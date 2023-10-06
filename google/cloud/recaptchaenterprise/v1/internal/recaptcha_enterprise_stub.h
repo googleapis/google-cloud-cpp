@@ -87,6 +87,36 @@ class RecaptchaEnterpriseServiceStub {
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+  CreateFirewallPolicy(
+      grpc::ClientContext& context,
+      google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse>
+  ListFirewallPolicies(
+      grpc::ClientContext& context,
+      google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+  GetFirewallPolicy(
+      grpc::ClientContext& context,
+      google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+  UpdateFirewallPolicy(
+      grpc::ClientContext& context,
+      google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+          request) = 0;
+
+  virtual Status DeleteFirewallPolicy(
+      grpc::ClientContext& context,
+      google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+          request) = 0;
+
   virtual StatusOr<
       google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
   ListRelatedAccountGroups(
@@ -170,6 +200,35 @@ class DefaultRecaptchaEnterpriseServiceStub
       grpc::ClientContext& client_context,
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request)
       override;
+
+  StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+  CreateFirewallPolicy(
+      grpc::ClientContext& client_context,
+      google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse>
+  ListFirewallPolicies(
+      grpc::ClientContext& client_context,
+      google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+  GetFirewallPolicy(
+      grpc::ClientContext& client_context,
+      google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+  UpdateFirewallPolicy(
+      grpc::ClientContext& client_context,
+      google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+          request) override;
+
+  Status DeleteFirewallPolicy(
+      grpc::ClientContext& client_context,
+      google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+          request) override;
 
   StatusOr<
       google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>

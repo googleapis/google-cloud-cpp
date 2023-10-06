@@ -134,6 +134,87 @@ DefaultDatasetServiceStub::AsyncExportData(
       request, std::move(context));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultDatasetServiceStub::AsyncCreateDatasetVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateDatasetVersion(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDatasetServiceStub::AsyncDeleteDatasetVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteDatasetVersion(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DefaultDatasetServiceStub::GetDatasetVersion(
+    grpc::ClientContext& client_context,
+    google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
+  google::cloud::aiplatform::v1::DatasetVersion response;
+  auto status =
+      grpc_stub_->GetDatasetVersion(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
+DefaultDatasetServiceStub::ListDatasetVersions(
+    grpc::ClientContext& client_context,
+    google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) {
+  google::cloud::aiplatform::v1::ListDatasetVersionsResponse response;
+  auto status =
+      grpc_stub_->ListDatasetVersions(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDatasetServiceStub::AsyncRestoreDatasetVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRestoreDatasetVersion(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
 DefaultDatasetServiceStub::ListDataItems(
     grpc::ClientContext& client_context,

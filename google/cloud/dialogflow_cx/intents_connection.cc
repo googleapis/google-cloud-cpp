@@ -67,6 +67,22 @@ Status IntentsConnection::DeleteIntent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
+IntentsConnection::ImportIntents(
+    google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
+IntentsConnection::ExportIntents(
+    google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<IntentsConnection> MakeIntentsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

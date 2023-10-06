@@ -105,6 +105,37 @@ class MockRecaptchaEnterpriseServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>,
+              CreateFirewallPolicy,
+              (google::cloud::recaptchaenterprise::v1::
+                   CreateFirewallPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>),
+      ListFirewallPolicies,
+      (google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>,
+      GetFirewallPolicy,
+      (google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>,
+              UpdateFirewallPolicy,
+              (google::cloud::recaptchaenterprise::v1::
+                   UpdateFirewallPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(Status, DeleteFirewallPolicy,
+              (google::cloud::recaptchaenterprise::v1::
+                   DeleteFirewallPolicyRequest const& request),
+              (override));
+
   MOCK_METHOD(
       (StreamRange<
           google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>),

@@ -110,6 +110,55 @@ DatasetServiceMetadata::AsyncExportData(
   return child_->AsyncExportData(cq, std::move(context), request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceMetadata::AsyncCreateDatasetVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDatasetVersion(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceMetadata::AsyncDeleteDatasetVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDatasetVersion(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceMetadata::GetDatasetVersion(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetDatasetVersion(context, request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
+DatasetServiceMetadata::ListDatasetVersions(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) {
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDatasetVersions(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceMetadata::AsyncRestoreDatasetVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+        request) {
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRestoreDatasetVersion(cq, std::move(context), request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
 DatasetServiceMetadata::ListDataItems(
     grpc::ClientContext& context,

@@ -70,6 +70,20 @@ class MockIntentsConnection : public dialogflow_cx::IntentsConnection {
       Status, DeleteIntent,
       (google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>,
+      ImportIntents,
+      (google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>,
+      ExportIntents,
+      (google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

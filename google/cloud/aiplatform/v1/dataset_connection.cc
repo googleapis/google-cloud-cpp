@@ -88,6 +88,44 @@ DatasetServiceConnection::ExportData(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+DatasetServiceConnection::CreateDatasetVersion(
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceConnection::DeleteDatasetVersion(
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceConnection::GetDatasetVersion(
+    google::cloud::aiplatform::v1::GetDatasetVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceConnection::ListDatasetVersions(
+    google::cloud::aiplatform::v1::
+        ListDatasetVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::aiplatform::v1::DatasetVersion>>();
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+DatasetServiceConnection::RestoreDatasetVersion(
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::aiplatform::v1::DataItem>
 DatasetServiceConnection::ListDataItems(
     google::cloud::aiplatform::v1::

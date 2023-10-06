@@ -119,6 +119,22 @@ HubServiceClient::DeleteHub(
 }
 
 StreamRange<google::cloud::networkconnectivity::v1::Spoke>
+HubServiceClient::ListHubSpokes(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::ListHubSpokesRequest request;
+  request.set_name(name);
+  return connection_->ListHubSpokes(request);
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::Spoke>
+HubServiceClient::ListHubSpokes(
+    google::cloud::networkconnectivity::v1::ListHubSpokesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListHubSpokes(std::move(request));
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::Spoke>
 HubServiceClient::ListSpokes(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::ListSpokesRequest request;
@@ -190,6 +206,44 @@ HubServiceClient::UpdateSpoke(
   return connection_->UpdateSpoke(request);
 }
 
+future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+HubServiceClient::RejectHubSpoke(std::string const& name,
+                                 std::string const& spoke_uri, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::RejectHubSpokeRequest request;
+  request.set_name(name);
+  request.set_spoke_uri(spoke_uri);
+  return connection_->RejectHubSpoke(request);
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+HubServiceClient::RejectHubSpoke(
+    google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RejectHubSpoke(request);
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+HubServiceClient::AcceptHubSpoke(std::string const& name,
+                                 std::string const& spoke_uri, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest request;
+  request.set_name(name);
+  request.set_spoke_uri(spoke_uri);
+  return connection_->AcceptHubSpoke(request);
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+HubServiceClient::AcceptHubSpoke(
+    google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AcceptHubSpoke(request);
+}
+
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 HubServiceClient::DeleteSpoke(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -204,6 +258,102 @@ HubServiceClient::DeleteSpoke(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSpoke(request);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
+HubServiceClient::GetRouteTable(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::GetRouteTableRequest request;
+  request.set_name(name);
+  return connection_->GetRouteTable(request);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
+HubServiceClient::GetRouteTable(
+    google::cloud::networkconnectivity::v1::GetRouteTableRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetRouteTable(request);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::Route>
+HubServiceClient::GetRoute(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::GetRouteRequest request;
+  request.set_name(name);
+  return connection_->GetRoute(request);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::Route>
+HubServiceClient::GetRoute(
+    google::cloud::networkconnectivity::v1::GetRouteRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetRoute(request);
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::Route>
+HubServiceClient::ListRoutes(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::ListRoutesRequest request;
+  request.set_parent(parent);
+  return connection_->ListRoutes(request);
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::Route>
+HubServiceClient::ListRoutes(
+    google::cloud::networkconnectivity::v1::ListRoutesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListRoutes(std::move(request));
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::RouteTable>
+HubServiceClient::ListRouteTables(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::ListRouteTablesRequest request;
+  request.set_parent(parent);
+  return connection_->ListRouteTables(request);
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::RouteTable>
+HubServiceClient::ListRouteTables(
+    google::cloud::networkconnectivity::v1::ListRouteTablesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListRouteTables(std::move(request));
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::Group>
+HubServiceClient::GetGroup(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::GetGroupRequest request;
+  request.set_name(name);
+  return connection_->GetGroup(request);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::Group>
+HubServiceClient::GetGroup(
+    google::cloud::networkconnectivity::v1::GetGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetGroup(request);
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::Group>
+HubServiceClient::ListGroups(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::ListGroupsRequest request;
+  request.set_parent(parent);
+  return connection_->ListGroups(request);
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::Group>
+HubServiceClient::ListGroups(
+    google::cloud::networkconnectivity::v1::ListGroupsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListGroups(std::move(request));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -210,6 +210,30 @@ class DatasetServiceConnection {
   virtual future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
   ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request);
 
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+  CreateDatasetVersion(
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDatasetVersion(
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+  GetDatasetVersion(
+      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request);
+
+  virtual StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
+  ListDatasetVersions(
+      google::cloud::aiplatform::v1::ListDatasetVersionsRequest request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+  RestoreDatasetVersion(
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+          request);
+
   virtual StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
       google::cloud::aiplatform::v1::ListDataItemsRequest request);
 

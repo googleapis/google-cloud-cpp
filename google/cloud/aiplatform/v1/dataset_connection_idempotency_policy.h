@@ -58,6 +58,24 @@ class DatasetServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ExportData(
       google::cloud::aiplatform::v1::ExportDataRequest const& request);
 
+  virtual google::cloud::Idempotency CreateDatasetVersion(
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteDatasetVersion(
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetDatasetVersion(
+      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request);
+
+  virtual google::cloud::Idempotency ListDatasetVersions(
+      google::cloud::aiplatform::v1::ListDatasetVersionsRequest request);
+
+  virtual google::cloud::Idempotency RestoreDatasetVersion(
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListDataItems(
       google::cloud::aiplatform::v1::ListDataItemsRequest request);
 

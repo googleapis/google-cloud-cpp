@@ -59,6 +59,16 @@ Idempotency IntentsConnectionIdempotencyPolicy::DeleteIntent(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency IntentsConnectionIdempotencyPolicy::ImportIntents(
+    google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency IntentsConnectionIdempotencyPolicy::ExportIntents(
+    google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<IntentsConnectionIdempotencyPolicy>
 MakeDefaultIntentsConnectionIdempotencyPolicy() {
   return std::make_unique<IntentsConnectionIdempotencyPolicy>();

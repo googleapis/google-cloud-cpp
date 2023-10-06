@@ -132,6 +132,85 @@ DatasetServiceAuth::AsyncExportData(
       });
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceAuth::AsyncCreateDatasetVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateDatasetVersion(cq, *std::move(context),
+                                                request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceAuth::AsyncDeleteDatasetVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteDatasetVersion(cq, *std::move(context),
+                                                request);
+      });
+}
+
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceAuth::GetDatasetVersion(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetDatasetVersion(context, request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
+DatasetServiceAuth::ListDatasetVersions(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDatasetVersions(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceAuth::AsyncRestoreDatasetVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncRestoreDatasetVersion(cq, *std::move(context),
+                                                 request);
+      });
+}
+
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
 DatasetServiceAuth::ListDataItems(
     grpc::ClientContext& context,

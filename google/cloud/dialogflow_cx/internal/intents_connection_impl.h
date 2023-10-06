@@ -26,10 +26,13 @@
 #include "google/cloud/dialogflow_cx/internal/intents_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -66,6 +69,14 @@ class IntentsConnectionImpl : public dialogflow_cx::IntentsConnection {
   Status DeleteIntent(
       google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request)
       override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
+  ImportIntents(google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&
+                    request) override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
+  ExportIntents(google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&
+                    request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

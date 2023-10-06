@@ -78,6 +78,29 @@ class DatasetServiceConnectionImpl
   ExportData(
       google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
 
+  future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+  CreateDatasetVersion(
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDatasetVersion(
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request)
+      override;
+
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
+      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request)
+      override;
+
+  StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
+  ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest
+                          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+  RestoreDatasetVersion(
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+          request) override;
+
   StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
       google::cloud::aiplatform::v1::ListDataItemsRequest request) override;
 

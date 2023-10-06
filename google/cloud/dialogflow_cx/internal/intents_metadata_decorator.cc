@@ -86,6 +86,45 @@ Status IntentsMetadata::DeleteIntent(
   return child_->DeleteIntent(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+IntentsMetadata::AsyncImportIntents(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncImportIntents(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+IntentsMetadata::AsyncExportIntents(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncExportIntents(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+IntentsMetadata::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncGetOperation(cq, std::move(context), request);
+}
+
+future<Status> IntentsMetadata::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelOperation(cq, std::move(context), request);
+}
+
 void IntentsMetadata::SetMetadata(grpc::ClientContext& context,
                                   std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

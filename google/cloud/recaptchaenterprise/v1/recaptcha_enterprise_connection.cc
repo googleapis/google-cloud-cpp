@@ -100,6 +100,40 @@ RecaptchaEnterpriseServiceConnection::GetMetrics(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceConnection::CreateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::
+        CreateFirewallPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceConnection::ListFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::
+        ListFirewallPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>>();
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceConnection::GetFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceConnection::UpdateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::
+        UpdateFirewallPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status RecaptchaEnterpriseServiceConnection::DeleteFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::
+        DeleteFirewallPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
 RecaptchaEnterpriseServiceConnection::ListRelatedAccountGroups(
     google::cloud::recaptchaenterprise::v1::

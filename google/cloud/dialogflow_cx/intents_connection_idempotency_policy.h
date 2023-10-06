@@ -50,6 +50,12 @@ class IntentsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteIntent(
       google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request);
+
+  virtual google::cloud::Idempotency ImportIntents(
+      google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request);
+
+  virtual google::cloud::Idempotency ExportIntents(
+      google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request);
 };
 
 std::unique_ptr<IntentsConnectionIdempotencyPolicy>

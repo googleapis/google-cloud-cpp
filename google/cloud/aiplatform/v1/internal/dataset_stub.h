@@ -69,6 +69,39 @@ class DatasetServiceStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::aiplatform::v1::ExportDataRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateDatasetVersion(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteDatasetVersion(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+  GetDatasetVersion(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::GetDatasetVersionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
+  ListDatasetVersions(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::ListDatasetVersionsRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncRestoreDatasetVersion(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
   ListDataItems(
       grpc::ClientContext& context,
@@ -158,6 +191,35 @@ class DefaultDatasetServiceStub : public DatasetServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDatasetVersion(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDatasetVersion(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request)
+      override;
+
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
+      grpc::ClientContext& client_context,
+      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request)
+      override;
+
+  StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
+  ListDatasetVersions(
+      grpc::ClientContext& client_context,
+      google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatasetVersion(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+          request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse> ListDataItems(
       grpc::ClientContext& client_context,

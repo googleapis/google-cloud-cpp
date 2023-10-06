@@ -221,6 +221,18 @@ AlloyDBAdminConnection::ListSupportedDatabaseFlags(
       StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>>();
 }
 
+StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+AlloyDBAdminConnection::GenerateClientCertificate(
+    google::cloud::alloydb::v1::GenerateClientCertificateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
+AlloyDBAdminConnection::GetConnectionInfo(
+    google::cloud::alloydb::v1::GetConnectionInfoRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::alloydb::v1::User> AlloyDBAdminConnection::ListUsers(
     google::cloud::alloydb::v1::
         ListUsersRequest) {  // NOLINT(performance-unnecessary-value-param)

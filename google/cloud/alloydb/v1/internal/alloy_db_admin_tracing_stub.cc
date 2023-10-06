@@ -368,6 +368,31 @@ AlloyDBAdminTracingStub::ListSupportedDatabaseFlags(
       context, *span, child_->ListSupportedDatabaseFlags(context, request));
 }
 
+StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+AlloyDBAdminTracingStub::GenerateClientCertificate(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "GenerateClientCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GenerateClientCertificate(context, request));
+}
+
+StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
+AlloyDBAdminTracingStub::GetConnectionInfo(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "GetConnectionInfo");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetConnectionInfo(context, request));
+}
+
 StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
 AlloyDBAdminTracingStub::ListUsers(
     grpc::ClientContext& context,

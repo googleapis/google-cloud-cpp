@@ -139,6 +139,63 @@ RecaptchaEnterpriseServiceTracingConnection::GetMetrics(
   return internal::EndSpan(*span, child_->GetMetrics(request));
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceTracingConnection::CreateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
+      "CreateFirewallPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateFirewallPolicy(request));
+}
+
+StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceTracingConnection::ListFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
+      "ListFirewallPolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListFirewallPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::recaptchaenterprise::v1::FirewallPolicy>(std::move(span),
+                                                              std::move(sr));
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceTracingConnection::GetFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
+      "GetFirewallPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFirewallPolicy(request));
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceTracingConnection::UpdateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
+      "UpdateFirewallPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateFirewallPolicy(request));
+}
+
+Status RecaptchaEnterpriseServiceTracingConnection::DeleteFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
+      "DeleteFirewallPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteFirewallPolicy(request));
+}
+
 StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
 RecaptchaEnterpriseServiceTracingConnection::ListRelatedAccountGroups(
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest

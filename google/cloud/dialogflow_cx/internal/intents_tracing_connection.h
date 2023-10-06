@@ -58,6 +58,14 @@ class IntentsTracingConnection : public dialogflow_cx::IntentsConnection {
       google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
+  ImportIntents(google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&
+                    request) override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
+  ExportIntents(google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&
+                    request) override;
+
  private:
   std::shared_ptr<dialogflow_cx::IntentsConnection> child_;
 };

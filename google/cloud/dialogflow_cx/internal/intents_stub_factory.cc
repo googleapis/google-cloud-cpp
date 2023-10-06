@@ -44,8 +44,9 @@ std::shared_ptr<IntentsStub> CreateDefaultIntentsStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::dialogflow::cx::v3::Intents::NewStub(channel);
-  std::shared_ptr<IntentsStub> stub =
-      std::make_shared<DefaultIntentsStub>(std::move(service_grpc_stub));
+  std::shared_ptr<IntentsStub> stub = std::make_shared<DefaultIntentsStub>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<IntentsAuth>(std::move(auth), std::move(stub));

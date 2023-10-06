@@ -59,6 +59,11 @@ Idempotency HubServiceConnectionIdempotencyPolicy::DeleteHub(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency HubServiceConnectionIdempotencyPolicy::ListHubSpokes(
+    google::cloud::networkconnectivity::v1::ListHubSpokesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency HubServiceConnectionIdempotencyPolicy::ListSpokes(
     google::cloud::networkconnectivity::v1::ListSpokesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -79,9 +84,49 @@ Idempotency HubServiceConnectionIdempotencyPolicy::UpdateSpoke(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency HubServiceConnectionIdempotencyPolicy::RejectHubSpoke(
+    google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency HubServiceConnectionIdempotencyPolicy::AcceptHubSpoke(
+    google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency HubServiceConnectionIdempotencyPolicy::DeleteSpoke(
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency HubServiceConnectionIdempotencyPolicy::GetRouteTable(
+    google::cloud::networkconnectivity::v1::GetRouteTableRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency HubServiceConnectionIdempotencyPolicy::GetRoute(
+    google::cloud::networkconnectivity::v1::GetRouteRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency HubServiceConnectionIdempotencyPolicy::ListRoutes(
+    google::cloud::networkconnectivity::v1::ListRoutesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency HubServiceConnectionIdempotencyPolicy::ListRouteTables(
+    google::cloud::networkconnectivity::v1::ListRouteTablesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency HubServiceConnectionIdempotencyPolicy::GetGroup(
+    google::cloud::networkconnectivity::v1::GetGroupRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency HubServiceConnectionIdempotencyPolicy::ListGroups(
+    google::cloud::networkconnectivity::v1::ListGroupsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<HubServiceConnectionIdempotencyPolicy>

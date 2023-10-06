@@ -102,10 +102,10 @@ class BigtableInstanceAdminClient {
   /// cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is
   /// enabled.
   ///
-  /// @param parent  Required. The unique name of the project in which to create the new instance.
-  ///  Values are of the form `projects/{project}`.
-  /// @param instance_id  Required. The ID to be used when referring to the new instance within its project,
-  ///  e.g., just `myinstance` rather than
+  /// @param parent  Required. The unique name of the project in which to create the new
+  ///  instance. Values are of the form `projects/{project}`.
+  /// @param instance_id  Required. The ID to be used when referring to the new instance within its
+  ///  project, e.g., just `myinstance` rather than
   ///  `projects/myproject/instances/myinstance`.
   /// @param instance  Required. The instance to create.
   ///  Fields marked `OutputOnly` must be left blank.
@@ -134,7 +134,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.CreateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L289}
+  /// [google.bigtable.admin.v2.CreateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L300}
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
@@ -181,7 +181,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.CreateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L289}
+  /// [google.bigtable.admin.v2.CreateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L300}
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
@@ -208,7 +208,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.GetInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L317}
+  /// [google.bigtable.admin.v2.GetInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L328}
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
@@ -238,7 +238,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.GetInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L317}
+  /// [google.bigtable.admin.v2.GetInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L328}
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
@@ -250,8 +250,8 @@ class BigtableInstanceAdminClient {
   ///
   /// Lists information about instances in a project.
   ///
-  /// @param parent  Required. The unique name of the project for which a list of instances is requested.
-  ///  Values are of the form `projects/{project}`.
+  /// @param parent  Required. The unique name of the project for which a list of instances is
+  ///  requested. Values are of the form `projects/{project}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -265,8 +265,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.ListInstancesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L329}
-  /// [google.bigtable.admin.v2.ListInstancesResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L344}
+  /// [google.bigtable.admin.v2.ListInstancesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L340}
+  /// [google.bigtable.admin.v2.ListInstancesResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L355}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
@@ -295,8 +295,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.ListInstancesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L329}
-  /// [google.bigtable.admin.v2.ListInstancesResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L344}
+  /// [google.bigtable.admin.v2.ListInstancesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L340}
+  /// [google.bigtable.admin.v2.ListInstancesResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L355}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
@@ -363,7 +363,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
-  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L361}
+  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L372}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
@@ -402,7 +402,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
-  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L361}
+  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L372}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
@@ -426,7 +426,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L371}
+  /// [google.bigtable.admin.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L383}
   ///
   // clang-format on
   Status DeleteInstance(std::string const& name, Options opts = {});
@@ -452,7 +452,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L371}
+  /// [google.bigtable.admin.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L383}
   ///
   // clang-format on
   Status DeleteInstance(
@@ -469,11 +469,10 @@ class BigtableInstanceAdminClient {
   /// cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is
   /// enabled.
   ///
-  /// @param parent  Required. The unique name of the instance in which to create the new cluster.
-  ///  Values are of the form
-  ///  `projects/{project}/instances/{instance}`.
-  /// @param cluster_id  Required. The ID to be used when referring to the new cluster within its instance,
-  ///  e.g., just `mycluster` rather than
+  /// @param parent  Required. The unique name of the instance in which to create the new
+  ///  cluster. Values are of the form `projects/{project}/instances/{instance}`.
+  /// @param cluster_id  Required. The ID to be used when referring to the new cluster within its
+  ///  instance, e.g., just `mycluster` rather than
   ///  `projects/myproject/instances/myinstance/clusters/mycluster`.
   /// @param cluster  Required. The cluster to be created.
   ///  Fields marked `OutputOnly` must be left blank.
@@ -497,8 +496,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
-  /// [google.bigtable.admin.v2.CreateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L383}
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L144}
+  /// [google.bigtable.admin.v2.CreateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L395}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
@@ -541,8 +540,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
-  /// [google.bigtable.admin.v2.CreateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L383}
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L144}
+  /// [google.bigtable.admin.v2.CreateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L395}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
@@ -568,8 +567,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
-  /// [google.bigtable.admin.v2.GetClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L405}
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L144}
+  /// [google.bigtable.admin.v2.GetClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L416}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
@@ -598,8 +597,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
-  /// [google.bigtable.admin.v2.GetClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L405}
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L144}
+  /// [google.bigtable.admin.v2.GetClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L416}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
@@ -610,10 +609,11 @@ class BigtableInstanceAdminClient {
   ///
   /// Lists information about clusters in an instance.
   ///
-  /// @param parent  Required. The unique name of the instance for which a list of clusters is requested.
-  ///  Values are of the form `projects/{project}/instances/{instance}`.
-  ///  Use ``{instance} = '-'`` to list Clusters for all Instances in a project,
-  ///  e.g., `projects/myproject/instances/-`.
+  /// @param parent  Required. The unique name of the instance for which a list of clusters is
+  ///  requested. Values are of the form
+  ///  `projects/{project}/instances/{instance}`. Use ``{instance} = '-'`` to list
+  ///  Clusters for all Instances in a project, e.g.,
+  ///  `projects/myproject/instances/-`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -627,8 +627,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.ListClustersRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L417}
-  /// [google.bigtable.admin.v2.ListClustersResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L434}
+  /// [google.bigtable.admin.v2.ListClustersRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L428}
+  /// [google.bigtable.admin.v2.ListClustersResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L446}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
@@ -657,8 +657,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.ListClustersRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L417}
-  /// [google.bigtable.admin.v2.ListClustersResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L434}
+  /// [google.bigtable.admin.v2.ListClustersRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L428}
+  /// [google.bigtable.admin.v2.ListClustersResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L446}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
@@ -699,7 +699,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L144}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
@@ -720,8 +720,8 @@ class BigtableInstanceAdminClient {
   /// To disable autoscaling, clear cluster_config.cluster_autoscaling_config,
   /// and explicitly set a serve_node count via the update_mask.
   ///
-  /// @param cluster  Required. The Cluster which contains the partial updates to be applied, subject to
-  ///  the update_mask.
+  /// @param cluster  Required. The Cluster which contains the partial updates to be applied,
+  ///  subject to the update_mask.
   /// @param update_mask  Required. The subset of Cluster fields which should be replaced.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -743,8 +743,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
-  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L563}
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L144}
+  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L575}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
@@ -792,8 +792,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
-  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L563}
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L144}
+  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L575}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
@@ -804,8 +804,8 @@ class BigtableInstanceAdminClient {
   ///
   /// Deletes a cluster from an instance.
   ///
-  /// @param name  Required. The unique name of the cluster to be deleted. Values are of the form
-  ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
+  /// @param name  Required. The unique name of the cluster to be deleted. Values are of the
+  ///  form `projects/{project}/instances/{instance}/clusters/{cluster}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -817,7 +817,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L450}
+  /// [google.bigtable.admin.v2.DeleteClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L462}
   ///
   // clang-format on
   Status DeleteCluster(std::string const& name, Options opts = {});
@@ -843,7 +843,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L450}
+  /// [google.bigtable.admin.v2.DeleteClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L462}
   ///
   // clang-format on
   Status DeleteCluster(
@@ -854,11 +854,10 @@ class BigtableInstanceAdminClient {
   ///
   /// Creates an app profile within an instance.
   ///
-  /// @param parent  Required. The unique name of the instance in which to create the new app profile.
-  ///  Values are of the form
-  ///  `projects/{project}/instances/{instance}`.
-  /// @param app_profile_id  Required. The ID to be used when referring to the new app profile within its
-  ///  instance, e.g., just `myprofile` rather than
+  /// @param parent  Required. The unique name of the instance in which to create the new app
+  ///  profile. Values are of the form `projects/{project}/instances/{instance}`.
+  /// @param app_profile_id  Required. The ID to be used when referring to the new app profile within
+  ///  its instance, e.g., just `myprofile` rather than
   ///  `projects/myproject/instances/myinstance/appProfiles/myprofile`.
   /// @param app_profile  Required. The app profile to be created.
   ///  Fields marked `OutputOnly` will be ignored.
@@ -875,8 +874,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L573}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L586}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
@@ -907,8 +906,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L573}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L586}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
@@ -919,8 +918,8 @@ class BigtableInstanceAdminClient {
   ///
   /// Gets information about an app profile.
   ///
-  /// @param name  Required. The unique name of the requested app profile. Values are of the form
-  ///  `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
+  /// @param name  Required. The unique name of the requested app profile. Values are of the
+  ///  form `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -934,8 +933,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L598}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
@@ -964,8 +963,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L598}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
@@ -976,8 +975,8 @@ class BigtableInstanceAdminClient {
   ///
   /// Lists information about app profiles in an instance.
   ///
-  /// @param parent  Required. The unique name of the instance for which a list of app profiles is
-  ///  requested. Values are of the form
+  /// @param parent  Required. The unique name of the instance for which a list of app profiles
+  ///  is requested. Values are of the form
   ///  `projects/{project}/instances/{instance}`.
   ///  Use ``{instance} = '-'`` to list AppProfiles for all Instances in a project,
   ///  e.g., `projects/myproject/instances/-`.
@@ -1003,8 +1002,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L622}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
@@ -1042,8 +1041,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L622}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
@@ -1077,8 +1076,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L656}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L668}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
@@ -1115,8 +1114,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L656}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L668}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
@@ -1144,7 +1143,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L669}
+  /// [google.bigtable.admin.v2.DeleteAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L682}
   ///
   // clang-format on
   Status DeleteAppProfile(
@@ -1388,8 +1387,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.HotTablet]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L307}
-  /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L689}
+  /// [google.bigtable.admin.v2.HotTablet]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L346}
+  /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L701}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
@@ -1428,8 +1427,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.HotTablet]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L307}
-  /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L689}
+  /// [google.bigtable.admin.v2.HotTablet]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L346}
+  /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L701}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(

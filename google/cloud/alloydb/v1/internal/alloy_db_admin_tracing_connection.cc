@@ -260,6 +260,25 @@ AlloyDBAdminTracingConnection::ListSupportedDatabaseFlags(
                                                          std::move(sr));
 }
 
+StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+AlloyDBAdminTracingConnection::GenerateClientCertificate(
+    google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "alloydb_v1::AlloyDBAdminConnection::GenerateClientCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateClientCertificate(request));
+}
+
+StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
+AlloyDBAdminTracingConnection::GetConnectionInfo(
+    google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
+  auto span = internal::MakeSpan(
+      "alloydb_v1::AlloyDBAdminConnection::GetConnectionInfo");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConnectionInfo(request));
+}
+
 StreamRange<google::cloud::alloydb::v1::User>
 AlloyDBAdminTracingConnection::ListUsers(
     google::cloud::alloydb::v1::ListUsersRequest request) {

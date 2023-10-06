@@ -267,6 +267,16 @@ class AlloyDBAdminConnection {
   ListSupportedDatabaseFlags(
       google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request);
 
+  virtual StatusOr<
+      google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+  GenerateClientCertificate(
+      google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
+  GetConnectionInfo(
+      google::cloud::alloydb::v1::GetConnectionInfoRequest const& request);
+
   virtual StreamRange<google::cloud::alloydb::v1::User> ListUsers(
       google::cloud::alloydb::v1::ListUsersRequest request);
 

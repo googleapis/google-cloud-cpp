@@ -21,6 +21,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -44,6 +45,10 @@ std::unique_ptr<dialogflow_cx::IntentsConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
   return options.get<dialogflow_cx::IntentsConnectionIdempotencyPolicyOption>()
       ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<dialogflow_cx::IntentsPollingPolicyOption>()->clone();
 }
 
 }  // namespace
@@ -138,6 +143,70 @@ Status IntentsConnectionImpl::DeleteIntent(
              google::cloud::dialogflow::cx::v3::DeleteIntentRequest const&
                  request) { return stub_->DeleteIntent(context, request); },
       request, __func__);
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
+IntentsConnectionImpl::ImportIntents(
+    google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dialogflow::cx::v3::ImportIntentsResponse>(
+      background_->cq(), request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&
+              request) {
+        return stub->AsyncImportIntents(cq, std::move(context), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dialogflow::cx::v3::ImportIntentsResponse>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportIntents(request),
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
+IntentsConnectionImpl::ExportIntents(
+    google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dialogflow::cx::v3::ExportIntentsResponse>(
+      background_->cq(), request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&
+              request) {
+        return stub->AsyncExportIntents(cq, std::move(context), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dialogflow::cx::v3::ExportIntentsResponse>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportIntents(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

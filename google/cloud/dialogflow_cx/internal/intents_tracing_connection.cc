@@ -78,6 +78,24 @@ Status IntentsTracingConnection::DeleteIntent(
   return internal::EndSpan(*span, child_->DeleteIntent(request));
 }
 
+future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
+IntentsTracingConnection::ImportIntents(
+    google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_cx::IntentsConnection::ImportIntents");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportIntents(request));
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
+IntentsTracingConnection::ExportIntents(
+    google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_cx::IntentsConnection::ExportIntents");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportIntents(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<dialogflow_cx::IntentsConnection> MakeIntentsTracingConnection(

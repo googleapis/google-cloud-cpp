@@ -22,6 +22,7 @@
 #include "google/cloud/dialogflow_cx/internal/intents_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
@@ -62,6 +63,28 @@ class IntentsLogging : public IntentsStub {
       grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncImportIntents(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncExportIntents(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<IntentsStub> child_;
