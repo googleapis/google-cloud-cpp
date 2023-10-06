@@ -488,17 +488,6 @@ StatusOr<std::unique_ptr<storage::internal::ObjectReadSource>>
 GrpcStub::ReadObject(rest_internal::RestContext& context,
                      Options const& options,
                      storage::internal::ReadObjectRangeRequest const& request) {
-  // With the REST API this condition was detected by the server as an error,
-  // generally we prefer the server to detect errors because its answers are
-  // authoritative. In this case, the server cannot: with gRPC '0' is the same
-  // as "not set" and the server would send back the full file, which was
-  // unlikely to be the customer's intent.
-  if (request.HasOption<storage::ReadLast>() &&
-      request.GetOption<storage::ReadLast>().value() == 0) {
-    return Status(
-        StatusCode::kOutOfRange,
-        "ReadLast(0) is invalid in REST and produces incorrect output in gRPC");
-  }
   auto ctx = std::make_shared<grpc::ClientContext>();
   ApplyQueryParameters(*ctx, options, request);
   AddIdempotencyToken(*ctx, context);

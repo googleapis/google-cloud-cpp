@@ -317,17 +317,40 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLastZero) {
   storage::internal::ReadObjectRangeRequest req("test-bucket", "test-object");
   req.set_multiple_options(storage::ReadLast(0));
 
-  auto const actual = ToProto(req).value();
-  EXPECT_THAT(actual, IsProtoEqual(expected));
+  auto const actual = ToProto(req);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kOutOfRange));
+}
 
-  auto client = std::make_unique<GrpcStub>(DefaultOptionsGrpc(
-      Options{}
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<EndpointOption>("localhost:1")));
-  rest_internal::RestContext context;
-  StatusOr<std::unique_ptr<storage::internal::ObjectReadSource>> reader =
-      client->ReadObject(context, client->options(), req);
-  EXPECT_THAT(reader, StatusIs(StatusCode::kOutOfRange));
+TEST(GrpcObjectRequestParser,
+     ReadObjectRangeRequestReadLastConflictsWithOffset) {
+  google::storage::v2::ReadObjectRequest expected;
+  EXPECT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+      )pb",
+      &expected));
+
+  storage::internal::ReadObjectRangeRequest req("test-bucket", "test-object");
+  req.set_multiple_options(storage::ReadLast(5), storage::ReadFromOffset(7));
+
+  auto const actual = ToProto(req);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST(GrpcObjectRequestParser,
+     ReadObjectRangeRequestReadLastConflictsWithRange) {
+  google::storage::v2::ReadObjectRequest expected;
+  EXPECT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+      )pb",
+      &expected));
+
+  storage::internal::ReadObjectRangeRequest req("test-bucket", "test-object");
+  req.set_multiple_options(storage::ReadLast(5), storage::ReadRange(0, 7));
+
+  auto const actual = ToProto(req);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {

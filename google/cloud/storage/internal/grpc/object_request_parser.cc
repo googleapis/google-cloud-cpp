@@ -20,6 +20,7 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/log.h"
 
@@ -317,6 +318,31 @@ google::storage::v2::GetObjectRequest ToProto(
 
 StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
     storage::internal::ReadObjectRangeRequest const& request) {
+  // With the REST API this condition was detected by the server as an error.
+  // Generally we prefer the server to detect errors because its answers are
+  // authoritative, but in this case it cannot. With gRPC, '0' is the same as
+  // "not set" so the server would send back the full file, and that is unlikely
+  // to be the customer's intent.
+  if (request.HasOption<storage::ReadLast>() &&
+      request.GetOption<storage::ReadLast>().value() == 0) {
+    return internal::OutOfRangeError(
+        "ReadLast(0) is invalid in REST and produces incorrect output in gRPC",
+        GCP_ERROR_INFO());
+  }
+  // We should not guess the intent in this case.
+  if (request.HasOption<storage::ReadLast>() &&
+      request.HasOption<storage::ReadRange>()) {
+    return internal::InvalidArgumentError(
+        "Cannot use ReadLast() and ReadRange() at the same time",
+        GCP_ERROR_INFO());
+  }
+  // We should not guess the intent in this case.
+  if (request.HasOption<storage::ReadLast>() &&
+      request.HasOption<storage::ReadFromOffset>()) {
+    return internal::InvalidArgumentError(
+        "Cannot use ReadLast() and ReadFromOffset() at the same time",
+        GCP_ERROR_INFO());
+  }
   google::storage::v2::ReadObjectRequest r;
   auto status = SetCommonObjectParameters(r, request);
   if (!status.ok()) return status;

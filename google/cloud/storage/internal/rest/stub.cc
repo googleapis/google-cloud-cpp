@@ -30,6 +30,7 @@
 #include "google/cloud/internal/auth_header_error.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/url_encode.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
@@ -483,6 +484,20 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestStub::ReadObject(
   request.AddOptionsToHttpRequest(builder);
 
   builder.AddQueryParameter("alt", "media");
+  // We should not guess the intent in this case.
+  if (request.HasOption<storage::ReadLast>() &&
+      request.HasOption<storage::ReadRange>()) {
+    return google::cloud::internal::InvalidArgumentError(
+        "Cannot use ReadLast() and ReadRange() at the same time",
+        GCP_ERROR_INFO());
+  }
+  // We should not guess the intent in this case.
+  if (request.HasOption<storage::ReadLast>() &&
+      request.HasOption<storage::ReadFromOffset>()) {
+    return google::cloud::internal::InvalidArgumentError(
+        "Cannot use ReadLast() and ReadFromOffset() at the same time",
+        GCP_ERROR_INFO());
+  }
   if (request.RequiresRangeHeader()) {
     builder.AddHeader("Range", request.RangeHeaderValue());
   }

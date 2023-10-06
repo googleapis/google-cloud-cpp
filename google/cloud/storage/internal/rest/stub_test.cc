@@ -303,6 +303,30 @@ TEST(RestStubTest, ReadObject) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
+TEST(RestStubTest, ReadObjectReadLastConflictsWithReadFromOffset) {
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest())).Times(0);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  auto status = tested->ReadObject(context, TestOptions(),
+                                   ReadObjectRangeRequest()
+                                       .set_option(ReadLast(5))
+                                       .set_option(ReadFromOffset(7)));
+  EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST(RestStubTest, ReadObjectReadLastConflictsWithReadRange) {
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest())).Times(0);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  auto status = tested->ReadObject(context, TestOptions(),
+                                   ReadObjectRangeRequest()
+                                       .set_option(ReadLast(5))
+                                       .set_option(ReadRange(0, 7)));
+  EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument));
+}
+
 TEST(RestStubTest, ListObjects) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))

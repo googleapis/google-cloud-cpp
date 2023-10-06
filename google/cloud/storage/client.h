@@ -1123,22 +1123,6 @@ class Client {
   ObjectReadStream ReadObject(std::string const& bucket_name,
                               std::string const& object_name,
                               Options&&... options) {
-    struct HasReadRange
-        : public absl::disjunction<std::is_same<ReadRange, Options>...> {};
-    struct HasReadFromOffset
-        : public absl::disjunction<std::is_same<ReadFromOffset, Options>...> {};
-    struct HasReadLast
-        : public absl::disjunction<std::is_same<ReadLast, Options>...> {};
-
-    struct HasIncompatibleRangeOptions
-        : public std::integral_constant<bool, HasReadLast::value &&
-                                                  (HasReadFromOffset::value ||
-                                                   HasReadRange::value)> {};
-
-    static_assert(!HasIncompatibleRangeOptions::value,
-                  "Cannot set ReadLast option with either ReadFromOffset or "
-                  "ReadRange.");
-
     google::cloud::internal::OptionsSpan const span(
         SpanOptions(std::forward<Options>(options)...));
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
