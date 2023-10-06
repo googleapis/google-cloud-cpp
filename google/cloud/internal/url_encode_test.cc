@@ -17,12 +17,9 @@
 
 namespace google {
 namespace cloud {
-namespace internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
 namespace {
-
-using google::cloud::internal::UrlEncode;
-using google::cloud::internal::UrlDecode;
 
 TEST(UrlEncode, Simple) {
   auto const* unencoded_string = "projects/*/resource/*";
@@ -30,7 +27,7 @@ TEST(UrlEncode, Simple) {
   auto result = UrlEncode(unencoded_string);
 
   auto const* encoded_string = "projects%2F*%2Fresource%2F*";
-  ASSERT_THAT(result, encoded_string);
+  EXPECT_THAT(result, encoded_string);
 }
 
 TEST(UrlEncode, MultipleReplacements) {
@@ -39,7 +36,7 @@ TEST(UrlEncode, MultipleReplacements) {
   auto result = UrlEncode(unencoded_string);
 
   auto const* encoded_string = "%25%3E%2F%40";
-  ASSERT_THAT(result, encoded_string);
+  EXPECT_THAT(result, encoded_string);
 }
 
 TEST(UrlDecode, Simple) {
@@ -48,7 +45,7 @@ TEST(UrlDecode, Simple) {
   auto result = UrlDecode(encoded_string);
 
   auto const* unencoded_string = "projects/*/resource/*";
-  ASSERT_THAT(result, unencoded_string);
+  EXPECT_THAT(result, unencoded_string);
 }
 
 TEST(UrlDecode, MultipleReplacements) {
@@ -57,11 +54,11 @@ TEST(UrlDecode, MultipleReplacements) {
   auto result = UrlDecode(encoded_string);
 
   auto const* unencoded_string = "%>/@";
-  ASSERT_THAT(result, unencoded_string);
+  EXPECT_THAT(result, unencoded_string);
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
