@@ -88,8 +88,7 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
  */
 MATCHER_P(MatchesGlob, glob, "matches the glob: \"" + glob + "\"") {
   // Translate the `glob` into a regex pattern.
-  auto matcher =
-      absl::StrReplaceAll(glob, {{"*", "[^/]+"}});
+  auto matcher = absl::StrReplaceAll(glob, {{"*", "[^/]+"}});
   std::regex regex(matcher);
   // Decode the `arg` before trying to match it.
   return std::regex_match(internal::UrlDecode(arg), regex);
@@ -139,7 +138,7 @@ RoutingHeaders FromRoutingRule(google::api::RoutingRule const& routing,
     // If the path_template is empty, we use the field's name as the routing
     // param key, and we match the entire value of the field.
     if (path_template.empty()) {
-      headers[rp.field()] = internal::UrlEncode(field);
+      headers[rp.field()] = field;
       continue;
     }
     // First we parse the path_template field to extract the routing param key
