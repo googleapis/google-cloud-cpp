@@ -318,7 +318,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      ElementsAre(AllOf(
+      Contains(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed(
               "google.test.admin.database.v1.GoldenKitchenSink/StreamingRead"),
@@ -354,7 +354,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      ElementsAre(AllOf(
+      Contains(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed(
               "google.test.admin.database.v1.GoldenKitchenSink/StreamingWrite"),
@@ -390,7 +390,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      ElementsAre(AllOf(
+      Contains(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("google.test.admin.database.v1.GoldenKitchenSink/"
                     "StreamingReadWrite"),
