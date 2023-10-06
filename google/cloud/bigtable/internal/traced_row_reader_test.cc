@@ -143,7 +143,7 @@ TEST(TracedStreamRange, Cancel) {
 
   EXPECT_THAT(span_catcher->GetSpans(),
               ElementsAre(AllOf(SpanNamed("span"),
-                                SpanEventsAre(EventNamed("cancel")))));
+                                SpanEventsAre(EventNamed("gl-cpp.cancel")))));
 }
 
 }  // namespace

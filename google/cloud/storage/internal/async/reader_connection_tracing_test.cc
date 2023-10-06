@@ -77,14 +77,14 @@ TEST(ReaderConnectionTracing, WithError) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanHasEvents(
               AllOf(
-                  EventNamed("Read"),
+                  EventNamed("gl-cpp.read"),
                   SpanEventAttributesAre(
                       OTelAttribute<std::int64_t>(sc::kMessageId, 1),
                       OTelAttribute<std::string>(sc::kMessageType, "RECEIVED"),
                       OTelAttribute<std::int64_t>("message.starting_offset", 0),
                       OTelAttribute<std::string>(sc::kThreadId, _))),
               AllOf(
-                  EventNamed("Read"),
+                  EventNamed("gl-cpp.read"),
                   SpanEventAttributesAre(
                       OTelAttribute<std::int64_t>(sc::kMessageId, 2),
                       OTelAttribute<std::string>(sc::kMessageType, "RECEIVED"),
@@ -119,14 +119,14 @@ TEST(ReaderConnectionTracing, WithSuccess) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanHasEvents(
               AllOf(
-                  EventNamed("Read"),
+                  EventNamed("gl-cpp.read"),
                   SpanEventAttributesAre(
                       OTelAttribute<std::int64_t>(sc::kMessageId, 1),
                       OTelAttribute<std::string>(sc::kMessageType, "RECEIVED"),
                       OTelAttribute<std::int64_t>("message.starting_offset", 0),
                       OTelAttribute<std::string>(sc::kThreadId, _))),
               AllOf(
-                  EventNamed("Read"),
+                  EventNamed("gl-cpp.read"),
                   SpanEventAttributesAre(
                       OTelAttribute<std::int64_t>(sc::kMessageId, 2),
                       OTelAttribute<std::string>(sc::kMessageType, "RECEIVED"),
@@ -134,7 +134,7 @@ TEST(ReaderConnectionTracing, WithSuccess) {
                                                   1024),
                       OTelAttribute<std::string>(sc::kThreadId, _))),
               AllOf(
-                  EventNamed("Read"),
+                  EventNamed("gl-cpp.read"),
                   SpanEventAttributesAre(
                       OTelAttribute<std::int64_t>(sc::kMessageId, 3),
                       OTelAttribute<std::string>(sc::kMessageType, "RECEIVED"),

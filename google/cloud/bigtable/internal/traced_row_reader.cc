@@ -38,7 +38,7 @@ class TracedRowReader : public bigtable_internal::RowReaderImpl {
 
   /// Skips remaining rows and invalidates current iterator.
   void Cancel() override {
-    span_->AddEvent("cancel");
+    span_->AddEvent("gl-cpp.cancel");
     reader_.Cancel();
   };
 
