@@ -53,12 +53,12 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
 void EndSpanImpl(opentelemetry::trace::Span& span, Status const& status) {
   if (status.ok()) {
     span.SetStatus(opentelemetry::trace::StatusCode::kOk);
-    span.SetAttribute("gcloud.status_code", 0);
+    span.SetAttribute("gl-cpp.status_code", 0);
     span.End();
     return;
   }
   span.SetStatus(opentelemetry::trace::StatusCode::kError, status.message());
-  span.SetAttribute("gcloud.status_code", static_cast<int>(status.code()));
+  span.SetAttribute("gl-cpp.status_code", static_cast<int>(status.code()));
   auto const& ei = status.error_info();
   if (!ei.reason().empty()) {
     span.SetAttribute("gcloud.error.reason", ei.reason());

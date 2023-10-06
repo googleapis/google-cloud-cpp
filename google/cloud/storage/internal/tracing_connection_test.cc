@@ -73,7 +73,7 @@ TEST(TracingClientTest, ListBuckets) {
                   SpanNamed("storage::Client::ListBuckets"),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, CreateBucket) {
@@ -95,7 +95,7 @@ TEST(TracingClientTest, CreateBucket) {
                   SpanNamed("storage::Client::CreateBucket"),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, GetBucketMetadata) {
@@ -117,7 +117,7 @@ TEST(TracingClientTest, GetBucketMetadata) {
                   SpanNamed("storage::Client::GetBucketMetadata"),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, DeleteBucket) {
@@ -139,7 +139,7 @@ TEST(TracingClientTest, DeleteBucket) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, UpdateBucket) {
@@ -161,7 +161,7 @@ TEST(TracingClientTest, UpdateBucket) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, PatchBucket) {
@@ -182,7 +182,7 @@ TEST(TracingClientTest, PatchBucket) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, GetNativeBucketIamPolicy) {
@@ -204,7 +204,7 @@ TEST(TracingClientTest, GetNativeBucketIamPolicy) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, SetNativeBucketIamPolicy) {
@@ -228,7 +228,7 @@ TEST(TracingClientTest, SetNativeBucketIamPolicy) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, TestBucketIamPermissions) {
@@ -250,7 +250,7 @@ TEST(TracingClientTest, TestBucketIamPermissions) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, LockBucketRetentionPolicy) {
@@ -272,7 +272,7 @@ TEST(TracingClientTest, LockBucketRetentionPolicy) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, InsertObjectMedia) {
@@ -294,7 +294,7 @@ TEST(TracingClientTest, InsertObjectMedia) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, CopyObject) {
@@ -315,7 +315,7 @@ TEST(TracingClientTest, CopyObject) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, GetObjectMetadata) {
@@ -337,7 +337,7 @@ TEST(TracingClientTest, GetObjectMetadata) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, ReadObject) {
@@ -359,7 +359,7 @@ TEST(TracingClientTest, ReadObject) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, ListObjects) {
@@ -380,7 +380,7 @@ TEST(TracingClientTest, ListObjects) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, DeleteObject) {
@@ -402,7 +402,7 @@ TEST(TracingClientTest, DeleteObject) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, UpdateObject) {
@@ -424,7 +424,7 @@ TEST(TracingClientTest, UpdateObject) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, PatchObject) {
@@ -445,7 +445,7 @@ TEST(TracingClientTest, PatchObject) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, ComposeObject) {
@@ -467,7 +467,7 @@ TEST(TracingClientTest, ComposeObject) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, RewriteObject) {
@@ -489,7 +489,7 @@ TEST(TracingClientTest, RewriteObject) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, CreateResumableUpload) {
@@ -512,7 +512,7 @@ TEST(TracingClientTest, CreateResumableUpload) {
                 SpanHasInstrumentationScope(), SpanKindIsClient(),
                 SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                 SpanHasAttributes(OTelAttribute<int>(
-                    "gcloud.status_code", static_cast<int>(code))))));
+                    "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, QueryResumableUpload) {
@@ -535,7 +535,7 @@ TEST(TracingClientTest, QueryResumableUpload) {
                 SpanHasInstrumentationScope(), SpanKindIsClient(),
                 SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                 SpanHasAttributes(OTelAttribute<int>(
-                    "gcloud.status_code", static_cast<int>(code))))));
+                    "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, DeleteResumableUpload) {
@@ -557,7 +557,7 @@ TEST(TracingClientTest, DeleteResumableUpload) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, UploadChunk) {
@@ -578,7 +578,7 @@ TEST(TracingClientTest, UploadChunk) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, ListBucketAcl) {
@@ -600,7 +600,7 @@ TEST(TracingClientTest, ListBucketAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, CreateBucketAcl) {
@@ -622,7 +622,7 @@ TEST(TracingClientTest, CreateBucketAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, DeleteBucketAcl) {
@@ -644,7 +644,7 @@ TEST(TracingClientTest, DeleteBucketAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, GetBucketAcl) {
@@ -666,7 +666,7 @@ TEST(TracingClientTest, GetBucketAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, UpdateBucketAcl) {
@@ -688,7 +688,7 @@ TEST(TracingClientTest, UpdateBucketAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, PatchBucketAcl) {
@@ -712,7 +712,7 @@ TEST(TracingClientTest, PatchBucketAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, ListObjectAcl) {
@@ -734,7 +734,7 @@ TEST(TracingClientTest, ListObjectAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, CreateObjectAcl) {
@@ -756,7 +756,7 @@ TEST(TracingClientTest, CreateObjectAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, DeleteObjectAcl) {
@@ -778,7 +778,7 @@ TEST(TracingClientTest, DeleteObjectAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, GetObjectAcl) {
@@ -800,7 +800,7 @@ TEST(TracingClientTest, GetObjectAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, UpdateObjectAcl) {
@@ -822,7 +822,7 @@ TEST(TracingClientTest, UpdateObjectAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, PatchObjectAcl) {
@@ -846,7 +846,7 @@ TEST(TracingClientTest, PatchObjectAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, ListDefaultObjectAcl) {
@@ -868,7 +868,7 @@ TEST(TracingClientTest, ListDefaultObjectAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, CreateDefaultObjectAcl) {
@@ -890,7 +890,7 @@ TEST(TracingClientTest, CreateDefaultObjectAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, DeleteDefaultObjectAcl) {
@@ -912,7 +912,7 @@ TEST(TracingClientTest, DeleteDefaultObjectAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, GetDefaultObjectAcl) {
@@ -934,7 +934,7 @@ TEST(TracingClientTest, GetDefaultObjectAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, UpdateDefaultObjectAcl) {
@@ -956,7 +956,7 @@ TEST(TracingClientTest, UpdateDefaultObjectAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, PatchDefaultObjectAcl) {
@@ -980,7 +980,7 @@ TEST(TracingClientTest, PatchDefaultObjectAcl) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, GetServiceAccount) {
@@ -1002,7 +1002,7 @@ TEST(TracingClientTest, GetServiceAccount) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, ListHmacKeys) {
@@ -1024,7 +1024,7 @@ TEST(TracingClientTest, ListHmacKeys) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, CreateHmacKey) {
@@ -1046,7 +1046,7 @@ TEST(TracingClientTest, CreateHmacKey) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, DeleteHmacKey) {
@@ -1069,7 +1069,7 @@ TEST(TracingClientTest, DeleteHmacKey) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, GetHmacKey) {
@@ -1091,7 +1091,7 @@ TEST(TracingClientTest, GetHmacKey) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, UpdateHmacKey) {
@@ -1114,7 +1114,7 @@ TEST(TracingClientTest, UpdateHmacKey) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, SignBlob) {
@@ -1136,7 +1136,7 @@ TEST(TracingClientTest, SignBlob) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, ListNotifications) {
@@ -1158,7 +1158,7 @@ TEST(TracingClientTest, ListNotifications) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, CreateNotification) {
@@ -1180,7 +1180,7 @@ TEST(TracingClientTest, CreateNotification) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, GetNotification) {
@@ -1202,7 +1202,7 @@ TEST(TracingClientTest, GetNotification) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, DeleteNotification) {
@@ -1224,7 +1224,7 @@ TEST(TracingClientTest, DeleteNotification) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+                      "gl-cpp.status_code", static_cast<int>(code))))));
 }
 
 }  // namespace

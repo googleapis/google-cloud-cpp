@@ -73,7 +73,7 @@ TEST(ReaderConnectionTracing, WithError) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError,
                          PermanentError().message()),
           SpanHasAttributes(
-              OTelAttribute<std::int32_t>("gcloud.status_code", expected_code)),
+              OTelAttribute<std::int32_t>("gl-cpp.status_code", expected_code)),
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanHasEvents(
               AllOf(

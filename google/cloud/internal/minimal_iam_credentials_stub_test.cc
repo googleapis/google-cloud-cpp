@@ -290,7 +290,7 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenTracing) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST_F(MinimalIamCredentialsStubTest, SignBlobNoTracing) {
@@ -339,7 +339,7 @@ TEST_F(MinimalIamCredentialsStubTest, SignBlobTracing) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
