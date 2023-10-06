@@ -48,7 +48,7 @@ class StreamingWriteRpcTracing
   }
 
   void Cancel() override {
-    span_->AddEvent("cancel");
+    span_->AddEvent("gl-cpp.cancel");
     impl_->Cancel();
   }
 
@@ -63,7 +63,7 @@ class StreamingWriteRpcTracing
   }
 
   StatusOr<ResponseType> Close() override {
-    span_->AddEvent("close");
+    span_->AddEvent("gl-cpp.close");
     return EndSpan(*std::move(context_), *std::move(span_), impl_->Close());
   }
 

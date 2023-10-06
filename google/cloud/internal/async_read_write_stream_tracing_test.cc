@@ -18,6 +18,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -82,7 +83,7 @@ TEST(AsyncStreamingReadWriteRpcTracing, Cancel) {
       spans,
       ElementsAre(AllOf(
           SpanNamed("span"),
-          SpanEventsAre(EventNamed("cancel"),
+          SpanEventsAre(EventNamed("gl-cpp.cancel"),
                         EventNamed("test-only: underlying stream cancel")))));
 }
 
@@ -103,7 +104,7 @@ TEST(AsyncStreamingReadWriteRpcTracing, Start) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, ElementsAre(AllOf(SpanNamed("span"),
                                        SpanHasAttributes(OTelAttribute<bool>(
-                                           "gcloud.stream_started", true)))));
+                                           "gl-cpp.stream_started", true)))));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, Read) {
@@ -246,7 +247,7 @@ TEST(AsyncStreamingReadWriteRpcTracing, WritesDone) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, ElementsAre(AllOf(
                          SpanNamed("span"),
-                         SpanEventsAre(EventNamed("gcloud.writes_done")))));
+                         SpanEventsAre(EventNamed("gl-cpp.writes_done")))));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, Finish) {

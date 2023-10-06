@@ -70,7 +70,7 @@ TEST(AsyncStreamingReadRpcTracing, Cancel) {
       spans,
       ElementsAre(AllOf(
           SpanNamed("span"),
-          SpanEventsAre(EventNamed("cancel"),
+          SpanEventsAre(EventNamed("gl-cpp.cancel"),
                         EventNamed("test-only: underlying stream cancel")))));
 }
 
@@ -91,7 +91,7 @@ TEST(AsyncStreamingReadRpcTracing, Start) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, ElementsAre(AllOf(SpanNamed("span"),
                                        SpanHasAttributes(OTelAttribute<bool>(
-                                           "gcloud.stream_started", true)))));
+                                           "gl-cpp.stream_started", true)))));
 }
 
 TEST(AsyncStreamingReadRpcTracing, Read) {

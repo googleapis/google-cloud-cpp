@@ -74,9 +74,9 @@ TEST(StreamingWriteRpcTracingTest, Cancel) {
       spans,
       ElementsAre(
           AllOf(SpanNamed("span"),
-                SpanEventsAre(EventNamed("cancel"),
+                SpanEventsAre(EventNamed("gl-cpp.cancel"),
                               EventNamed("test-only: underlying stream cancel"),
-                              EventNamed("close")))));
+                              EventNamed("gl-cpp.close")))));
 }
 
 TEST(StreamingWriteRpcTracingTest, Write) {
@@ -121,7 +121,7 @@ TEST(StreamingWriteRpcTracingTest, Write) {
                         OTelAttribute<int>("message.id", 3),
                         OTelAttribute<bool>("message.is_last", true),
                         OTelAttribute<bool>("message.success", true))),
-              EventNamed("close")))));
+              EventNamed("gl-cpp.close")))));
 }
 
 TEST(StreamingWriteRpcTracingTest, Close) {

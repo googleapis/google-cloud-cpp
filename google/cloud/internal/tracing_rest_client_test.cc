@@ -257,10 +257,10 @@ TEST(TracingRestClient, WithRestContextDetails) {
                     OTelAttribute<std::int32_t>(sc::kNetHostPort, 32000))),
           AllOf(SpanNamed("SendRequest"),
                 SpanHasAttributes(
-                    OTelAttribute<bool>("gcloud-cpp.cached_connection", false)),
-                SpanHasEvents(EventNamed("curl.namelookup"),
-                              EventNamed("curl.connected"),
-                              EventNamed("curl.ssl.handshake"))),
+                    OTelAttribute<bool>("gl-cpp.cached_connection", false)),
+                SpanHasEvents(EventNamed("gl-cpp.curl.namelookup"),
+                              EventNamed("gl-cpp.curl.connected"),
+                              EventNamed("gl-cpp.curl.ssl.handshake"))),
           SpanNamed("Read"), SpanNamed("Read")));
 }
 
@@ -295,13 +295,14 @@ TEST(TracingRestClient, CachedConnection) {
   EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, UnorderedElementsAre(
-                         SpanNamed("HTTP/PUT"),
-                         AllOf(SpanNamed("SendRequest"),
-                               SpanHasAttributes(OTelAttribute<bool>(
-                                   "gcloud-cpp.cached_connection", true)),
-                               SpanHasEvents(EventNamed("curl.connected"))),
-                         SpanNamed("Read"), SpanNamed("Read")));
+  EXPECT_THAT(spans,
+              UnorderedElementsAre(
+                  SpanNamed("HTTP/PUT"),
+                  AllOf(SpanNamed("SendRequest"),
+                        SpanHasAttributes(OTelAttribute<bool>(
+                            "gl-cpp.cached_connection", true)),
+                        SpanHasEvents(EventNamed("gl-cpp.curl.connected"))),
+                  SpanNamed("Read"), SpanNamed("Read")));
 }
 
 #else

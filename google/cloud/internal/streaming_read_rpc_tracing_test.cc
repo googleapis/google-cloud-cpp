@@ -84,7 +84,7 @@ TEST(StreamingReadRpcTracingTest, Cancel) {
       spans,
       ElementsAre(AllOf(
           SpanNamed("span"),
-          SpanEventsAre(EventNamed("cancel"),
+          SpanEventsAre(EventNamed("gl-cpp.cancel"),
                         EventNamed("test-only: underlying stream cancel")))));
 }
 

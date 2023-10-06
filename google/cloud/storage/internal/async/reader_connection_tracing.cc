@@ -47,9 +47,9 @@ class AsyncReaderConnectionTracing
 
   void Cancel() override {
     auto scope = opentelemetry::trace::Scope(span_);
-    span_->AddEvent("Cancel", {
-                                  {sc::kThreadId, CurrentThreadId()},
-                              });
+    span_->AddEvent("gl-cpp.cancel", {
+                                         {sc::kThreadId, CurrentThreadId()},
+                                     });
     return impl_->Cancel();
   }
 
@@ -59,20 +59,21 @@ class AsyncReaderConnectionTracing
                                span = span_](auto f) -> ReadResponse {
       auto r = f.get();
       if (absl::holds_alternative<Status>(r)) {
-        span->AddEvent("Read", {
-                                   {sc::kMessageType, "RECEIVED"},
-                                   {sc::kMessageId, count},
-                                   {sc::kThreadId, CurrentThreadId()},
-                               });
+        span->AddEvent("gl-cpp.read", {
+                                          {sc::kMessageType, "RECEIVED"},
+                                          {sc::kMessageId, count},
+                                          {sc::kThreadId, CurrentThreadId()},
+                                      });
         return internal::EndSpan(*span, absl::get<Status>(std::move(r)));
       }
       auto const& payload = absl::get<storage_experimental::ReadPayload>(r);
-      span->AddEvent("Read", {
-                                 {sc::kMessageType, "RECEIVED"},
-                                 {sc::kMessageId, count},
-                                 {sc::kThreadId, CurrentThreadId()},
-                                 {"message.starting_offset", payload.offset()},
-                             });
+      span->AddEvent("gl-cpp.read",
+                     {
+                         {sc::kMessageType, "RECEIVED"},
+                         {sc::kMessageId, count},
+                         {sc::kThreadId, CurrentThreadId()},
+                         {"message.starting_offset", payload.offset()},
+                     });
       return r;
     });
   }

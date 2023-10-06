@@ -43,14 +43,14 @@ class AsyncStreamingWriteRpcTracing
   }
 
   void Cancel() override {
-    span_->AddEvent("cancel");
+    span_->AddEvent("gl-cpp.cancel");
     impl_->Cancel();
   }
 
   future<bool> Start() override {
     return impl_->Start().then([this](future<bool> f) {
       auto started = f.get();
-      span_->SetAttribute("gcloud.stream_started", started);
+      span_->SetAttribute("gl-cpp.stream_started", started);
       return started;
     });
   }
@@ -71,7 +71,7 @@ class AsyncStreamingWriteRpcTracing
 
   future<bool> WritesDone() override {
     return impl_->WritesDone().then([this](future<bool> f) {
-      span_->AddEvent("gcloud.writes_done");
+      span_->AddEvent("gl-cpp.writes_done");
       return f.get();
     });
   }

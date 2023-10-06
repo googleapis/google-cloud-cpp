@@ -43,7 +43,7 @@ class StreamingReadRpcTracing : public StreamingReadRpc<ResponseType> {
   ~StreamingReadRpcTracing() override { (void)End(Status()); }
 
   void Cancel() override {
-    span_->AddEvent("cancel");
+    span_->AddEvent("gl-cpp.cancel");
     impl_->Cancel();
   }
 

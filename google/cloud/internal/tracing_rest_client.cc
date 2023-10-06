@@ -102,15 +102,16 @@ StatusOr<std::unique_ptr<RestResponse>> EndStartSpan(
     std::chrono::system_clock::time_point start, RestContext& context,
     StatusOr<std::unique_ptr<RestResponse>> request_result) {
   if (context.namelookup_time()) {
-    span.AddEvent("curl.namelookup", start + *context.namelookup_time());
+    span.AddEvent("gl-cpp.curl.namelookup", start + *context.namelookup_time());
   }
   if (context.connect_time()) {
-    span.AddEvent("curl.connected", start + *context.connect_time());
-    span.SetAttribute("gcloud-cpp.cached_connection",
+    span.AddEvent("gl-cpp.curl.connected", start + *context.connect_time());
+    span.SetAttribute("gl-cpp.cached_connection",
                       *context.connect_time() == std::chrono::microseconds(0));
   }
   if (context.appconnect_time()) {
-    span.AddEvent("curl.ssl.handshake", start + *context.appconnect_time());
+    span.AddEvent("gl-cpp.curl.ssl.handshake",
+                  start + *context.appconnect_time());
   }
   return internal::EndSpan(span, std::move(request_result));
 }
