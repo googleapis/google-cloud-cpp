@@ -18,7 +18,9 @@
 #include "google/cloud/storage/version.h"
 #include <chrono>
 #include <iosfwd>
+#include <string>
 #include <tuple>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -38,16 +40,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 struct BucketAutoclass {
   explicit BucketAutoclass(bool e) : enabled(e) {}
+  explicit BucketAutoclass(bool e, std::string tsc)
+      : enabled(e), terminal_storage_class(std::move(tsc)) {}
   explicit BucketAutoclass(bool e, std::chrono::system_clock::time_point tp)
       : enabled(e), toggle_time(tp) {}
+  explicit BucketAutoclass(bool e, std::chrono::system_clock::time_point tp,
+                           std::string tsc,
+                           std::chrono::system_clock::time_point tscu)
+      : enabled(e),
+        toggle_time(tp),
+        terminal_storage_class(std::move(tsc)),
+        terminal_storage_class_update(tscu) {}
 
   bool enabled;
   std::chrono::system_clock::time_point toggle_time;
+  std::string terminal_storage_class;
+  std::chrono::system_clock::time_point terminal_storage_class_update;
 };
 
 inline bool operator==(BucketAutoclass const& lhs, BucketAutoclass const& rhs) {
-  return std::tie(lhs.enabled, lhs.toggle_time) ==
-         std::tie(rhs.enabled, rhs.toggle_time);
+  return std::tie(lhs.enabled, lhs.toggle_time, lhs.terminal_storage_class,
+                  lhs.terminal_storage_class_update) ==
+         std::tie(rhs.enabled, rhs.toggle_time, rhs.terminal_storage_class,
+                  rhs.terminal_storage_class_update);
 }
 
 inline bool operator!=(BucketAutoclass const& lhs, BucketAutoclass const& rhs) {

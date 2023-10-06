@@ -199,6 +199,10 @@ google::storage::v2::Bucket::Autoclass ToProto(
   result.set_enabled(rhs.enabled);
   *result.mutable_toggle_time() =
       google::cloud::internal::ToProtoTimestamp(rhs.toggle_time);
+  result.set_terminal_storage_class(rhs.terminal_storage_class);
+  *result.mutable_terminal_storage_class_update_time() =
+      google::cloud::internal::ToProtoTimestamp(
+          rhs.terminal_storage_class_update);
   return result;
 }
 
@@ -208,6 +212,12 @@ storage::BucketAutoclass FromProto(
   if (rhs.has_toggle_time()) {
     result.toggle_time =
         google::cloud::internal::ToChronoTimePoint(rhs.toggle_time());
+  }
+  result.terminal_storage_class = rhs.terminal_storage_class();
+  if (rhs.has_terminal_storage_class_update_time()) {
+    result.terminal_storage_class_update =
+        google::cloud::internal::ToChronoTimePoint(
+            rhs.terminal_storage_class_update_time());
   }
   return result;
 }

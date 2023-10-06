@@ -255,8 +255,11 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetAcl() {
 
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetAutoclass(
     BucketAutoclass const& v) {
-  impl_.AddSubPatch(
-      "autoclass", internal::PatchBuilder().SetBoolField("enabled", v.enabled));
+  auto builder = internal::PatchBuilder().SetBoolField("enabled", v.enabled);
+  if (!v.terminal_storage_class.empty()) {
+    builder.SetStringField("terminalStorageClass", v.terminal_storage_class);
+  }
+  impl_.AddSubPatch("autoclass", std::move(builder));
   return *this;
 }
 
