@@ -318,11 +318,11 @@ google::storage::v2::GetObjectRequest ToProto(
 
 StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
     storage::internal::ReadObjectRangeRequest const& request) {
-  // With the REST API this condition was detected by the server as an error,
-  // generally we prefer the server to detect errors because its answers are
-  // authoritative. In this case, the server cannot: with gRPC '0' is the same
-  // as "not set" and the server would send back the full file, which was
-  // unlikely to be the customer's intent.
+  // With the REST API this condition was detected by the server as an error.
+  // Generally we prefer the server to detect errors because its answers are
+  // authoritative, but in this case it cannot. With gRPC, '0' is the same as
+  // "not set" so the server would send back the full file, and that is unlikely
+  // to be the customer's intent.
   if (request.HasOption<storage::ReadLast>() &&
       request.GetOption<storage::ReadLast>().value() == 0) {
     return internal::OutOfRangeError(
