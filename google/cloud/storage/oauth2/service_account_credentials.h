@@ -294,8 +294,7 @@ class ServiceAccountCredentials : public Credentials {
                     "The current_credentials cannot sign blobs for " +
                         signing_account.value());
     }
-    return internal::SignStringWithPem(blob, info_.private_key,
-                                       JwtSigningAlgorithms::RS256);
+    return internal::SignStringWithPem(blob, info_.private_key);
   }
 
   std::string AccountEmail() const override { return info_.client_email; }

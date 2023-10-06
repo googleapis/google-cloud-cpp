@@ -60,10 +60,7 @@ std::string Base64Encode(absl::Span<std::uint8_t const> bytes) {
 }
 
 StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
-    std::string const& str, std::string const& pem_contents,
-    storage::oauth2::JwtSigningAlgorithms alg) {
-  using ::google::cloud::storage::oauth2::JwtSigningAlgorithms;
-
+    std::string const& str, std::string const& pem_contents) {
   auto digest_ctx = GetDigestCtx();
   if (!digest_ctx) {
     return Status(StatusCode::kInvalidArgument,
@@ -71,12 +68,7 @@ StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
                   "could not create context for OpenSSL digest. ");
   }
 
-  EVP_MD const* digest_type = nullptr;
-  switch (alg) {
-    case JwtSigningAlgorithms::RS256:
-      digest_type = EVP_sha256();
-      break;
-  }
+  EVP_MD const* digest_type = EVP_sha256();
   if (digest_type == nullptr) {
     return Status(StatusCode::kInvalidArgument,
                   "Invalid ServiceAccountCredentials: "
