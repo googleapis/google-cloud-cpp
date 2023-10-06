@@ -152,6 +152,75 @@ RecaptchaEnterpriseServiceLogging::GetMetrics(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceLogging::CreateFirewallPolicy(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::recaptchaenterprise::v1::
+                 CreateFirewallPolicyRequest const& request) {
+        return child_->CreateFirewallPolicy(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceLogging::ListFirewallPolicies(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::recaptchaenterprise::v1::
+                 ListFirewallPoliciesRequest const& request) {
+        return child_->ListFirewallPolicies(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceLogging::GetFirewallPolicy(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::recaptchaenterprise::v1::
+                 GetFirewallPolicyRequest const& request) {
+        return child_->GetFirewallPolicy(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceLogging::UpdateFirewallPolicy(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::recaptchaenterprise::v1::
+                 UpdateFirewallPolicyRequest const& request) {
+        return child_->UpdateFirewallPolicy(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status RecaptchaEnterpriseServiceLogging::DeleteFirewallPolicy(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::recaptchaenterprise::v1::
+                 DeleteFirewallPolicyRequest const& request) {
+        return child_->DeleteFirewallPolicy(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 RecaptchaEnterpriseServiceLogging::ListRelatedAccountGroups(

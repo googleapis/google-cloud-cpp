@@ -236,6 +236,30 @@ class RecaptchaEnterpriseServiceConnection {
   virtual StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request);
 
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+  CreateFirewallPolicy(
+      google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+  ListFirewallPolicies(
+      google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest
+          request);
+
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+  GetFirewallPolicy(
+      google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+  UpdateFirewallPolicy(
+      google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+          request);
+
+  virtual Status DeleteFirewallPolicy(
+      google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+          request);
+
   virtual StreamRange<
       google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
   ListRelatedAccountGroups(

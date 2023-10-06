@@ -91,6 +91,16 @@ HubServiceMetadata::AsyncDeleteHub(
   return child_->AsyncDeleteHub(cq, std::move(context), request);
 }
 
+StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
+HubServiceMetadata::ListHubSpokes(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListHubSpokes(context, request);
+}
+
 StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
 HubServiceMetadata::ListSpokes(
     grpc::ClientContext& context,
@@ -131,6 +141,28 @@ HubServiceMetadata::AsyncUpdateSpoke(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+HubServiceMetadata::AsyncRejectHubSpoke(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+        request) {
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRejectHubSpoke(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+HubServiceMetadata::AsyncAcceptHubSpoke(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+        request) {
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncAcceptHubSpoke(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 HubServiceMetadata::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -138,6 +170,62 @@ HubServiceMetadata::AsyncDeleteSpoke(
   SetMetadata(*context,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSpoke(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
+HubServiceMetadata::GetRouteTable(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetRouteTable(context, request);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::Route>
+HubServiceMetadata::GetRoute(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::GetRouteRequest const& request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetRoute(context, request);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse>
+HubServiceMetadata::ListRoutes(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::ListRoutesRequest const& request) {
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListRoutes(context, request);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::ListRouteTablesResponse>
+HubServiceMetadata::ListRouteTables(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListRouteTables(context, request);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::Group>
+HubServiceMetadata::GetGroup(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::GetGroupRequest const& request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetGroup(context, request);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse>
+HubServiceMetadata::ListGroups(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::ListGroupsRequest const& request) {
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListGroups(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

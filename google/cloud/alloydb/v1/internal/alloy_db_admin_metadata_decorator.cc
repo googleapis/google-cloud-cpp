@@ -277,6 +277,25 @@ AlloyDBAdminMetadata::ListSupportedDatabaseFlags(
   return child_->ListSupportedDatabaseFlags(context, request);
 }
 
+StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+AlloyDBAdminMetadata::GenerateClientCertificate(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->GenerateClientCertificate(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
+AlloyDBAdminMetadata::GetConnectionInfo(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->GetConnectionInfo(context, request);
+}
+
 StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
 AlloyDBAdminMetadata::ListUsers(
     grpc::ClientContext& context,

@@ -156,6 +156,75 @@ DefaultRecaptchaEnterpriseServiceStub::GetMetrics(
   return response;
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+DefaultRecaptchaEnterpriseServiceStub::CreateFirewallPolicy(
+    grpc::ClientContext& client_context,
+    google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+        request) {
+  google::cloud::recaptchaenterprise::v1::FirewallPolicy response;
+  auto status =
+      grpc_stub_->CreateFirewallPolicy(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse>
+DefaultRecaptchaEnterpriseServiceStub::ListFirewallPolicies(
+    grpc::ClientContext& client_context,
+    google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const&
+        request) {
+  google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse response;
+  auto status =
+      grpc_stub_->ListFirewallPolicies(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+DefaultRecaptchaEnterpriseServiceStub::GetFirewallPolicy(
+    grpc::ClientContext& client_context,
+    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+        request) {
+  google::cloud::recaptchaenterprise::v1::FirewallPolicy response;
+  auto status =
+      grpc_stub_->GetFirewallPolicy(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+DefaultRecaptchaEnterpriseServiceStub::UpdateFirewallPolicy(
+    grpc::ClientContext& client_context,
+    google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+        request) {
+  google::cloud::recaptchaenterprise::v1::FirewallPolicy response;
+  auto status =
+      grpc_stub_->UpdateFirewallPolicy(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultRecaptchaEnterpriseServiceStub::DeleteFirewallPolicy(
+    grpc::ClientContext& client_context,
+    google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteFirewallPolicy(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 StatusOr<
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 DefaultRecaptchaEnterpriseServiceStub::ListRelatedAccountGroups(

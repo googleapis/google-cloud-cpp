@@ -154,6 +154,16 @@ Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ListSupportedDatabaseFlags(
   return Idempotency::kIdempotent;
 }
 
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::GenerateClientCertificate(
+    google::cloud::alloydb::v1::GenerateClientCertificateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::GetConnectionInfo(
+    google::cloud::alloydb::v1::GetConnectionInfoRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ListUsers(
     google::cloud::alloydb::v1::ListUsersRequest) {  // NOLINT
   return Idempotency::kIdempotent;

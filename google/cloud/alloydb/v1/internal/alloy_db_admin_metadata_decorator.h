@@ -163,6 +163,17 @@ class AlloyDBAdminMetadata : public AlloyDBAdminStub {
       google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
           request) override;
 
+  StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+  GenerateClientCertificate(
+      grpc::ClientContext& context,
+      google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+          request) override;
+
+  StatusOr<google::cloud::alloydb::v1::ConnectionInfo> GetConnectionInfo(
+      grpc::ClientContext& context,
+      google::cloud::alloydb::v1::GetConnectionInfoRequest const& request)
+      override;
+
   StatusOr<google::cloud::alloydb::v1::ListUsersResponse> ListUsers(
       grpc::ClientContext& context,
       google::cloud::alloydb::v1::ListUsersRequest const& request) override;

@@ -25,6 +25,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
 
@@ -60,7 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.Intent]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L148}
 ///
 class IntentsClient {
  public:
@@ -114,8 +115,8 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
-  /// [google.cloud.dialogflow.cx.v3.ListIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L242}
+  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.ListIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L288}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Intent> ListIntents(
@@ -153,8 +154,8 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
-  /// [google.cloud.dialogflow.cx.v3.ListIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L242}
+  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.ListIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L288}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Intent> ListIntents(
@@ -180,8 +181,8 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L289}
-  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
+  /// [google.cloud.dialogflow.cx.v3.GetIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L335}
+  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L148}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> GetIntent(
@@ -210,8 +211,8 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L289}
-  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
+  /// [google.cloud.dialogflow.cx.v3.GetIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L335}
+  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L148}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> GetIntent(
@@ -242,8 +243,8 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L315}
-  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
+  /// [google.cloud.dialogflow.cx.v3.CreateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L361}
+  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L148}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> CreateIntent(
@@ -278,8 +279,8 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L315}
-  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
+  /// [google.cloud.dialogflow.cx.v3.CreateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L361}
+  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L148}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> CreateIntent(
@@ -310,8 +311,8 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
-  /// [google.cloud.dialogflow.cx.v3.UpdateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L342}
+  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.UpdateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L388}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> UpdateIntent(
@@ -345,8 +346,8 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
-  /// [google.cloud.dialogflow.cx.v3.UpdateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L342}
+  /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.UpdateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L388}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> UpdateIntent(
@@ -374,7 +375,7 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L364}
+  /// [google.cloud.dialogflow.cx.v3.DeleteIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L410}
   ///
   // clang-format on
   Status DeleteIntent(std::string const& name, Options opts = {});
@@ -404,11 +405,109 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L364}
+  /// [google.cloud.dialogflow.cx.v3.DeleteIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L410}
   ///
   // clang-format on
   Status DeleteIntent(
       google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Imports the specified intents into the agent.
+  ///
+  /// This method is a [long-running
+  /// operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation).
+  /// The returned `Operation` type has the following method-specific fields:
+  ///
+  /// - `metadata`:
+  /// [ImportIntentsMetadata][google.cloud.dialogflow.cx.v3.ImportIntentsMetadata]
+  /// - `response`:
+  /// [ImportIntentsResponse][google.cloud.dialogflow.cx.v3.ImportIntentsResponse]
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.cx.v3.ImportIntentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.cx.v3.ImportIntentsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.ImportIntentsMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L531}
+  /// [google.cloud.dialogflow.cx.v3.ImportIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L438}
+  /// [google.cloud.dialogflow.cx.v3.ImportIntentsResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L503}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
+  ImportIntents(
+      google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Exports the selected intents.
+  ///
+  /// This method is a [long-running
+  /// operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation).
+  /// The returned `Operation` type has the following method-specific fields:
+  ///
+  /// - `metadata`:
+  /// [ExportIntentsMetadata][google.cloud.dialogflow.cx.v3.ExportIntentsMetadata]
+  /// - `response`:
+  /// [ExportIntentsResponse][google.cloud.dialogflow.cx.v3.ExportIntentsResponse]
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.cx.v3.ExportIntentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.cx.v3.ExportIntentsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.ExportIntentsMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L609}
+  /// [google.cloud.dialogflow.cx.v3.ExportIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L535}
+  /// [google.cloud.dialogflow.cx.v3.ExportIntentsResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L591}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
+  ExportIntents(
+      google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request,
       Options opts = {});
 
  private:

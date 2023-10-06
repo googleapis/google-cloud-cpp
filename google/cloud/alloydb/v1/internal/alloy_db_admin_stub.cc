@@ -407,6 +407,33 @@ DefaultAlloyDBAdminStub::ListSupportedDatabaseFlags(
   return response;
 }
 
+StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+DefaultAlloyDBAdminStub::GenerateClientCertificate(
+    grpc::ClientContext& client_context,
+    google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+        request) {
+  google::cloud::alloydb::v1::GenerateClientCertificateResponse response;
+  auto status = grpc_stub_->GenerateClientCertificate(&client_context, request,
+                                                      &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
+DefaultAlloyDBAdminStub::GetConnectionInfo(
+    grpc::ClientContext& client_context,
+    google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
+  google::cloud::alloydb::v1::ConnectionInfo response;
+  auto status =
+      grpc_stub_->GetConnectionInfo(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
 DefaultAlloyDBAdminStub::ListUsers(
     grpc::ClientContext& client_context,

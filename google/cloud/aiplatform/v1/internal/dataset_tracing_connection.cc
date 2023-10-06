@@ -97,6 +97,58 @@ DatasetServiceTracingConnection::ExportData(
   return internal::EndSpan(std::move(span), child_->ExportData(request));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+DatasetServiceTracingConnection::CreateDatasetVersion(
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::CreateDatasetVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDatasetVersion(request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceTracingConnection::DeleteDatasetVersion(
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::DeleteDatasetVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDatasetVersion(request));
+}
+
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceTracingConnection::GetDatasetVersion(
+    google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::GetDatasetVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDatasetVersion(request));
+}
+
+StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceTracingConnection::ListDatasetVersions(
+    google::cloud::aiplatform::v1::ListDatasetVersionsRequest request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::ListDatasetVersions");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListDatasetVersions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::DatasetVersion>(std::move(span),
+                                                     std::move(sr));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+DatasetServiceTracingConnection::RestoreDatasetVersion(
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::RestoreDatasetVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RestoreDatasetVersion(request));
+}
+
 StreamRange<google::cloud::aiplatform::v1::DataItem>
 DatasetServiceTracingConnection::ListDataItems(
     google::cloud::aiplatform::v1::ListDataItemsRequest request) {

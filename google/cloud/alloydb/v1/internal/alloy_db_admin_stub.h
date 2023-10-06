@@ -161,6 +161,18 @@ class AlloyDBAdminStub {
       google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
           request) = 0;
 
+  virtual StatusOr<
+      google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+  GenerateClientCertificate(
+      grpc::ClientContext& context,
+      google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
+  GetConnectionInfo(
+      grpc::ClientContext& context,
+      google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::alloydb::v1::ListUsersResponse> ListUsers(
       grpc::ClientContext& context,
       google::cloud::alloydb::v1::ListUsersRequest const& request) = 0;
@@ -325,6 +337,17 @@ class DefaultAlloyDBAdminStub : public AlloyDBAdminStub {
       grpc::ClientContext& client_context,
       google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
           request) override;
+
+  StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+  GenerateClientCertificate(
+      grpc::ClientContext& client_context,
+      google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+          request) override;
+
+  StatusOr<google::cloud::alloydb::v1::ConnectionInfo> GetConnectionInfo(
+      grpc::ClientContext& client_context,
+      google::cloud::alloydb::v1::GetConnectionInfoRequest const& request)
+      override;
 
   StatusOr<google::cloud::alloydb::v1::ListUsersResponse> ListUsers(
       grpc::ClientContext& client_context,

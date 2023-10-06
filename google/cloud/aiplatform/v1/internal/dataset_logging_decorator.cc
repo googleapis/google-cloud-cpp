@@ -130,6 +130,81 @@ DatasetServiceLogging::AsyncExportData(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceLogging::AsyncCreateDatasetVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
+                 request) {
+        return child_->AsyncCreateDatasetVersion(cq, std::move(context),
+                                                 request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceLogging::AsyncDeleteDatasetVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
+                 request) {
+        return child_->AsyncDeleteDatasetVersion(cq, std::move(context),
+                                                 request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceLogging::GetDatasetVersion(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::aiplatform::v1::GetDatasetVersionRequest const&
+                 request) {
+        return child_->GetDatasetVersion(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
+DatasetServiceLogging::ListDatasetVersions(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::aiplatform::v1::ListDatasetVersionsRequest const&
+                 request) {
+        return child_->ListDatasetVersions(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceLogging::AsyncRestoreDatasetVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+                 request) {
+        return child_->AsyncRestoreDatasetVersion(cq, std::move(context),
+                                                  request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
 DatasetServiceLogging::ListDataItems(
     grpc::ClientContext& context,

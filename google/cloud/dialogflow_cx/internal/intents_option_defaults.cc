@@ -53,6 +53,16 @@ Options IntentsDefaultOptions(std::string const& location, Options options) {
             std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
+  if (!options.has<dialogflow_cx::IntentsPollingPolicyOption>()) {
+    options.set<dialogflow_cx::IntentsPollingPolicyOption>(
+        GenericPollingPolicy<dialogflow_cx::IntentsRetryPolicyOption::Type,
+                             dialogflow_cx::IntentsBackoffPolicyOption::Type>(
+            options.get<dialogflow_cx::IntentsRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
+  }
   if (!options.has<dialogflow_cx::IntentsConnectionIdempotencyPolicyOption>()) {
     options.set<dialogflow_cx::IntentsConnectionIdempotencyPolicyOption>(
         dialogflow_cx::MakeDefaultIntentsConnectionIdempotencyPolicy());

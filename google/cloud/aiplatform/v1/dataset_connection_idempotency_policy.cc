@@ -69,6 +69,31 @@ Idempotency DatasetServiceConnectionIdempotencyPolicy::ExportData(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DatasetServiceConnectionIdempotencyPolicy::CreateDatasetVersion(
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteDatasetVersion(
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DatasetServiceConnectionIdempotencyPolicy::GetDatasetVersion(
+    google::cloud::aiplatform::v1::GetDatasetVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DatasetServiceConnectionIdempotencyPolicy::ListDatasetVersions(
+    google::cloud::aiplatform::v1::ListDatasetVersionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DatasetServiceConnectionIdempotencyPolicy::RestoreDatasetVersion(
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency DatasetServiceConnectionIdempotencyPolicy::ListDataItems(
     google::cloud::aiplatform::v1::ListDataItemsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

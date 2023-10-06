@@ -59,12 +59,23 @@ struct IntentsConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-dialogflow_cx-options
+ */
+struct IntentsPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to Intents.
  *
  * @ingroup google-cloud-dialogflow_cx-options
  */
 using IntentsPolicyOptionList =
     OptionList<IntentsRetryPolicyOption, IntentsBackoffPolicyOption,
+               IntentsPollingPolicyOption,
                IntentsConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

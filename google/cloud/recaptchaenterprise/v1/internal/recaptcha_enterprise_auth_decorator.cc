@@ -123,6 +123,55 @@ RecaptchaEnterpriseServiceAuth::GetMetrics(
   return child_->GetMetrics(context, request);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceAuth::CreateFirewallPolicy(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateFirewallPolicy(context, request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceAuth::ListFirewallPolicies(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListFirewallPolicies(context, request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceAuth::GetFirewallPolicy(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetFirewallPolicy(context, request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceAuth::UpdateFirewallPolicy(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateFirewallPolicy(context, request);
+}
+
+Status RecaptchaEnterpriseServiceAuth::DeleteFirewallPolicy(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFirewallPolicy(context, request);
+}
+
 StatusOr<
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 RecaptchaEnterpriseServiceAuth::ListRelatedAccountGroups(

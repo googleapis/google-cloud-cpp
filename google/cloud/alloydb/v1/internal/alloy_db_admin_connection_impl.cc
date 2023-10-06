@@ -771,6 +771,37 @@ AlloyDBAdminConnectionImpl::ListSupportedDatabaseFlags(
       });
 }
 
+StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+AlloyDBAdminConnectionImpl::GenerateClientCertificate(
+    google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateClientCertificate(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+                 request) {
+        return stub_->GenerateClientCertificate(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
+AlloyDBAdminConnectionImpl::GetConnectionInfo(
+    google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetConnectionInfo(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
+        return stub_->GetConnectionInfo(context, request);
+      },
+      request, __func__);
+}
+
 StreamRange<google::cloud::alloydb::v1::User>
 AlloyDBAdminConnectionImpl::ListUsers(
     google::cloud::alloydb::v1::ListUsersRequest request) {

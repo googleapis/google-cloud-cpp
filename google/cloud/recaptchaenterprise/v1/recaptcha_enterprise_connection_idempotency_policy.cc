@@ -90,6 +90,40 @@ Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::GetMetrics(
 }
 
 Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::CreateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::
+        CreateFirewallPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::
+        ListFirewallPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::GetFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::UpdateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::
+        UpdateFirewallPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::DeleteFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::
+        DeleteFirewallPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
 RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListRelatedAccountGroups(
     google::cloud::recaptchaenterprise::v1::
         ListRelatedAccountGroupsRequest) {  // NOLINT

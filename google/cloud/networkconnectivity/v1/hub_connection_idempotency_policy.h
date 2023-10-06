@@ -51,6 +51,9 @@ class HubServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteHub(
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request);
 
+  virtual google::cloud::Idempotency ListHubSpokes(
+      google::cloud::networkconnectivity::v1::ListHubSpokesRequest request);
+
   virtual google::cloud::Idempotency ListSpokes(
       google::cloud::networkconnectivity::v1::ListSpokesRequest request);
 
@@ -65,9 +68,36 @@ class HubServiceConnectionIdempotencyPolicy {
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
           request);
 
+  virtual google::cloud::Idempotency RejectHubSpoke(
+      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+          request);
+
+  virtual google::cloud::Idempotency AcceptHubSpoke(
+      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+          request);
+
   virtual google::cloud::Idempotency DeleteSpoke(
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
           request);
+
+  virtual google::cloud::Idempotency GetRouteTable(
+      google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetRoute(
+      google::cloud::networkconnectivity::v1::GetRouteRequest const& request);
+
+  virtual google::cloud::Idempotency ListRoutes(
+      google::cloud::networkconnectivity::v1::ListRoutesRequest request);
+
+  virtual google::cloud::Idempotency ListRouteTables(
+      google::cloud::networkconnectivity::v1::ListRouteTablesRequest request);
+
+  virtual google::cloud::Idempotency GetGroup(
+      google::cloud::networkconnectivity::v1::GetGroupRequest const& request);
+
+  virtual google::cloud::Idempotency ListGroups(
+      google::cloud::networkconnectivity::v1::ListGroupsRequest request);
 };
 
 std::unique_ptr<HubServiceConnectionIdempotencyPolicy>

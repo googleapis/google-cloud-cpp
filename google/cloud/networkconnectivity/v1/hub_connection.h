@@ -204,6 +204,10 @@ class HubServiceConnection {
   DeleteHub(
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request);
 
+  virtual StreamRange<google::cloud::networkconnectivity::v1::Spoke>
+  ListHubSpokes(
+      google::cloud::networkconnectivity::v1::ListHubSpokesRequest request);
+
   virtual StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
       google::cloud::networkconnectivity::v1::ListSpokesRequest request);
 
@@ -219,9 +223,42 @@ class HubServiceConnection {
                   request);
 
   virtual future<
+      StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+  RejectHubSpoke(
+      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+  AcceptHubSpoke(
+      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+          request);
+
+  virtual future<
       StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
                   request);
+
+  virtual StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
+  GetRouteTable(
+      google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
+      google::cloud::networkconnectivity::v1::GetRouteRequest const& request);
+
+  virtual StreamRange<google::cloud::networkconnectivity::v1::Route> ListRoutes(
+      google::cloud::networkconnectivity::v1::ListRoutesRequest request);
+
+  virtual StreamRange<google::cloud::networkconnectivity::v1::RouteTable>
+  ListRouteTables(
+      google::cloud::networkconnectivity::v1::ListRouteTablesRequest request);
+
+  virtual StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
+      google::cloud::networkconnectivity::v1::GetGroupRequest const& request);
+
+  virtual StreamRange<google::cloud::networkconnectivity::v1::Group> ListGroups(
+      google::cloud::networkconnectivity::v1::ListGroupsRequest request);
 };
 
 /**

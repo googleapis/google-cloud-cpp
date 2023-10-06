@@ -158,6 +158,93 @@ DatasetServiceClient::ExportData(
   return connection_->ExportData(request);
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+DatasetServiceClient::CreateDatasetVersion(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::CreateDatasetVersionRequest request;
+  request.set_parent(parent);
+  *request.mutable_dataset_version() = dataset_version;
+  return connection_->CreateDatasetVersion(request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+DatasetServiceClient::CreateDatasetVersion(
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDatasetVersion(request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceClient::DeleteDatasetVersion(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteDatasetVersionRequest request;
+  request.set_name(name);
+  return connection_->DeleteDatasetVersion(request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceClient::DeleteDatasetVersion(
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDatasetVersion(request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceClient::GetDatasetVersion(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::GetDatasetVersionRequest request;
+  request.set_name(name);
+  return connection_->GetDatasetVersion(request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceClient::GetDatasetVersion(
+    google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDatasetVersion(request);
+}
+
+StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceClient::ListDatasetVersions(std::string const& parent,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::ListDatasetVersionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListDatasetVersions(request);
+}
+
+StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceClient::ListDatasetVersions(
+    google::cloud::aiplatform::v1::ListDatasetVersionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDatasetVersions(std::move(request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+DatasetServiceClient::RestoreDatasetVersion(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::RestoreDatasetVersionRequest request;
+  request.set_name(name);
+  return connection_->RestoreDatasetVersion(request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+DatasetServiceClient::RestoreDatasetVersion(
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreDatasetVersion(request);
+}
+
 StreamRange<google::cloud::aiplatform::v1::DataItem>
 DatasetServiceClient::ListDataItems(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

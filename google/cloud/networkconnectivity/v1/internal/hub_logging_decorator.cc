@@ -100,6 +100,18 @@ HubServiceLogging::AsyncDeleteHub(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
+HubServiceLogging::ListHubSpokes(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
+                 request) { return child_->ListHubSpokes(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
 HubServiceLogging::ListSpokes(
     grpc::ClientContext& context,
@@ -153,6 +165,40 @@ HubServiceLogging::AsyncUpdateSpoke(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+HubServiceLogging::AsyncRejectHubSpoke(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+              request) {
+        return child_->AsyncRejectHubSpoke(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+HubServiceLogging::AsyncAcceptHubSpoke(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+              request) {
+        return child_->AsyncAcceptHubSpoke(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -165,6 +211,75 @@ HubServiceLogging::AsyncDeleteSpoke(
         return child_->AsyncDeleteSpoke(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
+HubServiceLogging::GetRouteTable(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
+                 request) { return child_->GetRouteTable(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::Route>
+HubServiceLogging::GetRoute(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::GetRouteRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::networkconnectivity::v1::GetRouteRequest const&
+                 request) { return child_->GetRoute(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse>
+HubServiceLogging::ListRoutes(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::ListRoutesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::networkconnectivity::v1::ListRoutesRequest const&
+                 request) { return child_->ListRoutes(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::ListRouteTablesResponse>
+HubServiceLogging::ListRouteTables(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
+              request) { return child_->ListRouteTables(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::Group>
+HubServiceLogging::GetGroup(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::GetGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::networkconnectivity::v1::GetGroupRequest const&
+                 request) { return child_->GetGroup(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse>
+HubServiceLogging::ListGroups(
+    grpc::ClientContext& context,
+    google::cloud::networkconnectivity::v1::ListGroupsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::networkconnectivity::v1::ListGroupsRequest const&
+                 request) { return child_->ListGroups(context, request); },
+      context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

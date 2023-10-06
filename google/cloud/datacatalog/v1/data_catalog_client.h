@@ -263,7 +263,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.CreateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L770}
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1512}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1643}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
@@ -321,7 +321,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.CreateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L770}
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1512}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1643}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
@@ -346,7 +346,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1512}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1643}
   /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L810}
   ///
   // clang-format on
@@ -372,7 +372,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1512}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1643}
   /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L810}
   ///
   // clang-format on
@@ -403,7 +403,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1512}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1643}
   /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L810}
   ///
   // clang-format on
@@ -434,7 +434,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1512}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1643}
   /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L796}
   ///
   // clang-format on
@@ -470,7 +470,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1512}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1643}
   /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L796}
   ///
   // clang-format on
@@ -506,7 +506,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1512}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1643}
   /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L796}
   ///
   // clang-format on
@@ -602,7 +602,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1512}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1643}
   /// [google.cloud.datacatalog.v1.ListEntryGroupsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L840}
   ///
   // clang-format on
@@ -641,7 +641,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1512}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1643}
   /// [google.cloud.datacatalog.v1.ListEntryGroupsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L840}
   ///
   // clang-format on
@@ -1028,7 +1028,7 @@ class DataCatalogClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.DataCatalog.SearchCatalog]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L75}
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1032}
-  /// [google.cloud.datacatalog.v1.ListEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1876}
+  /// [google.cloud.datacatalog.v1.ListEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2007}
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::v1::Entry> ListEntries(
@@ -1072,7 +1072,7 @@ class DataCatalogClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.DataCatalog.SearchCatalog]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L75}
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1032}
-  /// [google.cloud.datacatalog.v1.ListEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1876}
+  /// [google.cloud.datacatalog.v1.ListEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2007}
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::v1::Entry> ListEntries(
@@ -1107,8 +1107,8 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1032}
-  /// [google.cloud.datacatalog.v1.EntryOverview]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1481}
-  /// [google.cloud.datacatalog.v1.ModifyEntryOverviewRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2017}
+  /// [google.cloud.datacatalog.v1.EntryOverview]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1612}
+  /// [google.cloud.datacatalog.v1.ModifyEntryOverviewRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2148}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::EntryOverview> ModifyEntryOverview(
@@ -1142,9 +1142,9 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Contacts]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1493}
+  /// [google.cloud.datacatalog.v1.Contacts]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1624}
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1032}
-  /// [google.cloud.datacatalog.v1.ModifyEntryContactsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2032}
+  /// [google.cloud.datacatalog.v1.ModifyEntryContactsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2163}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::Contacts> ModifyEntryContacts(
@@ -1181,7 +1181,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1540}
+  /// [google.cloud.datacatalog.v1.CreateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1671}
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L144}
   ///
   // clang-format on
@@ -1218,7 +1218,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1540}
+  /// [google.cloud.datacatalog.v1.CreateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1671}
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L144}
   ///
   // clang-format on
@@ -1244,7 +1244,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.GetTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1563}
+  /// [google.cloud.datacatalog.v1.GetTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1694}
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L144}
   ///
   // clang-format on
@@ -1274,7 +1274,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.GetTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1563}
+  /// [google.cloud.datacatalog.v1.GetTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1694}
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L144}
   ///
   // clang-format on
@@ -1309,7 +1309,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L144}
-  /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1575}
+  /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1706}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> UpdateTagTemplate(
@@ -1352,7 +1352,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L144}
-  /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1575}
+  /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1706}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> UpdateTagTemplate(
@@ -1391,7 +1391,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L144}
-  /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1575}
+  /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1706}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> UpdateTagTemplate(
@@ -1421,7 +1421,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1593}
+  /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1724}
   ///
   // clang-format on
   Status DeleteTagTemplate(std::string const& name, bool force,
@@ -1452,7 +1452,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1593}
+  /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1724}
   ///
   // clang-format on
   Status DeleteTagTemplate(
@@ -1491,7 +1491,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1658}
+  /// [google.cloud.datacatalog.v1.CreateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1789}
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L187}
   ///
   // clang-format on
@@ -1529,7 +1529,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1658}
+  /// [google.cloud.datacatalog.v1.CreateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1789}
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L187}
   ///
   // clang-format on
@@ -1566,7 +1566,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L187}
-  /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1685}
+  /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1816}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
@@ -1618,7 +1618,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L187}
-  /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1685}
+  /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1816}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
@@ -1659,7 +1659,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L187}
-  /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1685}
+  /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1816}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
@@ -1692,7 +1692,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1720}
+  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1851}
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L187}
   ///
   // clang-format on
@@ -1728,7 +1728,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1720}
+  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1851}
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L187}
   ///
   // clang-format on
@@ -1760,7 +1760,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldEnumValueRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1736}
+  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldEnumValueRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1867}
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L187}
   ///
   // clang-format on
@@ -1794,7 +1794,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldEnumValueRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1736}
+  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldEnumValueRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1867}
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L187}
   ///
   // clang-format on
@@ -1828,7 +1828,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1753}
+  /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1884}
   ///
   // clang-format on
   Status DeleteTagTemplateField(std::string const& name, bool force,
@@ -1860,7 +1860,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1753}
+  /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1884}
   ///
   // clang-format on
   Status DeleteTagTemplateField(
@@ -1904,9 +1904,9 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1610}
+  /// [google.cloud.datacatalog.v1.CreateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1741}
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1032}
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1512}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1643}
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
   // clang-format on
@@ -1948,9 +1948,9 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1610}
+  /// [google.cloud.datacatalog.v1.CreateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1741}
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1032}
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1512}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1643}
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
   // clang-format on
@@ -1977,7 +1977,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
-  /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1631}
+  /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1762}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
@@ -2008,7 +2008,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
-  /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1631}
+  /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1762}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
@@ -2039,7 +2039,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
-  /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1631}
+  /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1762}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
@@ -2062,7 +2062,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1646}
+  /// [google.cloud.datacatalog.v1.DeleteTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1777}
   ///
   // clang-format on
   Status DeleteTag(std::string const& name, Options opts = {});
@@ -2088,7 +2088,7 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1646}
+  /// [google.cloud.datacatalog.v1.DeleteTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1777}
   ///
   // clang-format on
   Status DeleteTag(
@@ -2129,7 +2129,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1032}
-  /// [google.cloud.datacatalog.v1.ListTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1770}
+  /// [google.cloud.datacatalog.v1.ListTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1901}
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   /// [google.cloud.datacatalog.v1.Tag.column]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L73}
   ///
@@ -2172,7 +2172,7 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1032}
-  /// [google.cloud.datacatalog.v1.ListTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1770}
+  /// [google.cloud.datacatalog.v1.ListTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1901}
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   /// [google.cloud.datacatalog.v1.Tag.column]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L73}
   ///
@@ -2223,9 +2223,9 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.ReconcileTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1804}
-  /// [google.cloud.datacatalog.v1.ReconcileTagsRequest.force_delete_missing]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1824}
-  /// [google.cloud.datacatalog.v1.ReconcileTagsResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1836}
+  /// [google.cloud.datacatalog.v1.ReconcileTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1935}
+  /// [google.cloud.datacatalog.v1.ReconcileTagsRequest.force_delete_missing]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1955}
+  /// [google.cloud.datacatalog.v1.ReconcileTagsResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1967}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   // clang-format on
@@ -2254,8 +2254,8 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1032}
-  /// [google.cloud.datacatalog.v1.StarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1916}
-  /// [google.cloud.datacatalog.v1.StarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1929}
+  /// [google.cloud.datacatalog.v1.StarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2047}
+  /// [google.cloud.datacatalog.v1.StarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2060}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
@@ -2286,8 +2286,8 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1032}
-  /// [google.cloud.datacatalog.v1.StarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1916}
-  /// [google.cloud.datacatalog.v1.StarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1929}
+  /// [google.cloud.datacatalog.v1.StarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2047}
+  /// [google.cloud.datacatalog.v1.StarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2060}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
@@ -2314,8 +2314,8 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1032}
-  /// [google.cloud.datacatalog.v1.UnstarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1933}
-  /// [google.cloud.datacatalog.v1.UnstarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1946}
+  /// [google.cloud.datacatalog.v1.UnstarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2064}
+  /// [google.cloud.datacatalog.v1.UnstarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2077}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse> UnstarEntry(
@@ -2346,8 +2346,8 @@ class DataCatalogClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1032}
-  /// [google.cloud.datacatalog.v1.UnstarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1933}
-  /// [google.cloud.datacatalog.v1.UnstarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1946}
+  /// [google.cloud.datacatalog.v1.UnstarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2064}
+  /// [google.cloud.datacatalog.v1.UnstarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2077}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse> UnstarEntry(
@@ -2658,9 +2658,9 @@ class DataCatalogClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.ImportEntriesMetadata]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1986}
-  /// [google.cloud.datacatalog.v1.ImportEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1951}
-  /// [google.cloud.datacatalog.v1.ImportEntriesResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1974}
+  /// [google.cloud.datacatalog.v1.ImportEntriesMetadata]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2117}
+  /// [google.cloud.datacatalog.v1.ImportEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2082}
+  /// [google.cloud.datacatalog.v1.ImportEntriesResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2105}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   // clang-format on

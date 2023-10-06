@@ -81,6 +81,18 @@ HubServiceTracingConnection::DeleteHub(
 }
 
 StreamRange<google::cloud::networkconnectivity::v1::Spoke>
+HubServiceTracingConnection::ListHubSpokes(
+    google::cloud::networkconnectivity::v1::ListHubSpokesRequest request) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::ListHubSpokes");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListHubSpokes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::networkconnectivity::v1::Spoke>(std::move(span),
+                                                     std::move(sr));
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::Spoke>
 HubServiceTracingConnection::ListSpokes(
     google::cloud::networkconnectivity::v1::ListSpokesRequest request) {
   auto span = internal::MakeSpan(
@@ -119,6 +131,26 @@ HubServiceTracingConnection::UpdateSpoke(
   return internal::EndSpan(std::move(span), child_->UpdateSpoke(request));
 }
 
+future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+HubServiceTracingConnection::RejectHubSpoke(
+    google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::RejectHubSpoke");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->RejectHubSpoke(request));
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+HubServiceTracingConnection::AcceptHubSpoke(
+    google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::AcceptHubSpoke");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->AcceptHubSpoke(request));
+}
+
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 HubServiceTracingConnection::DeleteSpoke(
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
@@ -126,6 +158,70 @@ HubServiceTracingConnection::DeleteSpoke(
       "networkconnectivity_v1::HubServiceConnection::DeleteSpoke");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSpoke(request));
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
+HubServiceTracingConnection::GetRouteTable(
+    google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::GetRouteTable");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRouteTable(request));
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::Route>
+HubServiceTracingConnection::GetRoute(
+    google::cloud::networkconnectivity::v1::GetRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::GetRoute");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRoute(request));
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::Route>
+HubServiceTracingConnection::ListRoutes(
+    google::cloud::networkconnectivity::v1::ListRoutesRequest request) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::ListRoutes");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListRoutes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::networkconnectivity::v1::Route>(std::move(span),
+                                                     std::move(sr));
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::RouteTable>
+HubServiceTracingConnection::ListRouteTables(
+    google::cloud::networkconnectivity::v1::ListRouteTablesRequest request) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::ListRouteTables");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListRouteTables(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::networkconnectivity::v1::RouteTable>(std::move(span),
+                                                          std::move(sr));
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::Group>
+HubServiceTracingConnection::GetGroup(
+    google::cloud::networkconnectivity::v1::GetGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::GetGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGroup(request));
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::Group>
+HubServiceTracingConnection::ListGroups(
+    google::cloud::networkconnectivity::v1::ListGroupsRequest request) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::ListGroups");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListGroups(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::networkconnectivity::v1::Group>(std::move(span),
+                                                     std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

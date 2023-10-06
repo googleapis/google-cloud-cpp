@@ -896,7 +896,7 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L606}
+  /// [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L621}
   /// [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L787}
   ///
   // clang-format on
@@ -931,7 +931,7 @@ class SqlInstancesServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L716}
-  /// [google.cloud.sql.v1.SqlInstancesStartExternalSyncRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L643}
+  /// [google.cloud.sql.v1.SqlInstancesStartExternalSyncRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L658}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> StartExternalSync(
@@ -994,7 +994,7 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlInstancesGetDiskShrinkConfigRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L597}
+  /// [google.cloud.sql.v1.SqlInstancesGetDiskShrinkConfigRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L612}
   /// [google.cloud.sql.v1.SqlInstancesGetDiskShrinkConfigResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L799}
   ///
   // clang-format on

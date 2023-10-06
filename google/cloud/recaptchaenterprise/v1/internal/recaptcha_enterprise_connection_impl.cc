@@ -228,6 +228,107 @@ RecaptchaEnterpriseServiceConnectionImpl::GetMetrics(
       request, __func__);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceConnectionImpl::CreateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateFirewallPolicy(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::recaptchaenterprise::v1::
+                 CreateFirewallPolicyRequest const& request) {
+        return stub_->CreateFirewallPolicy(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceConnectionImpl::ListFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListFirewallPolicies(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::recaptchaenterprise::v1::
+              ListFirewallPoliciesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::recaptchaenterprise::v1::
+                       ListFirewallPoliciesRequest const& request) {
+              return stub->ListFirewallPolicies(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse
+             r) {
+        std::vector<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+            result(r.firewall_policies().size());
+        auto& messages = *r.mutable_firewall_policies();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceConnectionImpl::GetFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetFirewallPolicy(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::recaptchaenterprise::v1::
+                 GetFirewallPolicyRequest const& request) {
+        return stub_->GetFirewallPolicy(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceConnectionImpl::UpdateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateFirewallPolicy(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::recaptchaenterprise::v1::
+                 UpdateFirewallPolicyRequest const& request) {
+        return stub_->UpdateFirewallPolicy(context, request);
+      },
+      request, __func__);
+}
+
+Status RecaptchaEnterpriseServiceConnectionImpl::DeleteFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteFirewallPolicy(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::recaptchaenterprise::v1::
+                 DeleteFirewallPolicyRequest const& request) {
+        return stub_->DeleteFirewallPolicy(context, request);
+      },
+      request, __func__);
+}
+
 StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
 RecaptchaEnterpriseServiceConnectionImpl::ListRelatedAccountGroups(
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest

@@ -137,6 +137,15 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request)
       override;
 
+  StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+  GenerateClientCertificate(
+      google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+          request) override;
+
+  StatusOr<google::cloud::alloydb::v1::ConnectionInfo> GetConnectionInfo(
+      google::cloud::alloydb::v1::GetConnectionInfoRequest const& request)
+      override;
+
   StreamRange<google::cloud::alloydb::v1::User> ListUsers(
       google::cloud::alloydb::v1::ListUsersRequest request) override;
 

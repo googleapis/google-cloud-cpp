@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.Sessions.DetectIntent]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L65}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L66}
 ///
 class SessionsClient {
  public:
@@ -118,8 +118,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L119}
-  /// [google.cloud.dialogflow.cx.v3.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L154}
+  /// [google.cloud.dialogflow.cx.v3.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L120}
+  /// [google.cloud.dialogflow.cx.v3.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L155}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
@@ -154,8 +154,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L234}
-  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L371}
+  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L235}
+  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L372}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -187,8 +187,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.MatchIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L895}
-  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L926}
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L903}
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L934}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
@@ -224,10 +224,10 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.FulfillIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L962}
-  /// [google.cloud.dialogflow.cx.v3.FulfillIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L975}
-  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L926}
-  /// [google.cloud.dialogflow.cx.v3.Sessions.MatchIntent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L88}
+  /// [google.cloud.dialogflow.cx.v3.FulfillIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L970}
+  /// [google.cloud.dialogflow.cx.v3.FulfillIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L983}
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L934}
+  /// [google.cloud.dialogflow.cx.v3.Sessions.MatchIntent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L89}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>

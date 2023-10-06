@@ -113,8 +113,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
-  /// [google.cloud.networkconnectivity.v1.ListHubsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L322}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L338}
+  /// [google.cloud.networkconnectivity.v1.ListHubsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L667}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
@@ -152,8 +152,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
-  /// [google.cloud.networkconnectivity.v1.ListHubsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L322}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L338}
+  /// [google.cloud.networkconnectivity.v1.ListHubsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L667}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
@@ -178,8 +178,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L362}
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
+  /// [google.cloud.networkconnectivity.v1.GetHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L708}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L338}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
@@ -208,8 +208,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L362}
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
+  /// [google.cloud.networkconnectivity.v1.GetHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L708}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L338}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
@@ -243,8 +243,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.CreateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L375}
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
+  /// [google.cloud.networkconnectivity.v1.CreateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L721}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L338}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
@@ -282,8 +282,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.CreateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L375}
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
+  /// [google.cloud.networkconnectivity.v1.CreateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L721}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L338}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
@@ -321,8 +321,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
-  /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L410}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L338}
+  /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L756}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
@@ -360,8 +360,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
-  /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L410}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L338}
+  /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L756}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
@@ -393,7 +393,7 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.DeleteHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L441}
+  /// [google.cloud.networkconnectivity.v1.DeleteHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L787}
   /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
   ///
   // clang-format on
@@ -430,13 +430,91 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.DeleteHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L441}
+  /// [google.cloud.networkconnectivity.v1.DeleteHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L787}
   /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteHub(
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the Network Connectivity Center spokes associated with a
+  /// specified hub and location. The list includes both spokes that are attached
+  /// to the hub and spokes that have been proposed but not yet accepted.
+  ///
+  /// @param name  Required. The name of the hub.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networkconnectivity.v1.Spoke], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.ListHubSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L816}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListHubSpokes(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the Network Connectivity Center spokes associated with a
+  /// specified hub and location. The list includes both spokes that are attached
+  /// to the hub and spokes that have been proposed but not yet accepted.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkconnectivity.v1.ListHubSpokesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networkconnectivity.v1.Spoke], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.ListHubSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L816}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListHubSpokes(
+      google::cloud::networkconnectivity::v1::ListHubSpokesRequest request,
       Options opts = {});
 
   // clang-format off
@@ -467,8 +545,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.ListSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L469}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
+  /// [google.cloud.networkconnectivity.v1.ListSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L888}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
@@ -507,8 +585,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.ListSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L469}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
+  /// [google.cloud.networkconnectivity.v1.ListSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L888}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
@@ -533,8 +611,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L507}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
+  /// [google.cloud.networkconnectivity.v1.GetSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L927}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
@@ -563,8 +641,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L507}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
+  /// [google.cloud.networkconnectivity.v1.GetSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L927}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
@@ -598,8 +676,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.CreateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L519}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
+  /// [google.cloud.networkconnectivity.v1.CreateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L939}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
@@ -637,8 +715,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.CreateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L519}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
+  /// [google.cloud.networkconnectivity.v1.CreateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L939}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
@@ -675,8 +753,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
-  /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L554}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
+  /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L974}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
@@ -713,12 +791,172 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
-  /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L554}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
+  /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L974}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Rejects a Network Connectivity Center spoke from being attached to a hub.
+  /// If the spoke was previously in the `ACTIVE` state, it
+  /// transitions to the `INACTIVE` state and is no longer able to
+  /// connect to other spokes that are attached to the hub.
+  ///
+  /// @param name  Required. The name of the hub from which to reject the spoke.
+  /// @param spoke_uri  Required. The URI of the spoke to reject from the hub.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkconnectivity.v1.RejectHubSpokeResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.RejectHubSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1076}
+  /// [google.cloud.networkconnectivity.v1.RejectHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1115}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+  RejectHubSpoke(std::string const& name, std::string const& spoke_uri,
+                 Options opts = {});
+
+  // clang-format off
+  ///
+  /// Rejects a Network Connectivity Center spoke from being attached to a hub.
+  /// If the spoke was previously in the `ACTIVE` state, it
+  /// transitions to the `INACTIVE` state and is no longer able to
+  /// connect to other spokes that are attached to the hub.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkconnectivity.v1.RejectHubSpokeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkconnectivity.v1.RejectHubSpokeResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.RejectHubSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1076}
+  /// [google.cloud.networkconnectivity.v1.RejectHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1115}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+  RejectHubSpoke(
+      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Accepts a proposal to attach a Network Connectivity Center spoke
+  /// to a hub.
+  ///
+  /// @param name  Required. The name of the hub into which to accept the spoke.
+  /// @param spoke_uri  Required. The URI of the spoke to accept into the hub.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkconnectivity.v1.AcceptHubSpokeResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1033}
+  /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1069}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+  AcceptHubSpoke(std::string const& name, std::string const& spoke_uri,
+                 Options opts = {});
+
+  // clang-format off
+  ///
+  /// Accepts a proposal to attach a Network Connectivity Center spoke
+  /// to a hub.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkconnectivity.v1.AcceptHubSpokeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkconnectivity.v1.AcceptHubSpokeResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1033}
+  /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1069}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+  AcceptHubSpoke(
+      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+          request,
       Options opts = {});
 
   // clang-format off
@@ -746,7 +984,7 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.DeleteSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L585}
+  /// [google.cloud.networkconnectivity.v1.DeleteSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1005}
   /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
   ///
   // clang-format on
@@ -783,13 +1021,405 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.DeleteSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L585}
+  /// [google.cloud.networkconnectivity.v1.DeleteSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1005}
   /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteSpoke(
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details about a Network Connectivity Center route table.
+  ///
+  /// @param name  Required. The name of the route table resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networkconnectivity.v1.RouteTable])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.GetRouteTableRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1122}
+  /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L525}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networkconnectivity::v1::RouteTable> GetRouteTable(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details about a Network Connectivity Center route table.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkconnectivity.v1.GetRouteTableRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networkconnectivity.v1.RouteTable])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.GetRouteTableRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1122}
+  /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L525}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networkconnectivity::v1::RouteTable> GetRouteTable(
+      google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details about the specified route.
+  ///
+  /// @param name  Required. The name of the route resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networkconnectivity.v1.Route])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.GetRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1134}
+  /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L564}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details about the specified route.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkconnectivity.v1.GetRouteRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networkconnectivity.v1.Route])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.GetRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1134}
+  /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L564}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
+      google::cloud::networkconnectivity::v1::GetRouteRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists routes in a given project.
+  ///
+  /// @param parent  Required. The parent resource's name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networkconnectivity.v1.Route], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1147}
+  /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L564}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networkconnectivity::v1::Route> ListRoutes(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists routes in a given project.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkconnectivity.v1.ListRoutesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networkconnectivity.v1.Route], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1147}
+  /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L564}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networkconnectivity::v1::Route> ListRoutes(
+      google::cloud::networkconnectivity::v1::ListRoutesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists route tables in a given project.
+  ///
+  /// @param parent  Required. The parent resource's name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networkconnectivity.v1.RouteTable], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.ListRouteTablesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1188}
+  /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L525}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networkconnectivity::v1::RouteTable>
+  ListRouteTables(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists route tables in a given project.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkconnectivity.v1.ListRouteTablesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networkconnectivity.v1.RouteTable], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.ListRouteTablesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1188}
+  /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L525}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networkconnectivity::v1::RouteTable>
+  ListRouteTables(
+      google::cloud::networkconnectivity::v1::ListRouteTablesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details about a Network Connectivity Center group.
+  ///
+  /// @param name  Required. The name of the route table resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networkconnectivity.v1.Group])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.GetGroupRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1430}
+  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L627}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details about a Network Connectivity Center group.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkconnectivity.v1.GetGroupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networkconnectivity.v1.Group])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.GetGroupRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1430}
+  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L627}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
+      google::cloud::networkconnectivity::v1::GetGroupRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists groups in a given hub.
+  ///
+  /// @param parent  Required. The parent resource's name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networkconnectivity.v1.Group], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L627}
+  /// [google.cloud.networkconnectivity.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1229}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networkconnectivity::v1::Group> ListGroups(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists groups in a given hub.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkconnectivity.v1.ListGroupsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networkconnectivity.v1.Group], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L627}
+  /// [google.cloud.networkconnectivity.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1229}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networkconnectivity::v1::Group> ListGroups(
+      google::cloud::networkconnectivity::v1::ListGroupsRequest request,
       Options opts = {});
 
  private:

@@ -582,7 +582,7 @@ class TensorboardServiceClient {
   ///  final component of the Tensorboard experiment's resource name.
   ///  @n
   ///  This value should be 1-128 characters, and valid characters
-  ///  are /[a-z][0-9]-/.
+  ///  are `/[a-z][0-9]-/`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -932,7 +932,7 @@ class TensorboardServiceClient {
   ///  component of the Tensorboard run's resource name.
   ///  @n
   ///  This value should be 1-128 characters, and valid characters
-  ///  are /[a-z][0-9]-/.
+  ///  are `/[a-z][0-9]-/`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

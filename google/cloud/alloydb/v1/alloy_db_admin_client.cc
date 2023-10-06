@@ -428,6 +428,39 @@ AlloyDBAdminClient::ListSupportedDatabaseFlags(
   return connection_->ListSupportedDatabaseFlags(std::move(request));
 }
 
+StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+AlloyDBAdminClient::GenerateClientCertificate(std::string const& parent,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::alloydb::v1::GenerateClientCertificateRequest request;
+  request.set_parent(parent);
+  return connection_->GenerateClientCertificate(request);
+}
+
+StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+AlloyDBAdminClient::GenerateClientCertificate(
+    google::cloud::alloydb::v1::GenerateClientCertificateRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GenerateClientCertificate(request);
+}
+
+StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
+AlloyDBAdminClient::GetConnectionInfo(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::alloydb::v1::GetConnectionInfoRequest request;
+  request.set_parent(parent);
+  return connection_->GetConnectionInfo(request);
+}
+
+StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
+AlloyDBAdminClient::GetConnectionInfo(
+    google::cloud::alloydb::v1::GetConnectionInfoRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetConnectionInfo(request);
+}
+
 StreamRange<google::cloud::alloydb::v1::User> AlloyDBAdminClient::ListUsers(
     std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

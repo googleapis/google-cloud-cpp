@@ -113,7 +113,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L183}
+  /// [google.cloud.aiplatform.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L241}
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
   ///
   // clang-format on
@@ -151,7 +151,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L183}
+  /// [google.cloud.aiplatform.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L241}
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
   ///
   // clang-format on
@@ -178,7 +178,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
-  /// [google.cloud.aiplatform.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L206}
+  /// [google.cloud.aiplatform.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L264}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
@@ -208,7 +208,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
-  /// [google.cloud.aiplatform.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L206}
+  /// [google.cloud.aiplatform.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L264}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
@@ -241,7 +241,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
-  /// [google.cloud.aiplatform.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L221}
+  /// [google.cloud.aiplatform.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L279}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
@@ -272,7 +272,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
-  /// [google.cloud.aiplatform.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L221}
+  /// [google.cloud.aiplatform.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L279}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
@@ -308,7 +308,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
-  /// [google.cloud.aiplatform.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L238}
+  /// [google.cloud.aiplatform.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L296}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Dataset> ListDatasets(
@@ -347,7 +347,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
-  /// [google.cloud.aiplatform.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L238}
+  /// [google.cloud.aiplatform.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L296}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Dataset> ListDatasets(
@@ -381,7 +381,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L295}
+  /// [google.cloud.aiplatform.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L353}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -418,7 +418,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L295}
+  /// [google.cloud.aiplatform.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L353}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -456,8 +456,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L309}
-  /// [google.cloud.aiplatform.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L328}
+  /// [google.cloud.aiplatform.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L367}
+  /// [google.cloud.aiplatform.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L386}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
@@ -496,8 +496,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L309}
-  /// [google.cloud.aiplatform.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L328}
+  /// [google.cloud.aiplatform.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L367}
+  /// [google.cloud.aiplatform.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L386}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
@@ -532,8 +532,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L339}
-  /// [google.cloud.aiplatform.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L356}
+  /// [google.cloud.aiplatform.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L397}
+  /// [google.cloud.aiplatform.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L414}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
@@ -572,13 +572,374 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L339}
-  /// [google.cloud.aiplatform.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L356}
+  /// [google.cloud.aiplatform.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L397}
+  /// [google.cloud.aiplatform.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L414}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
   ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request,
              Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a version from a Dataset.
+  ///
+  /// @param parent  Required. The name of the Dataset resource.
+  ///  Format:
+  ///  `projects/{project}/locations/{location}/datasets/{dataset}`
+  /// @param dataset_version  Required. The version to be created. The same CMEK policies with the
+  ///  original Dataset will be applied the dataset version. So here we don't need
+  ///  to specify the EncryptionSpecType here.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.DatasetVersion] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.CreateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L432}
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+  CreateDatasetVersion(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a version from a Dataset.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.CreateDatasetVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.DatasetVersion] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.CreateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L432}
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+  CreateDatasetVersion(
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a Dataset version.
+  ///
+  /// @param name  Required. The resource name of the Dataset version to delete.
+  ///  Format:
+  ///  `projects/{project}/locations/{location}/datasets/{dataset}/datasetVersions/{dataset_version}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.DeleteOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.DeleteDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L458}
+  /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDatasetVersion(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a Dataset version.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.DeleteDatasetVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.DeleteOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.DeleteDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L458}
+  /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDatasetVersion(
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a Dataset version.
+  ///
+  /// @param name  Required. The resource name of the Dataset version to delete.
+  ///  Format:
+  ///  `projects/{project}/locations/{location}/datasets/{dataset}/datasetVersions/{dataset_version}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.aiplatform.v1.DatasetVersion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.GetDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L472}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a Dataset version.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.GetDatasetVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.aiplatform.v1.DatasetVersion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.GetDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L472}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
+      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists DatasetVersions in a Dataset.
+  ///
+  /// @param parent  Required. The resource name of the Dataset to list DatasetVersions from.
+  ///  Format:
+  ///  `projects/{project}/locations/{location}/datasets/{dataset}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.aiplatform.v1.DatasetVersion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.ListDatasetVersionsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L489}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
+  ListDatasetVersions(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists DatasetVersions in a Dataset.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.ListDatasetVersionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.aiplatform.v1.DatasetVersion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.ListDatasetVersionsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L489}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
+  ListDatasetVersions(
+      google::cloud::aiplatform::v1::ListDatasetVersionsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Restores a dataset version.
+  ///
+  /// @param name  Required. The name of the DatasetVersion resource.
+  ///  Format:
+  ///  `projects/{project}/locations/{location}/datasets/{dataset}/datasetVersions/{dataset_version}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.DatasetVersion] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.RestoreDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L530}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+  RestoreDatasetVersion(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Restores a dataset version.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.RestoreDatasetVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.DatasetVersion] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.RestoreDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L530}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+  RestoreDatasetVersion(
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -610,7 +971,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DataItem]: @googleapis_reference_link{google/cloud/aiplatform/v1/data_item.proto#L34}
-  /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L388}
+  /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L551}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
@@ -649,7 +1010,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DataItem]: @googleapis_reference_link{google/cloud/aiplatform/v1/data_item.proto#L34}
-  /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L388}
+  /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L551}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
@@ -688,8 +1049,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DataItemView]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L544}
-  /// [google.cloud.aiplatform.v1.SearchDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L428}
+  /// [google.cloud.aiplatform.v1.DataItemView]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L707}
+  /// [google.cloud.aiplatform.v1.SearchDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L591}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DataItemView> SearchDataItems(
@@ -725,7 +1086,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L564}
+  /// [google.cloud.aiplatform.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L727}
   /// [google.cloud.aiplatform.v1.SavedQuery]: @googleapis_reference_link{google/cloud/aiplatform/v1/saved_query.proto#L34}
   ///
   // clang-format on
@@ -764,7 +1125,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L564}
+  /// [google.cloud.aiplatform.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L727}
   /// [google.cloud.aiplatform.v1.SavedQuery]: @googleapis_reference_link{google/cloud/aiplatform/v1/saved_query.proto#L34}
   ///
   // clang-format on
@@ -800,7 +1161,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L604}
+  /// [google.cloud.aiplatform.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L767}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -837,7 +1198,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L604}
+  /// [google.cloud.aiplatform.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L767}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -866,7 +1227,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.AnnotationSpec]: @googleapis_reference_link{google/cloud/aiplatform/v1/annotation_spec.proto#L32}
-  /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L618}
+  /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L781}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
@@ -896,7 +1257,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.AnnotationSpec]: @googleapis_reference_link{google/cloud/aiplatform/v1/annotation_spec.proto#L32}
-  /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L618}
+  /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L781}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
@@ -933,7 +1294,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Annotation]: @googleapis_reference_link{google/cloud/aiplatform/v1/annotation.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L635}
+  /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L798}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Annotation> ListAnnotations(
@@ -972,7 +1333,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Annotation]: @googleapis_reference_link{google/cloud/aiplatform/v1/annotation.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L635}
+  /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L798}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Annotation> ListAnnotations(

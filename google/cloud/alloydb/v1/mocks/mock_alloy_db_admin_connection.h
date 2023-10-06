@@ -167,6 +167,18 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
       (google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>,
+      GenerateClientCertificate,
+      (google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::alloydb::v1::ConnectionInfo>, GetConnectionInfo,
+      (google::cloud::alloydb::v1::GetConnectionInfoRequest const& request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::User>), ListUsers,
               (google::cloud::alloydb::v1::ListUsersRequest request),
               (override));

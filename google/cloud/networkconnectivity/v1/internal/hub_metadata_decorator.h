@@ -66,6 +66,12 @@ class HubServiceMetadata : public HubServiceStub {
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request)
       override;
 
+  StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
+  ListHubSpokes(
+      grpc::ClientContext& context,
+      google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
+          request) override;
+
   StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
   ListSpokes(grpc::ClientContext& context,
              google::cloud::networkconnectivity::v1::ListSpokesRequest const&
@@ -88,11 +94,54 @@ class HubServiceMetadata : public HubServiceStub {
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncRejectHubSpoke(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncAcceptHubSpoke(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSpoke(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request)
       override;
+
+  StatusOr<google::cloud::networkconnectivity::v1::RouteTable> GetRouteTable(
+      grpc::ClientContext& context,
+      google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
+      grpc::ClientContext& context,
+      google::cloud::networkconnectivity::v1::GetRouteRequest const& request)
+      override;
+
+  StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse>
+  ListRoutes(grpc::ClientContext& context,
+             google::cloud::networkconnectivity::v1::ListRoutesRequest const&
+                 request) override;
+
+  StatusOr<google::cloud::networkconnectivity::v1::ListRouteTablesResponse>
+  ListRouteTables(
+      grpc::ClientContext& context,
+      google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
+      grpc::ClientContext& context,
+      google::cloud::networkconnectivity::v1::GetGroupRequest const& request)
+      override;
+
+  StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse>
+  ListGroups(grpc::ClientContext& context,
+             google::cloud::networkconnectivity::v1::ListGroupsRequest const&
+                 request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

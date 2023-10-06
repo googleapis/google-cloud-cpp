@@ -135,6 +135,57 @@ RecaptchaEnterpriseServiceMetadata::GetMetrics(
   return child_->GetMetrics(context, request);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceMetadata::CreateFirewallPolicy(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateFirewallPolicy(context, request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceMetadata::ListFirewallPolicies(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListFirewallPolicies(context, request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceMetadata::GetFirewallPolicy(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetFirewallPolicy(context, request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceMetadata::UpdateFirewallPolicy(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+        request) {
+  SetMetadata(
+      context,
+      absl::StrCat("firewall_policy.name=",
+                   internal::UrlEncode(request.firewall_policy().name())));
+  return child_->UpdateFirewallPolicy(context, request);
+}
+
+Status RecaptchaEnterpriseServiceMetadata::DeleteFirewallPolicy(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFirewallPolicy(context, request);
+}
+
 StatusOr<
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 RecaptchaEnterpriseServiceMetadata::ListRelatedAccountGroups(

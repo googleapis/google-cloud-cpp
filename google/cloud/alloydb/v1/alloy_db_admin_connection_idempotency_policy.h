@@ -110,6 +110,13 @@ class AlloyDBAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListSupportedDatabaseFlags(
       google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request);
 
+  virtual google::cloud::Idempotency GenerateClientCertificate(
+      google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetConnectionInfo(
+      google::cloud::alloydb::v1::GetConnectionInfoRequest const& request);
+
   virtual google::cloud::Idempotency ListUsers(
       google::cloud::alloydb::v1::ListUsersRequest request);
 

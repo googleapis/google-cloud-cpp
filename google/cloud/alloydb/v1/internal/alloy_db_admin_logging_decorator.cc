@@ -364,6 +364,33 @@ AlloyDBAdminLogging::ListSupportedDatabaseFlags(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+AlloyDBAdminLogging::GenerateClientCertificate(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+                 request) {
+        return child_->GenerateClientCertificate(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
+AlloyDBAdminLogging::GetConnectionInfo(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
+        return child_->GetConnectionInfo(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
 AlloyDBAdminLogging::ListUsers(
     grpc::ClientContext& context,

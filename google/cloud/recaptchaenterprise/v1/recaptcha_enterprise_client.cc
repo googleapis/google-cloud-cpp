@@ -208,6 +208,100 @@ RecaptchaEnterpriseServiceClient::GetMetrics(
   return connection_->GetMetrics(request);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceClient::CreateFirewallPolicy(
+    std::string const& parent,
+    google::cloud::recaptchaenterprise::v1::FirewallPolicy const&
+        firewall_policy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest request;
+  request.set_parent(parent);
+  *request.mutable_firewall_policy() = firewall_policy;
+  return connection_->CreateFirewallPolicy(request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceClient::CreateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateFirewallPolicy(request);
+}
+
+StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceClient::ListFirewallPolicies(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest request;
+  request.set_parent(parent);
+  return connection_->ListFirewallPolicies(request);
+}
+
+StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceClient::ListFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListFirewallPolicies(std::move(request));
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceClient::GetFirewallPolicy(std::string const& name,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest request;
+  request.set_name(name);
+  return connection_->GetFirewallPolicy(request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceClient::GetFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetFirewallPolicy(request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceClient::UpdateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::FirewallPolicy const&
+        firewall_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest request;
+  *request.mutable_firewall_policy() = firewall_policy;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateFirewallPolicy(request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceClient::UpdateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFirewallPolicy(request);
+}
+
+Status RecaptchaEnterpriseServiceClient::DeleteFirewallPolicy(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest request;
+  request.set_name(name);
+  return connection_->DeleteFirewallPolicy(request);
+}
+
+Status RecaptchaEnterpriseServiceClient::DeleteFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFirewallPolicy(request);
+}
+
 StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
 RecaptchaEnterpriseServiceClient::ListRelatedAccountGroups(
     std::string const& parent, Options opts) {

@@ -70,6 +70,26 @@ class RecaptchaEnterpriseServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetMetrics(
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request);
 
+  virtual google::cloud::Idempotency CreateFirewallPolicy(
+      google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListFirewallPolicies(
+      google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest
+          request);
+
+  virtual google::cloud::Idempotency GetFirewallPolicy(
+      google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateFirewallPolicy(
+      google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteFirewallPolicy(
+      google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListRelatedAccountGroups(
       google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest
           request);

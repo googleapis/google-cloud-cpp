@@ -84,6 +84,38 @@ class MockDatasetServiceConnection
       (google::cloud::aiplatform::v1::ExportDataRequest const& request),
       (override));
 
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>,
+              CreateDatasetVersion,
+              (google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteDatasetVersion,
+      (google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::DatasetVersion>,
+      GetDatasetVersion,
+      (google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::DatasetVersion>),
+      ListDatasetVersions,
+      (google::cloud::aiplatform::v1::ListDatasetVersionsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>,
+      RestoreDatasetVersion,
+      (google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+           request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::DataItem>),
               ListDataItems,
               (google::cloud::aiplatform::v1::ListDataItemsRequest request),

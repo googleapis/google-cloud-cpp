@@ -134,7 +134,7 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L909}
+  /// [google.cloud.metastore.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L922}
   /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
   ///
   // clang-format on
@@ -173,7 +173,7 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L909}
+  /// [google.cloud.metastore.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L922}
   /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
   ///
   // clang-format on
@@ -202,7 +202,7 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L963}
+  /// [google.cloud.metastore.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L976}
   /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
   ///
   // clang-format on
@@ -232,7 +232,7 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L963}
+  /// [google.cloud.metastore.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L976}
   /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
   ///
   // clang-format on
@@ -277,7 +277,7 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L978}
+  /// [google.cloud.metastore.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L991}
   /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
   ///
   // clang-format on
@@ -316,7 +316,7 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L978}
+  /// [google.cloud.metastore.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L991}
   /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
   ///
   // clang-format on
@@ -358,7 +358,7 @@ class DataprocMetastoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
-  /// [google.cloud.metastore.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1020}
+  /// [google.cloud.metastore.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1033}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
@@ -396,7 +396,7 @@ class DataprocMetastoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
-  /// [google.cloud.metastore.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1020}
+  /// [google.cloud.metastore.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1033}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
@@ -431,8 +431,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1052}
-  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1444}
+  /// [google.cloud.metastore.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1065}
+  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1457}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -468,8 +468,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1052}
-  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1444}
+  /// [google.cloud.metastore.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1065}
+  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1457}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -507,8 +507,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.ListMetadataImportsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1081}
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
+  /// [google.cloud.metastore.v1.ListMetadataImportsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1094}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L641}
   ///
   // clang-format on
   StreamRange<google::cloud::metastore::v1::MetadataImport> ListMetadataImports(
@@ -546,8 +546,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.ListMetadataImportsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1081}
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
+  /// [google.cloud.metastore.v1.ListMetadataImportsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1094}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L641}
   ///
   // clang-format on
   StreamRange<google::cloud::metastore::v1::MetadataImport> ListMetadataImports(
@@ -575,8 +575,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.GetMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1134}
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
+  /// [google.cloud.metastore.v1.GetMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1147}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L641}
   ///
   // clang-format on
   StatusOr<google::cloud::metastore::v1::MetadataImport> GetMetadataImport(
@@ -605,8 +605,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.GetMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1134}
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
+  /// [google.cloud.metastore.v1.GetMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1147}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L641}
   ///
   // clang-format on
   StatusOr<google::cloud::metastore::v1::MetadataImport> GetMetadataImport(
@@ -650,8 +650,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.CreateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1149}
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
+  /// [google.cloud.metastore.v1.CreateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1162}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L641}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
@@ -690,8 +690,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.CreateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1149}
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
+  /// [google.cloud.metastore.v1.CreateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1162}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L641}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
@@ -733,8 +733,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
-  /// [google.cloud.metastore.v1.UpdateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1191}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L641}
+  /// [google.cloud.metastore.v1.UpdateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
@@ -773,8 +773,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
-  /// [google.cloud.metastore.v1.UpdateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1191}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L641}
+  /// [google.cloud.metastore.v1.UpdateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
@@ -812,8 +812,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.ExportMetadataRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1361}
-  /// [google.cloud.metastore.v1.MetadataExport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L711}
+  /// [google.cloud.metastore.v1.ExportMetadataRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1374}
+  /// [google.cloud.metastore.v1.MetadataExport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L724}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataExport>> ExportMetadata(
@@ -852,8 +852,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Restore]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L810}
-  /// [google.cloud.metastore.v1.RestoreServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1402}
+  /// [google.cloud.metastore.v1.Restore]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L823}
+  /// [google.cloud.metastore.v1.RestoreServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1415}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
@@ -889,8 +889,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Restore]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L810}
-  /// [google.cloud.metastore.v1.RestoreServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1402}
+  /// [google.cloud.metastore.v1.Restore]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L823}
+  /// [google.cloud.metastore.v1.RestoreServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1415}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
@@ -927,8 +927,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L755}
-  /// [google.cloud.metastore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1223}
+  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L768}
+  /// [google.cloud.metastore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1236}
   ///
   // clang-format on
   StreamRange<google::cloud::metastore::v1::Backup> ListBackups(
@@ -966,8 +966,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L755}
-  /// [google.cloud.metastore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1223}
+  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L768}
+  /// [google.cloud.metastore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1236}
   ///
   // clang-format on
   StreamRange<google::cloud::metastore::v1::Backup> ListBackups(
@@ -995,8 +995,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L755}
-  /// [google.cloud.metastore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1276}
+  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L768}
+  /// [google.cloud.metastore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1289}
   ///
   // clang-format on
   StatusOr<google::cloud::metastore::v1::Backup> GetBackup(
@@ -1025,8 +1025,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L755}
-  /// [google.cloud.metastore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1276}
+  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L768}
+  /// [google.cloud.metastore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1289}
   ///
   // clang-format on
   StatusOr<google::cloud::metastore::v1::Backup> GetBackup(
@@ -1069,8 +1069,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L755}
-  /// [google.cloud.metastore.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1291}
+  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L768}
+  /// [google.cloud.metastore.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1304}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Backup>> CreateBackup(
@@ -1108,8 +1108,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L755}
-  /// [google.cloud.metastore.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1291}
+  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L768}
+  /// [google.cloud.metastore.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1304}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Backup>> CreateBackup(
@@ -1144,8 +1144,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1332}
-  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1444}
+  /// [google.cloud.metastore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1345}
+  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1457}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -1181,8 +1181,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1332}
-  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1444}
+  /// [google.cloud.metastore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1345}
+  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1457}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -1219,8 +1219,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.QueryMetadataRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1508}
-  /// [google.cloud.metastore.v1.QueryMetadataResponse]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1527}
+  /// [google.cloud.metastore.v1.QueryMetadataRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1521}
+  /// [google.cloud.metastore.v1.QueryMetadataResponse]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1540}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
@@ -1258,8 +1258,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.MoveTableToDatabaseRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1547}
-  /// [google.cloud.metastore.v1.MoveTableToDatabaseResponse]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1571}
+  /// [google.cloud.metastore.v1.MoveTableToDatabaseRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1560}
+  /// [google.cloud.metastore.v1.MoveTableToDatabaseResponse]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1584}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
@@ -1300,8 +1300,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.AlterMetadataResourceLocationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1575}
-  /// [google.cloud.metastore.v1.AlterMetadataResourceLocationResponse]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1602}
+  /// [google.cloud.metastore.v1.AlterMetadataResourceLocationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1588}
+  /// [google.cloud.metastore.v1.AlterMetadataResourceLocationResponse]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1615}
   ///
   // clang-format on
   future<StatusOr<
