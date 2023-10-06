@@ -87,12 +87,11 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
  * `GTEST_USES_POSIX_RE`.
  */
 MATCHER_P(MatchesGlob, glob, "matches the glob: \"" + glob + "\"") {
-  // Translate the glob into a regex pattern. It calls `internal::UrlDecode`
-  // first since the regex matcher uses the "/" character.
-  auto matcher =
-      absl::StrReplaceAll(internal::UrlDecode(glob), {{"*", "[^/]+"}});
+  // Translate the `glob` into a regex pattern.
+  auto matcher = absl::StrReplaceAll(glob, {{"*", "[^/]+"}});
   std::regex regex(matcher);
-  return std::regex_match(arg, regex);
+  // Decode the `arg` before trying to match it.
+  return std::regex_match(internal::UrlDecode(arg), regex);
 }
 
 // This method is recursive because dbolduc could not figure out the iterative
