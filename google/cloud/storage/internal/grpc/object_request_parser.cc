@@ -525,6 +525,7 @@ google::storage::v2::ListObjectsRequest ToProto(
       request.GetOption<storage::StartOffset>().value_or(""));
   result.set_lexicographic_end(
       request.GetOption<storage::EndOffset>().value_or(""));
+  result.set_match_glob(request.GetOption<storage::MatchGlob>().value_or(""));
   return result;
 }
 

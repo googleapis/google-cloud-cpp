@@ -860,6 +860,7 @@ TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
         versions: true
         lexicographic_start: "test/prefix/a"
         lexicographic_end: "test/prefix/abc"
+        match_glob: "**/*.cc"
       )pb",
       &expected));
 
@@ -869,7 +870,7 @@ TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
       storage::MaxResults(10), storage::Delimiter("/"),
       storage::IncludeTrailingDelimiter(true), storage::Prefix("test/prefix"),
       storage::Versions(true), storage::StartOffset("test/prefix/a"),
-      storage::EndOffset("test/prefix/abc"),
+      storage::EndOffset("test/prefix/abc"), storage::MatchGlob("**/*.cc"),
       storage::UserProject("test-user-project"),
       storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
