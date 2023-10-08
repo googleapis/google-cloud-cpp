@@ -1,15 +1,18 @@
+createTime: '2021-04-23T19:47:54.365241453Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: ^main$
+id: ee436bb0-22ab-407d-ab69-2a73aec2566d
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: publish-docs-ci
+resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/ee436bb0-22ab-407d-ab69-2a73aec2566d
 substitutions:
   _BUILD_NAME: publish-docs
   _DISTRO: fedora-latest-cmake
-  _TRIGGER_TYPE: ci
   _LIBRARIES: all
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
+  _TRIGGER_TYPE: ci
 tags:
 - ci

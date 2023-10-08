@@ -1,14 +1,16 @@
+createTime: '2021-04-15T01:54:43.175858386Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: ^main$
+id: 6a79664d-8602-4312-9c33-810683d8f847
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: msan-ci
 substitutions:
   _BUILD_NAME: msan
   _DISTRO: fedora-msan
   _TRIGGER_TYPE: ci
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - ci

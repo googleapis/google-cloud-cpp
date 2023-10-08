@@ -1,3 +1,4 @@
+createTime: '2022-02-11T02:48:08.775499777Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -5,11 +6,13 @@ github:
   pullRequest:
     branch: ^main$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+id: e373a802-f341-4559-bb55-7ec64f1ee825
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: quickstart-production-pr
+resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/e373a802-f341-4559-bb55-7ec64f1ee825
 substitutions:
   _BUILD_NAME: quickstart-production
   _DISTRO: fedora-latest-cmake
   _TRIGGER_TYPE: pr
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr

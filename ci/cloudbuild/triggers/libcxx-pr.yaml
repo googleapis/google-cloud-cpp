@@ -1,3 +1,4 @@
+createTime: '2021-04-14T19:46:45.308277299Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -5,11 +6,13 @@ github:
   pullRequest:
     branch: ^main$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+id: bb2d6a6f-9cf9-493a-bcbc-b7c0b60514a6
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: libcxx-pr
+resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/bb2d6a6f-9cf9-493a-bcbc-b7c0b60514a6
 substitutions:
   _BUILD_NAME: libcxx
   _DISTRO: fedora-latest-bazel
   _TRIGGER_TYPE: pr
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr

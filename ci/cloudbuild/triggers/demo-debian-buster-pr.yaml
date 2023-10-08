@@ -1,3 +1,4 @@
+createTime: '2021-04-13T23:35:54.986575277Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -5,11 +6,12 @@ github:
   pullRequest:
     branch: ^main$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+id: 6630ce19-92d1-40b7-8323-c8dc2afd5556
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: demo-debian-buster-pr
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-debian-buster
   _TRIGGER_TYPE: pr
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr

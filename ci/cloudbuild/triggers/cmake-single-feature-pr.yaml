@@ -1,3 +1,4 @@
+createTime: '2022-05-06T21:51:02.240926631Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -5,11 +6,13 @@ github:
   pullRequest:
     branch: ^main$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+id: 3e376bfc-ab89-4c29-a640-f7f88f756c8c
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: cmake-single-feature-pr
+resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/3e376bfc-ab89-4c29-a640-f7f88f756c8c
 substitutions:
   _BUILD_NAME: cmake-single-feature
   _DISTRO: fedora-latest-cmake
   _TRIGGER_TYPE: pr
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr
