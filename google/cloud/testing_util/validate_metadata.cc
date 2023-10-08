@@ -87,15 +87,11 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
  * `GTEST_USES_POSIX_RE`.
  */
 MATCHER_P(MatchesGlob, glob, "matches the glob: \"" + glob + "\"") {
-  // Translate the glob into a regex pattern.
-  auto matcher1 = absl::StrReplaceAll(glob, {{"*", "[^/]+"}});
-  // Create a second matcher that replaces all "/" with "%2F" to match the
-  // character replacement in `internal::UrlEncode`.
-  auto decoded_glob = absl::StrReplaceAll(glob, {{"/", "%2F"}});
-  auto matcher2 = absl::StrReplaceAll(decoded_glob, {{"*", "[^/]+"}});
-  auto regex_string = absl::StrCat(matcher1, "|", matcher2);
-  std::regex regex(regex_string);
-  return std::regex_match(arg, regex);
+  // Translate the `glob` into a regex pattern.
+  auto matcher = absl::StrReplaceAll(glob, {{"*", "[^/]+"}});
+  std::regex regex(matcher);
+  // Decode the `arg` before trying to match it.
+  return std::regex_match(internal::UrlDecode(arg), regex);
 }
 
 // This method is recursive because dbolduc could not figure out the iterative
@@ -142,7 +138,7 @@ RoutingHeaders FromRoutingRule(google::api::RoutingRule const& routing,
     // If the path_template is empty, we use the field's name as the routing
     // param key, and we match the entire value of the field.
     if (path_template.empty()) {
-      headers[rp.field()] = internal::UrlEncode(field);
+      headers[rp.field()] = field;
       continue;
     }
     // First we parse the path_template field to extract the routing param key
@@ -160,7 +156,7 @@ RoutingHeaders FromRoutingRule(google::api::RoutingRule const& routing,
     // Then we parse the field in the given request to see if it matches the
     // pattern we expect.
     if (std::regex_match(field, match, std::regex{pattern})) {
-      headers[std::move(param)] = internal::UrlEncode(match[1].str());
+      headers[std::move(param)] = match[1].str();
     }
   }
   return headers;

@@ -363,6 +363,7 @@ if (BUILD_TESTING)
         internal/traced_stream_range_test.cc
         internal/tuple_test.cc
         internal/type_list_test.cc
+        internal/url_encode_test.cc
         internal/user_agent_prefix_test.cc
         internal/utility_test.cc
         kms_key_name_test.cc
