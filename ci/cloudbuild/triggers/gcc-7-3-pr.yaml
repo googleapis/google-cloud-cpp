@@ -1,3 +1,4 @@
+createTime: '2022-07-01T20:43:58.864328349Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -5,11 +6,13 @@ github:
   pullRequest:
     branch: ^main$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+id: bc4951d8-7147-4a7b-87d0-f805ae630a2f
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: gcc-7-3-pr
+resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/bc4951d8-7147-4a7b-87d0-f805ae630a2f
 substitutions:
   _BUILD_NAME: gcc-7.3
   _DISTRO: centos-7
   _TRIGGER_TYPE: pr
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr
