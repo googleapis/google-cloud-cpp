@@ -172,9 +172,6 @@ endif ()
 
 add_library(google-cloud-cpp::experimental-storage_grpc ALIAS
             google_cloud_cpp_storage_grpc)
-# TODO(12698) - remove transition name (experimental-storage-grpc)
-add_library(google-cloud-cpp::experimental-storage-grpc ALIAS
-            google_cloud_cpp_storage_grpc)
 
 google_cloud_cpp_add_pkgconfig(
     storage_grpc

@@ -168,16 +168,6 @@ cc_library(
     ],
 )
 
-# TODO(12698) - remove transition name (experimental-storage-grpc)
-cc_library(
-    name = "experimental-storage-grpc",
-    hdrs = ["//google/cloud/storage:public_grpc_hdrs"],
-    tags = ["manual"],
-    deps = [
-        ":experimental-storage_grpc",
-    ],
-)
-
 cc_library(
     name = "common",
     hdrs = ["//google/cloud:common_hdrs"],
