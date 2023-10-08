@@ -43,8 +43,7 @@ namespace internal {
 class ObjectReadStreambuf : public std::basic_streambuf<char> {
  public:
   ObjectReadStreambuf(ReadObjectRangeRequest const& request,
-                      std::unique_ptr<ObjectReadSource> source,
-                      std::streamoff pos_in_stream);
+                      std::unique_ptr<ObjectReadSource> source);
 
   /// Create a streambuf in a permanent error status.
   ObjectReadStreambuf(ReadObjectRangeRequest const& request, Status status);

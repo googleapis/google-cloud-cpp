@@ -355,6 +355,35 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
   EXPECT_EQ(large_text.substr(kObjectSize - 129 * kKiB), actual);
 }
 
+/// @test Read the last chunk of an object by setting ReadLast option.
+TEST_F(ObjectMediaIntegrationTest, ReadLastTellg) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+
+  // This produces an object larger than 3MiB, but with a size that is not a
+  // multiple of 128KiB.
+  auto constexpr kKiB = 1024L;
+  auto constexpr kObjectSize = 256 * kKiB;
+  auto const expected = MakeRandomData(kObjectSize);
+  auto insert = client->InsertObject(bucket_name_, object_name, expected,
+                                     IfGenerationMatch(0));
+  ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
+
+  // Create an iostream to read the last 129KiB of the object, but simulate an
+  // application that does not know how large that last chunk is.
+  auto is = client->ReadObject(bucket_name_, object_name, ReadLast(129 * kKiB));
+  EXPECT_EQ(is.tellg(), kObjectSize - 129 * kKiB);
+  std::vector<char> buffer(1024 * kKiB);
+  is.read(buffer.data(), 1000);
+  EXPECT_EQ(is.gcount(), 1000);
+  EXPECT_EQ(is.tellg(), kObjectSize - 129 * kKiB + 1000);
+  auto const actual = std::string(buffer.data(), 1000);
+  EXPECT_EQ(actual, expected.substr(kObjectSize - 129 * kKiB, 1000));
+}
+
 /// @test Read an object by chunks of equal size.
 TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
   StatusOr<Client> client = MakeIntegrationTestClient();

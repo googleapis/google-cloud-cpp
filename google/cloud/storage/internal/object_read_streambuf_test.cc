@@ -32,6 +32,85 @@ TEST(ObjectReadStreambufTest, FailedTellg) {
   EXPECT_EQ(-1, stream.tellg());
 }
 
+TEST(ObjectReadStreambufTest, TellgReadFromOffset) {
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(ReadSourceResult{15, {}}))
+      .WillOnce(Return(ReadSourceResult{10, {}}));
+  ObjectReadStreambuf buf(
+      ReadObjectRangeRequest{}.set_option(ReadFromOffset(1024)),
+      std::move(read_source));
+
+  std::istream stream(&buf);
+  EXPECT_EQ(stream.tellg(), 1024);
+  std::vector<char> v(1024);
+  stream.read(v.data(), 15);
+  EXPECT_EQ(stream.tellg(), 1024 + 15);
+  stream.read(v.data(), 10);
+  EXPECT_EQ(stream.tellg(), 1024 + 15 + 10);
+}
+
+TEST(ObjectReadStreambufTest, TellgReadRange) {
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(ReadSourceResult{15, {}}))
+      .WillOnce(Return(ReadSourceResult{10, {}}));
+  ObjectReadStreambuf buf(
+      ReadObjectRangeRequest{}.set_option(ReadRange(2048, 4096)),
+      std::move(read_source));
+
+  std::istream stream(&buf);
+  EXPECT_EQ(stream.tellg(), 2048);
+  std::vector<char> v(1024);
+  stream.read(v.data(), 15);
+  EXPECT_EQ(stream.tellg(), 2048 + 15);
+  stream.read(v.data(), 10);
+  EXPECT_EQ(stream.tellg(), 2048 + 15 + 10);
+}
+
+TEST(ObjectReadStreambufTest, TellgReadLastUnknownSize) {
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(ReadSourceResult{15, {}}))
+      .WillOnce(Return(ReadSourceResult{10, {}}));
+  ObjectReadStreambuf buf(ReadObjectRangeRequest{}.set_option(ReadLast(512)),
+                          std::move(read_source));
+
+  std::istream stream(&buf);
+  EXPECT_EQ(stream.tellg(), -1);
+  std::vector<char> v(1024);
+  stream.read(v.data(), 15);
+  EXPECT_EQ(stream.tellg(), -1);
+  stream.read(v.data(), 10);
+  EXPECT_EQ(stream.tellg(), -1);
+}
+
+TEST(ObjectReadStreambufTest, TellgReadLastSize) {
+  auto make_response = [](std::size_t count) {
+    auto response = ReadSourceResult{count, {}};
+    response.size = 2048;
+    return response;
+  };
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(make_response(15)))
+      .WillOnce(Return(make_response(10)));
+  ObjectReadStreambuf buf(ReadObjectRangeRequest{}.set_option(ReadLast(512)),
+                          std::move(read_source));
+
+  std::istream stream(&buf);
+  EXPECT_EQ(stream.tellg(), -1);
+  std::vector<char> v(1024);
+  stream.read(v.data(), 15);
+  EXPECT_EQ(stream.tellg(), 2048 - 512 + 15);
+  stream.read(v.data(), 10);
+  EXPECT_EQ(stream.tellg(), 2048 - 512 + 15 + 10);
+}
+
 TEST(ObjectReadStreambufTest, Success) {
   auto read_source = std::make_unique<testing::MockObjectReadSource>();
   EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
@@ -40,7 +119,7 @@ TEST(ObjectReadStreambufTest, Success) {
       .WillOnce(Return(ReadSourceResult{15, {}}))
       .WillOnce(Return(ReadSourceResult{15, {}}))
       .WillOnce(Return(ReadSourceResult{128 * 1024, {}}));
-  ObjectReadStreambuf buf(ReadObjectRangeRequest{}, std::move(read_source), 0);
+  ObjectReadStreambuf buf(ReadObjectRangeRequest{}, std::move(read_source));
 
   std::istream stream(&buf);
   EXPECT_EQ(0, stream.tellg());
@@ -68,7 +147,7 @@ TEST(ObjectReadStreambufTest, WrongSeek) {
   auto read_source = std::make_unique<testing::MockObjectReadSource>();
   EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
   EXPECT_CALL(*read_source, Read).WillOnce(Return(ReadSourceResult{10, {}}));
-  ObjectReadStreambuf buf(ReadObjectRangeRequest{}, std::move(read_source), 0);
+  ObjectReadStreambuf buf(ReadObjectRangeRequest{}, std::move(read_source));
 
   std::istream stream(&buf);
   EXPECT_EQ(0, stream.tellg());
