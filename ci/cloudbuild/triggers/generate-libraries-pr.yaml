@@ -1,3 +1,4 @@
+createTime: '2021-04-23T21:24:15.931797724Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -5,11 +6,12 @@ github:
   pullRequest:
     branch: ^main$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+id: 6dc01f3c-7ccc-422f-8adb-2de0478853b3
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: generate-libraries-pr
 substitutions:
   _BUILD_NAME: generate-libraries
   _DISTRO: checkers
   _TRIGGER_TYPE: pr
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr

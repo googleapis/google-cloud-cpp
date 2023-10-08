@@ -1,3 +1,4 @@
+createTime: '2021-04-26T16:37:32.709851004Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -5,11 +6,13 @@ github:
   pullRequest:
     branch: ^main$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+id: 95e11a96-2138-4d65-8598-25308f1cf5f8
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: bazel-targets-pr
+resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/95e11a96-2138-4d65-8598-25308f1cf5f8
 substitutions:
   _BUILD_NAME: bazel-targets
   _DISTRO: fedora-latest-bazel
   _TRIGGER_TYPE: pr
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr

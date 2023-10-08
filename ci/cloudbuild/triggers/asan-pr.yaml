@@ -1,3 +1,4 @@
+createTime: '2021-04-09T18:15:26.533760362Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -5,11 +6,13 @@ github:
   pullRequest:
     branch: ^main$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+id: 45fd50c2-04f1-4674-b533-0db1346c8b7e
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: asan-pr
+resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/45fd50c2-04f1-4674-b533-0db1346c8b7e
 substitutions:
   _BUILD_NAME: asan
   _DISTRO: fedora-latest-bazel
   _TRIGGER_TYPE: pr
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr

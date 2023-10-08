@@ -1,14 +1,17 @@
+createTime: '2022-02-08T12:44:34.878690706Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: ^main$
+id: 3a7690ee-a385-4e86-835e-990a64eb71d7
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: bazel-oldest-ci
+resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/3a7690ee-a385-4e86-835e-990a64eb71d7
 substitutions:
   _BUILD_NAME: bazel-oldest
   _DISTRO: fedora-latest-bazel
   _TRIGGER_TYPE: ci
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - ci
