@@ -37,7 +37,7 @@ ObjectReadStreambuf::ObjectReadStreambuf(
     ReadObjectRangeRequest const& request,
     std::unique_ptr<ObjectReadSource> source)
     : source_(std::move(source)),
-      source_pos_(static_cast<std::streamoff>(InitialOffset(request))),
+      source_pos_(InitialOffset(request)),
       hash_function_(CreateHashFunction(request)),
       hash_validator_(CreateHashValidator(request)) {}
 
@@ -221,8 +221,7 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   if (source_pos_ >= 0) {
     source_pos_ += static_cast<std::streamoff>(read->bytes_received);
   } else if (size_) {
-    source_pos_ = *size_ + source_pos_ +
-                  static_cast<std::streamoff>(read->bytes_received);
+    source_pos_ += *size_ + static_cast<std::streamoff>(read->bytes_received);
   }
   return run_validator_if_closed(Status());
 }
