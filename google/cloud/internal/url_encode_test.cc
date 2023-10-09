@@ -31,11 +31,16 @@ TEST(UrlEncode, Simple) {
 }
 
 TEST(UrlEncode, MultipleReplacements) {
-  auto const* unencoded_string = "%>/@";
+  auto const* unencoded_string = R"( "#$%&+,/:;<)"
+                                 R"(=>?@[\]^`{|})"
+                                 "\177abcdABCD123";
 
   auto result = UrlEncode(unencoded_string);
 
-  auto const* encoded_string = "%25%3E%2F%40";
+  auto const* encoded_string =
+      "%20%22%23%24%25%26%2B%2C%2F%3A%3B%3C"
+      "%3D%3E%3F%40%5B%5C%5D%5E%60%7B%7C%7D"
+      "%7FabcdABCD123";
   EXPECT_THAT(result, encoded_string);
 }
 
@@ -49,12 +54,22 @@ TEST(UrlDecode, Simple) {
 }
 
 TEST(UrlDecode, MultipleReplacements) {
-  auto const* encoded_string = "%25%3E%2F%40";
+  auto const* encoded_string =
+      "%20%22%23%24%25%26%2B%2C%2F%3A%3B%3C"
+      "%3D%3E%3F%40%5B%5C%5D%5E%60%7B%7C%7D"
+      "%7FabcdABCD123";
 
   auto result = UrlDecode(encoded_string);
 
-  auto const* unencoded_string = "%>/@";
+  auto const* unencoded_string = R"( "#$%&+,/:;<)"
+                                 R"(=>?@[\]^`{|})"
+                                 "\177abcdABCD123";
   EXPECT_THAT(result, unencoded_string);
+}
+
+TEST(UrlDecode, PercentNoOverlap) {
+  EXPECT_THAT(UrlEncode("%25"), "%2525");
+  EXPECT_THAT(UrlDecode("%2525"), "%25");
 }
 
 }  // namespace
