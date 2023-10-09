@@ -26,7 +26,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::ostream& operator<<(std::ostream& os, BucketAutoclass const& rhs) {
   google::cloud::internal::IosFlagsSaver flags(os);
   return os << "{enabled=" << std::boolalpha << rhs.enabled << ", toggle_time="
-            << google::cloud::internal::FormatRfc3339(rhs.toggle_time) << "}";
+            << google::cloud::internal::FormatRfc3339(rhs.toggle_time)
+            << ", terminal_storage_class=" << rhs.terminal_storage_class
+            << ", terminal_storage_class_update="
+            << google::cloud::internal::FormatRfc3339(
+                   rhs.terminal_storage_class_update)
+            << "}";
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -90,6 +90,8 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
           autoclass {
             enabled: true
             toggle_time {}
+            terminal_storage_class: "NEARLINE"
+            terminal_storage_class_update_time {}
           }
           billing { requester_pays: true }
           default_object_acl {
@@ -137,7 +139,7 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
           .set_name("test-bucket")
           .set_storage_class("NEARLINE")
           .set_location("us-central1")
-          .set_autoclass(storage::BucketAutoclass{true})
+          .set_autoclass(storage::BucketAutoclass{true, "NEARLINE"})
           .set_billing(storage::BucketBilling(true))
           .set_rpo(storage::RpoAsyncTurbo())
           .set_versioning(storage::BucketVersioning(true))

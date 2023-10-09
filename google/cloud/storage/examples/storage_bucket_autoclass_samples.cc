@@ -72,6 +72,30 @@ void SetAutoclass(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), enabled);
 }
 
+void SetAutoclassArchive(google::cloud::storage::Client client,
+                         std::vector<std::string> const& argv) {
+  using ::google::cloud::storage::examples::Usage;
+  //! [set-autoclass-archive]
+  namespace gcs = ::google::cloud::storage;
+  [](gcs::Client client, std::string const& bucket_name) {
+    auto metadata = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetAutoclass(
+            gcs::BucketAutoclass{true, gcs::storage_class::Archive()}));
+    if (!metadata) throw google::cloud::Status(std::move(metadata).status());
+
+    std::cout << "The autoclass configuration for bucket " << bucket_name
+              << " was successfully updated.";
+    if (!metadata->has_autoclass()) {
+      std::cout << " The bucket no longer has an autoclass configuration.\n";
+      return;
+    }
+    std::cout << " The new configuration is " << metadata->autoclass() << "\n";
+  }
+  //! [set-autoclass-archive]
+  (std::move(client), argv.at(0));
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
@@ -83,15 +107,19 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  // We need multiple buckets because in production the autoclass state cannot
+  // be reset until 24 hours have elapsed.
   auto const bucket_name_enabled = examples::MakeRandomBucketName(generator);
   auto const bucket_name_disabled = examples::MakeRandomBucketName(generator);
+  auto const bucket_name_archive = examples::MakeRandomBucketName(generator);
   auto const object_name =
       examples::MakeRandomObjectName(generator, "object-") + ".txt";
   auto client = gcs::Client();
 
   std::cout << "\nCreating buckets to run the example:"
             << "\nEnabled Autoclass: " << bucket_name_enabled
-            << "\nDisabled Autoclass: " << bucket_name_disabled << std::endl;
+            << "\nDisabled Autoclass: " << bucket_name_disabled
+            << "\nArchive Autoclass: " << bucket_name_archive << std::endl;
   // In GCS a single project cannot create or delete buckets more often than
   // once every two seconds. We will pause until that time before deleting the
   // bucket.
@@ -109,6 +137,13 @@ void RunAll(std::vector<std::string> const& argv) {
           gcs::BucketMetadata{}.set_autoclass(gcs::BucketAutoclass{false}),
           examples::CreateBucketOptions())
       .value();
+  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
+  (void)client
+      .CreateBucketForProject(
+          bucket_name_archive, project_id,
+          gcs::BucketMetadata{}.set_autoclass(gcs::BucketAutoclass{false}),
+          examples::CreateBucketOptions())
+      .value();
   auto const pause = std::chrono::steady_clock::now() + kBucketPeriod;
 
   std::cout << "\nRunning GetAutoclass() example [enabled]" << std::endl;
@@ -120,10 +155,15 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetAutoclass() example" << std::endl;
   SetAutoclass(client, {bucket_name_enabled, "false"});
 
+  std::cout << "\nRunning SetAutoclassArchive() example" << std::endl;
+  SetAutoclassArchive(client, {bucket_name_archive});
+
   if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
   (void)examples::RemoveBucketAndContents(client, bucket_name_enabled);
   if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
   (void)examples::RemoveBucketAndContents(client, bucket_name_disabled);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
+  (void)examples::RemoveBucketAndContents(client, bucket_name_archive);
 }
 
 }  // namespace
@@ -135,6 +175,8 @@ int main(int argc, char* argv[]) {
                                    GetAutoclass),
       examples::CreateCommandEntry(
           "set-autoclass", {"<bucket-name>", "<enabled>"}, SetAutoclass),
+      examples::CreateCommandEntry("set-autoclass-archive", {"<bucket-name>"},
+                                   SetAutoclassArchive),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

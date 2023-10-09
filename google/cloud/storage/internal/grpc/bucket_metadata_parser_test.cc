@@ -122,6 +122,11 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     autoclass {
       enabled: true
       toggle_time { seconds: 1665108184 nanos: 123456000 }
+      terminal_storage_class: "NEARLINE"
+      terminal_storage_class_update_time: {
+        seconds: 1665108124
+        nanos: 123456000
+      }
     }
   )pb";
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
@@ -234,7 +239,9 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-id",
     "autoclass": {
       "enabled": true,
-      "toggleTime": "2022-10-07T02:03:04.123456000Z"
+      "toggleTime": "2022-10-07T02:03:04.123456000Z",
+      "terminalStorageClass": "NEARLINE",
+      "terminalStorageClassUpdateTime": "2022-10-07T02:02:04.123456000Z"
     }
   })""");
   ASSERT_THAT(expected, IsOk());
@@ -254,13 +261,18 @@ TEST(GrpcBucketMetadataParser, BucketAutoclassRoundtrip) {
   auto constexpr kText = R"pb(
     enabled: true
     toggle_time { seconds: 1665108184 nanos: 123456000 }
+    terminal_storage_class: "NEARLINE"
+    terminal_storage_class_update_time { seconds: 1665108194 nanos: 123456000 }
   )pb";
   google::storage::v2::Bucket::Autoclass start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
   auto const expected_toggle =
       google::cloud::internal::ParseRfc3339("2022-10-07T02:03:04.123456000Z");
   ASSERT_STATUS_OK(expected_toggle);
-  auto const expected = storage::BucketAutoclass{true, *expected_toggle};
+  auto const expected_tscu =
+      google::cloud::internal::ParseRfc3339("2022-10-07T02:03:14.123456000Z");
+  auto const expected = storage::BucketAutoclass{true, *expected_toggle,
+                                                 "NEARLINE", *expected_tscu};
   auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
   auto const end = ToProto(middle);

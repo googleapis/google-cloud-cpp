@@ -88,7 +88,11 @@ Status ParseAutoclass(BucketMetadata& meta, nlohmann::json const& json) {
   if (!enabled) return std::move(enabled).status();
   auto toggle = internal::ParseTimestampField(*f, "toggleTime");
   if (!toggle) return std::move(toggle).status();
-  meta.set_autoclass(BucketAutoclass{*enabled, *toggle});
+  auto tsc = f->value("terminalStorageClass", "");
+  auto tscu =
+      internal::ParseTimestampField(*f, "terminalStorageClassUpdateTime");
+  if (!tscu) return std::move(tscu).status();
+  meta.set_autoclass(BucketAutoclass{*enabled, *toggle, std::move(tsc), *tscu});
   return Status{};
 }
 
@@ -300,9 +304,11 @@ void ToJsonCors(nlohmann::json& json, BucketMetadata const& meta) {
 
 void ToJsonAutoclass(nlohmann::json& json, BucketMetadata const& meta) {
   if (!meta.has_autoclass()) return;
-  json["autoclass"] = nlohmann::json{
-      {"enabled", meta.autoclass().enabled},
-  };
+  auto a = nlohmann::json{{"enabled", meta.autoclass().enabled}};
+  if (!meta.autoclass().terminal_storage_class.empty()) {
+    a["terminalStorageClass"] = meta.autoclass().terminal_storage_class;
+  }
+  json["autoclass"] = std::move(a);
 }
 
 void ToJsonBilling(nlohmann::json& json, BucketMetadata const& meta) {

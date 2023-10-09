@@ -70,7 +70,9 @@ BucketMetadata CreateBucketMetadataForTest() {
       ],
       "autoclass": {
         "enabled": true,
-        "toggleTime": "2022-10-07T01:02:03Z"
+        "toggleTime": "2022-10-07T01:02:03Z",
+        "terminalStorageClass": "NEARLINE",
+        "terminalStorageClassUpdateTime": "2022-10-07T01:02:34Z"
       },
       "billing": {
         "requesterPays": true
@@ -187,8 +189,11 @@ TEST(BucketMetadataTest, Parse) {
       google::cloud::internal::ParseRfc3339("2022-10-07T01:02:03Z");
   ASSERT_STATUS_OK(expected_autoclass_toggle);
   ASSERT_TRUE(actual.has_autoclass());
+  auto const expected_tscu =
+      google::cloud::internal::ParseRfc3339("2022-10-07T01:02:34Z");
   EXPECT_EQ(actual.autoclass(),
-            BucketAutoclass(true, *expected_autoclass_toggle));
+            BucketAutoclass(true, *expected_autoclass_toggle, "NEARLINE",
+                            *expected_tscu));
 
   EXPECT_TRUE(actual.billing().requester_pays);
   EXPECT_EQ(2, actual.cors().size());
@@ -318,7 +323,9 @@ TEST(BucketMetadataTest, IOStream) {
   // autoclass()
   EXPECT_THAT(
       actual,
-      HasSubstr("autoclass={enabled=true, toggle_time=2022-10-07T01:02:03Z}"));
+      HasSubstr("autoclass={enabled=true, toggle_time=2022-10-07T01:02:03Z,"
+                " terminal_storage_class=NEARLINE,"
+                " terminal_storage_class_update=2022-10-07T01:02:34Z}"));
 
   // billing()
   EXPECT_THAT(actual, HasSubstr("enabled=true"));
@@ -407,6 +414,8 @@ TEST(BucketMetadataTest, ToJsonString) {
       {"enabled", true},
       // "toggleTime" is OUTPUT_ONLY and thus not included in the
       // JSON string for create/update.
+      {"terminalStorageClass", "NEARLINE"},
+      // "terminateStorageClassUpdateTime" is OUTPUT_ONLY too.
   };
   EXPECT_EQ(actual["autoclass"], expected_autoclass);
 
@@ -999,6 +1008,18 @@ TEST(BucketMetadataPatchBuilder, ResetAcl) {
 }
 
 TEST(BucketMetadataPatchBuilder, SetAutoclass) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetAutoclass(BucketAutoclass(true, "ARCHIVE"));
+
+  auto actual = builder.BuildPatch();
+  auto const json = nlohmann::json::parse(actual);
+  ASSERT_TRUE(json.contains("autoclass")) << json;
+  auto const expected_autoclass =
+      nlohmann::json{{"enabled", true}, {"terminalStorageClass", "ARCHIVE"}};
+  EXPECT_EQ(expected_autoclass, json["autoclass"]);
+}
+
+TEST(BucketMetadataPatchBuilder, SetAutoclassNoTerminal) {
   BucketMetadataPatchBuilder builder;
   builder.SetAutoclass(BucketAutoclass(true));
 
