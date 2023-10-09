@@ -119,7 +119,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nCreating buckets to run the example:"
             << "\nEnabled Autoclass: " << bucket_name_enabled
             << "\nDisabled Autoclass: " << bucket_name_disabled
-            << "\nArchive Autclass: " << bucket_name_archive << std::endl;
+            << "\nArchive Autoclass: " << bucket_name_archive << std::endl;
   // In GCS a single project cannot create or delete buckets more often than
   // once every two seconds. We will pause until that time before deleting the
   // bucket.
