@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/testing/mock_message_batch.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -27,6 +28,11 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::MakeSpan;
+using ::google::cloud::testing_util::EventNamed;
+using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::SpanHasEvents;
+using ::testing::AllOf;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 
 namespace {
@@ -65,6 +71,26 @@ TEST(TracingMessageBatch, SaveMultipleMessages) {
 
   auto spans = message_batch->GetSpans();
   EXPECT_THAT(spans, ElementsAre(span1, span2));
+}
+
+TEST(TracingMessageBatch, SaveMessageAddsEvent) {
+  auto span_catcher = InstallSpanCatcher();
+  auto span = MakeSpan("test span");
+  opentelemetry::trace::Scope scope(span);
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, SaveMessage);
+  auto message_batch = std::make_unique<TracingMessageBatch>(std::move(mock));
+  auto message = pubsub::MessageBuilder().SetData("test").Build();
+
+  message_batch->SaveMessage(message);
+
+  span->End();
+  auto spans = message_batch->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(span));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      Contains(AllOf(SpanHasEvents(EventNamed("gl-cpp.added_to_batch")))));
 }
 
 }  // namespace

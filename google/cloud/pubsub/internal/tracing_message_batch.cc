@@ -32,6 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 void TracingMessageBatch::SaveMessage(pubsub::Message m) {
   auto active_span = opentelemetry::trace::GetSpan(
       opentelemetry::context::RuntimeContext::GetCurrent());
+  active_span->AddEvent("gl-cpp.added_to_batch");
   message_spans_.push_back(active_span);
   child_->SaveMessage(std::move(m));
 }
