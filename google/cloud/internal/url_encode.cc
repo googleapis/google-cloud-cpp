@@ -15,36 +15,44 @@
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include <array>
+#include <utility>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+namespace {
+
+using UrlMappings =
+    std::array<std::pair<absl::string_view, absl::string_view>, 25>;
+
+constexpr auto kEncodeMappings = UrlMappings{{
+    {" ", "%20"}, {"\"", "%22"}, {"#", "%23"},  {"$", "%24"}, {"%", "%25"},
+    {"&", "%26"}, {"+", "%2B"},  {",", "%2C"},  {"/", "%2F"}, {":", "%3A"},
+    {";", "%3B"}, {"<", "%3C"},  {"=", "%3D"},  {">", "%3E"}, {"?", "%3F"},
+    {"@", "%40"}, {"[", "%5B"},  {"\\", "%5C"}, {"]", "%5D"}, {"^", "%5E"},
+    {"`", "%60"}, {"{", "%7B"},  {"|", "%7C"},  {"}", "%7D"}, {"\177", "%7F"},
+}};
+
+// Until we require C++17, it isn't worth trying to eliminate the duplication
+// using a constexpr function to produce kDecodeMappings from kEncodeMappings.
+constexpr auto kDecodeMappings = UrlMappings{{
+    {"%20", " "}, {"%22", "\""}, {"%23", "#"},  {"%24", "$"}, {"%25", "%"},
+    {"%26", "&"}, {"%2B", "+"},  {"%2C", ","},  {"%2F", "/"}, {"%3A", ":"},
+    {"%3B", ";"}, {"%3C", "<"},  {"%3D", "="},  {"%3E", ">"}, {"%3F", "?"},
+    {"%40", "@"}, {"%5B", "["},  {"%5C", "\\"}, {"%5D", "]"}, {"%5E", "^"},
+    {"%60", "`"}, {"%7B", "{"},  {"%7C", "|"},  {"%7D", "}"}, {"%7F", "\177"},
+}};
+
+}  // namespace
+
 std::string UrlEncode(absl::string_view value) {
-  using CharMapping = std::pair<absl::string_view, absl::string_view>;
-  auto const mappings = std::array<CharMapping, 25>{
-      {{" ", "%20"},   {"\"", "%22"}, {"#", "%23"}, {"$", "%24"},
-       {"%", "%25"},   {"&", "%26"},  {"+", "%2B"}, {",", "%2C"},
-       {"/", "%2F"},   {":", "%3A"},  {";", "%3B"}, {"<", "%3C"},
-       {"=", "%3D"},   {">", "%3E"},  {"?", "%3F"}, {"@", "%40"},
-       {"[", "%5B"},   {"\\", "%5C"}, {"]", "%5D"}, {"^", "%5E"},
-       {"`", "%60"},   {"{", "%7B"},  {"|", "%7C"}, {"}", "%7D"},
-       {"\177", "%7F"}}};
-  return absl::StrReplaceAll(value, mappings);
+  return absl::StrReplaceAll(value, kEncodeMappings);
 }
 
 std::string UrlDecode(absl::string_view value) {
-  using CharMapping = std::pair<absl::string_view, absl::string_view>;
-  auto const mappings = std::array<CharMapping, 25>{
-      {{"%20", " "},   {"%22", "\""}, {"%23", "#"}, {"%24", "$"},
-       {"%25", "%"},   {"%26", "&"},  {"%2B", "+"}, {"%2C", ","},
-       {"%2F", "/"},   {"%3A", ":"},  {"%3B", ";"}, {"%3C", "<"},
-       {"%3D", "="},   {"%3E", ">"},  {"%3F", "?"}, {"%40", "@"},
-       {"%5B", "["},   {"%5C", "\\"}, {"%5D", "]"}, {"%5E", "^"},
-       {"%60", "`"},   {"%7B", "{"},  {"%7C", "|"}, {"%7D", "}"},
-       {"%7F", "\177"}}};
-  return absl::StrReplaceAll(value, mappings);
+  return absl::StrReplaceAll(value, kDecodeMappings);
 }
 
 }  // namespace internal
