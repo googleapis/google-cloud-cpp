@@ -90,11 +90,11 @@ configure_template(
     output = "crc32c/crc32c_config.h",
     substitutions = {
         "#cmakedefine01": "#define",
-        # On x86_64 endianness is always little end.  ARM64 is bi-endian,
-        # fortunately.  macOS and Windows only use little endian.
+        # x86_64 is always little endian. ARM64 is bi-endian. Fortunately, macOS
+        # and Windows only use little endian. We assume the same is true for
+        # Linux.
         #    https://devblogs.microsoft.com/oldnewthing/20220726-00
         #    https://developer.apple.com/documentation/apple-silicon/porting-your-macos-apps-to-apple-silicon
-        # We are going to assume the same is true for Linux.
         " BYTE_ORDER_BIG_ENDIAN": " BYTE_ORDER_BIG_ENDIAN 0",
         " HAVE_BUILTIN_PREFETCH": " HAVE_BUILTIN_PREFETCH 0",
         " HAVE_MM_PREFETCH": " HAVE_MM_PREFETCH 0",
@@ -102,15 +102,15 @@ configure_template(
         " HAVE_WEAK_GETAUXVAL": " HAVE_WEAK_GETAUXVAL 0",
         " CRC32C_TESTS_BUILT_WITH_GLOG": " CRC32C_TESTS_BUILT_WITH_GLOG 0",
     } | select({
-        # We are going to assume all x86_64 CPUs support SSE4.2. This seems
-        # reasonably safe in 2023.
+        # We assume all x86_64 CPUs support SSE4.2. This seems reasonably safe
+        # in 2023.
         "@platforms//cpu:x86_64": {
             " HAVE_SSE42": " HAVE_SSE42 1",
             " HAVE_ARM64_CRC32C": " HAVE_ARM64_CRC32C 0",
         },
-        # We are going to assume all ARM64 CPUs support CRC32C extensions. This
-        # seems reasonably safe for workstations and servers in 2023, and we
-        # do not target mobile platforms at the moment.
+        # We assume all ARM64 CPUs support CRC32C extensions. This seems
+        # reasonably safe for workstations and servers in 2023, and we do not
+        # target mobile platforms at the moment.
         "@platforms//cpu:arm64": {
             " HAVE_SSE42": " HAVE_SSE42 0",
             " HAVE_ARM64_CRC32C": " HAVE_ARM64_CRC32C 1",
