@@ -55,15 +55,26 @@ crc32c_SRCS = [
 # select() cannot be use recursively, need to introduce temporary conjunctions.
 selects.config_setting_group(
     name = "linux_sse42",
-    match_all = ["@platforms//os:linux", "@platforms//cpu:x86_64"],
+    match_all = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
 )
+
 selects.config_setting_group(
     name = "macos_sse42",
-    match_all = ["@platforms//os:macos", "@platforms//cpu:x86_64"],
+    match_all = [
+        "@platforms//os:macos",
+        "@platforms//cpu:x86_64",
+    ],
 )
+
 selects.config_setting_group(
     name = "windows_sse42",
-    match_all = ["@platforms//os:windows", "@platforms//cpu:x86_64"],
+    match_all = [
+        "@platforms//os:windows",
+        "@platforms//cpu:x86_64",
+    ],
 )
 
 crc32c_copts = select({
@@ -95,14 +106,14 @@ configure_template(
         # reasonably safe in 2023.
         "@platforms//cpu:x86_64": {
             " HAVE_SSE42": " HAVE_SSE42 1",
-            " HAVE_ARM64_CRC32C": " HAVE_ARM64_CRC32C 0"
+            " HAVE_ARM64_CRC32C": " HAVE_ARM64_CRC32C 0",
         },
         # We are going to assume all ARM64 CPUs support CRC32C extensions. This
         # seems reasonably safe for workstations and servers in 2023, and we
         # do not target mobile platforms at the moment.
         "@platforms//cpu:arm64": {
             " HAVE_SSE42": " HAVE_SSE42 0",
-            " HAVE_ARM64_CRC32C": " HAVE_ARM64_CRC32C 1"
+            " HAVE_ARM64_CRC32C": " HAVE_ARM64_CRC32C 1",
         },
         "//conditions:default": {},
     }),
