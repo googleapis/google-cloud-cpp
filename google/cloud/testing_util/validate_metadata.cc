@@ -44,6 +44,7 @@ namespace testing_util {
 namespace {
 
 using ::google::protobuf::DescriptorPool;
+using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Matcher;
@@ -79,6 +80,11 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
                                  " is listed more than once";
   }
   return res;
+}
+
+MATCHER(IsUrlEncoded, "") {
+  std::regex regex(R"re([A-Za-z0-9%_.~-]*)re");
+  return std::regex_match(arg, regex);
 }
 
 /**
@@ -339,7 +345,8 @@ void ValidateMetadataFixture::IsContextMDValid(
   std::vector<Matcher<std::pair<std::string, std::string>>> matchers;
   matchers.reserve(expected.size());
   for (auto const& param : expected) {
-    matchers.push_back(Pair(param.first, MatchesGlob(param.second)));
+    matchers.push_back(
+        Pair(param.first, AllOf(IsUrlEncoded(), MatchesGlob(param.second))));
   }
   EXPECT_THAT(actual, UnorderedElementsAreArray(matchers));
 }
