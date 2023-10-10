@@ -31,7 +31,7 @@ class NoOpMessageBatch : public MessageBatch {
 
   ~NoOpMessageBatch() override = default;
 
-  void SaveMessage(pubsub::Message m) override{};
+  void SaveMessage(pubsub::Message) override{};
 
   void Flush() override{};
 
