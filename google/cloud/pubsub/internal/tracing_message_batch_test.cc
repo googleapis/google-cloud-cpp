@@ -31,9 +31,15 @@ using ::google::cloud::internal::MakeSpan;
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanHasEvents;
+using ::google::cloud::testing_util::SpanHasInstrumentationScope;
+using ::google::cloud::testing_util::SpanKindIsClient;
+using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanWithStatus;
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ElementsAre;
+using ::testing::IsEmpty;
+using ::testing::SizeIs;
 
 namespace {
 
@@ -91,6 +97,67 @@ TEST(TracingMessageBatch, SaveMessageAddsEvent) {
   EXPECT_THAT(
       span_catcher->GetSpans(),
       Contains(AllOf(SpanHasEvents(EventNamed("gl-cpp.added_to_batch")))));
+}
+
+TEST(TracingMessageBatch, FlushCallback) {
+  auto span_catcher = InstallSpanCatcher();
+  auto span = MakeSpan("test batch sink span");
+  opentelemetry::trace::Scope scope(span);
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, FlushCallback);
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+      message_spans;
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+      batch_sink_spans;
+  batch_sink_spans.emplace_back(span);
+  auto message_batch = std::make_unique<TracingMessageBatch>(
+      std::move(mock), message_spans, batch_sink_spans);
+
+  message_batch->FlushCallback();
+
+  // Verifies that the spans were ended. If the span was not ended, `GetSpans`
+  // would be empty.
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, SizeIs(1));
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(SpanNamed("test batch sink span"),
+                     SpanHasInstrumentationScope(), SpanKindIsClient(),
+                     SpanWithStatus(opentelemetry::trace::StatusCode::kOk))));
+  EXPECT_THAT(message_batch->GetBatchSinkSpans(), IsEmpty());
+}
+
+TEST(TracingMessageBatch, FlushCallbackWithMultipleMessages) {
+  auto span_catcher = InstallSpanCatcher();
+  auto span1 = MakeSpan("test batch sink span 1");
+  auto span2 = MakeSpan("test batch sink span 2");
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, FlushCallback);
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+      message_spans;
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+      batch_sink_spans;
+  batch_sink_spans.reserve(2);
+  batch_sink_spans.emplace_back(span1);
+  batch_sink_spans.emplace_back(span2);
+  auto message_batch = std::make_unique<TracingMessageBatch>(
+      std::move(mock), message_spans, batch_sink_spans);
+
+  message_batch->FlushCallback();
+
+  // Verifies that the spans were ended. If the span was not ended, `GetSpans`
+  // would be empty.
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, SizeIs(2));
+  EXPECT_THAT(
+      spans, ElementsAre(
+                 AllOf(SpanNamed("test batch sink span 1"),
+                       SpanHasInstrumentationScope(), SpanKindIsClient(),
+                       SpanWithStatus(opentelemetry::trace::StatusCode::kOk)),
+                 AllOf(SpanNamed("test batch sink span 2"),
+                       SpanHasInstrumentationScope(), SpanKindIsClient(),
+                       SpanWithStatus(opentelemetry::trace::StatusCode::kOk))));
+  EXPECT_THAT(message_batch->GetBatchSinkSpans(), IsEmpty());
 }
 
 }  // namespace

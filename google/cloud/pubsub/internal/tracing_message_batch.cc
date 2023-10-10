@@ -40,12 +40,22 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
 // TODO(#12528): Implement functionality for Flush.
 void TracingMessageBatch::Flush() { child_->Flush(); }
 
-// TODO(#12528): Implement functionality for FlushCallback.
-void TracingMessageBatch::FlushCallback() { child_->FlushCallback(); }
+void TracingMessageBatch::FlushCallback() {
+  for (auto& span : batch_sink_spans_) {
+    internal::EndSpan(*span);
+  }
+  batch_sink_spans_.clear();
+  child_->FlushCallback();
+}
 
 std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
 TracingMessageBatch::GetSpans() const {
   return message_spans_;
+}
+
+std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+TracingMessageBatch::GetBatchSinkSpans() const {
+  return batch_sink_spans_;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

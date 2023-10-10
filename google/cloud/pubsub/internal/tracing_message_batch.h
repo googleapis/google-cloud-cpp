@@ -38,6 +38,20 @@ class TracingMessageBatch : public MessageBatch {
  public:
   explicit TracingMessageBatch(std::unique_ptr<MessageBatch> child)
       : child_(std::move(child)) {}
+  TracingMessageBatch(
+      std::unique_ptr<MessageBatch> child,
+      std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+          message_spans)
+      : child_(std::move(child)), message_spans_(std::move(message_spans)) {}
+  TracingMessageBatch(
+      std::unique_ptr<MessageBatch> child,
+      std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+          message_spans,
+      std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+          batch_sink_spans)
+      : child_(std::move(child)),
+        message_spans_(std::move(message_spans)),
+        batch_sink_spans_(std::move(batch_sink_spans)) {}
   ~TracingMessageBatch() override = default;
 
   void SaveMessage(pubsub::Message m) override;
@@ -49,12 +63,15 @@ class TracingMessageBatch : public MessageBatch {
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
   GetSpans() const;
 
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+  GetBatchSinkSpans() const;
+
  private:
   std::unique_ptr<MessageBatch> child_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       message_spans_;
-
-  friend class TracingMessageBatchPeer;
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+      batch_sink_spans_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
