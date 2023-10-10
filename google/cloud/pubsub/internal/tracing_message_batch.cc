@@ -33,7 +33,10 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
   auto active_span = opentelemetry::trace::GetSpan(
       opentelemetry::context::RuntimeContext::GetCurrent());
   active_span->AddEvent("gl-cpp.added_to_batch");
-  message_spans_.push_back(active_span);
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    message_spans_.push_back(active_span);
+  }
   child_->SaveMessage(std::move(m));
 }
 
@@ -41,10 +44,12 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
 void TracingMessageBatch::Flush() { child_->Flush(); }
 
 void TracingMessageBatch::FlushCallback() {
-  for (auto& span : batch_sink_spans_) {
-    internal::EndSpan(*span);
+  decltype(batch_sink_spans_) spans;
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    spans.swap(batch_sink_spans_);
   }
-  batch_sink_spans_.clear();
+  for (auto& span : spans) internal::EndSpan(*span);
   child_->FlushCallback();
 }
 

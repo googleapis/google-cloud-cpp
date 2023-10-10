@@ -38,12 +38,14 @@ class TracingMessageBatch : public MessageBatch {
  public:
   explicit TracingMessageBatch(std::unique_ptr<MessageBatch> child)
       : child_(std::move(child)) {}
+ // For testing only.
   TracingMessageBatch(
       std::unique_ptr<MessageBatch> child,
       std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
           message_spans)
       : child_(std::move(child)), message_spans_(std::move(message_spans)) {}
-  TracingMessageBatch(
+ // For testing only.
+TracingMessageBatch(
       std::unique_ptr<MessageBatch> child,
       std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
           message_spans,
@@ -60,9 +62,11 @@ class TracingMessageBatch : public MessageBatch {
 
   void FlushCallback() override;
 
+  // For testing only.
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
   GetSpans() const;
 
+  // For testing only.
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
   GetBatchSinkSpans() const;
 
@@ -72,6 +76,7 @@ class TracingMessageBatch : public MessageBatch {
       message_spans_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       batch_sink_spans_;
+  std::mutex mu_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
