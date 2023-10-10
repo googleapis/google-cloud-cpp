@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCHING_PUBLISHER_CONNECTION_H
 
 #include "google/cloud/pubsub/internal/batch_sink.h"
+#include "google/cloud/pubsub/internal/message_batch.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/version.h"
 #include <chrono>
@@ -37,11 +38,12 @@ class BatchingPublisherConnection
 
   static std::shared_ptr<BatchingPublisherConnection> Create(
       pubsub::Topic topic, Options opts, std::string ordering_key,
-      std::shared_ptr<BatchSink> sink, CompletionQueue cq) {
+      std::shared_ptr<BatchSink> sink, CompletionQueue cq,
+      std::shared_ptr<MessageBatch> batch) {
     return std::shared_ptr<BatchingPublisherConnection>(
-        new BatchingPublisherConnection(std::move(topic), std::move(opts),
-                                        std::move(ordering_key),
-                                        std::move(sink), std::move(cq)));
+        new BatchingPublisherConnection(
+            std::move(topic), std::move(opts), std::move(ordering_key),
+            std::move(sink), std::move(cq), std::move(batch)));
   }
 
   future<StatusOr<std::string>> Publish(PublishParams p) override;
@@ -54,13 +56,15 @@ class BatchingPublisherConnection
   explicit BatchingPublisherConnection(pubsub::Topic topic, Options opts,
                                        std::string ordering_key,
                                        std::shared_ptr<BatchSink> sink,
-                                       CompletionQueue cq)
+                                       CompletionQueue cq,
+                                       std::shared_ptr<MessageBatch> batch)
       : topic_(std::move(topic)),
         topic_full_name_(topic_.FullName()),
         opts_(std::move(opts)),
         ordering_key_(std::move(ordering_key)),
         sink_(std::move(sink)),
-        cq_(std::move(cq)) {}
+        cq_(std::move(cq)),
+        batch_(std::move(batch)) {}
 
   void OnTimer();
   future<StatusOr<std::string>> CorkedError();
@@ -75,6 +79,7 @@ class BatchingPublisherConnection
   std::string const ordering_key_;
   std::shared_ptr<BatchSink> const sink_;
   CompletionQueue cq_;
+  std::shared_ptr<MessageBatch> const batch_;
 
   std::mutex mu_;
   std::vector<promise<StatusOr<std::string>>> waiters_;

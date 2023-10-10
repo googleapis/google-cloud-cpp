@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/testing/mock_batch_sink.h"
+#include "google/cloud/pubsub/testing/mock_message_batch.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/async_sequencer.h"
@@ -62,6 +63,7 @@ std::vector<std::string> MessagesData(
 
 TEST(BatchingPublisherConnectionTest, FastDestructor) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   AsyncSequencer<void> async;
@@ -79,7 +81,7 @@ TEST(BatchingPublisherConnectionTest, FastDestructor) {
           Options{}
               .set<pubsub::MaxBatchMessagesOption>(4)
               .set<pubsub::MaxHoldTimeOption>(kMaxHoldTime)),
-      ordering_key, mock, background.cq());
+      ordering_key, mock, background.cq(), mock_batch);
 
   // Publishing a message starts the batch timer.
   auto pending = publisher->Publish(
@@ -96,6 +98,7 @@ TEST(BatchingPublisherConnectionTest, FastDestructor) {
 
 TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   AsyncSequencer<void> async;
@@ -126,7 +129,7 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
           Options{}
               .set<pubsub::MaxBatchMessagesOption>(4)
               .set<pubsub::MaxHoldTimeOption>(kMaxHoldTime)),
-      ordering_key, mock, background.cq());
+      ordering_key, mock, background.cq(), mock_batch);
 
   // We expect the responses to be satisfied in the context of the completion
   // queue threads. This is an important property, the processing of any
@@ -163,6 +166,7 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
 
 TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
@@ -190,7 +194,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
               .set<pubsub::MaxBatchMessagesOption>(2)
               .set<pubsub::MaxBatchBytesOption>(kMaxBytes)
               .set<pubsub::MaxHoldTimeOption>(kMaxHoldTime)),
-      ordering_key, mock, background.cq());
+      ordering_key, mock, background.cq(), mock_batch);
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -215,6 +219,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
 
 TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
@@ -245,7 +250,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
               .set<pubsub::MaxBatchMessagesOption>(4)
               .set<pubsub::MaxBatchBytesOption>(max_bytes)
               .set<pubsub::MaxHoldTimeOption>(kMaxHoldTime)),
-      ordering_key, mock, background.cq());
+      ordering_key, mock, background.cq()), mock_batch);
   auto r0 = publisher->Publish({m0}).then([](future<StatusOr<std::string>> f) {
     auto r = f.get();
     ASSERT_STATUS_OK(r);
@@ -263,6 +268,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   auto constexpr kSinglePayload = 128;
@@ -303,7 +309,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
           Options{}
               .set<pubsub::MaxBatchMessagesOption>(100)
               .set<pubsub::MaxBatchBytesOption>(kBatchLimit)),
-      ordering_key, mock, cq);
+      ordering_key, mock, cq, mock_batch);
   std::vector<future<Status>> results;
   for (int i = 0; i != 3; ++i) {
     results.push_back(
@@ -331,6 +337,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMessageSizeOversizedSingleton) {
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   auto constexpr kSinglePayload = 128;
@@ -381,7 +388,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeOversizedSingleton) {
           Options{}
               .set<pubsub::MaxBatchMessagesOption>(100)
               .set<pubsub::MaxBatchBytesOption>(kBatchLimit)),
-      ordering_key, mock, cq);
+      ordering_key, mock, cq, mock_batch);
   std::vector<future<Status>> results;
   auto publish_single = [&] {
     results.push_back(
@@ -413,6 +420,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeOversizedSingleton) {
 }
 
 TEST(BatchingPublisherConnectionTest, BatchTorture) {
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   auto constexpr kMaxMessages = 20;
@@ -448,7 +456,7 @@ TEST(BatchingPublisherConnectionTest, BatchTorture) {
           Options{}
               .set<pubsub::MaxBatchMessagesOption>(kMaxMessages)
               .set<pubsub::MaxBatchBytesOption>(kMaxPayload)),
-      ordering_key, mock, background.cq());
+      ordering_key, mock, background.cq(), mock_batch);
 
   auto worker = [&](int iterations) {
     auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
@@ -477,6 +485,7 @@ TEST(BatchingPublisherConnectionTest, BatchTorture) {
 
 TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
@@ -500,7 +509,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
           Options{}
               .set<pubsub::MaxBatchMessagesOption>(4)
               .set<pubsub::MaxHoldTimeOption>(std::chrono::milliseconds(5))),
-      /*ordering_key=*/{}, mock, cq);
+      /*ordering_key=*/{}, mock, cq, mock_batch);
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -531,6 +540,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
 
 TEST(BatchingPublisherConnectionTest, BatchByFlush) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
@@ -565,7 +575,7 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
           Options{}
               .set<pubsub::MaxBatchMessagesOption>(4)
               .set<pubsub::MaxHoldTimeOption>(std::chrono::milliseconds(5))),
-      ordering_key, mock, cq);
+      ordering_key, mock, cq, mock_batch);
 
   std::vector<future<void>> results;
   for (auto i : {0, 1}) {
@@ -608,6 +618,7 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
 
 TEST(BatchingPublisherConnectionTest, HandleError) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   auto const error_status = Status(StatusCode::kPermissionDenied, "uh-oh");
@@ -622,7 +633,7 @@ TEST(BatchingPublisherConnectionTest, HandleError) {
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       DefaultPublisherOptions(Options{}.set<pubsub::MaxBatchMessagesOption>(2)),
-      ordering_key, mock, bg.cq());
+      ordering_key, mock, bg.cq(), mock_batch);
   auto r0 = publisher->Publish(
       {pubsub::MessageBuilder{}.SetData("test-data-0").Build()});
   auto r1 = publisher->Publish(
@@ -636,6 +647,7 @@ TEST(BatchingPublisherConnectionTest, HandleError) {
 
 TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
@@ -648,7 +660,7 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       DefaultPublisherOptions(Options{}.set<pubsub::MaxBatchMessagesOption>(2)),
-      "test-ordering-key", mock, background.cq());
+      "test-ordering-key", mock, background.cq(), mock_batch);
   auto r0 = publisher->Publish(
       {pubsub::MessageBuilder{}.SetData("test-data-0").Build()});
   auto r1 = publisher->Publish(
@@ -662,6 +674,7 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
 
 TEST(BatchingPublisherConnectionTest, HandleErrorWithOrderingPartialBatch) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   auto const error_status = Status(StatusCode::kPermissionDenied, "uh-oh");
@@ -682,7 +695,7 @@ TEST(BatchingPublisherConnectionTest, HandleErrorWithOrderingPartialBatch) {
       topic,
       DefaultPublisherOptions(
           Options{}.set<pubsub::MaxBatchMessagesOption>(kBatchSize)),
-      ordering_key, mock, cq);
+      ordering_key, mock, cq, mock_batch);
   std::vector<future<StatusOr<std::string>>> results;
   // Create a full batch (by message count) and a partial batch.
   for (int i = 0; i != kBatchSize + kBatchSize / 2; ++i) {
@@ -710,6 +723,7 @@ TEST(BatchingPublisherConnectionTest, HandleErrorWithOrderingPartialBatch) {
 
 TEST(BatchingPublisherConnectionTest, HandleErrorWithOrderingResume) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
+  auto mock_batch = std::make_shared<pubsub_testing::MockMessageBatch>();
   pubsub::Topic const topic("test-project", "test-topic");
   auto const ordering_key = std::string{"test-key"};
 
@@ -743,7 +757,7 @@ TEST(BatchingPublisherConnectionTest, HandleErrorWithOrderingResume) {
           Options{}
               .set<pubsub::MaxBatchMessagesOption>(kBatchSize)
               .set<pubsub::MaxHoldTimeOption>(kMaxHoldTime)),
-      ordering_key, mock, cq);
+      ordering_key, mock, cq, mock_batch);
   std::vector<future<StatusOr<std::string>>> results;
   // Create a full batch (by size).
   for (int i = 0; i != kBatchSize; ++i) {
