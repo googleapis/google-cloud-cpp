@@ -87,17 +87,28 @@ namespace sdk {
 namespace trace {
 
 std::ostream& operator<<(std::ostream& os, SpanData const& rhs) {
+  char const* line_sep = "\n\t\t\t";
   os << "Span {name=" << rhs.GetName()
      << ", kind=" << google::cloud::testing_util::ToString(rhs.GetSpanKind())
      << ", instrumentation_scope {" << rhs.GetInstrumentationScope().GetName()
-     << ", " << rhs.GetInstrumentationScope().GetVersion() << "}, attributes=["
-     << absl::StrJoin(rhs.GetAttributes(), ", ", AttributeFormatter)
-     << "], events=[";
+     << ", " << rhs.GetInstrumentationScope().GetVersion() << "}," << line_sep
+     << "attributes=["
+     << absl::StrJoin(rhs.GetAttributes(), ", ", AttributeFormatter) << "],"
+     << line_sep << "events=[";
   char const* sep = " ";
   for (auto const& e : rhs.GetEvents()) {
     os << sep << "Event {name=" << e.GetName() << ", attributes=["
        << absl::StrJoin(e.GetAttributes(), ", ", AttributeFormatter) << "]}";
-    sep = ", ";
+    sep = ", \n\t\t\t";
+  }
+  os << "]," << line_sep << "links=[";
+  for (auto const& link : rhs.GetLinks()) {
+    os << sep << "Link {span_context="
+       << google::cloud::testing_util::ToString(link.GetSpanContext()) << ","
+       << line_sep << "\t"
+       << "attributes=["
+       << absl::StrJoin(link.GetAttributes(), ", ", AttributeFormatter) << "]}";
+    sep = ", \n\t\t\t";
   }
   return os << "]}";
 }
@@ -138,6 +149,19 @@ std::string ToString(opentelemetry::trace::StatusCode c) {
     default:
       return "UNSET";
   }
+}
+
+std::string ToString(opentelemetry::trace::SpanContext const& span_context) {
+  std::stringstream ss;
+  char trace_id[32] = {0};
+  char span_id[16] = {0};
+  span_context.trace_id().ToLowerBase16(trace_id);
+  span_context.span_id().ToLowerBase16(span_id);
+  ss << "{trace_id: " << std::string(trace_id, 32)
+     << ", span_id: " << std::string(span_id, 16)
+     << ", trace_flags: " << std::to_string(span_context.trace_flags().flags())
+     << "}";
+  return ss.str();
 }
 
 bool ThereIsAnActiveSpan() {

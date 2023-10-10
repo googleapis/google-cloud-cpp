@@ -69,6 +69,12 @@ MATCHER_P(EventAttributesImpl, matcher,
                                        result_listener);
 }
 
+MATCHER_P(LinkAttributesImpl, matcher,
+          ::testing::DescribeMatcher<OTelAttributeMap>(matcher)) {
+  return ::testing::ExplainMatchResult(matcher, arg.GetAttributes(),
+                                       result_listener);
+}
+
 }  // namespace testing_util_internal
 namespace testing_util {
 
@@ -77,6 +83,8 @@ using SpanDataPtr = std::unique_ptr<opentelemetry::sdk::trace::SpanData>;
 std::string ToString(opentelemetry::trace::SpanKind k);
 
 std::string ToString(opentelemetry::trace::StatusCode c);
+
+std::string ToString(opentelemetry::trace::SpanContext const& span_context);
 
 bool ThereIsAnActiveSpan();
 
@@ -184,6 +192,38 @@ template <typename... Args>
 template <typename... Args>
 ::testing::Matcher<SpanDataPtr> SpanEventsAre(Args const&... matchers) {
   return SpanEventsAreImpl(::testing::ElementsAre(matchers...));
+}
+
+MATCHER_P(LinkHasSpanContext, context,
+          "has context" + google::cloud::testing_util::ToString(context)) {
+  auto const& actual = arg.GetSpanContext();
+  *result_listener << "has context: "
+                   << google::cloud::testing_util::ToString(actual);
+  return actual == context;
+}
+
+template <typename... Args>
+::testing::Matcher<opentelemetry::sdk::trace::SpanDataLink>
+SpanLinkAttributesAre(Args const&... matchers) {
+  return testing_util_internal::LinkAttributesImpl(
+      ::testing::UnorderedElementsAre(matchers...));
+}
+
+MATCHER_P(SpanLinksAreImpl, matcher,
+          ::testing::DescribeMatcher<
+              std::vector<opentelemetry::sdk::trace::SpanDataLink>>(matcher)) {
+  return ::testing::ExplainMatchResult(matcher, arg->GetLinks(),
+                                       result_listener);
+}
+
+template <typename... Args>
+::testing::Matcher<SpanDataPtr> SpanHasLinks(Args const&... matchers) {
+  return SpanLinksAreImpl(::testing::IsSupersetOf({matchers...}));
+}
+
+template <typename... Args>
+::testing::Matcher<SpanDataPtr> SpanLinksAre(Args const&... matchers) {
+  return SpanLinksAreImpl(::testing::ElementsAre(matchers...));
 }
 
 class SpanCatcher {
