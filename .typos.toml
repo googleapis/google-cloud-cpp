@@ -6,7 +6,7 @@ extend-exclude = [
     # fields. These typos can be propagated to the generated .h files.
     # TODO(#11736): Try and get typos fixed upstream.
     "generator/discovery/compute_public_google_rest_v1.json",
-    "google/cloud/compute/*/*/*.proto",
+    "protos/google/cloud/compute/*/*/*.proto",
     "google/cloud/compute/*/*/*.h",
     # Truncates strings, which might not form valid words.
     "google/cloud/internal/debug_string_protobuf_test.cc",

@@ -19,9 +19,6 @@ cc_binary(
     srcs = [
         "quickstart.cc",
     ],
-    copts = [
-        "-I$(BINDIR)",
-    ],
     deps = [
         "@google_cloud_cpp//:compute_disks",
     ],

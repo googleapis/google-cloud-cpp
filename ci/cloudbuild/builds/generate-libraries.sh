@@ -40,20 +40,20 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
     //generator:google-cloud-cpp-codegen -- \
     --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
     --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
-    --discovery_proto_path="${PWD}" \
-    --output_path="${PROJECT_ROOT}" \
+    --discovery_proto_path="${PWD}/protos" \
+    --output_path="${PROJECT_ROOT}/protos" \
     --export_output_path="${PROJECT_ROOT}" \
     --check_parameter_comment_substitutions=true \
     --generate_discovery_protos=true \
     --config_file="${PROJECT_ROOT}/generator/generator_config.textproto"
 
   io::log_h2 "Removing obsolete google/cloud/compute/v1/internal/*.proto"
-  find "${PROJECT_ROOT}/google/cloud/compute/v1/internal/" -name '*.proto' -a ! -newer "${newer_tmp_file}" -exec git rm {} \;
+  find "${PROJECT_ROOT}/protos/google/cloud/compute/v1/internal/" -name '*.proto' -a ! -newer "${newer_tmp_file}" -exec git rm {} \;
   rm "${newer_tmp_file}"
 
   io::log_h2 "Formatting and adding any new google/cloud/compute/v1/internal/common_*.proto"
-  find "${PROJECT_ROOT}/google/cloud/compute/v1/internal" -name '*.proto' -exec clang-format -i {} \;
-  git add "${PROJECT_ROOT}/google/cloud/compute/v1/internal/common_*.proto"
+  find "${PROJECT_ROOT}/protos/google/cloud/compute/v1/internal" -name '*.proto' -exec clang-format -i {} \;
+  git add "${PROJECT_ROOT}/protos/google/cloud/compute/v1/internal/common_*.proto"
 
   io::log_h2 "Formatting generated protos"
   git ls-files -z -- '*.proto' |
@@ -68,7 +68,7 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
     //generator:google-cloud-cpp-codegen -- \
     --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
     --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
-    --discovery_proto_path="${PWD}" \
+    --discovery_proto_path="${PWD}/protos" \
     --output_path="${PROJECT_ROOT}" \
     --check_parameter_comment_substitutions=true \
     --config_file="${PROJECT_ROOT}/generator/generator_config.textproto"
