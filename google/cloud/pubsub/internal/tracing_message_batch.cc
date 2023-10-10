@@ -33,19 +33,34 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
   auto active_span = opentelemetry::trace::GetSpan(
       opentelemetry::context::RuntimeContext::GetCurrent());
   active_span->AddEvent("gl-cpp.added_to_batch");
-  message_spans_.push_back(active_span);
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    message_spans_.push_back(std::move(active_span));
+  }
   child_->SaveMessage(std::move(m));
 }
 
 // TODO(#12528): Implement functionality for Flush.
 void TracingMessageBatch::Flush() { child_->Flush(); }
 
-// TODO(#12528): Implement functionality for FlushCallback.
-void TracingMessageBatch::FlushCallback() { child_->FlushCallback(); }
+void TracingMessageBatch::FlushCallback() {
+  decltype(batch_sink_spans_) spans;
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    spans.swap(batch_sink_spans_);
+  }
+  for (auto& span : spans) internal::EndSpan(*span);
+  child_->FlushCallback();
+}
 
 std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
 TracingMessageBatch::GetSpans() const {
   return message_spans_;
+}
+
+std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+TracingMessageBatch::GetBatchSinkSpans() const {
+  return batch_sink_spans_;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
