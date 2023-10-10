@@ -44,6 +44,7 @@ namespace testing_util {
 namespace {
 
 using ::google::protobuf::DescriptorPool;
+using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Matcher;
@@ -79,6 +80,21 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
                                  " is listed more than once";
   }
   return res;
+}
+
+/**
+ * Verify that the string contains no reserved characters, other than '%'.
+ *
+ * See: https://datatracker.ietf.org/doc/html/rfc3986#section-2.1
+ *
+ * Note that it will match something like "%xy", which is not URL encoded. A
+ * more accurate name might be: `IsntObviouslyNotUrlEncoded`. The important
+ * thing is that the match will fail if it encounters a '/', which is found in
+ * almost all of these routing values.
+ */
+MATCHER(IsUrlEncoded, "") {
+  std::regex regex(R"re([A-Za-z0-9%_.~-]*)re");
+  return std::regex_match(arg, regex);
 }
 
 /**
@@ -339,7 +355,8 @@ void ValidateMetadataFixture::IsContextMDValid(
   std::vector<Matcher<std::pair<std::string, std::string>>> matchers;
   matchers.reserve(expected.size());
   for (auto const& param : expected) {
-    matchers.push_back(Pair(param.first, MatchesGlob(param.second)));
+    matchers.push_back(
+        Pair(param.first, AllOf(IsUrlEncoded(), MatchesGlob(param.second))));
   }
   EXPECT_THAT(actual, UnorderedElementsAreArray(matchers));
 }
