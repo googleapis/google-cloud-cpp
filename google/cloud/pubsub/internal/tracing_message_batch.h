@@ -38,14 +38,14 @@ class TracingMessageBatch : public MessageBatch {
  public:
   explicit TracingMessageBatch(std::unique_ptr<MessageBatch> child)
       : child_(std::move(child)) {}
- // For testing only.
+  // For testing only.
   TracingMessageBatch(
       std::unique_ptr<MessageBatch> child,
       std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
           message_spans)
       : child_(std::move(child)), message_spans_(std::move(message_spans)) {}
- // For testing only.
-TracingMessageBatch(
+  // For testing only.
+  TracingMessageBatch(
       std::unique_ptr<MessageBatch> child,
       std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
           message_spans,
