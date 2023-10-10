@@ -79,7 +79,7 @@ AssignResourcesAndTypesToFiles(
     std::map<std::string, DiscoveryResource> const& resources,
     std::map<std::string, DiscoveryTypeVertex>& types,
     DiscoveryDocumentProperties const& document_properties,
-    std::string const& output_path);
+    std::string const& output_path, std::string const& export_output_path);
 
 // Extract hostname typically found in Discovery Documents in the form:
 // https://hostname/
@@ -93,6 +93,7 @@ Status GenerateProtosFromDiscoveryDoc(
     nlohmann::json const& discovery_doc, std::string const& discovery_doc_url,
     std::string const& protobuf_proto_path,
     std::string const& googleapis_proto_path, std::string const& output_path,
+    std::string const& export_output_path,
     std::set<std::string> operation_services = {});
 
 // Recurses through the json accumulating the values of any $ref fields

@@ -444,7 +444,7 @@ AssignResourcesAndTypesToFiles(
     std::map<std::string, DiscoveryResource> const& resources,
     std::map<std::string, DiscoveryTypeVertex>& types,
     DiscoveryDocumentProperties const& document_properties,
-    std::string const& output_path) {
+    std::string const& output_path, std::string const& export_output_path) {
   std::map<std::string, DiscoveryFile> common_files_by_resource;
   int i = 0;
   for (auto& kv : types) {
@@ -524,8 +524,9 @@ AssignResourcesAndTypesToFiles(
         includes.insert(f.second.relative_proto_path());
       }
     }
-    export_files.emplace_back(absl::StrCat(output_path, "/", proto_export_path),
-                              proto_export_path, std::move(includes));
+    export_files.emplace_back(
+        absl::StrCat(export_output_path, "/", proto_export_path),
+        proto_export_path, std::move(includes));
   }
 
   return std::make_pair(std::move(files), std::move(export_files));
@@ -572,6 +573,7 @@ Status GenerateProtosFromDiscoveryDoc(
     nlohmann::json const& discovery_doc, std::string const& discovery_doc_url,
     std::string const& protobuf_proto_path,
     std::string const& googleapis_proto_path, std::string const& output_path,
+    std::string const& export_output_path,
     std::set<std::string> operation_services) {
   auto default_hostname = DefaultHostFromRootUrl(discovery_doc);
   if (!default_hostname) return std::move(default_hostname).status();
@@ -627,9 +629,9 @@ Status GenerateProtosFromDiscoveryDoc(
 
   EstablishTypeDependencies(*types);
   ApplyResourceLabelsToTypes(resources);
-  auto files = AssignResourcesAndTypesToFiles(resources, *types,
-                                              document_properties, output_path);
-  if (!files) return std::move(files.status());
+  auto files = AssignResourcesAndTypesToFiles(
+      resources, *types, document_properties, output_path, export_output_path);
+  if (!files) return std::move(files).status();
 
   // google::protobuf::DescriptorPool lazily initializes itself. Searching for
   // types by name will fail if the descriptor has not yet been created. By

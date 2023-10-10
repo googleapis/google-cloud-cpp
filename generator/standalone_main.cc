@@ -46,6 +46,8 @@ ABSL_FLAG(std::string, discovery_proto_path, "",
           "Path to root dir of protos created from discovery documents.");
 ABSL_FLAG(std::string, output_path, ".",
           "Path to root dir where code is emitted.");
+ABSL_FLAG(std::string, export_output_path, ".",
+          "Path to root dir where *_export.h files are emitted.");
 ABSL_FLAG(std::string, scaffold_templates_path, ".",
           "Path to directory where we store scaffold templates.");
 ABSL_FLAG(std::string, scaffold, "",
@@ -75,6 +77,7 @@ struct CommandLineArgs {
   std::string golden_proto_path;
   std::string discovery_proto_path;
   std::string output_path;
+  std::string export_output_path;
   std::string scaffold_templates_path;
   std::string scaffold;
   bool experimental_scaffold;
@@ -191,6 +194,7 @@ google::cloud::Status GenerateProtosForRestProducts(
             *doc, p.discovery_document_url(),
             generator_args.protobuf_proto_path,
             generator_args.googleapis_proto_path, generator_args.output_path,
+            generator_args.export_output_path,
             std::set<std::string>(p.operation_services().begin(),
                                   p.operation_services().end()));
     if (!status.ok()) return status;
@@ -396,6 +400,7 @@ int main(int argc, char** argv) {
                              absl::GetFlag(FLAGS_golden_proto_path),
                              absl::GetFlag(FLAGS_discovery_proto_path),
                              absl::GetFlag(FLAGS_output_path),
+                             absl::GetFlag(FLAGS_export_output_path),
                              absl::GetFlag(FLAGS_scaffold_templates_path),
                              absl::GetFlag(FLAGS_scaffold),
                              absl::GetFlag(FLAGS_experimental_scaffold),
@@ -406,6 +411,7 @@ int main(int argc, char** argv) {
   GCP_LOG(INFO) << "googleapis_path = " << args.googleapis_proto_path << "\n";
   GCP_LOG(INFO) << "config_file = " << args.config_file << "\n";
   GCP_LOG(INFO) << "output_path = " << args.output_path << "\n";
+  GCP_LOG(INFO) << "export_output_path = " << args.export_output_path << "\n";
 
   auto config = GetConfig(args.config_file);
   if (!config.ok()) {
