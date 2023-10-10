@@ -160,6 +160,8 @@ TEST(TracingMessageBatch, FlushCallbackWithMultipleMessages) {
   EXPECT_THAT(message_batch->GetBatchSinkSpans(), IsEmpty());
 }
 
+// TODO(#12528): Add an end to end test.
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

@@ -35,7 +35,7 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
   active_span->AddEvent("gl-cpp.added_to_batch");
   {
     std::lock_guard<std::mutex> lk(mu_);
-    message_spans_.push_back(active_span);
+    message_spans_.push_back(std::move(active_span));
   }
   child_->SaveMessage(std::move(m));
 }
