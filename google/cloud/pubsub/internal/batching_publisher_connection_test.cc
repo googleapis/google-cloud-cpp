@@ -250,7 +250,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
               .set<pubsub::MaxBatchMessagesOption>(4)
               .set<pubsub::MaxBatchBytesOption>(max_bytes)
               .set<pubsub::MaxHoldTimeOption>(kMaxHoldTime)),
-      ordering_key, mock, background.cq()), mock_batch);
+      ordering_key, mock, background.cq(), mock_batch);
   auto r0 = publisher->Publish({m0}).then([](future<StatusOr<std::string>> f) {
     auto r = f.get();
     ASSERT_STATUS_OK(r);
