@@ -84,6 +84,36 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
         attributes);
 
 /**
+ * Start a [span] using the current [tracer] with the specified attributes and
+ * links.
+ *
+ * The current tracer is determined by the prevailing `CurrentOptions()`.
+ *
+ * @see https://opentelemetry.io/docs/instrumentation/cpp/manual/#start-a-span
+ *
+ * [span]:
+ * https://opentelemetry.io/docs/concepts/signals/traces/#spans-in-opentelemetry
+ * [tracer]: https://opentelemetry.io/docs/concepts/signals/traces/#tracer
+ */
+template <class T>
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
+    opentelemetry::nostd::string_view name,
+    std::initializer_list<std::pair<opentelemetry::nostd::string_view,
+                                    opentelemetry::common::AttributeValue>>
+        attributes,
+    T const& links) {
+  opentelemetry::trace::StartSpanOptions options;
+  options.kind = opentelemetry::trace::SpanKind::kClient;
+  return GetTracer(CurrentOptions())
+      ->StartSpan(name,
+                  opentelemetry::nostd::span<
+                      std::pair<opentelemetry::nostd::string_view,
+                                opentelemetry::common::AttributeValue> const>{
+                      attributes.begin(), attributes.end()},
+                  links, options);
+}
+
+/**
  * Extracts information from a `Status` and adds it to a span.
  *
  * This method will end the span, and set its [span status], accordingly. Other
