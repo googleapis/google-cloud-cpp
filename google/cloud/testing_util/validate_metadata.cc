@@ -82,6 +82,16 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
   return res;
 }
 
+/**
+ * Verify that the string contains no reserved characters, other than '%'.
+ *
+ * See: https://datatracker.ietf.org/doc/html/rfc3986#section-2.1
+ *
+ * Note that it will match something like "%xy", which is not URL encoded. A
+ * more accurate name might be: `IsntObviouslyNotUrlEncoded`. The important
+ * thing is that the match will fail if it encounters a '/', which is found in
+ * almost all of these routing values.
+ */
 MATCHER(IsUrlEncoded, "") {
   std::regex regex(R"re([A-Za-z0-9%_.~-]*)re");
   return std::regex_match(arg, regex);
