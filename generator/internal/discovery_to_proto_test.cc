@@ -990,7 +990,8 @@ TEST(GenerateProtosFromDiscoveryDocTest, MissingDocumentProperty) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "");
+  auto result =
+      GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "", "");
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Missing one or more document properties")));
@@ -1006,7 +1007,8 @@ TEST(GenerateProtosFromDiscoveryDocTest, ExtractTypesFromSchemaFailure) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "");
+  auto result =
+      GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "", "");
   EXPECT_THAT(
       result,
       StatusIs(
@@ -1030,7 +1032,8 @@ TEST(GenerateProtosFromDiscoveryDocTest, EmptyResourcesFailure) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "");
+  auto result =
+      GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "", "");
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("No resources found in Discovery Document")));
@@ -1064,7 +1067,8 @@ TEST(GenerateProtosFromDiscoveryDocTest, ProcessRequestResponseFailure) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "");
+  auto result =
+      GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "", "");
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Response name=baz not found in types")));
@@ -1648,8 +1652,8 @@ TEST_F(AssignResourcesAndTypesToFilesTest,
                                                  operation_type_json, &pool()));
   DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
                                     "", {}};
-  auto result =
-      AssignResourcesAndTypesToFiles(resources, types, props, "output_path");
+  auto result = AssignResourcesAndTypesToFiles(
+      resources, types, props, "output_path", "export_output_path");
   ASSERT_STATUS_OK(result);
   ASSERT_THAT(result->first.size(), Eq(2));
   EXPECT_THAT(
@@ -2333,8 +2337,9 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
   ASSERT_STATUS_OK(method_status);
   EstablishTypeDependencies(*types);
   ApplyResourceLabelsToTypes(resources);
-  auto files = AssignResourcesAndTypesToFiles(
-      resources, *types, document_properties, "output_path");
+  auto files =
+      AssignResourcesAndTypesToFiles(resources, *types, document_properties,
+                                     "output_path", "export_output_path");
   ASSERT_STATUS_OK(files);
 
   //  The resulting set of proto files contains one file per resource as well as

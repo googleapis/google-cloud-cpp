@@ -42,6 +42,7 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
     --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
     --discovery_proto_path="${PWD}" \
     --output_path="${PROJECT_ROOT}" \
+    --export_output_path="${PROJECT_ROOT}" \
     --check_parameter_comment_substitutions=true \
     --generate_discovery_protos=true \
     --config_file="${PROJECT_ROOT}/generator/generator_config.textproto"
