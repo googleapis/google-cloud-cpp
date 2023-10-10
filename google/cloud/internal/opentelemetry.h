@@ -70,7 +70,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanImpl(
         opentelemetry::common::NoopKeyValueIterable(),
     opentelemetry::trace::SpanContextKeyValueIterable const& links =
         opentelemetry::trace::NullSpanContext());
-        
+
 /**
  * Start a span with a @p name.
  */
@@ -87,8 +87,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
         attributes);
 
 /**
- * Start a span with a @p name, @p attributes using an initializer list, and @p links using an initializer
- * lists.
+ * Start a span with a @p name, @p attributes using an initializer list, and @p
+ * links using an initializer lists.
  */
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
     opentelemetry::nostd::string_view name,
