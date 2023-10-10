@@ -194,11 +194,9 @@ template <typename... Args>
   return SpanEventsAreImpl(::testing::ElementsAre(matchers...));
 }
 
-MATCHER_P(LinkHasSpanContext, context,
-          "has context" + google::cloud::testing_util::ToString(context)) {
+MATCHER_P(LinkHasSpanContext, context, "has context" + ToString(context)) {
   auto const& actual = arg.GetSpanContext();
-  *result_listener << "has context: "
-                   << google::cloud::testing_util::ToString(actual);
+  *result_listener << "has context: " << ToString(actual);
   return actual == context;
 }
 
