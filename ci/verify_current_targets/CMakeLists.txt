@@ -23,7 +23,7 @@ set(common_libraries common grpc_utils mocks rest_internal)
 
 # Define GA libraries.
 set(ga_libraries
-    # cmake-format: sortable
+    # cmake-format: sort
     bigquery
     bigtable
     iam
@@ -36,7 +36,7 @@ set(ga_libraries
 
 # Define experimental libraries. The only difference is the name of the CMake
 # targets.
-set(experimental_libraries # cmake-format: sortable
+set(experimental_libraries # cmake-format: sort
                            bigquery_rest sql storage_grpc_mocks)
 
 # CMake can use pkg-config to find dependencies. We recommend using CMake

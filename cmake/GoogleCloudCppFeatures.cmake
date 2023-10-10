@@ -30,15 +30,16 @@ set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
 set(GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES
     "oauth2;storage;experimental-bigquery_rest")
 
-set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES # cmake-format: sorted
-    # This is WIP, it needs a number of hand-crafted APIs.
-    "pubsublite" "sql")
+set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
+    # cmake-format: sort
+    "pubsublite" # This is WIP, it needs a number of hand-crafted APIs.
+    "sql")
 
-set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sorted
+set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sort
 )
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
-    # cmake-format: sorted
+    # cmake-format: sort
     "accessapproval"
     "accesscontextmanager"
     "advisorynotifications"
