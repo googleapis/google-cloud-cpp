@@ -14,11 +14,32 @@
 
 #include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
 #include "google/cloud/pubsub/internal/create_channel.h"
+#include "google/cloud/pubsub/internal/subscriber_auth_decorator.h"
+#include "google/cloud/pubsub/internal/subscriber_logging_decorator.h"
+#include "google/cloud/pubsub/internal/subscriber_metadata_decorator.h"
+#include "google/cloud/pubsub/internal/subscriber_round_robin_decorator.h"
+#include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+namespace {
+
+std::shared_ptr<SubscriberStub> CreateRoundRobinSubscriberStub(
+    Options const& options,
+    std::function<std::shared_ptr<SubscriberStub>(int)> child_factory) {
+  std::vector<std::shared_ptr<SubscriberStub>> children(
+      (std::max)(1, options.get<GrpcNumChannelsOption>()));
+  int id = 0;
+  std::generate(children.begin(), children.end(),
+                [&id, &child_factory] { return child_factory(id++); });
+  return std::make_shared<SubscriberRoundRobin>(std::move(children));
+}
+
+}  // namespace
 
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
     std::shared_ptr<grpc::Channel> channel) {
@@ -29,6 +50,32 @@ std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
                                                             int channel_id) {
   return CreateDefaultSubscriberStub(CreateChannel(opts, channel_id));
+}
+
+std::shared_ptr<SubscriberStub> CreateDecoratedStubs(
+    google::cloud::CompletionQueue cq, Options const& options,
+    BaseSubscriberStubFactory const& base_factory) {
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      std::move(cq), options);
+  auto child_factory = [base_factory, &auth, options](int id) {
+    auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                       internal::MakeChannelArguments(options));
+    return base_factory(std::move(channel));
+  };
+  auto stub = CreateRoundRobinSubscriberStub(options, std::move(child_factory));
+  if (auth->RequiresConfigureContext()) {
+    stub = std::make_shared<SubscriberAuth>(std::move(auth), std::move(stub));
+  }
+  stub = std::make_shared<SubscriberMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{},
+      internal::HandCraftedLibClientHeader());
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    stub = std::make_shared<SubscriberLogging>(
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        options.get<TracingComponentsOption>());
+  }
+  return stub;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
