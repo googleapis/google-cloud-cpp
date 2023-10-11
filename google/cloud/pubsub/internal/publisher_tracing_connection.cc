@@ -22,9 +22,12 @@
 #include <string>
 #include <utility>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/pubsub/internal/message_propagator.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/status_or.h"
+#include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/nostd/shared_ptr.h>
+#include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/scope.h>
 #include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span_metadata.h>
@@ -78,13 +81,19 @@ class PublisherTracingConnection : public pubsub::PublisherConnection {
  public:
   explicit PublisherTracingConnection(
       pubsub::Topic topic, std::shared_ptr<pubsub::PublisherConnection> child)
-      : topic_(std::move(topic)), child_(std::move(child)) {}
+      : topic_(std::move(topic)),
+        child_(std::move(child)),
+        propagator_(std::make_shared<
+                    opentelemetry::trace::propagation::HttpTraceContext>()) {}
 
   ~PublisherTracingConnection() override = default;
 
   future<StatusOr<std::string>> Publish(PublishParams p) override {
     auto span = StartPublishSpan(topic_.FullName(), p.message);
     auto scope = opentelemetry::trace::Scope(span);
+
+    InjectTraceContext(p.message, propagator_);
+
     return EndPublishSpan(std::move(span), child_->Publish(std::move(p)));
   };
 
@@ -105,6 +114,8 @@ class PublisherTracingConnection : public pubsub::PublisherConnection {
  private:
   pubsub::Topic const topic_;
   std::shared_ptr<pubsub::PublisherConnection> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 }  // namespace

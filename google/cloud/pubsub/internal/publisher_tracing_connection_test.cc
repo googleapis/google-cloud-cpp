@@ -51,8 +51,11 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::_;
 using ::testing::AllOf;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Not;
+using ::testing::Pair;
+using ::testing::StartsWith;
 
 TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
@@ -137,6 +140,29 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
                     OTelAttribute<int>("gl-cpp.status_code", kErrorCode),
                     OTelAttribute<std::int64_t>(
                         "messaging.message.total_size_bytes", 45)))));
+}
+
+TEST(PublisherTracingConnectionTest, PublishInjectsTraceContext) {
+  auto mock = std::make_shared<MockPublisherConnection>();
+  // Need to install the span catcher so ThereIsAnActiveSpan() detects a span.
+  auto span_catcher = InstallSpanCatcher();
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce([&](pubsub::PublisherConnection::PublishParams const& p) {
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        // We need to test the trace context has been injected here, since the
+        // connection moves the message to the child connection.
+        EXPECT_THAT(p.message.attributes(),
+                    Contains(Pair(StartsWith("googclient_"), _)));
+        return make_ready_future(StatusOr<std::string>("test-id-0"));
+      });
+  auto connection = MakePublisherTracingConnection(
+      Topic("test-project", "test-topic"), std::move(mock));
+
+  auto message = pubsub::MessageBuilder{}
+                     .SetData("test-data-0")
+                     .SetOrderingKey("ordering-key-0")
+                     .Build();
+  auto response = connection->Publish({message}).get();
 }
 
 TEST(PublisherTracingConnectionTest, PublishSpanOmitsOrderingKey) {
