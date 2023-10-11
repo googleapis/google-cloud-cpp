@@ -30,7 +30,7 @@ filegroup(
 )
 
 proto_library(
-    name = "google_cloud_cpp_compute_internal_proto",
+    name = "internal_proto",
     srcs = [":internal_protos"],
     strip_import_prefix = "/protos",
     visibility = [
@@ -44,12 +44,12 @@ proto_library(
 )
 
 cc_proto_library(
-    name = "google_cloud_cpp_compute_internal_cc_proto",
+    name = "internal_cc_proto",
     visibility = [
         "//:__pkg__",
         "//google/cloud/compute:__pkg__",
     ],
-    deps = [":google_cloud_cpp_compute_internal_proto"],
+    deps = [":internal_proto"],
 )
 
 # Service proto targets
@@ -59,7 +59,7 @@ cc_proto_library(
         srcs = glob([service + "*.proto"]),
     ),
     proto_library(
-        name = "google_cloud_cpp_compute_" + service.replace("/v1/", "_proto"),
+        name = service.replace("/v1/", "_proto"),
         srcs = [":" + service.replace("/v1/", "_proto_srcs")],
         strip_import_prefix = "/protos",
         visibility = [
@@ -67,7 +67,7 @@ cc_proto_library(
             "//google/cloud/compute:__pkg__",
         ],
         deps = [
-            ":google_cloud_cpp_compute_internal_proto",
+            ":internal_proto",
             "@com_google_googleapis//google/api:annotations_proto",
             "@com_google_googleapis//google/api:client_proto",
             "@com_google_googleapis//google/api:field_behavior_proto",
@@ -79,11 +79,11 @@ cc_proto_library(
         ],
     ),
     cc_proto_library(
-        name = "google_cloud_cpp_compute_" + service.replace("/v1/", "_cc_proto"),
+        name = service.replace("/v1/", "_cc_proto"),
         visibility = [
             "//:__pkg__",
             "//google/cloud/compute:__pkg__",
         ],
-        deps = [":google_cloud_cpp_compute_" + service.replace("/v1/", "_proto")],
+        deps = [":" + service.replace("/v1/", "_proto")],
     ),
 ] for service in service_dirs + operation_service_dirs]

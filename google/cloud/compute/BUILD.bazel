@@ -56,7 +56,7 @@ load(":service_dirs.bzl", "operation_service_dirs", "service_dirs")
     hdrs = [":" + service.replace("/v1/", "_hdrs")],
     visibility = ["//:__pkg__"],
     deps = [
-        "//protos/google/cloud/compute:google_cloud_cpp_compute_" + service.replace("/v1/", "") + "_cc_proto",
+        "//protos/google/cloud/compute:" + service.replace("/v1/", "") + "_cc_proto",
         "//:common",
         "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
@@ -76,7 +76,7 @@ load(":service_dirs.bzl", "operation_service_dirs", "service_dirs")
         ":google_cloud_cpp_compute_global_organization_operations",
         ":google_cloud_cpp_compute_region_operations",
         ":google_cloud_cpp_compute_zone_operations",
-        "//protos/google/cloud/compute:google_cloud_cpp_compute_" + service.replace("/v1/", "") + "_cc_proto",
+        "//protos/google/cloud/compute:" + service.replace("/v1/", "") + "_cc_proto",
         "//:common",
         "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
