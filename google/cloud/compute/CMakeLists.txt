@@ -14,30 +14,6 @@
 # limitations under the License.
 # ~~~
 
-# Defines a compute proto library and installs the .proto and .pb.h files.
-function (compute_proto_library dir library)
-    cmake_parse_arguments(_opt "" "" "DEPS" ${ARGN})
-    file(
-        GLOB proto_files
-        LIST_DIRECTORIES false
-        RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.proto")
-    list(SORT proto_files)
-    string(REPLACE "google_cloud_cpp_" "" alias "${library}")
-    google_cloud_cpp_proto_library(
-        "${library}" "${proto_files}" PROTO_PATH_DIRECTORIES
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}"
-        "${PROJECT_SOURCE_DIR}")
-    external_googleapis_set_version_and_alias("${alias}")
-    target_link_libraries("${library}" PUBLIC "${_opt_DEPS}")
-    # Some files are too big for the MSVC defaults.
-    if (MSVC)
-        target_compile_options("${library}" PRIVATE "/bigobj")
-    endif ()
-    google_cloud_cpp_install_proto_library_protos("${library}"
-                                                  "${PROJECT_SOURCE_DIR}")
-    google_cloud_cpp_install_proto_library_headers("${library}")
-endfunction ()
-
 # Defines a compute service library and installs the headers.
 function (compute_service_library dir library)
     cmake_parse_arguments(_opt "" "" "DEPS" ${ARGN})
@@ -78,23 +54,6 @@ export_list_to_bazel("service_dirs.bzl" YEAR 2023 service_dirs
                      operation_service_dirs)
 
 include(GoogleCloudCppCommon)
-include(CompileProtos)
-google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
-google_cloud_cpp_load_protodeps(
-    deps "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/compute.deps")
-
-compute_proto_library("v1/internal/" "google_cloud_cpp_compute_internal_protos"
-                      DEPS "${deps}")
-
-foreach (dir IN LISTS service_dirs operation_service_dirs)
-    string(REPLACE "/v1/" "" short_dir "${dir}")
-    compute_proto_library(
-        ${dir} "google_cloud_cpp_compute_${short_dir}_protos" PROTO_FILES
-        "${${short_dir}_proto_files}" DEPS
-        google_cloud_cpp_compute_internal_protos)
-    list(APPEND compute_proto_lib_targets
-         "google_cloud_cpp_compute_${short_dir}_protos")
-endforeach ()
 
 set(DOXYGEN_PROJECT_NAME "Cloud Compute API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Compute API")
@@ -107,6 +66,15 @@ endforeach ()
 list(APPEND DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/samples"
      "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 include(GoogleCloudCppDoxygen)
+
+foreach (dir IN LISTS service_dirs operation_service_dirs)
+    string(REPLACE "/v1/" "" short_dir "${dir}")
+    list(APPEND compute_proto_lib_targets
+         "google_cloud_cpp_compute_${short_dir}_protos")
+endforeach ()
+
+set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+    "${PROJECT_BINARY_DIR}/protos/google/cloud/compute")
 google_cloud_cpp_doxygen_targets("compute" THREADED DEPENDS cloud-docs
                                  ${compute_proto_lib_targets})
 
@@ -209,8 +177,7 @@ install(
 # GNUInstallDirs
 install(
     TARGETS google_cloud_cpp_compute ${compute_lib_targets}
-            ${compute_operation_lib_targets} ${compute_proto_lib_targets}
-            google_cloud_cpp_compute_internal_protos
+            ${compute_operation_lib_targets}
     EXPORT google_cloud_cpp_compute-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -234,23 +201,6 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_compute-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_compute"
     COMPONENT google_cloud_cpp_development)
-
-google_cloud_cpp_add_pkgconfig(
-    "compute_internal_protos" "The Cloud Compute API C++ Client Library"
-    "Provides C++ APIs to use the Cloud Compute API."
-    "google_cloud_cpp_cloud_extended_operations_protos")
-
-foreach (dir IN LISTS service_dirs operation_service_dirs)
-    string(REPLACE "/v1/" "" short_dir "${dir}")
-    google_cloud_cpp_add_pkgconfig(
-        "compute_${short_dir}_protos"
-        "The Cloud Compute API C++ Client Library"
-        "Provides C++ APIs to use the Cloud Compute API."
-        "google_cloud_cpp_compute_internal_protos"
-        "google_cloud_cpp_api_annotations_protos"
-        "google_cloud_cpp_api_client_protos"
-        "google_cloud_cpp_api_field_behavior_protos")
-endforeach ()
 
 foreach (dir IN LISTS operation_service_dirs)
     string(REPLACE "/v1/" "" short_dir "${dir}")

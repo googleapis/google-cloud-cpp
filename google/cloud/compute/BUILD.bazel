@@ -16,61 +16,7 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load(
-    "@com_google_googleapis_imports//:imports.bzl",
-    "cc_proto_library",
-)
 load(":service_dirs.bzl", "operation_service_dirs", "service_dirs")
-
-# Internal protos target
-filegroup(
-    name = "internal_protos",
-    srcs = glob(["v1/internal/*.proto"]),
-)
-
-proto_library(
-    name = "google_cloud_cpp_compute_internal_proto",
-    srcs = [":internal_protos"],
-    visibility = ["//:__pkg__"],
-    deps = [
-        "@com_google_googleapis//google/cloud:extended_operations_proto",
-        "@com_google_protobuf//:any_proto",
-    ],
-)
-
-cc_proto_library(
-    name = "google_cloud_cpp_compute_internal_cc_proto",
-    deps = [":google_cloud_cpp_compute_internal_proto"],
-)
-
-# Service proto targets
-[[
-    filegroup(
-        name = service.replace("/v1/", "_proto_srcs"),
-        srcs = glob([service + "*.proto"]),
-    ),
-    proto_library(
-        name = "google_cloud_cpp_compute_" + service.replace("/v1/", "_proto"),
-        srcs = [":" + service.replace("/v1/", "_proto_srcs")],
-        visibility = ["//:__pkg__"],
-        deps = [
-            ":google_cloud_cpp_compute_internal_proto",
-            "@com_google_googleapis//google/api:annotations_proto",
-            "@com_google_googleapis//google/api:client_proto",
-            "@com_google_googleapis//google/api:field_behavior_proto",
-            "@com_google_googleapis//google/api:http_proto",
-            "@com_google_googleapis//google/api:resource_proto",
-            "@com_google_googleapis//google/api:routing_proto",
-            "@com_google_googleapis//google/cloud:extended_operations_proto",
-            "@com_google_protobuf//:empty_proto",
-        ],
-    ),
-    cc_proto_library(
-        name = "google_cloud_cpp_compute_" + service.replace("/v1/", "_cc_proto"),
-        deps = [":google_cloud_cpp_compute_" + service.replace("/v1/", "_proto")],
-    ),
-] for service in service_dirs + operation_service_dirs]
 
 # Service C++ files and mocks targets
 [[
@@ -108,16 +54,14 @@ cc_proto_library(
     name = "google_cloud_cpp_compute_" + service.replace("/v1/", ""),
     srcs = [":" + service.replace("/v1/", "_srcs")],
     hdrs = [":" + service.replace("/v1/", "_hdrs")],
-    copts = [
-        "-I$(BINDIR)",
-    ],
     visibility = ["//:__pkg__"],
     deps = [
-        ":google_cloud_cpp_compute_" + service.replace("/v1/", "") + "_cc_proto",
+        "//protos/google/cloud/compute:google_cloud_cpp_compute_" + service.replace("/v1/", "") + "_cc_proto",
         "//:common",
         "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
         "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
+        "//protos:system_includes",
     ],
 ) for service in operation_service_dirs]
 
@@ -126,29 +70,24 @@ cc_proto_library(
     name = "google_cloud_cpp_compute_" + service.replace("/v1/", ""),
     srcs = [":" + service.replace("/v1/", "_srcs")],
     hdrs = [":" + service.replace("/v1/", "_hdrs")],
-    copts = [
-        "-I$(BINDIR)",
-    ],
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_compute_global_operations",
         ":google_cloud_cpp_compute_global_organization_operations",
         ":google_cloud_cpp_compute_region_operations",
         ":google_cloud_cpp_compute_zone_operations",
-        ":google_cloud_cpp_compute_" + service.replace("/v1/", "") + "_cc_proto",
+        "//protos/google/cloud/compute:google_cloud_cpp_compute_" + service.replace("/v1/", "") + "_cc_proto",
         "//:common",
         "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
         "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
+        "//protos:system_includes",
     ],
 ) for service in service_dirs]
 
 [cc_test(
     name = sample.replace("/", "_").replace(".cc", ""),
     srcs = [sample],
-    copts = [
-        "-I$(BINDIR)",
-    ],
     tags = ["integration-test"],
     deps = [
         ":google_cloud_cpp_compute_" + sample[0:sample.find("/v")],
