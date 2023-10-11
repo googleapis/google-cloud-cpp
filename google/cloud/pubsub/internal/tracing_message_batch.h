@@ -70,14 +70,6 @@ class TracingMessageBatch : public MessageBatch {
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
   GetBatchSinkSpans() const;
 
-  // For testing only.
-  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-  GetBatchSinkSpans() const;
-
-  // For testing only.
-  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-  GetBatchSinkSpans() const;
-
  private:
   std::unique_ptr<MessageBatch> child_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
