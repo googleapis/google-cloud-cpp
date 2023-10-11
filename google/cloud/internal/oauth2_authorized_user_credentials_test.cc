@@ -62,7 +62,6 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
   std::string response_payload = R"""({
     "token_type": "Type",
     "access_token": "access-token-value",
-    "id_token": "id-token-value",
     "expires_in": 1234
 })""";
 
@@ -223,7 +222,6 @@ TEST_F(AuthorizedUserCredentialsTest,
   // Does not have access_token.
   std::string r2 = R"""({
     "token_type": "Type",
-    "id_token": "id-token-value",
     "expires_in": 1000
 })""";
 
@@ -260,7 +258,6 @@ TEST_F(AuthorizedUserCredentialsTest, ParseAuthorizedUserRefreshResponse) {
   std::string r1 = R"""({
     "token_type": "Type",
     "access_token": "access-token-r1",
-    "id_token": "id-token-value",
     "expires_in": 1000
 })""";
 

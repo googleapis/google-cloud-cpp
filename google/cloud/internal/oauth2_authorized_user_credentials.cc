@@ -68,12 +68,11 @@ StatusOr<AccessToken> ParseAuthorizedUserRefreshResponse(
   auto access_token = nlohmann::json::parse(*payload, nullptr, false);
   if (access_token.is_discarded() || access_token.count("access_token") == 0 ||
       access_token.count("expires_in") == 0 ||
-      access_token.count("id_token") == 0 ||
       access_token.count("token_type") == 0) {
     auto error_payload =
         *payload +
         "Could not find all required fields in response (access_token,"
-        " id_token, expires_in, token_type) while trying to obtain an access"
+        " expires_in, token_type) while trying to obtain an access"
         " token for service account credentials.";
     return AsStatus(status_code, error_payload);
   }
