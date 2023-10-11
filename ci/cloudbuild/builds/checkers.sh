@@ -91,7 +91,7 @@ time {
 printf "%-50s" "Running check-include-guards:" >&2
 time {
   git_files -z -- '*.h' |
-    xargs -r -0 awk -f "ci/check-include-guards.gawk"
+    xargs -r -P "$(nproc)" -n 50 -0 awk -f "ci/check-include-guards.gawk"
 }
 
 # TODO(#4501) - this fixup can be removed if #include <absl/...> works
@@ -103,8 +103,7 @@ time {
 printf "%-50s" "Running Abseil header fixes:" >&2
 time {
   expressions=("-e" "'s;#include \"absl/strings/str_\(cat\|replace\|join\).h\";#include \"google/cloud/internal/absl_str_\1_quiet.h\";'")
-  git_files -z -- '*.h' '*.cc' |
-    (grep -zv 'google/cloud/internal/absl_.*quiet.h$' || true) |
+  (git grep -zEl '#include "absl/strings/str_(cat|replace|join).h"' -- '*.h' '*.cc' ':!google/cloud/internal/absl_str_*quiet.h' || true) |
     xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
@@ -115,10 +114,13 @@ time {
 #       `grpc::` namespace do not exist inside google.
 printf "%-50s" "Running include fixes:" >&2
 time {
-  expressions=("-e" "'s/grpc::\([A-Z][A-Z_]\+\)/grpc::StatusCode::\1/g'")
   expressions+=("-e" "'s;#include <grpc++/grpc++.h>;#include <grpcpp/grpcpp.h>;'")
+  (git grep -zEl 'grpc::([A-Z][A-Z_]+)' -- '*.h' '*.cc' || true) |
+    xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
+
+  expression=("-e" "'s;#include <grpc++/grpc++.h>;#include <grpcpp/grpcpp.h>;'")
   expressions+=("-e" "'s;#include <grpc++/;#include <grpcpp/;'")
-  git_files -z -- '*.h' '*.cc' |
+  (git grep -zl '#include <grpc++/' -- '*.h' '*.cc' || true) |
     xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
@@ -145,27 +147,27 @@ time {
 printf "%-50s" "Running buildifier:" >&2
 time {
   git_files -z -- '*.BUILD' '*.bzl' '*.bazel' |
-    xargs -r -0 buildifier -mode=fix
+    xargs -r -P "$(nproc)" -n 50 -0 buildifier -mode=fix
 }
 
 # Apply psf/black to format Python files.
 #    https://pypi.org/project/black/
 printf "%-50s" "Running black:" >&2
 time {
-  git_files -z -- '*.py' | xargs -r -0 python3 -m black --quiet
+  git_files -z -- '*.py' | xargs -r -P "$(nproc)" -n 50 -0 python3 -m black --quiet
 }
 
 # Apply shfmt to format all shell scripts
 printf "%-50s" "Running shfmt:" >&2
 time {
-  git_files -z -- '*.sh' | xargs -r -0 shfmt -w
+  git_files -z -- '*.sh' | xargs -r -P "$(nproc)" -n 50 -0 shfmt -w
 }
 
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.
 printf "%-50s" "Running shellcheck:" >&2
 time {
   git_files -z -- '*.sh' |
-    xargs -r -P "$(nproc)" -n 1 -0 shellcheck \
+    xargs -r -P "$(nproc)" -n 50 -0 shellcheck \
       --exclude=SC1090 \
       --exclude=SC1091 \
       --exclude=SC2034 \
@@ -178,7 +180,7 @@ time {
 printf "%-50s" "Running clang-format:" >&2
 time {
   git_files -z -- '*.h' '*.cc' '*.proto' |
-    xargs -r -P "$(nproc)" -n 1 -0 clang-format -i
+    xargs -r -P "$(nproc)" -n 50 -0 clang-format -i
 }
 
 # Apply cmake_format to all the CMake list files.
@@ -186,7 +188,7 @@ time {
 printf "%-50s" "Running cmake-format:" >&2
 time {
   git_files -z -- 'CMakeLists.txt' '**/CMakeLists.txt' '*.cmake' |
-    xargs -r -P "$(nproc)" -n 1 -0 cmake-format -i
+    xargs -r -P "$(nproc)" -n 50 -0 cmake-format -i
 }
 
 # The markdown generators run last. This is useful because as part of the
@@ -214,7 +216,7 @@ time {
 printf "%-50s" "Running markdown formatter:" >&2
 time {
   # See `.mdformat.toml` for the configuration parameters.
-  git_files -z -- '*.md' | xargs -r -P "$(nproc)" -n 1 -0 mdformat
+  git_files -z -- '*.md' | xargs -r -P "$(nproc)" -n 50 -0 mdformat
   git_files -z -- '*.md' | xargs -r -0 chmod go=u-w
 }
 

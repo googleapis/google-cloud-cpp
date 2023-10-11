@@ -57,7 +57,7 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
 
   io::log_h2 "Formatting generated protos"
   git ls-files -z -- '*.proto' |
-    xargs -P "$(nproc)" -n 1 -0 clang-format -i
+    xargs -P "$(nproc)" -n 50 -0 clang-format -i
 else
   io::log_red "Skipping update of protos generated from discovery docs."
 fi
@@ -81,19 +81,19 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   # so we don't need this extra step.
   io::log_h2 "Formatting generated code"
   git ls-files -z -- '*.h' '*.cc' '*.proto' |
-    xargs -P "$(nproc)" -n 1 -0 clang-format -i
+    xargs -P "$(nproc)" -n 50 -0 clang-format -i
   git ls-files -z -- '*.h' '*.cc' '*.proto' |
     xargs -r -P "$(nproc)" -n 50 -0 sed -i 's/[[:blank:]]\+$//'
   # TODO(#12621): Remove this second execution of clang-format when this issue
   # is resolved.
   git ls-files -z -- 'google/cloud/compute/firewall_policies/v1/internal/firewall_policies_rest_connection_impl.cc' |
-    xargs -P "$(nproc)" -n 1 -0 clang-format -i
+    xargs -P "$(nproc)" -n 50 -0 clang-format -i
 else
   io::log_red "Only formatting generated golden code."
   git ls-files -z -- 'generator/integration_tests/golden/**/*.h' \
     'generator/integration_tests/golden/v1/**/*.cc' \
     'generator/integration_tests/*.proto' |
-    xargs -P "$(nproc)" -n 1 -0 clang-format -i
+    xargs -P "$(nproc)" -n 50 -0 clang-format -i
   git ls-files -z -- 'generator/integration_tests/golden/**/*.h' \
     'generator/integration_tests/golden/v1/**/*.cc' \
     'generator/integration_tests/*.proto' |
