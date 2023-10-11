@@ -4,7 +4,32 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.17.0 - TBD
+## v2.17.0
+
+### [Compute Engine](/google/cloud/compute/README.md)
+
+- fix(compute): usable in external Bazel projects
+  ([#12864](https://github.com/googleapis/google-cloud-cpp/pull/12864))
+- fix(compute): add missing bazelrc file
+  ([#12856](https://github.com/googleapis/google-cloud-cpp/pull/12856))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): another Bucket CRUD field
+  ([#12842](https://github.com/googleapis/google-cloud-cpp/pull/12842))
+- fix(storage): fix tellg() values
+  ([#12844](https://github.com/googleapis/google-cloud-cpp/pull/12844))
+- fix(storage): check ReadObject options at runtime
+  ([#12841](https://github.com/googleapis/google-cloud-cpp/pull/12841))
+- feat(storage): `MatchGlob` for `ListObjects()`
+  ([#12840](https://github.com/googleapis/google-cloud-cpp/pull/12840))
+- doc(storage): describe default project search
+  ([#12833](https://github.com/googleapis/google-cloud-cpp/pull/12833))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix(oauth2): do not require `id_token` in creds
+  ([#12867](https://github.com/googleapis/google-cloud-cpp/pull/12867))
 
 ### Other Changes
 
