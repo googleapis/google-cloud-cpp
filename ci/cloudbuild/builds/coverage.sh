@@ -110,8 +110,8 @@ TIMEFORMAT="==> 🕑 codecov.io upload done in %R seconds"
 time {
   # Downloads and verifies the codecov uploader before executing it.
   codecov="$(mktemp -u -t codecov.XXXXXXXXXX)"
-  curl -fsSL -o "${codecov}" https://github.com/codecov/uploader/releases/download/v0.4.1/codecov-linux
-  sha256sum="32cb14b5f3aaacd67f4c1ff55d82f037d3cd10c8e7b69c051f27391d2e66e15c"
+  curl -fsSL -o "${codecov}" https://github.com/codecov/uploader/releases/download/v0.6.3/codecov-linux
+  sha256sum="e6aa8429d6ff91eddc7eced927e6ec936364a88fe755eed28b1f627a6499980d"
   if ! sha256sum -c <(echo "${sha256sum} *${codecov}"); then
     io::log_h2 "ERROR: Invalid sha256sum for codecov program"
     exit 1
