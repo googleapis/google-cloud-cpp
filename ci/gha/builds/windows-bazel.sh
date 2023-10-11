@@ -55,9 +55,9 @@ io::log_h1 "Get target list for: " "$@"
 # on Windows. We need to clean things up before feeding them through bash.
 #
 # I (coryan@) do not understand why: `//examples` gets converted to `/examples`
-# somewhere in the `printf ... | xargs -n 64 bazelisk ...` call. Using `///`
-# seems to work.
-mapfile -t targets < <(bazelisk "${args[@]}" query -- "$@" | tr -d '\r' | sed 's;//examples;///examples;g' | sort)
+# somewhere in the `printf ... | xargs -n 64 bazelisk ...` call. Ditto for
+# `//protos`. Using `///` seems to work.
+mapfile -t targets < <(bazelisk "${args[@]}" query -- "$@" | tr -d '\r' | sed -e 's;//examples;///examples;g' -e 's;//protos;///protos;g' | sort)
 
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
