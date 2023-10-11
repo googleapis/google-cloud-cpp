@@ -55,7 +55,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer(
 /**
  * Start a [span] using the current [tracer].
  *
- * The current tracer is determined by the prevailing `CurrentOptions()`.
+ * The current tracer is determined by the prevailing `CurrentOptions()`. Each
+ * span is set as a client span.
  *
  * @see https://opentelemetry.io/docs/instrumentation/cpp/manual/#start-a-span
  *
@@ -63,19 +64,21 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer(
  * https://opentelemetry.io/docs/concepts/signals/traces/#spans-in-opentelemetry
  * [tracer]: https://opentelemetry.io/docs/concepts/signals/traces/#tracer
  */
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanImpl(
+    opentelemetry::nostd::string_view name,
+    opentelemetry::common::KeyValueIterable const& attributes =
+        opentelemetry::common::NoopKeyValueIterable(),
+    opentelemetry::trace::SpanContextKeyValueIterable const& links =
+        opentelemetry::trace::NullSpanContext());
+
+/**
+ * Start a span with a @p name.
+ */
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
     opentelemetry::nostd::string_view name);
 
 /**
- * Start a [span] using the current [tracer] with the specified attributes.
- *
- * The current tracer is determined by the prevailing `CurrentOptions()`.
- *
- * @see https://opentelemetry.io/docs/instrumentation/cpp/manual/#start-a-span
- *
- * [span]:
- * https://opentelemetry.io/docs/concepts/signals/traces/#spans-in-opentelemetry
- * [tracer]: https://opentelemetry.io/docs/concepts/signals/traces/#tracer
+ * Start a span with a @p name and @p attributes using an initializer list.
  */
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
     opentelemetry::nostd::string_view name,
@@ -84,9 +87,57 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
         attributes);
 
 /**
- * Extracts information from a `Status` and adds it to a span.
+ * Start a span with a @p name, @p attributes using an initializer list, and @p
+ * links using an initializer lists.
+ */
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
+    opentelemetry::nostd::string_view name,
+    std::initializer_list<std::pair<opentelemetry::nostd::string_view,
+                                    opentelemetry::common::AttributeValue>>
+        attributes,
+    std::initializer_list<
+        std::pair<opentelemetry::trace::SpanContext,
+                  std::initializer_list<
+                      std::pair<opentelemetry::nostd::string_view,
+                                opentelemetry::common::AttributeValue>>>>
+        links);
+
+/**
+ * Start a span with a @p name, @p attributes, and @p links.
+ */
+template <class T, class U>
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
+    opentelemetry::nostd::string_view name, T const& attributes,
+    U const& links) {
+  return MakeSpanImpl(
+      name, opentelemetry::common::KeyValueIterableView<T>(attributes),
+      opentelemetry::trace::SpanContextKeyValueIterableView<U>(links));
+}
+
+/**
+ * Start a span with a @p name, @p attributes, and @p links where attributes
+ * uses an initializer list.
+ */
+template <class T>
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
+    opentelemetry::nostd::string_view name,
+    std::initializer_list<std::pair<opentelemetry::nostd::string_view,
+                                    opentelemetry::common::AttributeValue>>
+        attributes,
+    T const& links) {
+  return MakeSpan(
+      name,
+      opentelemetry::nostd::span<
+          std::pair<opentelemetry::nostd::string_view,
+                    opentelemetry::common::AttributeValue> const>{
+          attributes.begin(), attributes.end()},
+      opentelemetry::trace::SpanContextKeyValueIterableView<T>(links));
+}
+
+/**
+ * Extracts information from a `status` and adds it to a span.
  *
- * This method will end the span, and set its [span status], accordingly. Other
+ * This method will end the span, and set its [span status], accordingly. other
  * details, such as error information, will be set as [attributes] on the span.
  *
  * @see https://opentelemetry.io/docs/concepts/signals/traces/#spans-in-opentelemetry
