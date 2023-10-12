@@ -4,7 +4,9 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.17.0
+## v2.18.0 - TBD
+
+## v2.17.0 - 2023-10
 
 ### [Compute Engine](/google/cloud/compute/README.md)
 
