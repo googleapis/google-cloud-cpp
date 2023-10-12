@@ -92,7 +92,7 @@ class PublisherTracingConnection : public pubsub::PublisherConnection {
     auto span = StartPublishSpan(topic_.FullName(), p.message);
     auto scope = opentelemetry::trace::Scope(span);
 
-    InjectTraceContext(p.message, propagator_);
+    InjectTraceContext(p.message, *propagator_);
 
     return EndPublishSpan(std::move(span), child_->Publish(std::move(p)));
   };
