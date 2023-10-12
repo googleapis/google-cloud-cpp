@@ -27,12 +27,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void InjectTraceContext(
     pubsub::Message& message,
-    std::shared_ptr<
-        opentelemetry::context::propagation::TextMapPropagator> const&
-        propagator) {
+    opentelemetry::context::propagation::TextMapPropagator& propagator) {
   auto current = opentelemetry::context::RuntimeContext::GetCurrent();
   MessageCarrier carrier(message);
-  propagator->Inject(carrier, current);
+  propagator.Inject(carrier, current);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

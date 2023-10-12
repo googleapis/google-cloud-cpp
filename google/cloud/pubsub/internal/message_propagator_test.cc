@@ -49,7 +49,7 @@ TEST(MessagePropagatorTest, InjectTraceContext) {
   auto propagator =
       std::make_shared<opentelemetry::trace::propagation::HttpTraceContext>();
 
-  InjectTraceContext(message, propagator);
+  InjectTraceContext(message, *propagator);
 
   EXPECT_THAT(message.attributes(),
               Contains(Pair(StartsWith("googclient_"), _)));
