@@ -17,6 +17,7 @@
 // source: google/storage/v2/storage.proto
 
 #include "google/cloud/storage/internal/storage_auth_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include "google/cloud/internal/async_streaming_read_rpc_auth.h"
 #include "google/cloud/internal/async_streaming_write_rpc_auth.h"
 #include "google/cloud/internal/streaming_write_rpc_impl.h"
@@ -157,6 +158,14 @@ Status StorageAuth::DeleteObject(
   return child_->DeleteObject(context, request);
 }
 
+StatusOr<google::storage::v2::Object> StorageAuth::RestoreObject(
+    grpc::ClientContext& context,
+    google::storage::v2::RestoreObjectRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestoreObject(context, request);
+}
+
 StatusOr<google::storage::v2::CancelResumableWriteResponse>
 StorageAuth::CancelResumableWrite(
     grpc::ClientContext& context,
@@ -203,6 +212,24 @@ StorageAuth::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->WriteObject(std::move(context));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::storage::v2::BidiWriteObjectRequest,
+    google::storage::v2::BidiWriteObjectResponse>>
+StorageAuth::AsyncBidiWriteObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+      google::storage::v2::BidiWriteObjectRequest,
+      google::storage::v2::BidiWriteObjectResponse>;
+
+  auto& child = child_;
+  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncBidiWriteObject(cq, std::move(ctx));
+  };
+  return std::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 StatusOr<google::storage::v2::ListObjectsResponse> StorageAuth::ListObjects(
