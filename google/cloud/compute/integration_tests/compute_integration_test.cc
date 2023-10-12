@@ -15,12 +15,14 @@
 #include "google/cloud/compute/disks/v1/disks_client.h"
 #include "google/cloud/compute/disks/v1/disks_proto_export.h"
 #include "google/cloud/compute/instances/v1/instances_client.h"
+#include "google/cloud/compute/networks/v1/networks_client.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <thread>
@@ -174,42 +176,62 @@ TEST_F(ComputeIntegrationTest, VerifyUpdateSendsUpdateMaskParameter) {
 }
 
 TEST_F(ComputeIntegrationTest, VerifyPatchResourceFieldNameFormat) {
-  namespace instances = ::google::cloud::compute_instances_v1;
+  namespace networks = ::google::cloud::compute_networks_v1;
+  namespace compute_proto = ::google::cloud::cpp::compute::v1;
+
   auto client =
-      instances::InstancesClient(instances::MakeInstancesConnectionRest());
-  std::string const instance_name = "test-e2-micro-instance";
-  google::cloud::cpp::compute::v1::ShieldedInstanceConfig
-      shielded_instance_config;
+      networks::NetworksClient(networks::MakeNetworksConnectionRest());
+  compute_proto::Network network;
+  network.set_name(CreateRandomName("int-test-network-"));
 
-  shielded_instance_config.set_enable_integrity_monitoring(false);
-  shielded_instance_config.set_enable_vtpm(false);
-  shielded_instance_config.set_enable_secure_boot(true);
-  auto updated_instance = client.UpdateShieldedInstanceConfig(
-      project_id_, zone_, instance_name, shielded_instance_config);
-  ASSERT_STATUS_OK(updated_instance.get());
+  auto created_network =
+      client.InsertNetwork(project_id_, network)
+          .then(
+              [client, project_id = project_id_, network_name = network.name()](
+                  auto f) mutable -> StatusOr<compute_proto::Network> {
+                auto result = f.get();
+                if (!result.ok()) return std::move(result).status();
+                return client.GetNetwork(project_id, network_name);
+              })
+          .get();
+  ASSERT_STATUS_OK(created_network);
+  EXPECT_THAT(created_network->routing_config().routing_mode(), Eq("REGIONAL"));
 
-  auto get_instance = client.GetInstance(project_id_, zone_, instance_name);
-  ASSERT_THAT(get_instance, IsOk());
-  EXPECT_THAT(get_instance->name(), Eq(instance_name));
-  EXPECT_FALSE(
-      get_instance->shielded_instance_config().enable_integrity_monitoring());
-  EXPECT_FALSE(get_instance->shielded_instance_config().enable_vtpm());
-  EXPECT_TRUE(get_instance->shielded_instance_config().enable_secure_boot());
+  compute_proto::Network patch_network;
+  patch_network.mutable_routing_config()->set_routing_mode("GLOBAL");
 
-  shielded_instance_config.set_enable_integrity_monitoring(true);
-  shielded_instance_config.set_enable_vtpm(true);
-  shielded_instance_config.set_enable_secure_boot(false);
-  updated_instance = client.UpdateShieldedInstanceConfig(
-      project_id_, zone_, instance_name, shielded_instance_config);
-  ASSERT_STATUS_OK(updated_instance.get());
+  auto patch_result =
+      client.PatchNetwork(project_id_, network.name(), patch_network)
+          .then(
+              [client, project_id = project_id_, network_name = network.name()](
+                  auto f) mutable -> StatusOr<compute_proto::Network> {
+                auto result = f.get();
+                if (!result.ok()) return std::move(result).status();
+                return client.GetNetwork(project_id, network_name);
+              })
+          .get();
 
-  get_instance = client.GetInstance(project_id_, zone_, instance_name);
-  ASSERT_THAT(get_instance, IsOk());
-  EXPECT_THAT(get_instance->name(), Eq(instance_name));
-  EXPECT_TRUE(
-      get_instance->shielded_instance_config().enable_integrity_monitoring());
-  EXPECT_TRUE(get_instance->shielded_instance_config().enable_vtpm());
-  EXPECT_FALSE(get_instance->shielded_instance_config().enable_secure_boot());
+  EXPECT_STATUS_OK(patch_result);
+  if (patch_result) {
+    EXPECT_THAT(patch_result->routing_config().routing_mode(), Eq("GLOBAL"));
+  }
+
+  // Delete the network, if this attempt fails it will eventually get deleted.
+  (void)client.DeleteNetwork(project_id_, network.name()).get();
+
+  auto const create_threshold =
+      std::chrono::system_clock::now() - std::chrono::hours(48);
+  for (auto const& n : client.ListNetworks(project_id_)) {
+    ASSERT_STATUS_OK(n);
+    // Garbage collect old disks, ignore errors.
+    auto creation_timestamp = internal::ParseRfc3339(n->creation_timestamp());
+    if (creation_timestamp) {
+      if (absl::StartsWith(n->name(), "int-test-network-") &&
+          *creation_timestamp < create_threshold) {
+        (void)client.DeleteNetwork(project_id_, n->name()).get();
+      }
+    }
+  }
 }
 
 TEST_F(ComputeIntegrationTest, VerifyRetrievalMalformedCamelCaseJsonField) {
