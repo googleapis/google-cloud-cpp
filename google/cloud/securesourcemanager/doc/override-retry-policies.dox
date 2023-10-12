@@ -67,6 +67,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section securesourcemanager-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `securesourcemanager_v1::SecureSourceManagerClient`:
+
+@snippet secure_source_manager_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet secure_source_manager_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section securesourcemanager-override-retry-more-information More Information
@@ -80,4 +89,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
+
+/*! @page securesourcemanager_v1::SecureSourceManagerClient-retry-snippet Override securesourcemanager_v1::SecureSourceManagerClient Retry Policies
+
+This shows how to override the retry policies for securesourcemanager_v1::SecureSourceManagerClient:
+
+@snippet google/cloud/securesourcemanager/v1/samples/secure_source_manager_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/securesourcemanager/v1/samples/secure_source_manager_client_samples.cc custom-idempotency-policy
+
+*/
 // <!-- inject-retry-pages-end -->

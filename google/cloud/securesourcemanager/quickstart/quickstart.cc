@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/securesourcemanager/v1/ EDIT HERE _client.h"
+#include "google/cloud/securesourcemanager/v1/secure_source_manager_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -26,10 +26,10 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace securesourcemanager = ::google::cloud::securesourcemanager_v1;
-  auto client = securesourcemanager::ServiceClient(
-      securesourcemanager::MakeServiceConnection());  // EDIT HERE
+  auto client = securesourcemanager::SecureSourceManagerClient(
+      securesourcemanager::MakeSecureSourceManagerConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListInstances(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

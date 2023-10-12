@@ -1,8 +1,9 @@
 # Secure Source Manager API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Secure Source Manager API][cloud-service-docs], a service to Regionally
-deployed, single-tenant managed source code repository hosted on Google Cloud.
+[Secure Source Manager API][cloud-service-docs]. Secure Source Manager is a
+regionally deployed, single-tenant managed source code repository hosted on
+Google Cloud.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,6 +17,35 @@ this library.
 
 <!-- inject-quickstart-start -->
 
+```cc
+#include "google/cloud/securesourcemanager/v1/secure_source_manager_client.h"
+#include "google/cloud/location.h"
+#include <iostream>
+
+int main(int argc, char* argv[]) try {
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+    return 1;
+  }
+
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
+  namespace securesourcemanager = ::google::cloud::securesourcemanager_v1;
+  auto client = securesourcemanager::SecureSourceManagerClient(
+      securesourcemanager::MakeSecureSourceManagerConnection());
+
+  for (auto r : client.ListInstances(location.FullName())) {
+    if (!r) throw std::move(r).status();
+    std::cout << r->DebugString() << "\n";
+  }
+
+  return 0;
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
+  return 1;
+}
+```
+
 <!-- inject-quickstart-end -->
 
 ## More Information
@@ -26,6 +56,6 @@ this library.
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/securesourcemanager
+[cloud-service-docs]: https://cloud.google.com/secure-source-manager/docs/overview
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/securesourcemanager/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/securesourcemanager

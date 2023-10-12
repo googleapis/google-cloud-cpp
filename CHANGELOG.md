@@ -6,6 +6,13 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.18.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Secure Source Manager](/google/cloud/securesourcemanager/README.md)
+
 ## v2.17.0 - 2023-10
 
 ### [Compute Engine](/google/cloud/compute/README.md)

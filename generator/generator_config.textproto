@@ -2833,7 +2833,7 @@ service {
 # Secure Source Manager
 service {
   service_proto_path: "google/cloud/securesourcemanager/v1/secure_source_manager.proto"
-  product_path: "google/cloud/secureresourcemanager/v1"
+  product_path: "google/cloud/securesourcemanager/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
