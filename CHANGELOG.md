@@ -8,6 +8,8 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ### [Compute Engine](/google/cloud/compute/README.md)
 
+- fix(compute): build with Bazel and MSVC
+  ([#12877](https://github.com/googleapis/google-cloud-cpp/pull/12877))
 - fix(compute): usable in external Bazel projects
   ([#12864](https://github.com/googleapis/google-cloud-cpp/pull/12864))
 - fix(compute): add missing bazelrc file
