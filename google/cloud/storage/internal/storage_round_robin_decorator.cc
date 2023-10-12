@@ -123,6 +123,12 @@ Status StorageRoundRobin::DeleteObject(
   return Child()->DeleteObject(context, request);
 }
 
+StatusOr<google::storage::v2::Object> StorageRoundRobin::RestoreObject(
+    grpc::ClientContext& context,
+    google::storage::v2::RestoreObjectRequest const& request) {
+  return Child()->RestoreObject(context, request);
+}
+
 StatusOr<google::storage::v2::CancelResumableWriteResponse>
 StorageRoundRobin::CancelResumableWrite(
     grpc::ClientContext& context,
@@ -155,6 +161,15 @@ std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectResponse>>
 StorageRoundRobin::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
   return Child()->WriteObject(std::move(context));
+}
+
+std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
+    google::storage::v2::BidiWriteObjectRequest,
+    google::storage::v2::BidiWriteObjectResponse>>
+StorageRoundRobin::AsyncBidiWriteObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  return Child()->AsyncBidiWriteObject(cq, std::move(context));
 }
 
 StatusOr<google::storage::v2::ListObjectsResponse>

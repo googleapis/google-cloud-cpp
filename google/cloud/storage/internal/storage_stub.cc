@@ -18,6 +18,7 @@
 
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/internal/async_streaming_write_rpc_impl.h"
 #include "google/cloud/internal/streaming_write_rpc_impl.h"
@@ -209,6 +210,17 @@ Status DefaultStorageStub::DeleteObject(
   return google::cloud::Status();
 }
 
+StatusOr<google::storage::v2::Object> DefaultStorageStub::RestoreObject(
+    grpc::ClientContext& client_context,
+    google::storage::v2::RestoreObjectRequest const& request) {
+  google::storage::v2::Object response;
+  auto status = grpc_stub_->RestoreObject(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::storage::v2::CancelResumableWriteResponse>
 DefaultStorageStub::CancelResumableWrite(
     grpc::ClientContext& client_context,
@@ -265,6 +277,21 @@ DefaultStorageStub::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>(
       std::move(context), std::move(response), std::move(stream));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::storage::v2::BidiWriteObjectRequest,
+    google::storage::v2::BidiWriteObjectResponse>>
+DefaultStorageStub::AsyncBidiWriteObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::storage::v2::BidiWriteObjectRequest,
+      google::storage::v2::BidiWriteObjectResponse>(
+      cq, std::move(context),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncBidiWriteObject(context, cq);
+      });
 }
 
 StatusOr<google::storage::v2::ListObjectsResponse>

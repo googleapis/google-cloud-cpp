@@ -386,6 +386,25 @@ Status StorageMetadata::DeleteObject(
   return child_->DeleteObject(context, request);
 }
 
+StatusOr<google::storage::v2::Object> StorageMetadata::RestoreObject(
+    grpc::ClientContext& context,
+    google::storage::v2::RestoreObjectRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.bucket().empty()) {
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
+  }
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
+  return child_->RestoreObject(context, request);
+}
+
 StatusOr<google::storage::v2::CancelResumableWriteResponse>
 StorageMetadata::CancelResumableWrite(
     grpc::ClientContext& context,
@@ -479,6 +498,16 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
 StorageMetadata::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
   SetMetadata(*context);
   return child_->WriteObject(std::move(context));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::storage::v2::BidiWriteObjectRequest,
+    google::storage::v2::BidiWriteObjectResponse>>
+StorageMetadata::AsyncBidiWriteObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context);
+  return child_->AsyncBidiWriteObject(cq, std::move(context));
 }
 
 StatusOr<google::storage::v2::ListObjectsResponse> StorageMetadata::ListObjects(

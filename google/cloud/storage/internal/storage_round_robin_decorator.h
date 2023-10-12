@@ -102,6 +102,10 @@ class StorageRoundRobin : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::DeleteObjectRequest const& request) override;
 
+  StatusOr<google::storage::v2::Object> RestoreObject(
+      grpc::ClientContext& context,
+      google::storage::v2::RestoreObjectRequest const& request) override;
+
   StatusOr<google::storage::v2::CancelResumableWriteResponse>
   CancelResumableWrite(
       grpc::ClientContext& context,
@@ -124,6 +128,12 @@ class StorageRoundRobin : public StorageStub {
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>
   WriteObject(std::shared_ptr<grpc::ClientContext> context) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::storage::v2::BidiWriteObjectRequest,
+      google::storage::v2::BidiWriteObjectResponse>>
+  AsyncBidiWriteObject(google::cloud::CompletionQueue const& cq,
+                       std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::storage::v2::ListObjectsResponse> ListObjects(
       grpc::ClientContext& context,

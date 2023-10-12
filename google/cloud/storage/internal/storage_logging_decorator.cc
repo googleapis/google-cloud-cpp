@@ -17,6 +17,7 @@
 // source: google/storage/v2/storage.proto
 
 #include "google/cloud/storage/internal/storage_logging_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/async_streaming_read_rpc_logging.h"
 #include "google/cloud/internal/async_streaming_write_rpc_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
@@ -211,6 +212,17 @@ Status StorageLogging::DeleteObject(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::v2::Object> StorageLogging::RestoreObject(
+    grpc::ClientContext& context,
+    google::storage::v2::RestoreObjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::RestoreObjectRequest const& request) {
+        return child_->RestoreObject(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storage::v2::CancelResumableWriteResponse>
 StorageLogging::CancelResumableWrite(
     grpc::ClientContext& context,
@@ -279,6 +291,27 @@ StorageLogging::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->WriteObject(std::move(context));
+  if (stream_logging_) {
+    stream = std::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::storage::v2::BidiWriteObjectRequest,
+    google::storage::v2::BidiWriteObjectResponse>>
+StorageLogging::AsyncBidiWriteObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  using LoggingStream =
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::storage::v2::BidiWriteObjectRequest,
+          google::storage::v2::BidiWriteObjectResponse>;
+
+  auto request_id = google::cloud::internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->AsyncBidiWriteObject(cq, std::move(context));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));

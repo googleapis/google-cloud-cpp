@@ -17,6 +17,7 @@
 // source: google/storage/v2/storage.proto
 
 #include "google/cloud/storage/internal/storage_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/async_streaming_read_rpc_tracing.h"
 #include "google/cloud/internal/async_streaming_write_rpc_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
@@ -202,6 +203,17 @@ Status StorageTracingStub::DeleteObject(
                            child_->DeleteObject(context, request));
 }
 
+StatusOr<google::storage::v2::Object> StorageTracingStub::RestoreObject(
+    grpc::ClientContext& context,
+    google::storage::v2::RestoreObjectRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.storage.v2.Storage", "RestoreObject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RestoreObject(context, request));
+}
+
 StatusOr<google::storage::v2::CancelResumableWriteResponse>
 StorageTracingStub::CancelResumableWrite(
     grpc::ClientContext& context,
@@ -260,6 +272,22 @@ StorageTracingStub::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
   return std::make_unique<internal::StreamingWriteRpcTracing<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
+std::unique_ptr<
+    AsyncStreamingReadWriteRpc<google::storage::v2::BidiWriteObjectRequest,
+                               google::storage::v2::BidiWriteObjectResponse>>
+StorageTracingStub::AsyncBidiWriteObject(
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+  auto span =
+      internal::MakeSpanGrpc("google.storage.v2.Storage", "BidiWriteObject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->AsyncBidiWriteObject(cq, context);
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::storage::v2::BidiWriteObjectRequest,
+      google::storage::v2::BidiWriteObjectResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
 
