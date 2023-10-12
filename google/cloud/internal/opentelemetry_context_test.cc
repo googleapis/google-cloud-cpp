@@ -69,12 +69,12 @@ TEST(OTelContext, PopOTelContextDropsStack) {
 }
 
 TEST(OTelContext, AttachDetachOTelContext) {
-  auto c1 = opentelemetry::context::Context{"name", "c1"};
+  auto c1 = opentelemetry::context::Context("name", "c1");
   AttachOTelContext(c1);
   EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1));
   EXPECT_EQ(c1, opentelemetry::context::RuntimeContext::GetCurrent());
 
-  auto c2 = opentelemetry::context::Context{"name", "c2"};
+  auto c2 = opentelemetry::context::Context("name", "c2");
   AttachOTelContext(c2);
   EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
   EXPECT_EQ(c2, opentelemetry::context::RuntimeContext::GetCurrent());
@@ -85,30 +85,30 @@ TEST(OTelContext, AttachDetachOTelContext) {
 
   DetachOTelContext(c1);
   EXPECT_THAT(CurrentOTelContext(), IsEmpty());
-  EXPECT_EQ(opentelemetry::context::Context{},
+  EXPECT_EQ(opentelemetry::context::Context(),
             opentelemetry::context::RuntimeContext::GetCurrent());
 }
 
 TEST(OTelContext, DetachOTelContextDropsStack) {
-  auto c1 = opentelemetry::context::Context{"name", "c1"};
+  auto c1 = opentelemetry::context::Context("name", "c1");
   AttachOTelContext(c1);
   EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1));
   EXPECT_EQ(c1, opentelemetry::context::RuntimeContext::GetCurrent());
 
-  auto c2 = opentelemetry::context::Context{"name", "c2"};
+  auto c2 = opentelemetry::context::Context("name", "c2");
   AttachOTelContext(c2);
   EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
   EXPECT_EQ(c2, opentelemetry::context::RuntimeContext::GetCurrent());
 
   DetachOTelContext(c1);
   EXPECT_THAT(CurrentOTelContext(), IsEmpty());
-  EXPECT_EQ(opentelemetry::context::Context{},
+  EXPECT_EQ(opentelemetry::context::Context(),
             opentelemetry::context::RuntimeContext::GetCurrent());
 }
 
 TEST(OTelContext, ScopedOTelContext) {
-  auto c1 = opentelemetry::context::Context{"name", "c1"};
-  auto c2 = opentelemetry::context::Context{"name", "c2"};
+  auto c1 = opentelemetry::context::Context("name", "c1");
+  auto c2 = opentelemetry::context::Context("name", "c2");
 
   {
     OTelContext oc = {c1, c2};
@@ -119,8 +119,8 @@ TEST(OTelContext, ScopedOTelContext) {
 }
 
 TEST(OTelContext, ThreadLocalStorage) {
-  auto c1 = opentelemetry::context::Context{"name", "c1"};
-  auto c2 = opentelemetry::context::Context{"name", "c2"};
+  auto c1 = opentelemetry::context::Context("name", "c1");
+  auto c2 = opentelemetry::context::Context("name", "c2");
 
   OTelContext oc = {c1, c2};
   ScopedOTelContext scope(oc);
