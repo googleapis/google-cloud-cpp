@@ -171,32 +171,57 @@ Please note that we use more strict settings for release branches than for
 [PR#32391] is probably a good example of the changes you will need to make.
 
 - Create a fork of https://github.com/Microsoft/vcpkg.git.
+
 - Clone the fork and/or sync the `master` branch in your fork to the upstream
   version.
-- Create a feature branch.
+
+- Save the version.
+
   ```shell
-  git checkout -b google-cloud-cpp-update-to-v2.13.0
+  VERSION=... # e.g. v2.13.0
   ```
+
+- Create a feature branch.
+
+  ```shell
+  git checkout -b google-cloud-cpp-update-to-${VERSION}
+  ```
+
 - Update the version and list of features (any new GA libraries) in these files:
+
   ```
   ports/google-cloud-cpp/portfile.cmake
   ports/google-cloud-cpp/vcpkg.json
   ```
-- Commit the changes
+
+- Update the [SHA512]. To compute it, run:
+
   ```shell
-  git commit -m"[google-cloud-cpp] update to latest release (v2.13.0)" ports
+  curl -fSsL https://github.com/googleapis/google-cloud-cpp/archive/${VERSION}.tar.gz | sha512sum
   ```
-- Update the version information (you really do need two commits)
+
+- Commit the changes
+
   ```shell
-  ./vcpkg x-add-version --all --overwrite-version
+  git commit -m"[google-cloud-cpp] update to ${VERSION}" ports
+  ```
+
+- Update the version information (you really do need two commits)
+
+  ```shell
+  ./vcpkg x-add-version google-cloud-cpp --overwrite-version
   git commit --amend --no-edit .
   ```
+
 - Remove any older versions
+
   ```shell
   ./bootstrap-vcpkg.sh
   ./vcpkg remove --outdated --recurse
   ```
+
 - Test the changes
+
   ```shell
   ./vcpkg install 'google-cloud-cpp[*]'
   ```
@@ -355,6 +380,7 @@ ______________________________________________________________________
 [pr#138]: https://github.com/conda-forge/google-cloud-cpp-feedstock/pull/138
 [pr#17988]: https://github.com/conan-io/conan-center-index/pull/17988
 [pr#32391]: https://github.com/microsoft/vcpkg/pull/32391
+[sha512]: https://learn.microsoft.com/en-us/vcpkg/maintainers/functions/vcpkg_from_github#sha512
 [vcpkg port]: https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp
 [`changelog.md`]: /CHANGELOG.md
 [`release/release.sh`]: https://github.com/googleapis/google-cloud-cpp/blob/main/release/release.sh
