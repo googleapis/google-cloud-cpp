@@ -29,6 +29,12 @@ namespace {
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 
+opentelemetry::context::Context MakeNewContext() {
+  // Note that `MakeNewContext() != MakeNewContext()`. This would not be true if
+  // we returned a default constructed `Context`.
+  return opentelemetry::context::Context("key", true);
+}
+
 TEST(OTelContext, PushPopOTelContext) {
   EXPECT_THAT(CurrentOTelContext(), IsEmpty());
 
@@ -69,12 +75,12 @@ TEST(OTelContext, PopOTelContextDropsStack) {
 }
 
 TEST(OTelContext, AttachDetachOTelContext) {
-  auto c1 = opentelemetry::context::Context("name", "c1");
+  auto c1 = MakeNewContext();
   AttachOTelContext(c1);
   EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1));
   EXPECT_EQ(c1, opentelemetry::context::RuntimeContext::GetCurrent());
 
-  auto c2 = opentelemetry::context::Context("name", "c2");
+  auto c2 = MakeNewContext();
   AttachOTelContext(c2);
   EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
   EXPECT_EQ(c2, opentelemetry::context::RuntimeContext::GetCurrent());
@@ -90,12 +96,12 @@ TEST(OTelContext, AttachDetachOTelContext) {
 }
 
 TEST(OTelContext, DetachOTelContextDropsStack) {
-  auto c1 = opentelemetry::context::Context("name", "c1");
+  auto c1 = MakeNewContext();
   AttachOTelContext(c1);
   EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1));
   EXPECT_EQ(c1, opentelemetry::context::RuntimeContext::GetCurrent());
 
-  auto c2 = opentelemetry::context::Context("name", "c2");
+  auto c2 = MakeNewContext();
   AttachOTelContext(c2);
   EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
   EXPECT_EQ(c2, opentelemetry::context::RuntimeContext::GetCurrent());
@@ -107,8 +113,8 @@ TEST(OTelContext, DetachOTelContextDropsStack) {
 }
 
 TEST(OTelContext, ScopedOTelContext) {
-  auto c1 = opentelemetry::context::Context("name", "c1");
-  auto c2 = opentelemetry::context::Context("name", "c2");
+  auto c1 = MakeNewContext();
+  auto c2 = MakeNewContext();
 
   {
     OTelContext oc = {c1, c2};
@@ -119,8 +125,8 @@ TEST(OTelContext, ScopedOTelContext) {
 }
 
 TEST(OTelContext, ThreadLocalStorage) {
-  auto c1 = opentelemetry::context::Context("name", "c1");
-  auto c2 = opentelemetry::context::Context("name", "c2");
+  auto c1 = MakeNewContext();
+  auto c2 = MakeNewContext();
 
   OTelContext oc = {c1, c2};
   ScopedOTelContext scope(oc);
