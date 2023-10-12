@@ -22,6 +22,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <thread>
@@ -215,7 +216,22 @@ TEST_F(ComputeIntegrationTest, VerifyPatchResourceFieldNameFormat) {
     EXPECT_THAT(patch_result->routing_config().routing_mode(), Eq("GLOBAL"));
   }
 
-  client.DeleteNetwork(project_id_, network.name()).get();
+  // Delete the network, if this attempt fails it will eventually get deleted.
+  (void)client.DeleteNetwork(project_id_, network.name()).get();
+
+  auto const create_threshold =
+      std::chrono::system_clock::now() - std::chrono::hours(48);
+  for (auto const& n : client.ListNetworks(project_id_)) {
+    ASSERT_STATUS_OK(n);
+    // Garbage collect old disks, ignore errors.
+    auto creation_timestamp = internal::ParseRfc3339(n->creation_timestamp());
+    if (creation_timestamp) {
+      if (absl::StartsWith(n->name(), "int-test-network-") &&
+          *creation_timestamp < create_threshold) {
+        (void)client.DeleteNetwork(project_id_, n->name()).get();
+      }
+    }
+  }
 }
 
 TEST_F(ComputeIntegrationTest, VerifyRetrievalMalformedCamelCaseJsonField) {
