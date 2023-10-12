@@ -2830,6 +2830,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Secure Source Manager
+service {
+  service_proto_path: "google/cloud/securesourcemanager/v1/secure_source_manager.proto"
+  product_path: "google/cloud/secureresourcemanager/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Security Center
 service {
   service_proto_path: "google/cloud/securitycenter/v1/securitycenter_service.proto"
