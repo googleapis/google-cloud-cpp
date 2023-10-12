@@ -90,6 +90,10 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&,
                google::storage::v2::DeleteObjectRequest const&),
               (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::Object>, RestoreObject,
+              (grpc::ClientContext&,
+               google::storage::v2::RestoreObjectRequest const&),
+              (override));
   MOCK_METHOD(StatusOr<google::storage::v2::CancelResumableWriteResponse>,
               CancelResumableWrite,
               (grpc::ClientContext&,
@@ -113,6 +117,15 @@ class MockStorageStub : public storage_internal::StorageStub {
                    google::storage::v2::WriteObjectRequest,
                    google::storage::v2::WriteObjectResponse>>),
               WriteObject, (std::shared_ptr<grpc::ClientContext>), (override));
+
+  MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+                   google::storage::v2::BidiWriteObjectRequest,
+                   google::storage::v2::BidiWriteObjectResponse>>),
+              AsyncBidiWriteObject,
+              (google::cloud::CompletionQueue const&,
+               std::shared_ptr<grpc::ClientContext>),
+              (override));
+
   MOCK_METHOD(StatusOr<google::storage::v2::ListObjectsResponse>, ListObjects,
               (grpc::ClientContext&,
                google::storage::v2::ListObjectsRequest const&));
