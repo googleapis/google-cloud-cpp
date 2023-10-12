@@ -21,6 +21,8 @@
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/flow_controlled_publisher_connection.h"
 #include "google/cloud/pubsub/internal/flow_controlled_publisher_tracing_connection.h"
+#include "google/cloud/pubsub/internal/message_batch.h"
+#include "google/cloud/pubsub/internal/noop_message_batch.h"
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
 #include "google/cloud/pubsub/internal/publisher_stub_factory.h"
 #include "google/cloud/pubsub/internal/publisher_tracing_connection.h"
@@ -47,8 +49,11 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
     auto cq = background->cq();
     std::shared_ptr<pubsub_internal::BatchSink> sink =
         pubsub_internal::DefaultBatchSink::Create(stub, cq, opts);
+    std::shared_ptr<pubsub_internal::MessageBatch> message_batch =
+        std::make_shared<pubsub_internal::NoOpMessageBatch>();
     if (opts.get<pubsub::MessageOrderingOption>()) {
-      auto factory = [topic, opts, sink, cq](std::string const& key) {
+      auto factory = [topic, opts, sink, cq,
+                      message_batch](std::string const& key) {
         auto used_sink = sink;
         if (!key.empty()) {
           // Only wrap the sink if there is an ordering key.
@@ -56,14 +61,16 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
               std::move(used_sink));
         }
         return pubsub_internal::BatchingPublisherConnection::Create(
-            topic, opts, key, std::move(used_sink), cq);
+            topic, opts, key, std::move(used_sink), cq,
+            std::move(message_batch));
       };
       return pubsub_internal::OrderingKeyPublisherConnection::Create(
           std::move(factory));
     }
     return pubsub_internal::RejectsWithOrderingKey::Create(
         pubsub_internal::BatchingPublisherConnection::Create(
-            topic, opts, {}, std::move(sink), std::move(cq)));
+            topic, opts, {}, std::move(sink), std::move(cq),
+            std::move(message_batch)));
   };
   auto tracing_enabled = google::cloud::internal::TracingEnabled(opts);
   auto connection = make_connection();
