@@ -56,7 +56,7 @@ void TracingMessageBatch::Flush() {
   if (batch_size < kMaxOtelLinks) {
     std::transform(
         message_spans_.begin(), message_spans_.end(), std::back_inserter(links),
-        [i = std::int64_t(0)](auto const& span) mutable {
+        [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
           return std::make_pair(
               span->GetContext(),
               AttributesList{{"messaging.pubsub.message.link", i++}});
