@@ -42,19 +42,20 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
 
 void TracingMessageBatch::Flush() {
   using opentelemetry::trace::SpanContext;
+  using AttributesList =
+      std::vector<std::pair<opentelemetry::nostd::string_view,
+                            opentelemetry::common::AttributeValue>>;
   int64_t message_count = message_spans_.size();
   auto constexpr kMaxOtelLinks = 128;
-  bool const kIsSmallBatch = message_count < kMaxOtelLinks;
-  std::vector<std::pair<SpanContext, std::map<std::string, int64_t>>> links;
+  std::vector<std::pair<SpanContext, AttributesList>> links;
 
   // If the batch size is less than the max size, add the links to a single
   // span.
-  if (kIsSmallBatch) {
+  if (message_count < kMaxOtelLinks) {
     for (int64_t i = 0; i < message_count; i++) {
       auto span = message_spans_.at(i);
-      std::map<std::string, int64_t> link_attributes;
-      link_attributes["messaging.pubsub.message.link"] = i;
-      links.push_back(std::make_pair(span->GetContext(), link_attributes));
+      AttributesList link_attributes = {{"messaging.pubsub.message.link", i}};
+      links.emplace_back(std::make_pair(span->GetContext(), link_attributes));
     }
   }
   auto batch_sink_span_parent = internal::MakeSpan(

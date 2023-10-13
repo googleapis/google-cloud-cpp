@@ -125,13 +125,12 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
                                     opentelemetry::common::AttributeValue>>
         attributes,
     T const& links) {
-  return MakeSpan(
-      name,
-      opentelemetry::nostd::span<
-          std::pair<opentelemetry::nostd::string_view,
-                    opentelemetry::common::AttributeValue> const>{
-          attributes.begin(), attributes.end()},
-      opentelemetry::trace::SpanContextKeyValueIterableView<T>(links));
+  return MakeSpan(name,
+                  opentelemetry::nostd::span<
+                      std::pair<opentelemetry::nostd::string_view,
+                                opentelemetry::common::AttributeValue> const>{
+                      attributes.begin(), attributes.end()},
+                  links);
 }
 
 /**
