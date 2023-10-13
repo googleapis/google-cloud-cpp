@@ -64,7 +64,7 @@ class TracingMessageBatch : public MessageBatch {
 
   // For testing only.
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-  GetSpans() const;
+  GetMessageSpans() const;
 
   // For testing only.
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>

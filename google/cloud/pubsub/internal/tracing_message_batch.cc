@@ -21,6 +21,7 @@
 #include "opentelemetry/context/runtime_context.h"
 #include "opentelemetry/trace/context.h"
 #include "opentelemetry/trace/span.h"
+#include <algorithm>
 #include <memory>
 #include <string>
 
@@ -40,8 +41,46 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
   child_->SaveMessage(std::move(m));
 }
 
-// TODO(#12528): Implement functionality for Flush.
-void TracingMessageBatch::Flush() { child_->Flush(); }
+void TracingMessageBatch::Flush() {
+  using opentelemetry::trace::SpanContext;
+  using AttributesList =
+      std::vector<std::pair<opentelemetry::nostd::string_view,
+                            opentelemetry::common::AttributeValue>>;
+  auto constexpr kMaxOtelLinks = 128;
+  std::vector<std::pair<SpanContext, AttributesList>> links;
+  auto batch_size = message_spans_.size();
+  links.reserve(batch_size);
+
+  // If the batch size is less than the max size, add the links to a single
+  // span.
+  if (batch_size < kMaxOtelLinks) {
+    std::transform(
+        message_spans_.begin(), message_spans_.end(), std::back_inserter(links),
+        [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
+          return std::make_pair(
+              span->GetContext(),
+              AttributesList{{"messaging.pubsub.message.link", i++}});
+        });
+  }
+  auto batch_sink_span_parent =
+      internal::MakeSpan("BatchSink::AsyncPublish",
+                         /*attributes=*/
+                         {{"messaging.pubsub.num_messages_in_batch",
+                           static_cast<std::int64_t>(batch_size)}},
+                         /*links*/ links);
+
+  // TODO(#12528): Handle batches larger than 128.
+
+  // Clear message spans.
+  message_spans_.clear();
+
+  batch_sink_spans_.push_back(batch_sink_span_parent);
+
+  // Set the batch sink parent span.
+  auto async_scope = internal::GetTracer(internal::CurrentOptions())
+                         ->WithActiveSpan(batch_sink_span_parent);
+  child_->Flush();
+}
 
 void TracingMessageBatch::FlushCallback() {
   decltype(batch_sink_spans_) spans;
@@ -54,7 +93,7 @@ void TracingMessageBatch::FlushCallback() {
 }
 
 std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-TracingMessageBatch::GetSpans() const {
+TracingMessageBatch::GetMessageSpans() const {
   return message_spans_;
 }
 
