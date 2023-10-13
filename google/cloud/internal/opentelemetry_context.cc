@@ -22,7 +22,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using OTelContextWithTokens = std::list<
+using OTelContextWithTokens = std::vector<
     std::pair<opentelemetry::context::Context,
               opentelemetry::nostd::unique_ptr<opentelemetry::context::Token>>>;
 
@@ -65,10 +65,7 @@ void AttachOTelContext(opentelemetry::context::Context const& context) {
 
 void DetachOTelContext(opentelemetry::context::Context const& context) {
   auto& v = ThreadLocalOTelContext();
-  auto it = std::find_if(v.begin(), v.end(), [&context](auto const& p) {
-    return p.first == context;
-  });
-  v.erase(it, v.end());
+  if (!v.empty() && context == v.back().first) v.pop_back();
 }
 
 }  // namespace internal

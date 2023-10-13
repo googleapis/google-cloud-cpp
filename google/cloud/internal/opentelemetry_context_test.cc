@@ -35,7 +35,17 @@ opentelemetry::context::Context MakeNewContext() {
   return opentelemetry::context::Context("key", true);
 }
 
-TEST(OTelContext, PushPopOTelContext) {
+class OTelContextTest : public ::testing::Test {
+ public:
+  // The code under test uses static storage. Ensure that each test starts
+  // with a clean slate.
+  OTelContextTest() {
+    auto v = CurrentOTelContext();
+    for (auto it = v.rbegin(); it != v.rend(); ++it) DetachOTelContext(*it);
+  }
+};
+
+TEST_F(OTelContextTest, PushPopOTelContext) {
   EXPECT_THAT(CurrentOTelContext(), IsEmpty());
 
   auto s1 = opentelemetry::trace::Scope(MakeSpan("s1"));
@@ -59,24 +69,7 @@ TEST(OTelContext, PushPopOTelContext) {
   EXPECT_THAT(CurrentOTelContext(), IsEmpty());
 }
 
-TEST(OTelContext, PopOTelContextDropsStack) {
-  EXPECT_THAT(CurrentOTelContext(), IsEmpty());
-
-  auto s1 = opentelemetry::trace::Scope(MakeSpan("s1"));
-  auto c1 = opentelemetry::context::RuntimeContext::GetCurrent();
-
-  // In practice we never push the same context multiple times, but it
-  // simplifies the test.
-  PushOTelContext();
-  PushOTelContext();
-  PushOTelContext();
-  EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c1, c1));
-
-  PopOTelContext();
-  EXPECT_THAT(CurrentOTelContext(), IsEmpty());
-}
-
-TEST(OTelContext, AttachDetachOTelContext) {
+TEST_F(OTelContextTest, AttachDetachOTelContext) {
   auto c1 = MakeNewContext();
   AttachOTelContext(c1);
   EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1));
@@ -97,24 +90,7 @@ TEST(OTelContext, AttachDetachOTelContext) {
             opentelemetry::context::RuntimeContext::GetCurrent());
 }
 
-TEST(OTelContext, DetachOTelContextDropsStack) {
-  auto c1 = MakeNewContext();
-  AttachOTelContext(c1);
-  EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1));
-  EXPECT_EQ(c1, opentelemetry::context::RuntimeContext::GetCurrent());
-
-  auto c2 = MakeNewContext();
-  AttachOTelContext(c2);
-  EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
-  EXPECT_EQ(c2, opentelemetry::context::RuntimeContext::GetCurrent());
-
-  DetachOTelContext(c1);
-  EXPECT_THAT(CurrentOTelContext(), IsEmpty());
-  EXPECT_EQ(opentelemetry::context::Context(),
-            opentelemetry::context::RuntimeContext::GetCurrent());
-}
-
-TEST(ScopedOTelContext, Basic) {
+TEST_F(OTelContextTest, Scope) {
   auto c1 = MakeNewContext();
   auto c2 = MakeNewContext();
 
@@ -126,7 +102,7 @@ TEST(ScopedOTelContext, Basic) {
   EXPECT_THAT(CurrentOTelContext(), IsEmpty());
 }
 
-TEST(ScopedOTelContext, NoopWhenContextIsAlreadyActive) {
+TEST_F(OTelContextTest, ScopeNoopWhenContextIsAlreadyActive) {
   auto c1 = MakeNewContext();
   auto c2 = MakeNewContext();
 
@@ -142,7 +118,7 @@ TEST(ScopedOTelContext, NoopWhenContextIsAlreadyActive) {
   EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
 }
 
-TEST(OTelContext, ThreadLocalStorage) {
+TEST_F(OTelContextTest, ThreadLocalStorage) {
   auto c1 = MakeNewContext();
   auto c2 = MakeNewContext();
 

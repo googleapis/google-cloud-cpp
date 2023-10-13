@@ -19,7 +19,7 @@
 #include "google/cloud/version.h"
 #include <opentelemetry/context/context.h>
 #include <opentelemetry/context/runtime_context.h>
-#include <list>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -27,12 +27,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /**
- * Represents the stack of active spans that have been created by our library.
+ * Represents the stack of active spans that have been created by *our* library.
  *
  * Typically OpenTelemetry handles this for us, but in the case of asynchronous
  * APIs, we need to keep track of this stuff manually.
+ *
+ * For GAPICs, the size never exceeds 2 (the connection span, and the stub
+ * span). In handwritten libraries like Pub/Sub this number may be higher. It
+ * probably won't ever be more than 5.
+ *
+ * For more details on the design of these functions, Googlers can see
+ * go/cloud-cxx:otel-async-context-dd.
  */
-using OTelContext = std::list<opentelemetry::context::Context>;
+using OTelContext = std::vector<opentelemetry::context::Context>;
 
 OTelContext CurrentOTelContext();
 
@@ -56,6 +63,10 @@ void AttachOTelContext(opentelemetry::context::Context const& context);
  */
 void DetachOTelContext(opentelemetry::context::Context const& context);
 
+/**
+ * If the supplied OTelContext is not currently active, this class attaches it
+ * when constructed, and detaches it when destructed.
+ */
 class ScopedOTelContext {
  public:
   explicit ScopedOTelContext(OTelContext contexts)
@@ -70,8 +81,8 @@ class ScopedOTelContext {
 
   ~ScopedOTelContext() {
     if (same_thread_) return;
-    for (auto const& c : contexts_) {
-      DetachOTelContext(c);
+    for (auto it = contexts_.rbegin(); it != contexts_.rend(); ++it) {
+      DetachOTelContext(*it);
     }
   }
 
