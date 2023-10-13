@@ -14,7 +14,6 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry_context.h"
-#include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/nostd/unique_ptr.h>
 
 namespace google {
@@ -23,7 +22,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using OTelContextWithTokens = std::vector<
+using OTelContextWithTokens = std::list<
     std::pair<opentelemetry::context::Context,
               opentelemetry::nostd::unique_ptr<opentelemetry::context::Token>>>;
 
@@ -43,7 +42,6 @@ OTelContextWithTokens& ThreadLocalOTelContext() {
 OTelContext CurrentOTelContext() {
   auto const& v = ThreadLocalOTelContext();
   OTelContext contexts;
-  contexts.reserve(v.size());
   std::transform(v.begin(), v.end(), std::back_inserter(contexts),
                  [](auto const& p) { return p.first; });
   return contexts;

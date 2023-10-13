@@ -18,7 +18,8 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/version.h"
 #include <opentelemetry/context/context.h>
-#include <vector>
+#include <opentelemetry/context/runtime_context.h>
+#include <list>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ namespace internal {
  * Typically OpenTelemetry handles this for us, but in the case of asynchronous
  * APIs, we need to keep track of this stuff manually.
  */
-using OTelContext = std::vector<opentelemetry::context::Context>;
+using OTelContext = std::list<opentelemetry::context::Context>;
 
 OTelContext CurrentOTelContext();
 
@@ -58,13 +59,17 @@ void DetachOTelContext(opentelemetry::context::Context const& context);
 class ScopedOTelContext {
  public:
   explicit ScopedOTelContext(OTelContext contexts)
-      : contexts_(std::move(contexts)) {
+      : contexts_(std::move(contexts)),
+        same_thread_(contexts_.back() ==
+                     opentelemetry::context::RuntimeContext::GetCurrent()) {
+    if (same_thread_) return;
     for (auto const& c : contexts_) {
       AttachOTelContext(c);
     }
   }
 
   ~ScopedOTelContext() {
+    if (same_thread_) return;
     for (auto const& c : contexts_) {
       DetachOTelContext(c);
     }
@@ -72,6 +77,7 @@ class ScopedOTelContext {
 
  private:
   OTelContext contexts_;
+  bool same_thread_;
 };
 
 }  // namespace internal

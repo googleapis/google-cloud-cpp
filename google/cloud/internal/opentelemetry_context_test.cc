@@ -65,6 +65,8 @@ TEST(OTelContext, PopOTelContextDropsStack) {
   auto s1 = opentelemetry::trace::Scope(MakeSpan("s1"));
   auto c1 = opentelemetry::context::RuntimeContext::GetCurrent();
 
+  // In practice we never push the same context multiple times, but it
+  // simplifies the test.
   PushOTelContext();
   PushOTelContext();
   PushOTelContext();
@@ -112,7 +114,7 @@ TEST(OTelContext, DetachOTelContextDropsStack) {
             opentelemetry::context::RuntimeContext::GetCurrent());
 }
 
-TEST(OTelContext, ScopedOTelContext) {
+TEST(ScopedOTelContext, Basic) {
   auto c1 = MakeNewContext();
   auto c2 = MakeNewContext();
 
@@ -122,6 +124,22 @@ TEST(OTelContext, ScopedOTelContext) {
     EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
   }
   EXPECT_THAT(CurrentOTelContext(), IsEmpty());
+}
+
+TEST(ScopedOTelContext, NoopWhenContextIsAlreadyActive) {
+  auto c1 = MakeNewContext();
+  auto c2 = MakeNewContext();
+
+  OTelContext oc = {c1, c2};
+  ScopedOTelContext s1(oc);
+  EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
+
+  {
+    // Simulate the case where a future is satisfied immediately.
+    ScopedOTelContext s2(oc);
+    EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
+  }
+  EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
 }
 
 TEST(OTelContext, ThreadLocalStorage) {
