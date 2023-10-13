@@ -144,9 +144,7 @@ else ()
                Crc32c::crc32c
                CURL::libcurl
                Threads::Threads
-               OpenSSL::SSL
-               OpenSSL::Crypto
-               ZLIB::ZLIB)
+               OpenSSL::Crypto)
     google_cloud_cpp_add_common_options(google_cloud_cpp_storage_grpc)
     target_include_directories(
         google_cloud_cpp_storage_grpc

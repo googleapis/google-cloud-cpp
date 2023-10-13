@@ -16,7 +16,6 @@
 
 include(FindCurlWithTargets)
 find_package(OpenSSL REQUIRED)
-find_package(ZLIB REQUIRED)
 
 # the client library
 add_library(
@@ -259,9 +258,7 @@ target_link_libraries(
            Crc32c::crc32c
            CURL::libcurl
            Threads::Threads
-           OpenSSL::SSL
-           OpenSSL::Crypto
-           ZLIB::ZLIB)
+           OpenSSL::Crypto)
 if (WIN32)
     # We use `setsockopt()` directly, which requires the ws2_32 (Winsock2 for
     # Windows32?) library on Windows.
