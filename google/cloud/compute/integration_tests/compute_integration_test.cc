@@ -34,12 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Property;
+using ::testing::ResultOf;
 
 class ComputeIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -211,10 +213,12 @@ TEST_F(ComputeIntegrationTest, VerifyPatchResourceFieldNameFormat) {
               })
           .get();
 
-  EXPECT_STATUS_OK(patch_result);
-  if (patch_result) {
-    EXPECT_THAT(patch_result->routing_config().routing_mode(), Eq("GLOBAL"));
-  }
+  EXPECT_THAT(
+      patch_result,
+      IsOkAndHolds(ResultOf(
+          "has routing_config.routing_mode",
+          [](auto const& n) { return n.routing_config().routing_mode(); },
+          Eq("GLOBAL"))));
 
   // Delete the network, if this attempt fails it will eventually get deleted.
   (void)client.DeleteNetwork(project_id_, network.name()).get();
