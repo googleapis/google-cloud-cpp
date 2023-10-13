@@ -53,7 +53,7 @@ void TracingMessageBatch::Flush() {
   // span.
   if (message_count < kMaxOtelLinks) {
     for (int64_t i = 0; i < message_count; i++) {
-      auto span = message_spans_.at(i);
+      auto span = message_spans_.at(static_cast<int>(i));
       AttributesList link_attributes = {{"messaging.pubsub.message.link", i}};
       links.emplace_back(std::make_pair(span->GetContext(), link_attributes));
     }
