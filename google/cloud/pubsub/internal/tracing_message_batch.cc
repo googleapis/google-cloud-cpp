@@ -48,10 +48,12 @@ void TracingMessageBatch::Flush() {
                             opentelemetry::common::AttributeValue>>;
   auto constexpr kMaxOtelLinks = 128;
   std::vector<std::pair<SpanContext, AttributesList>> links;
+  auto batch_size = message_spans_.size();
+  links.reserve(batch_size);
 
   // If the batch size is less than the max size, add the links to a single
   // span.
-  if (message_spans_.size() < kMaxOtelLinks) {
+  if (batch_size < kMaxOtelLinks) {
     std::transform(
         message_spans_.begin(), message_spans_.end(), std::back_inserter(links),
         [i = std::int64_t(0)](auto const& span) mutable {
@@ -64,7 +66,7 @@ void TracingMessageBatch::Flush() {
       internal::MakeSpan("BatchSink::AsyncPublish",
                          /*attributes=*/
                          {{"messaging.pubsub.num_messages_in_batch",
-                           static_cast<int64_t>(message_spans_.size())}},
+                           static_cast<std::int64_t>(batch_size)}},
                          /*links*/ links);
 
   // TODO(#12528): Handle batches larger than 128.
