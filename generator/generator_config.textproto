@@ -2550,6 +2550,25 @@ service {
   omit_repo_metadata: true
 }
 
+# Cloud Pub/Sub Generated
+service {
+  service_proto_path: "google/pubsub/v1/pubsub.proto"
+  product_path: "google/cloud/pubsub/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: []
+  omit_client: false
+  omit_connection: false
+  omit_stub_factory: false
+  generate_round_robin_decorator: true
+  omitted_rpcs: [
+    "Acknowledge",
+    "ModifyAckDeadline",
+    "Pull(std::string const&, bool, std::int32_t)"
+  ]
+  omit_repo_metadata: true
+  # rename_generated_code = [["Publisher", "TopicAdmin"], ["Subscriber", "SubscriptionAdmin"]]
+}
+
 service {
   service_proto_path: "google/pubsub/v1/schema.proto"
   product_path: "google/cloud/pubsub"

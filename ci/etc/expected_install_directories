@@ -870,6 +870,9 @@
 ./include/google/cloud/pubsub
 ./include/google/cloud/pubsub/internal
 ./include/google/cloud/pubsub/mocks
+./include/google/cloud/pubsub/v1
+./include/google/cloud/pubsub/v1/internal
+./include/google/cloud/pubsub/v1/mocks
 ./include/google/cloud/pubsublite
 ./include/google/cloud/pubsublite/internal
 ./include/google/cloud/pubsublite/mocks
