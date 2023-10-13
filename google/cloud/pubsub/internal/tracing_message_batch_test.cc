@@ -182,6 +182,7 @@ TEST(TracingMessageBatch, FlushSmallBatch) {
 TEST(TracingMessageBatch, FlushLargeBatch) {
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       initial_spans;
+  internal_spans.reserve(129);
   for (int i = 0; i < 129; ++i) {
     initial_spans.emplace_back(MakeSpan("test span " + std::to_string(i)));
   }
