@@ -34,8 +34,13 @@ bazel_test_args=("$@")
 production_only_targets=(
   "//google/cloud/pubsub/samples:iam_samples"
 )
-"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
-  -- "${production_only_targets[@]}"
+
+# Coverage builds are more subject to flakiness, as we must explicitly disable
+# retries. Disable the production-only tests, which also fail more often.
+if [[ "${BAZEL_VERB}" != "coverage" ]]; then
+  io::run "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
+    -- "${production_only_targets[@]}"
+fi
 
 # Start the emulator and arranges to kill it, run in $HOME because
 # pubsub_emulator::start creates unsightly *.log files in the workspace

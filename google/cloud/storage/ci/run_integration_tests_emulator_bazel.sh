@@ -65,8 +65,12 @@ for base in "${PRODUCTION_ONLY_BASE[@]}"; do
   )
 done
 
-io::run "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
-  -- "${production_only_targets[@]}" "${excluded_targets[@]}"
+# Coverage builds are more subject to flakiness, as we must explicitly disable
+# retries. Disable the production-only tests, which also fail more often.
+if [[ "${BAZEL_VERB}" != "coverage" ]]; then
+  io::run "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
+    -- "${production_only_targets[@]}" "${excluded_targets[@]}"
+fi
 
 # `start_emulator` creates unsightly *.log files in the current directory
 # (which is ${PROJECT_ROOT}) and we cannot use a subshell because we want the
