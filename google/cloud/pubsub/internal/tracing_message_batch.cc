@@ -21,6 +21,7 @@
 #include "opentelemetry/context/runtime_context.h"
 #include "opentelemetry/trace/context.h"
 #include "opentelemetry/trace/span.h"
+#include <algorithm>
 #include <memory>
 #include <string>
 
@@ -45,24 +46,27 @@ void TracingMessageBatch::Flush() {
   using AttributesList =
       std::vector<std::pair<opentelemetry::nostd::string_view,
                             opentelemetry::common::AttributeValue>>;
-  int64_t message_count = message_spans_.size();
   auto constexpr kMaxOtelLinks = 128;
   std::vector<std::pair<SpanContext, AttributesList>> links;
 
   // If the batch size is less than the max size, add the links to a single
   // span.
-  if (message_count < kMaxOtelLinks) {
-    for (int64_t i = 0; i < message_count; i++) {
-      auto span = message_spans_.at(static_cast<int>(i));
-      AttributesList link_attributes = {{"messaging.pubsub.message.link", i}};
-      links.emplace_back(std::make_pair(span->GetContext(), link_attributes));
-    }
+  if (message_spans_.size() < kMaxOtelLinks) {
+    std::transform(
+        message_spans_.begin(), message_spans_.end(), std::back_inserter(links),
+        [i = std::int64_t(0)](auto const& span) mutable {
+          return std::make_pair(
+              span->GetContext(),
+              AttributesList{{"messaging.pubsub.message.link", i++}});
+        });
   }
   auto batch_sink_span_parent = internal::MakeSpan(
       "BatchSink::AsyncPublish",
       /*attributes=*/
       {{"messaging.pubsub.num_messages_in_batch", message_count}},
       /*links*/ links);
+
+  // TODO(#12528): Handle batches larger than 128.
 
   // Clear message spans.
   message_spans_.clear();
