@@ -72,7 +72,6 @@ if [[ "${BAZEL_VERB}" != "coverage" ]]; then
     -- "${production_only_targets[@]}" "${excluded_targets[@]}"
 fi
 
-
 # `start_emulator` creates unsightly *.log files in the current directory
 # (which is ${PROJECT_ROOT}) and we cannot use a subshell because we want the
 # environment variables that it sets.
