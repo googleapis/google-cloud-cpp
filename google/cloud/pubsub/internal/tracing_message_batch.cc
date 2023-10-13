@@ -60,11 +60,12 @@ void TracingMessageBatch::Flush() {
               AttributesList{{"messaging.pubsub.message.link", i++}});
         });
   }
-  auto batch_sink_span_parent = internal::MakeSpan(
-      "BatchSink::AsyncPublish",
-      /*attributes=*/
-      {{"messaging.pubsub.num_messages_in_batch", message_count}},
-      /*links*/ links);
+  auto batch_sink_span_parent =
+      internal::MakeSpan("BatchSink::AsyncPublish",
+                         /*attributes=*/
+                         {{"messaging.pubsub.num_messages_in_batch",
+                           static_cast<int64_t>(message_spans_.size())}},
+                         /*links*/ links);
 
   // TODO(#12528): Handle batches larger than 128.
 
