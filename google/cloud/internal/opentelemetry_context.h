@@ -71,16 +71,17 @@ class ScopedOTelContext {
  public:
   explicit ScopedOTelContext(OTelContext contexts)
       : contexts_(std::move(contexts)),
-        same_thread_(contexts_.back() ==
-                     opentelemetry::context::RuntimeContext::GetCurrent()) {
-    if (same_thread_) return;
+        noop_(contexts_.empty() ||
+              contexts_.back() ==
+                  opentelemetry::context::RuntimeContext::GetCurrent()) {
+    if (noop_) return;
     for (auto const& c : contexts_) {
       AttachOTelContext(c);
     }
   }
 
   ~ScopedOTelContext() {
-    if (same_thread_) return;
+    if (noop_) return;
     for (auto it = contexts_.rbegin(); it != contexts_.rend(); ++it) {
       DetachOTelContext(*it);
     }
@@ -88,7 +89,7 @@ class ScopedOTelContext {
 
  private:
   OTelContext contexts_;
-  bool same_thread_;
+  bool noop_;
 };
 
 }  // namespace internal

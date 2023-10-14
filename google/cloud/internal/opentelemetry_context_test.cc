@@ -102,6 +102,11 @@ TEST_F(OTelContextTest, Scope) {
   EXPECT_THAT(CurrentOTelContext(), IsEmpty());
 }
 
+TEST_F(OTelContextTest, ScopeHandlesEmpty) {
+  ScopedOTelContext scope({});
+  EXPECT_THAT(CurrentOTelContext(), IsEmpty());
+}
+
 TEST_F(OTelContextTest, ScopeNoopWhenContextIsAlreadyActive) {
   auto c1 = MakeNewContext();
   auto c2 = MakeNewContext();
