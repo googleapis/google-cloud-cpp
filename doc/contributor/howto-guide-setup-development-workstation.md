@@ -43,40 +43,120 @@ If you use a different distribution, you will need to use the corresponding
 package manager (`dnf`, `zypper`, `apk`, etc.) and find the corresponding
 package names.
 
-First, install the basic development tools:
+Install the basic development tools:
 
-```console
-sudo apt update
-sudo apt install -y build-essential cmake git gcc g++ cmake \
-        libc-ares-dev libc-ares2 libbenchmark-dev libcurl4-openssl-dev libssl-dev \
-        make npm pkg-config tar wget zlib1g-dev
+```sh
+sudo curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.18.0/bazelisk-linux-amd64"
+sudo chmod +x /usr/bin/bazelisk
+sudo ln -s /usr/bin/bazelisk /usr/bin/bazel
+
+sudo apt-get update
+sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
+        automake build-essential cmake ca-certificates curl git \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
+        libssl-dev m4 make pkg-config tar wget zlib1g-dev
+sudo apt install -y ninja-build
+sudo apt-get install curl zip unzip tar
 ```
 
-Then install `clang-10` and some additional Clang tools that we use to enforce
-code style rules:
+Install docker and its `buildx` component:
 
-```console
-sudo apt install -y clang-10 clang-tidy-10 clang-format-10 clang-tools-10
-sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-10 100
-sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-10 100
+```sh
+sudo apt install -y docker.io docker-buildx
 ```
 
-Note: newer versions of Ubuntu might require:
+Configure your user to launch docker without needing `sudo`:
 
-```console
-sudo apt install -y clang libc++-dev libc++abi-dev cmake ninja-build
+```sh
+sudo usermod -aG docker $USER
 ```
+
+Update all packages and reboot:
+
+```sh
+sudo apt upgrade
+sudo shutdown -r now
+```
+
+Verify docker is working:
+
+```sh
+docker run hello-world
+```
+
+Clone the repository and run a test build:
+
+```sh
+git clone git@github.com:${GITHUB_USER}/google-cloud-cpp.git
+```
+
+```sh
+time env -C google-cloud-cpp bazel build //google/cloud/storage/...
+#
+# real    6m36.547s
+# user    0m0.825s
+# sys     0m0.630s
+```
+
+You need to install the Google Cloud SDK. These instructions work for a GCE VM,
+but you may need to adapt them for your environment. Check the instructions on
+the [Google Cloud SDK website](https://cloud.google.com/sdk/) for alternatives.
+
+```sh
+type gcloud || sudo google-cloud-cpp/ci/install-cloud-sdk.sh
+```
+
+By default, `gcloud` will use the GCE instance credentials. That may be enough
+in most cases, but you may need to use your *own* credentials:
+
+```sh
+/usr/local/google-cloud-sdk/bin/gcloud auth login
+```
+
+Don't forget the second ~breakfast~ login:
+
+```sh
+/usr/local/google-cloud-sdk/bin/gcloud auth application-default login
+```
+
+Test checkers:
+
+```sh
+time env -C google-cloud-cpp ci/cloudbuild/build.sh -t checkers-pr
+# The first time is slow, as it needs to create the docker image. The second
+# time it should run
+# real    0m30.997s
+# user    0m0.282s
+# sys     0m0.232s
+```
+
+```sh
+(
+echo ENABLED_FEATURES=storage,experimental-storage_grpc,opentelemetry
+echo RUN_CLANG_TIDY_FIX=NO
+) >$HOME/.cloudcxxrc
+time env -C google-cloud-cpp ci/cloudbuild/build.sh --distro fedora-latest-cmake --build development
+# The second run should get times such as
+# real    1m48.347s
+# user    0m0.259s
+# sys     0m0.247s
+```
+
+### Optional Tools
+
+Most of the time we use these tools in docker images, so there is no need to
+install them in your development environment.
 
 Install the buildifier tool, which we use to format `BUILD.bazel` files:
 
-```console
+```sh
 sudo curl -fsSL -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/6.0.0/buildifier-linux-amd64
 sudo chmod 755 /usr/bin/buildifier
 ```
 
 Install shfmt tool, which we use to format our shell scripts:
 
-```console
+```sh
 sudo curl -L -o /usr/local/bin/shfmt \
     "https://github.com/mvdan/sh/releases/download/v3.4.3/shfmt_v3.4.3_linux_amd64"
 sudo chmod 755 /usr/local/bin/shfmt
@@ -87,21 +167,21 @@ tool to a specific version because the formatting changes when the "latest"
 version is updated, and we do not want the builds to break just because some
 third party changed something.
 
-```console
+```sh
 sudo apt install -y python3 python3-pip
 pip3 install --upgrade pip
 pip3 install cmake_format==0.6.13
 ```
 
-Install black, which we use to format our Python scripts:
+Install \`black\`\`, which we use to format our Python scripts:
 
-```console
+```sh
 pip3 install black==22.3.0
 ```
 
 Install `mdformat`, which we use to format our `.md` documents:
 
-```
+```sh
 pip3 install mdformat-gfm==0.3.5 \
                  mdformat-frontmatter==0.4.1 \
                  mdformat-footnote==0.1.1
@@ -109,30 +189,22 @@ pip3 install mdformat-gfm==0.3.5 \
 
 Install `typos-cli` for spell and typo checking:
 
-```
+```sh
 sudo apt install cargo
 cargo install typos-cli --version 1.16.1
 ```
 
 Install the Python modules used in the integration tests:
 
-```console
+```sh
 pip3 install setuptools wheel
 pip3 install git+https://github.com/googleapis/storage-testbench
 ```
 
 Add the pip directory to your PATH:
 
-```console
+```sh
 export PATH=$PATH:$HOME/.local/bin
-```
-
-You need to install the Google Cloud SDK. These instructions work for a GCE VM,
-but you may need to adapt them for your environment. Check the instructions on
-the [Google Cloud SDK website](https://cloud.google.com/sdk/) for alternatives.
-
-```console
-sudo ./ci/install-cloud-sdk.sh
 ```
 
 ### (Optional) Enable clang-based tooling in your IDE
@@ -159,10 +231,10 @@ build all the dependencies.
 
 ```shell
 cmake -S . -B .build -G Ninja \
+  --toolchain "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" \
   -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
   -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON \
-  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-  -DCMAKE_TOOLCHAIN_FILE="${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 cmake --build .build
 ```
 
@@ -352,56 +424,79 @@ This might be useful to run performance tests in isolation, but "close" to the
 service you are doing development for. The following instructions assume you
 have already created a project:
 
-```console
-$ PROJECT_ID=$(gcloud config get-value project)
+```sh
+PROJECT_ID=$(gcloud config get-value project)
 # Or manually set it if you have not configured your default project:
 ```
 
 Select a zone to run your VM:
 
-```console
-$ gcloud compute zones list
+```sh
+gcloud compute zones list
 $ ZONE=... # Pick a zone.
 ```
 
 Select the name of the VM:
 
-```console
-$ VM=... # e.g. VM=my-windows-devbox
+```sh
+VM=... # e.g. VM=my-windows-devbox
 ```
 
 Then create the virtual machine using:
 
-```console
-# Googlers should consult go/drawfork before selecting an image.
-$ IMAGE_PROJECT=ubuntu-os-cloud
-$ IMAGE=$(gcloud compute images list \
+```sh
+IMAGE_PROJECT=ubuntu-os-cloud
+
+IMAGE=$(gcloud compute images list \
     --project=${IMAGE_PROJECT} \
-    --filter="family ~ ubuntu-1804" \
+    --filter="family ~ ubuntu-2204" \
     --sort-by=~name \
     --format="value(name)" \
     --limit=1)
-$ PROJECT_NUMBER=$(gcloud projects list \
+
+PROJECT_NUMBER=$(gcloud projects list \
     --filter="project_id=${PROJECT_ID}" \
     --format="value(project_number)" \
     --limit=1)
-$ gcloud compute --project "${PROJECT_ID}" instances create "${VM}" \
-  --zone "${ZONE}" \
-  --image "${IMAGE}" \
-  --image-project "${IMAGE_PROJECT}" \
-  --boot-disk-size "1024" --boot-disk-type "pd-standard" \
-  --boot-disk-device-name "${VM}" \
-  --service-account "${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
-  --machine-type "n1-standard-8" \
-  --subnet "default" \
-  --maintenance-policy "MIGRATE" \
-  --scopes "https://www.googleapis.com/auth/bigtable.admin","https://www.googleapis.com/auth/bigtable.data","https://www.googleapis.com/auth/cloud-platform"
+
+gcloud compute instances create ${VM} \
+    --project=${PROJECT_ID} \
+    --service-account=${PROJECT_NUMBER}-compute@developer.gserviceaccount.com \
+    --create-disk=auto-delete=yes,boot=yes,device-name=${VM},image=projects/${IMAGE_PROJECT}/global/images/${IMAGE},mode=rw,size=2048,type=projects/${PROJECT_ID}/zones/${ZONE}/diskTypes/pd-balanced \
+    --zone=${ZONE} \
+    --machine-type=n2d-standard-128 \
+    --network-interface=network-tier=PREMIUM,stack-type=IPV4_ONLY,subnet=default \
+    --maintenance-policy=MIGRATE \
+    --provisioning-model=STANDARD \
+    --scopes=https://www.googleapis.com/auth/cloud-platform \
+    --no-shielded-secure-boot \
+    --shielded-vtpm \
+    --shielded-integrity-monitoring \
+    --labels=goog-ec-src=vm_add-gcloud \
+    --reservation-affinity=any
 ```
 
-To login to this image use:
+Update the `ssh` configuration to include this new VM:
 
-```console
-$ gcloud compute ssh --ssh-flag=-A --zone=${ZONE} ${VM}
+```sh
+# You need to do this every time you add GCE instances.
+gcloud compute config-ssh
+```
+
+```sh
+# Googlers should do this once. It configures SSH to use a tunnel and to forward
+# the authentication agent on all VMs in your project.
+cat >>.ssh/config <__EOF__
+Host *.${PROJECT_ID}
+    ProxyCommand=corp-ssh-helper %h %p
+    ForwardAgent yes
+__EOF__
+```
+
+Then login using:
+
+```sh
+ssh -A ${VM}.${ZONE}.${PROJECT_ID}
 ```
 
 ## Appendix: Windows VM on Google Compute Engine
