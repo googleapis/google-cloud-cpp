@@ -164,6 +164,32 @@ NetworkAttachmentsClient::ListNetworkAttachments(
   return connection_->ListNetworkAttachments(std::move(request));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkAttachmentsClient::PatchNetworkAttachment(
+    std::string const& project, std::string const& region,
+    std::string const& network_attachment,
+    google::cloud::cpp::compute::v1::NetworkAttachment const&
+        network_attachment_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_attachments::v1::
+      PatchNetworkAttachmentRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_network_attachment(network_attachment);
+  *request.mutable_network_attachment_resource() = network_attachment_resource;
+  return connection_->PatchNetworkAttachment(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkAttachmentsClient::PatchNetworkAttachment(
+    google::cloud::cpp::compute::network_attachments::v1::
+        PatchNetworkAttachmentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchNetworkAttachment(request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NetworkAttachmentsClient::SetIamPolicy(
     std::string const& project, std::string const& region,

@@ -227,6 +227,23 @@ BackendServicesClient::ListBackendServices(
   return connection_->ListBackendServices(std::move(request));
 }
 
+StreamRange<google::cloud::cpp::compute::v1::BackendService>
+BackendServicesClient::ListUsable(std::string const& project, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::backend_services::v1::ListUsableRequest request;
+  request.set_project(project);
+  return connection_->ListUsable(request);
+}
+
+StreamRange<google::cloud::cpp::compute::v1::BackendService>
+BackendServicesClient::ListUsable(
+    google::cloud::cpp::compute::backend_services::v1::ListUsableRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListUsable(std::move(request));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesClient::PatchBackendService(
     std::string const& project, std::string const& backend_service,

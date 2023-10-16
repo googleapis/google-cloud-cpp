@@ -89,6 +89,12 @@ Idempotency BackendServicesConnectionIdempotencyPolicy::ListBackendServices(
   return Idempotency::kIdempotent;
 }
 
+Idempotency BackendServicesConnectionIdempotencyPolicy::ListUsable(
+    google::cloud::cpp::compute::backend_services::v1::
+        ListUsableRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency BackendServicesConnectionIdempotencyPolicy::PatchBackendService(
     google::cloud::cpp::compute::backend_services::v1::
         PatchBackendServiceRequest const&) {

@@ -73,6 +73,10 @@ class BackendServicesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::backend_services::v1::
           ListBackendServicesRequest request);
 
+  virtual google::cloud::Idempotency ListUsable(
+      google::cloud::cpp::compute::backend_services::v1::ListUsableRequest
+          request);
+
   virtual google::cloud::Idempotency PatchBackendService(
       google::cloud::cpp::compute::backend_services::v1::
           PatchBackendServiceRequest const& request);

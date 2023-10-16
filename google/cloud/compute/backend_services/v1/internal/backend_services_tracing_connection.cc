@@ -140,6 +140,19 @@ BackendServicesTracingConnection::ListBackendServices(
                                                        std::move(sr));
 }
 
+StreamRange<google::cloud::cpp::compute::v1::BackendService>
+BackendServicesTracingConnection::ListUsable(
+    google::cloud::cpp::compute::backend_services::v1::ListUsableRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_services_v1::BackendServicesConnection::ListUsable");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListUsable(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::BackendService>(std::move(span),
+                                                       std::move(sr));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesTracingConnection::PatchBackendService(
     google::cloud::cpp::compute::backend_services::v1::

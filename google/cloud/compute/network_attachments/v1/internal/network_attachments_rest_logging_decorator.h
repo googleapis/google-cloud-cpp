@@ -78,6 +78,13 @@ class NetworkAttachmentsRestLogging : public NetworkAttachmentsRestStub {
       google::cloud::cpp::compute::network_attachments::v1::
           ListNetworkAttachmentsRequest const& request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchNetworkAttachment(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::network_attachments::v1::
+          PatchNetworkAttachmentRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::network_attachments::v1::

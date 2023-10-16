@@ -61,6 +61,10 @@ class NetworkAttachmentsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::network_attachments::v1::
           ListNetworkAttachmentsRequest request);
 
+  virtual google::cloud::Idempotency PatchNetworkAttachment(
+      google::cloud::cpp::compute::network_attachments::v1::
+          PatchNetworkAttachmentRequest const& request);
+
   virtual google::cloud::Idempotency SetIamPolicy(
       google::cloud::cpp::compute::network_attachments::v1::
           SetIamPolicyRequest const& request);

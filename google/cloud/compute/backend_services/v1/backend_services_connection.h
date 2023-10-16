@@ -225,6 +225,11 @@ class BackendServicesConnection {
   ListBackendServices(google::cloud::cpp::compute::backend_services::v1::
                           ListBackendServicesRequest request);
 
+  virtual StreamRange<google::cloud::cpp::compute::v1::BackendService>
+  ListUsable(
+      google::cloud::cpp::compute::backend_services::v1::ListUsableRequest
+          request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchBackendService(google::cloud::cpp::compute::backend_services::v1::
                           PatchBackendServiceRequest const& request);

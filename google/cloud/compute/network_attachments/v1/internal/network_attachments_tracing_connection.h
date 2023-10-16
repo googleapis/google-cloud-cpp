@@ -71,6 +71,11 @@ class NetworkAttachmentsTracingConnection
   ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::
                              ListNetworkAttachmentsRequest request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNetworkAttachment(
+      google::cloud::cpp::compute::network_attachments::v1::
+          PatchNetworkAttachmentRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::network_attachments::v1::
           SetIamPolicyRequest const& request) override;

@@ -274,6 +274,28 @@ DefaultBackendServicesRestStub::ListBackendServices(
                           request.return_partial_success() ? "1" : "0")}));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::BackendServiceListUsable>
+DefaultBackendServicesRestStub::ListUsable(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backend_services::v1::ListUsableRequest const&
+        request) {
+  auto const& opts = internal::CurrentOptions();
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::BackendServiceListUsable>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "backendServices", "/", "listUsable"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendServicesRestStub::AsyncPatchBackendService(
     CompletionQueue& cq,
