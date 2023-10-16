@@ -210,6 +210,49 @@ TEST(TracingMessageBatch, FlushLargeBatch) {
                              "messaging.pubsub.num_messages_in_batch", 129)))));
 }
 
+TEST(TracingMessageBatch, AddMessageSpanMetadataAddsEvent) {
+  // The span catcher must be installed before the message span is created.
+  auto span_catcher = InstallSpanCatcher();
+  auto message_span = MakeSpan("test message span");
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  auto initial_spans = {message_span};
+  auto message_batch =
+      std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
+
+  message_batch->AddMessageSpanMetadata();
+
+  // The span must end before it can be processed by the span catcher.
+  EndSpans(message_batch->GetMessageSpans());
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      Contains(AllOf(SpanNamed("test message span"),
+                     SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
+}
+
+TEST(TracingMessageBatch, AddMessageSpanMetadataAddsEventForMultipleMessages) {
+  // The span catcher must be installed before the message span is created.
+  auto span_catcher = InstallSpanCatcher();
+  auto span1 = MakeSpan("test message span1");
+  auto span2 = MakeSpan("test message span2");
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  auto initial_spans = {span1, span2};
+  auto message_batch =
+      std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
+
+  message_batch->AddMessageSpanMetadata();
+
+  // The span must end before it can be processed by the span catcher.
+  EndSpans(message_batch->GetMessageSpans());
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(SpanNamed("test message span1"),
+                        SpanHasEvents(EventNamed("gl-cpp.batch_flushed"))),
+                  AllOf(SpanNamed("test message span2"),
+                        SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
+}
+
 TEST(TracingMessageBatch, FlushCallback) {
   auto span_catcher = InstallSpanCatcher();
   auto span = MakeSpan("test batch sink span");
