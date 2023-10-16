@@ -68,13 +68,14 @@ TEST(TracingHttpPayload, Success) {
                      OTelAttribute<std::int64_t>("read.returned.size", rs)));
   };
   EXPECT_THAT(
-      spans, UnorderedElementsAre(
-                 AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
-                       SpanKindIsClient(),
-                       SpanHasAttributes(OTelAttribute<std::string>(
-                           sc::kNetTransport, sc::NetTransportValues::kIpTcp))),
-                 make_read_matcher(16, 16), make_read_matcher(16, 16),
-                 make_read_matcher(16, 11), make_read_matcher(16, 0)));
+      spans,
+      UnorderedElementsAre(
+          AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+                SpanKindIsClient(),
+                SpanHasAttributes(OTelAttribute<std::string>(
+                    sc::kNetworkTransport, sc::NetTransportValues::kIpTcp))),
+          make_read_matcher(16, 16), make_read_matcher(16, 16),
+          make_read_matcher(16, 11), make_read_matcher(16, 0)));
 }
 
 TEST(TracingHttpPayload, Failure) {
@@ -120,7 +121,7 @@ TEST(TracingHttpPayload, Failure) {
           AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
                 SpanKindIsClient(),
                 SpanHasAttributes(
-                    OTelAttribute<std::string>(sc::kNetTransport,
+                    OTelAttribute<std::string>(sc::kNetworkTransport,
                                                sc::NetTransportValues::kIpTcp),
                     OTelAttribute<int>(
                         "gl-cpp.status_code",
