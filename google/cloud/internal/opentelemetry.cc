@@ -33,7 +33,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer(
   return provider->GetTracer("gcloud-cpp", version_string());
 }
 
-opentelemetry::trace::StartSpanOptions DefaultStartSpanOptions(){
+opentelemetry::trace::StartSpanOptions DefaultStartSpanOptions() {
   opentelemetry::trace::StartSpanOptions default_options;
   default_options.kind = opentelemetry::trace::SpanKind::kClient;
   return default_options;
@@ -45,8 +45,9 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanImpl(
     opentelemetry::trace::SpanContextKeyValueIterable const& links,
     absl::optional<opentelemetry::trace::StartSpanOptions> const& options) {
   return GetTracer(CurrentOptions())
-      ->StartSpan(name, attributes, links,
-                  (options.has_value()) ? options.value() : DefaultStartSpanOptions());
+      ->StartSpan(
+          name, attributes, links,
+          (options.has_value()) ? options.value() : DefaultStartSpanOptions());
 }
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
