@@ -47,6 +47,36 @@ void TracingMessageBatch::AddMessageSpanMetadata() {
   }
 }
 
+/// Inserts a link for each span between the given iterators.
+///
+/// @p begin the first position in the list of spans to create links.
+/// @p end the last position in the list of spans to create links.
+/// @p links the vector that will be filled with links.
+template <typename Iterator>
+void GenerateLinks(
+    Iterator begin, Iterator end,
+    std::vector<std::pair<
+        opentelemetry::trace::SpanContext,
+        std::vector<std::pair<opentelemetry::nostd::string_view,
+                              opentelemetry::common::AttributeValue>>>>&
+        links) {
+  static_assert(
+      std::is_same<
+          absl::decay_t<decltype(*begin)>,
+          opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>::value,
+      "Iterator is not the right type.");
+  using opentelemetry::trace::SpanContext;
+  using AttributesList =
+      std::vector<std::pair<opentelemetry::nostd::string_view,
+                            opentelemetry::common::AttributeValue>>;
+  std::transform(begin, end, std::back_inserter(links),
+                 [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
+                   return std::make_pair(
+                       span->GetContext(),
+                       AttributesList{{"messaging.pubsub.message.link", i++}});
+                 });
+}
+
 void TracingMessageBatch::Flush() {
   using opentelemetry::trace::SpanContext;
   using AttributesList =
@@ -58,15 +88,11 @@ void TracingMessageBatch::Flush() {
   links.reserve(batch_size);
 
   // If the batch size is less than the max size, add the links to a single
-  // span.
-  if (batch_size < kMaxOtelLinks) {
-    std::transform(
-        message_spans_.begin(), message_spans_.end(), std::back_inserter(links),
-        [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
-          return std::make_pair(
-              span->GetContext(),
-              AttributesList{{"messaging.pubsub.message.link", i++}});
-        });
+  // span. If the batch size is greater than the max size, this will be a parent
+  // span with no links and each child spans will contain links.
+  bool const is_small_batch = batch_size <= kMaxOtelLinks;
+  if (is_small_batch) {
+    GenerateLinks(message_spans_.begin(), message_spans_.end(), links);
   }
   auto batch_sink_span_parent =
       internal::MakeSpan("BatchSink::AsyncPublish",
@@ -75,7 +101,29 @@ void TracingMessageBatch::Flush() {
                            static_cast<std::int64_t>(batch_size)}},
                          /*links*/ links);
 
-  // TODO(#12528): Handle batches larger than 128.
+  // Create N spans with up to 128 links per batch.
+  if (!is_small_batch) {
+    int num_of_batches =
+        static_cast<std::int64_t>((batch_size / kMaxOtelLinks) + 1);
+    for (int i = 0; i < num_of_batches; ++i) {
+      std::vector<std::pair<SpanContext, AttributesList>> links;
+      links.reserve(kMaxOtelLinks);
+      GenerateLinks(
+          message_spans_.begin() + (kMaxOtelLinks * i),
+          message_spans_.begin() +
+              std::min(static_cast<std::int64_t>((kMaxOtelLinks * (i + 1))),
+                       static_cast<std::int64_t>(batch_size)),
+          links);
+
+      opentelemetry::trace::StartSpanOptions options;
+      options.parent = batch_sink_span_parent->GetContext();
+      auto batch_sink_span = internal::MakeSpan(
+          "BatchSink::AsyncPublish - Batch #" + std::to_string(i),
+          /*attributes=*/{{}},
+          /*links=*/links, options);
+      batch_sink_spans_.push_back(batch_sink_span);
+    }
+  }
 
   // This must be called before we clear the message spans.
   AddMessageSpanMetadata();

@@ -233,6 +233,13 @@ template <typename... Args>
   return SpanLinksAreImpl(::testing::ElementsAre(matchers...));
 }
 
+MATCHER_P(SpanLinksSizeIs, span_links,
+          "has size: " + std::to_string(span_links)) {
+  auto const& actual = static_cast<std::int64_t>(arg->GetLinks().size());
+  *result_listener << "has size: " + std::to_string(actual);
+  return actual == span_links;
+}
+
 class SpanCatcher {
  public:
   SpanCatcher();

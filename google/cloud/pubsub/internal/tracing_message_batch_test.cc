@@ -37,14 +37,17 @@ using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanLinkAttributesAre;
+using ::google::cloud::testing_util::SpanLinksSizeIs;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::Each;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::SizeIs;
+using ::testing::StartsWith;
 
 namespace {
 
@@ -178,14 +181,15 @@ TEST(TracingMessageBatch, FlushSmallBatch) {
                                  "messaging.pubsub.message.link", 1)))))));
 }
 
-// TODO(#12528): Update test when impl is added
-TEST(TracingMessageBatch, FlushLargeBatch) {
+TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {
+  int const kBatchSize = 128;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       initial_spans;
-  initial_spans.reserve(129);
-  for (int i = 0; i < 129; ++i) {
+  initial_spans.reserve(kBatchSize);
+  for (int i = 0; i < kBatchSize; ++i) {
     initial_spans.emplace_back(MakeSpan("test span " + std::to_string(i)));
   }
+  ASSERT_THAT(initial_spans, ::testing::SizeIs(kBatchSize));
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
@@ -203,11 +207,51 @@ TEST(TracingMessageBatch, FlushLargeBatch) {
   EXPECT_THAT(message_batch->GetBatchSinkSpans(), SizeIs(1));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, Contains(AllOf(
-                         SpanHasInstrumentationScope(), SpanKindIsClient(),
-                         SpanNamed("BatchSink::AsyncPublish"),
-                         SpanHasAttributes(OTelAttribute<std::int64_t>(
-                             "messaging.pubsub.num_messages_in_batch", 129)))));
+  EXPECT_THAT(
+      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                            SpanNamed("BatchSink::AsyncPublish"),
+                            SpanHasAttributes(OTelAttribute<std::int64_t>(
+                                "messaging.pubsub.num_messages_in_batch", 128)),
+                            SpanLinksSizeIs(128))));
+}
+
+TEST(TracingMessageBatch, FlushLargeBatch) {
+  int const kBatchSize = 129;
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+      initial_spans;
+  initial_spans.reserve(kBatchSize);
+  for (int i = 0; i < kBatchSize; ++i) {
+    initial_spans.emplace_back(MakeSpan("test span " + std::to_string(i)));
+  }
+  ASSERT_THAT(initial_spans, ::testing::SizeIs(kBatchSize));
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, Flush).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+  });
+  auto message_batch =
+      std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
+
+  message_batch->Flush();
+
+  // The span must end before it can be processed by the span catcher.
+  EndSpans(message_batch->GetBatchSinkSpans());
+
+  EXPECT_THAT(message_batch->GetMessageSpans(), IsEmpty());
+  EXPECT_THAT(message_batch->GetBatchSinkSpans(), SizeIs(3));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              Contains(AllOf(
+                  SpanNamed("BatchSink::AsyncPublish"),
+                  SpanHasAttributes(OTelAttribute<std::int64_t>(
+                      "messaging.pubsub.num_messages_in_batch", kBatchSize)))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("BatchSink::AsyncPublish - Batch #0"),
+                             SpanLinksSizeIs(128))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("BatchSink::AsyncPublish - Batch #1"),
+                             SpanLinksSizeIs(1))));
 }
 
 TEST(TracingMessageBatch, AddMessageSpanMetadataAddsEvent) {
