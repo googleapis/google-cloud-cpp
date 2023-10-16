@@ -13,6 +13,11 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Secure Source Manager](/google/cloud/securesourcemanager/README.md)
 
+### [Compute Engine](/google/cloud/compute/README.md)
+
+- fix(compute): `RegionSecurityPoliciesClient::PatchSecurityPolicy` added
+  `update_mask` field.
+
 ## v2.17.0 - 2023-10
 
 ### [Compute Engine](/google/cloud/compute/README.md)
