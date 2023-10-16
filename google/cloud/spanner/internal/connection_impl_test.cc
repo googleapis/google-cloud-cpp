@@ -325,6 +325,7 @@ template <typename ResponseType>
 std::unique_ptr<MockStreamingReadRpc<ResponseType>> MakeReader(
     std::vector<std::string> const& responses, Status status = Status()) {
   std::vector<ResponseType> response_protos;
+  response_protos.reserve(responses.size());
   for (auto const& response : responses) {
     response_protos.push_back(ResponseType{});
     if (!TextFormat::ParseFromString(response, &response_protos.back())) {
