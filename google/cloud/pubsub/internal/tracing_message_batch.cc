@@ -41,6 +41,12 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
   child_->SaveMessage(std::move(m));
 }
 
+void TracingMessageBatch::AddMessageSpanMetadata() {
+  for (auto& message_span : message_spans_) {
+    message_span->AddEvent("gl-cpp.batch_flushed");
+  }
+}
+
 void TracingMessageBatch::Flush() {
   using opentelemetry::trace::SpanContext;
   using AttributesList =
@@ -71,6 +77,8 @@ void TracingMessageBatch::Flush() {
 
   // TODO(#12528): Handle batches larger than 128.
 
+  // This must be called before we clear the message spans.
+  AddMessageSpanMetadata();
   // Clear message spans.
   message_spans_.clear();
 
@@ -79,6 +87,7 @@ void TracingMessageBatch::Flush() {
   // Set the batch sink parent span.
   auto async_scope = internal::GetTracer(internal::CurrentOptions())
                          ->WithActiveSpan(batch_sink_span_parent);
+
   child_->Flush();
 }
 

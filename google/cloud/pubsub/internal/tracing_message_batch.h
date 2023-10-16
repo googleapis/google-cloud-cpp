@@ -58,6 +58,12 @@ class TracingMessageBatch : public MessageBatch {
 
   void SaveMessage(pubsub::Message m) override;
 
+  /// Adds extra information to the message spans inside the flush call. This
+  /// function needs to be separate for testing purposes. Since the Flush call
+  /// clears the message_spans_, the unit tests are unable to access the
+  /// modified spans using the span catcher.
+  void AddMessageSpanMetadata();
+
   void Flush() override;
 
   void FlushCallback() override;
