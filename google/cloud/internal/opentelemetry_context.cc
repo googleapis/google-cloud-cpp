@@ -47,16 +47,6 @@ OTelContext CurrentOTelContext() {
   return contexts;
 }
 
-void PushOTelContext() {
-  auto& v = ThreadLocalOTelContext();
-  v.emplace_back(opentelemetry::context::RuntimeContext::GetCurrent(), nullptr);
-}
-
-void PopOTelContext() {
-  auto current = opentelemetry::context::RuntimeContext::GetCurrent();
-  DetachOTelContext(current);
-}
-
 void AttachOTelContext(opentelemetry::context::Context const& context) {
   auto& v = ThreadLocalOTelContext();
   auto token = opentelemetry::context::RuntimeContext::Attach(context);
@@ -66,6 +56,18 @@ void AttachOTelContext(opentelemetry::context::Context const& context) {
 void DetachOTelContext(opentelemetry::context::Context const& context) {
   auto& v = ThreadLocalOTelContext();
   if (!v.empty() && context == v.back().first) v.pop_back();
+}
+
+OTelScope::OTelScope(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span)
+    : scope_(span) {
+  auto& v = ThreadLocalOTelContext();
+  v.emplace_back(opentelemetry::context::RuntimeContext::GetCurrent(), nullptr);
+}
+
+OTelScope::~OTelScope() {
+  auto current = opentelemetry::context::RuntimeContext::GetCurrent();
+  DetachOTelContext(current);
 }
 
 }  // namespace internal

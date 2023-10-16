@@ -45,27 +45,23 @@ class OTelContextTest : public ::testing::Test {
   }
 };
 
-TEST_F(OTelContextTest, PushPopOTelContext) {
+TEST_F(OTelContextTest, OTelScope) {
   EXPECT_THAT(CurrentOTelContext(), IsEmpty());
 
-  auto s1 = opentelemetry::trace::Scope(MakeSpan("s1"));
-  auto c1 = opentelemetry::context::RuntimeContext::GetCurrent();
-
-  PushOTelContext();
-  EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1));
-
   {
-    auto s2 = opentelemetry::trace::Scope(MakeSpan("s2"));
-    auto c2 = opentelemetry::context::RuntimeContext::GetCurrent();
+    OTelScope scope1(MakeSpan("s1"));
+    auto c1 = opentelemetry::context::RuntimeContext::GetCurrent();
+    EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1));
 
-    PushOTelContext();
-    EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
+    {
+      OTelScope scope2(MakeSpan("s2"));
+      auto c2 = opentelemetry::context::RuntimeContext::GetCurrent();
+      EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
+    }
 
-    PopOTelContext();
     EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1));
   }
 
-  PopOTelContext();
   EXPECT_THAT(CurrentOTelContext(), IsEmpty());
 }
 
