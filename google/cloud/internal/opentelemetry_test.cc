@@ -35,13 +35,18 @@ using ::testing::MockFunction;
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::LinkHasSpanContext;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
+using ::google::cloud::testing_util::SpanHasLinks;
 using ::google::cloud::testing_util::SpanKindIsClient;
+using ::google::cloud::testing_util::SpanLinkAttributesAre;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanWithParentSpanId;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::testing::AllOf;
+using ::testing::Contains;
 using ::testing::Each;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
@@ -92,6 +97,57 @@ TEST(OpenTelemetry, MakeSpanWithAttributes) {
   EXPECT_THAT(spans, ElementsAre(SpanNamed("span1")));
   EXPECT_THAT(spans, ElementsAre(SpanHasAttributes(
                          OTelAttribute<std::string>("key", "value"))));
+}
+
+TEST(OpenTelemetry, MakeSpanWithLink) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto s1 = MakeSpan("span1");
+  auto s2 = MakeSpan("span2", {}, {{s1->GetContext(), {{"key", "value"}}}});
+  s1->End();
+  s2->End();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(
+          SpanNamed("span2"),
+          SpanHasLinks(AllOf(LinkHasSpanContext(s1->GetContext()),
+                             SpanLinkAttributesAre(OTelAttribute<std::string>(
+                                 "key", "value")))))));
+}
+
+TEST(OpenTelemetry, MakeSpanWithKind) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto s1 = MakeSpan("span1");
+  opentelemetry::trace::StartSpanOptions options;
+  options.kind = opentelemetry::trace::SpanKind::kProducer;
+  s1->End();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Each(SpanKindIsClient()));
+}
+
+TEST(OpenTelemetry, MakeSpanWithParent) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto s1 = MakeSpan("span1");
+  opentelemetry::trace::StartSpanOptions options;
+  options.parent = s1->GetContext();
+  auto s2 = MakeSpan("span2", absl::make_optional(options));
+  s1->End();
+  s2->End();
+
+  auto spans = span_catcher->GetSpans();
+  ASSERT_EQ(2, spans.size());
+  // Span data will be in the order the spans are ended. The spans are
+  // returned in a `vector<unique_ptr<SpanData>>`, so we can't extract a span
+  // directly to get the span id from the span data. Instead we are accessing
+  // the span data using the `.at()`.
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("span2"),
+                             SpanWithParentSpanId(spans.at(0)->GetSpanId()))));
 }
 
 TEST(OpenTelemetry, EndSpanImplEndsSpan) {

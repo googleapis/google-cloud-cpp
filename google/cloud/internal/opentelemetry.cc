@@ -36,24 +36,28 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer(
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanImpl(
     opentelemetry::nostd::string_view name,
     opentelemetry::common::KeyValueIterable const& attributes,
-    opentelemetry::trace::SpanContextKeyValueIterable const& links) {
-  opentelemetry::trace::StartSpanOptions options;
-  options.kind = opentelemetry::trace::SpanKind::kClient;
+    opentelemetry::trace::SpanContextKeyValueIterable const& links,
+    absl::optional<opentelemetry::trace::StartSpanOptions> const& options) {
+  opentelemetry::trace::StartSpanOptions default_options;
+  default_options.kind = opentelemetry::trace::SpanKind::kClient;
   return GetTracer(CurrentOptions())
-      ->StartSpan(name, attributes, links, options);
+      ->StartSpan(name, attributes, links,
+                  (options.has_value()) ? options.value() : default_options);
 }
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
-    opentelemetry::nostd::string_view name) {
-  return MakeSpanImpl(name);
+    opentelemetry::nostd::string_view name,
+    absl::optional<opentelemetry::trace::StartSpanOptions> const& options) {
+  return MakeSpan(name, {}, {}, options);
 }
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
     opentelemetry::nostd::string_view name,
     std::initializer_list<std::pair<opentelemetry::nostd::string_view,
                                     opentelemetry::common::AttributeValue>>
-        attributes) {
-  return MakeSpan(name, attributes, {});
+        attributes,
+    absl::optional<opentelemetry::trace::StartSpanOptions> const& options) {
+  return MakeSpan(name, attributes, {}, options);
 }
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
@@ -66,7 +70,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
                   std::initializer_list<
                       std::pair<opentelemetry::nostd::string_view,
                                 opentelemetry::common::AttributeValue>>>>
-        links) {
+        links,
+    absl::optional<opentelemetry::trace::StartSpanOptions> const& options) {
   return MakeSpan(
       name,
       opentelemetry::nostd::span<
@@ -78,7 +83,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
                     std::initializer_list<std::pair<
                         opentelemetry::nostd::string_view,
                         opentelemetry::common::AttributeValue>>> const>{
-          links.begin(), links.end()});
+          links.begin(), links.end()},
+      options);
 }
 
 void EndSpanImpl(opentelemetry::trace::Span& span, Status const& status) {

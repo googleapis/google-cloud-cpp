@@ -92,6 +92,8 @@ std::ostream& operator<<(std::ostream& os, SpanData const& rhs) {
      << ", kind=" << google::cloud::testing_util::ToString(rhs.GetSpanKind())
      << ", instrumentation_scope {" << rhs.GetInstrumentationScope().GetName()
      << ", " << rhs.GetInstrumentationScope().GetVersion() << "}," << line_sep
+     << "parent_span_id="
+     << google::cloud::testing_util::ToString(rhs.GetParentSpanId()) << line_sep
      << "attributes=["
      << absl::StrJoin(rhs.GetAttributes(), ", ", AttributeFormatter) << "],"
      << line_sep << "events=[";
@@ -162,6 +164,12 @@ std::string ToString(opentelemetry::trace::SpanContext const& span_context) {
      << ", trace_flags: " << std::to_string(span_context.trace_flags().flags())
      << "}";
   return ss.str();
+}
+
+std::string ToString(opentelemetry::trace::SpanId span_id) {
+  char span_id_array[16] = {0};
+  span_id.ToLowerBase16(span_id_array);
+  return std::string(span_id_array, 16);
 }
 
 bool ThereIsAnActiveSpan() {
