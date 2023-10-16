@@ -37,6 +37,7 @@ using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanLinkAttributesAre;
+using ::google::cloud::testing_util::SpanLinksSizeIs;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
@@ -150,7 +151,7 @@ TEST(TracingMessageBatch, FlushSmallBatch) {
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
-  });
+  }); 
   auto initial_spans = {message_span1, message_span2};
   auto message_batch =
       std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
@@ -179,14 +180,15 @@ TEST(TracingMessageBatch, FlushSmallBatch) {
                                  "messaging.pubsub.message.link", 1)))))));
 }
 
-// TODO(#12528): Update test when impl is added
-TEST(TracingMessageBatch, FlushLargeBatch) {
+TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {
+  int const k_batch_size = 128;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       initial_spans;
-  initial_spans.reserve(129);
-  for (int i = 0; i < 129; ++i) {
+  initial_spans.reserve(k_batch_size);
+  for (int i = 0; i < k_batch_size; ++i) {
     initial_spans.emplace_back(MakeSpan("test span " + std::to_string(i)));
   }
+  ASSERT_THAT(initial_spans, ::testing::SizeIs(k_batch_size));
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
@@ -204,11 +206,51 @@ TEST(TracingMessageBatch, FlushLargeBatch) {
   EXPECT_THAT(message_batch->GetBatchSinkSpans(), SizeIs(1));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, Contains(AllOf(
-                         SpanHasInstrumentationScope(), SpanKindIsClient(),
-                         SpanNamed("BatchSink::AsyncPublish"),
-                         SpanHasAttributes(OTelAttribute<std::int64_t>(
-                             "messaging.pubsub.num_messages_in_batch", 129)))));
+  EXPECT_THAT(
+      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                            SpanNamed("BatchSink::AsyncPublish"),
+                            SpanHasAttributes(OTelAttribute<std::int64_t>(
+                                "messaging.pubsub.num_messages_in_batch", 128)),
+                            SpanLinksSizeIs(128))));
+}
+
+TEST(TracingMessageBatch, FlushLargeBatch) {
+  int const k_batch_size = 129;
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+      initial_spans;
+  initial_spans.reserve(k_batch_size);
+  for (int i = 0; i < k_batch_size; ++i) {
+    initial_spans.emplace_back(MakeSpan("test span " + std::to_string(i)));
+  }
+  ASSERT_THAT(initial_spans, ::testing::SizeIs(k_batch_size));
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, Flush).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+  });
+  auto message_batch =
+      std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
+
+  message_batch->Flush();
+
+  // The span must end before it can be processed by the span catcher.
+  EndSpans(message_batch->GetBatchSinkSpans());
+
+  EXPECT_THAT(message_batch->GetMessageSpans(), IsEmpty());
+  EXPECT_THAT(message_batch->GetBatchSinkSpans(), SizeIs(3));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              Contains(AllOf(
+                  SpanNamed("BatchSink::AsyncPublish"),
+                  SpanHasAttributes(OTelAttribute<std::int64_t>(
+                      "messaging.pubsub.num_messages_in_batch", k_batch_size)))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("BatchSink::AsyncPublish - Batch #0"),
+                             SpanLinksSizeIs(128))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("BatchSink::AsyncPublish - Batch #1"),
+                             SpanLinksSizeIs(1))));
 }
 
 TEST(TracingMessageBatch, FlushAddsSpanIdAndTraceIdAttribute) {

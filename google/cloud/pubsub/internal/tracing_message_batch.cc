@@ -43,7 +43,35 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
 
 namespace {
 
-opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
+/// Inserts a link for each span in @p links between the @p begin and @p end
+/// iterators.
+template <typename Iterator>
+void GenerateLinks(
+    Iterator begin, Iterator end,
+    std::vector<std::pair<
+        opentelemetry::trace::SpanContext,
+        std::vector<std::pair<opentelemetry::nostd::string_view,
+                              opentelemetry::common::AttributeValue>>>>&
+        links) {
+  static_assert(
+      std::is_same<
+          absl::decay_t<decltype(*begin)>,
+          opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>::value,
+      "Iterator is not the right type.");
+  using opentelemetry::trace::SpanContext;
+  using AttributesList =
+      std::vector<std::pair<opentelemetry::nostd::string_view,
+                            opentelemetry::common::AttributeValue>>;
+  std::transform(begin, end, std::back_inserter(links),
+                 [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
+                   return std::make_pair(
+                       span->GetContext(),
+                       AttributesList{{"messaging.pubsub.message.link", i++}});
+                 });
+}
+
+std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+MakeBatchSinkSpans(
     std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
         message_spans) {
   using opentelemetry::trace::SpanContext;
@@ -55,16 +83,13 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
   auto batch_size = message_spans.size();
   links.reserve(batch_size);
   // If the batch size is less than the max size, add the links to a single
-  // span.
-  if (batch_size < kMaxOtelLinks) {
-    std::transform(
-        message_spans.begin(), message_spans.end(), std::back_inserter(links),
-        [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
-          return std::make_pair(
-              span->GetContext(),
-              AttributesList{{"messaging.pubsub.message.link", i++}});
-        });
+  // span. If the batch size is greater than the max size, this will be a parent
+  // span with no links and each child spans will contain links.
+  bool const is_small_batch = batch_size <= kMaxOtelLinks;
+  if (is_small_batch) {
+    GenerateLinks(message_spans.begin(), message_spans.end(), links);
   }
+
   auto batch_sink_parent_span =
       internal::MakeSpan("BatchSink::AsyncPublish",
                          /*attributes=*/
@@ -72,6 +97,38 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
                            static_cast<std::int64_t>(batch_size)}},
                          /*links*/ links);
 
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+      batch_sink_spans;
+  int num_of_batches =
+      is_small_batch
+          ? 0
+          : static_cast<std::int64_t>((batch_size / kMaxOtelLinks) + 1);
+  batch_sink_spans.reserve(num_of_batches + 1);
+  batch_sink_spans.emplace_back(batch_sink_parent_span);
+
+  // Create N spans with up to 128 links per batch.
+  if (!is_small_batch) {
+    for (int i = 0; i < num_of_batches; ++i) {
+      std::vector<std::pair<SpanContext, AttributesList>> links;
+      links.reserve(kMaxOtelLinks);
+      GenerateLinks(
+          message_spans.begin() + (kMaxOtelLinks * i),
+          message_spans.begin() +
+              std::min(static_cast<std::int64_t>((kMaxOtelLinks * (i + 1))),
+                       static_cast<std::int64_t>(batch_size)),
+          links);
+
+      opentelemetry::trace::StartSpanOptions options;
+      options.parent = batch_sink_parent_span->GetContext();
+      auto batch_sink_span = internal::MakeSpan(
+          "BatchSink::AsyncPublish - Batch #" + std::to_string(i),
+          /*attributes=*/{{}},
+          /*links=*/links, options);
+      batch_sink_spans.emplace_back(batch_sink_span);
+    }
+  }
+  
+  // Add metadata to the message spans about the batch sink span.
   auto context = batch_sink_parent_span->GetContext();
   auto trace_id = internal::ToString(context.trace_id());
   auto span_id = internal::ToString(context.span_id());
@@ -81,7 +138,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
     message_span->SetAttribute("pubsub.batch_sink.span_id", span_id);
   }
 
-  return batch_sink_parent_span;
+  return batch_sink_spans;
 }
 
 }  // namespace
@@ -93,15 +150,15 @@ void TracingMessageBatch::Flush() {
     message_spans.swap(message_spans_);
   }
 
-  // TODO(#12528): Handle batches larger than 128.
-  auto batch_sink_parent_span = MakeParentSpan(std::move(message_spans));
+  auto batch_sink_spans = MakeBatchSinkSpans(std::move(message_spans));
 
-  // Set the batch sink as the active span.
+  // Set the batch sink parent span as the active span. This will always be the
+  // first span in the vector.
   auto async_scope = internal::GetTracer(internal::CurrentOptions())
-                         ->WithActiveSpan(batch_sink_parent_span);
+                         ->WithActiveSpan(batch_sink_spans[0]);
   {
     std::lock_guard<std::mutex> lk(batch_sink_mu_);
-    batch_sink_spans_.push_back(std::move(batch_sink_parent_span));
+    batch_sink_spans_.swap(batch_sink_spans);
   }
 
   child_->Flush();
