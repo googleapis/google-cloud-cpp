@@ -922,6 +922,10 @@
 ./include/google/cloud/secretmanager/v1
 ./include/google/cloud/secretmanager/v1/internal
 ./include/google/cloud/secretmanager/v1/mocks
+./include/google/cloud/securesourcemanager
+./include/google/cloud/securesourcemanager/v1
+./include/google/cloud/securesourcemanager/v1/internal
+./include/google/cloud/securesourcemanager/v1/mocks
 ./include/google/cloud/security
 ./include/google/cloud/security/privateca
 ./include/google/cloud/security/privateca/v1
@@ -1238,6 +1242,7 @@
 ./lib64/cmake/google_cloud_cpp_run
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_secretmanager
+./lib64/cmake/google_cloud_cpp_securesourcemanager
 ./lib64/cmake/google_cloud_cpp_securitycenter
 ./lib64/cmake/google_cloud_cpp_servicecontrol
 ./lib64/cmake/google_cloud_cpp_servicedirectory

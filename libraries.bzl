@@ -193,6 +193,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "run",
     "scheduler",
     "secretmanager",
+    "securesourcemanager",
     "securitycenter",
     "servicecontrol",
     "servicedirectory",
