@@ -16,6 +16,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/default_span.h>
@@ -267,6 +268,28 @@ TEST(OpenTelemetry, EndSpanFutureStatusOr) {
       spans,
       ElementsAre(SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError)));
+}
+
+TEST(OpenTelemetry, EndSpanFutureDetachesContext) {
+  auto span_catcher = InstallSpanCatcher();
+
+  // Set the `OTelContext` like we do in `AsyncOperation`s
+  auto c = opentelemetry::context::Context("key", true);
+  ScopedOTelContext scope({c});
+  EXPECT_EQ(c, opentelemetry::context::RuntimeContext::GetCurrent());
+
+  promise<Status> p;
+  auto f = EndSpan(MakeSpan("span"), p.get_future()).then([](auto f) {
+    auto s = f.get();
+    // The `OTelContext` should be cleared by the time we exit `EndSpan()`.
+    EXPECT_EQ(opentelemetry::context::Context{},
+              opentelemetry::context::RuntimeContext::GetCurrent());
+    return s;
+  });
+
+  p.set_value(Status());
+  EXPECT_STATUS_OK(f.get());
+  EXPECT_THAT(span_catcher->GetSpans(), ElementsAre(SpanNamed("span")));
 }
 
 TEST(OpenTelemetry, EndSpanVoid) {
