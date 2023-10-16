@@ -64,10 +64,10 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("HTTP/GET"),
           SpanHasAttributes(
-              OTelAttribute<std::string>(sc::kNetTransport,
+              OTelAttribute<std::string>(sc::kNetworkTransport,
                                          sc::NetTransportValues::kIpTcp),
-              OTelAttribute<std::string>(sc::kHttpMethod, "GET"),
-              OTelAttribute<std::string>(sc::kHttpUrl, kUrl),
+              OTelAttribute<std::string>(sc::kHttpRequestMethod, "GET"),
+              OTelAttribute<std::string>(sc::kUrlFull, kUrl),
               OTelAttribute<std::string>("http.request.header.empty", ""),
               OTelAttribute<std::string>("http.request.header.x-goog-foo",
                                          "bar"),

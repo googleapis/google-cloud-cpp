@@ -48,13 +48,13 @@ StatusOr<std::unique_ptr<RestResponse>> EndResponseSpan(
     StatusOr<std::unique_ptr<RestResponse>> request_result) {
   namespace sc = opentelemetry::trace::SemanticConventions;
   if (context.primary_ip_address() && context.primary_port()) {
-    span->SetAttribute(sc::kNetPeerName, *context.primary_ip_address());
-    span->SetAttribute(sc::kNetPeerPort, *context.primary_port());
+    span->SetAttribute(sc::kServerAddress, *context.primary_ip_address());
+    span->SetAttribute(sc::kServerPort, *context.primary_port());
   }
 
   if (context.local_ip_address() && context.local_port()) {
-    span->SetAttribute(sc::kNetHostName, *context.local_ip_address());
-    span->SetAttribute(sc::kNetHostPort, *context.local_port());
+    span->SetAttribute(sc::kClientAddress, *context.local_ip_address());
+    span->SetAttribute(sc::kClientPort, *context.local_port());
   }
   for (auto const& kv : context.headers()) {
     auto const name = "http.request.header." + kv.first;

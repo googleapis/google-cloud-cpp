@@ -101,19 +101,20 @@ TEST(TracingRestClient, Delete) {
       spans,
       UnorderedElementsAre(
           // Request span
-          AllOf(SpanNamed("HTTP/DELETE"), SpanHasInstrumentationScope(),
-                SpanKindIsClient(),
-                SpanHasAttributes(
-                    OTelAttribute<std::string>(sc::kNetTransport,
-                                               sc::NetTransportValues::kIpTcp),
-                    OTelAttribute<std::string>(sc::kHttpMethod, "DELETE"),
-                    OTelAttribute<std::string>(sc::kHttpUrl, kUrl),
-                    OTelAttribute<std::string>(
-                        "http.request.header.x-test-header-3", "value3"),
-                    OTelAttribute<std::string>(
-                        "http.response.header.x-test-header-1", "value1"),
-                    OTelAttribute<std::string>(
-                        "http.response.header.x-test-header-2", "value2"))),
+          AllOf(
+              SpanNamed("HTTP/DELETE"), SpanHasInstrumentationScope(),
+              SpanKindIsClient(),
+              SpanHasAttributes(
+                  OTelAttribute<std::string>(sc::kNetworkTransport,
+                                             sc::NetTransportValues::kIpTcp),
+                  OTelAttribute<std::string>(sc::kHttpRequestMethod, "DELETE"),
+                  OTelAttribute<std::string>(sc::kUrlFull, kUrl),
+                  OTelAttribute<std::string>(
+                      "http.request.header.x-test-header-3", "value3"),
+                  OTelAttribute<std::string>(
+                      "http.response.header.x-test-header-1", "value1"),
+                  OTelAttribute<std::string>(
+                      "http.response.header.x-test-header-2", "value2"))),
           SpanNamed("SendRequest"), SpanNamed("Read"), SpanNamed("Read")));
 }
 
@@ -245,16 +246,17 @@ TEST(TracingRestClient, WithRestContextDetails) {
   EXPECT_THAT(
       spans,
       UnorderedElementsAre(
-          AllOf(SpanNamed("HTTP/POST"),
-                SpanHasAttributes(
-                    OTelAttribute<std::string>(sc::kNetTransport,
-                                               sc::NetTransportValues::kIpTcp),
-                    OTelAttribute<std::string>(sc::kHttpMethod, "POST"),
-                    OTelAttribute<std::string>(sc::kHttpUrl, kUrl),
-                    OTelAttribute<std::string>(sc::kNetPeerName, "192.168.1.1"),
-                    OTelAttribute<std::int32_t>(sc::kNetPeerPort, 443),
-                    OTelAttribute<std::string>(sc::kNetHostName, "127.0.0.1"),
-                    OTelAttribute<std::int32_t>(sc::kNetHostPort, 32000))),
+          AllOf(
+              SpanNamed("HTTP/POST"),
+              SpanHasAttributes(
+                  OTelAttribute<std::string>(sc::kNetworkTransport,
+                                             sc::NetTransportValues::kIpTcp),
+                  OTelAttribute<std::string>(sc::kHttpRequestMethod, "POST"),
+                  OTelAttribute<std::string>(sc::kUrlFull, kUrl),
+                  OTelAttribute<std::string>(sc::kServerAddress, "192.168.1.1"),
+                  OTelAttribute<std::int32_t>(sc::kServerPort, 443),
+                  OTelAttribute<std::string>(sc::kClientAddress, "127.0.0.1"),
+                  OTelAttribute<std::int32_t>(sc::kClientPort, 32000))),
           AllOf(SpanNamed("SendRequest"),
                 SpanHasAttributes(
                     OTelAttribute<bool>("gl-cpp.cached_connection", false)),
