@@ -41,6 +41,7 @@ using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanHasLinks;
 using ::google::cloud::testing_util::SpanKindIsClient;
+using ::google::cloud::testing_util::SpanKindIsProducer;
 using ::google::cloud::testing_util::SpanLinkAttributesAre;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithParentSpanId;
@@ -120,13 +121,13 @@ TEST(OpenTelemetry, MakeSpanWithLink) {
 TEST(OpenTelemetry, MakeSpanWithKind) {
   auto span_catcher = InstallSpanCatcher();
 
-  auto s1 = MakeSpan("span1");
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kProducer;
+  auto s1 = MakeSpan("span1", options);
   s1->End();
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, Each(SpanKindIsClient()));
+  EXPECT_THAT(spans, Each(SpanKindIsProducer()));
 }
 
 TEST(OpenTelemetry, MakeSpanWithParent) {
@@ -144,10 +145,10 @@ TEST(OpenTelemetry, MakeSpanWithParent) {
   // Span data will be in the order the spans are ended. The spans are
   // returned in a `vector<unique_ptr<SpanData>>`, so we can't extract a span
   // directly to get the span id from the span data. Instead we are accessing
-  // the span data using the `.at()`.
+  // the span data via the vector.
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("span2"),
-                             SpanWithParentSpanId(spans.at(0)->GetSpanId()))));
+                             SpanWithParentSpanId(spans[0]->GetSpanId()))));
 }
 
 TEST(OpenTelemetry, EndSpanImplEndsSpan) {
