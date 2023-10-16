@@ -41,9 +41,28 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
   child_->SaveMessage(std::move(m));
 }
 
+std::string ToString(opentelemetry::trace::TraceId trace_id) {
+  char trace_id_array[32] = {0};
+  trace_id.ToLowerBase16(trace_id_array);
+  return std::string(trace_id_array, 32);
+}
+
+std::string ToString(opentelemetry::trace::SpanId span_id) {
+  char span_id_array[16] = {0};
+  span_id.ToLowerBase16(span_id_array);
+  return std::string(span_id_array, 16);
+}
+
 void TracingMessageBatch::AddMessageSpanMetadata() {
+  using opentelemetry::trace::SpanId;
+  using opentelemetry::trace::TraceId;
+  auto context = batch_sink_parent_span_->GetContext();
+  auto trace_id = ToString(context.trace_id());
+  auto span_id = ToString(context.span_id());
   for (auto& message_span : message_spans_) {
     message_span->AddEvent("gl-cpp.batch_flushed");
+    message_span->SetAttribute("pubsub.batch_sink.trace_id", trace_id);
+    message_span->SetAttribute("pubsub.batch_sink.span_id", span_id);
   }
 }
 
@@ -68,7 +87,7 @@ void TracingMessageBatch::Flush() {
               AttributesList{{"messaging.pubsub.message.link", i++}});
         });
   }
-  auto batch_sink_span_parent =
+  batch_sink_parent_span_ =
       internal::MakeSpan("BatchSink::AsyncPublish",
                          /*attributes=*/
                          {{"messaging.pubsub.num_messages_in_batch",
@@ -82,11 +101,11 @@ void TracingMessageBatch::Flush() {
   // Clear message spans.
   message_spans_.clear();
 
-  batch_sink_spans_.push_back(batch_sink_span_parent);
+  batch_sink_spans_.push_back(batch_sink_parent_span_);
 
   // Set the batch sink parent span.
   auto async_scope = internal::GetTracer(internal::CurrentOptions())
-                         ->WithActiveSpan(batch_sink_span_parent);
+                         ->WithActiveSpan(batch_sink_parent_span_);
 
   child_->Flush();
 }
@@ -99,6 +118,11 @@ void TracingMessageBatch::FlushCallback() {
   }
   for (auto& span : spans) internal::EndSpan(*span);
   child_->FlushCallback();
+}
+
+void TracingMessageBatch::SetBatchSinkParentSpan(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span) {
+  batch_sink_parent_span_ = span;
 }
 
 std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>

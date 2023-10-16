@@ -164,6 +164,18 @@ std::string ToString(opentelemetry::trace::SpanContext const& span_context) {
   return ss.str();
 }
 
+std::string ToString(opentelemetry::trace::SpanId const& span_id) {
+  char span_id_array[16] = {0};
+  span_id.ToLowerBase16(span_id_array);
+  return std::string(span_id_array, 16);
+}
+
+std::string ToString(opentelemetry::trace::TraceId const& trace_id) {
+  char trace_id_array[32] = {0};
+  trace_id.ToLowerBase16(trace_id_array);
+  return std::string(trace_id_array, 32);
+}
+
 bool ThereIsAnActiveSpan() {
   return opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid();
 }

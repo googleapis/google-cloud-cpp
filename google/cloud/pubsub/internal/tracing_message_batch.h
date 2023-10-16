@@ -69,6 +69,10 @@ class TracingMessageBatch : public MessageBatch {
   void FlushCallback() override;
 
   // For testing only.
+  void SetBatchSinkParentSpan(
+      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span);
+
+  // For testing only.
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
   GetMessageSpans() const;
 
@@ -82,6 +86,8 @@ class TracingMessageBatch : public MessageBatch {
       message_spans_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       batch_sink_spans_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>
+      batch_sink_parent_span_;
   std::mutex mu_;
 };
 

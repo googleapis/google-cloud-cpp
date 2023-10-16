@@ -86,6 +86,10 @@ std::string ToString(opentelemetry::trace::StatusCode c);
 
 std::string ToString(opentelemetry::trace::SpanContext const& span_context);
 
+std::string ToString(opentelemetry::trace::SpanId const& span_id);
+
+std::string ToString(opentelemetry::trace::TraceId const& trace_id);
+
 bool ThereIsAnActiveSpan();
 
 /**

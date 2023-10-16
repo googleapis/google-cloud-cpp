@@ -40,6 +40,7 @@ using ::google::cloud::testing_util::SpanLinkAttributesAre;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::google::cloud::testing_util::ToString;
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ElementsAre;
@@ -210,6 +211,36 @@ TEST(TracingMessageBatch, FlushLargeBatch) {
                              "messaging.pubsub.num_messages_in_batch", 129)))));
 }
 
+TEST(TracingMessageBatch, AddMessageSpanMetadataAddsSpanIdAndTraceIdAttribute) {
+  // The span catcher must be installed before the message span is created.
+  auto span_catcher = InstallSpanCatcher();
+  auto message_span = MakeSpan("test message span");
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  auto initial_spans = {message_span};
+  auto message_batch =
+      std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
+  auto batch_sink_parent_span = MakeSpan("test batch sink span");
+  message_batch->SetBatchSinkParentSpan(batch_sink_parent_span);
+
+  message_batch->AddMessageSpanMetadata();
+
+  // The span must end before it can be processed by the span catcher.
+  EndSpans(message_batch->GetMessageSpans());
+  EndSpans(message_batch->GetBatchSinkSpans());
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      Contains(AllOf(
+          SpanNamed("test message span"),
+          SpanHasAttributes(
+              OTelAttribute<std::string>(
+                  "pubsub.batch_sink.trace_id",
+                  ToString(batch_sink_parent_span->GetContext().trace_id())),
+              OTelAttribute<std::string>(
+                  "pubsub.batch_sink.span_id",
+                  ToString(batch_sink_parent_span->GetContext().span_id()))))));
+}
+
 TEST(TracingMessageBatch, AddMessageSpanMetadataAddsEvent) {
   // The span catcher must be installed before the message span is created.
   auto span_catcher = InstallSpanCatcher();
@@ -218,6 +249,8 @@ TEST(TracingMessageBatch, AddMessageSpanMetadataAddsEvent) {
   auto initial_spans = {message_span};
   auto message_batch =
       std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
+  auto batch_sink_parent_span = MakeSpan("test batch sink span");
+  message_batch->SetBatchSinkParentSpan(batch_sink_parent_span);
 
   message_batch->AddMessageSpanMetadata();
 
@@ -239,6 +272,8 @@ TEST(TracingMessageBatch, AddMessageSpanMetadataAddsEventForMultipleMessages) {
   auto initial_spans = {span1, span2};
   auto message_batch =
       std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
+  auto batch_sink_parent_span = MakeSpan("test batch sink span");
+  message_batch->SetBatchSinkParentSpan(batch_sink_parent_span);
 
   message_batch->AddMessageSpanMetadata();
 
