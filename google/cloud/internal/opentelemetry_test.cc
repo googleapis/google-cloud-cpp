@@ -136,7 +136,7 @@ TEST(OpenTelemetry, MakeSpanWithParent) {
   auto s1 = MakeSpan("span1");
   opentelemetry::trace::StartSpanOptions options;
   options.parent = s1->GetContext();
-  auto s2 = MakeSpan("span2", absl::make_optional(options));
+  auto s2 = MakeSpan("span2", options);
   s1->End();
   s2->End();
 
