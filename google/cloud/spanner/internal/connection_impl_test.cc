@@ -47,8 +47,8 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-// We compile with `-Wextra` which enables `-Wmissing-field-initializers`. This
-// warning triggers when aggregate initialization is used with too few
+// We compile with `-Wextra` which enables `-Wmissing-field-initializers`.
+// This warning triggers when aggregate initialization is used with too few
 // arguments. For example
 //
 //   struct A { int a; int b; int c; };  // 3 fields
@@ -89,6 +89,10 @@ using ::testing::StartsWith;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedPointwise;
 using ::testing::Unused;
+
+// Streaming RPC response types.
+using BatchWriteResponse = ::google::spanner::v1::BatchWriteResponse;
+using PartialResultSet = ::google::spanner::v1::PartialResultSet;
 
 // A simple protobuf builder.
 template <typename T>
@@ -283,23 +287,21 @@ std::shared_ptr<ConnectionImpl> MakeConnectionImpl(
                                           std::move(stubs), std::move(opts));
 }
 
-class MockStream
-    : public internal::StreamingReadRpc<google::spanner::v1::PartialResultSet> {
+template <typename ResponseType>
+class MockStreamingReadRpc : public internal::StreamingReadRpc<ResponseType> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD((absl::variant<Status, google::spanner::v1::PartialResultSet>),
-              Read, (), (override));
+  MOCK_METHOD((absl::variant<Status, ResponseType>), Read, (), (override));
   MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (),
               (const, override));
 };
 
-// Creates a MockStream that yields the specified `PartialResultSet`
-// `responses` (which can be given in proto or text format) in sequence,
-// and then yields the specified `status` (default OK).
-std::unique_ptr<MockStream> MakeReader(
-    std::vector<google::spanner::v1::PartialResultSet> responses,
-    Status status = Status()) {
-  auto reader = std::make_unique<MockStream>();
+// Creates a MockStreamingReadRpc that yields the specified `responses`
+// in sequence, and then yields the specified `status` (default OK).
+template <typename ResponseType>
+std::unique_ptr<MockStreamingReadRpc<ResponseType>> MakeReader(
+    std::vector<ResponseType> responses, Status status = Status()) {
+  auto reader = std::make_unique<MockStreamingReadRpc<ResponseType>>();
   Sequence s;
   for (auto& response : responses) {
     EXPECT_CALL(*reader, Read)
@@ -310,23 +312,27 @@ std::unique_ptr<MockStream> MakeReader(
   return reader;
 }
 
-std::unique_ptr<MockStream> MakeReader(
+// Creates a MockStreamingReadRpc from an empty list.
+template <typename ResponseType>
+std::unique_ptr<MockStreamingReadRpc<ResponseType>> MakeReader(
+    std::initializer_list<internal::NonConstructible>,
+    Status status = Status()) {
+  return MakeReader(std::vector<ResponseType>{}, std::move(status));
+}
+
+// Creates a MockStreamingReadRpc from protos in text format.
+template <typename ResponseType>
+std::unique_ptr<MockStreamingReadRpc<ResponseType>> MakeReader(
     std::vector<std::string> const& responses, Status status = Status()) {
-  std::vector<google::spanner::v1::PartialResultSet> response_protos;
-  response_protos.resize(responses.size());
-  for (std::size_t i = 0; i < responses.size(); ++i) {
-    if (!TextFormat::ParseFromString(responses[i], &response_protos[i])) {
-      ADD_FAILURE() << "Failed to parse proto " << responses[i];
+  std::vector<ResponseType> response_protos;
+  response_protos.reserve(responses.size());
+  for (auto const& response : responses) {
+    response_protos.push_back(ResponseType{});
+    if (!TextFormat::ParseFromString(response, &response_protos.back())) {
+      ADD_FAILURE() << "Failed to parse proto " << response;
     }
   }
   return MakeReader(std::move(response_protos), std::move(status));
-}
-
-std::unique_ptr<MockStream> MakeReader(
-    std::initializer_list<internal::NonConstructible>,
-    Status status = Status()) {
-  return MakeReader(std::vector<google::spanner::v1::PartialResultSet>{},
-                    std::move(status));
 }
 
 TEST(ConnectionImplTest, ReadCreateSessionFailure) {
@@ -360,7 +366,8 @@ TEST(ConnectionImplTest, ReadStreamingReadFailure) {
   auto finish_status =
       internal::PermissionDeniedError("uh-oh in GrpcReader::Finish");
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
+      .WillOnce(
+          Return(ByMove(MakeReader<PartialResultSet>({}, finish_status))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -418,7 +425,7 @@ TEST(ConnectionImplTest, ReadSuccess) {
                           google::spanner::v1::ReadRequest const& request) {
             // The beginning of the row stream, but immediately fail.
             EXPECT_THAT(request.resume_token(), IsEmpty());
-            return MakeReader({}, retry_status);
+            return MakeReader<PartialResultSet>({}, retry_status);
           })
       .WillOnce([&responses, &retry_status](
                     std::shared_ptr<grpc::ClientContext> const&,
@@ -426,7 +433,7 @@ TEST(ConnectionImplTest, ReadSuccess) {
         // Restart from the beginning, but return the metadata and first
         // row before failing again.
         EXPECT_THAT(request.resume_token(), IsEmpty());
-        return MakeReader({responses[0]}, retry_status);
+        return MakeReader<PartialResultSet>({responses[0]}, retry_status);
       })
       .WillOnce([&responses, &retry_status](
                     std::shared_ptr<grpc::ClientContext> const&,
@@ -434,13 +441,13 @@ TEST(ConnectionImplTest, ReadSuccess) {
         // Restart from the second row, but only return part of it before
         // failing once more.
         EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
-        return MakeReader({responses[1]}, retry_status);
+        return MakeReader<PartialResultSet>({responses[1]}, retry_status);
       })
       .WillOnce([&responses](std::shared_ptr<grpc::ClientContext> const&,
                              google::spanner::v1::ReadRequest const& request) {
         // Restart from the second row, but now deliver it all in two chunks.
         EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
-        return MakeReader({responses[1], responses[2]});
+        return MakeReader<PartialResultSet>({responses[1], responses[2]});
       });
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -468,8 +475,8 @@ TEST(ConnectionImplTest, ReadPermanentFailure) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce(Return(
-          ByMove(MakeReader({}, internal::PermissionDeniedError("uh-oh")))));
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
+          {}, internal::PermissionDeniedError("uh-oh")))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -494,7 +501,8 @@ TEST(ConnectionImplTest, ReadTooManyTransientFailures) {
       .Times(AtLeast(2))
       // This won't compile without `Unused` despite what the gMock docs say.
       .WillRepeatedly([](Unused, Unused) {
-        return MakeReader({}, internal::UnavailableError("try-again"));
+        return MakeReader<PartialResultSet>(
+            {}, internal::UnavailableError("try-again"));
       });
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -522,7 +530,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
     metadata: { transaction: { id: "ABCDEF00" } }
   )pb";
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce(Return(ByMove(MakeReader({kText}))));
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -540,7 +548,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto status = internal::UnavailableError("uh-oh");
-  auto failing_reader = MakeReader({}, status);
+  auto failing_reader = MakeReader<PartialResultSet>({}, status);
   auto constexpr kText = R"pb(
     metadata: {
       transaction: { id: "ABCDEF00" }
@@ -560,7 +568,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
     values: { string_value: "42" }
     values: { string_value: "Ann" }
   )pb";
-  auto ok_reader = MakeReader({kText});
+  auto ok_reader = MakeReader<PartialResultSet>({kText});
 
   // n.b. these calls are explicitly sequenced because using the scoped
   // `InSequence` object causes gMock to get confused by the reader calls.
@@ -598,7 +606,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto status = internal::PermissionDeniedError("uh-oh");
-  auto failing_reader = MakeReader({}, status);
+  auto failing_reader = MakeReader<PartialResultSet>({}, status);
   auto constexpr kText = R"pb(
     metadata: {
       row_type: {
@@ -617,7 +625,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
     values: { string_value: "42" }
     values: { string_value: "Ann" }
   )pb";
-  auto ok_reader = MakeReader({kText});
+  auto ok_reader = MakeReader<PartialResultSet>({kText});
 
   // n.b. these calls are explicitly sequenced because using the scoped
   // `InSequence` object causes gMock to get confused by the reader calls.
@@ -655,12 +663,11 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
 
 TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto status = internal::PermissionDeniedError("uh-oh");
-  auto reader1 = MakeReader({}, status);
-  auto reader2 = MakeReader({}, status);
+  auto reader1 = MakeReader<PartialResultSet>({}, status);
+  auto reader2 = MakeReader<PartialResultSet>({}, status);
 
   // n.b. these calls are explicitly sequenced because using the scoped
   // `InSequence` object causes gMock to get confused by the reader calls.
@@ -719,9 +726,9 @@ TEST(ConnectionImplTest, ExecuteQueryStreamingReadFailure) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(
-          Return(ByMove(MakeReader({}, internal::PermissionDeniedError(
-                                           "uh-oh in GrpcReader::Finish")))));
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
+          {},
+          internal::PermissionDeniedError("uh-oh in GrpcReader::Finish")))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -765,7 +772,7 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
     values: { string_value: "123456.78" }
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeReader({kText}))));
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -809,7 +816,7 @@ TEST(ConnectionImplTest, ExecuteQueryPgNumericResult) {
     values: { string_value: "0.42" }
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeReader({kText}))));
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -855,7 +862,7 @@ TEST(ConnectionImplTest, ExecuteQueryJsonBResult) {
     values: { string_value: "{\"a\": 1, \"b\": 2}" }
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeReader({kText}))));
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -911,7 +918,7 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
         EXPECT_EQ(request.param_types().at("value").type_annotation(),
                   google::spanner::v1::TypeAnnotationCode::
                       TYPE_ANNOTATION_CODE_UNSPECIFIED);
-        return MakeReader({kResponseNumeric});
+        return MakeReader<PartialResultSet>({kResponseNumeric});
       })
       .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&,
                     google::spanner::v1::ExecuteSqlRequest const& request) {
@@ -920,7 +927,7 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
                   google::spanner::v1::TypeCode::NUMERIC);
         EXPECT_EQ(request.param_types().at("value").type_annotation(),
                   google::spanner::v1::TypeAnnotationCode::PG_NUMERIC);
-        return MakeReader({kResponsePgNumeric});
+        return MakeReader<PartialResultSet>({kResponsePgNumeric});
       })
       .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&,
                     google::spanner::v1::ExecuteSqlRequest const& request) {
@@ -929,7 +936,7 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
                   google::spanner::v1::TypeCode::NUMERIC);
         EXPECT_EQ(request.param_types().at("value").type_annotation(),
                   google::spanner::v1::TypeAnnotationCode::PG_NUMERIC);
-        return MakeReader({kResponsePgNumeric});
+        return MakeReader<PartialResultSet>({kResponsePgNumeric});
       });
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -969,7 +976,7 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
     metadata: { transaction: { id: "00FEDCBA" } }
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeReader({kText}))));
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1112,15 +1119,16 @@ TEST(ConnectionImplTest, QueryOptions) {
             .set_request_priority(tc.options.request_priority())
             .set_transaction_tag("tag")};
 
-    // We wrap MockStream in NiceMock, because we don't really care how
-    // it's called in this test (aside from needing to return a transaction in
-    // the first call), and we want to minimize gMock's "uninteresting mock
-    // function call" warnings.
-    auto stream = std::make_unique<NiceMock<MockStream>>();
+    // We wrap MockStreamingReadRpc in NiceMock, because we don't really
+    // care how it's called in this test (aside from needing to return a
+    // transaction in the first call), and we want to minimize gMock's
+    // "uninteresting mock function call" warnings.
+    auto stream =
+        std::make_unique<NiceMock<MockStreamingReadRpc<PartialResultSet>>>();
     auto constexpr kResponseText = R"pb(
       metadata: { transaction: { id: "2468ACE" } }
     )pb";
-    google::spanner::v1::PartialResultSet response;
+    PartialResultSet response;
     ASSERT_TRUE(TextFormat::ParseFromString(kResponseText, &response));
     EXPECT_CALL(*stream, Read).WillOnce(Return(response));
     {
@@ -1185,7 +1193,9 @@ TEST(ConnectionImplTest, QueryOptions) {
 
       // ProfileQuery().
       EXPECT_CALL(*mock, ExecuteStreamingSql(_, execute_sql_request_matcher))
-          .WillOnce(Return(ByMove(std::make_unique<NiceMock<MockStream>>())))
+          .WillOnce(Return(
+              ByMove(std::make_unique<
+                     NiceMock<MockStreamingReadRpc<PartialResultSet>>>())))
           .RetiresOnSaturation();
 
       // ExecutePartitionedDml().
@@ -1197,7 +1207,9 @@ TEST(ConnectionImplTest, QueryOptions) {
           .RetiresOnSaturation();
       EXPECT_CALL(*mock,
                   ExecuteStreamingSql(_, untagged_execute_sql_request_matcher))
-          .WillOnce(Return(ByMove(std::make_unique<NiceMock<MockStream>>())))
+          .WillOnce(Return(
+              ByMove(std::make_unique<
+                     NiceMock<MockStreamingReadRpc<PartialResultSet>>>())))
           .RetiresOnSaturation();
 
       // ExecuteDml(), ProfileDml(), AnalyzeSql().
@@ -1212,7 +1224,9 @@ TEST(ConnectionImplTest, QueryOptions) {
 
       // Read().
       EXPECT_CALL(*mock, StreamingRead(_, read_request_matcher))
-          .WillOnce(Return(ByMove(std::make_unique<NiceMock<MockStream>>())))
+          .WillOnce(Return(
+              ByMove(std::make_unique<
+                     NiceMock<MockStreamingReadRpc<PartialResultSet>>>())))
           .RetiresOnSaturation();
 
       // Commit().
@@ -1430,7 +1444,7 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
     }
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeReader({kText}))));
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1482,7 +1496,6 @@ TEST(ConnectionImplTest, ProfileQueryCreateSessionFailure) {
 
 TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -1490,7 +1503,8 @@ TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
   auto finish_status =
       internal::PermissionDeniedError("uh-oh in GrpcReader::Finish");
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
+      .WillOnce(
+          Return(ByMove(MakeReader<PartialResultSet>({}, finish_status))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1934,10 +1948,10 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql(
                          _, AllOf(HasRequestTag("tag"), HasTransactionTag(""))))
-      .WillOnce(Return(ByMove(MakeReader(
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
           {},
           internal::UnavailableError("try-again in ExecutePartitionedDml")))))
-      .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kTextResponse}))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1978,8 +1992,8 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
   // A `kInternal` status can be treated as transient based on the message.
   // This tests that other `kInternal` errors are treated as permanent.
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(
-          MakeReader({}, internal::InternalError("permanent failure")))));
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
+          {}, internal::InternalError("permanent failure")))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -2002,8 +2016,9 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
       .Times(AtLeast(2))
       // This won't compile without `Unused` despite what the gMock docs say.
       .WillRepeatedly([](Unused, Unused) {
-        return MakeReader({}, internal::UnavailableError(
-                                  "try-again in ExecutePartitionedDml"));
+        return MakeReader<PartialResultSet>(
+            {},
+            internal::UnavailableError("try-again in ExecutePartitionedDml"));
       });
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -2032,13 +2047,13 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlRetryableInternalErrors) {
     stats: { row_count_lower_bound: 99999 }
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeReader(
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
           {}, internal::InternalError(
                   "Received unexpected EOS on DATA frame from server")))))
-      .WillOnce(Return(ByMove(MakeReader(
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
           {}, internal::InternalError(
                   "HTTP/2 error code: INTERNAL_ERROR\nReceived Rst Stream")))))
-      .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kTextResponse}))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -2536,7 +2551,7 @@ TEST(ConnectionImplTest, ReadPartition) {
         EXPECT_EQ("Table", request.table());
         EXPECT_EQ("DEADBEEF", request.partition_token());
         EXPECT_TRUE(request.data_boost_enabled());
-        return MakeReader(
+        return MakeReader<PartialResultSet>(
             {R"pb(metadata: { transaction: { id: " ABCDEF00 " } })pb"});
       });
 
@@ -2691,7 +2706,7 @@ TEST(ConnectionImplTest, QueryPartition) {
         EXPECT_EQ("SELECT * FROM Table", request.sql());
         EXPECT_EQ("DEADBEEF", request.partition_token());
         EXPECT_TRUE(request.data_boost_enabled());
-        return MakeReader(
+        return MakeReader<PartialResultSet>(
             {R"pb(metadata: { transaction: { id: " ABCDEF00 " } })pb"});
       });
 
@@ -2885,7 +2900,9 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
       .WillOnce(Return(MakeSessionsResponse({"session-2"})));
 
   constexpr int kNumResponses = 4;
-  std::array<std::unique_ptr<MockStream>, kNumResponses> readers;
+  std::array<std::unique_ptr<MockStreamingReadRpc<PartialResultSet>>,
+             kNumResponses>
+      readers;
   for (int i = 0; i < kNumResponses; ++i) {
     auto constexpr kText = R"pb(
       metadata: {
@@ -2897,7 +2914,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
         }
       }
     )pb";
-    google::spanner::v1::PartialResultSet response;
+    PartialResultSet response;
     ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
     // The first two responses are reads from two different "begin"
     // transactions.
@@ -2912,7 +2929,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
         break;
     }
     response.add_values()->set_string_value(std::to_string(i));
-    readers[i] = MakeReader({std::move(response)});
+    readers[i] = MakeReader<PartialResultSet>({std::move(response)});
   }
 
   // Ensure the StreamingRead calls have the expected session and transaction
@@ -2991,7 +3008,7 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
     metadata: { transaction: { id: "ABCDEF00" } }
   )pb";
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce(Return(ByMove(MakeReader({kText}))));
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -3016,7 +3033,8 @@ TEST(ConnectionImplTest, ReadSessionNotFound) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   auto finish_status = SessionNotFoundError("test-session-name");
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
+      .WillOnce(
+          Return(ByMove(MakeReader<PartialResultSet>({}, finish_status))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -3057,7 +3075,8 @@ TEST(ConnectionImplTest, ExecuteQuerySessionNotFound) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   auto finish_status = SessionNotFoundError("test-session-name");
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
+      .WillOnce(
+          Return(ByMove(MakeReader<PartialResultSet>({}, finish_status))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -3077,7 +3096,8 @@ TEST(ConnectionImplTest, ProfileQuerySessionNotFound) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   auto finish_status = SessionNotFoundError("test-session-name");
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
+      .WillOnce(
+          Return(ByMove(MakeReader<PartialResultSet>({}, finish_status))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
