@@ -87,15 +87,15 @@ void TracingMessageBatch::Flush() {
               AttributesList{{"messaging.pubsub.message.link", i++}});
         });
   }
-   {
+  {
     std::lock_guard<std::mutex> lk(mu_);
-   batch_sink_parent_span_ =
-      internal::MakeSpan("BatchSink::AsyncPublish",
-                         /*attributes=*/
-                         {{"messaging.pubsub.num_messages_in_batch",
-                           static_cast<std::int64_t>(batch_size)}},
-                         /*links*/ links);
-   }
+    batch_sink_parent_span_ =
+        internal::MakeSpan("BatchSink::AsyncPublish",
+                           /*attributes=*/
+                           {{"messaging.pubsub.num_messages_in_batch",
+                             static_cast<std::int64_t>(batch_size)}},
+                           /*links*/ links);
+  }
   // TODO(#12528): Handle batches larger than 128.
 
   // This must be called before we clear the message spans.
