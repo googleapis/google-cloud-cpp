@@ -87,13 +87,15 @@ void TracingMessageBatch::Flush() {
               AttributesList{{"messaging.pubsub.message.link", i++}});
         });
   }
-  batch_sink_parent_span_ =
+   {
+    std::lock_guard<std::mutex> lk(mu_);
+   batch_sink_parent_span_ =
       internal::MakeSpan("BatchSink::AsyncPublish",
                          /*attributes=*/
                          {{"messaging.pubsub.num_messages_in_batch",
                            static_cast<std::int64_t>(batch_size)}},
                          /*links*/ links);
-
+   }
   // TODO(#12528): Handle batches larger than 128.
 
   // This must be called before we clear the message spans.
@@ -122,7 +124,7 @@ void TracingMessageBatch::FlushCallback() {
 
 void TracingMessageBatch::SetBatchSinkParentSpan(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span) {
-  batch_sink_parent_span_ = span;
+  batch_sink_parent_span_ = std::move(span);
 }
 
 std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
