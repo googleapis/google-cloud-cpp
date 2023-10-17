@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENTELEMETRY_H
 
 #include "google/cloud/future.h"
+#include "google/cloud/internal/opentelemetry_context.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -178,8 +179,12 @@ template <typename T>
 future<T> EndSpan(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
     future<T> fut) {
-  return fut.then(
-      [s = std::move(span)](auto f) { return EndSpan(*s, f.get()); });
+  return fut.then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+                   s = std::move(span)](auto f) {
+    auto t = f.get();
+    DetachOTelContext(oc);
+    return EndSpan(*s, std::move(t));
+  });
 }
 
 /**
