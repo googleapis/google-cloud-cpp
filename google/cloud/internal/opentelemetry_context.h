@@ -19,6 +19,8 @@
 #include "google/cloud/version.h"
 #include <opentelemetry/context/context.h>
 #include <opentelemetry/context/runtime_context.h>
+#include <opentelemetry/trace/scope.h>
+#include <opentelemetry/trace/span.h>
 #include <vector>
 
 namespace google {
@@ -43,11 +45,6 @@ using OTelContext = std::vector<opentelemetry::context::Context>;
 
 OTelContext CurrentOTelContext();
 
-/// Append the current context to our thread local stack.
-void PushOTelContext();
-/// Pop the current context from our thread local stack.
-void PopOTelContext();
-
 /**
  * Attach the supplied context to the RuntimeContext, storing its Token.
  *
@@ -62,6 +59,36 @@ void AttachOTelContext(opentelemetry::context::Context const& context);
  * For example, when we `EndSpan(..., future<T>)`.
  */
 void DetachOTelContext(opentelemetry::context::Context const& context);
+
+/**
+ * A wrapper around an `opentelemetry::trace::Scope` object that maintains our
+ * `OTelContext` stack.
+ *
+ * Upon construction, a `Scope` object is created. The current `Context` is
+ * pushed to our `OTelContext` stack. Upon destruction, the `Scope` object is
+ * destroyed and the `Context` is popped from our `OTelContext` stack.
+ *
+ * We need to maintain our own context stack for async operations where the
+ * default OpenTelemetry storage is not sufficient.
+ *
+ * @code
+ * {
+ *   auto span = MakeSpan("span");
+ *   OTelScope scope(span);
+ *   // Perform work while `span` is active.
+ * }
+ * @endcode
+ */
+class OTelScope {
+ public:
+  explicit OTelScope(
+      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span);
+
+  ~OTelScope();
+
+ private:
+  opentelemetry::trace::Scope scope_;
+};
 
 /**
  * If the supplied OTelContext is not currently active, this class attaches it
