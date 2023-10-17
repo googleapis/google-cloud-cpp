@@ -189,6 +189,10 @@ future<T> EndSpan(
  */
 void EndSpan(opentelemetry::trace::Span& span);
 
+std::string ToString(opentelemetry::trace::TraceId const& trace_id);
+
+std::string ToString(opentelemetry::trace::SpanId const& span_id);
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 bool TracingEnabled(Options const& options);

@@ -41,24 +41,12 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
   child_->SaveMessage(std::move(m));
 }
 
-std::string ToString(opentelemetry::trace::TraceId trace_id) {
-  char trace_id_array[32] = {0};
-  trace_id.ToLowerBase16(trace_id_array);
-  return std::string(trace_id_array, 32);
-}
-
-std::string ToString(opentelemetry::trace::SpanId span_id) {
-  char span_id_array[16] = {0};
-  span_id.ToLowerBase16(span_id_array);
-  return std::string(span_id_array, 16);
-}
-
 void TracingMessageBatch::AddMessageSpanMetadata() {
   using opentelemetry::trace::SpanId;
   using opentelemetry::trace::TraceId;
   auto context = batch_sink_parent_span_->GetContext();
-  auto trace_id = ToString(context.trace_id());
-  auto span_id = ToString(context.span_id());
+  auto trace_id = internal::ToString(context.trace_id());
+  auto span_id = internal::ToString(context.span_id());
   for (auto& message_span : message_spans_) {
     message_span->AddEvent("gl-cpp.batch_flushed");
     message_span->SetAttribute("pubsub.batch_sink.trace_id", trace_id);
@@ -79,13 +67,16 @@ void TracingMessageBatch::Flush() {
   // If the batch size is less than the max size, add the links to a single
   // span.
   if (batch_size < kMaxOtelLinks) {
-    std::transform(
+      {
+    std::lock_guard<std::mutex> lk(mu_);
+  std::transform(
         message_spans_.begin(), message_spans_.end(), std::back_inserter(links),
         [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
           return std::make_pair(
               span->GetContext(),
               AttributesList{{"messaging.pubsub.message.link", i++}});
         });
+      }
   }
   {
     std::lock_guard<std::mutex> lk(mu_);
@@ -100,10 +91,11 @@ void TracingMessageBatch::Flush() {
 
   // This must be called before we clear the message spans.
   AddMessageSpanMetadata();
-  // Clear message spans.
-  message_spans_.clear();
-
-  batch_sink_spans_.push_back(batch_sink_parent_span_);
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    message_spans_.clear();
+    batch_sink_spans_.push_back(batch_sink_parent_span_);
+  }
 
   // Set the batch sink parent span.
   auto async_scope = internal::GetTracer(internal::CurrentOptions())
