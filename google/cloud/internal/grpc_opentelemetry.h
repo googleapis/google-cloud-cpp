@@ -90,9 +90,12 @@ future<T> EndSpan(
     std::shared_ptr<grpc::ClientContext> context,
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
     future<T> fut) {
-  return fut.then([c = std::move(context), s = std::move(span)](auto f) {
+  return fut.then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+                   c = std::move(context), s = std::move(span)](auto f) {
+    auto t = f.get();
     ExtractAttributes(*c, *s);
-    return EndSpan(*s, f.get());
+    DetachOTelContext(oc);
+    return EndSpan(*s, std::move(t));
   });
 }
 

@@ -140,6 +140,33 @@ TEST(OpenTelemetry, EndSpanFuture) {
           SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)))));
 }
 
+TEST(OpenTelemetry, EndSpanFutureDetachesContext) {
+  auto span_catcher = InstallSpanCatcher();
+
+  // Set the `OTelContext` like we do in `AsyncOperation`s
+  auto c = opentelemetry::context::Context("key", true);
+  ScopedOTelContext scope({c});
+  EXPECT_EQ(c, opentelemetry::context::RuntimeContext::GetCurrent());
+
+  promise<Status> p;
+  auto f =
+      EndSpan(std::make_shared<grpc::ClientContext>(),
+              MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar"), p.get_future())
+          .then([](auto f) {
+            auto s = f.get();
+            // The `OTelContext` should be cleared by the time we exit
+            // `EndSpan()`.
+            EXPECT_EQ(opentelemetry::context::Context{},
+                      opentelemetry::context::RuntimeContext::GetCurrent());
+            return s;
+          });
+
+  p.set_value(Status());
+  EXPECT_STATUS_OK(f.get());
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(SpanNamed("google.cloud.foo.v1.Foo/GetBar")));
+}
+
 TEST(OpenTelemetry, TracedAsyncBackoffEnabled) {
   auto span_catcher = InstallSpanCatcher();
 
