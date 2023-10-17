@@ -15,11 +15,11 @@ the APIs in these libraries are stable, and are ready for production use.
 
 ### Other Changes
 
-* fix(oauth2): only enable via `GOOGLE_CLOUD_CPP_ENABLE`
-  ([#12911](https://github.com/googleapis/google-cloud-cpp/pull/12911))
-  When compiling with CMake, the `oauth2` used to be automatically enabled if
+- fix(oauth2): only enable via `GOOGLE_CLOUD_CPP_ENABLE`
+  ([#12911](https://github.com/googleapis/google-cloud-cpp/pull/12911)) When
+  compiling with CMake, the `oauth2` used to be automatically enabled if
   `GOOGLE_CLOUD_CPP_REST` was manually enabled or enabled by a separate library.
-  That made it impossible to shard a build with separate builds for `oauth2`, 
+  That made it impossible to shard a build with separate builds for `oauth2`,
   `storage` and `compute`.
 
 ## v2.17.0 - 2023-10
