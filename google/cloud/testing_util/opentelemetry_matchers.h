@@ -86,6 +86,8 @@ std::string ToString(opentelemetry::trace::StatusCode c);
 
 std::string ToString(opentelemetry::trace::SpanContext const& span_context);
 
+std::string ToString(opentelemetry::trace::SpanId span_id);
+
 bool ThereIsAnActiveSpan();
 
 /**
@@ -127,6 +129,13 @@ MATCHER(SpanKindIsProducer,
   auto const& kind = arg->GetSpanKind();
   *result_listener << "has kind: " << ToString(kind);
   return kind == opentelemetry::trace::SpanKind::kProducer;
+}
+
+MATCHER_P(SpanWithParentSpanId, parent_span_id,
+          "has parent span id: " + ToString(parent_span_id)) {
+  auto const& actual = arg->GetParentSpanId();
+  *result_listener << "has parent span id: " << ToString(actual);
+  return actual == parent_span_id;
 }
 
 MATCHER_P(SpanNamed, name, "has name: " + std::string{name}) {
