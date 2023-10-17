@@ -71,6 +71,10 @@ class RegionBackendServicesTracingConnection
       google::cloud::cpp::compute::region_backend_services::v1::
           ListRegionBackendServicesRequest request) override;
 
+  StreamRange<google::cloud::cpp::compute::v1::BackendService> ListUsable(
+      google::cloud::cpp::compute::region_backend_services::v1::
+          ListUsableRequest request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchBackendService(google::cloud::cpp::compute::region_backend_services::v1::
                           PatchBackendServiceRequest const& request) override;

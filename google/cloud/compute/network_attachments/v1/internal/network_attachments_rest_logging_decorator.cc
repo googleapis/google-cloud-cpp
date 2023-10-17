@@ -123,6 +123,23 @@ NetworkAttachmentsRestLogging::ListNetworkAttachments(
       rest_context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkAttachmentsRestLogging::AsyncPatchNetworkAttachment(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::network_attachments::v1::
+        PatchNetworkAttachmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::cpp::compute::network_attachments::v1::
+                 PatchNetworkAttachmentRequest const& request) {
+        return child_->AsyncPatchNetworkAttachment(cq, std::move(rest_context),
+                                                   request);
+      },
+      cq, std::move(rest_context), request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NetworkAttachmentsRestLogging::SetIamPolicy(
     rest_internal::RestContext& rest_context,

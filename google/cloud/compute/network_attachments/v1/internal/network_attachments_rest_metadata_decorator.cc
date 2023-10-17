@@ -98,6 +98,17 @@ NetworkAttachmentsRestMetadata::ListNetworkAttachments(
   return child_->ListNetworkAttachments(rest_context, request);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkAttachmentsRestMetadata::AsyncPatchNetworkAttachment(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::network_attachments::v1::
+        PatchNetworkAttachmentRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncPatchNetworkAttachment(cq, std::move(rest_context),
+                                             request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NetworkAttachmentsRestMetadata::SetIamPolicy(
     rest_internal::RestContext& rest_context,

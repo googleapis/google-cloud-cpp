@@ -215,6 +215,10 @@ class NetworkAttachmentsConnection {
   ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::
                              ListNetworkAttachmentsRequest request);
 
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
+                             PatchNetworkAttachmentRequest const& request);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::network_attachments::v1::
           SetIamPolicyRequest const& request);

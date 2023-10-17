@@ -110,6 +110,18 @@ NetworkAttachmentsTracingConnection::ListNetworkAttachments(
                                                           std::move(sr));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkAttachmentsTracingConnection::PatchNetworkAttachment(
+    google::cloud::cpp::compute::network_attachments::v1::
+        PatchNetworkAttachmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "PatchNetworkAttachment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PatchNetworkAttachment(request));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NetworkAttachmentsTracingConnection::SetIamPolicy(
     google::cloud::cpp::compute::network_attachments::v1::

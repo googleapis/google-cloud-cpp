@@ -228,7 +228,8 @@ DefaultRegionSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
                              "securityPolicies", "/",
                              request.security_policy()),
                 rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                    {std::make_pair("request_id", request.request_id()),
+                     std::make_pair("update_mask", request.update_mask())})));
       },
       std::move(p),
       service_,
@@ -265,6 +266,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncPatchRule(
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("priority",
                                     std::to_string(request.priority())),
+                     std::make_pair("update_mask", request.update_mask()),
                      std::make_pair("validate_only",
                                     request.validate_only() ? "1" : "0")})));
       },

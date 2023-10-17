@@ -219,6 +219,10 @@ class RegionBackendServicesConnection {
       google::cloud::cpp::compute::region_backend_services::v1::
           ListRegionBackendServicesRequest request);
 
+  virtual StreamRange<google::cloud::cpp::compute::v1::BackendService>
+  ListUsable(google::cloud::cpp::compute::region_backend_services::v1::
+                 ListUsableRequest request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchBackendService(google::cloud::cpp::compute::region_backend_services::v1::
                           PatchBackendServiceRequest const& request);

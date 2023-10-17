@@ -238,6 +238,42 @@ RegionBackendServicesRestConnectionImpl::ListRegionBackendServices(
       });
 }
 
+StreamRange<google::cloud::cpp::compute::v1::BackendService>
+RegionBackendServicesRestConnectionImpl::ListUsable(
+    google::cloud::cpp::compute::region_backend_services::v1::ListUsableRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListUsable(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::BackendService>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_region_backend_services_v1::
+                                   RegionBackendServicesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::region_backend_services::v1::
+              ListUsableRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::region_backend_services::v1::
+                       ListUsableRequest const& request) {
+              return stub->ListUsable(rest_context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::cpp::compute::v1::BackendServiceListUsable r) {
+        std::vector<google::cloud::cpp::compute::v1::BackendService> result(
+            r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesRestConnectionImpl::PatchBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::

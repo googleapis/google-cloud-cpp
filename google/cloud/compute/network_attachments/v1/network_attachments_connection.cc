@@ -84,6 +84,15 @@ NetworkAttachmentsConnection::ListNetworkAttachments(
       StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>>();
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkAttachmentsConnection::PatchNetworkAttachment(
+    google::cloud::cpp::compute::network_attachments::v1::
+        PatchNetworkAttachmentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NetworkAttachmentsConnection::SetIamPolicy(
     google::cloud::cpp::compute::network_attachments::v1::
