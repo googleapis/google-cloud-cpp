@@ -719,7 +719,7 @@ TEST(AsyncBulkApplyTest, CallSpanActiveThroughout) {
   bigtable::BulkMutation mut(IdempotentMutation("r0"),
                              IdempotentMutation("r1"));
 
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::OptionsSpan o(EnableTracing(Options{}));
   auto f = AsyncBulkApplier::Create(background.cq(), mock, std::move(retry),
                                     std::move(mock_b), *idempotency,

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CALL_CONTEXT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CALL_CONTEXT_H
 
+#include "google/cloud/internal/opentelemetry_context.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -44,8 +45,7 @@ struct CallContext {
 
   ImmutableOptions options;
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span =
-      opentelemetry::trace::Tracer::GetCurrentSpan();
+  OTelContext otel_context = CurrentOTelContext();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 };
 
@@ -60,7 +60,7 @@ class ScopedCallContext {
       : options_span_(std::move(call_context.options))
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
         // clang-format off
-        , otel_scope_(std::move(call_context.span))
+        , scoped_otel_context_(std::move(call_context.otel_context))
   // clang-format on
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   {
@@ -79,7 +79,7 @@ class ScopedCallContext {
  private:
   OptionsSpan options_span_;
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  opentelemetry::trace::Scope otel_scope_;
+  ScopedOTelContext scoped_otel_context_;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 };
 

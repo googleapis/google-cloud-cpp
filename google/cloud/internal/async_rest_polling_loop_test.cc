@@ -772,7 +772,7 @@ TEST(AsyncRestPollingLoopTest, SpanActiveThroughout) {
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
 
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::OptionsSpan o(EnableTracing(Options{}));
   auto pending = AsyncRestPollingLoopAip151(
       cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
@@ -804,7 +804,7 @@ TEST(AsyncRestPollingLoopTest, TraceCapturesOperationName) {
   auto policy = std::make_unique<MockPollingPolicy>();
   CompletionQueue cq;
 
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::OptionsSpan o(EnableTracing(Options{}));
   (void)AsyncRestPollingLoopAip151(cq, make_ready_future(make_status_or(op)),
                                    MakePoll(mock), MakeCancel(mock),

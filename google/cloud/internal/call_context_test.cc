@@ -45,26 +45,26 @@ TEST(CallContext, Options) {
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::testing::ElementsAre;
+using ::testing::IsEmpty;
 
-TEST(CallContext, Span) {
-  auto s1 = MakeSpan("s1");
-  auto s2 = MakeSpan("s2");
+TEST(CallContext, OTel) {
+  auto c1 = opentelemetry::context::Context("key", true);
+  auto c2 = opentelemetry::context::Context("key", true);
 
-  EXPECT_FALSE(CallContext().span->GetContext().IsValid());
+  EXPECT_THAT(CallContext().otel_context, IsEmpty());
   {
-    auto context = CallContext();
-    context.span = s1;
-    ScopedCallContext scope(context);
-    EXPECT_EQ(CallContext().span, s1);
+    ScopedOTelContext c({c1});
+    ScopedCallContext scope(CallContext{});
+    EXPECT_THAT(CallContext().otel_context, ElementsAre(c1));
     {
-      auto context = CallContext();
-      context.span = s2;
-      ScopedCallContext scope(context);
-      EXPECT_EQ(CallContext().span, s2);
+      ScopedOTelContext c({c2});
+      ScopedCallContext scope(CallContext{});
+      EXPECT_THAT(CallContext().otel_context, ElementsAre(c1, c2));
     }
-    EXPECT_EQ(CallContext().span, s1);
+    EXPECT_THAT(CallContext().otel_context, ElementsAre(c1));
   }
-  EXPECT_FALSE(CallContext().span->GetContext().IsValid());
+  EXPECT_THAT(CallContext().otel_context, IsEmpty());
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

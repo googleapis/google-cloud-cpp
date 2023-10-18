@@ -492,7 +492,7 @@ TEST(AsyncSampleRowKeysTest, CallSpanActiveThroughout) {
   auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(kNumRetries);
 
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::OptionsSpan o(EnableTracing(Options{}));
   auto f = AsyncRowSampler::Create(background.cq(), mock, std::move(retry),
                                    std::move(mock_b), kAppProfile, kTableName);
