@@ -35,7 +35,7 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
       opentelemetry::context::RuntimeContext::GetCurrent());
   active_span->AddEvent("gl-cpp.added_to_batch");
   {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> lk(message_mu_);
     message_spans_.push_back(std::move(active_span));
   }
   child_->SaveMessage(std::move(m));
@@ -91,7 +91,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
 void TracingMessageBatch::Flush() {
   decltype(message_spans_) message_spans;
   {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> lk(message_mu_);
     message_spans.swap(message_spans_);
   }
 
@@ -104,7 +104,7 @@ void TracingMessageBatch::Flush() {
   auto async_scope = internal::GetTracer(internal::CurrentOptions())
                          ->WithActiveSpan(batch_sink_parent_span);
   {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> lk(batch_sink_mu_);
     batch_sink_spans_.push_back(std::move(batch_sink_parent_span));
   }
 
@@ -114,7 +114,7 @@ void TracingMessageBatch::Flush() {
 void TracingMessageBatch::FlushCallback() {
   decltype(batch_sink_spans_) spans;
   {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> lk(batch_sink_mu_);
     spans.swap(batch_sink_spans_);
   }
   for (auto& span : spans) internal::EndSpan(*span);

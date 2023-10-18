@@ -72,11 +72,12 @@ class TracingMessageBatch : public MessageBatch {
 
  private:
   std::unique_ptr<MessageBatch> child_;
-  std::mutex mu_;
+  std::mutex message_mu_;
+  std::mutex batch_sink_mu_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      message_spans_;  // ABSL_GUARDED_BY(mu_)
+      message_spans_;  // ABSL_GUARDED_BY(message_mu_)
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      batch_sink_spans_;  // ABSL_GUARDED_BY(mu_)
+      batch_sink_spans_;  // ABSL_GUARDED_BY(batch_sink_mu_)
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
