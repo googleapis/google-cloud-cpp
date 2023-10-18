@@ -221,7 +221,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
 
   auto stream = [&] {
     auto span = MakeSpan("create");
-    auto scope = opentelemetry::trace::Scope(span);
+    OTelScope scope(span);
     return MakeStreamingReadWriteRpc<FakeRequest, FakeResponse>(
         cq, std::make_shared<grpc::ClientContext>(),
         [&mock, span](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
@@ -232,7 +232,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
 
   auto start = [&] {
     auto span = MakeSpan("start");
-    auto scope = opentelemetry::trace::Scope(span);
+    OTelScope scope(span);
     return stream->Start().then([span](auto f) {
       EXPECT_THAT(span, IsActive());
       return f.get();
@@ -244,7 +244,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
 
   auto write = [&] {
     auto span = MakeSpan("start");
-    auto scope = opentelemetry::trace::Scope(span);
+    OTelScope scope(span);
     return stream
         ->Write(FakeRequest{"key0"}, grpc::WriteOptions().set_last_message())
         .then([span](auto f) {
@@ -258,7 +258,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
 
   auto read = [&] {
     auto span = MakeSpan("read");
-    auto scope = opentelemetry::trace::Scope(span);
+    OTelScope scope(span);
     return stream->Read().then([span](auto f) {
       EXPECT_THAT(span, IsActive());
       return f.get();
@@ -270,7 +270,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
 
   auto writes_done = [&] {
     auto span = MakeSpan("start");
-    auto scope = opentelemetry::trace::Scope(span);
+    OTelScope scope(span);
     return stream->WritesDone().then([span](auto f) {
       EXPECT_THAT(span, IsActive());
       return f.get();
@@ -282,7 +282,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
 
   auto finish = [&] {
     auto span = MakeSpan("finish");
-    auto scope = opentelemetry::trace::Scope(span);
+    OTelScope scope(span);
     return stream->Finish().then([span](auto f) {
       EXPECT_THAT(span, IsActive());
       return f.get();

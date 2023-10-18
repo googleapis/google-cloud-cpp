@@ -304,7 +304,7 @@ TEST(StreamRange, CallSpanActiveThroughout) {
   auto scope = opentelemetry::trace::Scope(overlay);
   auto sr = [] {
     auto span = internal::MakeSpan("call span");
-    auto scope = opentelemetry::trace::Scope(span);
+    internal::OTelScope scope(span);
     return internal::MakeStreamRange<int>(internal::SaveCurrentOptions(),
                                           FakeReader(span));
   }();

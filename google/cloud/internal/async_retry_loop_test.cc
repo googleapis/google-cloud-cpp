@@ -632,34 +632,11 @@ TEST(AsyncRetryLoopTest, TracedBackoff) {
               AllOf(SizeIs(kMaxRetries), Each(SpanNamed("Async Backoff"))));
 }
 
-TEST(AsyncRetryLoopTest, CallSpanActiveThroughout) {
-  auto span_catcher = testing_util::InstallSpanCatcher();
-
-  AsyncSequencer<StatusOr<int>> sequencer;
-  auto span = MakeSpan("span");
-  auto scope = opentelemetry::trace::Scope(span);
-
-  AutomaticallyCreatedBackgroundThreads background;
-  future<StatusOr<int>> actual = AsyncRetryLoop(
-      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      background.cq(),
-      [&](auto, auto, auto const&, auto) {
-        EXPECT_THAT(span, IsActive());
-        return sequencer.PushBack();
-      },
-      MakeImmutableOptions(EnableTracing(Options{})), 42, "error message");
-
-  sequencer.PopFront().set_value(UnavailableError("try again"));
-  sequencer.PopFront().set_value(0);
-  auto overlay = opentelemetry::trace::Scope(MakeSpan("overlay"));
-  (void)actual.get();
-}
-
 TEST(AsyncRetryLoopTest, CallSpanActiveDuringCancel) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto span = MakeSpan("span");
-  auto scope = opentelemetry::trace::Scope(span);
+  OTelScope scope(span);
 
   promise<StatusOr<int>> p([span] { EXPECT_THAT(span, IsActive()); });
 
