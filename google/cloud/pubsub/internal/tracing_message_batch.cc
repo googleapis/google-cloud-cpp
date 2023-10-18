@@ -68,7 +68,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
   // span.
   if (batch_size < kMaxOtelLinks) {
     std::transform(
-        message_spans.begin(), message_spans.end(), links.begin(),
+        message_spans.begin(), message_spans.end(), std::back_inserter(links),
         [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
           return std::make_pair(
               span->GetContext(),
