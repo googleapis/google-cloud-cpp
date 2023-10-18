@@ -88,7 +88,17 @@ std::string ToString(opentelemetry::trace::SpanContext const& span_context);
 
 std::string ToString(opentelemetry::trace::SpanId span_id);
 
+// Returns true if there is an active span, as tracked by opentelemetry-cpp.
 bool ThereIsAnActiveSpan();
+
+/**
+ * Returns true if the current context, as tracked by opentelemetry-cpp, matches
+ * the current context, as tracked by google-cloud-cpp.
+ *
+ * This duplication is necessary for operations that might complete in a
+ * different thread than they are created.
+ */
+bool OTelContextCaptured();
 
 /**
  * Note that all spans created by a `NoopTracerProvider` will compare equal. To

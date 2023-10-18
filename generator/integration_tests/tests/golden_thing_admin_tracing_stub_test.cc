@@ -33,6 +33,7 @@ using ::testing::Return;
 
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -50,6 +51,8 @@ auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
 future<StatusOr<google::longrunning::Operation>> LongrunningError(
     Unused, std::shared_ptr<grpc::ClientContext> const& context, Unused) {
   ValidatePropagator(*context);
+  EXPECT_TRUE(ThereIsAnActiveSpan());
+  EXPECT_TRUE(OTelContextCaptured());
   return make_ready_future(
       StatusOr<google::longrunning::Operation>(internal::AbortedError("fail")));
 }
@@ -544,6 +547,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncGetDatabase) {
   EXPECT_CALL(*mock, AsyncGetDatabase)
       .WillOnce([](auto const&, auto context, auto const&) {
         ValidatePropagator(*context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        EXPECT_TRUE(OTelContextCaptured());
         return make_ready_future(
             StatusOr<google::test::admin::database::v1::Database>(
                 internal::AbortedError("fail")));
@@ -576,6 +581,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncDropDatabase) {
   EXPECT_CALL(*mock, AsyncDropDatabase)
       .WillOnce([](auto const&, auto context, auto const&) {
         ValidatePropagator(*context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        EXPECT_TRUE(OTelContextCaptured());
         return make_ready_future(internal::AbortedError("fail"));
       });
 
@@ -631,6 +638,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCancelOperation) {
   EXPECT_CALL(*mock, AsyncCancelOperation)
       .WillOnce([](auto const&, auto context, auto const&) {
         ValidatePropagator(*context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        EXPECT_TRUE(OTelContextCaptured());
         return make_ready_future(internal::AbortedError("fail"));
       });
 
