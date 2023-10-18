@@ -37,7 +37,7 @@ GkeHubTracingConnection::ListMemberships(
     google::cloud::gkehub::v1::ListMembershipsRequest request) {
   auto span =
       internal::MakeSpan("gkehub_v1::GkeHubConnection::ListMemberships");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMemberships(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::gkehub::v1::Membership>(
       std::move(span), std::move(sr));
@@ -47,7 +47,7 @@ StreamRange<google::cloud::gkehub::v1::Feature>
 GkeHubTracingConnection::ListFeatures(
     google::cloud::gkehub::v1::ListFeaturesRequest request) {
   auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::ListFeatures");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListFeatures(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::gkehub::v1::Feature>(
       std::move(span), std::move(sr));
@@ -74,7 +74,7 @@ GkeHubTracingConnection::CreateMembership(
     google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
   auto span =
       internal::MakeSpan("gkehub_v1::GkeHubConnection::CreateMembership");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateMembership(request));
 }
 
@@ -82,7 +82,7 @@ future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubTracingConnection::CreateFeature(
     google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
   auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::CreateFeature");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateFeature(request));
 }
 
@@ -91,7 +91,7 @@ GkeHubTracingConnection::DeleteMembership(
     google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
   auto span =
       internal::MakeSpan("gkehub_v1::GkeHubConnection::DeleteMembership");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteMembership(request));
 }
 
@@ -99,7 +99,7 @@ future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
 GkeHubTracingConnection::DeleteFeature(
     google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
   auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::DeleteFeature");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteFeature(request));
 }
 
@@ -108,7 +108,7 @@ GkeHubTracingConnection::UpdateMembership(
     google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
   auto span =
       internal::MakeSpan("gkehub_v1::GkeHubConnection::UpdateMembership");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateMembership(request));
 }
 
@@ -116,7 +116,7 @@ future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubTracingConnection::UpdateFeature(
     google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
   auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::UpdateFeature");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateFeature(request));
 }
 

@@ -39,7 +39,7 @@ PartitionAssignmentServiceTracingStub::AsyncAssignPartitions(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.pubsublite.v1.PartitionAssignmentService",
       "AssignPartitions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncAssignPartitions(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<

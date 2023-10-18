@@ -51,7 +51,7 @@ BigQueryWriteTracingStub::AsyncAppendRows(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.storage.v1.BigQueryWrite", "AppendRows");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncAppendRows(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<

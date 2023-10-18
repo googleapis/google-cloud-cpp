@@ -37,10 +37,8 @@ MetadataServiceTracingStub::AsyncCreateMetadataStore(
     google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.MetadataService", "CreateMetadataStore");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateMetadataStore(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -76,10 +74,8 @@ MetadataServiceTracingStub::AsyncDeleteMetadataStore(
     google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.MetadataService", "DeleteMetadataStore");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteMetadataStore(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -139,10 +135,8 @@ MetadataServiceTracingStub::AsyncDeleteArtifact(
     google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.MetadataService", "DeleteArtifact");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteArtifact(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -154,10 +148,8 @@ MetadataServiceTracingStub::AsyncPurgeArtifacts(
     google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.MetadataService", "PurgeArtifacts");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncPurgeArtifacts(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -217,10 +209,8 @@ MetadataServiceTracingStub::AsyncDeleteContext(
     google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.MetadataService", "DeleteContext");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteContext(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -232,10 +222,8 @@ MetadataServiceTracingStub::AsyncPurgeContexts(
     google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.MetadataService", "PurgeContexts");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncPurgeContexts(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -350,10 +338,8 @@ MetadataServiceTracingStub::AsyncDeleteExecution(
     google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.MetadataService", "DeleteExecution");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteExecution(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -365,10 +351,8 @@ MetadataServiceTracingStub::AsyncPurgeExecutions(
     google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.MetadataService", "PurgeExecutions");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncPurgeExecutions(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -456,10 +440,8 @@ MetadataServiceTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -470,10 +452,8 @@ future<Status> MetadataServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

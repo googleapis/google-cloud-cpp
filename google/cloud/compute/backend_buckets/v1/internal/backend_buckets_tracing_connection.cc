@@ -38,7 +38,7 @@ BackendBucketsTracingConnection::AddSignedUrlKey(
         AddSignedUrlKeyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::AddSignedUrlKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddSignedUrlKey(request));
 }
 
@@ -49,7 +49,7 @@ BackendBucketsTracingConnection::DeleteBackendBucket(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "DeleteBackendBucket");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteBackendBucket(request));
 }
@@ -61,7 +61,7 @@ BackendBucketsTracingConnection::DeleteSignedUrlKey(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "DeleteSignedUrlKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteSignedUrlKey(request));
 }
@@ -83,7 +83,7 @@ BackendBucketsTracingConnection::InsertBackendBucket(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "InsertBackendBucket");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertBackendBucket(request));
 }
@@ -95,7 +95,7 @@ BackendBucketsTracingConnection::ListBackendBuckets(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "ListBackendBuckets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBackendBuckets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::BackendBucket>(std::move(span),
@@ -109,7 +109,7 @@ BackendBucketsTracingConnection::PatchBackendBucket(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "PatchBackendBucket");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchBackendBucket(request));
 }
@@ -121,7 +121,7 @@ BackendBucketsTracingConnection::SetEdgeSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "SetEdgeSecurityPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetEdgeSecurityPolicy(request));
 }
@@ -133,7 +133,7 @@ BackendBucketsTracingConnection::UpdateBackendBucket(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "UpdateBackendBucket");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateBackendBucket(request));
 }

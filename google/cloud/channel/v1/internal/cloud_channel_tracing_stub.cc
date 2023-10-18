@@ -123,10 +123,8 @@ CloudChannelServiceTracingStub::AsyncProvisionCloudIdentity(
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelService", "ProvisionCloudIdentity");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncProvisionCloudIdentity(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -186,10 +184,8 @@ CloudChannelServiceTracingStub::AsyncCreateEntitlement(
     google::cloud::channel::v1::CreateEntitlementRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelService", "CreateEntitlement");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateEntitlement(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -201,10 +197,8 @@ CloudChannelServiceTracingStub::AsyncChangeParameters(
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelService", "ChangeParameters");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncChangeParameters(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -216,10 +210,8 @@ CloudChannelServiceTracingStub::AsyncChangeRenewalSettings(
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelService", "ChangeRenewalSettings");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncChangeRenewalSettings(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -231,10 +223,8 @@ CloudChannelServiceTracingStub::AsyncChangeOffer(
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelService", "ChangeOffer");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncChangeOffer(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -246,10 +236,8 @@ CloudChannelServiceTracingStub::AsyncStartPaidService(
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelService", "StartPaidService");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncStartPaidService(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -261,10 +249,8 @@ CloudChannelServiceTracingStub::AsyncSuspendEntitlement(
     google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelService", "SuspendEntitlement");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncSuspendEntitlement(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -276,10 +262,8 @@ CloudChannelServiceTracingStub::AsyncCancelEntitlement(
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelService", "CancelEntitlement");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelEntitlement(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -291,10 +275,8 @@ CloudChannelServiceTracingStub::AsyncActivateEntitlement(
     google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelService", "ActivateEntitlement");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncActivateEntitlement(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -306,10 +288,8 @@ CloudChannelServiceTracingStub::AsyncTransferEntitlements(
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelService", "TransferEntitlements");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncTransferEntitlements(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -323,10 +303,8 @@ CloudChannelServiceTracingStub::AsyncTransferEntitlementsToGoogle(
   auto span =
       internal::MakeSpanGrpc("google.cloud.channel.v1.CloudChannelService",
                              "TransferEntitlementsToGoogle");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncTransferEntitlementsToGoogle(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -692,10 +670,8 @@ CloudChannelServiceTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -706,10 +682,8 @@ future<Status> CloudChannelServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

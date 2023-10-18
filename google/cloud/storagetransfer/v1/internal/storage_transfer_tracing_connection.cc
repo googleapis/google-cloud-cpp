@@ -79,7 +79,7 @@ StorageTransferServiceTracingConnection::ListTransferJobs(
     google::storagetransfer::v1::ListTransferJobsRequest request) {
   auto span = internal::MakeSpan(
       "storagetransfer_v1::StorageTransferServiceConnection::ListTransferJobs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTransferJobs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::storagetransfer::v1::TransferJob>(std::move(span), std::move(sr));
@@ -109,7 +109,7 @@ StorageTransferServiceTracingConnection::RunTransferJob(
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   auto span = internal::MakeSpan(
       "storagetransfer_v1::StorageTransferServiceConnection::RunTransferJob");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RunTransferJob(request));
 }
 
@@ -154,7 +154,7 @@ StorageTransferServiceTracingConnection::ListAgentPools(
     google::storagetransfer::v1::ListAgentPoolsRequest request) {
   auto span = internal::MakeSpan(
       "storagetransfer_v1::StorageTransferServiceConnection::ListAgentPools");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAgentPools(std::move(request));
   return internal::MakeTracedStreamRange<
       google::storagetransfer::v1::AgentPool>(std::move(span), std::move(sr));

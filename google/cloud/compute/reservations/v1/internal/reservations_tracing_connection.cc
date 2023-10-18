@@ -40,7 +40,7 @@ ReservationsTracingConnection::AggregatedListReservations(
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::"
       "AggregatedListReservations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListReservations(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>>(
@@ -53,7 +53,7 @@ ReservationsTracingConnection::DeleteReservation(
         DeleteReservationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::DeleteReservation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteReservation(request));
 }
 
@@ -83,7 +83,7 @@ ReservationsTracingConnection::InsertReservation(
         InsertReservationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::InsertReservation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertReservation(request));
 }
 
@@ -93,7 +93,7 @@ ReservationsTracingConnection::ListReservations(
         request) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::ListReservations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListReservations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Reservation>(std::move(span),
@@ -106,7 +106,7 @@ ReservationsTracingConnection::Resize(
         request) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::Resize");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->Resize(request));
 }
 
@@ -136,7 +136,7 @@ ReservationsTracingConnection::UpdateReservation(
         UpdateReservationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::UpdateReservation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateReservation(request));
 }
 

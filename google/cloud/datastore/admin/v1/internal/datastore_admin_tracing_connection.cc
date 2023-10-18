@@ -37,7 +37,7 @@ DatastoreAdminTracingConnection::ExportEntities(
     google::datastore::admin::v1::ExportEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::ExportEntities");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportEntities(request));
 }
 
@@ -46,7 +46,7 @@ DatastoreAdminTracingConnection::ImportEntities(
     google::datastore::admin::v1::ImportEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::ImportEntities");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportEntities(request));
 }
 
@@ -55,7 +55,7 @@ DatastoreAdminTracingConnection::CreateIndex(
     google::datastore::admin::v1::CreateIndexRequest const& request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::CreateIndex");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateIndex(request));
 }
 
@@ -64,7 +64,7 @@ DatastoreAdminTracingConnection::DeleteIndex(
     google::datastore::admin::v1::DeleteIndexRequest const& request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::DeleteIndex");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteIndex(request));
 }
 
@@ -82,7 +82,7 @@ DatastoreAdminTracingConnection::ListIndexes(
     google::datastore::admin::v1::ListIndexesRequest request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::ListIndexes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListIndexes(std::move(request));
   return internal::MakeTracedStreamRange<google::datastore::admin::v1::Index>(
       std::move(span), std::move(sr));

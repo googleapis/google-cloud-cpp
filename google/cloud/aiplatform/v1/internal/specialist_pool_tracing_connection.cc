@@ -37,7 +37,7 @@ SpecialistPoolServiceTracingConnection::CreateSpecialistPool(
     google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::CreateSpecialistPool");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateSpecialistPool(request));
 }
@@ -56,7 +56,7 @@ SpecialistPoolServiceTracingConnection::ListSpecialistPools(
     google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::ListSpecialistPools");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSpecialistPools(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::SpecialistPool>(std::move(span),
@@ -68,7 +68,7 @@ SpecialistPoolServiceTracingConnection::DeleteSpecialistPool(
     google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::DeleteSpecialistPool");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteSpecialistPool(request));
 }
@@ -78,7 +78,7 @@ SpecialistPoolServiceTracingConnection::UpdateSpecialistPool(
     google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::UpdateSpecialistPool");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateSpecialistPool(request));
 }

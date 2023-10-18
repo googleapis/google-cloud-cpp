@@ -46,7 +46,7 @@ TranscoderServiceTracingConnection::ListJobs(
     google::cloud::video::transcoder::v1::ListJobsRequest request) {
   auto span = internal::MakeSpan(
       "video_transcoder_v1::TranscoderServiceConnection::ListJobs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::video::transcoder::v1::Job>(std::move(span),
@@ -85,7 +85,7 @@ TranscoderServiceTracingConnection::ListJobTemplates(
     google::cloud::video::transcoder::v1::ListJobTemplatesRequest request) {
   auto span = internal::MakeSpan(
       "video_transcoder_v1::TranscoderServiceConnection::ListJobTemplates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListJobTemplates(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::video::transcoder::v1::JobTemplate>(std::move(span),

@@ -37,7 +37,7 @@ StorageInsightsTracingConnection::ListReportConfigs(
     google::cloud::storageinsights::v1::ListReportConfigsRequest request) {
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::ListReportConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListReportConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::storageinsights::v1::ReportConfig>(std::move(span),
@@ -87,7 +87,7 @@ StorageInsightsTracingConnection::ListReportDetails(
     google::cloud::storageinsights::v1::ListReportDetailsRequest request) {
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::ListReportDetails");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListReportDetails(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::storageinsights::v1::ReportDetail>(std::move(span),

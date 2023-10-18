@@ -46,7 +46,7 @@ DocumentServiceTracingConnection::ListDocuments(
     google::cloud::discoveryengine::v1::ListDocumentsRequest request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DocumentServiceConnection::ListDocuments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDocuments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::discoveryengine::v1::Document>(std::move(span),
@@ -84,7 +84,7 @@ DocumentServiceTracingConnection::ImportDocuments(
     google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DocumentServiceConnection::ImportDocuments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportDocuments(request));
 }
 
@@ -93,7 +93,7 @@ DocumentServiceTracingConnection::PurgeDocuments(
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DocumentServiceConnection::PurgeDocuments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PurgeDocuments(request));
 }
 

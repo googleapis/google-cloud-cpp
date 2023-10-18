@@ -70,7 +70,7 @@ AutoscalingPolicyServiceTracingConnection::ListAutoscalingPolicies(
   auto span = internal::MakeSpan(
       "dataproc_v1::AutoscalingPolicyServiceConnection::"
       "ListAutoscalingPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAutoscalingPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dataproc::v1::AutoscalingPolicy>(std::move(span),

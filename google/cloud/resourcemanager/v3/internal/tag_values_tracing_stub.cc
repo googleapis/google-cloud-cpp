@@ -73,10 +73,8 @@ TagValuesTracingStub::AsyncCreateTagValue(
     google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcemanager.v3.TagValues", "CreateTagValue");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateTagValue(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -88,10 +86,8 @@ TagValuesTracingStub::AsyncUpdateTagValue(
     google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcemanager.v3.TagValues", "UpdateTagValue");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateTagValue(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -103,10 +99,8 @@ TagValuesTracingStub::AsyncDeleteTagValue(
     google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcemanager.v3.TagValues", "DeleteTagValue");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteTagValue(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -152,10 +146,8 @@ TagValuesTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -166,10 +158,8 @@ future<Status> TagValuesTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

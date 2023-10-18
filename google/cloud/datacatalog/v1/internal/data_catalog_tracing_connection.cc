@@ -37,7 +37,7 @@ DataCatalogTracingConnection::SearchCatalog(
     google::cloud::datacatalog::v1::SearchCatalogRequest request) {
   auto span = internal::MakeSpan(
       "datacatalog_v1::DataCatalogConnection::SearchCatalog");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchCatalog(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::datacatalog::v1::SearchCatalogResult>(std::move(span),
@@ -84,7 +84,7 @@ DataCatalogTracingConnection::ListEntryGroups(
     google::cloud::datacatalog::v1::ListEntryGroupsRequest request) {
   auto span = internal::MakeSpan(
       "datacatalog_v1::DataCatalogConnection::ListEntryGroups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEntryGroups(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::datacatalog::v1::EntryGroup>(std::move(span),
@@ -140,7 +140,7 @@ DataCatalogTracingConnection::ListEntries(
     google::cloud::datacatalog::v1::ListEntriesRequest request) {
   auto span =
       internal::MakeSpan("datacatalog_v1::DataCatalogConnection::ListEntries");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEntries(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::datacatalog::v1::Entry>(
       std::move(span), std::move(sr));
@@ -280,7 +280,7 @@ DataCatalogTracingConnection::ListTags(
     google::cloud::datacatalog::v1::ListTagsRequest request) {
   auto span =
       internal::MakeSpan("datacatalog_v1::DataCatalogConnection::ListTags");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTags(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::datacatalog::v1::Tag>(
       std::move(span), std::move(sr));
@@ -291,7 +291,7 @@ DataCatalogTracingConnection::ReconcileTags(
     google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
   auto span = internal::MakeSpan(
       "datacatalog_v1::DataCatalogConnection::ReconcileTags");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ReconcileTags(request));
 }
 
@@ -343,7 +343,7 @@ DataCatalogTracingConnection::ImportEntries(
     google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
   auto span = internal::MakeSpan(
       "datacatalog_v1::DataCatalogConnection::ImportEntries");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportEntries(request));
 }
 

@@ -61,7 +61,7 @@ AgentsTracingConnection::SearchAgents(
     google::cloud::dialogflow::v2::SearchAgentsRequest request) {
   auto span =
       internal::MakeSpan("dialogflow_es::AgentsConnection::SearchAgents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchAgents(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::Agent>(
       std::move(span), std::move(sr));
@@ -70,7 +70,7 @@ AgentsTracingConnection::SearchAgents(
 future<StatusOr<google::protobuf::Struct>> AgentsTracingConnection::TrainAgent(
     google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_es::AgentsConnection::TrainAgent");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->TrainAgent(request));
 }
 
@@ -79,7 +79,7 @@ AgentsTracingConnection::ExportAgent(
     google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::AgentsConnection::ExportAgent");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportAgent(request));
 }
 
@@ -87,7 +87,7 @@ future<StatusOr<google::protobuf::Struct>> AgentsTracingConnection::ImportAgent(
     google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::AgentsConnection::ImportAgent");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportAgent(request));
 }
 
@@ -96,7 +96,7 @@ AgentsTracingConnection::RestoreAgent(
     google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::AgentsConnection::RestoreAgent");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RestoreAgent(request));
 }
 

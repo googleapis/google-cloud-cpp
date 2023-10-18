@@ -47,7 +47,7 @@ WorkstationsTracingConnection::ListWorkstationClusters(
     google::cloud::workstations::v1::ListWorkstationClustersRequest request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::ListWorkstationClusters");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListWorkstationClusters(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::workstations::v1::WorkstationCluster>(std::move(span),
@@ -60,7 +60,7 @@ WorkstationsTracingConnection::CreateWorkstationCluster(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::CreateWorkstationCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateWorkstationCluster(request));
 }
@@ -71,7 +71,7 @@ WorkstationsTracingConnection::UpdateWorkstationCluster(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::UpdateWorkstationCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateWorkstationCluster(request));
 }
@@ -82,7 +82,7 @@ WorkstationsTracingConnection::DeleteWorkstationCluster(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::DeleteWorkstationCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteWorkstationCluster(request));
 }
@@ -102,7 +102,7 @@ WorkstationsTracingConnection::ListWorkstationConfigs(
     google::cloud::workstations::v1::ListWorkstationConfigsRequest request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::ListWorkstationConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListWorkstationConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::workstations::v1::WorkstationConfig>(std::move(span),
@@ -115,7 +115,7 @@ WorkstationsTracingConnection::ListUsableWorkstationConfigs(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::ListUsableWorkstationConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListUsableWorkstationConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::workstations::v1::WorkstationConfig>(std::move(span),
@@ -128,7 +128,7 @@ WorkstationsTracingConnection::CreateWorkstationConfig(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::CreateWorkstationConfig");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateWorkstationConfig(request));
 }
@@ -139,7 +139,7 @@ WorkstationsTracingConnection::UpdateWorkstationConfig(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::UpdateWorkstationConfig");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateWorkstationConfig(request));
 }
@@ -150,7 +150,7 @@ WorkstationsTracingConnection::DeleteWorkstationConfig(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::DeleteWorkstationConfig");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteWorkstationConfig(request));
 }
@@ -169,7 +169,7 @@ WorkstationsTracingConnection::ListWorkstations(
     google::cloud::workstations::v1::ListWorkstationsRequest request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::ListWorkstations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListWorkstations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::workstations::v1::Workstation>(std::move(span),
@@ -181,7 +181,7 @@ WorkstationsTracingConnection::ListUsableWorkstations(
     google::cloud::workstations::v1::ListUsableWorkstationsRequest request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::ListUsableWorkstations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListUsableWorkstations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::workstations::v1::Workstation>(std::move(span),
@@ -193,7 +193,7 @@ WorkstationsTracingConnection::CreateWorkstation(
     google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::CreateWorkstation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateWorkstation(request));
 }
 
@@ -202,7 +202,7 @@ WorkstationsTracingConnection::UpdateWorkstation(
     google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::UpdateWorkstation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateWorkstation(request));
 }
 
@@ -211,7 +211,7 @@ WorkstationsTracingConnection::DeleteWorkstation(
     google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::DeleteWorkstation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteWorkstation(request));
 }
 
@@ -220,7 +220,7 @@ WorkstationsTracingConnection::StartWorkstation(
     google::cloud::workstations::v1::StartWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::StartWorkstation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->StartWorkstation(request));
 }
 
@@ -229,7 +229,7 @@ WorkstationsTracingConnection::StopWorkstation(
     google::cloud::workstations::v1::StopWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::StopWorkstation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->StopWorkstation(request));
 }
 

@@ -37,7 +37,7 @@ TagBindingsTracingConnection::ListTagBindings(
     google::cloud::resourcemanager::v3::ListTagBindingsRequest request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagBindingsConnection::ListTagBindings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTagBindings(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::resourcemanager::v3::TagBinding>(std::move(span),
@@ -50,7 +50,7 @@ TagBindingsTracingConnection::CreateTagBinding(
         request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagBindingsConnection::CreateTagBinding");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateTagBinding(request));
 }
 
@@ -60,7 +60,7 @@ TagBindingsTracingConnection::DeleteTagBinding(
         request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagBindingsConnection::DeleteTagBinding");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTagBinding(request));
 }
 
@@ -69,7 +69,7 @@ TagBindingsTracingConnection::ListEffectiveTags(
     google::cloud::resourcemanager::v3::ListEffectiveTagsRequest request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagBindingsConnection::ListEffectiveTags");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEffectiveTags(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::resourcemanager::v3::EffectiveTag>(std::move(span),

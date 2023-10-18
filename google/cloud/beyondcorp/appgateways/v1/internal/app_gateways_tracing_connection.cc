@@ -40,7 +40,7 @@ AppGatewaysServiceTracingConnection::ListAppGateways(
   auto span = internal::MakeSpan(
       "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
       "ListAppGateways");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAppGateways(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::beyondcorp::appgateways::v1::AppGateway>(std::move(span),
@@ -64,7 +64,7 @@ AppGatewaysServiceTracingConnection::CreateAppGateway(
   auto span = internal::MakeSpan(
       "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
       "CreateAppGateway");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateAppGateway(request));
 }
 
@@ -76,7 +76,7 @@ AppGatewaysServiceTracingConnection::DeleteAppGateway(
   auto span = internal::MakeSpan(
       "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
       "DeleteAppGateway");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAppGateway(request));
 }
 

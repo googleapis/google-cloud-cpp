@@ -93,7 +93,7 @@ DataPolicyServiceTracingConnection::ListDataPolicies(
   auto span = internal::MakeSpan(
       "bigquery_datapolicies_v1::DataPolicyServiceConnection::"
       "ListDataPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDataPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::datapolicies::v1::DataPolicy>(std::move(span),

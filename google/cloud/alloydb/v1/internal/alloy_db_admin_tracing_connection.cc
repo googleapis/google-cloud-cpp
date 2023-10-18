@@ -37,7 +37,7 @@ AlloyDBAdminTracingConnection::ListClusters(
     google::cloud::alloydb::v1::ListClustersRequest request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::ListClusters");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListClusters(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::alloydb::v1::Cluster>(
       std::move(span), std::move(sr));
@@ -57,7 +57,7 @@ AlloyDBAdminTracingConnection::CreateCluster(
     google::cloud::alloydb::v1::CreateClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::CreateCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateCluster(request));
 }
 
@@ -66,7 +66,7 @@ AlloyDBAdminTracingConnection::UpdateCluster(
     google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpdateCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
 }
 
@@ -75,7 +75,7 @@ AlloyDBAdminTracingConnection::DeleteCluster(
     google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::DeleteCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteCluster(request));
 }
 
@@ -84,7 +84,7 @@ AlloyDBAdminTracingConnection::PromoteCluster(
     google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::PromoteCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PromoteCluster(request));
 }
 
@@ -93,7 +93,7 @@ AlloyDBAdminTracingConnection::RestoreCluster(
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::RestoreCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RestoreCluster(request));
 }
 
@@ -102,7 +102,7 @@ AlloyDBAdminTracingConnection::CreateSecondaryCluster(
     google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::CreateSecondaryCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateSecondaryCluster(request));
 }
@@ -112,7 +112,7 @@ AlloyDBAdminTracingConnection::ListInstances(
     google::cloud::alloydb::v1::ListInstancesRequest request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::ListInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInstances(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::alloydb::v1::Instance>(
       std::move(span), std::move(sr));
@@ -132,7 +132,7 @@ AlloyDBAdminTracingConnection::CreateInstance(
     google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::CreateInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
@@ -141,7 +141,7 @@ AlloyDBAdminTracingConnection::CreateSecondaryInstance(
     google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::CreateSecondaryInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateSecondaryInstance(request));
 }
@@ -151,7 +151,7 @@ AlloyDBAdminTracingConnection::BatchCreateInstances(
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::BatchCreateInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchCreateInstances(request));
 }
@@ -161,7 +161,7 @@ AlloyDBAdminTracingConnection::UpdateInstance(
     google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpdateInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
 }
 
@@ -170,7 +170,7 @@ AlloyDBAdminTracingConnection::DeleteInstance(
     google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::DeleteInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
 
@@ -179,7 +179,7 @@ AlloyDBAdminTracingConnection::FailoverInstance(
     google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::FailoverInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->FailoverInstance(request));
 }
 
@@ -188,7 +188,7 @@ AlloyDBAdminTracingConnection::InjectFault(
     google::cloud::alloydb::v1::InjectFaultRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::InjectFault");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InjectFault(request));
 }
 
@@ -197,7 +197,7 @@ AlloyDBAdminTracingConnection::RestartInstance(
     google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::RestartInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RestartInstance(request));
 }
 
@@ -206,7 +206,7 @@ AlloyDBAdminTracingConnection::ListBackups(
     google::cloud::alloydb::v1::ListBackupsRequest request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::ListBackups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBackups(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::alloydb::v1::Backup>(
       std::move(span), std::move(sr));
@@ -226,7 +226,7 @@ AlloyDBAdminTracingConnection::CreateBackup(
     google::cloud::alloydb::v1::CreateBackupRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::CreateBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateBackup(request));
 }
 
@@ -235,7 +235,7 @@ AlloyDBAdminTracingConnection::UpdateBackup(
     google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpdateBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateBackup(request));
 }
 
@@ -244,7 +244,7 @@ AlloyDBAdminTracingConnection::DeleteBackup(
     google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::DeleteBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteBackup(request));
 }
 
@@ -253,7 +253,7 @@ AlloyDBAdminTracingConnection::ListSupportedDatabaseFlags(
     google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::ListSupportedDatabaseFlags");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSupportedDatabaseFlags(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::alloydb::v1::SupportedDatabaseFlag>(std::move(span),
@@ -284,7 +284,7 @@ AlloyDBAdminTracingConnection::ListUsers(
     google::cloud::alloydb::v1::ListUsersRequest request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::ListUsers");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListUsers(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::alloydb::v1::User>(
       std::move(span), std::move(sr));

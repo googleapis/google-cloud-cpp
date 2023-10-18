@@ -38,7 +38,7 @@ SecureSourceManagerTracingConnection::ListInstances(
     google::cloud::securesourcemanager::v1::ListInstancesRequest request) {
   auto span = internal::MakeSpan(
       "securesourcemanager_v1::SecureSourceManagerConnection::ListInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInstances(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::securesourcemanager::v1::Instance>(std::move(span),
@@ -60,7 +60,7 @@ SecureSourceManagerTracingConnection::CreateInstance(
         request) {
   auto span = internal::MakeSpan(
       "securesourcemanager_v1::SecureSourceManagerConnection::CreateInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
@@ -70,7 +70,7 @@ SecureSourceManagerTracingConnection::DeleteInstance(
         request) {
   auto span = internal::MakeSpan(
       "securesourcemanager_v1::SecureSourceManagerConnection::DeleteInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
 
@@ -80,7 +80,7 @@ SecureSourceManagerTracingConnection::ListRepositories(
   auto span = internal::MakeSpan(
       "securesourcemanager_v1::SecureSourceManagerConnection::"
       "ListRepositories");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRepositories(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::securesourcemanager::v1::Repository>(std::move(span),
@@ -104,7 +104,7 @@ SecureSourceManagerTracingConnection::CreateRepository(
   auto span = internal::MakeSpan(
       "securesourcemanager_v1::SecureSourceManagerConnection::"
       "CreateRepository");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateRepository(request));
 }
 
@@ -115,7 +115,7 @@ SecureSourceManagerTracingConnection::DeleteRepository(
   auto span = internal::MakeSpan(
       "securesourcemanager_v1::SecureSourceManagerConnection::"
       "DeleteRepository");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRepository(request));
 }
 

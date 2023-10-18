@@ -103,6 +103,13 @@ class MockBackendServicesConnection
                    ListBackendServicesRequest request),
               (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::cpp::compute::v1::BackendService>),
+      ListUsable,
+      (google::cloud::cpp::compute::backend_services::v1::ListUsableRequest
+           request),
+      (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchBackendService,
               (google::cloud::cpp::compute::backend_services::v1::

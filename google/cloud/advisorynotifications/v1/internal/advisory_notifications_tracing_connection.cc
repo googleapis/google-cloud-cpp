@@ -42,7 +42,7 @@ AdvisoryNotificationsServiceTracingConnection::ListNotifications(
   auto span = internal::MakeSpan(
       "advisorynotifications_v1::AdvisoryNotificationsServiceConnection::"
       "ListNotifications");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNotifications(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::advisorynotifications::v1::Notification>(std::move(span),

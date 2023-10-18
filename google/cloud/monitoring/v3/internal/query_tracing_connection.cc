@@ -37,7 +37,7 @@ QueryServiceTracingConnection::QueryTimeSeries(
     google::monitoring::v3::QueryTimeSeriesRequest request) {
   auto span = internal::MakeSpan(
       "monitoring_v3::QueryServiceConnection::QueryTimeSeries");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->QueryTimeSeries(std::move(request));
   return internal::MakeTracedStreamRange<
       google::monitoring::v3::TimeSeriesData>(std::move(span), std::move(sr));

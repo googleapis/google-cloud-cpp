@@ -39,10 +39,8 @@ EnvironmentsTracingStub::AsyncCreateEnvironment(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.orchestration.airflow.service.v1.Environments",
       "CreateEnvironment");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateEnvironment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -85,10 +83,8 @@ EnvironmentsTracingStub::AsyncUpdateEnvironment(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.orchestration.airflow.service.v1.Environments",
       "UpdateEnvironment");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateEnvironment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -102,10 +98,8 @@ EnvironmentsTracingStub::AsyncDeleteEnvironment(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.orchestration.airflow.service.v1.Environments",
       "DeleteEnvironment");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteEnvironment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -164,10 +158,8 @@ EnvironmentsTracingStub::AsyncSaveSnapshot(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.orchestration.airflow.service.v1.Environments",
       "SaveSnapshot");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncSaveSnapshot(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -181,10 +173,8 @@ EnvironmentsTracingStub::AsyncLoadSnapshot(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.orchestration.airflow.service.v1.Environments",
       "LoadSnapshot");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncLoadSnapshot(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -198,10 +188,8 @@ EnvironmentsTracingStub::AsyncDatabaseFailover(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.orchestration.airflow.service.v1.Environments",
       "DatabaseFailover");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDatabaseFailover(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -228,10 +216,8 @@ EnvironmentsTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -242,10 +228,8 @@ future<Status> EnvironmentsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

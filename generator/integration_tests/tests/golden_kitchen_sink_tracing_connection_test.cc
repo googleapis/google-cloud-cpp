@@ -37,6 +37,7 @@ using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -148,6 +149,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ListLogs) {
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, ListLogs).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return mocks::MakeStreamRange<std::string>({},
                                                internal::AbortedError("fail"));
   });
@@ -253,6 +255,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, StreamingRead) {
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, StreamingRead).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return mocks::MakeStreamRange<Response>({}, internal::AbortedError("fail"));
   });
 

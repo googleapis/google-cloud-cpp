@@ -61,10 +61,8 @@ ServiceManagerTracingStub::AsyncCreateService(
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "CreateService");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateService(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -76,10 +74,8 @@ ServiceManagerTracingStub::AsyncDeleteService(
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "DeleteService");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteService(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -91,10 +87,8 @@ ServiceManagerTracingStub::AsyncUndeleteService(
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "UndeleteService");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUndeleteService(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -144,10 +138,8 @@ ServiceManagerTracingStub::AsyncSubmitConfigSource(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "SubmitConfigSource");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncSubmitConfigSource(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -186,10 +178,8 @@ ServiceManagerTracingStub::AsyncCreateServiceRollout(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "CreateServiceRollout");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateServiceRollout(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -214,10 +204,8 @@ ServiceManagerTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -228,10 +216,8 @@ future<Status> ServiceManagerTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

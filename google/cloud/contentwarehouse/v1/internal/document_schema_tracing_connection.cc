@@ -81,7 +81,7 @@ DocumentSchemaServiceTracingConnection::ListDocumentSchemas(
   auto span = internal::MakeSpan(
       "contentwarehouse_v1::DocumentSchemaServiceConnection::"
       "ListDocumentSchemas");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDocumentSchemas(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::contentwarehouse::v1::DocumentSchema>(std::move(span),

@@ -58,7 +58,7 @@ WorkflowTemplateServiceTracingConnection::InstantiateWorkflowTemplate(
   auto span = internal::MakeSpan(
       "dataproc_v1::WorkflowTemplateServiceConnection::"
       "InstantiateWorkflowTemplate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InstantiateWorkflowTemplate(request));
 }
@@ -70,7 +70,7 @@ WorkflowTemplateServiceTracingConnection::InstantiateInlineWorkflowTemplate(
   auto span = internal::MakeSpan(
       "dataproc_v1::WorkflowTemplateServiceConnection::"
       "InstantiateInlineWorkflowTemplate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InstantiateInlineWorkflowTemplate(request));
 }
@@ -89,7 +89,7 @@ WorkflowTemplateServiceTracingConnection::ListWorkflowTemplates(
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::WorkflowTemplateServiceConnection::ListWorkflowTemplates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListWorkflowTemplates(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dataproc::v1::WorkflowTemplate>(std::move(span),

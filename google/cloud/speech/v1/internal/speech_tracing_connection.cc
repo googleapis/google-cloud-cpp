@@ -44,7 +44,7 @@ SpeechTracingConnection::LongRunningRecognize(
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v1::SpeechConnection::LongRunningRecognize");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->LongRunningRecognize(request));
 }

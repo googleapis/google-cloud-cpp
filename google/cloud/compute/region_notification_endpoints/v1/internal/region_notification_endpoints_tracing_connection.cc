@@ -43,7 +43,7 @@ RegionNotificationEndpointsTracingConnection::DeleteNotificationEndpoint(
   auto span = internal::MakeSpan(
       "compute_region_notification_endpoints_v1::"
       "RegionNotificationEndpointsConnection::DeleteNotificationEndpoint");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteNotificationEndpoint(request));
 }
@@ -66,7 +66,7 @@ RegionNotificationEndpointsTracingConnection::InsertNotificationEndpoint(
   auto span = internal::MakeSpan(
       "compute_region_notification_endpoints_v1::"
       "RegionNotificationEndpointsConnection::InsertNotificationEndpoint");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertNotificationEndpoint(request));
 }
@@ -78,7 +78,7 @@ RegionNotificationEndpointsTracingConnection::ListRegionNotificationEndpoints(
   auto span = internal::MakeSpan(
       "compute_region_notification_endpoints_v1::"
       "RegionNotificationEndpointsConnection::ListRegionNotificationEndpoints");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionNotificationEndpoints(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::NotificationEndpoint>(std::move(span),

@@ -37,10 +37,8 @@ BackupForGKETracingStub::AsyncCreateBackupPlan(
     google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "CreateBackupPlan");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateBackupPlan(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -76,10 +74,8 @@ BackupForGKETracingStub::AsyncUpdateBackupPlan(
     google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "UpdateBackupPlan");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateBackupPlan(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -91,10 +87,8 @@ BackupForGKETracingStub::AsyncDeleteBackupPlan(
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "DeleteBackupPlan");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteBackupPlan(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -106,10 +100,8 @@ BackupForGKETracingStub::AsyncCreateBackup(
     google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "CreateBackup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateBackup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -144,10 +136,8 @@ BackupForGKETracingStub::AsyncUpdateBackup(
     google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "UpdateBackup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateBackup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -159,10 +149,8 @@ BackupForGKETracingStub::AsyncDeleteBackup(
     google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "DeleteBackup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteBackup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -198,10 +186,8 @@ BackupForGKETracingStub::AsyncCreateRestorePlan(
     google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "CreateRestorePlan");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateRestorePlan(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -237,10 +223,8 @@ BackupForGKETracingStub::AsyncUpdateRestorePlan(
     google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "UpdateRestorePlan");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateRestorePlan(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -252,10 +236,8 @@ BackupForGKETracingStub::AsyncDeleteRestorePlan(
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "DeleteRestorePlan");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteRestorePlan(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -267,10 +249,8 @@ BackupForGKETracingStub::AsyncCreateRestore(
     google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "CreateRestore");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateRestore(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -306,10 +286,8 @@ BackupForGKETracingStub::AsyncUpdateRestore(
     google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "UpdateRestore");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateRestore(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -321,10 +299,8 @@ BackupForGKETracingStub::AsyncDeleteRestore(
     google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "DeleteRestore");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteRestore(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -360,10 +336,8 @@ BackupForGKETracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -374,10 +348,8 @@ future<Status> BackupForGKETracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

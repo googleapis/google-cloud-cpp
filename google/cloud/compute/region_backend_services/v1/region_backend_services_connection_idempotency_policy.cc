@@ -75,6 +75,12 @@ RegionBackendServicesConnectionIdempotencyPolicy::ListRegionBackendServices(
   return Idempotency::kIdempotent;
 }
 
+Idempotency RegionBackendServicesConnectionIdempotencyPolicy::ListUsable(
+    google::cloud::cpp::compute::region_backend_services::v1::
+        ListUsableRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency
 RegionBackendServicesConnectionIdempotencyPolicy::PatchBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::

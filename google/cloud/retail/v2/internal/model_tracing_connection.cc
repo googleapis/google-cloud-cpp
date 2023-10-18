@@ -37,7 +37,7 @@ ModelServiceTracingConnection::CreateModel(
     google::cloud::retail::v2::CreateModelRequest const& request) {
   auto span =
       internal::MakeSpan("retail_v2::ModelServiceConnection::CreateModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateModel(request));
 }
 
@@ -80,7 +80,7 @@ ModelServiceTracingConnection::ListModels(
     google::cloud::retail::v2::ListModelsRequest request) {
   auto span =
       internal::MakeSpan("retail_v2::ModelServiceConnection::ListModels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListModels(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::retail::v2::Model>(
       std::move(span), std::move(sr));
@@ -100,7 +100,7 @@ ModelServiceTracingConnection::TuneModel(
     google::cloud::retail::v2::TuneModelRequest const& request) {
   auto span =
       internal::MakeSpan("retail_v2::ModelServiceConnection::TuneModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->TuneModel(request));
 }
 

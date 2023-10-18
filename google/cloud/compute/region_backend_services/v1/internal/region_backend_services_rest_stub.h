@@ -73,6 +73,11 @@ class RegionBackendServicesRestStub {
       google::cloud::cpp::compute::region_backend_services::v1::
           ListRegionBackendServicesRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::BackendServiceListUsable>
+  ListUsable(google::cloud::rest_internal::RestContext& rest_context,
+             google::cloud::cpp::compute::region_backend_services::v1::
+                 ListUsableRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncPatchBackendService(
       google::cloud::CompletionQueue& cq,
@@ -157,6 +162,11 @@ class DefaultRegionBackendServicesRestStub
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_backend_services::v1::
           ListRegionBackendServicesRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::BackendServiceListUsable>
+  ListUsable(google::cloud::rest_internal::RestContext& rest_context,
+             google::cloud::cpp::compute::region_backend_services::v1::
+                 ListUsableRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncPatchBackendService(

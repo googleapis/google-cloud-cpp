@@ -213,7 +213,7 @@ TEST(AsyncStreamingReadRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
 
   auto stream = [&] {
     auto span = MakeSpan("create");
-    auto scope = opentelemetry::trace::Scope(span);
+    OTelScope scope(span);
     return MakeStreamingReadRpc<FakeRequest, FakeResponse>(
         cq, std::make_shared<grpc::ClientContext>(), FakeRequest{},
         [&mock, span](grpc::ClientContext* context, FakeRequest const& request,
@@ -225,7 +225,7 @@ TEST(AsyncStreamingReadRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
 
   auto start = [&] {
     auto span = MakeSpan("start");
-    auto scope = opentelemetry::trace::Scope(span);
+    OTelScope scope(span);
     return stream->Start().then([span](auto f) {
       EXPECT_THAT(span, IsActive());
       return f.get();
@@ -237,7 +237,7 @@ TEST(AsyncStreamingReadRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
 
   auto read = [&] {
     auto span = MakeSpan("read");
-    auto scope = opentelemetry::trace::Scope(span);
+    OTelScope scope(span);
     return stream->Read().then([span](auto f) {
       EXPECT_THAT(span, IsActive());
       return f.get();
@@ -249,7 +249,7 @@ TEST(AsyncStreamingReadRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
 
   auto finish = [&] {
     auto span = MakeSpan("finish");
-    auto scope = opentelemetry::trace::Scope(span);
+    OTelScope scope(span);
     return stream->Finish().then([span](auto f) {
       EXPECT_THAT(span, IsActive());
       return f.get();

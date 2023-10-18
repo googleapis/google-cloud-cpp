@@ -46,7 +46,7 @@ SimulatorTracingConnection::CreateReplay(
     google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
   auto span = internal::MakeSpan(
       "policysimulator_v1::SimulatorConnection::CreateReplay");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateReplay(request));
 }
 
@@ -55,7 +55,7 @@ SimulatorTracingConnection::ListReplayResults(
     google::cloud::policysimulator::v1::ListReplayResultsRequest request) {
   auto span = internal::MakeSpan(
       "policysimulator_v1::SimulatorConnection::ListReplayResults");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListReplayResults(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::policysimulator::v1::ReplayResult>(std::move(span),

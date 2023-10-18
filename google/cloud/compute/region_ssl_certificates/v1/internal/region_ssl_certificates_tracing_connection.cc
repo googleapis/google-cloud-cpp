@@ -42,7 +42,7 @@ RegionSslCertificatesTracingConnection::DeleteSslCertificate(
   auto span = internal::MakeSpan(
       "compute_region_ssl_certificates_v1::RegionSslCertificatesConnection::"
       "DeleteSslCertificate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteSslCertificate(request));
 }
@@ -65,7 +65,7 @@ RegionSslCertificatesTracingConnection::InsertSslCertificate(
   auto span = internal::MakeSpan(
       "compute_region_ssl_certificates_v1::RegionSslCertificatesConnection::"
       "InsertSslCertificate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertSslCertificate(request));
 }
@@ -77,7 +77,7 @@ RegionSslCertificatesTracingConnection::ListRegionSslCertificates(
   auto span = internal::MakeSpan(
       "compute_region_ssl_certificates_v1::RegionSslCertificatesConnection::"
       "ListRegionSslCertificates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionSslCertificates(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::SslCertificate>(std::move(span),

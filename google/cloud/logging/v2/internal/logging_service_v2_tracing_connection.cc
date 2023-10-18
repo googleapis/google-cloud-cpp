@@ -54,7 +54,7 @@ LoggingServiceV2TracingConnection::ListLogEntries(
     google::logging::v2::ListLogEntriesRequest request) {
   auto span = internal::MakeSpan(
       "logging_v2::LoggingServiceV2Connection::ListLogEntries");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListLogEntries(std::move(request));
   return internal::MakeTracedStreamRange<google::logging::v2::LogEntry>(
       std::move(span), std::move(sr));
@@ -66,7 +66,7 @@ LoggingServiceV2TracingConnection::ListMonitoredResourceDescriptors(
   auto span = internal::MakeSpan(
       "logging_v2::LoggingServiceV2Connection::"
       "ListMonitoredResourceDescriptors");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMonitoredResourceDescriptors(std::move(request));
   return internal::MakeTracedStreamRange<
       google::api::MonitoredResourceDescriptor>(std::move(span), std::move(sr));
@@ -76,7 +76,7 @@ StreamRange<std::string> LoggingServiceV2TracingConnection::ListLogs(
     google::logging::v2::ListLogsRequest request) {
   auto span =
       internal::MakeSpan("logging_v2::LoggingServiceV2Connection::ListLogs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListLogs(std::move(request));
   return internal::MakeTracedStreamRange<std::string>(std::move(span),
                                                       std::move(sr));
@@ -94,7 +94,7 @@ LoggingServiceV2TracingConnection::AsyncWriteLogEntries(
     google::logging::v2::WriteLogEntriesRequest const& request) {
   auto span = internal::MakeSpan(
       "logging_v2::LoggingServiceV2Connection::AsyncWriteLogEntries");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->AsyncWriteLogEntries(request));
 }

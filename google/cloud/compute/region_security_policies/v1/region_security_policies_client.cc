@@ -173,7 +173,7 @@ RegionSecurityPoliciesClient::ListRegionSecurityPolicies(
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesClient::PatchSecurityPolicy(
     std::string const& project, std::string const& region,
-    std::string const& security_policy,
+    std::string const& security_policy, std::string const& update_mask,
     google::cloud::cpp::compute::v1::SecurityPolicy const&
         security_policy_resource,
     Options opts) {
@@ -183,6 +183,7 @@ RegionSecurityPoliciesClient::PatchSecurityPolicy(
   request.set_project(project);
   request.set_region(region);
   request.set_security_policy(security_policy);
+  request.set_update_mask(update_mask);
   *request.mutable_security_policy_resource() = security_policy_resource;
   return connection_->PatchSecurityPolicy(request);
 }

@@ -37,6 +37,7 @@ using ::testing::Return;
 
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -301,6 +302,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
       .WillOnce([](auto const&, auto context, auto const&) {
         ValidatePropagator(*context);
         EXPECT_TRUE(ThereIsAnActiveSpan());
+        EXPECT_TRUE(OTelContextCaptured());
         using ErrorStream =
             ::google::cloud::internal::AsyncStreamingReadRpcError<Response>;
         return std::make_unique<ErrorStream>(internal::AbortedError("fail"));
@@ -336,6 +338,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
       .WillOnce([](auto const&, auto context) {
         ValidatePropagator(*context);
         EXPECT_TRUE(ThereIsAnActiveSpan());
+        EXPECT_TRUE(OTelContextCaptured());
         using ErrorStream =
             ::google::cloud::internal::AsyncStreamingWriteRpcError<Request,
                                                                    Response>;
@@ -372,6 +375,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
       .WillOnce([](auto const&, auto context) {
         ValidatePropagator(*context);
         EXPECT_TRUE(ThereIsAnActiveSpan());
+        EXPECT_TRUE(OTelContextCaptured());
         using ErrorStream =
             ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
                 Request, Response>;

@@ -44,7 +44,7 @@ PublicDelegatedPrefixesTracingConnection::AggregatedListPublicDelegatedPrefixes(
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":AggregatedListPublicDelegatedPrefixes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListPublicDelegatedPrefixes(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string,
@@ -59,7 +59,7 @@ PublicDelegatedPrefixesTracingConnection::DeletePublicDelegatedPrefix(
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":DeletePublicDelegatedPrefix");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeletePublicDelegatedPrefix(request));
 }
@@ -82,7 +82,7 @@ PublicDelegatedPrefixesTracingConnection::InsertPublicDelegatedPrefix(
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":InsertPublicDelegatedPrefix");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertPublicDelegatedPrefix(request));
 }
@@ -94,7 +94,7 @@ PublicDelegatedPrefixesTracingConnection::ListPublicDelegatedPrefixes(
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":ListPublicDelegatedPrefixes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPublicDelegatedPrefixes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefix>(std::move(span),
@@ -108,7 +108,7 @@ PublicDelegatedPrefixesTracingConnection::PatchPublicDelegatedPrefix(
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":PatchPublicDelegatedPrefix");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchPublicDelegatedPrefix(request));
 }

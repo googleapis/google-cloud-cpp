@@ -38,7 +38,7 @@ AttachedClustersTracingConnection::CreateAttachedCluster(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::CreateAttachedCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateAttachedCluster(request));
 }
@@ -49,7 +49,7 @@ AttachedClustersTracingConnection::UpdateAttachedCluster(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::UpdateAttachedCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateAttachedCluster(request));
 }
@@ -60,7 +60,7 @@ AttachedClustersTracingConnection::ImportAttachedCluster(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::ImportAttachedCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ImportAttachedCluster(request));
 }
@@ -80,7 +80,7 @@ AttachedClustersTracingConnection::ListAttachedClusters(
     google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::ListAttachedClusters");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAttachedClusters(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::gkemulticloud::v1::AttachedCluster>(std::move(span),
@@ -93,7 +93,7 @@ AttachedClustersTracingConnection::DeleteAttachedCluster(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::DeleteAttachedCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteAttachedCluster(request));
 }

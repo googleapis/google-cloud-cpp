@@ -38,7 +38,7 @@ MachineImagesTracingConnection::DeleteMachineImage(
         DeleteMachineImageRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_machine_images_v1::MachineImagesConnection::DeleteMachineImage");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteMachineImage(request));
 }
@@ -69,7 +69,7 @@ MachineImagesTracingConnection::InsertMachineImage(
         InsertMachineImageRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_machine_images_v1::MachineImagesConnection::InsertMachineImage");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertMachineImage(request));
 }
@@ -80,7 +80,7 @@ MachineImagesTracingConnection::ListMachineImages(
         request) {
   auto span = internal::MakeSpan(
       "compute_machine_images_v1::MachineImagesConnection::ListMachineImages");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMachineImages(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::MachineImage>(std::move(span),

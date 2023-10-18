@@ -170,6 +170,27 @@ RegionBackendServicesClient::ListRegionBackendServices(
   return connection_->ListRegionBackendServices(std::move(request));
 }
 
+StreamRange<google::cloud::cpp::compute::v1::BackendService>
+RegionBackendServicesClient::ListUsable(std::string const& project,
+                                        std::string const& region,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_backend_services::v1::ListUsableRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  return connection_->ListUsable(request);
+}
+
+StreamRange<google::cloud::cpp::compute::v1::BackendService>
+RegionBackendServicesClient::ListUsable(
+    google::cloud::cpp::compute::region_backend_services::v1::ListUsableRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListUsable(std::move(request));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesClient::PatchBackendService(
     std::string const& project, std::string const& region,

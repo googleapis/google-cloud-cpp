@@ -37,7 +37,7 @@ VpcAccessServiceTracingConnection::CreateConnector(
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
   auto span = internal::MakeSpan(
       "vpcaccess_v1::VpcAccessServiceConnection::CreateConnector");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateConnector(request));
 }
 
@@ -55,7 +55,7 @@ VpcAccessServiceTracingConnection::ListConnectors(
     google::cloud::vpcaccess::v1::ListConnectorsRequest request) {
   auto span = internal::MakeSpan(
       "vpcaccess_v1::VpcAccessServiceConnection::ListConnectors");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListConnectors(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::vpcaccess::v1::Connector>(std::move(span), std::move(sr));
@@ -66,7 +66,7 @@ VpcAccessServiceTracingConnection::DeleteConnector(
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
   auto span = internal::MakeSpan(
       "vpcaccess_v1::VpcAccessServiceConnection::DeleteConnector");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteConnector(request));
 }
 

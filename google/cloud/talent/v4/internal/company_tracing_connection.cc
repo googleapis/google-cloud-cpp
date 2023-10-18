@@ -72,7 +72,7 @@ CompanyServiceTracingConnection::ListCompanies(
     google::cloud::talent::v4::ListCompaniesRequest request) {
   auto span =
       internal::MakeSpan("talent_v4::CompanyServiceConnection::ListCompanies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListCompanies(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::talent::v4::Company>(
       std::move(span), std::move(sr));

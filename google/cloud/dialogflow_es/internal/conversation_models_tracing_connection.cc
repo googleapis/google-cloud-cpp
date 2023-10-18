@@ -38,7 +38,7 @@ ConversationModelsTracingConnection::CreateConversationModel(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::CreateConversationModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateConversationModel(request));
 }
@@ -57,7 +57,7 @@ ConversationModelsTracingConnection::ListConversationModels(
     google::cloud::dialogflow::v2::ListConversationModelsRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::ListConversationModels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListConversationModels(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::v2::ConversationModel>(std::move(span),
@@ -71,7 +71,7 @@ ConversationModelsTracingConnection::DeleteConversationModel(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::DeleteConversationModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteConversationModel(request));
 }
@@ -83,7 +83,7 @@ ConversationModelsTracingConnection::DeployConversationModel(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::DeployConversationModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeployConversationModel(request));
 }
@@ -95,7 +95,7 @@ ConversationModelsTracingConnection::UndeployConversationModel(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::UndeployConversationModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UndeployConversationModel(request));
 }
@@ -119,7 +119,7 @@ ConversationModelsTracingConnection::ListConversationModelEvaluations(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::"
       "ListConversationModelEvaluations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListConversationModelEvaluations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::v2::ConversationModelEvaluation>(
@@ -133,7 +133,7 @@ ConversationModelsTracingConnection::CreateConversationModelEvaluation(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::"
       "CreateConversationModelEvaluation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateConversationModelEvaluation(request));
 }

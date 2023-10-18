@@ -109,6 +109,14 @@ BackendServicesConnection::ListBackendServices(
       StreamRange<google::cloud::cpp::compute::v1::BackendService>>();
 }
 
+StreamRange<google::cloud::cpp::compute::v1::BackendService>
+BackendServicesConnection::ListUsable(
+    google::cloud::cpp::compute::backend_services::v1::
+        ListUsableRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::BackendService>>();
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::PatchBackendService(
     google::cloud::cpp::compute::backend_services::v1::

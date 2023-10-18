@@ -39,7 +39,7 @@ RoutersTracingConnection::AggregatedListRouters(
         request) {
   auto span = internal::MakeSpan(
       "compute_routers_v1::RoutersConnection::AggregatedListRouters");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListRouters(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>(
@@ -52,7 +52,7 @@ RoutersTracingConnection::DeleteRouter(
         request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::DeleteRouter");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRouter(request));
 }
 
@@ -101,7 +101,7 @@ RoutersTracingConnection::InsertRouter(
         request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::InsertRouter");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertRouter(request));
 }
 
@@ -110,7 +110,7 @@ RoutersTracingConnection::ListRouters(
     google::cloud::cpp::compute::routers::v1::ListRoutersRequest request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::ListRouters");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRouters(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Router>(std::move(span), std::move(sr));
@@ -122,7 +122,7 @@ RoutersTracingConnection::PatchRouter(
         request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::PatchRouter");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchRouter(request));
 }
 
@@ -141,7 +141,7 @@ RoutersTracingConnection::UpdateRouter(
         request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::UpdateRouter");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateRouter(request));
 }
 

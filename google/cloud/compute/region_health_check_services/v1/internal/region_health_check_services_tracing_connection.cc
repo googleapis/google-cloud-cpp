@@ -43,7 +43,7 @@ RegionHealthCheckServicesTracingConnection::DeleteHealthCheckService(
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::DeleteHealthCheckService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteHealthCheckService(request));
 }
@@ -66,7 +66,7 @@ RegionHealthCheckServicesTracingConnection::InsertHealthCheckService(
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::InsertHealthCheckService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertHealthCheckService(request));
 }
@@ -78,7 +78,7 @@ RegionHealthCheckServicesTracingConnection::ListRegionHealthCheckServices(
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::ListRegionHealthCheckServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionHealthCheckServices(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::HealthCheckService>(std::move(span),
@@ -92,7 +92,7 @@ RegionHealthCheckServicesTracingConnection::PatchHealthCheckService(
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::PatchHealthCheckService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchHealthCheckService(request));
 }

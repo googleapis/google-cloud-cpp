@@ -37,7 +37,7 @@ AwsClustersTracingConnection::CreateAwsCluster(
     google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AwsClustersConnection::CreateAwsCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateAwsCluster(request));
 }
 
@@ -46,7 +46,7 @@ AwsClustersTracingConnection::UpdateAwsCluster(
     google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AwsClustersConnection::UpdateAwsCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateAwsCluster(request));
 }
 
@@ -64,7 +64,7 @@ AwsClustersTracingConnection::ListAwsClusters(
     google::cloud::gkemulticloud::v1::ListAwsClustersRequest request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AwsClustersConnection::ListAwsClusters");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAwsClusters(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::gkemulticloud::v1::AwsCluster>(std::move(span),
@@ -76,7 +76,7 @@ AwsClustersTracingConnection::DeleteAwsCluster(
     google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AwsClustersConnection::DeleteAwsCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAwsCluster(request));
 }
 
@@ -95,7 +95,7 @@ AwsClustersTracingConnection::CreateAwsNodePool(
     google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AwsClustersConnection::CreateAwsNodePool");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateAwsNodePool(request));
 }
 
@@ -104,7 +104,7 @@ AwsClustersTracingConnection::UpdateAwsNodePool(
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AwsClustersConnection::UpdateAwsNodePool");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateAwsNodePool(request));
 }
 
@@ -122,7 +122,7 @@ AwsClustersTracingConnection::ListAwsNodePools(
     google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AwsClustersConnection::ListAwsNodePools");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAwsNodePools(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::gkemulticloud::v1::AwsNodePool>(std::move(span),
@@ -134,7 +134,7 @@ AwsClustersTracingConnection::DeleteAwsNodePool(
     google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AwsClustersConnection::DeleteAwsNodePool");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAwsNodePool(request));
 }
 

@@ -46,7 +46,7 @@ NetworkEdgeSecurityServicesTracingConnection::
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::"
       "AggregatedListNetworkEdgeSecurityServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr =
       child_->AggregatedListNetworkEdgeSecurityServices(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
@@ -63,7 +63,7 @@ NetworkEdgeSecurityServicesTracingConnection::DeleteNetworkEdgeSecurityService(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::"
       "DeleteNetworkEdgeSecurityService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteNetworkEdgeSecurityService(request));
 }
@@ -88,7 +88,7 @@ NetworkEdgeSecurityServicesTracingConnection::InsertNetworkEdgeSecurityService(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::"
       "InsertNetworkEdgeSecurityService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertNetworkEdgeSecurityService(request));
 }
@@ -100,7 +100,7 @@ NetworkEdgeSecurityServicesTracingConnection::PatchNetworkEdgeSecurityService(
   auto span = internal::MakeSpan(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchNetworkEdgeSecurityService(request));
 }

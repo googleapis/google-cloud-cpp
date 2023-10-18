@@ -39,7 +39,7 @@ UrlMapsTracingConnection::AggregatedListUrlMaps(
         request) {
   auto span = internal::MakeSpan(
       "compute_url_maps_v1::UrlMapsConnection::AggregatedListUrlMaps");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListUrlMaps(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::UrlMapsScopedList>>(
@@ -52,7 +52,7 @@ UrlMapsTracingConnection::DeleteUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_url_maps_v1::UrlMapsConnection::DeleteUrlMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteUrlMap(request));
 }
 
@@ -72,7 +72,7 @@ UrlMapsTracingConnection::InsertUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_url_maps_v1::UrlMapsConnection::InsertUrlMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertUrlMap(request));
 }
 
@@ -82,7 +82,7 @@ UrlMapsTracingConnection::InvalidateCache(
         request) {
   auto span = internal::MakeSpan(
       "compute_url_maps_v1::UrlMapsConnection::InvalidateCache");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InvalidateCache(request));
 }
 
@@ -91,7 +91,7 @@ UrlMapsTracingConnection::ListUrlMaps(
     google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest request) {
   auto span =
       internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::ListUrlMaps");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListUrlMaps(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::UrlMap>(std::move(span), std::move(sr));
@@ -103,7 +103,7 @@ UrlMapsTracingConnection::PatchUrlMap(
         request) {
   auto span =
       internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::PatchUrlMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchUrlMap(request));
 }
 
@@ -113,7 +113,7 @@ UrlMapsTracingConnection::UpdateUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_url_maps_v1::UrlMapsConnection::UpdateUrlMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateUrlMap(request));
 }
 

@@ -40,7 +40,7 @@ SslPoliciesTracingConnection::AggregatedListSslPolicies(
   auto span = internal::MakeSpan(
       "compute_ssl_policies_v1::SslPoliciesConnection::"
       "AggregatedListSslPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListSslPolicies(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>(
@@ -53,7 +53,7 @@ SslPoliciesTracingConnection::DeleteSslPolicy(
         request) {
   auto span = internal::MakeSpan(
       "compute_ssl_policies_v1::SslPoliciesConnection::DeleteSslPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSslPolicy(request));
 }
 
@@ -73,7 +73,7 @@ SslPoliciesTracingConnection::InsertSslPolicy(
         request) {
   auto span = internal::MakeSpan(
       "compute_ssl_policies_v1::SslPoliciesConnection::InsertSslPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertSslPolicy(request));
 }
 
@@ -83,7 +83,7 @@ SslPoliciesTracingConnection::ListSslPolicies(
         request) {
   auto span = internal::MakeSpan(
       "compute_ssl_policies_v1::SslPoliciesConnection::ListSslPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSslPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::SslPolicy>(std::move(span),
@@ -107,7 +107,7 @@ SslPoliciesTracingConnection::PatchSslPolicy(
         request) {
   auto span = internal::MakeSpan(
       "compute_ssl_policies_v1::SslPoliciesConnection::PatchSslPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchSslPolicy(request));
 }
 

@@ -76,6 +76,11 @@ class RegionBackendServicesRestMetadata : public RegionBackendServicesRestStub {
       google::cloud::cpp::compute::region_backend_services::v1::
           ListRegionBackendServicesRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::BackendServiceListUsable>
+  ListUsable(google::cloud::rest_internal::RestContext& rest_context,
+             google::cloud::cpp::compute::region_backend_services::v1::
+                 ListUsableRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncPatchBackendService(
       google::cloud::CompletionQueue& cq,

@@ -37,7 +37,7 @@ KeyManagementServiceTracingConnection::ListKeyRings(
     google::cloud::kms::v1::ListKeyRingsRequest request) {
   auto span = internal::MakeSpan(
       "kms_v1::KeyManagementServiceConnection::ListKeyRings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListKeyRings(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::kms::v1::KeyRing>(
       std::move(span), std::move(sr));
@@ -48,7 +48,7 @@ KeyManagementServiceTracingConnection::ListCryptoKeys(
     google::cloud::kms::v1::ListCryptoKeysRequest request) {
   auto span = internal::MakeSpan(
       "kms_v1::KeyManagementServiceConnection::ListCryptoKeys");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListCryptoKeys(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::kms::v1::CryptoKey>(
       std::move(span), std::move(sr));
@@ -59,7 +59,7 @@ KeyManagementServiceTracingConnection::ListCryptoKeyVersions(
     google::cloud::kms::v1::ListCryptoKeyVersionsRequest request) {
   auto span = internal::MakeSpan(
       "kms_v1::KeyManagementServiceConnection::ListCryptoKeyVersions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListCryptoKeyVersions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::kms::v1::CryptoKeyVersion>(std::move(span), std::move(sr));
@@ -70,7 +70,7 @@ KeyManagementServiceTracingConnection::ListImportJobs(
     google::cloud::kms::v1::ListImportJobsRequest request) {
   auto span = internal::MakeSpan(
       "kms_v1::KeyManagementServiceConnection::ListImportJobs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListImportJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::kms::v1::ImportJob>(
       std::move(span), std::move(sr));

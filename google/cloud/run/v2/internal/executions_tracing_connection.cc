@@ -45,7 +45,7 @@ ExecutionsTracingConnection::ListExecutions(
     google::cloud::run::v2::ListExecutionsRequest request) {
   auto span =
       internal::MakeSpan("run_v2::ExecutionsConnection::ListExecutions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListExecutions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::run::v2::Execution>(
       std::move(span), std::move(sr));
@@ -56,7 +56,7 @@ ExecutionsTracingConnection::DeleteExecution(
     google::cloud::run::v2::DeleteExecutionRequest const& request) {
   auto span =
       internal::MakeSpan("run_v2::ExecutionsConnection::DeleteExecution");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteExecution(request));
 }
 
@@ -65,7 +65,7 @@ ExecutionsTracingConnection::CancelExecution(
     google::cloud::run::v2::CancelExecutionRequest const& request) {
   auto span =
       internal::MakeSpan("run_v2::ExecutionsConnection::CancelExecution");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CancelExecution(request));
 }
 

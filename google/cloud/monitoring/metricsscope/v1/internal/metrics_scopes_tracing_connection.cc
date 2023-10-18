@@ -61,7 +61,7 @@ MetricsScopesTracingConnection::CreateMonitoredProject(
   auto span = internal::MakeSpan(
       "monitoring_metricsscope_v1::MetricsScopesConnection::"
       "CreateMonitoredProject");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateMonitoredProject(request));
 }
@@ -73,7 +73,7 @@ MetricsScopesTracingConnection::DeleteMonitoredProject(
   auto span = internal::MakeSpan(
       "monitoring_metricsscope_v1::MetricsScopesConnection::"
       "DeleteMonitoredProject");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteMonitoredProject(request));
 }

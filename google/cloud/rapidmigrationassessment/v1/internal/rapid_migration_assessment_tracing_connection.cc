@@ -43,7 +43,7 @@ RapidMigrationAssessmentTracingConnection::CreateCollector(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "CreateCollector");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateCollector(request));
 }
 
@@ -54,7 +54,7 @@ RapidMigrationAssessmentTracingConnection::CreateAnnotation(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "CreateAnnotation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateAnnotation(request));
 }
 
@@ -76,7 +76,7 @@ RapidMigrationAssessmentTracingConnection::ListCollectors(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "ListCollectors");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListCollectors(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::rapidmigrationassessment::v1::Collector>(std::move(span),
@@ -101,7 +101,7 @@ RapidMigrationAssessmentTracingConnection::UpdateCollector(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "UpdateCollector");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateCollector(request));
 }
 
@@ -112,7 +112,7 @@ RapidMigrationAssessmentTracingConnection::DeleteCollector(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "DeleteCollector");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteCollector(request));
 }
 
@@ -123,7 +123,7 @@ RapidMigrationAssessmentTracingConnection::ResumeCollector(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "ResumeCollector");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ResumeCollector(request));
 }
 
@@ -134,7 +134,7 @@ RapidMigrationAssessmentTracingConnection::RegisterCollector(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "RegisterCollector");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RegisterCollector(request));
 }
 
@@ -145,7 +145,7 @@ RapidMigrationAssessmentTracingConnection::PauseCollector(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "PauseCollector");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PauseCollector(request));
 }
 

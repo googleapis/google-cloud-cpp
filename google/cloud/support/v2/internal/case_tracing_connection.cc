@@ -45,7 +45,7 @@ CaseServiceTracingConnection::ListCases(
     google::cloud::support::v2::ListCasesRequest request) {
   auto span =
       internal::MakeSpan("support_v2::CaseServiceConnection::ListCases");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListCases(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::support::v2::Case>(
       std::move(span), std::move(sr));
@@ -56,7 +56,7 @@ CaseServiceTracingConnection::SearchCases(
     google::cloud::support::v2::SearchCasesRequest request) {
   auto span =
       internal::MakeSpan("support_v2::CaseServiceConnection::SearchCases");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchCases(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::support::v2::Case>(
       std::move(span), std::move(sr));
@@ -103,7 +103,7 @@ CaseServiceTracingConnection::SearchCaseClassifications(
     google::cloud::support::v2::SearchCaseClassificationsRequest request) {
   auto span = internal::MakeSpan(
       "support_v2::CaseServiceConnection::SearchCaseClassifications");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchCaseClassifications(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::support::v2::CaseClassification>(std::move(span),

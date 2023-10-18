@@ -45,7 +45,7 @@ FleetRoutingTracingConnection::BatchOptimizeTours(
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
   auto span = internal::MakeSpan(
       "optimization_v1::FleetRoutingConnection::BatchOptimizeTours");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchOptimizeTours(request));
 }

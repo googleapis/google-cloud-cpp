@@ -81,13 +81,14 @@ TEST(TracingRestResponseTest, Success) {
   };
   auto const content_size = static_cast<std::int64_t>(MockContents().size());
   EXPECT_THAT(
-      spans, UnorderedElementsAre(
-                 AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
-                       SpanKindIsClient(),
-                       SpanHasAttributes(OTelAttribute<std::string>(
-                           sc::kNetTransport, sc::NetTransportValues::kIpTcp))),
-                 make_read_event_matcher(kBufferSize, content_size),
-                 make_read_event_matcher(kBufferSize, 0)));
+      spans,
+      UnorderedElementsAre(
+          AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+                SpanKindIsClient(),
+                SpanHasAttributes(OTelAttribute<std::string>(
+                    sc::kNetworkTransport, sc::NetTransportValues::kIpTcp))),
+          make_read_event_matcher(kBufferSize, content_size),
+          make_read_event_matcher(kBufferSize, 0)));
 }
 
 }  // namespace

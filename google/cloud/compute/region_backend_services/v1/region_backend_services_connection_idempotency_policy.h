@@ -62,6 +62,10 @@ class RegionBackendServicesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_backend_services::v1::
           ListRegionBackendServicesRequest request);
 
+  virtual google::cloud::Idempotency ListUsable(
+      google::cloud::cpp::compute::region_backend_services::v1::
+          ListUsableRequest request);
+
   virtual google::cloud::Idempotency PatchBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
           PatchBackendServiceRequest const& request);

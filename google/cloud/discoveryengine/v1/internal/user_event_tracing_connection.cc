@@ -56,7 +56,7 @@ UserEventServiceTracingConnection::ImportUserEvents(
         request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::UserEventServiceConnection::ImportUserEvents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportUserEvents(request));
 }
 

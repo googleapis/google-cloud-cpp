@@ -72,10 +72,8 @@ BigtableTableAdminTracingStub::AsyncUpdateTable(
     google::bigtable::admin::v2::UpdateTableRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "UpdateTable");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateTable(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -98,10 +96,8 @@ BigtableTableAdminTracingStub::AsyncUndeleteTable(
     google::bigtable::admin::v2::UndeleteTableRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "UndeleteTable");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUndeleteTable(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -162,10 +158,8 @@ BigtableTableAdminTracingStub::AsyncCreateBackup(
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "CreateBackup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateBackup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -223,10 +217,8 @@ BigtableTableAdminTracingStub::AsyncRestoreTable(
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "RestoreTable");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRestoreTable(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -238,10 +230,8 @@ BigtableTableAdminTracingStub::AsyncCopyBackup(
     google::bigtable::admin::v2::CopyBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "CopyBackup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCopyBackup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -287,10 +277,8 @@ BigtableTableAdminTracingStub::AsyncCheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "CheckConsistency");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCheckConsistency(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -302,10 +290,8 @@ BigtableTableAdminTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -316,10 +302,8 @@ future<Status> BigtableTableAdminTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

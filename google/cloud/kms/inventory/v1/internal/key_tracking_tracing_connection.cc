@@ -51,7 +51,7 @@ KeyTrackingServiceTracingConnection::SearchProtectedResources(
   auto span = internal::MakeSpan(
       "kms_inventory_v1::KeyTrackingServiceConnection::"
       "SearchProtectedResources");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchProtectedResources(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::kms::inventory::v1::ProtectedResource>(std::move(span),

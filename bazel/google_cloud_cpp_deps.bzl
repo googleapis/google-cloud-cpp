@@ -108,11 +108,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "platforms",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/platforms/platforms-0.0.7.tar.gz",
-            "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.7/platforms-0.0.7.tar.gz",
-            "https://github.com/bazelbuild/platforms/releases/download/0.0.7/platforms-0.0.7.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/platforms/platforms-0.0.8.tar.gz",
+            "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.8/platforms-0.0.8.tar.gz",
+            "https://github.com/bazelbuild/platforms/releases/download/0.0.8/platforms-0.0.8.tar.gz",
         ],
-        sha256 = "3a561c99e7bdbe9173aa653fd579fe849f1d8d67395780ab4770b1f381431d51",
+        sha256 = "8150406605389ececb6da07cbcb509d5637a3ab9a24bc69b1101531367d89d74",
     )
 
     # Load rules_cc, used by googletest
@@ -271,11 +271,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "io_opentelemetry_cpp",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/io_opentelemetry_cpp/v1.11.0.tar.gz",
-            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.11.0.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/io_opentelemetry_cpp/v1.12.0.tar.gz",
+            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz",
         ],
-        sha256 = "f30cd88bf898a5726d245eba882b8e81012021eb00df34109f4dfb203f005cea",
-        strip_prefix = "opentelemetry-cpp-1.11.0",
+        sha256 = "09c208a21fb1159d114a3ea15dc1bcc5dee28eb39907ba72a6012d2c7b7564a0",
+        strip_prefix = "opentelemetry-cpp-1.12.0",
         repo_mapping = {
             "@curl": "@com_github_curl_curl",
             "@com_github_google_benchmark": "@com_github_benchmark",

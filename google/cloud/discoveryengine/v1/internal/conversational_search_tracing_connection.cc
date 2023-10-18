@@ -94,7 +94,7 @@ ConversationalSearchServiceTracingConnection::ListConversations(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::ConversationalSearchServiceConnection::"
       "ListConversations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListConversations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::discoveryengine::v1::Conversation>(std::move(span),

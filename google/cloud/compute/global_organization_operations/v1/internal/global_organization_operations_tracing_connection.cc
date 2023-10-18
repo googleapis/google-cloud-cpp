@@ -65,7 +65,7 @@ GlobalOrganizationOperationsTracingConnection::ListGlobalOrganizationOperations(
       "compute_global_organization_operations_v1::"
       "GlobalOrganizationOperationsConnection::"
       "ListGlobalOrganizationOperations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListGlobalOrganizationOperations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Operation>(std::move(span),

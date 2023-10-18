@@ -37,7 +37,7 @@ SessionEntityTypesTracingConnection::ListSessionEntityTypes(
     google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::SessionEntityTypesConnection::ListSessionEntityTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSessionEntityTypes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::cx::v3::SessionEntityType>(std::move(span),

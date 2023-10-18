@@ -37,7 +37,7 @@ LivestreamServiceTracingConnection::CreateChannel(
     google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::CreateChannel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateChannel(request));
 }
 
@@ -46,7 +46,7 @@ LivestreamServiceTracingConnection::ListChannels(
     google::cloud::video::livestream::v1::ListChannelsRequest request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::ListChannels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListChannels(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::video::livestream::v1::Channel>(std::move(span),
@@ -67,7 +67,7 @@ LivestreamServiceTracingConnection::DeleteChannel(
     google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::DeleteChannel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteChannel(request));
 }
 
@@ -76,7 +76,7 @@ LivestreamServiceTracingConnection::UpdateChannel(
     google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::UpdateChannel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateChannel(request));
 }
 
@@ -85,7 +85,7 @@ LivestreamServiceTracingConnection::StartChannel(
     google::cloud::video::livestream::v1::StartChannelRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::StartChannel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->StartChannel(request));
 }
 
@@ -94,7 +94,7 @@ LivestreamServiceTracingConnection::StopChannel(
     google::cloud::video::livestream::v1::StopChannelRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::StopChannel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->StopChannel(request));
 }
 
@@ -103,7 +103,7 @@ LivestreamServiceTracingConnection::CreateInput(
     google::cloud::video::livestream::v1::CreateInputRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::CreateInput");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateInput(request));
 }
 
@@ -112,7 +112,7 @@ LivestreamServiceTracingConnection::ListInputs(
     google::cloud::video::livestream::v1::ListInputsRequest request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::ListInputs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInputs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::video::livestream::v1::Input>(std::move(span),
@@ -133,7 +133,7 @@ LivestreamServiceTracingConnection::DeleteInput(
     google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::DeleteInput");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteInput(request));
 }
 
@@ -142,7 +142,7 @@ LivestreamServiceTracingConnection::UpdateInput(
     google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::UpdateInput");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateInput(request));
 }
 
@@ -160,7 +160,7 @@ LivestreamServiceTracingConnection::ListEvents(
     google::cloud::video::livestream::v1::ListEventsRequest request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::ListEvents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEvents(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::video::livestream::v1::Event>(std::move(span),
@@ -189,7 +189,7 @@ LivestreamServiceTracingConnection::CreateAsset(
     google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::CreateAsset");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateAsset(request));
 }
 
@@ -198,7 +198,7 @@ LivestreamServiceTracingConnection::DeleteAsset(
     google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::DeleteAsset");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAsset(request));
 }
 
@@ -216,7 +216,7 @@ LivestreamServiceTracingConnection::ListAssets(
     google::cloud::video::livestream::v1::ListAssetsRequest request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::ListAssets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAssets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::video::livestream::v1::Asset>(std::move(span),
@@ -237,7 +237,7 @@ LivestreamServiceTracingConnection::UpdatePool(
     google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::UpdatePool");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdatePool(request));
 }
 

@@ -37,6 +37,7 @@ using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -71,6 +72,7 @@ TEST(GoldenThingAdminTracingConnectionTest, ListDatabases) {
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, ListDatabases).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return mocks::MakeStreamRange<Database>({}, internal::AbortedError("fail"));
   });
 
@@ -98,6 +100,7 @@ TEST(GoldenThingAdminTracingConnectionTest, CreateDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, CreateDatabase).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return make_ready_future<StatusOr<Database>>(
         internal::AbortedError("fail"));
   });
@@ -150,6 +153,7 @@ TEST(GoldenThingAdminTracingConnectionTest, UpdateDatabaseDdl) {
   using ::google::test::admin::database::v1::UpdateDatabaseDdlMetadata;
   EXPECT_CALL(*mock, UpdateDatabaseDdl).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return make_ready_future<StatusOr<UpdateDatabaseDdlMetadata>>(
         internal::AbortedError("fail"));
   });
@@ -302,6 +306,7 @@ TEST(GoldenThingAdminTracingConnectionTest, CreateBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, CreateBackup).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return make_ready_future<StatusOr<Backup>>(internal::AbortedError("fail"));
   });
 
@@ -402,6 +407,7 @@ TEST(GoldenThingAdminTracingConnectionTest, ListBackups) {
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, ListBackups).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return mocks::MakeStreamRange<Backup>({}, internal::AbortedError("fail"));
   });
 
@@ -429,6 +435,7 @@ TEST(GoldenThingAdminTracingConnectionTest, RestoreDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, RestoreDatabase).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return make_ready_future<StatusOr<Database>>(
         internal::AbortedError("fail"));
   });
@@ -455,6 +462,7 @@ TEST(GoldenThingAdminTracingConnectionTest, ListDatabaseOperations) {
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, ListDatabaseOperations).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return mocks::MakeStreamRange<google::longrunning::Operation>(
         {}, internal::AbortedError("fail"));
   });
@@ -484,6 +492,7 @@ TEST(GoldenThingAdminTracingConnectionTest, ListBackupOperations) {
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, ListBackupOperations).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return mocks::MakeStreamRange<google::longrunning::Operation>(
         {}, internal::AbortedError("fail"));
   });
@@ -513,6 +522,7 @@ TEST(GoldenThingAdminTracingConnectionTest, LongRunningWithoutRouting) {
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, LongRunningWithoutRouting).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return make_ready_future<StatusOr<Database>>(
         internal::AbortedError("fail"));
   });
@@ -540,6 +550,7 @@ TEST(GoldenThingAdminTracingConnectionTest, AsyncGetDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, AsyncGetDatabase).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return make_ready_future<StatusOr<Database>>(
         internal::AbortedError("fail"));
   });
@@ -566,6 +577,7 @@ TEST(GoldenThingAdminTracingConnectionTest, AsyncDropDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, AsyncDropDatabase).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return make_ready_future(internal::AbortedError("fail"));
   });
 

@@ -41,7 +41,7 @@ ForwardingRulesTracingConnection::AggregatedListForwardingRules(
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::"
       "AggregatedListForwardingRules");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListForwardingRules(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>(
@@ -55,7 +55,7 @@ ForwardingRulesTracingConnection::DeleteForwardingRule(
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::"
       "DeleteForwardingRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteForwardingRule(request));
 }
@@ -78,7 +78,7 @@ ForwardingRulesTracingConnection::InsertForwardingRule(
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::"
       "InsertForwardingRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertForwardingRule(request));
 }
@@ -90,7 +90,7 @@ ForwardingRulesTracingConnection::ListForwardingRules(
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::"
       "ListForwardingRules");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListForwardingRules(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::ForwardingRule>(std::move(span),
@@ -104,7 +104,7 @@ ForwardingRulesTracingConnection::PatchForwardingRule(
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::"
       "PatchForwardingRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchForwardingRule(request));
 }
@@ -115,7 +115,7 @@ ForwardingRulesTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 
@@ -125,7 +125,7 @@ ForwardingRulesTracingConnection::SetTarget(
         request) {
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::SetTarget");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetTarget(request));
 }
 

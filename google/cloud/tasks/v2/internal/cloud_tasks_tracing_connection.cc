@@ -36,7 +36,7 @@ StreamRange<google::cloud::tasks::v2::Queue>
 CloudTasksTracingConnection::ListQueues(
     google::cloud::tasks::v2::ListQueuesRequest request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::ListQueues");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListQueues(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::tasks::v2::Queue>(
       std::move(span), std::move(sr));
@@ -125,7 +125,7 @@ StreamRange<google::cloud::tasks::v2::Task>
 CloudTasksTracingConnection::ListTasks(
     google::cloud::tasks::v2::ListTasksRequest request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::ListTasks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTasks(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::tasks::v2::Task>(
       std::move(span), std::move(sr));

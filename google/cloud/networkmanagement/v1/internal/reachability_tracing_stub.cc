@@ -67,10 +67,8 @@ ReachabilityServiceTracingStub::AsyncCreateConnectivityTest(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkmanagement.v1.ReachabilityService",
       "CreateConnectivityTest");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateConnectivityTest(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -84,10 +82,8 @@ ReachabilityServiceTracingStub::AsyncUpdateConnectivityTest(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkmanagement.v1.ReachabilityService",
       "UpdateConnectivityTest");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateConnectivityTest(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -101,10 +97,8 @@ ReachabilityServiceTracingStub::AsyncRerunConnectivityTest(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkmanagement.v1.ReachabilityService",
       "RerunConnectivityTest");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRerunConnectivityTest(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -118,10 +112,8 @@ ReachabilityServiceTracingStub::AsyncDeleteConnectivityTest(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkmanagement.v1.ReachabilityService",
       "DeleteConnectivityTest");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteConnectivityTest(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -133,10 +125,8 @@ ReachabilityServiceTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -147,10 +137,8 @@ future<Status> ReachabilityServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

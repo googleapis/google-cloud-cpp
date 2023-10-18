@@ -37,7 +37,7 @@ ArtifactRegistryTracingConnection::ListDockerImages(
     google::devtools::artifactregistry::v1::ListDockerImagesRequest request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ListDockerImages");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDockerImages(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::artifactregistry::v1::DockerImage>(std::move(span),
@@ -59,7 +59,7 @@ ArtifactRegistryTracingConnection::ListMavenArtifacts(
     google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ListMavenArtifacts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMavenArtifacts(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::artifactregistry::v1::MavenArtifact>(std::move(span),
@@ -81,7 +81,7 @@ ArtifactRegistryTracingConnection::ListNpmPackages(
     google::devtools::artifactregistry::v1::ListNpmPackagesRequest request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ListNpmPackages");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNpmPackages(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::artifactregistry::v1::NpmPackage>(std::move(span),
@@ -103,7 +103,7 @@ ArtifactRegistryTracingConnection::ListPythonPackages(
     google::devtools::artifactregistry::v1::ListPythonPackagesRequest request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ListPythonPackages");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPythonPackages(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::artifactregistry::v1::PythonPackage>(std::move(span),
@@ -127,7 +127,7 @@ ArtifactRegistryTracingConnection::ImportAptArtifacts(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ImportAptArtifacts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ImportAptArtifacts(request));
 }
@@ -139,7 +139,7 @@ ArtifactRegistryTracingConnection::ImportYumArtifacts(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ImportYumArtifacts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ImportYumArtifacts(request));
 }
@@ -149,7 +149,7 @@ ArtifactRegistryTracingConnection::ListRepositories(
     google::devtools::artifactregistry::v1::ListRepositoriesRequest request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ListRepositories");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRepositories(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::artifactregistry::v1::Repository>(std::move(span),
@@ -172,7 +172,7 @@ ArtifactRegistryTracingConnection::CreateRepository(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::CreateRepository");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateRepository(request));
 }
 
@@ -192,7 +192,7 @@ ArtifactRegistryTracingConnection::DeleteRepository(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteRepository");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRepository(request));
 }
 
@@ -201,7 +201,7 @@ ArtifactRegistryTracingConnection::ListPackages(
     google::devtools::artifactregistry::v1::ListPackagesRequest request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ListPackages");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPackages(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::artifactregistry::v1::Package>(std::move(span),
@@ -223,7 +223,7 @@ ArtifactRegistryTracingConnection::DeletePackage(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeletePackage");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeletePackage(request));
 }
 
@@ -232,7 +232,7 @@ ArtifactRegistryTracingConnection::ListVersions(
     google::devtools::artifactregistry::v1::ListVersionsRequest request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ListVersions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVersions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::artifactregistry::v1::Version>(std::move(span),
@@ -254,7 +254,7 @@ ArtifactRegistryTracingConnection::DeleteVersion(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteVersion");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteVersion(request));
 }
 
@@ -263,7 +263,7 @@ ArtifactRegistryTracingConnection::ListFiles(
     google::devtools::artifactregistry::v1::ListFilesRequest request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ListFiles");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListFiles(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::artifactregistry::v1::File>(std::move(span),
@@ -284,7 +284,7 @@ ArtifactRegistryTracingConnection::ListTags(
     google::devtools::artifactregistry::v1::ListTagsRequest request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ListTags");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTags(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::artifactregistry::v1::Tag>(std::move(span),

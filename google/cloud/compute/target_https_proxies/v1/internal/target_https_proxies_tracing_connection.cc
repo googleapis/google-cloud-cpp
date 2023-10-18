@@ -43,7 +43,7 @@ TargetHttpsProxiesTracingConnection::AggregatedListTargetHttpsProxies(
   auto span = internal::MakeSpan(
       "compute_target_https_proxies_v1::TargetHttpsProxiesConnection::"
       "AggregatedListTargetHttpsProxies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListTargetHttpsProxies(std::move(request));
   return internal::MakeTracedStreamRange<
       std::pair<std::string,
@@ -58,7 +58,7 @@ TargetHttpsProxiesTracingConnection::DeleteTargetHttpsProxy(
   auto span = internal::MakeSpan(
       "compute_target_https_proxies_v1::TargetHttpsProxiesConnection::"
       "DeleteTargetHttpsProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTargetHttpsProxy(request));
 }
@@ -81,7 +81,7 @@ TargetHttpsProxiesTracingConnection::InsertTargetHttpsProxy(
   auto span = internal::MakeSpan(
       "compute_target_https_proxies_v1::TargetHttpsProxiesConnection::"
       "InsertTargetHttpsProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertTargetHttpsProxy(request));
 }
@@ -93,7 +93,7 @@ TargetHttpsProxiesTracingConnection::ListTargetHttpsProxies(
   auto span = internal::MakeSpan(
       "compute_target_https_proxies_v1::TargetHttpsProxiesConnection::"
       "ListTargetHttpsProxies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTargetHttpsProxies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::TargetHttpsProxy>(std::move(span),
@@ -107,7 +107,7 @@ TargetHttpsProxiesTracingConnection::PatchTargetHttpsProxy(
   auto span = internal::MakeSpan(
       "compute_target_https_proxies_v1::TargetHttpsProxiesConnection::"
       "PatchTargetHttpsProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchTargetHttpsProxy(request));
 }
@@ -119,7 +119,7 @@ TargetHttpsProxiesTracingConnection::SetCertificateMap(
   auto span = internal::MakeSpan(
       "compute_target_https_proxies_v1::TargetHttpsProxiesConnection::"
       "SetCertificateMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetCertificateMap(request));
 }
 
@@ -130,7 +130,7 @@ TargetHttpsProxiesTracingConnection::SetQuicOverride(
   auto span = internal::MakeSpan(
       "compute_target_https_proxies_v1::TargetHttpsProxiesConnection::"
       "SetQuicOverride");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetQuicOverride(request));
 }
 
@@ -141,7 +141,7 @@ TargetHttpsProxiesTracingConnection::SetSslCertificates(
   auto span = internal::MakeSpan(
       "compute_target_https_proxies_v1::TargetHttpsProxiesConnection::"
       "SetSslCertificates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetSslCertificates(request));
 }
@@ -153,7 +153,7 @@ TargetHttpsProxiesTracingConnection::SetSslPolicy(
   auto span = internal::MakeSpan(
       "compute_target_https_proxies_v1::TargetHttpsProxiesConnection::"
       "SetSslPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetSslPolicy(request));
 }
 
@@ -164,7 +164,7 @@ TargetHttpsProxiesTracingConnection::SetUrlMap(
   auto span = internal::MakeSpan(
       "compute_target_https_proxies_v1::TargetHttpsProxiesConnection::"
       "SetUrlMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetUrlMap(request));
 }
 

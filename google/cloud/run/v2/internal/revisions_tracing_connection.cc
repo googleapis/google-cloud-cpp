@@ -44,7 +44,7 @@ StreamRange<google::cloud::run::v2::Revision>
 RevisionsTracingConnection::ListRevisions(
     google::cloud::run::v2::ListRevisionsRequest request) {
   auto span = internal::MakeSpan("run_v2::RevisionsConnection::ListRevisions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRevisions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::run::v2::Revision>(
       std::move(span), std::move(sr));
@@ -54,7 +54,7 @@ future<StatusOr<google::cloud::run::v2::Revision>>
 RevisionsTracingConnection::DeleteRevision(
     google::cloud::run::v2::DeleteRevisionRequest const& request) {
   auto span = internal::MakeSpan("run_v2::RevisionsConnection::DeleteRevision");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRevision(request));
 }
 

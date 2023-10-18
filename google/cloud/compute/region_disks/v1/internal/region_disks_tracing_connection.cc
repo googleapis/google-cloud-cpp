@@ -38,7 +38,7 @@ RegionDisksTracingConnection::AddResourcePolicies(
         AddResourcePoliciesRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::AddResourcePolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->AddResourcePolicies(request));
 }
@@ -49,7 +49,7 @@ RegionDisksTracingConnection::BulkInsert(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::BulkInsert");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->BulkInsert(request));
 }
 
@@ -59,7 +59,7 @@ RegionDisksTracingConnection::CreateSnapshot(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::CreateSnapshot");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateSnapshot(request));
 }
 
@@ -69,7 +69,7 @@ RegionDisksTracingConnection::DeleteDisk(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::DeleteDisk");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteDisk(request));
 }
 
@@ -99,7 +99,7 @@ RegionDisksTracingConnection::InsertDisk(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::InsertDisk");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertDisk(request));
 }
 
@@ -109,7 +109,7 @@ RegionDisksTracingConnection::ListRegionDisks(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::ListRegionDisks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionDisks(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Disk>(
       std::move(span), std::move(sr));
@@ -121,7 +121,7 @@ RegionDisksTracingConnection::RemoveResourcePolicies(
         RemoveResourcePoliciesRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::RemoveResourcePolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RemoveResourcePolicies(request));
 }
@@ -132,7 +132,7 @@ RegionDisksTracingConnection::Resize(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::Resize");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->Resize(request));
 }
 
@@ -152,7 +152,7 @@ RegionDisksTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 
@@ -162,7 +162,7 @@ RegionDisksTracingConnection::StartAsyncReplication(
         StartAsyncReplicationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::StartAsyncReplication");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->StartAsyncReplication(request));
 }
@@ -173,7 +173,7 @@ RegionDisksTracingConnection::StopAsyncReplication(
         StopAsyncReplicationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::StopAsyncReplication");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->StopAsyncReplication(request));
 }
@@ -185,7 +185,7 @@ RegionDisksTracingConnection::StopGroupAsyncReplication(
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::"
       "StopGroupAsyncReplication");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->StopGroupAsyncReplication(request));
 }
@@ -206,7 +206,7 @@ RegionDisksTracingConnection::UpdateDisk(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::UpdateDisk");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateDisk(request));
 }
 

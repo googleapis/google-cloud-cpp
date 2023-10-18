@@ -43,7 +43,7 @@ PublicAdvertisedPrefixesTracingConnection::DeletePublicAdvertisedPrefix(
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
       "PublicAdvertisedPrefixesConnection::DeletePublicAdvertisedPrefix");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeletePublicAdvertisedPrefix(request));
 }
@@ -66,7 +66,7 @@ PublicAdvertisedPrefixesTracingConnection::InsertPublicAdvertisedPrefix(
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
       "PublicAdvertisedPrefixesConnection::InsertPublicAdvertisedPrefix");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertPublicAdvertisedPrefix(request));
 }
@@ -78,7 +78,7 @@ PublicAdvertisedPrefixesTracingConnection::ListPublicAdvertisedPrefixes(
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
       "PublicAdvertisedPrefixesConnection::ListPublicAdvertisedPrefixes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPublicAdvertisedPrefixes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>(std::move(span),
@@ -92,7 +92,7 @@ PublicAdvertisedPrefixesTracingConnection::PatchPublicAdvertisedPrefix(
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
       "PublicAdvertisedPrefixesConnection::PatchPublicAdvertisedPrefix");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchPublicAdvertisedPrefix(request));
 }

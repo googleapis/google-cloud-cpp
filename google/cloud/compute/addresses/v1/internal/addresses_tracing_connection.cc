@@ -39,7 +39,7 @@ AddressesTracingConnection::AggregatedListAddresses(
         request) {
   auto span = internal::MakeSpan(
       "compute_addresses_v1::AddressesConnection::AggregatedListAddresses");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListAddresses(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>(
@@ -52,7 +52,7 @@ AddressesTracingConnection::DeleteAddress(
         request) {
   auto span = internal::MakeSpan(
       "compute_addresses_v1::AddressesConnection::DeleteAddress");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAddress(request));
 }
 
@@ -72,7 +72,7 @@ AddressesTracingConnection::InsertAddress(
         request) {
   auto span = internal::MakeSpan(
       "compute_addresses_v1::AddressesConnection::InsertAddress");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertAddress(request));
 }
 
@@ -81,7 +81,7 @@ AddressesTracingConnection::ListAddresses(
     google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request) {
   auto span = internal::MakeSpan(
       "compute_addresses_v1::AddressesConnection::ListAddresses");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAddresses(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Address>(std::move(span), std::move(sr));
@@ -92,7 +92,7 @@ AddressesTracingConnection::Move(
     google::cloud::cpp::compute::addresses::v1::MoveRequest const& request) {
   auto span =
       internal::MakeSpan("compute_addresses_v1::AddressesConnection::Move");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->Move(request));
 }
 
@@ -102,7 +102,7 @@ AddressesTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_addresses_v1::AddressesConnection::SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 

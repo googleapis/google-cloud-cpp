@@ -46,7 +46,7 @@ ProjectsTracingConnection::ListProjects(
     google::cloud::resourcemanager::v3::ListProjectsRequest request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::ListProjects");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListProjects(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::resourcemanager::v3::Project>(std::move(span),
@@ -58,7 +58,7 @@ ProjectsTracingConnection::SearchProjects(
     google::cloud::resourcemanager::v3::SearchProjectsRequest request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::SearchProjects");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchProjects(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::resourcemanager::v3::Project>(std::move(span),
@@ -70,7 +70,7 @@ ProjectsTracingConnection::CreateProject(
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::CreateProject");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateProject(request));
 }
 
@@ -79,7 +79,7 @@ ProjectsTracingConnection::UpdateProject(
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::UpdateProject");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateProject(request));
 }
 
@@ -88,7 +88,7 @@ ProjectsTracingConnection::MoveProject(
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::ProjectsConnection::MoveProject");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->MoveProject(request));
 }
 
@@ -97,7 +97,7 @@ ProjectsTracingConnection::DeleteProject(
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::DeleteProject");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteProject(request));
 }
 
@@ -106,7 +106,7 @@ ProjectsTracingConnection::UndeleteProject(
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::UndeleteProject");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UndeleteProject(request));
 }
 

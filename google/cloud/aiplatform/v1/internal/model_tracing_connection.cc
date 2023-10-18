@@ -37,7 +37,7 @@ ModelServiceTracingConnection::UploadModel(
     google::cloud::aiplatform::v1::UploadModelRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::ModelServiceConnection::UploadModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UploadModel(request));
 }
 
@@ -55,7 +55,7 @@ ModelServiceTracingConnection::ListModels(
     google::cloud::aiplatform::v1::ListModelsRequest request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::ModelServiceConnection::ListModels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListModels(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Model>(
       std::move(span), std::move(sr));
@@ -66,7 +66,7 @@ ModelServiceTracingConnection::ListModelVersions(
     google::cloud::aiplatform::v1::ListModelVersionsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::ModelServiceConnection::ListModelVersions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListModelVersions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Model>(
       std::move(span), std::move(sr));
@@ -88,7 +88,7 @@ ModelServiceTracingConnection::UpdateExplanationDataset(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::ModelServiceConnection::UpdateExplanationDataset");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateExplanationDataset(request));
 }
@@ -98,7 +98,7 @@ ModelServiceTracingConnection::DeleteModel(
     google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::ModelServiceConnection::DeleteModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteModel(request));
 }
 
@@ -107,7 +107,7 @@ ModelServiceTracingConnection::DeleteModelVersion(
     google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::ModelServiceConnection::DeleteModelVersion");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteModelVersion(request));
 }
@@ -126,7 +126,7 @@ ModelServiceTracingConnection::ExportModel(
     google::cloud::aiplatform::v1::ExportModelRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::ModelServiceConnection::ExportModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportModel(request));
 }
 
@@ -135,7 +135,7 @@ ModelServiceTracingConnection::CopyModel(
     google::cloud::aiplatform::v1::CopyModelRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::ModelServiceConnection::CopyModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CopyModel(request));
 }
 
@@ -187,7 +187,7 @@ ModelServiceTracingConnection::ListModelEvaluations(
     google::cloud::aiplatform::v1::ListModelEvaluationsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::ModelServiceConnection::ListModelEvaluations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListModelEvaluations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::ModelEvaluation>(std::move(span),
@@ -209,7 +209,7 @@ ModelServiceTracingConnection::ListModelEvaluationSlices(
     google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::ModelServiceConnection::ListModelEvaluationSlices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListModelEvaluationSlices(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::ModelEvaluationSlice>(std::move(span),

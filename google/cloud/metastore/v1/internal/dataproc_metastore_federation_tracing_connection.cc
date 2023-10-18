@@ -39,7 +39,7 @@ DataprocMetastoreFederationTracingConnection::ListFederations(
     google::cloud::metastore::v1::ListFederationsRequest request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::ListFederations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListFederations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::metastore::v1::Federation>(std::move(span), std::move(sr));
@@ -59,7 +59,7 @@ DataprocMetastoreFederationTracingConnection::CreateFederation(
     google::cloud::metastore::v1::CreateFederationRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::CreateFederation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateFederation(request));
 }
 
@@ -68,7 +68,7 @@ DataprocMetastoreFederationTracingConnection::UpdateFederation(
     google::cloud::metastore::v1::UpdateFederationRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::UpdateFederation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateFederation(request));
 }
 
@@ -77,7 +77,7 @@ DataprocMetastoreFederationTracingConnection::DeleteFederation(
     google::cloud::metastore::v1::DeleteFederationRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::DeleteFederation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteFederation(request));
 }
 

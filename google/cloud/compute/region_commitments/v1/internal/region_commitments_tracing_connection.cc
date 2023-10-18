@@ -41,7 +41,7 @@ RegionCommitmentsTracingConnection::AggregatedListRegionCommitments(
   auto span = internal::MakeSpan(
       "compute_region_commitments_v1::RegionCommitmentsConnection::"
       "AggregatedListRegionCommitments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListRegionCommitments(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::CommitmentsScopedList>>(
@@ -66,7 +66,7 @@ RegionCommitmentsTracingConnection::InsertCommitment(
   auto span = internal::MakeSpan(
       "compute_region_commitments_v1::RegionCommitmentsConnection::"
       "InsertCommitment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertCommitment(request));
 }
 
@@ -77,7 +77,7 @@ RegionCommitmentsTracingConnection::ListRegionCommitments(
   auto span = internal::MakeSpan(
       "compute_region_commitments_v1::RegionCommitmentsConnection::"
       "ListRegionCommitments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionCommitments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Commitment>(std::move(span),
@@ -91,7 +91,7 @@ RegionCommitmentsTracingConnection::UpdateCommitment(
   auto span = internal::MakeSpan(
       "compute_region_commitments_v1::RegionCommitmentsConnection::"
       "UpdateCommitment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateCommitment(request));
 }
 

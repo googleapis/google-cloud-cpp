@@ -47,7 +47,7 @@ DocumentLinkServiceTracingConnection::ListLinkedSources(
     google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request) {
   auto span = internal::MakeSpan(
       "contentwarehouse_v1::DocumentLinkServiceConnection::ListLinkedSources");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListLinkedSources(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::contentwarehouse::v1::DocumentLink>(std::move(span),

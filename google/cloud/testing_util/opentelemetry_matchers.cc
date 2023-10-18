@@ -16,6 +16,7 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_context.h"
 #include "google/cloud/opentelemetry_options.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/sdk/trace/simple_processor.h>
@@ -93,6 +94,8 @@ std::ostream& operator<<(std::ostream& os, SpanData const& rhs) {
      << ", kind=" << google::cloud::testing_util::ToString(rhs.GetSpanKind())
      << ", instrumentation_scope {" << rhs.GetInstrumentationScope().GetName()
      << ", " << rhs.GetInstrumentationScope().GetVersion() << "}," << line_sep
+     << "parent_span_id="
+     << google::cloud::testing_util::ToString(rhs.GetParentSpanId()) << line_sep
      << "attributes=["
      << absl::StrJoin(rhs.GetAttributes(), ", ", AttributeFormatter) << "],"
      << line_sep << "events=[";
@@ -161,8 +164,20 @@ std::string ToString(opentelemetry::trace::SpanContext const& span_context) {
   return ss.str();
 }
 
+std::string ToString(opentelemetry::trace::SpanId span_id) {
+  char span_id_array[16] = {0};
+  span_id.ToLowerBase16(span_id_array);
+  return std::string(span_id_array, 16);
+}
+
 bool ThereIsAnActiveSpan() {
   return opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid();
+}
+
+bool OTelContextCaptured() {
+  if (internal::CurrentOTelContext().empty()) return false;
+  return internal::CurrentOTelContext().back() ==
+         opentelemetry::context::RuntimeContext::GetCurrent();
 }
 
 SpanCatcher::SpanCatcher()

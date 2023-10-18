@@ -41,7 +41,7 @@ PacketMirroringsTracingConnection::AggregatedListPacketMirrorings(
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "AggregatedListPacketMirrorings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListPacketMirrorings(std::move(request));
   return internal::MakeTracedStreamRange<
       std::pair<std::string,
@@ -56,7 +56,7 @@ PacketMirroringsTracingConnection::DeletePacketMirroring(
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "DeletePacketMirroring");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeletePacketMirroring(request));
 }
@@ -79,7 +79,7 @@ PacketMirroringsTracingConnection::InsertPacketMirroring(
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "InsertPacketMirroring");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertPacketMirroring(request));
 }
@@ -91,7 +91,7 @@ PacketMirroringsTracingConnection::ListPacketMirrorings(
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "ListPacketMirrorings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPacketMirrorings(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::PacketMirroring>(std::move(span),
@@ -105,7 +105,7 @@ PacketMirroringsTracingConnection::PatchPacketMirroring(
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "PatchPacketMirroring");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchPacketMirroring(request));
 }

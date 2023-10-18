@@ -37,7 +37,7 @@ BackupForGKETracingConnection::CreateBackupPlan(
     google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::CreateBackupPlan");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateBackupPlan(request));
 }
 
@@ -46,7 +46,7 @@ BackupForGKETracingConnection::ListBackupPlans(
     google::cloud::gkebackup::v1::ListBackupPlansRequest request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::ListBackupPlans");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBackupPlans(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::gkebackup::v1::BackupPlan>(std::move(span), std::move(sr));
@@ -66,7 +66,7 @@ BackupForGKETracingConnection::UpdateBackupPlan(
     google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::UpdateBackupPlan");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateBackupPlan(request));
 }
 
@@ -75,7 +75,7 @@ BackupForGKETracingConnection::DeleteBackupPlan(
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::DeleteBackupPlan");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteBackupPlan(request));
 }
 
@@ -84,7 +84,7 @@ BackupForGKETracingConnection::CreateBackup(
     google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::CreateBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateBackup(request));
 }
 
@@ -93,7 +93,7 @@ BackupForGKETracingConnection::ListBackups(
     google::cloud::gkebackup::v1::ListBackupsRequest request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::ListBackups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBackups(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::gkebackup::v1::Backup>(
       std::move(span), std::move(sr));
@@ -113,7 +113,7 @@ BackupForGKETracingConnection::UpdateBackup(
     google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::UpdateBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateBackup(request));
 }
 
@@ -122,7 +122,7 @@ BackupForGKETracingConnection::DeleteBackup(
     google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::DeleteBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteBackup(request));
 }
 
@@ -131,7 +131,7 @@ BackupForGKETracingConnection::ListVolumeBackups(
     google::cloud::gkebackup::v1::ListVolumeBackupsRequest request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::ListVolumeBackups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVolumeBackups(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::gkebackup::v1::VolumeBackup>(std::move(span),
@@ -152,7 +152,7 @@ BackupForGKETracingConnection::CreateRestorePlan(
     google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::CreateRestorePlan");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateRestorePlan(request));
 }
 
@@ -161,7 +161,7 @@ BackupForGKETracingConnection::ListRestorePlans(
     google::cloud::gkebackup::v1::ListRestorePlansRequest request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::ListRestorePlans");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRestorePlans(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::gkebackup::v1::RestorePlan>(std::move(span),
@@ -182,7 +182,7 @@ BackupForGKETracingConnection::UpdateRestorePlan(
     google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::UpdateRestorePlan");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateRestorePlan(request));
 }
 
@@ -191,7 +191,7 @@ BackupForGKETracingConnection::DeleteRestorePlan(
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::DeleteRestorePlan");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRestorePlan(request));
 }
 
@@ -200,7 +200,7 @@ BackupForGKETracingConnection::CreateRestore(
     google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::CreateRestore");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateRestore(request));
 }
 
@@ -209,7 +209,7 @@ BackupForGKETracingConnection::ListRestores(
     google::cloud::gkebackup::v1::ListRestoresRequest request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::ListRestores");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRestores(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::gkebackup::v1::Restore>(
       std::move(span), std::move(sr));
@@ -229,7 +229,7 @@ BackupForGKETracingConnection::UpdateRestore(
     google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::UpdateRestore");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateRestore(request));
 }
 
@@ -238,7 +238,7 @@ BackupForGKETracingConnection::DeleteRestore(
     google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::DeleteRestore");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRestore(request));
 }
 
@@ -247,7 +247,7 @@ BackupForGKETracingConnection::ListVolumeRestores(
     google::cloud::gkebackup::v1::ListVolumeRestoresRequest request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::ListVolumeRestores");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVolumeRestores(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::gkebackup::v1::VolumeRestore>(std::move(span),

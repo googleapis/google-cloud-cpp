@@ -39,7 +39,7 @@ AssuredWorkloadsServiceTracingConnection::CreateWorkload(
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   auto span = internal::MakeSpan(
       "assuredworkloads_v1::AssuredWorkloadsServiceConnection::CreateWorkload");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateWorkload(request));
 }
 
@@ -85,7 +85,7 @@ AssuredWorkloadsServiceTracingConnection::ListWorkloads(
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) {
   auto span = internal::MakeSpan(
       "assuredworkloads_v1::AssuredWorkloadsServiceConnection::ListWorkloads");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListWorkloads(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::assuredworkloads::v1::Workload>(std::move(span),
@@ -97,7 +97,7 @@ AssuredWorkloadsServiceTracingConnection::ListViolations(
     google::cloud::assuredworkloads::v1::ListViolationsRequest request) {
   auto span = internal::MakeSpan(
       "assuredworkloads_v1::AssuredWorkloadsServiceConnection::ListViolations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListViolations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::assuredworkloads::v1::Violation>(std::move(span),

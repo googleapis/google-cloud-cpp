@@ -106,7 +106,7 @@ SubscriberTracingStub::AsyncStreamingPull(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
   auto span =
       internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "StreamingPull");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncStreamingPull(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
@@ -197,10 +197,8 @@ future<Status> SubscriberTracingStub::AsyncModifyAckDeadline(
     google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber",
                                      "ModifyAckDeadline");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncModifyAckDeadline(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -211,10 +209,8 @@ future<Status> SubscriberTracingStub::AsyncAcknowledge(
     google::pubsub::v1::AcknowledgeRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "Acknowledge");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncAcknowledge(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

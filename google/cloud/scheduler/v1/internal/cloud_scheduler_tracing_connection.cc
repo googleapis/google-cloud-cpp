@@ -37,7 +37,7 @@ CloudSchedulerTracingConnection::ListJobs(
     google::cloud::scheduler::v1::ListJobsRequest request) {
   auto span =
       internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::ListJobs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::scheduler::v1::Job>(
       std::move(span), std::move(sr));

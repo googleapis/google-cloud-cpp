@@ -37,7 +37,7 @@ BatchControllerTracingConnection::CreateBatch(
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
   auto span =
       internal::MakeSpan("dataproc_v1::BatchControllerConnection::CreateBatch");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateBatch(request));
 }
 
@@ -55,7 +55,7 @@ BatchControllerTracingConnection::ListBatches(
     google::cloud::dataproc::v1::ListBatchesRequest request) {
   auto span =
       internal::MakeSpan("dataproc_v1::BatchControllerConnection::ListBatches");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBatches(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataproc::v1::Batch>(
       std::move(span), std::move(sr));

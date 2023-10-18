@@ -38,7 +38,7 @@ FirewallsTracingConnection::DeleteFirewall(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::DeleteFirewall");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteFirewall(request));
 }
 
@@ -58,7 +58,7 @@ FirewallsTracingConnection::InsertFirewall(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::InsertFirewall");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertFirewall(request));
 }
 
@@ -67,7 +67,7 @@ FirewallsTracingConnection::ListFirewalls(
     google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::ListFirewalls");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListFirewalls(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Firewall>(std::move(span),
@@ -80,7 +80,7 @@ FirewallsTracingConnection::PatchFirewall(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::PatchFirewall");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchFirewall(request));
 }
 
@@ -90,7 +90,7 @@ FirewallsTracingConnection::UpdateFirewall(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::UpdateFirewall");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateFirewall(request));
 }
 

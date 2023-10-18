@@ -72,7 +72,7 @@ RuleSetServiceTracingConnection::ListRuleSets(
     google::cloud::contentwarehouse::v1::ListRuleSetsRequest request) {
   auto span = internal::MakeSpan(
       "contentwarehouse_v1::RuleSetServiceConnection::ListRuleSets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRuleSets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::contentwarehouse::v1::RuleSet>(std::move(span),

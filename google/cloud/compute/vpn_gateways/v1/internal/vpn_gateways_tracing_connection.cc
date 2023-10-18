@@ -40,7 +40,7 @@ VpnGatewaysTracingConnection::AggregatedListVpnGateways(
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::"
       "AggregatedListVpnGateways");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListVpnGateways(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::VpnGatewaysScopedList>>(
@@ -53,7 +53,7 @@ VpnGatewaysTracingConnection::DeleteVpnGateway(
         DeleteVpnGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::DeleteVpnGateway");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteVpnGateway(request));
 }
 
@@ -83,7 +83,7 @@ VpnGatewaysTracingConnection::InsertVpnGateway(
         InsertVpnGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::InsertVpnGateway");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertVpnGateway(request));
 }
 
@@ -93,7 +93,7 @@ VpnGatewaysTracingConnection::ListVpnGateways(
         request) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::ListVpnGateways");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVpnGateways(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::VpnGateway>(std::move(span),
@@ -106,7 +106,7 @@ VpnGatewaysTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 

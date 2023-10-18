@@ -42,7 +42,7 @@ ExternalVpnGatewaysTracingConnection::DeleteExternalVpnGateway(
   auto span = internal::MakeSpan(
       "compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection::"
       "DeleteExternalVpnGateway");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteExternalVpnGateway(request));
 }
@@ -65,7 +65,7 @@ ExternalVpnGatewaysTracingConnection::InsertExternalVpnGateway(
   auto span = internal::MakeSpan(
       "compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection::"
       "InsertExternalVpnGateway");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertExternalVpnGateway(request));
 }
@@ -77,7 +77,7 @@ ExternalVpnGatewaysTracingConnection::ListExternalVpnGateways(
   auto span = internal::MakeSpan(
       "compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection::"
       "ListExternalVpnGateways");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListExternalVpnGateways(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::ExternalVpnGateway>(std::move(span),
@@ -91,7 +91,7 @@ ExternalVpnGatewaysTracingConnection::SetLabels(
   auto span = internal::MakeSpan(
       "compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection::"
       "SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 

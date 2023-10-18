@@ -121,7 +121,7 @@ TEST(CompletionQueueTest, PropagateCallContext) {
 
   auto span = MakeSpan("span");
   [&]() {
-    auto scope = opentelemetry::trace::Scope(span);
+    OTelScope scope(span);
     OptionsSpan o(Options{}.set<TestOption>(5));
     return cq.AsyncWaitConnectionReady(
         channel, std::chrono::system_clock::now() + std::chrono::seconds(1));

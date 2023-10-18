@@ -54,7 +54,7 @@ PredictionServiceTracingConnection::ServerStreamingPredict(
     google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PredictionServiceConnection::ServerStreamingPredict");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ServerStreamingPredict(request);
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::StreamingPredictResponse>(std::move(span),

@@ -82,6 +82,14 @@ RegionBackendServicesConnection::ListRegionBackendServices(
       StreamRange<google::cloud::cpp::compute::v1::BackendService>>();
 }
 
+StreamRange<google::cloud::cpp::compute::v1::BackendService>
+RegionBackendServicesConnection::ListUsable(
+    google::cloud::cpp::compute::region_backend_services::v1::
+        ListUsableRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::BackendService>>();
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesConnection::PatchBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::

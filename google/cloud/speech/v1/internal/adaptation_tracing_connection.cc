@@ -55,7 +55,7 @@ AdaptationTracingConnection::ListPhraseSet(
     google::cloud::speech::v1::ListPhraseSetRequest request) {
   auto span =
       internal::MakeSpan("speech_v1::AdaptationConnection::ListPhraseSet");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPhraseSet(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::speech::v1::PhraseSet>(
       std::move(span), std::move(sr));
@@ -101,7 +101,7 @@ AdaptationTracingConnection::ListCustomClasses(
     google::cloud::speech::v1::ListCustomClassesRequest request) {
   auto span =
       internal::MakeSpan("speech_v1::AdaptationConnection::ListCustomClasses");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListCustomClasses(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::speech::v1::CustomClass>(std::move(span), std::move(sr));

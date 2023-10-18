@@ -40,7 +40,7 @@ MachineTypesTracingConnection::AggregatedListMachineTypes(
   auto span = internal::MakeSpan(
       "compute_machine_types_v1::MachineTypesConnection::"
       "AggregatedListMachineTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListMachineTypes(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>(
@@ -63,7 +63,7 @@ MachineTypesTracingConnection::ListMachineTypes(
         request) {
   auto span = internal::MakeSpan(
       "compute_machine_types_v1::MachineTypesConnection::ListMachineTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMachineTypes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::MachineType>(std::move(span),

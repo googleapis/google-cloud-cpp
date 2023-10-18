@@ -47,7 +47,7 @@ BigQueryReadTracingConnection::ReadRows(
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   auto span = internal::MakeSpan(
       "bigquery_storage_v1::BigQueryReadConnection::ReadRows");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ReadRows(request);
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>(std::move(span),

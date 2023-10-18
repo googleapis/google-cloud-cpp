@@ -254,7 +254,7 @@ $tracing_connection_class_name$::Async$method_name$() {
 StreamRange<$response_type$>
 $tracing_connection_class_name$::$method_name$($request_type$ const& request) {
   auto span = internal::MakeSpan("$product_namespace$::$connection_class_name$::$method_name$");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->$method_name$(request);
   return internal::MakeTracedStreamRange<$response_type$>(
         std::move(span), std::move(sr));
@@ -272,7 +272,7 @@ $tracing_connection_class_name$::$method_name$($request_type$ const& request) {
 StreamRange<$range_output_type$>
 $tracing_connection_class_name$::$method_name$($request_type$ request) {
   auto span = internal::MakeSpan("$product_namespace$::$connection_class_name$::$method_name$");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->$method_name$(std::move(request));
   return internal::MakeTracedStreamRange<$range_output_type$>(
         std::move(span), std::move(sr));
@@ -294,7 +294,7 @@ future<StatusOr<$longrunning_deduced_response_type$>>)""",
 $tracing_connection_class_name$::$method_name$($request_type$ const& request) {
   auto span = internal::MakeSpan(
       "$product_namespace$::$connection_class_name$::$method_name$");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->$method_name$(request));
 }
 )""");
@@ -323,7 +323,7 @@ future<StatusOr<$response_type$>>)""",
 $tracing_connection_class_name$::Async$method_name$($request_type$ const& request) {
   auto span = internal::MakeSpan(
       "$product_namespace$::$connection_class_name$::Async$method_name$");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->Async$method_name$(request));
 }
 )""");

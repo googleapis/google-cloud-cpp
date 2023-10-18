@@ -263,6 +263,61 @@ NetworkAttachmentsRestConnectionImpl::ListNetworkAttachments(
       });
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkAttachmentsRestConnectionImpl::PatchNetworkAttachment(
+    google::cloud::cpp::compute::network_attachments::v1::
+        PatchNetworkAttachmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return rest_internal::AsyncRestLongRunningOperation<
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), request,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::network_attachments::v1::
+                         PatchNetworkAttachmentRequest const& request) {
+        return stub->AsyncPatchNetworkAttachment(cq, std::move(context),
+                                                 request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PatchNetworkAttachment(request),
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
+        return op.status() == "DONE";
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    GetOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    DeleteOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      });
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NetworkAttachmentsRestConnectionImpl::SetIamPolicy(
     google::cloud::cpp::compute::network_attachments::v1::

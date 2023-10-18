@@ -64,7 +64,7 @@ MetastoreServiceTracingConnection::ListCatalogs(
     google::cloud::bigquery::biglake::v1::ListCatalogsRequest request) {
   auto span = internal::MakeSpan(
       "bigquery_biglake_v1::MetastoreServiceConnection::ListCatalogs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListCatalogs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::biglake::v1::Catalog>(std::move(span),
@@ -115,7 +115,7 @@ MetastoreServiceTracingConnection::ListDatabases(
     google::cloud::bigquery::biglake::v1::ListDatabasesRequest request) {
   auto span = internal::MakeSpan(
       "bigquery_biglake_v1::MetastoreServiceConnection::ListDatabases");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDatabases(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::biglake::v1::Database>(std::move(span),
@@ -172,7 +172,7 @@ MetastoreServiceTracingConnection::ListTables(
     google::cloud::bigquery::biglake::v1::ListTablesRequest request) {
   auto span = internal::MakeSpan(
       "bigquery_biglake_v1::MetastoreServiceConnection::ListTables");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTables(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::biglake::v1::Table>(std::move(span),

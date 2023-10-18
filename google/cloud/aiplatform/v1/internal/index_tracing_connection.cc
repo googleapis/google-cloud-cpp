@@ -37,7 +37,7 @@ IndexServiceTracingConnection::CreateIndex(
     google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::IndexServiceConnection::CreateIndex");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateIndex(request));
 }
 
@@ -55,7 +55,7 @@ IndexServiceTracingConnection::ListIndexes(
     google::cloud::aiplatform::v1::ListIndexesRequest request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::IndexServiceConnection::ListIndexes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListIndexes(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Index>(
       std::move(span), std::move(sr));
@@ -66,7 +66,7 @@ IndexServiceTracingConnection::UpdateIndex(
     google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::IndexServiceConnection::UpdateIndex");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateIndex(request));
 }
 
@@ -75,7 +75,7 @@ IndexServiceTracingConnection::DeleteIndex(
     google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::IndexServiceConnection::DeleteIndex");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteIndex(request));
 }
 

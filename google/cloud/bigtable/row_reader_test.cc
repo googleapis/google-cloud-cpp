@@ -109,7 +109,7 @@ TEST(RowReader, CallSpanActiveThroughout) {
 
   auto reader = [span, mock] {
     // Set "call span" as active.
-    auto scope = opentelemetry::trace::Scope(span);
+    google::cloud::internal::OTelScope scope(span);
     return bigtable_internal::MakeRowReader(mock);
   }();
 

@@ -43,7 +43,7 @@ NetworkFirewallPoliciesTracingConnection::AddAssociation(
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":AddAssociation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddAssociation(request));
 }
 
@@ -54,7 +54,7 @@ NetworkFirewallPoliciesTracingConnection::AddRule(
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":AddRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddRule(request));
 }
 
@@ -65,7 +65,7 @@ NetworkFirewallPoliciesTracingConnection::CloneRules(
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":CloneRules");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CloneRules(request));
 }
 
@@ -76,7 +76,7 @@ NetworkFirewallPoliciesTracingConnection::DeleteFirewallPolicy(
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":DeleteFirewallPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteFirewallPolicy(request));
 }
@@ -132,7 +132,7 @@ NetworkFirewallPoliciesTracingConnection::InsertFirewallPolicy(
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":InsertFirewallPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertFirewallPolicy(request));
 }
@@ -144,7 +144,7 @@ NetworkFirewallPoliciesTracingConnection::ListNetworkFirewallPolicies(
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":ListNetworkFirewallPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNetworkFirewallPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::FirewallPolicy>(std::move(span),
@@ -158,7 +158,7 @@ NetworkFirewallPoliciesTracingConnection::PatchFirewallPolicy(
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":PatchFirewallPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchFirewallPolicy(request));
 }
@@ -170,7 +170,7 @@ NetworkFirewallPoliciesTracingConnection::PatchRule(
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":PatchRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchRule(request));
 }
 
@@ -181,7 +181,7 @@ NetworkFirewallPoliciesTracingConnection::RemoveAssociation(
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":RemoveAssociation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RemoveAssociation(request));
 }
 
@@ -192,7 +192,7 @@ NetworkFirewallPoliciesTracingConnection::RemoveRule(
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":RemoveRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RemoveRule(request));
 }
 

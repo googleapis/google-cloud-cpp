@@ -37,7 +37,7 @@ EndpointServiceTracingConnection::CreateEndpoint(
     google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::EndpointServiceConnection::CreateEndpoint");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateEndpoint(request));
 }
 
@@ -55,7 +55,7 @@ EndpointServiceTracingConnection::ListEndpoints(
     google::cloud::aiplatform::v1::ListEndpointsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::EndpointServiceConnection::ListEndpoints");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEndpoints(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::Endpoint>(std::move(span), std::move(sr));
@@ -75,7 +75,7 @@ EndpointServiceTracingConnection::DeleteEndpoint(
     google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::EndpointServiceConnection::DeleteEndpoint");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteEndpoint(request));
 }
 
@@ -84,7 +84,7 @@ EndpointServiceTracingConnection::DeployModel(
     google::cloud::aiplatform::v1::DeployModelRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::EndpointServiceConnection::DeployModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeployModel(request));
 }
 
@@ -93,7 +93,7 @@ EndpointServiceTracingConnection::UndeployModel(
     google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::EndpointServiceConnection::UndeployModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UndeployModel(request));
 }
 
@@ -102,7 +102,7 @@ EndpointServiceTracingConnection::MutateDeployedModel(
     google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::EndpointServiceConnection::MutateDeployedModel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->MutateDeployedModel(request));
 }

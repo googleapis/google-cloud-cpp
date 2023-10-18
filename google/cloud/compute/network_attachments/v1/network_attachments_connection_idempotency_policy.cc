@@ -74,6 +74,13 @@ NetworkAttachmentsConnectionIdempotencyPolicy::ListNetworkAttachments(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+NetworkAttachmentsConnectionIdempotencyPolicy::PatchNetworkAttachment(
+    google::cloud::cpp::compute::network_attachments::v1::
+        PatchNetworkAttachmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetworkAttachmentsConnectionIdempotencyPolicy::SetIamPolicy(
     google::cloud::cpp::compute::network_attachments::v1::
         SetIamPolicyRequest const&) {

@@ -133,10 +133,8 @@ PublisherTracingStub::AsyncPublish(
     std::shared_ptr<grpc::ClientContext> context,
     google::pubsub::v1::PublishRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.pubsub.v1.Publisher", "Publish");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncPublish(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

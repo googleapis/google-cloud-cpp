@@ -45,7 +45,7 @@ ApplicationsTracingConnection::CreateApplication(
     google::appengine::v1::CreateApplicationRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::ApplicationsConnection::CreateApplication");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateApplication(request));
 }
 
@@ -54,7 +54,7 @@ ApplicationsTracingConnection::UpdateApplication(
     google::appengine::v1::UpdateApplicationRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::ApplicationsConnection::UpdateApplication");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateApplication(request));
 }
 
@@ -63,7 +63,7 @@ ApplicationsTracingConnection::RepairApplication(
     google::appengine::v1::RepairApplicationRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::ApplicationsConnection::RepairApplication");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RepairApplication(request));
 }
 

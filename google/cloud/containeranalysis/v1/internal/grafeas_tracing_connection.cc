@@ -44,7 +44,7 @@ StreamRange<grafeas::v1::Occurrence> GrafeasTracingConnection::ListOccurrences(
     grafeas::v1::ListOccurrencesRequest request) {
   auto span = internal::MakeSpan(
       "containeranalysis_v1::GrafeasConnection::ListOccurrences");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListOccurrences(std::move(request));
   return internal::MakeTracedStreamRange<grafeas::v1::Occurrence>(
       std::move(span), std::move(sr));
@@ -103,7 +103,7 @@ StreamRange<grafeas::v1::Note> GrafeasTracingConnection::ListNotes(
     grafeas::v1::ListNotesRequest request) {
   auto span =
       internal::MakeSpan("containeranalysis_v1::GrafeasConnection::ListNotes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNotes(std::move(request));
   return internal::MakeTracedStreamRange<grafeas::v1::Note>(std::move(span),
                                                             std::move(sr));
@@ -147,7 +147,7 @@ GrafeasTracingConnection::ListNoteOccurrences(
     grafeas::v1::ListNoteOccurrencesRequest request) {
   auto span = internal::MakeSpan(
       "containeranalysis_v1::GrafeasConnection::ListNoteOccurrences");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNoteOccurrences(std::move(request));
   return internal::MakeTracedStreamRange<grafeas::v1::Occurrence>(
       std::move(span), std::move(sr));

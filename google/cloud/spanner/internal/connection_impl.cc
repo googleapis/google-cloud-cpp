@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
+#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/algorithm.h"
@@ -35,6 +36,7 @@ namespace google {
 namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 namespace {
 
 inline std::shared_ptr<spanner::RetryPolicy> const& RetryPolicyPrototype() {
@@ -53,10 +55,6 @@ inline bool RpcStreamTracingEnabled() {
 inline TracingOptions const& RpcTracingOptions() {
   return internal::CurrentOptions().get<GrpcTracingOptionsOption>();
 }
-
-}  // namespace
-
-using ::google::cloud::Idempotency;
 
 class DefaultPartialResultSetReader : public PartialResultSetReader {
  public:
@@ -120,6 +118,21 @@ google::spanner::v1::RequestOptions_Priority ProtoRequestPriority(
   return google::spanner::v1::RequestOptions::PRIORITY_UNSPECIFIED;
 }
 
+// Converts a `google::protobuf::Timestamp` to a `spanner::Timestamp`, but
+// substitutes the maximal value for any conversion error. This is needed
+// when, for example, a response commit_timestamp is out of range but the
+// commit itself was successful and so we cannot indicate an error.
+spanner::Timestamp MakeTimestamp(google::protobuf::Timestamp const& proto) {
+  auto timestamp = spanner::MakeTimestamp(proto);
+  if (!timestamp) {
+    protobuf::Timestamp proto;
+    proto.set_seconds(google::protobuf::util::TimeUtil::kTimestampMaxSeconds);
+    proto.set_nanos(999999999);
+    timestamp = spanner::MakeTimestamp(proto);
+  }
+  return *std::move(timestamp);
+}
+
 // Operations that set `TransactionSelector::begin` in the request and receive
 // a malformed response that does not contain a `Transaction` should invalidate
 // the transaction with and also return this status.
@@ -128,6 +141,100 @@ Status MissingTransactionStatus(std::string const& operation) {
                 "Begin transaction requested but no transaction returned (in " +
                     operation + ")");
 }
+
+class StatusOnlyResultSetSource : public spanner::ResultSourceInterface {
+ public:
+  explicit StatusOnlyResultSetSource(google::cloud::Status status)
+      : status_(std::move(status)) {}
+  ~StatusOnlyResultSetSource() override = default;
+
+  StatusOr<spanner::Row> NextRow() override { return status_; }
+  absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
+    return {};
+  }
+  absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
+    return {};
+  }
+
+ private:
+  google::cloud::Status status_;
+};
+
+// Helper function to build and wrap a `StatusOnlyResultSetSource`.
+template <typename ResultType>
+ResultType MakeStatusOnlyResult(Status status) {
+  return ResultType(
+      std::make_unique<StatusOnlyResultSetSource>(std::move(status)));
+}
+
+class DmlResultSetSource : public spanner::ResultSourceInterface {
+ public:
+  static StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> Create(
+      google::spanner::v1::ResultSet result_set) {
+    return std::unique_ptr<spanner::ResultSourceInterface>(
+        new DmlResultSetSource(std::move(result_set)));
+  }
+
+  explicit DmlResultSetSource(google::spanner::v1::ResultSet result_set)
+      : result_set_(std::move(result_set)) {}
+  ~DmlResultSetSource() override = default;
+
+  StatusOr<spanner::Row> NextRow() override { return {}; }
+
+  absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
+    if (result_set_.has_metadata()) {
+      return result_set_.metadata();
+    }
+    return {};
+  }
+
+  absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
+    if (result_set_.has_stats()) {
+      return result_set_.stats();
+    }
+    return {};
+  }
+
+ private:
+  google::spanner::v1::ResultSet result_set_;
+};
+
+// Used as an intermediary for streaming PartitionedDml operations.
+class StreamingPartitionedDmlResult {
+ public:
+  StreamingPartitionedDmlResult() = default;
+  explicit StreamingPartitionedDmlResult(
+      std::unique_ptr<spanner::ResultSourceInterface> source)
+      : source_(std::move(source)) {}
+
+  // This class is movable but not copyable.
+  StreamingPartitionedDmlResult(StreamingPartitionedDmlResult&&) = default;
+  StreamingPartitionedDmlResult& operator=(StreamingPartitionedDmlResult&&) =
+      default;
+
+  /**
+   * Returns a lower bound on the number of rows modified by the DML statement
+   * on success.
+   */
+  StatusOr<std::int64_t> RowsModifiedLowerBound() const {
+    StatusOr<spanner::Row> row;
+    do {
+      row = source_->NextRow();
+      if (!row) return std::move(row).status();
+      // We don't expect to get any data; if we do just drop it.
+      // Exit the loop when we get an empty row.
+    } while (row->size() != 0);
+
+    return source_->Stats()->row_count_lower_bound();
+  }
+
+ private:
+  std::unique_ptr<spanner::ResultSourceInterface> source_;
+};
+
+}  // namespace
+
+using ::google::cloud::Idempotency;
 
 ConnectionImpl::ConnectionImpl(
     spanner::Database db, std::unique_ptr<BackgroundThreads> background_threads,
@@ -265,96 +372,6 @@ Status ConnectionImpl::Rollback(RollbackParams params) {
                  return RollbackImpl(session, s, ctx);
                });
 }
-
-class StatusOnlyResultSetSource : public spanner::ResultSourceInterface {
- public:
-  explicit StatusOnlyResultSetSource(google::cloud::Status status)
-      : status_(std::move(status)) {}
-  ~StatusOnlyResultSetSource() override = default;
-
-  StatusOr<spanner::Row> NextRow() override { return status_; }
-  absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
-    return {};
-  }
-  absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
-    return {};
-  }
-
- private:
-  google::cloud::Status status_;
-};
-
-// Helper function to build and wrap a `StatusOnlyResultSetSource`.
-template <typename ResultType>
-ResultType MakeStatusOnlyResult(Status status) {
-  return ResultType(
-      std::make_unique<StatusOnlyResultSetSource>(std::move(status)));
-}
-
-class DmlResultSetSource : public spanner::ResultSourceInterface {
- public:
-  static StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> Create(
-      google::spanner::v1::ResultSet result_set) {
-    return std::unique_ptr<spanner::ResultSourceInterface>(
-        new DmlResultSetSource(std::move(result_set)));
-  }
-
-  explicit DmlResultSetSource(google::spanner::v1::ResultSet result_set)
-      : result_set_(std::move(result_set)) {}
-  ~DmlResultSetSource() override = default;
-
-  StatusOr<spanner::Row> NextRow() override { return {}; }
-
-  absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
-    if (result_set_.has_metadata()) {
-      return result_set_.metadata();
-    }
-    return {};
-  }
-
-  absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
-    if (result_set_.has_stats()) {
-      return result_set_.stats();
-    }
-    return {};
-  }
-
- private:
-  google::spanner::v1::ResultSet result_set_;
-};
-
-// Used as an intermediary for streaming PartitionedDml operations.
-class StreamingPartitionedDmlResult {
- public:
-  StreamingPartitionedDmlResult() = default;
-  explicit StreamingPartitionedDmlResult(
-      std::unique_ptr<spanner::ResultSourceInterface> source)
-      : source_(std::move(source)) {}
-
-  // This class is movable but not copyable.
-  StreamingPartitionedDmlResult(StreamingPartitionedDmlResult&&) = default;
-  StreamingPartitionedDmlResult& operator=(StreamingPartitionedDmlResult&&) =
-      default;
-
-  /**
-   * Returns a lower bound on the number of rows modified by the DML statement
-   * on success.
-   */
-  StatusOr<std::int64_t> RowsModifiedLowerBound() const {
-    StatusOr<spanner::Row> row;
-    do {
-      row = source_->NextRow();
-      if (!row) return std::move(row).status();
-      // We don't expect to get any data; if we do just drop it.
-      // Exit the loop when we get an empty row.
-    } while (row->size() != 0);
-
-    return source_->Stats()->row_count_lower_bound();
-  }
-
- private:
-  std::unique_ptr<spanner::ResultSourceInterface> source_;
-};
 
 /**
  * Helper function that ensures `session` holds a valid `Session`, or returns
@@ -1069,18 +1086,8 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
     if (IsSessionNotFound(status)) session->set_bad();
     return status;
   }
-  auto timestamp = spanner::MakeTimestamp(response->commit_timestamp());
-  if (!timestamp) {
-    // The response commit_timestamp is out of range, but the commit was
-    // successful so we cannot indicate an error. This should not happen,
-    // but if it does we set r.commit_timestamp to its maximal value.
-    protobuf::Timestamp proto;
-    proto.set_seconds(google::protobuf::util::TimeUtil::kTimestampMaxSeconds);
-    proto.set_nanos(999999999);
-    timestamp = spanner::MakeTimestamp(proto);
-  }
   spanner::CommitResult r;
-  r.commit_timestamp = *std::move(timestamp);
+  r.commit_timestamp = MakeTimestamp(response->commit_timestamp());
   if (response->has_commit_stats()) {
     r.commit_stats.emplace(
         spanner::CommitStats{response->commit_stats().mutation_count()});

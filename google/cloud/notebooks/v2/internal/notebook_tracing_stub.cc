@@ -61,10 +61,8 @@ NotebookServiceTracingStub::AsyncCreateInstance(
     google::cloud::notebooks::v2::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v2.NotebookService", "CreateInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -76,10 +74,8 @@ NotebookServiceTracingStub::AsyncUpdateInstance(
     google::cloud::notebooks::v2::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v2.NotebookService", "UpdateInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -91,10 +87,8 @@ NotebookServiceTracingStub::AsyncDeleteInstance(
     google::cloud::notebooks::v2::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v2.NotebookService", "DeleteInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -106,10 +100,8 @@ NotebookServiceTracingStub::AsyncStartInstance(
     google::cloud::notebooks::v2::StartInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v2.NotebookService", "StartInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncStartInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -121,10 +113,8 @@ NotebookServiceTracingStub::AsyncStopInstance(
     google::cloud::notebooks::v2::StopInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v2.NotebookService", "StopInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncStopInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -136,10 +126,8 @@ NotebookServiceTracingStub::AsyncResetInstance(
     google::cloud::notebooks::v2::ResetInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v2.NotebookService", "ResetInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncResetInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -165,10 +153,8 @@ NotebookServiceTracingStub::AsyncUpgradeInstance(
     google::cloud::notebooks::v2::UpgradeInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v2.NotebookService", "UpgradeInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpgradeInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -180,10 +166,8 @@ NotebookServiceTracingStub::AsyncRollbackInstance(
     google::cloud::notebooks::v2::RollbackInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v2.NotebookService", "RollbackInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRollbackInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -195,10 +179,8 @@ NotebookServiceTracingStub::AsyncDiagnoseInstance(
     google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v2.NotebookService", "DiagnoseInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDiagnoseInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -210,10 +192,8 @@ NotebookServiceTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -224,10 +204,8 @@ future<Status> NotebookServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

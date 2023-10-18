@@ -37,7 +37,7 @@ TensorboardServiceTracingConnection::CreateTensorboard(
     google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::CreateTensorboard");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateTensorboard(request));
 }
 
@@ -55,7 +55,7 @@ TensorboardServiceTracingConnection::UpdateTensorboard(
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::UpdateTensorboard");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateTensorboard(request));
 }
 
@@ -64,7 +64,7 @@ TensorboardServiceTracingConnection::ListTensorboards(
     google::cloud::aiplatform::v1::ListTensorboardsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::ListTensorboards");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTensorboards(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::Tensorboard>(std::move(span),
@@ -76,7 +76,7 @@ TensorboardServiceTracingConnection::DeleteTensorboard(
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::DeleteTensorboard");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTensorboard(request));
 }
 
@@ -136,7 +136,7 @@ TensorboardServiceTracingConnection::ListTensorboardExperiments(
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::"
       "ListTensorboardExperiments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTensorboardExperiments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::TensorboardExperiment>(std::move(span),
@@ -150,7 +150,7 @@ TensorboardServiceTracingConnection::DeleteTensorboardExperiment(
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::"
       "DeleteTensorboardExperiment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTensorboardExperiment(request));
 }
@@ -198,7 +198,7 @@ TensorboardServiceTracingConnection::ListTensorboardRuns(
     google::cloud::aiplatform::v1::ListTensorboardRunsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::ListTensorboardRuns");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTensorboardRuns(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::TensorboardRun>(std::move(span),
@@ -210,7 +210,7 @@ TensorboardServiceTracingConnection::DeleteTensorboardRun(
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::DeleteTensorboardRun");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTensorboardRun(request));
 }
@@ -265,7 +265,7 @@ TensorboardServiceTracingConnection::ListTensorboardTimeSeries(
     google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::ListTensorboardTimeSeries");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTensorboardTimeSeries(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::TensorboardTimeSeries>(std::move(span),
@@ -279,7 +279,7 @@ TensorboardServiceTracingConnection::DeleteTensorboardTimeSeries(
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::"
       "DeleteTensorboardTimeSeries");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTensorboardTimeSeries(request));
 }
@@ -315,7 +315,7 @@ TensorboardServiceTracingConnection::ReadTensorboardBlobData(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::ReadTensorboardBlobData");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ReadTensorboardBlobData(request);
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>(
@@ -350,7 +350,7 @@ TensorboardServiceTracingConnection::ExportTensorboardTimeSeriesData(
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::"
       "ExportTensorboardTimeSeriesData");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ExportTensorboardTimeSeriesData(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::TimeSeriesDataPoint>(std::move(span),

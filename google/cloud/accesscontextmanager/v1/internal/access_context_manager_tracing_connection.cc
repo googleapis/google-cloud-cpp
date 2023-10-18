@@ -40,7 +40,7 @@ AccessContextManagerTracingConnection::ListAccessPolicies(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "ListAccessPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAccessPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::identity::accesscontextmanager::v1::AccessPolicy>(std::move(span),
@@ -64,7 +64,7 @@ AccessContextManagerTracingConnection::CreateAccessPolicy(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "CreateAccessPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateAccessPolicy(request));
 }
@@ -76,7 +76,7 @@ AccessContextManagerTracingConnection::UpdateAccessPolicy(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "UpdateAccessPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateAccessPolicy(request));
 }
@@ -89,7 +89,7 @@ AccessContextManagerTracingConnection::DeleteAccessPolicy(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "DeleteAccessPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteAccessPolicy(request));
 }
@@ -101,7 +101,7 @@ AccessContextManagerTracingConnection::ListAccessLevels(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "ListAccessLevels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAccessLevels(std::move(request));
   return internal::MakeTracedStreamRange<
       google::identity::accesscontextmanager::v1::AccessLevel>(std::move(span),
@@ -126,7 +126,7 @@ AccessContextManagerTracingConnection::CreateAccessLevel(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "CreateAccessLevel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateAccessLevel(request));
 }
 
@@ -137,7 +137,7 @@ AccessContextManagerTracingConnection::UpdateAccessLevel(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "UpdateAccessLevel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateAccessLevel(request));
 }
 
@@ -149,7 +149,7 @@ AccessContextManagerTracingConnection::DeleteAccessLevel(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "DeleteAccessLevel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAccessLevel(request));
 }
 
@@ -161,7 +161,7 @@ AccessContextManagerTracingConnection::ReplaceAccessLevels(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "ReplaceAccessLevels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ReplaceAccessLevels(request));
 }
@@ -173,7 +173,7 @@ AccessContextManagerTracingConnection::ListServicePerimeters(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "ListServicePerimeters");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServicePerimeters(std::move(request));
   return internal::MakeTracedStreamRange<
       google::identity::accesscontextmanager::v1::ServicePerimeter>(
@@ -198,7 +198,7 @@ AccessContextManagerTracingConnection::CreateServicePerimeter(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "CreateServicePerimeter");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateServicePerimeter(request));
 }
@@ -210,7 +210,7 @@ AccessContextManagerTracingConnection::UpdateServicePerimeter(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "UpdateServicePerimeter");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateServicePerimeter(request));
 }
@@ -223,7 +223,7 @@ AccessContextManagerTracingConnection::DeleteServicePerimeter(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "DeleteServicePerimeter");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteServicePerimeter(request));
 }
@@ -236,7 +236,7 @@ AccessContextManagerTracingConnection::ReplaceServicePerimeters(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "ReplaceServicePerimeters");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ReplaceServicePerimeters(request));
 }
@@ -249,7 +249,7 @@ AccessContextManagerTracingConnection::CommitServicePerimeters(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "CommitServicePerimeters");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CommitServicePerimeters(request));
 }
@@ -261,7 +261,7 @@ AccessContextManagerTracingConnection::ListGcpUserAccessBindings(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "ListGcpUserAccessBindings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListGcpUserAccessBindings(std::move(request));
   return internal::MakeTracedStreamRange<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>(
@@ -287,7 +287,7 @@ AccessContextManagerTracingConnection::CreateGcpUserAccessBinding(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "CreateGcpUserAccessBinding");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateGcpUserAccessBinding(request));
 }
@@ -300,7 +300,7 @@ AccessContextManagerTracingConnection::UpdateGcpUserAccessBinding(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "UpdateGcpUserAccessBinding");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateGcpUserAccessBinding(request));
 }
@@ -313,7 +313,7 @@ AccessContextManagerTracingConnection::DeleteGcpUserAccessBinding(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "DeleteGcpUserAccessBinding");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteGcpUserAccessBinding(request));
 }
