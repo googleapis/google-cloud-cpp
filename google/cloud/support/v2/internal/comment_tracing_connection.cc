@@ -37,7 +37,7 @@ CommentServiceTracingConnection::ListComments(
     google::cloud::support::v2::ListCommentsRequest request) {
   auto span =
       internal::MakeSpan("support_v2::CommentServiceConnection::ListComments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListComments(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::support::v2::Comment>(
       std::move(span), std::move(sr));

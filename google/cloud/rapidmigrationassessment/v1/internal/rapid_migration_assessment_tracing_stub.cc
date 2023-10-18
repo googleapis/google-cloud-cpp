@@ -40,10 +40,8 @@ RapidMigrationAssessmentTracingStub::AsyncCreateCollector(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
       "CreateCollector");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateCollector(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -57,10 +55,8 @@ RapidMigrationAssessmentTracingStub::AsyncCreateAnnotation(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
       "CreateAnnotation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateAnnotation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -116,10 +112,8 @@ RapidMigrationAssessmentTracingStub::AsyncUpdateCollector(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
       "UpdateCollector");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateCollector(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -133,10 +127,8 @@ RapidMigrationAssessmentTracingStub::AsyncDeleteCollector(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
       "DeleteCollector");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteCollector(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -150,10 +142,8 @@ RapidMigrationAssessmentTracingStub::AsyncResumeCollector(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
       "ResumeCollector");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncResumeCollector(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -167,10 +157,8 @@ RapidMigrationAssessmentTracingStub::AsyncRegisterCollector(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
       "RegisterCollector");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRegisterCollector(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -184,10 +172,8 @@ RapidMigrationAssessmentTracingStub::AsyncPauseCollector(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
       "PauseCollector");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncPauseCollector(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -199,10 +185,8 @@ RapidMigrationAssessmentTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -213,10 +197,8 @@ future<Status> RapidMigrationAssessmentTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

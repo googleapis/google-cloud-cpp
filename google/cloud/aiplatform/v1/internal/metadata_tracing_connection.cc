@@ -37,7 +37,7 @@ MetadataServiceTracingConnection::CreateMetadataStore(
     google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::CreateMetadataStore");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateMetadataStore(request));
 }
@@ -56,7 +56,7 @@ MetadataServiceTracingConnection::ListMetadataStores(
     google::cloud::aiplatform::v1::ListMetadataStoresRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::ListMetadataStores");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMetadataStores(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::MetadataStore>(std::move(span),
@@ -69,7 +69,7 @@ MetadataServiceTracingConnection::DeleteMetadataStore(
     google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::DeleteMetadataStore");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteMetadataStore(request));
 }
@@ -97,7 +97,7 @@ MetadataServiceTracingConnection::ListArtifacts(
     google::cloud::aiplatform::v1::ListArtifactsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::ListArtifacts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListArtifacts(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::Artifact>(std::move(span), std::move(sr));
@@ -117,7 +117,7 @@ MetadataServiceTracingConnection::DeleteArtifact(
     google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::DeleteArtifact");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteArtifact(request));
 }
 
@@ -126,7 +126,7 @@ MetadataServiceTracingConnection::PurgeArtifacts(
     google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::PurgeArtifacts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PurgeArtifacts(request));
 }
 
@@ -153,7 +153,7 @@ MetadataServiceTracingConnection::ListContexts(
     google::cloud::aiplatform::v1::ListContextsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::ListContexts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListContexts(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::Context>(std::move(span), std::move(sr));
@@ -173,7 +173,7 @@ MetadataServiceTracingConnection::DeleteContext(
     google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::DeleteContext");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteContext(request));
 }
 
@@ -182,7 +182,7 @@ MetadataServiceTracingConnection::PurgeContexts(
     google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::PurgeContexts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PurgeContexts(request));
 }
 
@@ -251,7 +251,7 @@ MetadataServiceTracingConnection::ListExecutions(
     google::cloud::aiplatform::v1::ListExecutionsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::ListExecutions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListExecutions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::Execution>(std::move(span), std::move(sr));
@@ -271,7 +271,7 @@ MetadataServiceTracingConnection::DeleteExecution(
     google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::DeleteExecution");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteExecution(request));
 }
 
@@ -280,7 +280,7 @@ MetadataServiceTracingConnection::PurgeExecutions(
     google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::PurgeExecutions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PurgeExecutions(request));
 }
 
@@ -328,7 +328,7 @@ MetadataServiceTracingConnection::ListMetadataSchemas(
     google::cloud::aiplatform::v1::ListMetadataSchemasRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::ListMetadataSchemas");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMetadataSchemas(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::MetadataSchema>(std::move(span),

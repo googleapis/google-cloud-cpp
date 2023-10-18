@@ -66,7 +66,7 @@ LineageTracingConnection::ListProcesses(
     google::cloud::datacatalog::lineage::v1::ListProcessesRequest request) {
   auto span = internal::MakeSpan(
       "datacatalog_lineage_v1::LineageConnection::ListProcesses");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListProcesses(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::datacatalog::lineage::v1::Process>(std::move(span),
@@ -79,7 +79,7 @@ LineageTracingConnection::DeleteProcess(
         request) {
   auto span = internal::MakeSpan(
       "datacatalog_lineage_v1::LineageConnection::DeleteProcess");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteProcess(request));
 }
 
@@ -115,7 +115,7 @@ LineageTracingConnection::ListRuns(
     google::cloud::datacatalog::lineage::v1::ListRunsRequest request) {
   auto span =
       internal::MakeSpan("datacatalog_lineage_v1::LineageConnection::ListRuns");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRuns(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::datacatalog::lineage::v1::Run>(std::move(span),
@@ -127,7 +127,7 @@ LineageTracingConnection::DeleteRun(
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   auto span = internal::MakeSpan(
       "datacatalog_lineage_v1::LineageConnection::DeleteRun");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRun(request));
 }
 
@@ -156,7 +156,7 @@ LineageTracingConnection::ListLineageEvents(
     google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest request) {
   auto span = internal::MakeSpan(
       "datacatalog_lineage_v1::LineageConnection::ListLineageEvents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListLineageEvents(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::datacatalog::lineage::v1::LineageEvent>(std::move(span),
@@ -177,7 +177,7 @@ LineageTracingConnection::SearchLinks(
     google::cloud::datacatalog::lineage::v1::SearchLinksRequest request) {
   auto span = internal::MakeSpan(
       "datacatalog_lineage_v1::LineageConnection::SearchLinks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchLinks(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::datacatalog::lineage::v1::Link>(std::move(span),
@@ -190,7 +190,7 @@ LineageTracingConnection::BatchSearchLinkProcesses(
         request) {
   auto span = internal::MakeSpan(
       "datacatalog_lineage_v1::LineageConnection::BatchSearchLinkProcesses");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->BatchSearchLinkProcesses(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::datacatalog::lineage::v1::ProcessLinks>(std::move(span),

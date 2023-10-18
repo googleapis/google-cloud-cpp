@@ -43,7 +43,7 @@ RegionTargetHttpProxiesTracingConnection::DeleteTargetHttpProxy(
   auto span = internal::MakeSpan(
       "compute_region_target_http_proxies_v1::"
       "RegionTargetHttpProxiesConnection::DeleteTargetHttpProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTargetHttpProxy(request));
 }
@@ -66,7 +66,7 @@ RegionTargetHttpProxiesTracingConnection::InsertTargetHttpProxy(
   auto span = internal::MakeSpan(
       "compute_region_target_http_proxies_v1::"
       "RegionTargetHttpProxiesConnection::InsertTargetHttpProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertTargetHttpProxy(request));
 }
@@ -78,7 +78,7 @@ RegionTargetHttpProxiesTracingConnection::ListRegionTargetHttpProxies(
   auto span = internal::MakeSpan(
       "compute_region_target_http_proxies_v1::"
       "RegionTargetHttpProxiesConnection::ListRegionTargetHttpProxies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionTargetHttpProxies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::TargetHttpProxy>(std::move(span),
@@ -92,7 +92,7 @@ RegionTargetHttpProxiesTracingConnection::SetUrlMap(
   auto span = internal::MakeSpan(
       "compute_region_target_http_proxies_v1::"
       "RegionTargetHttpProxiesConnection::SetUrlMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetUrlMap(request));
 }
 

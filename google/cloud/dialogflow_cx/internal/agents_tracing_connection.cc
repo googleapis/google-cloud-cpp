@@ -36,7 +36,7 @@ StreamRange<google::cloud::dialogflow::cx::v3::Agent>
 AgentsTracingConnection::ListAgents(
     google::cloud::dialogflow::cx::v3::ListAgentsRequest request) {
   auto span = internal::MakeSpan("dialogflow_cx::AgentsConnection::ListAgents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAgents(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::cx::v3::Agent>(std::move(span), std::move(sr));
@@ -81,7 +81,7 @@ AgentsTracingConnection::ExportAgent(
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::AgentsConnection::ExportAgent");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportAgent(request));
 }
 
@@ -90,7 +90,7 @@ AgentsTracingConnection::RestoreAgent(
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::AgentsConnection::RestoreAgent");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RestoreAgent(request));
 }
 

@@ -60,7 +60,7 @@ EssentialContactsServiceTracingConnection::ListContacts(
     google::cloud::essentialcontacts::v1::ListContactsRequest request) {
   auto span = internal::MakeSpan(
       "essentialcontacts_v1::EssentialContactsServiceConnection::ListContacts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListContacts(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::essentialcontacts::v1::Contact>(std::move(span),
@@ -91,7 +91,7 @@ EssentialContactsServiceTracingConnection::ComputeContacts(
   auto span = internal::MakeSpan(
       "essentialcontacts_v1::EssentialContactsServiceConnection::"
       "ComputeContacts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ComputeContacts(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::essentialcontacts::v1::Contact>(std::move(span),

@@ -38,7 +38,7 @@ RegionUrlMapsTracingConnection::DeleteUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_url_maps_v1::RegionUrlMapsConnection::DeleteUrlMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteUrlMap(request));
 }
 
@@ -58,7 +58,7 @@ RegionUrlMapsTracingConnection::InsertUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_url_maps_v1::RegionUrlMapsConnection::InsertUrlMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertUrlMap(request));
 }
 
@@ -68,7 +68,7 @@ RegionUrlMapsTracingConnection::ListRegionUrlMaps(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_url_maps_v1::RegionUrlMapsConnection::ListRegionUrlMaps");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionUrlMaps(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::UrlMap>(std::move(span), std::move(sr));
@@ -80,7 +80,7 @@ RegionUrlMapsTracingConnection::PatchUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_url_maps_v1::RegionUrlMapsConnection::PatchUrlMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchUrlMap(request));
 }
 
@@ -90,7 +90,7 @@ RegionUrlMapsTracingConnection::UpdateUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_url_maps_v1::RegionUrlMapsConnection::UpdateUrlMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateUrlMap(request));
 }
 

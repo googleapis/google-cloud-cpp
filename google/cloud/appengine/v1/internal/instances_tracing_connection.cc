@@ -37,7 +37,7 @@ InstancesTracingConnection::ListInstances(
     google::appengine::v1::ListInstancesRequest request) {
   auto span =
       internal::MakeSpan("appengine_v1::InstancesConnection::ListInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInstances(std::move(request));
   return internal::MakeTracedStreamRange<google::appengine::v1::Instance>(
       std::move(span), std::move(sr));
@@ -57,7 +57,7 @@ InstancesTracingConnection::DeleteInstance(
     google::appengine::v1::DeleteInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::InstancesConnection::DeleteInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
 
@@ -66,7 +66,7 @@ InstancesTracingConnection::DebugInstance(
     google::appengine::v1::DebugInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::InstancesConnection::DebugInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DebugInstance(request));
 }
 

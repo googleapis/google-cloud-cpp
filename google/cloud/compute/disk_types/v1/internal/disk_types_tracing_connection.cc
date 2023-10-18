@@ -39,7 +39,7 @@ DiskTypesTracingConnection::AggregatedListDiskTypes(
         request) {
   auto span = internal::MakeSpan(
       "compute_disk_types_v1::DiskTypesConnection::AggregatedListDiskTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListDiskTypes(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>(
@@ -61,7 +61,7 @@ DiskTypesTracingConnection::ListDiskTypes(
     google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request) {
   auto span = internal::MakeSpan(
       "compute_disk_types_v1::DiskTypesConnection::ListDiskTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDiskTypes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::DiskType>(std::move(span),

@@ -41,7 +41,7 @@ GlobalOperationsTracingConnection::AggregatedListGlobalOperations(
   auto span = internal::MakeSpan(
       "compute_global_operations_v1::GlobalOperationsConnection::"
       "AggregatedListGlobalOperations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListGlobalOperations(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::OperationsScopedList>>(
@@ -75,7 +75,7 @@ GlobalOperationsTracingConnection::ListGlobalOperations(
   auto span = internal::MakeSpan(
       "compute_global_operations_v1::GlobalOperationsConnection::"
       "ListGlobalOperations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListGlobalOperations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Operation>(std::move(span),

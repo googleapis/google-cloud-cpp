@@ -56,7 +56,7 @@ GoldenKitchenSinkTracingConnection::WriteLogEntries(google::test::admin::databas
 StreamRange<std::string>
 GoldenKitchenSinkTracingConnection::ListLogs(google::test::admin::database::v1::ListLogsRequest request) {
   auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::ListLogs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListLogs(std::move(request));
   return internal::MakeTracedStreamRange<std::string>(
         std::move(span), std::move(sr));
@@ -86,7 +86,7 @@ GoldenKitchenSinkTracingConnection::Deprecated2(google::test::admin::database::v
 StreamRange<google::test::admin::database::v1::Response>
 GoldenKitchenSinkTracingConnection::StreamingRead(google::test::admin::database::v1::Request const& request) {
   auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::StreamingRead");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->StreamingRead(request);
   return internal::MakeTracedStreamRange<google::test::admin::database::v1::Response>(
         std::move(span), std::move(sr));

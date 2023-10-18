@@ -51,7 +51,7 @@ StreamRange<google::cloud::dialogflow::cx::v3::Flow>
 FlowsTracingConnection::ListFlows(
     google::cloud::dialogflow::cx::v3::ListFlowsRequest request) {
   auto span = internal::MakeSpan("dialogflow_cx::FlowsConnection::ListFlows");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListFlows(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::cx::v3::Flow>(std::move(span), std::move(sr));
@@ -76,7 +76,7 @@ FlowsTracingConnection::UpdateFlow(
 future<StatusOr<google::protobuf::Struct>> FlowsTracingConnection::TrainFlow(
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_cx::FlowsConnection::TrainFlow");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->TrainFlow(request));
 }
 
@@ -103,7 +103,7 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
 FlowsTracingConnection::ImportFlow(
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_cx::FlowsConnection::ImportFlow");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportFlow(request));
 }
 
@@ -111,7 +111,7 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
 FlowsTracingConnection::ExportFlow(
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_cx::FlowsConnection::ExportFlow");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportFlow(request));
 }
 

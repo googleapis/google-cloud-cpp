@@ -54,7 +54,7 @@ UserEventServiceTracingConnection::PurgeUserEvents(
     google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::UserEventServiceConnection::PurgeUserEvents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PurgeUserEvents(request));
 }
 
@@ -63,7 +63,7 @@ UserEventServiceTracingConnection::ImportUserEvents(
     google::cloud::retail::v2::ImportUserEventsRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::UserEventServiceConnection::ImportUserEvents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportUserEvents(request));
 }
 
@@ -72,7 +72,7 @@ UserEventServiceTracingConnection::RejoinUserEvents(
     google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::UserEventServiceConnection::RejoinUserEvents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RejoinUserEvents(request));
 }
 

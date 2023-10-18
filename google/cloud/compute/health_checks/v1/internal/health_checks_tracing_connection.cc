@@ -40,7 +40,7 @@ HealthChecksTracingConnection::AggregatedListHealthChecks(
   auto span = internal::MakeSpan(
       "compute_health_checks_v1::HealthChecksConnection::"
       "AggregatedListHealthChecks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListHealthChecks(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::HealthChecksScopedList>>(
@@ -53,7 +53,7 @@ HealthChecksTracingConnection::DeleteHealthCheck(
         DeleteHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_health_checks_v1::HealthChecksConnection::DeleteHealthCheck");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteHealthCheck(request));
 }
 
@@ -73,7 +73,7 @@ HealthChecksTracingConnection::InsertHealthCheck(
         InsertHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_health_checks_v1::HealthChecksConnection::InsertHealthCheck");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertHealthCheck(request));
 }
 
@@ -83,7 +83,7 @@ HealthChecksTracingConnection::ListHealthChecks(
         request) {
   auto span = internal::MakeSpan(
       "compute_health_checks_v1::HealthChecksConnection::ListHealthChecks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListHealthChecks(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::HealthCheck>(std::move(span),
@@ -96,7 +96,7 @@ HealthChecksTracingConnection::PatchHealthCheck(
         PatchHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_health_checks_v1::HealthChecksConnection::PatchHealthCheck");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchHealthCheck(request));
 }
 
@@ -106,7 +106,7 @@ HealthChecksTracingConnection::UpdateHealthCheck(
         UpdateHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_health_checks_v1::HealthChecksConnection::UpdateHealthCheck");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateHealthCheck(request));
 }
 

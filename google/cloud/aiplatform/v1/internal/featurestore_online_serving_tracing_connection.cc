@@ -52,7 +52,7 @@ FeaturestoreOnlineServingServiceTracingConnection::StreamingReadFeatureValues(
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreOnlineServingServiceConnection::"
       "StreamingReadFeatureValues");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->StreamingReadFeatureValues(request);
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(std::move(span),

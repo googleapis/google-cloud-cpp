@@ -37,7 +37,7 @@ MigrationCenterTracingConnection::ListAssets(
     google::cloud::migrationcenter::v1::ListAssetsRequest request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::ListAssets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAssets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::migrationcenter::v1::Asset>(std::move(span),
@@ -114,7 +114,7 @@ MigrationCenterTracingConnection::CreateImportJob(
     google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreateImportJob");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateImportJob(request));
 }
 
@@ -123,7 +123,7 @@ MigrationCenterTracingConnection::ListImportJobs(
     google::cloud::migrationcenter::v1::ListImportJobsRequest request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::ListImportJobs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListImportJobs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::migrationcenter::v1::ImportJob>(std::move(span),
@@ -144,7 +144,7 @@ MigrationCenterTracingConnection::DeleteImportJob(
     google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeleteImportJob");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteImportJob(request));
 }
 
@@ -153,7 +153,7 @@ MigrationCenterTracingConnection::UpdateImportJob(
     google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::UpdateImportJob");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateImportJob(request));
 }
 
@@ -163,7 +163,7 @@ MigrationCenterTracingConnection::ValidateImportJob(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::ValidateImportJob");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ValidateImportJob(request));
 }
 
@@ -172,7 +172,7 @@ MigrationCenterTracingConnection::RunImportJob(
     google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::RunImportJob");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RunImportJob(request));
 }
 
@@ -191,7 +191,7 @@ MigrationCenterTracingConnection::ListImportDataFiles(
     google::cloud::migrationcenter::v1::ListImportDataFilesRequest request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::ListImportDataFiles");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListImportDataFiles(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::migrationcenter::v1::ImportDataFile>(std::move(span),
@@ -204,7 +204,7 @@ MigrationCenterTracingConnection::CreateImportDataFile(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreateImportDataFile");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateImportDataFile(request));
 }
@@ -215,7 +215,7 @@ MigrationCenterTracingConnection::DeleteImportDataFile(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeleteImportDataFile");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteImportDataFile(request));
 }
@@ -225,7 +225,7 @@ MigrationCenterTracingConnection::ListGroups(
     google::cloud::migrationcenter::v1::ListGroupsRequest request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::ListGroups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListGroups(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::migrationcenter::v1::Group>(std::move(span),
@@ -246,7 +246,7 @@ MigrationCenterTracingConnection::CreateGroup(
     google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreateGroup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateGroup(request));
 }
 
@@ -255,7 +255,7 @@ MigrationCenterTracingConnection::UpdateGroup(
     google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::UpdateGroup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateGroup(request));
 }
 
@@ -264,7 +264,7 @@ MigrationCenterTracingConnection::DeleteGroup(
     google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeleteGroup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteGroup(request));
 }
 
@@ -274,7 +274,7 @@ MigrationCenterTracingConnection::AddAssetsToGroup(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::AddAssetsToGroup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddAssetsToGroup(request));
 }
 
@@ -284,7 +284,7 @@ MigrationCenterTracingConnection::RemoveAssetsFromGroup(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::RemoveAssetsFromGroup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RemoveAssetsFromGroup(request));
 }
@@ -294,7 +294,7 @@ MigrationCenterTracingConnection::ListErrorFrames(
     google::cloud::migrationcenter::v1::ListErrorFramesRequest request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::ListErrorFrames");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListErrorFrames(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::migrationcenter::v1::ErrorFrame>(std::move(span),
@@ -315,7 +315,7 @@ MigrationCenterTracingConnection::ListSources(
     google::cloud::migrationcenter::v1::ListSourcesRequest request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::ListSources");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSources(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::migrationcenter::v1::Source>(std::move(span),
@@ -336,7 +336,7 @@ MigrationCenterTracingConnection::CreateSource(
     google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreateSource");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateSource(request));
 }
 
@@ -345,7 +345,7 @@ MigrationCenterTracingConnection::UpdateSource(
     google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::UpdateSource");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateSource(request));
 }
 
@@ -354,7 +354,7 @@ MigrationCenterTracingConnection::DeleteSource(
     google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeleteSource");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSource(request));
 }
 
@@ -363,7 +363,7 @@ MigrationCenterTracingConnection::ListPreferenceSets(
     google::cloud::migrationcenter::v1::ListPreferenceSetsRequest request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::ListPreferenceSets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPreferenceSets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::migrationcenter::v1::PreferenceSet>(std::move(span),
@@ -386,7 +386,7 @@ MigrationCenterTracingConnection::CreatePreferenceSet(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreatePreferenceSet");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreatePreferenceSet(request));
 }
@@ -397,7 +397,7 @@ MigrationCenterTracingConnection::UpdatePreferenceSet(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::UpdatePreferenceSet");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdatePreferenceSet(request));
 }
@@ -408,7 +408,7 @@ MigrationCenterTracingConnection::DeletePreferenceSet(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeletePreferenceSet");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeletePreferenceSet(request));
 }
@@ -427,7 +427,7 @@ MigrationCenterTracingConnection::UpdateSettings(
     google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::UpdateSettings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateSettings(request));
 }
 
@@ -437,7 +437,7 @@ MigrationCenterTracingConnection::CreateReportConfig(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreateReportConfig");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateReportConfig(request));
 }
@@ -456,7 +456,7 @@ MigrationCenterTracingConnection::ListReportConfigs(
     google::cloud::migrationcenter::v1::ListReportConfigsRequest request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::ListReportConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListReportConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::migrationcenter::v1::ReportConfig>(std::move(span),
@@ -469,7 +469,7 @@ MigrationCenterTracingConnection::DeleteReportConfig(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeleteReportConfig");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteReportConfig(request));
 }
@@ -479,7 +479,7 @@ MigrationCenterTracingConnection::CreateReport(
     google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreateReport");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateReport(request));
 }
 
@@ -497,7 +497,7 @@ MigrationCenterTracingConnection::ListReports(
     google::cloud::migrationcenter::v1::ListReportsRequest request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::ListReports");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListReports(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::migrationcenter::v1::Report>(std::move(span),
@@ -509,7 +509,7 @@ MigrationCenterTracingConnection::DeleteReport(
     google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeleteReport");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteReport(request));
 }
 

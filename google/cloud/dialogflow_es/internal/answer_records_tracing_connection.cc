@@ -37,7 +37,7 @@ AnswerRecordsTracingConnection::ListAnswerRecords(
     google::cloud::dialogflow::v2::ListAnswerRecordsRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::AnswerRecordsConnection::ListAnswerRecords");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAnswerRecords(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::v2::AnswerRecord>(std::move(span),

@@ -46,7 +46,7 @@ BigtableTableAdminTracingConnection::ListTables(
     google::bigtable::admin::v2::ListTablesRequest request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::ListTables");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTables(std::move(request));
   return internal::MakeTracedStreamRange<google::bigtable::admin::v2::Table>(
       std::move(span), std::move(sr));
@@ -66,7 +66,7 @@ BigtableTableAdminTracingConnection::UpdateTable(
     google::bigtable::admin::v2::UpdateTableRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::UpdateTable");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateTable(request));
 }
 
@@ -83,7 +83,7 @@ BigtableTableAdminTracingConnection::UndeleteTable(
     google::bigtable::admin::v2::UndeleteTableRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::UndeleteTable");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UndeleteTable(request));
 }
 
@@ -128,7 +128,7 @@ BigtableTableAdminTracingConnection::CreateBackup(
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::CreateBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateBackup(request));
 }
 
@@ -163,7 +163,7 @@ BigtableTableAdminTracingConnection::ListBackups(
     google::bigtable::admin::v2::ListBackupsRequest request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::ListBackups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBackups(std::move(request));
   return internal::MakeTracedStreamRange<google::bigtable::admin::v2::Backup>(
       std::move(span), std::move(sr));
@@ -174,7 +174,7 @@ BigtableTableAdminTracingConnection::RestoreTable(
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::RestoreTable");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RestoreTable(request));
 }
 
@@ -183,7 +183,7 @@ BigtableTableAdminTracingConnection::CopyBackup(
     google::bigtable::admin::v2::CopyBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::CopyBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CopyBackup(request));
 }
 
@@ -219,7 +219,7 @@ BigtableTableAdminTracingConnection::AsyncCheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::AsyncCheckConsistency");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->AsyncCheckConsistency(request));
 }

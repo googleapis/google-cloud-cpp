@@ -37,7 +37,7 @@ VersionsTracingConnection::ListVersions(
     google::appengine::v1::ListVersionsRequest request) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::ListVersions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVersions(std::move(request));
   return internal::MakeTracedStreamRange<google::appengine::v1::Version>(
       std::move(span), std::move(sr));
@@ -56,7 +56,7 @@ VersionsTracingConnection::CreateVersion(
     google::appengine::v1::CreateVersionRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::CreateVersion");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateVersion(request));
 }
 
@@ -65,7 +65,7 @@ VersionsTracingConnection::UpdateVersion(
     google::appengine::v1::UpdateVersionRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::UpdateVersion");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateVersion(request));
 }
 
@@ -74,7 +74,7 @@ VersionsTracingConnection::DeleteVersion(
     google::appengine::v1::DeleteVersionRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::DeleteVersion");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteVersion(request));
 }
 

@@ -53,10 +53,8 @@ ContactCenterInsightsTracingStub::AsyncUploadConversation(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contactcenterinsights.v1.ContactCenterInsights",
       "UploadConversation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUploadConversation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -125,10 +123,8 @@ ContactCenterInsightsTracingStub::AsyncCreateAnalysis(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contactcenterinsights.v1.ContactCenterInsights",
       "CreateAnalysis");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateAnalysis(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -183,10 +179,8 @@ ContactCenterInsightsTracingStub::AsyncBulkAnalyzeConversations(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contactcenterinsights.v1.ContactCenterInsights",
       "BulkAnalyzeConversations");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncBulkAnalyzeConversations(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -200,10 +194,8 @@ ContactCenterInsightsTracingStub::AsyncIngestConversations(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contactcenterinsights.v1.ContactCenterInsights",
       "IngestConversations");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncIngestConversations(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -217,10 +209,8 @@ ContactCenterInsightsTracingStub::AsyncExportInsightsData(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contactcenterinsights.v1.ContactCenterInsights",
       "ExportInsightsData");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncExportInsightsData(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -234,10 +224,8 @@ ContactCenterInsightsTracingStub::AsyncCreateIssueModel(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contactcenterinsights.v1.ContactCenterInsights",
       "CreateIssueModel");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateIssueModel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -293,10 +281,8 @@ ContactCenterInsightsTracingStub::AsyncDeleteIssueModel(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contactcenterinsights.v1.ContactCenterInsights",
       "DeleteIssueModel");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteIssueModel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -310,10 +296,8 @@ ContactCenterInsightsTracingStub::AsyncDeployIssueModel(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contactcenterinsights.v1.ContactCenterInsights",
       "DeployIssueModel");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeployIssueModel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -327,10 +311,8 @@ ContactCenterInsightsTracingStub::AsyncUndeployIssueModel(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contactcenterinsights.v1.ContactCenterInsights",
       "UndeployIssueModel");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUndeployIssueModel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -585,10 +567,8 @@ ContactCenterInsightsTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -599,10 +579,8 @@ future<Status> ContactCenterInsightsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

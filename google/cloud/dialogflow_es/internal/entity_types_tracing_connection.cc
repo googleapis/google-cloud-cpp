@@ -37,7 +37,7 @@ EntityTypesTracingConnection::ListEntityTypes(
     google::cloud::dialogflow::v2::ListEntityTypesRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::ListEntityTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEntityTypes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::v2::EntityType>(std::move(span),
@@ -85,7 +85,7 @@ EntityTypesTracingConnection::BatchUpdateEntityTypes(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchUpdateEntityTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchUpdateEntityTypes(request));
 }
@@ -96,7 +96,7 @@ EntityTypesTracingConnection::BatchDeleteEntityTypes(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchDeleteEntityTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchDeleteEntityTypes(request));
 }
@@ -106,7 +106,7 @@ EntityTypesTracingConnection::BatchCreateEntities(
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchCreateEntities");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchCreateEntities(request));
 }
@@ -116,7 +116,7 @@ EntityTypesTracingConnection::BatchUpdateEntities(
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchUpdateEntities");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchUpdateEntities(request));
 }
@@ -126,7 +126,7 @@ EntityTypesTracingConnection::BatchDeleteEntities(
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchDeleteEntities");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchDeleteEntities(request));
 }

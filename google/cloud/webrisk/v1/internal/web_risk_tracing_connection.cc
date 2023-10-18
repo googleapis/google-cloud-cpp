@@ -72,7 +72,7 @@ WebRiskServiceTracingConnection::SubmitUri(
     google::cloud::webrisk::v1::SubmitUriRequest const& request) {
   auto span =
       internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::SubmitUri");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SubmitUri(request));
 }
 

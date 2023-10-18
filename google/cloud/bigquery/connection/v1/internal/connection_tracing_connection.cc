@@ -57,7 +57,7 @@ ConnectionServiceTracingConnection::ListConnections(
     google::cloud::bigquery::connection::v1::ListConnectionsRequest request) {
   auto span = internal::MakeSpan(
       "bigquery_connection_v1::ConnectionServiceConnection::ListConnections");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListConnections(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::connection::v1::Connection>(std::move(span),

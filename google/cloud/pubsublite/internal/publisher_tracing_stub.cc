@@ -38,7 +38,7 @@ PublisherServiceTracingStub::AsyncPublish(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.pubsublite.v1.PublisherService", "Publish");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncPublish(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<

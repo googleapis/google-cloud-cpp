@@ -37,7 +37,7 @@ TagValuesTracingConnection::ListTagValues(
     google::cloud::resourcemanager::v3::ListTagValuesRequest request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagValuesConnection::ListTagValues");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTagValues(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::resourcemanager::v3::TagValue>(std::move(span),
@@ -68,7 +68,7 @@ TagValuesTracingConnection::CreateTagValue(
     google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagValuesConnection::CreateTagValue");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateTagValue(request));
 }
 
@@ -77,7 +77,7 @@ TagValuesTracingConnection::UpdateTagValue(
     google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagValuesConnection::UpdateTagValue");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateTagValue(request));
 }
 
@@ -86,7 +86,7 @@ TagValuesTracingConnection::DeleteTagValue(
     google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagValuesConnection::DeleteTagValue");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTagValue(request));
 }
 

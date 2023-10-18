@@ -72,7 +72,7 @@ MetadataServiceTracingConnection::ListEntities(
     google::cloud::dataplex::v1::ListEntitiesRequest request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::MetadataServiceConnection::ListEntities");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEntities(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Entity>(
       std::move(span), std::move(sr));
@@ -109,7 +109,7 @@ MetadataServiceTracingConnection::ListPartitions(
     google::cloud::dataplex::v1::ListPartitionsRequest request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::MetadataServiceConnection::ListPartitions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPartitions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dataplex::v1::Partition>(std::move(span), std::move(sr));

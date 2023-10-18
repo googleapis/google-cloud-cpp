@@ -37,7 +37,7 @@ ServiceManagerTracingConnection::ListServices(
     google::api::servicemanagement::v1::ListServicesRequest request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::ListServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<
       google::api::servicemanagement::v1::ManagedService>(std::move(span),
@@ -58,7 +58,7 @@ ServiceManagerTracingConnection::CreateService(
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::CreateService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateService(request));
 }
 
@@ -67,7 +67,7 @@ ServiceManagerTracingConnection::DeleteService(
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::DeleteService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteService(request));
 }
 
@@ -76,7 +76,7 @@ ServiceManagerTracingConnection::UndeleteService(
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::UndeleteService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UndeleteService(request));
 }
 
@@ -85,7 +85,7 @@ ServiceManagerTracingConnection::ListServiceConfigs(
     google::api::servicemanagement::v1::ListServiceConfigsRequest request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::ListServiceConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServiceConfigs(std::move(request));
   return internal::MakeTracedStreamRange<google::api::Service>(std::move(span),
                                                                std::move(sr));
@@ -117,7 +117,7 @@ ServiceManagerTracingConnection::SubmitConfigSource(
         request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::SubmitConfigSource");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SubmitConfigSource(request));
 }
@@ -127,7 +127,7 @@ ServiceManagerTracingConnection::ListServiceRollouts(
     google::api::servicemanagement::v1::ListServiceRolloutsRequest request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::ListServiceRollouts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServiceRollouts(std::move(request));
   return internal::MakeTracedStreamRange<
       google::api::servicemanagement::v1::Rollout>(std::move(span),
@@ -150,7 +150,7 @@ ServiceManagerTracingConnection::CreateServiceRollout(
         request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::CreateServiceRollout");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateServiceRollout(request));
 }

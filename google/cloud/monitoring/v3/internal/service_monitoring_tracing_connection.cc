@@ -57,7 +57,7 @@ ServiceMonitoringServiceTracingConnection::ListServices(
     google::monitoring::v3::ListServicesRequest request) {
   auto span = internal::MakeSpan(
       "monitoring_v3::ServiceMonitoringServiceConnection::ListServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::Service>(
       std::move(span), std::move(sr));
@@ -106,7 +106,7 @@ ServiceMonitoringServiceTracingConnection::ListServiceLevelObjectives(
   auto span = internal::MakeSpan(
       "monitoring_v3::ServiceMonitoringServiceConnection::"
       "ListServiceLevelObjectives");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServiceLevelObjectives(std::move(request));
   return internal::MakeTracedStreamRange<
       google::monitoring::v3::ServiceLevelObjective>(std::move(span),

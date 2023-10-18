@@ -37,7 +37,7 @@ ServicesTracingConnection::ListServices(
     google::appengine::v1::ListServicesRequest request) {
   auto span =
       internal::MakeSpan("appengine_v1::ServicesConnection::ListServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::appengine::v1::Service>(
       std::move(span), std::move(sr));
@@ -56,7 +56,7 @@ ServicesTracingConnection::UpdateService(
     google::appengine::v1::UpdateServiceRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::ServicesConnection::UpdateService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateService(request));
 }
 
@@ -65,7 +65,7 @@ ServicesTracingConnection::DeleteService(
     google::appengine::v1::DeleteServiceRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::ServicesConnection::DeleteService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteService(request));
 }
 

@@ -37,7 +37,7 @@ KeyDashboardServiceTracingConnection::ListCryptoKeys(
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest request) {
   auto span = internal::MakeSpan(
       "kms_inventory_v1::KeyDashboardServiceConnection::ListCryptoKeys");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListCryptoKeys(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::kms::v1::CryptoKey>(
       std::move(span), std::move(sr));

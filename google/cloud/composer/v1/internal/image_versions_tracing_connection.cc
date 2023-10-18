@@ -38,7 +38,7 @@ ImageVersionsTracingConnection::ListImageVersions(
         request) {
   auto span = internal::MakeSpan(
       "composer_v1::ImageVersionsConnection::ListImageVersions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListImageVersions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::orchestration::airflow::service::v1::ImageVersion>(

@@ -36,7 +36,7 @@ StreamRange<google::cloud::ids::v1::Endpoint>
 IDSTracingConnection::ListEndpoints(
     google::cloud::ids::v1::ListEndpointsRequest request) {
   auto span = internal::MakeSpan("ids_v1::IDSConnection::ListEndpoints");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEndpoints(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::ids::v1::Endpoint>(
       std::move(span), std::move(sr));
@@ -53,7 +53,7 @@ future<StatusOr<google::cloud::ids::v1::Endpoint>>
 IDSTracingConnection::CreateEndpoint(
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
   auto span = internal::MakeSpan("ids_v1::IDSConnection::CreateEndpoint");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateEndpoint(request));
 }
 
@@ -61,7 +61,7 @@ future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
 IDSTracingConnection::DeleteEndpoint(
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
   auto span = internal::MakeSpan("ids_v1::IDSConnection::DeleteEndpoint");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteEndpoint(request));
 }
 

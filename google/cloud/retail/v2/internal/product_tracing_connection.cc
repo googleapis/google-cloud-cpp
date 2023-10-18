@@ -55,7 +55,7 @@ ProductServiceTracingConnection::ListProducts(
     google::cloud::retail::v2::ListProductsRequest request) {
   auto span =
       internal::MakeSpan("retail_v2::ProductServiceConnection::ListProducts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListProducts(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::retail::v2::Product>(
       std::move(span), std::move(sr));
@@ -83,7 +83,7 @@ ProductServiceTracingConnection::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const& request) {
   auto span =
       internal::MakeSpan("retail_v2::ProductServiceConnection::ImportProducts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportProducts(request));
 }
 
@@ -92,7 +92,7 @@ ProductServiceTracingConnection::SetInventory(
     google::cloud::retail::v2::SetInventoryRequest const& request) {
   auto span =
       internal::MakeSpan("retail_v2::ProductServiceConnection::SetInventory");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetInventory(request));
 }
 
@@ -101,7 +101,7 @@ ProductServiceTracingConnection::AddFulfillmentPlaces(
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::AddFulfillmentPlaces");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->AddFulfillmentPlaces(request));
 }
@@ -111,7 +111,7 @@ ProductServiceTracingConnection::RemoveFulfillmentPlaces(
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::RemoveFulfillmentPlaces");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RemoveFulfillmentPlaces(request));
 }
@@ -121,7 +121,7 @@ ProductServiceTracingConnection::AddLocalInventories(
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::AddLocalInventories");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->AddLocalInventories(request));
 }
@@ -131,7 +131,7 @@ ProductServiceTracingConnection::RemoveLocalInventories(
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::RemoveLocalInventories");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RemoveLocalInventories(request));
 }

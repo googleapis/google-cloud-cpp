@@ -42,7 +42,7 @@ GlobalForwardingRulesTracingConnection::DeleteForwardingRule(
   auto span = internal::MakeSpan(
       "compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection::"
       "DeleteForwardingRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteForwardingRule(request));
 }
@@ -65,7 +65,7 @@ GlobalForwardingRulesTracingConnection::InsertForwardingRule(
   auto span = internal::MakeSpan(
       "compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection::"
       "InsertForwardingRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertForwardingRule(request));
 }
@@ -77,7 +77,7 @@ GlobalForwardingRulesTracingConnection::ListGlobalForwardingRules(
   auto span = internal::MakeSpan(
       "compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection::"
       "ListGlobalForwardingRules");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListGlobalForwardingRules(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::ForwardingRule>(std::move(span),
@@ -91,7 +91,7 @@ GlobalForwardingRulesTracingConnection::PatchForwardingRule(
   auto span = internal::MakeSpan(
       "compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection::"
       "PatchForwardingRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchForwardingRule(request));
 }
@@ -103,7 +103,7 @@ GlobalForwardingRulesTracingConnection::SetLabels(
   auto span = internal::MakeSpan(
       "compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection::"
       "SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 
@@ -114,7 +114,7 @@ GlobalForwardingRulesTracingConnection::SetTarget(
   auto span = internal::MakeSpan(
       "compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection::"
       "SetTarget");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetTarget(request));
 }
 

@@ -37,7 +37,7 @@ DatasetServiceTracingConnection::CreateDataset(
     google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::CreateDataset");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateDataset(request));
 }
 
@@ -64,7 +64,7 @@ DatasetServiceTracingConnection::ListDatasets(
     google::cloud::aiplatform::v1::ListDatasetsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::ListDatasets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDatasets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::Dataset>(std::move(span), std::move(sr));
@@ -75,7 +75,7 @@ DatasetServiceTracingConnection::DeleteDataset(
     google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteDataset");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteDataset(request));
 }
 
@@ -84,7 +84,7 @@ DatasetServiceTracingConnection::ImportData(
     google::cloud::aiplatform::v1::ImportDataRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ImportData");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportData(request));
 }
 
@@ -93,7 +93,7 @@ DatasetServiceTracingConnection::ExportData(
     google::cloud::aiplatform::v1::ExportDataRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ExportData");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportData(request));
 }
 
@@ -102,7 +102,7 @@ DatasetServiceTracingConnection::CreateDatasetVersion(
     google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::CreateDatasetVersion");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateDatasetVersion(request));
 }
@@ -112,7 +112,7 @@ DatasetServiceTracingConnection::DeleteDatasetVersion(
     google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteDatasetVersion");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteDatasetVersion(request));
 }
@@ -131,7 +131,7 @@ DatasetServiceTracingConnection::ListDatasetVersions(
     google::cloud::aiplatform::v1::ListDatasetVersionsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::ListDatasetVersions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDatasetVersions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::DatasetVersion>(std::move(span),
@@ -144,7 +144,7 @@ DatasetServiceTracingConnection::RestoreDatasetVersion(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::RestoreDatasetVersion");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RestoreDatasetVersion(request));
 }
@@ -154,7 +154,7 @@ DatasetServiceTracingConnection::ListDataItems(
     google::cloud::aiplatform::v1::ListDataItemsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::ListDataItems");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDataItems(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::DataItem>(std::move(span), std::move(sr));
@@ -165,7 +165,7 @@ DatasetServiceTracingConnection::SearchDataItems(
     google::cloud::aiplatform::v1::SearchDataItemsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::SearchDataItems");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchDataItems(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::DataItemView>(std::move(span),
@@ -177,7 +177,7 @@ DatasetServiceTracingConnection::ListSavedQueries(
     google::cloud::aiplatform::v1::ListSavedQueriesRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::ListSavedQueries");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSavedQueries(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::SavedQuery>(std::move(span),
@@ -189,7 +189,7 @@ DatasetServiceTracingConnection::DeleteSavedQuery(
     google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteSavedQuery");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSavedQuery(request));
 }
 
@@ -207,7 +207,7 @@ DatasetServiceTracingConnection::ListAnnotations(
     google::cloud::aiplatform::v1::ListAnnotationsRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::ListAnnotations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAnnotations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::Annotation>(std::move(span),

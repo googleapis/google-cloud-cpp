@@ -36,14 +36,14 @@ future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysTracingConnection::CreateKey(
     google::api::apikeys::v2::CreateKeyRequest const& request) {
   auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::CreateKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateKey(request));
 }
 
 StreamRange<google::api::apikeys::v2::Key> ApiKeysTracingConnection::ListKeys(
     google::api::apikeys::v2::ListKeysRequest request) {
   auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::ListKeys");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListKeys(std::move(request));
   return internal::MakeTracedStreamRange<google::api::apikeys::v2::Key>(
       std::move(span), std::move(sr));
@@ -68,7 +68,7 @@ future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysTracingConnection::UpdateKey(
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
   auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::UpdateKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateKey(request));
 }
 
@@ -76,7 +76,7 @@ future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysTracingConnection::DeleteKey(
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
   auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::DeleteKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteKey(request));
 }
 
@@ -84,7 +84,7 @@ future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysTracingConnection::UndeleteKey(
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::UndeleteKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UndeleteKey(request));
 }
 

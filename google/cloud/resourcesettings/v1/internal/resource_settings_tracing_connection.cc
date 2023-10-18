@@ -39,7 +39,7 @@ ResourceSettingsServiceTracingConnection::ListSettings(
     google::cloud::resourcesettings::v1::ListSettingsRequest request) {
   auto span = internal::MakeSpan(
       "resourcesettings_v1::ResourceSettingsServiceConnection::ListSettings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSettings(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::resourcesettings::v1::Setting>(std::move(span),

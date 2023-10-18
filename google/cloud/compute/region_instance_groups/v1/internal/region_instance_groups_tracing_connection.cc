@@ -53,7 +53,7 @@ RegionInstanceGroupsTracingConnection::ListRegionInstanceGroups(
   auto span = internal::MakeSpan(
       "compute_region_instance_groups_v1::RegionInstanceGroupsConnection::"
       "ListRegionInstanceGroups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionInstanceGroups(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::InstanceGroup>(std::move(span),
@@ -67,7 +67,7 @@ RegionInstanceGroupsTracingConnection::ListInstances(
   auto span = internal::MakeSpan(
       "compute_region_instance_groups_v1::RegionInstanceGroupsConnection::"
       "ListInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInstances(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::InstanceWithNamedPorts>(std::move(span),
@@ -81,7 +81,7 @@ RegionInstanceGroupsTracingConnection::SetNamedPorts(
   auto span = internal::MakeSpan(
       "compute_region_instance_groups_v1::RegionInstanceGroupsConnection::"
       "SetNamedPorts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetNamedPorts(request));
 }
 

@@ -64,7 +64,7 @@ BudgetServiceTracingConnection::ListBudgets(
     google::cloud::billing::budgets::v1::ListBudgetsRequest request) {
   auto span = internal::MakeSpan(
       "billing_budgets_v1::BudgetServiceConnection::ListBudgets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBudgets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::billing::budgets::v1::Budget>(std::move(span),

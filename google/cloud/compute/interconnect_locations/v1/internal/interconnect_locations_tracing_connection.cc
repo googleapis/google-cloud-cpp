@@ -53,7 +53,7 @@ InterconnectLocationsTracingConnection::ListInterconnectLocations(
   auto span = internal::MakeSpan(
       "compute_interconnect_locations_v1::InterconnectLocationsConnection::"
       "ListInterconnectLocations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInterconnectLocations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::InterconnectLocation>(std::move(span),

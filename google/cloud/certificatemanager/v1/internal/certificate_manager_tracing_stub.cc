@@ -67,10 +67,8 @@ CertificateManagerTracingStub::AsyncCreateCertificate(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "CreateCertificate");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateCertificate(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -84,10 +82,8 @@ CertificateManagerTracingStub::AsyncUpdateCertificate(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "UpdateCertificate");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateCertificate(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -101,10 +97,8 @@ CertificateManagerTracingStub::AsyncDeleteCertificate(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "DeleteCertificate");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteCertificate(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -146,10 +140,8 @@ CertificateManagerTracingStub::AsyncCreateCertificateMap(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "CreateCertificateMap");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateCertificateMap(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -163,10 +155,8 @@ CertificateManagerTracingStub::AsyncUpdateCertificateMap(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "UpdateCertificateMap");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateCertificateMap(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -180,10 +170,8 @@ CertificateManagerTracingStub::AsyncDeleteCertificateMap(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "DeleteCertificateMap");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteCertificateMap(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -226,10 +214,8 @@ CertificateManagerTracingStub::AsyncCreateCertificateMapEntry(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "CreateCertificateMapEntry");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateCertificateMapEntry(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -243,10 +229,8 @@ CertificateManagerTracingStub::AsyncUpdateCertificateMapEntry(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "UpdateCertificateMapEntry");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateCertificateMapEntry(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -260,10 +244,8 @@ CertificateManagerTracingStub::AsyncDeleteCertificateMapEntry(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "DeleteCertificateMapEntry");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteCertificateMapEntry(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -305,10 +287,8 @@ CertificateManagerTracingStub::AsyncCreateDnsAuthorization(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "CreateDnsAuthorization");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateDnsAuthorization(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -322,10 +302,8 @@ CertificateManagerTracingStub::AsyncUpdateDnsAuthorization(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "UpdateDnsAuthorization");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateDnsAuthorization(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -339,10 +317,8 @@ CertificateManagerTracingStub::AsyncDeleteDnsAuthorization(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "DeleteDnsAuthorization");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteDnsAuthorization(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -385,10 +361,8 @@ CertificateManagerTracingStub::AsyncCreateCertificateIssuanceConfig(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "CreateCertificateIssuanceConfig");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateCertificateIssuanceConfig(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -402,10 +376,8 @@ CertificateManagerTracingStub::AsyncDeleteCertificateIssuanceConfig(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.certificatemanager.v1.CertificateManager",
       "DeleteCertificateIssuanceConfig");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteCertificateIssuanceConfig(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -417,10 +389,8 @@ CertificateManagerTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -431,10 +401,8 @@ future<Status> CertificateManagerTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

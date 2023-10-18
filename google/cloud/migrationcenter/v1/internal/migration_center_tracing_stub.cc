@@ -135,10 +135,8 @@ MigrationCenterTracingStub::AsyncCreateImportJob(
     google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "CreateImportJob");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateImportJob(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -174,10 +172,8 @@ MigrationCenterTracingStub::AsyncDeleteImportJob(
     google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "DeleteImportJob");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteImportJob(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -189,10 +185,8 @@ MigrationCenterTracingStub::AsyncUpdateImportJob(
     google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "UpdateImportJob");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateImportJob(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -205,10 +199,8 @@ MigrationCenterTracingStub::AsyncValidateImportJob(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "ValidateImportJob");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncValidateImportJob(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -220,10 +212,8 @@ MigrationCenterTracingStub::AsyncRunImportJob(
     google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "RunImportJob");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRunImportJob(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -263,10 +253,8 @@ MigrationCenterTracingStub::AsyncCreateImportDataFile(
   auto span =
       internal::MakeSpanGrpc("google.cloud.migrationcenter.v1.MigrationCenter",
                              "CreateImportDataFile");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateImportDataFile(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -280,10 +268,8 @@ MigrationCenterTracingStub::AsyncDeleteImportDataFile(
   auto span =
       internal::MakeSpanGrpc("google.cloud.migrationcenter.v1.MigrationCenter",
                              "DeleteImportDataFile");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteImportDataFile(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -318,10 +304,8 @@ MigrationCenterTracingStub::AsyncCreateGroup(
     google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "CreateGroup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateGroup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -333,10 +317,8 @@ MigrationCenterTracingStub::AsyncUpdateGroup(
     google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "UpdateGroup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateGroup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -348,10 +330,8 @@ MigrationCenterTracingStub::AsyncDeleteGroup(
     google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "DeleteGroup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteGroup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -364,10 +344,8 @@ MigrationCenterTracingStub::AsyncAddAssetsToGroup(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "AddAssetsToGroup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncAddAssetsToGroup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -381,10 +359,8 @@ MigrationCenterTracingStub::AsyncRemoveAssetsFromGroup(
   auto span =
       internal::MakeSpanGrpc("google.cloud.migrationcenter.v1.MigrationCenter",
                              "RemoveAssetsFromGroup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRemoveAssetsFromGroup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -443,10 +419,8 @@ MigrationCenterTracingStub::AsyncCreateSource(
     google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "CreateSource");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateSource(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -458,10 +432,8 @@ MigrationCenterTracingStub::AsyncUpdateSource(
     google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "UpdateSource");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateSource(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -473,10 +445,8 @@ MigrationCenterTracingStub::AsyncDeleteSource(
     google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "DeleteSource");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteSource(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -515,10 +485,8 @@ MigrationCenterTracingStub::AsyncCreatePreferenceSet(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "CreatePreferenceSet");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreatePreferenceSet(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -531,10 +499,8 @@ MigrationCenterTracingStub::AsyncUpdatePreferenceSet(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "UpdatePreferenceSet");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdatePreferenceSet(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -547,10 +513,8 @@ MigrationCenterTracingStub::AsyncDeletePreferenceSet(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "DeletePreferenceSet");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeletePreferenceSet(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -574,10 +538,8 @@ MigrationCenterTracingStub::AsyncUpdateSettings(
     google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "UpdateSettings");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateSettings(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -590,10 +552,8 @@ MigrationCenterTracingStub::AsyncCreateReportConfig(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "CreateReportConfig");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateReportConfig(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -631,10 +591,8 @@ MigrationCenterTracingStub::AsyncDeleteReportConfig(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "DeleteReportConfig");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteReportConfig(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -646,10 +604,8 @@ MigrationCenterTracingStub::AsyncCreateReport(
     google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "CreateReport");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateReport(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -684,10 +640,8 @@ MigrationCenterTracingStub::AsyncDeleteReport(
     google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.migrationcenter.v1.MigrationCenter", "DeleteReport");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteReport(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -699,10 +653,8 @@ MigrationCenterTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -713,10 +665,8 @@ future<Status> MigrationCenterTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

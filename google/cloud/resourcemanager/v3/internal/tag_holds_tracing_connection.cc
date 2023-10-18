@@ -37,7 +37,7 @@ TagHoldsTracingConnection::CreateTagHold(
     google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::CreateTagHold");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateTagHold(request));
 }
 
@@ -46,7 +46,7 @@ TagHoldsTracingConnection::DeleteTagHold(
     google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::DeleteTagHold");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTagHold(request));
 }
 
@@ -55,7 +55,7 @@ TagHoldsTracingConnection::ListTagHolds(
     google::cloud::resourcemanager::v3::ListTagHoldsRequest request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::ListTagHolds");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTagHolds(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::resourcemanager::v3::TagHold>(std::move(span),

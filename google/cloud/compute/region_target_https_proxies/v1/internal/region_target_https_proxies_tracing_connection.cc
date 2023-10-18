@@ -43,7 +43,7 @@ RegionTargetHttpsProxiesTracingConnection::DeleteTargetHttpsProxy(
   auto span = internal::MakeSpan(
       "compute_region_target_https_proxies_v1::"
       "RegionTargetHttpsProxiesConnection::DeleteTargetHttpsProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTargetHttpsProxy(request));
 }
@@ -66,7 +66,7 @@ RegionTargetHttpsProxiesTracingConnection::InsertTargetHttpsProxy(
   auto span = internal::MakeSpan(
       "compute_region_target_https_proxies_v1::"
       "RegionTargetHttpsProxiesConnection::InsertTargetHttpsProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertTargetHttpsProxy(request));
 }
@@ -78,7 +78,7 @@ RegionTargetHttpsProxiesTracingConnection::ListRegionTargetHttpsProxies(
   auto span = internal::MakeSpan(
       "compute_region_target_https_proxies_v1::"
       "RegionTargetHttpsProxiesConnection::ListRegionTargetHttpsProxies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionTargetHttpsProxies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::TargetHttpsProxy>(std::move(span),
@@ -92,7 +92,7 @@ RegionTargetHttpsProxiesTracingConnection::PatchTargetHttpsProxy(
   auto span = internal::MakeSpan(
       "compute_region_target_https_proxies_v1::"
       "RegionTargetHttpsProxiesConnection::PatchTargetHttpsProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchTargetHttpsProxy(request));
 }
@@ -104,7 +104,7 @@ RegionTargetHttpsProxiesTracingConnection::SetSslCertificates(
   auto span = internal::MakeSpan(
       "compute_region_target_https_proxies_v1::"
       "RegionTargetHttpsProxiesConnection::SetSslCertificates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetSslCertificates(request));
 }
@@ -116,7 +116,7 @@ RegionTargetHttpsProxiesTracingConnection::SetUrlMap(
   auto span = internal::MakeSpan(
       "compute_region_target_https_proxies_v1::"
       "RegionTargetHttpsProxiesConnection::SetUrlMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetUrlMap(request));
 }
 

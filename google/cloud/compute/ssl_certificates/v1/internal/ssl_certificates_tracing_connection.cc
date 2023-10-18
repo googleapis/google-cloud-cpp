@@ -41,7 +41,7 @@ SslCertificatesTracingConnection::AggregatedListSslCertificates(
   auto span = internal::MakeSpan(
       "compute_ssl_certificates_v1::SslCertificatesConnection::"
       "AggregatedListSslCertificates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListSslCertificates(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>(
@@ -55,7 +55,7 @@ SslCertificatesTracingConnection::DeleteSslCertificate(
   auto span = internal::MakeSpan(
       "compute_ssl_certificates_v1::SslCertificatesConnection::"
       "DeleteSslCertificate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteSslCertificate(request));
 }
@@ -78,7 +78,7 @@ SslCertificatesTracingConnection::InsertSslCertificate(
   auto span = internal::MakeSpan(
       "compute_ssl_certificates_v1::SslCertificatesConnection::"
       "InsertSslCertificate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertSslCertificate(request));
 }
@@ -90,7 +90,7 @@ SslCertificatesTracingConnection::ListSslCertificates(
   auto span = internal::MakeSpan(
       "compute_ssl_certificates_v1::SslCertificatesConnection::"
       "ListSslCertificates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSslCertificates(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::SslCertificate>(std::move(span),

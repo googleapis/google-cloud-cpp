@@ -46,7 +46,7 @@ SchemaServiceTracingConnection::ListSchemas(
     google::cloud::discoveryengine::v1::ListSchemasRequest request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::ListSchemas");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSchemas(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::discoveryengine::v1::Schema>(std::move(span),
@@ -58,7 +58,7 @@ SchemaServiceTracingConnection::CreateSchema(
     google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::CreateSchema");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateSchema(request));
 }
 
@@ -67,7 +67,7 @@ SchemaServiceTracingConnection::UpdateSchema(
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::UpdateSchema");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateSchema(request));
 }
 
@@ -76,7 +76,7 @@ SchemaServiceTracingConnection::DeleteSchema(
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::DeleteSchema");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSchema(request));
 }
 

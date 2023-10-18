@@ -35,7 +35,7 @@ PoliciesTracingConnection::PoliciesTracingConnection(
 StreamRange<google::iam::v2::Policy> PoliciesTracingConnection::ListPolicies(
     google::iam::v2::ListPoliciesRequest request) {
   auto span = internal::MakeSpan("iam_v2::PoliciesConnection::ListPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPolicies(std::move(request));
   return internal::MakeTracedStreamRange<google::iam::v2::Policy>(
       std::move(span), std::move(sr));
@@ -52,7 +52,7 @@ future<StatusOr<google::iam::v2::Policy>>
 PoliciesTracingConnection::CreatePolicy(
     google::iam::v2::CreatePolicyRequest const& request) {
   auto span = internal::MakeSpan("iam_v2::PoliciesConnection::CreatePolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreatePolicy(request));
 }
 
@@ -60,7 +60,7 @@ future<StatusOr<google::iam::v2::Policy>>
 PoliciesTracingConnection::UpdatePolicy(
     google::iam::v2::UpdatePolicyRequest const& request) {
   auto span = internal::MakeSpan("iam_v2::PoliciesConnection::UpdatePolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdatePolicy(request));
 }
 
@@ -68,7 +68,7 @@ future<StatusOr<google::iam::v2::Policy>>
 PoliciesTracingConnection::DeletePolicy(
     google::iam::v2::DeletePolicyRequest const& request) {
   auto span = internal::MakeSpan("iam_v2::PoliciesConnection::DeletePolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeletePolicy(request));
 }
 

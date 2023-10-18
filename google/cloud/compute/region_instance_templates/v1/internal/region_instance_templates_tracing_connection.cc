@@ -43,7 +43,7 @@ RegionInstanceTemplatesTracingConnection::DeleteInstanceTemplate(
   auto span = internal::MakeSpan(
       "compute_region_instance_templates_v1::RegionInstanceTemplatesConnection:"
       ":DeleteInstanceTemplate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteInstanceTemplate(request));
 }
@@ -66,7 +66,7 @@ RegionInstanceTemplatesTracingConnection::InsertInstanceTemplate(
   auto span = internal::MakeSpan(
       "compute_region_instance_templates_v1::RegionInstanceTemplatesConnection:"
       ":InsertInstanceTemplate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertInstanceTemplate(request));
 }
@@ -78,7 +78,7 @@ RegionInstanceTemplatesTracingConnection::ListRegionInstanceTemplates(
   auto span = internal::MakeSpan(
       "compute_region_instance_templates_v1::RegionInstanceTemplatesConnection:"
       ":ListRegionInstanceTemplates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionInstanceTemplates(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::InstanceTemplate>(std::move(span),

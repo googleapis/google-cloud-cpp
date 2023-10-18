@@ -46,7 +46,7 @@ FoldersTracingConnection::ListFolders(
     google::cloud::resourcemanager::v3::ListFoldersRequest request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::ListFolders");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListFolders(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::resourcemanager::v3::Folder>(std::move(span),
@@ -58,7 +58,7 @@ FoldersTracingConnection::SearchFolders(
     google::cloud::resourcemanager::v3::SearchFoldersRequest request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::FoldersConnection::SearchFolders");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchFolders(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::resourcemanager::v3::Folder>(std::move(span),
@@ -70,7 +70,7 @@ FoldersTracingConnection::CreateFolder(
     google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::CreateFolder");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateFolder(request));
 }
 
@@ -79,7 +79,7 @@ FoldersTracingConnection::UpdateFolder(
     google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::UpdateFolder");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateFolder(request));
 }
 
@@ -88,7 +88,7 @@ FoldersTracingConnection::MoveFolder(
     google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::MoveFolder");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->MoveFolder(request));
 }
 
@@ -97,7 +97,7 @@ FoldersTracingConnection::DeleteFolder(
     google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::DeleteFolder");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteFolder(request));
 }
 
@@ -106,7 +106,7 @@ FoldersTracingConnection::UndeleteFolder(
     google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::FoldersConnection::UndeleteFolder");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UndeleteFolder(request));
 }
 

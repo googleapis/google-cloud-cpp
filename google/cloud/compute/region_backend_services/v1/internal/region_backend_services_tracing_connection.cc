@@ -42,7 +42,7 @@ RegionBackendServicesTracingConnection::DeleteBackendService(
   auto span = internal::MakeSpan(
       "compute_region_backend_services_v1::RegionBackendServicesConnection::"
       "DeleteBackendService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteBackendService(request));
 }
@@ -87,7 +87,7 @@ RegionBackendServicesTracingConnection::InsertBackendService(
   auto span = internal::MakeSpan(
       "compute_region_backend_services_v1::RegionBackendServicesConnection::"
       "InsertBackendService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertBackendService(request));
 }
@@ -99,7 +99,7 @@ RegionBackendServicesTracingConnection::ListRegionBackendServices(
   auto span = internal::MakeSpan(
       "compute_region_backend_services_v1::RegionBackendServicesConnection::"
       "ListRegionBackendServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionBackendServices(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::BackendService>(std::move(span),
@@ -113,7 +113,7 @@ RegionBackendServicesTracingConnection::ListUsable(
   auto span = internal::MakeSpan(
       "compute_region_backend_services_v1::RegionBackendServicesConnection::"
       "ListUsable");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListUsable(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::BackendService>(std::move(span),
@@ -127,7 +127,7 @@ RegionBackendServicesTracingConnection::PatchBackendService(
   auto span = internal::MakeSpan(
       "compute_region_backend_services_v1::RegionBackendServicesConnection::"
       "PatchBackendService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchBackendService(request));
 }
@@ -150,7 +150,7 @@ RegionBackendServicesTracingConnection::SetSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_region_backend_services_v1::RegionBackendServicesConnection::"
       "SetSecurityPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetSecurityPolicy(request));
 }
 
@@ -161,7 +161,7 @@ RegionBackendServicesTracingConnection::UpdateBackendService(
   auto span = internal::MakeSpan(
       "compute_region_backend_services_v1::RegionBackendServicesConnection::"
       "UpdateBackendService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateBackendService(request));
 }

@@ -37,7 +37,7 @@ WorkflowsTracingConnection::ListWorkflows(
     google::cloud::workflows::v1::ListWorkflowsRequest request) {
   auto span =
       internal::MakeSpan("workflows_v1::WorkflowsConnection::ListWorkflows");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListWorkflows(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::workflows::v1::Workflow>(std::move(span), std::move(sr));
@@ -57,7 +57,7 @@ WorkflowsTracingConnection::CreateWorkflow(
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
   auto span =
       internal::MakeSpan("workflows_v1::WorkflowsConnection::CreateWorkflow");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateWorkflow(request));
 }
 
@@ -66,7 +66,7 @@ WorkflowsTracingConnection::DeleteWorkflow(
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
   auto span =
       internal::MakeSpan("workflows_v1::WorkflowsConnection::DeleteWorkflow");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteWorkflow(request));
 }
 
@@ -75,7 +75,7 @@ WorkflowsTracingConnection::UpdateWorkflow(
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
   auto span =
       internal::MakeSpan("workflows_v1::WorkflowsConnection::UpdateWorkflow");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateWorkflow(request));
 }
 

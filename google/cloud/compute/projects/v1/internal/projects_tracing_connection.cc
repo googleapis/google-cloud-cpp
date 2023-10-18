@@ -38,7 +38,7 @@ ProjectsTracingConnection::DisableXpnHost(
         request) {
   auto span = internal::MakeSpan(
       "compute_projects_v1::ProjectsConnection::DisableXpnHost");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DisableXpnHost(request));
 }
 
@@ -48,7 +48,7 @@ ProjectsTracingConnection::DisableXpnResource(
         request) {
   auto span = internal::MakeSpan(
       "compute_projects_v1::ProjectsConnection::DisableXpnResource");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DisableXpnResource(request));
 }
@@ -59,7 +59,7 @@ ProjectsTracingConnection::EnableXpnHost(
         request) {
   auto span = internal::MakeSpan(
       "compute_projects_v1::ProjectsConnection::EnableXpnHost");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->EnableXpnHost(request));
 }
 
@@ -69,7 +69,7 @@ ProjectsTracingConnection::EnableXpnResource(
         request) {
   auto span = internal::MakeSpan(
       "compute_projects_v1::ProjectsConnection::EnableXpnResource");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->EnableXpnResource(request));
 }
 
@@ -108,7 +108,7 @@ ProjectsTracingConnection::ListXpnHosts(
     google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request) {
   auto span = internal::MakeSpan(
       "compute_projects_v1::ProjectsConnection::ListXpnHosts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListXpnHosts(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Project>(std::move(span), std::move(sr));
@@ -119,7 +119,7 @@ ProjectsTracingConnection::MoveDisk(
     google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
   auto span =
       internal::MakeSpan("compute_projects_v1::ProjectsConnection::MoveDisk");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->MoveDisk(request));
 }
 
@@ -129,7 +129,7 @@ ProjectsTracingConnection::MoveInstance(
         request) {
   auto span = internal::MakeSpan(
       "compute_projects_v1::ProjectsConnection::MoveInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->MoveInstance(request));
 }
 
@@ -139,7 +139,7 @@ ProjectsTracingConnection::SetCommonInstanceMetadata(
         SetCommonInstanceMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_projects_v1::ProjectsConnection::SetCommonInstanceMetadata");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetCommonInstanceMetadata(request));
 }
@@ -150,7 +150,7 @@ ProjectsTracingConnection::SetDefaultNetworkTier(
         SetDefaultNetworkTierRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_projects_v1::ProjectsConnection::SetDefaultNetworkTier");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetDefaultNetworkTier(request));
 }
@@ -161,7 +161,7 @@ ProjectsTracingConnection::SetUsageExportBucket(
         SetUsageExportBucketRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_projects_v1::ProjectsConnection::SetUsageExportBucket");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetUsageExportBucket(request));
 }

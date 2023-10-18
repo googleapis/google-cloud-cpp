@@ -39,7 +39,7 @@ NodeTypesTracingConnection::AggregatedListNodeTypes(
         request) {
   auto span = internal::MakeSpan(
       "compute_node_types_v1::NodeTypesConnection::AggregatedListNodeTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListNodeTypes(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>(
@@ -61,7 +61,7 @@ NodeTypesTracingConnection::ListNodeTypes(
     google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request) {
   auto span = internal::MakeSpan(
       "compute_node_types_v1::NodeTypesConnection::ListNodeTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNodeTypes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::NodeType>(std::move(span),

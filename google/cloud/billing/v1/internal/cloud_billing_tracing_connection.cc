@@ -46,7 +46,7 @@ CloudBillingTracingConnection::ListBillingAccounts(
     google::cloud::billing::v1::ListBillingAccountsRequest request) {
   auto span = internal::MakeSpan(
       "billing_v1::CloudBillingConnection::ListBillingAccounts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBillingAccounts(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::billing::v1::BillingAccount>(std::move(span),
@@ -76,7 +76,7 @@ CloudBillingTracingConnection::ListProjectBillingInfo(
     google::cloud::billing::v1::ListProjectBillingInfoRequest request) {
   auto span = internal::MakeSpan(
       "billing_v1::CloudBillingConnection::ListProjectBillingInfo");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListProjectBillingInfo(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::billing::v1::ProjectBillingInfo>(std::move(span),

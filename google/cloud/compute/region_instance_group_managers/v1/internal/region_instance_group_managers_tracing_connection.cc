@@ -43,7 +43,7 @@ RegionInstanceGroupManagersTracingConnection::AbandonInstances(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::AbandonInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AbandonInstances(request));
 }
 
@@ -54,7 +54,7 @@ RegionInstanceGroupManagersTracingConnection::ApplyUpdatesToInstances(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::ApplyUpdatesToInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ApplyUpdatesToInstances(request));
 }
@@ -66,7 +66,7 @@ RegionInstanceGroupManagersTracingConnection::CreateInstances(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::CreateInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateInstances(request));
 }
 
@@ -77,7 +77,7 @@ RegionInstanceGroupManagersTracingConnection::DeleteInstanceGroupManager(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::DeleteInstanceGroupManager");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteInstanceGroupManager(request));
 }
@@ -89,7 +89,7 @@ RegionInstanceGroupManagersTracingConnection::DeleteInstances(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::DeleteInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteInstances(request));
 }
 
@@ -100,7 +100,7 @@ RegionInstanceGroupManagersTracingConnection::DeletePerInstanceConfigs(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::DeletePerInstanceConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeletePerInstanceConfigs(request));
 }
@@ -123,7 +123,7 @@ RegionInstanceGroupManagersTracingConnection::InsertInstanceGroupManager(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::InsertInstanceGroupManager");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertInstanceGroupManager(request));
 }
@@ -135,7 +135,7 @@ RegionInstanceGroupManagersTracingConnection::ListRegionInstanceGroupManagers(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::ListRegionInstanceGroupManagers");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionInstanceGroupManagers(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::InstanceGroupManager>(std::move(span),
@@ -149,7 +149,7 @@ RegionInstanceGroupManagersTracingConnection::ListErrors(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::ListErrors");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListErrors(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::InstanceManagedByIgmError>(
@@ -175,7 +175,7 @@ RegionInstanceGroupManagersTracingConnection::ListPerInstanceConfigs(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::ListPerInstanceConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPerInstanceConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::PerInstanceConfig>(std::move(span),
@@ -189,7 +189,7 @@ RegionInstanceGroupManagersTracingConnection::PatchInstanceGroupManager(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::PatchInstanceGroupManager");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchInstanceGroupManager(request));
 }
@@ -201,7 +201,7 @@ RegionInstanceGroupManagersTracingConnection::PatchPerInstanceConfigs(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::PatchPerInstanceConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchPerInstanceConfigs(request));
 }
@@ -213,7 +213,7 @@ RegionInstanceGroupManagersTracingConnection::RecreateInstances(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::RecreateInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RecreateInstances(request));
 }
 
@@ -224,7 +224,7 @@ RegionInstanceGroupManagersTracingConnection::Resize(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::Resize");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->Resize(request));
 }
 
@@ -235,7 +235,7 @@ RegionInstanceGroupManagersTracingConnection::SetInstanceTemplate(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::SetInstanceTemplate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetInstanceTemplate(request));
 }
@@ -247,7 +247,7 @@ RegionInstanceGroupManagersTracingConnection::SetTargetPools(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::SetTargetPools");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetTargetPools(request));
 }
 
@@ -258,7 +258,7 @@ RegionInstanceGroupManagersTracingConnection::UpdatePerInstanceConfigs(
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::UpdatePerInstanceConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdatePerInstanceConfigs(request));
 }

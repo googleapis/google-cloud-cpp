@@ -149,10 +149,8 @@ ArtifactRegistryTracingStub::AsyncImportAptArtifacts(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.artifactregistry.v1.ArtifactRegistry",
       "ImportAptArtifacts");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncImportAptArtifacts(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -166,10 +164,8 @@ ArtifactRegistryTracingStub::AsyncImportYumArtifacts(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.artifactregistry.v1.ArtifactRegistry",
       "ImportYumArtifacts");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncImportYumArtifacts(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -210,10 +206,8 @@ ArtifactRegistryTracingStub::AsyncCreateRepository(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.artifactregistry.v1.ArtifactRegistry",
       "CreateRepository");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateRepository(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -241,10 +235,8 @@ ArtifactRegistryTracingStub::AsyncDeleteRepository(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.artifactregistry.v1.ArtifactRegistry",
       "DeleteRepository");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteRepository(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -282,10 +274,8 @@ ArtifactRegistryTracingStub::AsyncDeletePackage(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.artifactregistry.v1.ArtifactRegistry", "DeletePackage");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeletePackage(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -323,10 +313,8 @@ ArtifactRegistryTracingStub::AsyncDeleteVersion(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.artifactregistry.v1.ArtifactRegistry", "DeleteVersion");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -504,10 +492,8 @@ ArtifactRegistryTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -518,10 +504,8 @@ future<Status> ArtifactRegistryTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

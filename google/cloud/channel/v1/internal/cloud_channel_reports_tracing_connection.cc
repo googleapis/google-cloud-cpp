@@ -38,7 +38,7 @@ CloudChannelReportsServiceTracingConnection::RunReportJob(
     google::cloud::channel::v1::RunReportJobRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelReportsServiceConnection::RunReportJob");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RunReportJob(request));
 }
 
@@ -47,7 +47,7 @@ CloudChannelReportsServiceTracingConnection::FetchReportResults(
     google::cloud::channel::v1::FetchReportResultsRequest request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelReportsServiceConnection::FetchReportResults");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->FetchReportResults(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::channel::v1::Row>(
       std::move(span), std::move(sr));
@@ -58,7 +58,7 @@ CloudChannelReportsServiceTracingConnection::ListReports(
     google::cloud::channel::v1::ListReportsRequest request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelReportsServiceConnection::ListReports");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListReports(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::channel::v1::Report>(
       std::move(span), std::move(sr));

@@ -38,7 +38,7 @@ ConversationProfilesTracingConnection::ListConversationProfiles(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationProfilesConnection::"
       "ListConversationProfiles");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListConversationProfiles(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::v2::ConversationProfile>(std::move(span),
@@ -94,7 +94,7 @@ ConversationProfilesTracingConnection::SetSuggestionFeatureConfig(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationProfilesConnection::"
       "SetSuggestionFeatureConfig");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetSuggestionFeatureConfig(request));
 }
@@ -106,7 +106,7 @@ ConversationProfilesTracingConnection::ClearSuggestionFeatureConfig(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationProfilesConnection::"
       "ClearSuggestionFeatureConfig");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ClearSuggestionFeatureConfig(request));
 }

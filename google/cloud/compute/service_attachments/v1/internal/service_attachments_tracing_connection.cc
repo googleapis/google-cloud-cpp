@@ -42,7 +42,7 @@ ServiceAttachmentsTracingConnection::AggregatedListServiceAttachments(
   auto span = internal::MakeSpan(
       "compute_service_attachments_v1::ServiceAttachmentsConnection::"
       "AggregatedListServiceAttachments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListServiceAttachments(std::move(request));
   return internal::MakeTracedStreamRange<
       std::pair<std::string,
@@ -57,7 +57,7 @@ ServiceAttachmentsTracingConnection::DeleteServiceAttachment(
   auto span = internal::MakeSpan(
       "compute_service_attachments_v1::ServiceAttachmentsConnection::"
       "DeleteServiceAttachment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteServiceAttachment(request));
 }
@@ -91,7 +91,7 @@ ServiceAttachmentsTracingConnection::InsertServiceAttachment(
   auto span = internal::MakeSpan(
       "compute_service_attachments_v1::ServiceAttachmentsConnection::"
       "InsertServiceAttachment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertServiceAttachment(request));
 }
@@ -103,7 +103,7 @@ ServiceAttachmentsTracingConnection::ListServiceAttachments(
   auto span = internal::MakeSpan(
       "compute_service_attachments_v1::ServiceAttachmentsConnection::"
       "ListServiceAttachments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServiceAttachments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::ServiceAttachment>(std::move(span),
@@ -117,7 +117,7 @@ ServiceAttachmentsTracingConnection::PatchServiceAttachment(
   auto span = internal::MakeSpan(
       "compute_service_attachments_v1::ServiceAttachmentsConnection::"
       "PatchServiceAttachment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchServiceAttachment(request));
 }

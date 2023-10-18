@@ -47,10 +47,8 @@ JobServiceTracingStub::AsyncBatchCreateJobs(
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.JobService",
                                      "BatchCreateJobs");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncBatchCreateJobs(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -82,10 +80,8 @@ JobServiceTracingStub::AsyncBatchUpdateJobs(
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.JobService",
                                      "BatchUpdateJobs");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncBatchUpdateJobs(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -107,10 +103,8 @@ JobServiceTracingStub::AsyncBatchDeleteJobs(
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.JobService",
                                      "BatchDeleteJobs");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncBatchDeleteJobs(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -157,10 +151,8 @@ JobServiceTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -171,10 +163,8 @@ future<Status> JobServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

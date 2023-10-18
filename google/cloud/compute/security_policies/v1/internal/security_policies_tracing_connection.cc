@@ -39,7 +39,7 @@ SecurityPoliciesTracingConnection::AddRule(
         request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::AddRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddRule(request));
 }
 
@@ -51,7 +51,7 @@ SecurityPoliciesTracingConnection::AggregatedListSecurityPolicies(
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::"
       "AggregatedListSecurityPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListSecurityPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       std::pair<std::string,
@@ -66,7 +66,7 @@ SecurityPoliciesTracingConnection::DeleteSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::"
       "DeleteSecurityPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteSecurityPolicy(request));
 }
@@ -99,7 +99,7 @@ SecurityPoliciesTracingConnection::InsertSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::"
       "InsertSecurityPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertSecurityPolicy(request));
 }
@@ -111,7 +111,7 @@ SecurityPoliciesTracingConnection::ListSecurityPolicies(
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::"
       "ListSecurityPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSecurityPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::SecurityPolicy>(std::move(span),
@@ -138,7 +138,7 @@ SecurityPoliciesTracingConnection::PatchSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::"
       "PatchSecurityPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchSecurityPolicy(request));
 }
@@ -149,7 +149,7 @@ SecurityPoliciesTracingConnection::PatchRule(
         request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::PatchRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchRule(request));
 }
 
@@ -159,7 +159,7 @@ SecurityPoliciesTracingConnection::RemoveRule(
         request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::RemoveRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RemoveRule(request));
 }
 
@@ -169,7 +169,7 @@ SecurityPoliciesTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 

@@ -73,7 +73,7 @@ DocumentServiceTracingConnection::SearchDocuments(
     google::cloud::contentwarehouse::v1::SearchDocumentsRequest request) {
   auto span = internal::MakeSpan(
       "contentwarehouse_v1::DocumentServiceConnection::SearchDocuments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchDocuments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::contentwarehouse::v1::SearchDocumentsResponse::

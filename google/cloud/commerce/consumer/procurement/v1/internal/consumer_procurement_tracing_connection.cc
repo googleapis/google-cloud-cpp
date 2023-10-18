@@ -43,7 +43,7 @@ ConsumerProcurementServiceTracingConnection::PlaceOrder(
   auto span = internal::MakeSpan(
       "commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection::"
       "PlaceOrder");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PlaceOrder(request));
 }
 
@@ -65,7 +65,7 @@ ConsumerProcurementServiceTracingConnection::ListOrders(
   auto span = internal::MakeSpan(
       "commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection::"
       "ListOrders");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListOrders(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::commerce::consumer::procurement::v1::Order>(

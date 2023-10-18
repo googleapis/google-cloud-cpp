@@ -40,7 +40,7 @@ VideoIntelligenceServiceTracingConnection::AnnotateVideo(
   auto span = internal::MakeSpan(
       "videointelligence_v1::VideoIntelligenceServiceConnection::"
       "AnnotateVideo");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AnnotateVideo(request));
 }
 

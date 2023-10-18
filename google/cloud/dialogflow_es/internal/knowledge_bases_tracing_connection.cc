@@ -37,7 +37,7 @@ KnowledgeBasesTracingConnection::ListKnowledgeBases(
     google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::KnowledgeBasesConnection::ListKnowledgeBases");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListKnowledgeBases(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::v2::KnowledgeBase>(std::move(span),

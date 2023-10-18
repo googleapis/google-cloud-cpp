@@ -37,7 +37,7 @@ IntentsTracingConnection::ListIntents(
     google::cloud::dialogflow::v2::ListIntentsRequest request) {
   auto span =
       internal::MakeSpan("dialogflow_es::IntentsConnection::ListIntents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListIntents(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::Intent>(
       std::move(span), std::move(sr));
@@ -82,7 +82,7 @@ IntentsTracingConnection::BatchUpdateIntents(
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::IntentsConnection::BatchUpdateIntents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchUpdateIntents(request));
 }
@@ -92,7 +92,7 @@ IntentsTracingConnection::BatchDeleteIntents(
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::IntentsConnection::BatchDeleteIntents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchDeleteIntents(request));
 }

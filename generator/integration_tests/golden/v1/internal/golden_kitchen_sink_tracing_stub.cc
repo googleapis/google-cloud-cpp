@@ -135,7 +135,7 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
 GoldenKitchenSinkTracingStub::AsyncStreamingReadWrite(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
   auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "StreamingReadWrite");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncStreamingReadWrite(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
@@ -170,7 +170,7 @@ GoldenKitchenSinkTracingStub::AsyncStreamingRead(
     std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::Request const& request) {
   auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "StreamingRead");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncStreamingRead(cq, context, request);
   return std::make_unique<
@@ -184,7 +184,7 @@ GoldenKitchenSinkTracingStub::AsyncStreamingWrite(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context) {
   auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "StreamingWrite");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncStreamingWrite(cq, context);
   return std::make_unique<

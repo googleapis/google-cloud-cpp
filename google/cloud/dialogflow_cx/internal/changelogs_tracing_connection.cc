@@ -37,7 +37,7 @@ ChangelogsTracingConnection::ListChangelogs(
     google::cloud::dialogflow::cx::v3::ListChangelogsRequest request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::ChangelogsConnection::ListChangelogs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListChangelogs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::cx::v3::Changelog>(std::move(span),

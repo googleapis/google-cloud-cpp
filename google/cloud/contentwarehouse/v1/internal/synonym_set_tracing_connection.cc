@@ -75,7 +75,7 @@ SynonymSetServiceTracingConnection::ListSynonymSets(
     google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request) {
   auto span = internal::MakeSpan(
       "contentwarehouse_v1::SynonymSetServiceConnection::ListSynonymSets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSynonymSets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::contentwarehouse::v1::SynonymSet>(std::move(span),

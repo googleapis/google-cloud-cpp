@@ -37,7 +37,7 @@ MigrationServiceTracingConnection::SearchMigratableResources(
     google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MigrationServiceConnection::SearchMigratableResources");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchMigratableResources(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::aiplatform::v1::MigratableResource>(std::move(span),
@@ -50,7 +50,7 @@ MigrationServiceTracingConnection::BatchMigrateResources(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MigrationServiceConnection::BatchMigrateResources");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchMigrateResources(request));
 }

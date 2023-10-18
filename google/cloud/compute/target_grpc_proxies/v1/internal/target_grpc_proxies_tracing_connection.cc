@@ -40,7 +40,7 @@ TargetGrpcProxiesTracingConnection::DeleteTargetGrpcProxy(
   auto span = internal::MakeSpan(
       "compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection::"
       "DeleteTargetGrpcProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTargetGrpcProxy(request));
 }
@@ -63,7 +63,7 @@ TargetGrpcProxiesTracingConnection::InsertTargetGrpcProxy(
   auto span = internal::MakeSpan(
       "compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection::"
       "InsertTargetGrpcProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertTargetGrpcProxy(request));
 }
@@ -75,7 +75,7 @@ TargetGrpcProxiesTracingConnection::ListTargetGrpcProxies(
   auto span = internal::MakeSpan(
       "compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection::"
       "ListTargetGrpcProxies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTargetGrpcProxies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::TargetGrpcProxy>(std::move(span),
@@ -89,7 +89,7 @@ TargetGrpcProxiesTracingConnection::PatchTargetGrpcProxy(
   auto span = internal::MakeSpan(
       "compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection::"
       "PatchTargetGrpcProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchTargetGrpcProxy(request));
 }

@@ -37,7 +37,7 @@ FirewallTracingConnection::ListIngressRules(
     google::appengine::v1::ListIngressRulesRequest request) {
   auto span =
       internal::MakeSpan("appengine_v1::FirewallConnection::ListIngressRules");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListIngressRules(std::move(request));
   return internal::MakeTracedStreamRange<google::appengine::v1::FirewallRule>(
       std::move(span), std::move(sr));

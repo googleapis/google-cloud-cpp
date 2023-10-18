@@ -46,7 +46,7 @@ FunctionServiceTracingConnection::ListFunctions(
     google::cloud::functions::v2::ListFunctionsRequest request) {
   auto span = internal::MakeSpan(
       "functions_v2::FunctionServiceConnection::ListFunctions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListFunctions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::functions::v2::Function>(std::move(span), std::move(sr));
@@ -57,7 +57,7 @@ FunctionServiceTracingConnection::CreateFunction(
     google::cloud::functions::v2::CreateFunctionRequest const& request) {
   auto span = internal::MakeSpan(
       "functions_v2::FunctionServiceConnection::CreateFunction");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateFunction(request));
 }
 
@@ -66,7 +66,7 @@ FunctionServiceTracingConnection::UpdateFunction(
     google::cloud::functions::v2::UpdateFunctionRequest const& request) {
   auto span = internal::MakeSpan(
       "functions_v2::FunctionServiceConnection::UpdateFunction");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateFunction(request));
 }
 
@@ -75,7 +75,7 @@ FunctionServiceTracingConnection::DeleteFunction(
     google::cloud::functions::v2::DeleteFunctionRequest const& request) {
   auto span = internal::MakeSpan(
       "functions_v2::FunctionServiceConnection::DeleteFunction");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteFunction(request));
 }
 

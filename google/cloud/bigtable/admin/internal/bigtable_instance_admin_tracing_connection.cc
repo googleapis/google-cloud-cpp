@@ -37,7 +37,7 @@ BigtableInstanceAdminTracingConnection::CreateInstance(
     google::bigtable::admin::v2::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::CreateInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
@@ -73,7 +73,7 @@ BigtableInstanceAdminTracingConnection::PartialUpdateInstance(
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PartialUpdateInstance(request));
 }
@@ -91,7 +91,7 @@ BigtableInstanceAdminTracingConnection::CreateCluster(
     google::bigtable::admin::v2::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::CreateCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateCluster(request));
 }
 
@@ -118,7 +118,7 @@ BigtableInstanceAdminTracingConnection::UpdateCluster(
     google::bigtable::admin::v2::Cluster const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::UpdateCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
 }
 
@@ -127,7 +127,7 @@ BigtableInstanceAdminTracingConnection::PartialUpdateCluster(
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PartialUpdateCluster(request));
 }
@@ -163,7 +163,7 @@ BigtableInstanceAdminTracingConnection::ListAppProfiles(
     google::bigtable::admin::v2::ListAppProfilesRequest request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::ListAppProfiles");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAppProfiles(std::move(request));
   return internal::MakeTracedStreamRange<
       google::bigtable::admin::v2::AppProfile>(std::move(span), std::move(sr));
@@ -174,7 +174,7 @@ BigtableInstanceAdminTracingConnection::UpdateAppProfile(
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::UpdateAppProfile");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateAppProfile(request));
 }
 
@@ -218,7 +218,7 @@ BigtableInstanceAdminTracingConnection::ListHotTablets(
     google::bigtable::admin::v2::ListHotTabletsRequest request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::ListHotTablets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListHotTablets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::bigtable::admin::v2::HotTablet>(std::move(span), std::move(sr));

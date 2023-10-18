@@ -41,7 +41,7 @@ TargetHttpProxiesTracingConnection::AggregatedListTargetHttpProxies(
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "AggregatedListTargetHttpProxies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListTargetHttpProxies(std::move(request));
   return internal::MakeTracedStreamRange<
       std::pair<std::string,
@@ -56,7 +56,7 @@ TargetHttpProxiesTracingConnection::DeleteTargetHttpProxy(
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "DeleteTargetHttpProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTargetHttpProxy(request));
 }
@@ -79,7 +79,7 @@ TargetHttpProxiesTracingConnection::InsertTargetHttpProxy(
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "InsertTargetHttpProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertTargetHttpProxy(request));
 }
@@ -91,7 +91,7 @@ TargetHttpProxiesTracingConnection::ListTargetHttpProxies(
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "ListTargetHttpProxies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTargetHttpProxies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::TargetHttpProxy>(std::move(span),
@@ -105,7 +105,7 @@ TargetHttpProxiesTracingConnection::PatchTargetHttpProxy(
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "PatchTargetHttpProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchTargetHttpProxy(request));
 }
@@ -116,7 +116,7 @@ TargetHttpProxiesTracingConnection::SetUrlMap(
         SetUrlMapRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::SetUrlMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetUrlMap(request));
 }
 

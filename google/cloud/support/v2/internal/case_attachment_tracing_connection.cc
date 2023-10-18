@@ -37,7 +37,7 @@ CaseAttachmentServiceTracingConnection::ListAttachments(
     google::cloud::support::v2::ListAttachmentsRequest request) {
   auto span = internal::MakeSpan(
       "support_v2::CaseAttachmentServiceConnection::ListAttachments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAttachments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::support::v2::Attachment>(std::move(span), std::move(sr));

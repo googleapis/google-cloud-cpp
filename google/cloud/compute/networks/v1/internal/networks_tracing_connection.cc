@@ -38,7 +38,7 @@ NetworksTracingConnection::AddPeering(
         request) {
   auto span =
       internal::MakeSpan("compute_networks_v1::NetworksConnection::AddPeering");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddPeering(request));
 }
 
@@ -48,7 +48,7 @@ NetworksTracingConnection::DeleteNetwork(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::DeleteNetwork");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteNetwork(request));
 }
 
@@ -78,7 +78,7 @@ NetworksTracingConnection::InsertNetwork(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::InsertNetwork");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertNetwork(request));
 }
 
@@ -87,7 +87,7 @@ NetworksTracingConnection::ListNetworks(
     google::cloud::cpp::compute::networks::v1::ListNetworksRequest request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::ListNetworks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNetworks(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Network>(std::move(span), std::move(sr));
@@ -99,7 +99,7 @@ NetworksTracingConnection::ListPeeringRoutes(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::ListPeeringRoutes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPeeringRoutes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::ExchangedPeeringRoute>(std::move(span),
@@ -112,7 +112,7 @@ NetworksTracingConnection::PatchNetwork(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::PatchNetwork");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchNetwork(request));
 }
 
@@ -122,7 +122,7 @@ NetworksTracingConnection::RemovePeering(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::RemovePeering");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RemovePeering(request));
 }
 
@@ -132,7 +132,7 @@ NetworksTracingConnection::SwitchToCustomMode(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::SwitchToCustomMode");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SwitchToCustomMode(request));
 }
@@ -143,7 +143,7 @@ NetworksTracingConnection::UpdatePeering(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::UpdatePeering");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdatePeering(request));
 }
 

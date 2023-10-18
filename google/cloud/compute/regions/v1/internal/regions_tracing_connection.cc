@@ -46,7 +46,7 @@ RegionsTracingConnection::ListRegions(
     google::cloud::cpp::compute::regions::v1::ListRegionsRequest request) {
   auto span =
       internal::MakeSpan("compute_regions_v1::RegionsConnection::ListRegions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Region>(std::move(span), std::move(sr));

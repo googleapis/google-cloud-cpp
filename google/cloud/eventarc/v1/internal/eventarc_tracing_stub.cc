@@ -59,10 +59,8 @@ EventarcTracingStub::AsyncCreateTrigger(
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "CreateTrigger");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateTrigger(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -74,10 +72,8 @@ EventarcTracingStub::AsyncUpdateTrigger(
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "UpdateTrigger");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateTrigger(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -89,10 +85,8 @@ EventarcTracingStub::AsyncDeleteTrigger(
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "DeleteTrigger");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteTrigger(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -127,10 +121,8 @@ EventarcTracingStub::AsyncCreateChannel(
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "CreateChannel");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateChannel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -142,10 +134,8 @@ EventarcTracingStub::AsyncUpdateChannel(
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "UpdateChannel");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateChannel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -157,10 +147,8 @@ EventarcTracingStub::AsyncDeleteChannel(
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "DeleteChannel");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteChannel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -221,10 +209,8 @@ EventarcTracingStub::AsyncCreateChannelConnection(
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "CreateChannelConnection");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateChannelConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -237,10 +223,8 @@ EventarcTracingStub::AsyncDeleteChannelConnection(
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "DeleteChannelConnection");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteChannelConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -277,10 +261,8 @@ EventarcTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -291,10 +273,8 @@ future<Status> EventarcTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

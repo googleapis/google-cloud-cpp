@@ -38,7 +38,7 @@ SnapshotsTracingConnection::DeleteSnapshot(
         request) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::DeleteSnapshot");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSnapshot(request));
 }
 
@@ -68,7 +68,7 @@ SnapshotsTracingConnection::InsertSnapshot(
         request) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::InsertSnapshot");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertSnapshot(request));
 }
 
@@ -77,7 +77,7 @@ SnapshotsTracingConnection::ListSnapshots(
     google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::ListSnapshots");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSnapshots(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Snapshot>(std::move(span),
@@ -100,7 +100,7 @@ SnapshotsTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 

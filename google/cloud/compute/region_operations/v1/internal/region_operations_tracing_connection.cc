@@ -60,7 +60,7 @@ RegionOperationsTracingConnection::ListRegionOperations(
   auto span = internal::MakeSpan(
       "compute_region_operations_v1::RegionOperationsConnection::"
       "ListRegionOperations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionOperations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Operation>(std::move(span),

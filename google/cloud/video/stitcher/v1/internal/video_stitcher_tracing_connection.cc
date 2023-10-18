@@ -37,7 +37,7 @@ VideoStitcherServiceTracingConnection::CreateCdnKey(
     google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::CreateCdnKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateCdnKey(request));
 }
 
@@ -46,7 +46,7 @@ VideoStitcherServiceTracingConnection::ListCdnKeys(
     google::cloud::video::stitcher::v1::ListCdnKeysRequest request) {
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::ListCdnKeys");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListCdnKeys(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::video::stitcher::v1::CdnKey>(std::move(span),
@@ -67,7 +67,7 @@ VideoStitcherServiceTracingConnection::DeleteCdnKey(
     google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::DeleteCdnKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteCdnKey(request));
 }
 
@@ -76,7 +76,7 @@ VideoStitcherServiceTracingConnection::UpdateCdnKey(
     google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::UpdateCdnKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateCdnKey(request));
 }
 
@@ -105,7 +105,7 @@ VideoStitcherServiceTracingConnection::ListVodStitchDetails(
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::"
       "ListVodStitchDetails");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVodStitchDetails(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::video::stitcher::v1::VodStitchDetail>(std::move(span),
@@ -127,7 +127,7 @@ VideoStitcherServiceTracingConnection::ListVodAdTagDetails(
     google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request) {
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::ListVodAdTagDetails");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVodAdTagDetails(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::video::stitcher::v1::VodAdTagDetail>(std::move(span),
@@ -150,7 +150,7 @@ VideoStitcherServiceTracingConnection::ListLiveAdTagDetails(
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::"
       "ListLiveAdTagDetails");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListLiveAdTagDetails(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::video::stitcher::v1::LiveAdTagDetail>(std::move(span),
@@ -172,7 +172,7 @@ VideoStitcherServiceTracingConnection::CreateSlate(
     google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::CreateSlate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateSlate(request));
 }
 
@@ -181,7 +181,7 @@ VideoStitcherServiceTracingConnection::ListSlates(
     google::cloud::video::stitcher::v1::ListSlatesRequest request) {
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::ListSlates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSlates(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::video::stitcher::v1::Slate>(std::move(span),
@@ -202,7 +202,7 @@ VideoStitcherServiceTracingConnection::UpdateSlate(
     google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::UpdateSlate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateSlate(request));
 }
 
@@ -211,7 +211,7 @@ VideoStitcherServiceTracingConnection::DeleteSlate(
     google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::DeleteSlate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSlate(request));
 }
 
@@ -240,7 +240,7 @@ VideoStitcherServiceTracingConnection::CreateLiveConfig(
         request) {
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::CreateLiveConfig");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateLiveConfig(request));
 }
 
@@ -249,7 +249,7 @@ VideoStitcherServiceTracingConnection::ListLiveConfigs(
     google::cloud::video::stitcher::v1::ListLiveConfigsRequest request) {
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::ListLiveConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListLiveConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::video::stitcher::v1::LiveConfig>(std::move(span),
@@ -271,7 +271,7 @@ VideoStitcherServiceTracingConnection::DeleteLiveConfig(
         request) {
   auto span = internal::MakeSpan(
       "video_stitcher_v1::VideoStitcherServiceConnection::DeleteLiveConfig");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteLiveConfig(request));
 }
 

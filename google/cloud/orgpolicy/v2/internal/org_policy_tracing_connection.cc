@@ -37,7 +37,7 @@ OrgPolicyTracingConnection::ListConstraints(
     google::cloud::orgpolicy::v2::ListConstraintsRequest request) {
   auto span =
       internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::ListConstraints");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListConstraints(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::orgpolicy::v2::Constraint>(std::move(span), std::move(sr));
@@ -48,7 +48,7 @@ OrgPolicyTracingConnection::ListPolicies(
     google::cloud::orgpolicy::v2::ListPoliciesRequest request) {
   auto span =
       internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::ListPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPolicies(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::orgpolicy::v2::Policy>(
       std::move(span), std::move(sr));

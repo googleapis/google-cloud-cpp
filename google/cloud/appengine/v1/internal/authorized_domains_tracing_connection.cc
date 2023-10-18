@@ -37,7 +37,7 @@ AuthorizedDomainsTracingConnection::ListAuthorizedDomains(
     google::appengine::v1::ListAuthorizedDomainsRequest request) {
   auto span = internal::MakeSpan(
       "appengine_v1::AuthorizedDomainsConnection::ListAuthorizedDomains");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAuthorizedDomains(std::move(request));
   return internal::MakeTracedStreamRange<
       google::appengine::v1::AuthorizedDomain>(std::move(span), std::move(sr));

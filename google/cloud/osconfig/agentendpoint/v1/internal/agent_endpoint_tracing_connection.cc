@@ -41,7 +41,7 @@ AgentEndpointServiceTracingConnection::ReceiveTaskNotification(
   auto span = internal::MakeSpan(
       "osconfig_agentendpoint_v1::AgentEndpointServiceConnection::"
       "ReceiveTaskNotification");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ReceiveTaskNotification(request);
   return internal::MakeTracedStreamRange<
       google::cloud::osconfig::agentendpoint::v1::

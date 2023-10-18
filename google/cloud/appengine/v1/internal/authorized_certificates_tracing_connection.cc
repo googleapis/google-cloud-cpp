@@ -39,7 +39,7 @@ AuthorizedCertificatesTracingConnection::ListAuthorizedCertificates(
   auto span = internal::MakeSpan(
       "appengine_v1::AuthorizedCertificatesConnection::"
       "ListAuthorizedCertificates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAuthorizedCertificates(std::move(request));
   return internal::MakeTracedStreamRange<
       google::appengine::v1::AuthorizedCertificate>(std::move(span),

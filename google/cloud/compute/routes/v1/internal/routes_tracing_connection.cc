@@ -38,7 +38,7 @@ RoutesTracingConnection::DeleteRoute(
         request) {
   auto span =
       internal::MakeSpan("compute_routes_v1::RoutesConnection::DeleteRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRoute(request));
 }
 
@@ -57,7 +57,7 @@ RoutesTracingConnection::InsertRoute(
         request) {
   auto span =
       internal::MakeSpan("compute_routes_v1::RoutesConnection::InsertRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertRoute(request));
 }
 
@@ -66,7 +66,7 @@ RoutesTracingConnection::ListRoutes(
     google::cloud::cpp::compute::routes::v1::ListRoutesRequest request) {
   auto span =
       internal::MakeSpan("compute_routes_v1::RoutesConnection::ListRoutes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRoutes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Route>(std::move(span), std::move(sr));

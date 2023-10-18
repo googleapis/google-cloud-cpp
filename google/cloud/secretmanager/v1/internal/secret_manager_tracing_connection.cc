@@ -37,7 +37,7 @@ SecretManagerServiceTracingConnection::ListSecrets(
     google::cloud::secretmanager::v1::ListSecretsRequest request) {
   auto span = internal::MakeSpan(
       "secretmanager_v1::SecretManagerServiceConnection::ListSecrets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSecrets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::secretmanager::v1::Secret>(std::move(span), std::move(sr));
@@ -92,7 +92,7 @@ SecretManagerServiceTracingConnection::ListSecretVersions(
     google::cloud::secretmanager::v1::ListSecretVersionsRequest request) {
   auto span = internal::MakeSpan(
       "secretmanager_v1::SecretManagerServiceConnection::ListSecretVersions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSecretVersions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::secretmanager::v1::SecretVersion>(std::move(span),

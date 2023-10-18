@@ -44,7 +44,7 @@ NetworkEndpointGroupsTracingConnection::AggregatedListNetworkEndpointGroups(
   auto span = internal::MakeSpan(
       "compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection::"
       "AggregatedListNetworkEndpointGroups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListNetworkEndpointGroups(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string,
@@ -59,7 +59,7 @@ NetworkEndpointGroupsTracingConnection::AttachNetworkEndpoints(
   auto span = internal::MakeSpan(
       "compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection::"
       "AttachNetworkEndpoints");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->AttachNetworkEndpoints(request));
 }
@@ -71,7 +71,7 @@ NetworkEndpointGroupsTracingConnection::DeleteNetworkEndpointGroup(
   auto span = internal::MakeSpan(
       "compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection::"
       "DeleteNetworkEndpointGroup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteNetworkEndpointGroup(request));
 }
@@ -83,7 +83,7 @@ NetworkEndpointGroupsTracingConnection::DetachNetworkEndpoints(
   auto span = internal::MakeSpan(
       "compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection::"
       "DetachNetworkEndpoints");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DetachNetworkEndpoints(request));
 }
@@ -106,7 +106,7 @@ NetworkEndpointGroupsTracingConnection::InsertNetworkEndpointGroup(
   auto span = internal::MakeSpan(
       "compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection::"
       "InsertNetworkEndpointGroup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertNetworkEndpointGroup(request));
 }
@@ -118,7 +118,7 @@ NetworkEndpointGroupsTracingConnection::ListNetworkEndpointGroups(
   auto span = internal::MakeSpan(
       "compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection::"
       "ListNetworkEndpointGroups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNetworkEndpointGroups(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::NetworkEndpointGroup>(std::move(span),
@@ -132,7 +132,7 @@ NetworkEndpointGroupsTracingConnection::ListNetworkEndpoints(
   auto span = internal::MakeSpan(
       "compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection::"
       "ListNetworkEndpoints");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNetworkEndpoints(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>(

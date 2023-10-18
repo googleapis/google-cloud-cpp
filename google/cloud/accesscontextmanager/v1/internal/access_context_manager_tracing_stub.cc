@@ -66,10 +66,8 @@ AccessContextManagerTracingStub::AsyncCreateAccessPolicy(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "CreateAccessPolicy");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateAccessPolicy(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -83,10 +81,8 @@ AccessContextManagerTracingStub::AsyncUpdateAccessPolicy(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "UpdateAccessPolicy");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateAccessPolicy(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -100,10 +96,8 @@ AccessContextManagerTracingStub::AsyncDeleteAccessPolicy(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "DeleteAccessPolicy");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteAccessPolicy(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -145,10 +139,8 @@ AccessContextManagerTracingStub::AsyncCreateAccessLevel(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "CreateAccessLevel");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateAccessLevel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -162,10 +154,8 @@ AccessContextManagerTracingStub::AsyncUpdateAccessLevel(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "UpdateAccessLevel");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateAccessLevel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -179,10 +169,8 @@ AccessContextManagerTracingStub::AsyncDeleteAccessLevel(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "DeleteAccessLevel");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteAccessLevel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -196,10 +184,8 @@ AccessContextManagerTracingStub::AsyncReplaceAccessLevels(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "ReplaceAccessLevels");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncReplaceAccessLevels(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -242,10 +228,8 @@ AccessContextManagerTracingStub::AsyncCreateServicePerimeter(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "CreateServicePerimeter");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateServicePerimeter(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -259,10 +243,8 @@ AccessContextManagerTracingStub::AsyncUpdateServicePerimeter(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "UpdateServicePerimeter");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateServicePerimeter(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -276,10 +258,8 @@ AccessContextManagerTracingStub::AsyncDeleteServicePerimeter(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "DeleteServicePerimeter");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteServicePerimeter(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -293,10 +273,8 @@ AccessContextManagerTracingStub::AsyncReplaceServicePerimeters(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "ReplaceServicePerimeters");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncReplaceServicePerimeters(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -310,10 +288,8 @@ AccessContextManagerTracingStub::AsyncCommitServicePerimeters(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "CommitServicePerimeters");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCommitServicePerimeters(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -356,10 +332,8 @@ AccessContextManagerTracingStub::AsyncCreateGcpUserAccessBinding(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "CreateGcpUserAccessBinding");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateGcpUserAccessBinding(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -373,10 +347,8 @@ AccessContextManagerTracingStub::AsyncUpdateGcpUserAccessBinding(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "UpdateGcpUserAccessBinding");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateGcpUserAccessBinding(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -390,10 +362,8 @@ AccessContextManagerTracingStub::AsyncDeleteGcpUserAccessBinding(
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "DeleteGcpUserAccessBinding");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteGcpUserAccessBinding(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -442,10 +412,8 @@ AccessContextManagerTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -456,10 +424,8 @@ future<Status> AccessContextManagerTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

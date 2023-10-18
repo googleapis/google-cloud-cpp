@@ -37,7 +37,7 @@ UptimeCheckServiceTracingConnection::ListUptimeCheckConfigs(
     google::monitoring::v3::ListUptimeCheckConfigsRequest request) {
   auto span = internal::MakeSpan(
       "monitoring_v3::UptimeCheckServiceConnection::ListUptimeCheckConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListUptimeCheckConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::monitoring::v3::UptimeCheckConfig>(std::move(span),
@@ -84,7 +84,7 @@ UptimeCheckServiceTracingConnection::ListUptimeCheckIps(
     google::monitoring::v3::ListUptimeCheckIpsRequest request) {
   auto span = internal::MakeSpan(
       "monitoring_v3::UptimeCheckServiceConnection::ListUptimeCheckIps");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListUptimeCheckIps(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::UptimeCheckIp>(
       std::move(span), std::move(sr));

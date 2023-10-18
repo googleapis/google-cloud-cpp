@@ -37,7 +37,7 @@ DataprocMetastoreTracingConnection::ListServices(
     google::cloud::metastore::v1::ListServicesRequest request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::ListServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::metastore::v1::Service>(
       std::move(span), std::move(sr));
@@ -57,7 +57,7 @@ DataprocMetastoreTracingConnection::CreateService(
     google::cloud::metastore::v1::CreateServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::CreateService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateService(request));
 }
 
@@ -66,7 +66,7 @@ DataprocMetastoreTracingConnection::UpdateService(
     google::cloud::metastore::v1::UpdateServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::UpdateService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateService(request));
 }
 
@@ -75,7 +75,7 @@ DataprocMetastoreTracingConnection::DeleteService(
     google::cloud::metastore::v1::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::DeleteService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteService(request));
 }
 
@@ -84,7 +84,7 @@ DataprocMetastoreTracingConnection::ListMetadataImports(
     google::cloud::metastore::v1::ListMetadataImportsRequest request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::ListMetadataImports");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMetadataImports(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::metastore::v1::MetadataImport>(std::move(span),
@@ -105,7 +105,7 @@ DataprocMetastoreTracingConnection::CreateMetadataImport(
     google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::CreateMetadataImport");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateMetadataImport(request));
 }
@@ -115,7 +115,7 @@ DataprocMetastoreTracingConnection::UpdateMetadataImport(
     google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::UpdateMetadataImport");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateMetadataImport(request));
 }
@@ -125,7 +125,7 @@ DataprocMetastoreTracingConnection::ExportMetadata(
     google::cloud::metastore::v1::ExportMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::ExportMetadata");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportMetadata(request));
 }
 
@@ -134,7 +134,7 @@ DataprocMetastoreTracingConnection::RestoreService(
     google::cloud::metastore::v1::RestoreServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::RestoreService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RestoreService(request));
 }
 
@@ -143,7 +143,7 @@ DataprocMetastoreTracingConnection::ListBackups(
     google::cloud::metastore::v1::ListBackupsRequest request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::ListBackups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBackups(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::metastore::v1::Backup>(
       std::move(span), std::move(sr));
@@ -163,7 +163,7 @@ DataprocMetastoreTracingConnection::CreateBackup(
     google::cloud::metastore::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::CreateBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateBackup(request));
 }
 
@@ -172,7 +172,7 @@ DataprocMetastoreTracingConnection::DeleteBackup(
     google::cloud::metastore::v1::DeleteBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::DeleteBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteBackup(request));
 }
 
@@ -181,7 +181,7 @@ DataprocMetastoreTracingConnection::QueryMetadata(
     google::cloud::metastore::v1::QueryMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::QueryMetadata");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->QueryMetadata(request));
 }
 
@@ -190,7 +190,7 @@ DataprocMetastoreTracingConnection::MoveTableToDatabase(
     google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::MoveTableToDatabase");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->MoveTableToDatabase(request));
 }
@@ -203,7 +203,7 @@ DataprocMetastoreTracingConnection::AlterMetadataResourceLocation(
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::"
       "AlterMetadataResourceLocation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->AlterMetadataResourceLocation(request));
 }
