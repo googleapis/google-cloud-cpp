@@ -42,8 +42,6 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
 }
 
 void TracingMessageBatch::AddMessageSpanMetadata() {
-  using opentelemetry::trace::SpanId;
-  using opentelemetry::trace::TraceId;
   auto context = batch_sink_parent_span_->GetContext();
   auto trace_id = internal::ToString(context.trace_id());
   auto span_id = internal::ToString(context.span_id());
@@ -54,49 +52,47 @@ void TracingMessageBatch::AddMessageSpanMetadata() {
   }
 }
 
-void TracingMessageBatch::Flush() {
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
+    std::vector<
+        opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>> const&
+        message_spans) {
   using opentelemetry::trace::SpanContext;
   using AttributesList =
       std::vector<std::pair<opentelemetry::nostd::string_view,
                             opentelemetry::common::AttributeValue>>;
   auto constexpr kMaxOtelLinks = 128;
   std::vector<std::pair<SpanContext, AttributesList>> links;
-  auto batch_size = message_spans_.size();
+  auto batch_size = message_spans.size();
   links.reserve(batch_size);
-
   // If the batch size is less than the max size, add the links to a single
   // span.
   if (batch_size < kMaxOtelLinks) {
-    {
-      std::lock_guard<std::mutex> lk(mu_);
-      std::transform(
-          message_spans_.begin(), message_spans_.end(),
-          std::back_inserter(links),
-          [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
-            return std::make_pair(
-                span->GetContext(),
-                AttributesList{{"messaging.pubsub.message.link", i++}});
-          });
-    }
+    std::transform(
+        message_spans.begin(), message_spans.end(), std::back_inserter(links),
+        [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
+          return std::make_pair(
+              span->GetContext(),
+              AttributesList{{"messaging.pubsub.message.link", i++}});
+        });
   }
-  {
-    std::lock_guard<std::mutex> lk(mu_);
-    batch_sink_parent_span_ =
-        internal::MakeSpan("BatchSink::AsyncPublish",
-                           /*attributes=*/
-                           {{"messaging.pubsub.num_messages_in_batch",
-                             static_cast<std::int64_t>(batch_size)}},
-                           /*links*/ links);
-  }
-  // TODO(#12528): Handle batches larger than 128.
+  auto batch_sink_parent_span =
+      internal::MakeSpan("BatchSink::AsyncPublish",
+                         /*attributes=*/
+                         {{"messaging.pubsub.num_messages_in_batch",
+                           static_cast<std::int64_t>(batch_size)}},
+                         /*links*/ links);
+  return batch_sink_parent_span;
+}
 
+void TracingMessageBatch::Flush() {
+  std::unique_lock<std::mutex> lk(mu_);
+  batch_sink_parent_span_ = MakeParentSpan(std::move(message_spans_));
+  // TODO(#12528): Handle batches larger than 128.
   // This must be called before we clear the message spans.
   AddMessageSpanMetadata();
-  {
-    std::lock_guard<std::mutex> lk(mu_);
-    message_spans_.clear();
-    batch_sink_spans_.push_back(batch_sink_parent_span_);
-  }
+  message_spans_.clear();
+  batch_sink_spans_.push_back(batch_sink_parent_span_);
+  lk.unlock();
 
   // Set the batch sink parent span.
   auto async_scope = internal::GetTracer(internal::CurrentOptions())

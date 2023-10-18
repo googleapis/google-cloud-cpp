@@ -114,15 +114,13 @@ Status EndSpan(opentelemetry::trace::Span& span, Status const& status) {
 void EndSpan(opentelemetry::trace::Span& span) { EndSpanImpl(span, Status{}); }
 
 std::string ToString(opentelemetry::trace::TraceId const& trace_id) {
-  static constexpr int kSize = 32;
-  char trace_id_array[kSize] = {0};
+  constexpr int kSize = opentelemetry::trace::TraceId::kSize * 2;  char trace_id_array[kSize] = {0};
   trace_id.ToLowerBase16(trace_id_array);
   return std::string(trace_id_array, kSize);
 }
 
 std::string ToString(opentelemetry::trace::SpanId const& span_id) {
-  static constexpr int kSize = 16;
-  char span_id_array[kSize] = {0};
+  constexpr int kSize = opentelemetry::trace::SpanId::kSize * 2;   char span_id_array[kSize] = {0};
   span_id.ToLowerBase16(span_id_array);
   return std::string(span_id_array, kSize);
 }

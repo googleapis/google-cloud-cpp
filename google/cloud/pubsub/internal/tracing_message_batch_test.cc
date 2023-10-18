@@ -41,7 +41,6 @@ using ::google::cloud::testing_util::SpanLinkAttributesAre;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
-using ::google::cloud::testing_util::ToString;
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ElementsAre;
