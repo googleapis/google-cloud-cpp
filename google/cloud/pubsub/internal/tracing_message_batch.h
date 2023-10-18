@@ -58,19 +58,9 @@ class TracingMessageBatch : public MessageBatch {
 
   void SaveMessage(pubsub::Message m) override;
 
-  /// Adds extra information to the message spans inside the flush call. This
-  /// function needs to be separate for testing purposes. Since the Flush call
-  /// clears the message_spans_, the unit tests are unable to access the
-  /// modified spans using the span catcher.
-  void AddMessageSpanMetadata();
-
   void Flush() override;
 
   void FlushCallback() override;
-
-  // For testing only.
-  void SetBatchSinkParentSpan(
-      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span);
 
   // For testing only.
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
@@ -86,8 +76,6 @@ class TracingMessageBatch : public MessageBatch {
       message_spans_;  // ABSL_GUARDED_BY(mu_)
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       batch_sink_spans_;  // ABSL_GUARDED_BY(mu_)
-  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>
-      batch_sink_parent_span_;
   std::mutex mu_;
 };
 

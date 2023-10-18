@@ -41,11 +41,15 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
   child_->SaveMessage(std::move(m));
 }
 
-void TracingMessageBatch::AddMessageSpanMetadata() {
-  auto context = batch_sink_parent_span_->GetContext();
+void AddMessageSpanMetadata(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const&
+        batch_sink_parent_span,
+    std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+        message_spans) {
+  auto context = batch_sink_parent_span->GetContext();
   auto trace_id = internal::ToString(context.trace_id());
   auto span_id = internal::ToString(context.span_id());
-  for (auto& message_span : message_spans_) {
+  for (auto& message_span : message_spans) {
     message_span->AddEvent("gl-cpp.batch_flushed");
     message_span->SetAttribute("pubsub.batch_sink.trace_id", trace_id);
     message_span->SetAttribute("pubsub.batch_sink.span_id", span_id);
@@ -94,11 +98,7 @@ void TracingMessageBatch::Flush() {
   auto batch_sink_parent_span = MakeParentSpan(message_spans);
 
   // TODO(#12528): Handle batches larger than 128.
-  // TODO(alevenb): Refactor AddMessageSpanMetadata to accept message_spans and
-  // batch_sink_parent_span as params instead of using member variables. This
-  // must be called before we clear the message spans.
-  batch_sink_parent_span_ = batch_sink_parent_span;  // Remove this line.
-  AddMessageSpanMetadata();
+  AddMessageSpanMetadata(batch_sink_parent_span, std::move(message_spans));
 
   // Set the batch sink as the active span.
   auto async_scope = internal::GetTracer(internal::CurrentOptions())
@@ -119,11 +119,6 @@ void TracingMessageBatch::FlushCallback() {
   }
   for (auto& span : spans) internal::EndSpan(*span);
   child_->FlushCallback();
-}
-
-void TracingMessageBatch::SetBatchSinkParentSpan(
-    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span) {
-  batch_sink_parent_span_ = std::move(span);
 }
 
 std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
