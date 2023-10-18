@@ -68,7 +68,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
   // span.
   if (batch_size < kMaxOtelLinks) {
     std::transform(
-        message_spans.begin(), message_spans.end(), std::back_inserter(links),
+        message_spans.begin(), message_spans.end(), links.begin(),
         [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
           return std::make_pair(
               span->GetContext(),
@@ -92,11 +92,10 @@ void TracingMessageBatch::Flush() {
   AddMessageSpanMetadata();
   message_spans_.clear();
   batch_sink_spans_.push_back(batch_sink_parent_span_);
-  lk.unlock();
-
   // Set the batch sink parent span.
   auto async_scope = internal::GetTracer(internal::CurrentOptions())
                          ->WithActiveSpan(batch_sink_parent_span_);
+  lk.unlock();
 
   child_->Flush();
 }
