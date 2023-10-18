@@ -85,17 +85,28 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
 }
 
 void TracingMessageBatch::Flush() {
-  std::unique_lock<std::mutex> lk(mu_);
-  batch_sink_parent_span_ = MakeParentSpan(std::move(message_spans_));
+  decltype(message_spans_) message_spans;
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    message_spans.swap(message_spans_);
+  }
+
+  auto batch_sink_parent_span = MakeParentSpan(message_spans);
+
   // TODO(#12528): Handle batches larger than 128.
-  // This must be called before we clear the message spans.
+  // TODO(alevenb): Refactor AddMessageSpanMetadata to accept message_spans and
+  // batch_sink_parent_span as params instead of using member variables. This
+  // must be called before we clear the message spans.
+  batch_sink_parent_span_ = batch_sink_parent_span;  // Remove this line.
   AddMessageSpanMetadata();
-  message_spans_.clear();
-  batch_sink_spans_.push_back(batch_sink_parent_span_);
-  // Set the batch sink parent span.
+
+  // Set the batch sink as the active span.
   auto async_scope = internal::GetTracer(internal::CurrentOptions())
-                         ->WithActiveSpan(batch_sink_parent_span_);
-  lk.unlock();
+                         ->WithActiveSpan(batch_sink_parent_span);
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    batch_sink_spans_.push_back(std::move(batch_sink_parent_span));
+  }
 
   child_->Flush();
 }

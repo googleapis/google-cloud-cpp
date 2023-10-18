@@ -83,9 +83,9 @@ class TracingMessageBatch : public MessageBatch {
  private:
   std::unique_ptr<MessageBatch> child_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      message_spans_;
+      message_spans_;  // ABSL_GUARDED_BY(mu_)
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      batch_sink_spans_;
+      batch_sink_spans_;  // ABSL_GUARDED_BY(mu_)
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>
       batch_sink_parent_span_;
   std::mutex mu_;
