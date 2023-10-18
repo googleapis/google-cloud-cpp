@@ -40,7 +40,7 @@ AutoscalersTracingConnection::AggregatedListAutoscalers(
   auto span = internal::MakeSpan(
       "compute_autoscalers_v1::AutoscalersConnection::"
       "AggregatedListAutoscalers");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListAutoscalers(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::AutoscalersScopedList>>(
@@ -53,7 +53,7 @@ AutoscalersTracingConnection::DeleteAutoscaler(
         request) {
   auto span = internal::MakeSpan(
       "compute_autoscalers_v1::AutoscalersConnection::DeleteAutoscaler");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAutoscaler(request));
 }
 
@@ -73,7 +73,7 @@ AutoscalersTracingConnection::InsertAutoscaler(
         request) {
   auto span = internal::MakeSpan(
       "compute_autoscalers_v1::AutoscalersConnection::InsertAutoscaler");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertAutoscaler(request));
 }
 
@@ -83,7 +83,7 @@ AutoscalersTracingConnection::ListAutoscalers(
         request) {
   auto span = internal::MakeSpan(
       "compute_autoscalers_v1::AutoscalersConnection::ListAutoscalers");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAutoscalers(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Autoscaler>(std::move(span),
@@ -96,7 +96,7 @@ AutoscalersTracingConnection::PatchAutoscaler(
         request) {
   auto span = internal::MakeSpan(
       "compute_autoscalers_v1::AutoscalersConnection::PatchAutoscaler");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchAutoscaler(request));
 }
 
@@ -106,7 +106,7 @@ AutoscalersTracingConnection::UpdateAutoscaler(
         request) {
   auto span = internal::MakeSpan(
       "compute_autoscalers_v1::AutoscalersConnection::UpdateAutoscaler");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateAutoscaler(request));
 }
 

@@ -37,7 +37,7 @@ ConfigServiceV2TracingConnection::ListBuckets(
     google::logging::v2::ListBucketsRequest request) {
   auto span =
       internal::MakeSpan("logging_v2::ConfigServiceV2Connection::ListBuckets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBuckets(std::move(request));
   return internal::MakeTracedStreamRange<google::logging::v2::LogBucket>(
       std::move(span), std::move(sr));
@@ -57,7 +57,7 @@ ConfigServiceV2TracingConnection::CreateBucketAsync(
     google::logging::v2::CreateBucketRequest const& request) {
   auto span = internal::MakeSpan(
       "logging_v2::ConfigServiceV2Connection::CreateBucketAsync");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateBucketAsync(request));
 }
 
@@ -66,7 +66,7 @@ ConfigServiceV2TracingConnection::UpdateBucketAsync(
     google::logging::v2::UpdateBucketRequest const& request) {
   auto span = internal::MakeSpan(
       "logging_v2::ConfigServiceV2Connection::UpdateBucketAsync");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateBucketAsync(request));
 }
 
@@ -109,7 +109,7 @@ ConfigServiceV2TracingConnection::ListViews(
     google::logging::v2::ListViewsRequest request) {
   auto span =
       internal::MakeSpan("logging_v2::ConfigServiceV2Connection::ListViews");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListViews(std::move(request));
   return internal::MakeTracedStreamRange<google::logging::v2::LogView>(
       std::move(span), std::move(sr));
@@ -155,7 +155,7 @@ ConfigServiceV2TracingConnection::ListSinks(
     google::logging::v2::ListSinksRequest request) {
   auto span =
       internal::MakeSpan("logging_v2::ConfigServiceV2Connection::ListSinks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSinks(std::move(request));
   return internal::MakeTracedStreamRange<google::logging::v2::LogSink>(
       std::move(span), std::move(sr));
@@ -201,7 +201,7 @@ ConfigServiceV2TracingConnection::CreateLink(
     google::logging::v2::CreateLinkRequest const& request) {
   auto span =
       internal::MakeSpan("logging_v2::ConfigServiceV2Connection::CreateLink");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateLink(request));
 }
 
@@ -210,7 +210,7 @@ ConfigServiceV2TracingConnection::DeleteLink(
     google::logging::v2::DeleteLinkRequest const& request) {
   auto span =
       internal::MakeSpan("logging_v2::ConfigServiceV2Connection::DeleteLink");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteLink(request));
 }
 
@@ -219,7 +219,7 @@ ConfigServiceV2TracingConnection::ListLinks(
     google::logging::v2::ListLinksRequest request) {
   auto span =
       internal::MakeSpan("logging_v2::ConfigServiceV2Connection::ListLinks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListLinks(std::move(request));
   return internal::MakeTracedStreamRange<google::logging::v2::Link>(
       std::move(span), std::move(sr));
@@ -238,7 +238,7 @@ ConfigServiceV2TracingConnection::ListExclusions(
     google::logging::v2::ListExclusionsRequest request) {
   auto span = internal::MakeSpan(
       "logging_v2::ConfigServiceV2Connection::ListExclusions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListExclusions(std::move(request));
   return internal::MakeTracedStreamRange<google::logging::v2::LogExclusion>(
       std::move(span), std::move(sr));
@@ -320,7 +320,7 @@ ConfigServiceV2TracingConnection::CopyLogEntries(
     google::logging::v2::CopyLogEntriesRequest const& request) {
   auto span = internal::MakeSpan(
       "logging_v2::ConfigServiceV2Connection::CopyLogEntries");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CopyLogEntries(request));
 }
 

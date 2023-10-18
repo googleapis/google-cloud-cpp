@@ -37,7 +37,7 @@ SearchServiceTracingConnection::Search(
     google::cloud::discoveryengine::v1::SearchRequest request) {
   auto span =
       internal::MakeSpan("discoveryengine_v1::SearchServiceConnection::Search");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->Search(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::discoveryengine::v1::SearchResponse::SearchResult>(

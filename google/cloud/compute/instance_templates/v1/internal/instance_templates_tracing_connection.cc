@@ -41,7 +41,7 @@ InstanceTemplatesTracingConnection::AggregatedListInstanceTemplates(
   auto span = internal::MakeSpan(
       "compute_instance_templates_v1::InstanceTemplatesConnection::"
       "AggregatedListInstanceTemplates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListInstanceTemplates(std::move(request));
   return internal::MakeTracedStreamRange<
       std::pair<std::string,
@@ -56,7 +56,7 @@ InstanceTemplatesTracingConnection::DeleteInstanceTemplate(
   auto span = internal::MakeSpan(
       "compute_instance_templates_v1::InstanceTemplatesConnection::"
       "DeleteInstanceTemplate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteInstanceTemplate(request));
 }
@@ -90,7 +90,7 @@ InstanceTemplatesTracingConnection::InsertInstanceTemplate(
   auto span = internal::MakeSpan(
       "compute_instance_templates_v1::InstanceTemplatesConnection::"
       "InsertInstanceTemplate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertInstanceTemplate(request));
 }
@@ -102,7 +102,7 @@ InstanceTemplatesTracingConnection::ListInstanceTemplates(
   auto span = internal::MakeSpan(
       "compute_instance_templates_v1::InstanceTemplatesConnection::"
       "ListInstanceTemplates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInstanceTemplates(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::InstanceTemplate>(std::move(span),

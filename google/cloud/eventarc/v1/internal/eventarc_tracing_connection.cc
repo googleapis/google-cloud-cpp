@@ -45,7 +45,7 @@ EventarcTracingConnection::ListTriggers(
     google::cloud::eventarc::v1::ListTriggersRequest request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::ListTriggers");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTriggers(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::eventarc::v1::Trigger>(
       std::move(span), std::move(sr));
@@ -56,7 +56,7 @@ EventarcTracingConnection::CreateTrigger(
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::CreateTrigger");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateTrigger(request));
 }
 
@@ -65,7 +65,7 @@ EventarcTracingConnection::UpdateTrigger(
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateTrigger");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateTrigger(request));
 }
 
@@ -74,7 +74,7 @@ EventarcTracingConnection::DeleteTrigger(
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteTrigger");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTrigger(request));
 }
 
@@ -91,7 +91,7 @@ EventarcTracingConnection::ListChannels(
     google::cloud::eventarc::v1::ListChannelsRequest request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::ListChannels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListChannels(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::eventarc::v1::Channel>(
       std::move(span), std::move(sr));
@@ -102,7 +102,7 @@ EventarcTracingConnection::CreateChannel(
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::CreateChannel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateChannel(request));
 }
 
@@ -111,7 +111,7 @@ EventarcTracingConnection::UpdateChannel(
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateChannel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateChannel(request));
 }
 
@@ -120,7 +120,7 @@ EventarcTracingConnection::DeleteChannel(
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteChannel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteChannel(request));
 }
 
@@ -138,7 +138,7 @@ EventarcTracingConnection::ListProviders(
     google::cloud::eventarc::v1::ListProvidersRequest request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::ListProviders");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListProviders(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::eventarc::v1::Provider>(
       std::move(span), std::move(sr));
@@ -158,7 +158,7 @@ EventarcTracingConnection::ListChannelConnections(
     google::cloud::eventarc::v1::ListChannelConnectionsRequest request) {
   auto span = internal::MakeSpan(
       "eventarc_v1::EventarcConnection::ListChannelConnections");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListChannelConnections(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::eventarc::v1::ChannelConnection>(std::move(span),
@@ -171,7 +171,7 @@ EventarcTracingConnection::CreateChannelConnection(
         request) {
   auto span = internal::MakeSpan(
       "eventarc_v1::EventarcConnection::CreateChannelConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateChannelConnection(request));
 }
@@ -182,7 +182,7 @@ EventarcTracingConnection::DeleteChannelConnection(
         request) {
   auto span = internal::MakeSpan(
       "eventarc_v1::EventarcConnection::DeleteChannelConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteChannelConnection(request));
 }

@@ -49,7 +49,7 @@ DataTransferServiceTracingConnection::ListDataSources(
   auto span = internal::MakeSpan(
       "bigquery_datatransfer_v1::DataTransferServiceConnection::"
       "ListDataSources");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDataSources(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::datatransfer::v1::DataSource>(std::move(span),
@@ -106,7 +106,7 @@ DataTransferServiceTracingConnection::ListTransferConfigs(
   auto span = internal::MakeSpan(
       "bigquery_datatransfer_v1::DataTransferServiceConnection::"
       "ListTransferConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTransferConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::datatransfer::v1::TransferConfig>(
@@ -165,7 +165,7 @@ DataTransferServiceTracingConnection::ListTransferRuns(
   auto span = internal::MakeSpan(
       "bigquery_datatransfer_v1::DataTransferServiceConnection::"
       "ListTransferRuns");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTransferRuns(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::datatransfer::v1::TransferRun>(std::move(span),
@@ -179,7 +179,7 @@ DataTransferServiceTracingConnection::ListTransferLogs(
   auto span = internal::MakeSpan(
       "bigquery_datatransfer_v1::DataTransferServiceConnection::"
       "ListTransferLogs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTransferLogs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::datatransfer::v1::TransferMessage>(

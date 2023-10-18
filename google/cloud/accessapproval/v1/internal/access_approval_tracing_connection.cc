@@ -37,7 +37,7 @@ AccessApprovalTracingConnection::ListApprovalRequests(
     google::cloud::accessapproval::v1::ListApprovalRequestsMessage request) {
   auto span = internal::MakeSpan(
       "accessapproval_v1::AccessApprovalConnection::ListApprovalRequests");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListApprovalRequests(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::accessapproval::v1::ApprovalRequest>(std::move(span),

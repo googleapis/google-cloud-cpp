@@ -37,7 +37,7 @@ EnvironmentsTracingConnection::ListEnvironments(
     google::cloud::dialogflow::v2::ListEnvironmentsRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EnvironmentsConnection::ListEnvironments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEnvironments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::v2::Environment>(std::move(span),
@@ -84,7 +84,7 @@ EnvironmentsTracingConnection::GetEnvironmentHistory(
     google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EnvironmentsConnection::GetEnvironmentHistory");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->GetEnvironmentHistory(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::v2::EnvironmentHistory::Entry>(std::move(span),

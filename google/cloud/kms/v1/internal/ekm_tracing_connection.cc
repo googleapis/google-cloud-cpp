@@ -37,7 +37,7 @@ EkmServiceTracingConnection::ListEkmConnections(
     google::cloud::kms::v1::ListEkmConnectionsRequest request) {
   auto span =
       internal::MakeSpan("kms_v1::EkmServiceConnection::ListEkmConnections");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEkmConnections(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::kms::v1::EkmConnection>(
       std::move(span), std::move(sr));

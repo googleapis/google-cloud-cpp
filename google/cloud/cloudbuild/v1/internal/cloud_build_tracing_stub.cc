@@ -37,10 +37,8 @@ CloudBuildTracingStub::AsyncCreateBuild(
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
                                      "CreateBuild");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateBuild(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -87,10 +85,8 @@ CloudBuildTracingStub::AsyncRetryBuild(
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
                                      "RetryBuild");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRetryBuild(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -102,10 +98,8 @@ CloudBuildTracingStub::AsyncApproveBuild(
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
                                      "ApproveBuild");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncApproveBuild(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -179,10 +173,8 @@ CloudBuildTracingStub::AsyncRunBuildTrigger(
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
                                      "RunBuildTrigger");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRunBuildTrigger(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -207,10 +199,8 @@ CloudBuildTracingStub::AsyncCreateWorkerPool(
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
                                      "CreateWorkerPool");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateWorkerPool(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -234,10 +224,8 @@ CloudBuildTracingStub::AsyncDeleteWorkerPool(
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
                                      "DeleteWorkerPool");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteWorkerPool(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -249,10 +237,8 @@ CloudBuildTracingStub::AsyncUpdateWorkerPool(
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
                                      "UpdateWorkerPool");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateWorkerPool(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -276,10 +262,8 @@ CloudBuildTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -290,10 +274,8 @@ future<Status> CloudBuildTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

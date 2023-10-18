@@ -46,7 +46,7 @@ JobControllerTracingConnection::SubmitJobAsOperation(
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::JobControllerConnection::SubmitJobAsOperation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SubmitJobAsOperation(request));
 }
@@ -65,7 +65,7 @@ JobControllerTracingConnection::ListJobs(
     google::cloud::dataproc::v1::ListJobsRequest request) {
   auto span =
       internal::MakeSpan("dataproc_v1::JobControllerConnection::ListJobs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataproc::v1::Job>(
       std::move(span), std::move(sr));

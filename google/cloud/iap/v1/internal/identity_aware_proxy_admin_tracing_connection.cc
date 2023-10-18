@@ -83,7 +83,7 @@ IdentityAwareProxyAdminServiceTracingConnection::ListTunnelDestGroups(
     google::cloud::iap::v1::ListTunnelDestGroupsRequest request) {
   auto span = internal::MakeSpan(
       "iap_v1::IdentityAwareProxyAdminServiceConnection::ListTunnelDestGroups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTunnelDestGroups(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::iap::v1::TunnelDestGroup>(std::move(span), std::move(sr));

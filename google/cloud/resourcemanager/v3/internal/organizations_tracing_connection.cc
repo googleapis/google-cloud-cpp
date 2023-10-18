@@ -46,7 +46,7 @@ OrganizationsTracingConnection::SearchOrganizations(
     google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::OrganizationsConnection::SearchOrganizations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchOrganizations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::resourcemanager::v3::Organization>(std::move(span),

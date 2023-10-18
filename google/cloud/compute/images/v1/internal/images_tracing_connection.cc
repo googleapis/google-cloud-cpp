@@ -38,7 +38,7 @@ ImagesTracingConnection::DeleteImage(
         request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::DeleteImage");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteImage(request));
 }
 
@@ -47,7 +47,7 @@ ImagesTracingConnection::Deprecate(
     google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::Deprecate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->Deprecate(request));
 }
 
@@ -86,7 +86,7 @@ ImagesTracingConnection::InsertImage(
         request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::InsertImage");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertImage(request));
 }
 
@@ -95,7 +95,7 @@ ImagesTracingConnection::ListImages(
     google::cloud::cpp::compute::images::v1::ListImagesRequest request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::ListImages");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListImages(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Image>(std::move(span), std::move(sr));
@@ -106,7 +106,7 @@ ImagesTracingConnection::PatchImage(
     google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::PatchImage");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchImage(request));
 }
 
@@ -125,7 +125,7 @@ ImagesTracingConnection::SetLabels(
     google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 

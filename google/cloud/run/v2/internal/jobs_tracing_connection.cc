@@ -35,7 +35,7 @@ JobsTracingConnection::JobsTracingConnection(
 future<StatusOr<google::cloud::run::v2::Job>> JobsTracingConnection::CreateJob(
     google::cloud::run::v2::CreateJobRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::CreateJob");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateJob(request));
 }
 
@@ -49,7 +49,7 @@ StatusOr<google::cloud::run::v2::Job> JobsTracingConnection::GetJob(
 StreamRange<google::cloud::run::v2::Job> JobsTracingConnection::ListJobs(
     google::cloud::run::v2::ListJobsRequest request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::ListJobs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::run::v2::Job>(
       std::move(span), std::move(sr));
@@ -58,14 +58,14 @@ StreamRange<google::cloud::run::v2::Job> JobsTracingConnection::ListJobs(
 future<StatusOr<google::cloud::run::v2::Job>> JobsTracingConnection::UpdateJob(
     google::cloud::run::v2::UpdateJobRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::UpdateJob");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateJob(request));
 }
 
 future<StatusOr<google::cloud::run::v2::Job>> JobsTracingConnection::DeleteJob(
     google::cloud::run::v2::DeleteJobRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::DeleteJob");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteJob(request));
 }
 
@@ -73,7 +73,7 @@ future<StatusOr<google::cloud::run::v2::Execution>>
 JobsTracingConnection::RunJob(
     google::cloud::run::v2::RunJobRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::RunJob");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RunJob(request));
 }
 

@@ -62,10 +62,8 @@ EnvironmentsTracingStub::AsyncCreateEnvironment(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "CreateEnvironment");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateEnvironment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -78,10 +76,8 @@ EnvironmentsTracingStub::AsyncUpdateEnvironment(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "UpdateEnvironment");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateEnvironment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -119,10 +115,8 @@ EnvironmentsTracingStub::AsyncRunContinuousTest(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "RunContinuousTest");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRunContinuousTest(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -148,10 +142,8 @@ EnvironmentsTracingStub::AsyncDeployFlow(
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "DeployFlow");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeployFlow(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -163,10 +155,8 @@ EnvironmentsTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -177,10 +167,8 @@ future<Status> EnvironmentsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

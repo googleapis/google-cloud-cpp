@@ -61,10 +61,8 @@ AlloyDBAdminTracingStub::AsyncCreateCluster(
     google::cloud::alloydb::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "CreateCluster");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -76,10 +74,8 @@ AlloyDBAdminTracingStub::AsyncUpdateCluster(
     google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "UpdateCluster");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -91,10 +87,8 @@ AlloyDBAdminTracingStub::AsyncDeleteCluster(
     google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "DeleteCluster");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -106,10 +100,8 @@ AlloyDBAdminTracingStub::AsyncPromoteCluster(
     google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "PromoteCluster");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncPromoteCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -121,10 +113,8 @@ AlloyDBAdminTracingStub::AsyncRestoreCluster(
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "RestoreCluster");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRestoreCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -136,10 +126,8 @@ AlloyDBAdminTracingStub::AsyncCreateSecondaryCluster(
     google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "CreateSecondaryCluster");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateSecondaryCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -175,10 +163,8 @@ AlloyDBAdminTracingStub::AsyncCreateInstance(
     google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "CreateInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -190,10 +176,8 @@ AlloyDBAdminTracingStub::AsyncCreateSecondaryInstance(
     google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "CreateSecondaryInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateSecondaryInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -205,10 +189,8 @@ AlloyDBAdminTracingStub::AsyncBatchCreateInstances(
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "BatchCreateInstances");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncBatchCreateInstances(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -220,10 +202,8 @@ AlloyDBAdminTracingStub::AsyncUpdateInstance(
     google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "UpdateInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -235,10 +215,8 @@ AlloyDBAdminTracingStub::AsyncDeleteInstance(
     google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "DeleteInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -250,10 +228,8 @@ AlloyDBAdminTracingStub::AsyncFailoverInstance(
     google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "FailoverInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncFailoverInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -265,10 +241,8 @@ AlloyDBAdminTracingStub::AsyncInjectFault(
     google::cloud::alloydb::v1::InjectFaultRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "InjectFault");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncInjectFault(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -280,10 +254,8 @@ AlloyDBAdminTracingStub::AsyncRestartInstance(
     google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "RestartInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRestartInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -317,10 +289,8 @@ AlloyDBAdminTracingStub::AsyncCreateBackup(
     google::cloud::alloydb::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "CreateBackup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateBackup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -332,10 +302,8 @@ AlloyDBAdminTracingStub::AsyncUpdateBackup(
     google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "UpdateBackup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateBackup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -347,10 +315,8 @@ AlloyDBAdminTracingStub::AsyncDeleteBackup(
     google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "DeleteBackup");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteBackup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -454,10 +420,8 @@ AlloyDBAdminTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -468,10 +432,8 @@ future<Status> AlloyDBAdminTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

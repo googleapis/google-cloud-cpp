@@ -66,7 +66,7 @@ WebSecurityScannerTracingConnection::ListScanConfigs(
     google::cloud::websecurityscanner::v1::ListScanConfigsRequest request) {
   auto span = internal::MakeSpan(
       "websecurityscanner_v1::WebSecurityScannerConnection::ListScanConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListScanConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::websecurityscanner::v1::ScanConfig>(std::move(span),
@@ -106,7 +106,7 @@ WebSecurityScannerTracingConnection::ListScanRuns(
     google::cloud::websecurityscanner::v1::ListScanRunsRequest request) {
   auto span = internal::MakeSpan(
       "websecurityscanner_v1::WebSecurityScannerConnection::ListScanRuns");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListScanRuns(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::websecurityscanner::v1::ScanRun>(std::move(span),
@@ -127,7 +127,7 @@ WebSecurityScannerTracingConnection::ListCrawledUrls(
     google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request) {
   auto span = internal::MakeSpan(
       "websecurityscanner_v1::WebSecurityScannerConnection::ListCrawledUrls");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListCrawledUrls(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::websecurityscanner::v1::CrawledUrl>(std::move(span),
@@ -148,7 +148,7 @@ WebSecurityScannerTracingConnection::ListFindings(
     google::cloud::websecurityscanner::v1::ListFindingsRequest request) {
   auto span = internal::MakeSpan(
       "websecurityscanner_v1::WebSecurityScannerConnection::ListFindings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListFindings(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::websecurityscanner::v1::Finding>(std::move(span),

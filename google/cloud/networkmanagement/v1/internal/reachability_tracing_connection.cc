@@ -39,7 +39,7 @@ ReachabilityServiceTracingConnection::ListConnectivityTests(
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "ListConnectivityTests");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListConnectivityTests(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkmanagement::v1::ConnectivityTest>(std::move(span),
@@ -64,7 +64,7 @@ ReachabilityServiceTracingConnection::CreateConnectivityTest(
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "CreateConnectivityTest");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateConnectivityTest(request));
 }
@@ -76,7 +76,7 @@ ReachabilityServiceTracingConnection::UpdateConnectivityTest(
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "UpdateConnectivityTest");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateConnectivityTest(request));
 }
@@ -88,7 +88,7 @@ ReachabilityServiceTracingConnection::RerunConnectivityTest(
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "RerunConnectivityTest");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RerunConnectivityTest(request));
 }
@@ -100,7 +100,7 @@ ReachabilityServiceTracingConnection::DeleteConnectivityTest(
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "DeleteConnectivityTest");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteConnectivityTest(request));
 }

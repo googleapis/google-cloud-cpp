@@ -40,7 +40,7 @@ RegionAutoscalersTracingConnection::DeleteAutoscaler(
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "DeleteAutoscaler");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAutoscaler(request));
 }
 
@@ -62,7 +62,7 @@ RegionAutoscalersTracingConnection::InsertAutoscaler(
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "InsertAutoscaler");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertAutoscaler(request));
 }
 
@@ -73,7 +73,7 @@ RegionAutoscalersTracingConnection::ListRegionAutoscalers(
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "ListRegionAutoscalers");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionAutoscalers(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Autoscaler>(std::move(span),
@@ -87,7 +87,7 @@ RegionAutoscalersTracingConnection::PatchAutoscaler(
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "PatchAutoscaler");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchAutoscaler(request));
 }
 
@@ -98,7 +98,7 @@ RegionAutoscalersTracingConnection::UpdateAutoscaler(
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "UpdateAutoscaler");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateAutoscaler(request));
 }
 

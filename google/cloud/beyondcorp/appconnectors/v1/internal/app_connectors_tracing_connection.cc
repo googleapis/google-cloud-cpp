@@ -40,7 +40,7 @@ AppConnectorsServiceTracingConnection::ListAppConnectors(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
       "ListAppConnectors");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAppConnectors(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
@@ -65,7 +65,7 @@ AppConnectorsServiceTracingConnection::CreateAppConnector(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
       "CreateAppConnector");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateAppConnector(request));
 }
@@ -77,7 +77,7 @@ AppConnectorsServiceTracingConnection::UpdateAppConnector(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
       "UpdateAppConnector");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateAppConnector(request));
 }
@@ -90,7 +90,7 @@ AppConnectorsServiceTracingConnection::DeleteAppConnector(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
       "DeleteAppConnector");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteAppConnector(request));
 }
@@ -102,7 +102,7 @@ AppConnectorsServiceTracingConnection::ReportStatus(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
       "ReportStatus");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ReportStatus(request));
 }
 

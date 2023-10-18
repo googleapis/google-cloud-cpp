@@ -97,7 +97,7 @@ ContentServiceTracingConnection::ListContent(
     google::cloud::dataplex::v1::ListContentRequest request) {
   auto span =
       internal::MakeSpan("dataplex_v1::ContentServiceConnection::ListContent");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListContent(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Content>(
       std::move(span), std::move(sr));

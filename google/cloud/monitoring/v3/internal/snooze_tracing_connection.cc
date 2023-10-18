@@ -46,7 +46,7 @@ SnoozeServiceTracingConnection::ListSnoozes(
     google::monitoring::v3::ListSnoozesRequest request) {
   auto span =
       internal::MakeSpan("monitoring_v3::SnoozeServiceConnection::ListSnoozes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSnoozes(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::Snooze>(
       std::move(span), std::move(sr));

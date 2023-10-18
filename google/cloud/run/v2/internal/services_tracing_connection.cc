@@ -36,7 +36,7 @@ future<StatusOr<google::cloud::run::v2::Service>>
 ServicesTracingConnection::CreateService(
     google::cloud::run::v2::CreateServiceRequest const& request) {
   auto span = internal::MakeSpan("run_v2::ServicesConnection::CreateService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateService(request));
 }
 
@@ -51,7 +51,7 @@ StreamRange<google::cloud::run::v2::Service>
 ServicesTracingConnection::ListServices(
     google::cloud::run::v2::ListServicesRequest request) {
   auto span = internal::MakeSpan("run_v2::ServicesConnection::ListServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::run::v2::Service>(
       std::move(span), std::move(sr));
@@ -61,7 +61,7 @@ future<StatusOr<google::cloud::run::v2::Service>>
 ServicesTracingConnection::UpdateService(
     google::cloud::run::v2::UpdateServiceRequest const& request) {
   auto span = internal::MakeSpan("run_v2::ServicesConnection::UpdateService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateService(request));
 }
 
@@ -69,7 +69,7 @@ future<StatusOr<google::cloud::run::v2::Service>>
 ServicesTracingConnection::DeleteService(
     google::cloud::run::v2::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpan("run_v2::ServicesConnection::DeleteService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteService(request));
 }
 

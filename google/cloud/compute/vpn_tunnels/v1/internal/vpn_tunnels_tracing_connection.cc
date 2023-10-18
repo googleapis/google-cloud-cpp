@@ -39,7 +39,7 @@ VpnTunnelsTracingConnection::AggregatedListVpnTunnels(
         AggregatedListVpnTunnelsRequest request) {
   auto span = internal::MakeSpan(
       "compute_vpn_tunnels_v1::VpnTunnelsConnection::AggregatedListVpnTunnels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListVpnTunnels(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::VpnTunnelsScopedList>>(
@@ -52,7 +52,7 @@ VpnTunnelsTracingConnection::DeleteVpnTunnel(
         request) {
   auto span = internal::MakeSpan(
       "compute_vpn_tunnels_v1::VpnTunnelsConnection::DeleteVpnTunnel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteVpnTunnel(request));
 }
 
@@ -72,7 +72,7 @@ VpnTunnelsTracingConnection::InsertVpnTunnel(
         request) {
   auto span = internal::MakeSpan(
       "compute_vpn_tunnels_v1::VpnTunnelsConnection::InsertVpnTunnel");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertVpnTunnel(request));
 }
 
@@ -82,7 +82,7 @@ VpnTunnelsTracingConnection::ListVpnTunnels(
         request) {
   auto span = internal::MakeSpan(
       "compute_vpn_tunnels_v1::VpnTunnelsConnection::ListVpnTunnels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVpnTunnels(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::VpnTunnel>(std::move(span),
@@ -95,7 +95,7 @@ VpnTunnelsTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_vpn_tunnels_v1::VpnTunnelsConnection::SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 

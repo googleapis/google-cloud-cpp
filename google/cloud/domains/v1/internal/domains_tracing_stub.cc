@@ -61,10 +61,8 @@ DomainsTracingStub::AsyncRegisterDomain(
     google::cloud::domains::v1::RegisterDomainRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "RegisterDomain");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRegisterDomain(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -89,10 +87,8 @@ DomainsTracingStub::AsyncTransferDomain(
     google::cloud::domains::v1::TransferDomainRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "TransferDomain");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncTransferDomain(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -128,10 +124,8 @@ DomainsTracingStub::AsyncUpdateRegistration(
     google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "UpdateRegistration");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateRegistration(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -144,10 +138,8 @@ DomainsTracingStub::AsyncConfigureManagementSettings(
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "ConfigureManagementSettings");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncConfigureManagementSettings(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -159,10 +151,8 @@ DomainsTracingStub::AsyncConfigureDnsSettings(
     google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "ConfigureDnsSettings");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncConfigureDnsSettings(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -175,10 +165,8 @@ DomainsTracingStub::AsyncConfigureContactSettings(
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "ConfigureContactSettings");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncConfigureContactSettings(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -190,10 +178,8 @@ DomainsTracingStub::AsyncExportRegistration(
     google::cloud::domains::v1::ExportRegistrationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "ExportRegistration");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncExportRegistration(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -205,10 +191,8 @@ DomainsTracingStub::AsyncDeleteRegistration(
     google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "DeleteRegistration");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteRegistration(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -245,10 +229,8 @@ DomainsTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -259,10 +241,8 @@ future<Status> DomainsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

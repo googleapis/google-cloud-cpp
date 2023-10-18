@@ -37,7 +37,7 @@ EdgeContainerTracingConnection::ListClusters(
     google::cloud::edgecontainer::v1::ListClustersRequest request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::ListClusters");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListClusters(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::edgecontainer::v1::Cluster>(std::move(span),
@@ -58,7 +58,7 @@ EdgeContainerTracingConnection::CreateCluster(
     google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::CreateCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateCluster(request));
 }
 
@@ -67,7 +67,7 @@ EdgeContainerTracingConnection::UpdateCluster(
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::UpdateCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
 }
 
@@ -76,7 +76,7 @@ EdgeContainerTracingConnection::DeleteCluster(
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::DeleteCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteCluster(request));
 }
 
@@ -95,7 +95,7 @@ EdgeContainerTracingConnection::ListNodePools(
     google::cloud::edgecontainer::v1::ListNodePoolsRequest request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::ListNodePools");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNodePools(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::edgecontainer::v1::NodePool>(std::move(span),
@@ -116,7 +116,7 @@ EdgeContainerTracingConnection::CreateNodePool(
     google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::CreateNodePool");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateNodePool(request));
 }
 
@@ -125,7 +125,7 @@ EdgeContainerTracingConnection::UpdateNodePool(
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::UpdateNodePool");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateNodePool(request));
 }
 
@@ -134,7 +134,7 @@ EdgeContainerTracingConnection::DeleteNodePool(
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::DeleteNodePool");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteNodePool(request));
 }
 
@@ -143,7 +143,7 @@ EdgeContainerTracingConnection::ListMachines(
     google::cloud::edgecontainer::v1::ListMachinesRequest request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::ListMachines");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMachines(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::edgecontainer::v1::Machine>(std::move(span),
@@ -164,7 +164,7 @@ EdgeContainerTracingConnection::ListVpnConnections(
     google::cloud::edgecontainer::v1::ListVpnConnectionsRequest request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::ListVpnConnections");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVpnConnections(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::edgecontainer::v1::VpnConnection>(std::move(span),
@@ -186,7 +186,7 @@ EdgeContainerTracingConnection::CreateVpnConnection(
         request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::CreateVpnConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateVpnConnection(request));
 }
@@ -197,7 +197,7 @@ EdgeContainerTracingConnection::DeleteVpnConnection(
         request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::DeleteVpnConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteVpnConnection(request));
 }

@@ -39,7 +39,7 @@ NetworkSecurityTracingConnection::ListAuthorizationPolicies(
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "ListAuthorizationPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAuthorizationPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networksecurity::v1::AuthorizationPolicy>(std::move(span),
@@ -63,7 +63,7 @@ NetworkSecurityTracingConnection::CreateAuthorizationPolicy(
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "CreateAuthorizationPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateAuthorizationPolicy(request));
 }
@@ -75,7 +75,7 @@ NetworkSecurityTracingConnection::UpdateAuthorizationPolicy(
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "UpdateAuthorizationPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateAuthorizationPolicy(request));
 }
@@ -87,7 +87,7 @@ NetworkSecurityTracingConnection::DeleteAuthorizationPolicy(
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "DeleteAuthorizationPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteAuthorizationPolicy(request));
 }
@@ -97,7 +97,7 @@ NetworkSecurityTracingConnection::ListServerTlsPolicies(
     google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::ListServerTlsPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServerTlsPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networksecurity::v1::ServerTlsPolicy>(std::move(span),
@@ -120,7 +120,7 @@ NetworkSecurityTracingConnection::CreateServerTlsPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::CreateServerTlsPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateServerTlsPolicy(request));
 }
@@ -131,7 +131,7 @@ NetworkSecurityTracingConnection::UpdateServerTlsPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::UpdateServerTlsPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateServerTlsPolicy(request));
 }
@@ -142,7 +142,7 @@ NetworkSecurityTracingConnection::DeleteServerTlsPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::DeleteServerTlsPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteServerTlsPolicy(request));
 }
@@ -152,7 +152,7 @@ NetworkSecurityTracingConnection::ListClientTlsPolicies(
     google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::ListClientTlsPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListClientTlsPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networksecurity::v1::ClientTlsPolicy>(std::move(span),
@@ -175,7 +175,7 @@ NetworkSecurityTracingConnection::CreateClientTlsPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::CreateClientTlsPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateClientTlsPolicy(request));
 }
@@ -186,7 +186,7 @@ NetworkSecurityTracingConnection::UpdateClientTlsPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::UpdateClientTlsPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateClientTlsPolicy(request));
 }
@@ -197,7 +197,7 @@ NetworkSecurityTracingConnection::DeleteClientTlsPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::DeleteClientTlsPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteClientTlsPolicy(request));
 }

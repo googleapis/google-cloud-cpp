@@ -37,7 +37,7 @@ VersionsTracingConnection::ListVersions(
     google::cloud::dialogflow::cx::v3::ListVersionsRequest request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::VersionsConnection::ListVersions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVersions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::cx::v3::Version>(std::move(span),
@@ -58,7 +58,7 @@ VersionsTracingConnection::CreateVersion(
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::VersionsConnection::CreateVersion");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateVersion(request));
 }
 
@@ -84,7 +84,7 @@ VersionsTracingConnection::LoadVersion(
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::VersionsConnection::LoadVersion");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->LoadVersion(request));
 }
 

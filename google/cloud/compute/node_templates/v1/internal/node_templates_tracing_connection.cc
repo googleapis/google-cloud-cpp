@@ -40,7 +40,7 @@ NodeTemplatesTracingConnection::AggregatedListNodeTemplates(
   auto span = internal::MakeSpan(
       "compute_node_templates_v1::NodeTemplatesConnection::"
       "AggregatedListNodeTemplates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListNodeTemplates(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>(
@@ -53,7 +53,7 @@ NodeTemplatesTracingConnection::DeleteNodeTemplate(
         DeleteNodeTemplateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_node_templates_v1::NodeTemplatesConnection::DeleteNodeTemplate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteNodeTemplate(request));
 }
@@ -84,7 +84,7 @@ NodeTemplatesTracingConnection::InsertNodeTemplate(
         InsertNodeTemplateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_node_templates_v1::NodeTemplatesConnection::InsertNodeTemplate");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertNodeTemplate(request));
 }
@@ -95,7 +95,7 @@ NodeTemplatesTracingConnection::ListNodeTemplates(
         request) {
   auto span = internal::MakeSpan(
       "compute_node_templates_v1::NodeTemplatesConnection::ListNodeTemplates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNodeTemplates(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::NodeTemplate>(std::move(span),

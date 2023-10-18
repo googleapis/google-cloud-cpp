@@ -60,10 +60,8 @@ ConfigTracingStub::AsyncCreateDeployment(
     google::cloud::config::v1::CreateDeploymentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
                                      "CreateDeployment");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateDeployment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -75,10 +73,8 @@ ConfigTracingStub::AsyncUpdateDeployment(
     google::cloud::config::v1::UpdateDeploymentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
                                      "UpdateDeployment");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateDeployment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -90,10 +86,8 @@ ConfigTracingStub::AsyncDeleteDeployment(
     google::cloud::config::v1::DeleteDeploymentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
                                      "DeleteDeployment");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteDeployment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -199,10 +193,8 @@ ConfigTracingStub::AsyncLockDeployment(
     google::cloud::config::v1::LockDeploymentRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.config.v1.Config", "LockDeployment");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncLockDeployment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -214,10 +206,8 @@ ConfigTracingStub::AsyncUnlockDeployment(
     google::cloud::config::v1::UnlockDeploymentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
                                      "UnlockDeployment");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUnlockDeployment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -240,10 +230,8 @@ ConfigTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -254,10 +242,8 @@ future<Status> ConfigTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

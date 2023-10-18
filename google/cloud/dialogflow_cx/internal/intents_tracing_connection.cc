@@ -37,7 +37,7 @@ IntentsTracingConnection::ListIntents(
     google::cloud::dialogflow::cx::v3::ListIntentsRequest request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::IntentsConnection::ListIntents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListIntents(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::cx::v3::Intent>(std::move(span),
@@ -83,7 +83,7 @@ IntentsTracingConnection::ImportIntents(
     google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::IntentsConnection::ImportIntents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportIntents(request));
 }
 
@@ -92,7 +92,7 @@ IntentsTracingConnection::ExportIntents(
     google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::IntentsConnection::ExportIntents");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportIntents(request));
 }
 

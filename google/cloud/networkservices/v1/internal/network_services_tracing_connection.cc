@@ -37,7 +37,7 @@ NetworkServicesTracingConnection::ListEndpointPolicies(
     google::cloud::networkservices::v1::ListEndpointPoliciesRequest request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::ListEndpointPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEndpointPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkservices::v1::EndpointPolicy>(std::move(span),
@@ -60,7 +60,7 @@ NetworkServicesTracingConnection::CreateEndpointPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateEndpointPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateEndpointPolicy(request));
 }
@@ -71,7 +71,7 @@ NetworkServicesTracingConnection::UpdateEndpointPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateEndpointPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateEndpointPolicy(request));
 }
@@ -82,7 +82,7 @@ NetworkServicesTracingConnection::DeleteEndpointPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteEndpointPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteEndpointPolicy(request));
 }
@@ -92,7 +92,7 @@ NetworkServicesTracingConnection::ListGateways(
     google::cloud::networkservices::v1::ListGatewaysRequest request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::ListGateways");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListGateways(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkservices::v1::Gateway>(std::move(span),
@@ -113,7 +113,7 @@ NetworkServicesTracingConnection::CreateGateway(
     google::cloud::networkservices::v1::CreateGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateGateway");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateGateway(request));
 }
 
@@ -122,7 +122,7 @@ NetworkServicesTracingConnection::UpdateGateway(
     google::cloud::networkservices::v1::UpdateGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateGateway");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateGateway(request));
 }
 
@@ -131,7 +131,7 @@ NetworkServicesTracingConnection::DeleteGateway(
     google::cloud::networkservices::v1::DeleteGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteGateway");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteGateway(request));
 }
 
@@ -140,7 +140,7 @@ NetworkServicesTracingConnection::ListGrpcRoutes(
     google::cloud::networkservices::v1::ListGrpcRoutesRequest request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::ListGrpcRoutes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListGrpcRoutes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkservices::v1::GrpcRoute>(std::move(span),
@@ -161,7 +161,7 @@ NetworkServicesTracingConnection::CreateGrpcRoute(
     google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateGrpcRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateGrpcRoute(request));
 }
 
@@ -170,7 +170,7 @@ NetworkServicesTracingConnection::UpdateGrpcRoute(
     google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateGrpcRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateGrpcRoute(request));
 }
 
@@ -179,7 +179,7 @@ NetworkServicesTracingConnection::DeleteGrpcRoute(
     google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteGrpcRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteGrpcRoute(request));
 }
 
@@ -188,7 +188,7 @@ NetworkServicesTracingConnection::ListHttpRoutes(
     google::cloud::networkservices::v1::ListHttpRoutesRequest request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::ListHttpRoutes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListHttpRoutes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkservices::v1::HttpRoute>(std::move(span),
@@ -209,7 +209,7 @@ NetworkServicesTracingConnection::CreateHttpRoute(
     google::cloud::networkservices::v1::CreateHttpRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateHttpRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateHttpRoute(request));
 }
 
@@ -218,7 +218,7 @@ NetworkServicesTracingConnection::UpdateHttpRoute(
     google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateHttpRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateHttpRoute(request));
 }
 
@@ -227,7 +227,7 @@ NetworkServicesTracingConnection::DeleteHttpRoute(
     google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteHttpRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteHttpRoute(request));
 }
 
@@ -236,7 +236,7 @@ NetworkServicesTracingConnection::ListTcpRoutes(
     google::cloud::networkservices::v1::ListTcpRoutesRequest request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::ListTcpRoutes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTcpRoutes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkservices::v1::TcpRoute>(std::move(span),
@@ -257,7 +257,7 @@ NetworkServicesTracingConnection::CreateTcpRoute(
     google::cloud::networkservices::v1::CreateTcpRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateTcpRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateTcpRoute(request));
 }
 
@@ -266,7 +266,7 @@ NetworkServicesTracingConnection::UpdateTcpRoute(
     google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateTcpRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateTcpRoute(request));
 }
 
@@ -275,7 +275,7 @@ NetworkServicesTracingConnection::DeleteTcpRoute(
     google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteTcpRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTcpRoute(request));
 }
 
@@ -284,7 +284,7 @@ NetworkServicesTracingConnection::ListTlsRoutes(
     google::cloud::networkservices::v1::ListTlsRoutesRequest request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::ListTlsRoutes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTlsRoutes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkservices::v1::TlsRoute>(std::move(span),
@@ -305,7 +305,7 @@ NetworkServicesTracingConnection::CreateTlsRoute(
     google::cloud::networkservices::v1::CreateTlsRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateTlsRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateTlsRoute(request));
 }
 
@@ -314,7 +314,7 @@ NetworkServicesTracingConnection::UpdateTlsRoute(
     google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateTlsRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateTlsRoute(request));
 }
 
@@ -323,7 +323,7 @@ NetworkServicesTracingConnection::DeleteTlsRoute(
     google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteTlsRoute");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTlsRoute(request));
 }
 
@@ -332,7 +332,7 @@ NetworkServicesTracingConnection::ListServiceBindings(
     google::cloud::networkservices::v1::ListServiceBindingsRequest request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::ListServiceBindings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServiceBindings(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkservices::v1::ServiceBinding>(std::move(span),
@@ -355,7 +355,7 @@ NetworkServicesTracingConnection::CreateServiceBinding(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateServiceBinding");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateServiceBinding(request));
 }
@@ -366,7 +366,7 @@ NetworkServicesTracingConnection::DeleteServiceBinding(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteServiceBinding");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteServiceBinding(request));
 }
@@ -376,7 +376,7 @@ NetworkServicesTracingConnection::ListMeshes(
     google::cloud::networkservices::v1::ListMeshesRequest request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::ListMeshes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMeshes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkservices::v1::Mesh>(std::move(span), std::move(sr));
@@ -396,7 +396,7 @@ NetworkServicesTracingConnection::CreateMesh(
     google::cloud::networkservices::v1::CreateMeshRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateMesh");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateMesh(request));
 }
 
@@ -405,7 +405,7 @@ NetworkServicesTracingConnection::UpdateMesh(
     google::cloud::networkservices::v1::UpdateMeshRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateMesh");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateMesh(request));
 }
 
@@ -414,7 +414,7 @@ NetworkServicesTracingConnection::DeleteMesh(
     google::cloud::networkservices::v1::DeleteMeshRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteMesh");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteMesh(request));
 }
 

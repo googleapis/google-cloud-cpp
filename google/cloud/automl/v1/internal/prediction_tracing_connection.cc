@@ -45,7 +45,7 @@ PredictionServiceTracingConnection::BatchPredict(
     google::cloud::automl::v1::BatchPredictRequest const& request) {
   auto span = internal::MakeSpan(
       "automl_v1::PredictionServiceConnection::BatchPredict");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->BatchPredict(request));
 }
 

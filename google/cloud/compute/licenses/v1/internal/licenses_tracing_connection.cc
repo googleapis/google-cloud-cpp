@@ -38,7 +38,7 @@ LicensesTracingConnection::DeleteLicense(
         request) {
   auto span = internal::MakeSpan(
       "compute_licenses_v1::LicensesConnection::DeleteLicense");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteLicense(request));
 }
 
@@ -68,7 +68,7 @@ LicensesTracingConnection::InsertLicense(
         request) {
   auto span = internal::MakeSpan(
       "compute_licenses_v1::LicensesConnection::InsertLicense");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertLicense(request));
 }
 
@@ -77,7 +77,7 @@ LicensesTracingConnection::ListLicenses(
     google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request) {
   auto span = internal::MakeSpan(
       "compute_licenses_v1::LicensesConnection::ListLicenses");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListLicenses(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::License>(std::move(span), std::move(sr));

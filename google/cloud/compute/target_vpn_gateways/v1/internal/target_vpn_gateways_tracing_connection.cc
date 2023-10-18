@@ -41,7 +41,7 @@ TargetVpnGatewaysTracingConnection::AggregatedListTargetVpnGateways(
   auto span = internal::MakeSpan(
       "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
       "AggregatedListTargetVpnGateways");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListTargetVpnGateways(std::move(request));
   return internal::MakeTracedStreamRange<
       std::pair<std::string,
@@ -56,7 +56,7 @@ TargetVpnGatewaysTracingConnection::DeleteTargetVpnGateway(
   auto span = internal::MakeSpan(
       "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
       "DeleteTargetVpnGateway");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTargetVpnGateway(request));
 }
@@ -79,7 +79,7 @@ TargetVpnGatewaysTracingConnection::InsertTargetVpnGateway(
   auto span = internal::MakeSpan(
       "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
       "InsertTargetVpnGateway");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertTargetVpnGateway(request));
 }
@@ -91,7 +91,7 @@ TargetVpnGatewaysTracingConnection::ListTargetVpnGateways(
   auto span = internal::MakeSpan(
       "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
       "ListTargetVpnGateways");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTargetVpnGateways(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::TargetVpnGateway>(std::move(span),
@@ -104,7 +104,7 @@ TargetVpnGatewaysTracingConnection::SetLabels(
         SetLabelsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 

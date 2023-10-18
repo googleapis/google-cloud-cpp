@@ -97,10 +97,8 @@ EntityTypesTracingStub::AsyncBatchUpdateEntityTypes(
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EntityTypes",
                                      "BatchUpdateEntityTypes");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncBatchUpdateEntityTypes(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -113,10 +111,8 @@ EntityTypesTracingStub::AsyncBatchDeleteEntityTypes(
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EntityTypes",
                                      "BatchDeleteEntityTypes");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncBatchDeleteEntityTypes(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -128,10 +124,8 @@ EntityTypesTracingStub::AsyncBatchCreateEntities(
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EntityTypes",
                                      "BatchCreateEntities");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncBatchCreateEntities(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -143,10 +137,8 @@ EntityTypesTracingStub::AsyncBatchUpdateEntities(
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EntityTypes",
                                      "BatchUpdateEntities");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncBatchUpdateEntities(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -158,10 +150,8 @@ EntityTypesTracingStub::AsyncBatchDeleteEntities(
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EntityTypes",
                                      "BatchDeleteEntities");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncBatchDeleteEntities(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -173,10 +163,8 @@ EntityTypesTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -187,10 +175,8 @@ future<Status> EntityTypesTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

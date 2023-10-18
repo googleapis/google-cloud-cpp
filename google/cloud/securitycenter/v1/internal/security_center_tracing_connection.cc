@@ -37,7 +37,7 @@ SecurityCenterTracingConnection::BulkMuteFindings(
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::BulkMuteFindings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->BulkMuteFindings(request));
 }
 
@@ -207,7 +207,7 @@ SecurityCenterTracingConnection::GroupAssets(
     google::cloud::securitycenter::v1::GroupAssetsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::GroupAssets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->GroupAssets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::securitycenter::v1::GroupResult>(std::move(span),
@@ -219,7 +219,7 @@ SecurityCenterTracingConnection::GroupFindings(
     google::cloud::securitycenter::v1::GroupFindingsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::GroupFindings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->GroupFindings(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::securitycenter::v1::GroupResult>(std::move(span),
@@ -232,7 +232,7 @@ SecurityCenterTracingConnection::ListAssets(
     google::cloud::securitycenter::v1::ListAssetsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::ListAssets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAssets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>(
@@ -248,7 +248,7 @@ SecurityCenterTracingConnection::
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::"
       "ListDescendantSecurityHealthAnalyticsCustomModules");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDescendantSecurityHealthAnalyticsCustomModules(
       std::move(request));
   return internal::MakeTracedStreamRange<
@@ -262,7 +262,7 @@ SecurityCenterTracingConnection::ListFindings(
     google::cloud::securitycenter::v1::ListFindingsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::ListFindings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListFindings(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::securitycenter::v1::ListFindingsResponse::
@@ -274,7 +274,7 @@ SecurityCenterTracingConnection::ListMuteConfigs(
     google::cloud::securitycenter::v1::ListMuteConfigsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::ListMuteConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMuteConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::securitycenter::v1::MuteConfig>(std::move(span),
@@ -286,7 +286,7 @@ SecurityCenterTracingConnection::ListNotificationConfigs(
     google::cloud::securitycenter::v1::ListNotificationConfigsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::ListNotificationConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNotificationConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::securitycenter::v1::NotificationConfig>(std::move(span),
@@ -302,7 +302,7 @@ SecurityCenterTracingConnection::
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::"
       "ListEffectiveSecurityHealthAnalyticsCustomModules");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEffectiveSecurityHealthAnalyticsCustomModules(
       std::move(request));
   return internal::MakeTracedStreamRange<
@@ -319,7 +319,7 @@ SecurityCenterTracingConnection::ListSecurityHealthAnalyticsCustomModules(
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::"
       "ListSecurityHealthAnalyticsCustomModules");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr =
       child_->ListSecurityHealthAnalyticsCustomModules(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -332,7 +332,7 @@ SecurityCenterTracingConnection::ListSources(
     google::cloud::securitycenter::v1::ListSourcesRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::ListSources");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSources(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::securitycenter::v1::Source>(std::move(span),
@@ -345,7 +345,7 @@ SecurityCenterTracingConnection::RunAssetDiscovery(
         request) {
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::RunAssetDiscovery");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RunAssetDiscovery(request));
 }
 
@@ -498,7 +498,7 @@ SecurityCenterTracingConnection::ListBigQueryExports(
     google::cloud::securitycenter::v1::ListBigQueryExportsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::ListBigQueryExports");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBigQueryExports(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::securitycenter::v1::BigQueryExport>(std::move(span),

@@ -41,7 +41,7 @@ ResourcePoliciesTracingConnection::AggregatedListResourcePolicies(
   auto span = internal::MakeSpan(
       "compute_resource_policies_v1::ResourcePoliciesConnection::"
       "AggregatedListResourcePolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListResourcePolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       std::pair<std::string,
@@ -56,7 +56,7 @@ ResourcePoliciesTracingConnection::DeleteResourcePolicy(
   auto span = internal::MakeSpan(
       "compute_resource_policies_v1::ResourcePoliciesConnection::"
       "DeleteResourcePolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteResourcePolicy(request));
 }
@@ -89,7 +89,7 @@ ResourcePoliciesTracingConnection::InsertResourcePolicy(
   auto span = internal::MakeSpan(
       "compute_resource_policies_v1::ResourcePoliciesConnection::"
       "InsertResourcePolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertResourcePolicy(request));
 }
@@ -101,7 +101,7 @@ ResourcePoliciesTracingConnection::ListResourcePolicies(
   auto span = internal::MakeSpan(
       "compute_resource_policies_v1::ResourcePoliciesConnection::"
       "ListResourcePolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListResourcePolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::ResourcePolicy>(std::move(span),
@@ -115,7 +115,7 @@ ResourcePoliciesTracingConnection::PatchResourcePolicy(
   auto span = internal::MakeSpan(
       "compute_resource_policies_v1::ResourcePoliciesConnection::"
       "PatchResourcePolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchResourcePolicy(request));
 }

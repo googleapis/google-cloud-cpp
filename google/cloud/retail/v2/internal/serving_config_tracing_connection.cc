@@ -72,7 +72,7 @@ ServingConfigServiceTracingConnection::ListServingConfigs(
     google::cloud::retail::v2::ListServingConfigsRequest request) {
   auto span = internal::MakeSpan(
       "retail_v2::ServingConfigServiceConnection::ListServingConfigs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServingConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::retail::v2::ServingConfig>(std::move(span), std::move(sr));

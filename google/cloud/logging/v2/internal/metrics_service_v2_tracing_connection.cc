@@ -37,7 +37,7 @@ MetricsServiceV2TracingConnection::ListLogMetrics(
     google::logging::v2::ListLogMetricsRequest request) {
   auto span = internal::MakeSpan(
       "logging_v2::MetricsServiceV2Connection::ListLogMetrics");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListLogMetrics(std::move(request));
   return internal::MakeTracedStreamRange<google::logging::v2::LogMetric>(
       std::move(span), std::move(sr));

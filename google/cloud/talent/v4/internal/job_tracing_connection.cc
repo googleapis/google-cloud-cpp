@@ -44,7 +44,7 @@ JobServiceTracingConnection::BatchCreateJobs(
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
   auto span =
       internal::MakeSpan("talent_v4::JobServiceConnection::BatchCreateJobs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->BatchCreateJobs(request));
 }
 
@@ -67,7 +67,7 @@ JobServiceTracingConnection::BatchUpdateJobs(
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
   auto span =
       internal::MakeSpan("talent_v4::JobServiceConnection::BatchUpdateJobs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->BatchUpdateJobs(request));
 }
 
@@ -83,7 +83,7 @@ JobServiceTracingConnection::BatchDeleteJobs(
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
   auto span =
       internal::MakeSpan("talent_v4::JobServiceConnection::BatchDeleteJobs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->BatchDeleteJobs(request));
 }
 
@@ -91,7 +91,7 @@ StreamRange<google::cloud::talent::v4::Job>
 JobServiceTracingConnection::ListJobs(
     google::cloud::talent::v4::ListJobsRequest request) {
   auto span = internal::MakeSpan("talent_v4::JobServiceConnection::ListJobs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::talent::v4::Job>(
       std::move(span), std::move(sr));

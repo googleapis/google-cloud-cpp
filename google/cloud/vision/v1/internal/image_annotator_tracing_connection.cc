@@ -54,7 +54,7 @@ ImageAnnotatorTracingConnection::AsyncBatchAnnotateImages(
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   auto span = internal::MakeSpan(
       "vision_v1::ImageAnnotatorConnection::AsyncBatchAnnotateImages");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->AsyncBatchAnnotateImages(request));
 }
@@ -64,7 +64,7 @@ ImageAnnotatorTracingConnection::AsyncBatchAnnotateFiles(
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   auto span = internal::MakeSpan(
       "vision_v1::ImageAnnotatorConnection::AsyncBatchAnnotateFiles");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->AsyncBatchAnnotateFiles(request));
 }

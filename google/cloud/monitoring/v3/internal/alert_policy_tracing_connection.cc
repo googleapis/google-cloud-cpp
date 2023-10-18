@@ -37,7 +37,7 @@ AlertPolicyServiceTracingConnection::ListAlertPolicies(
     google::monitoring::v3::ListAlertPoliciesRequest request) {
   auto span = internal::MakeSpan(
       "monitoring_v3::AlertPolicyServiceConnection::ListAlertPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAlertPolicies(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::AlertPolicy>(
       std::move(span), std::move(sr));

@@ -41,7 +41,7 @@ TargetTcpProxiesTracingConnection::AggregatedListTargetTcpProxies(
   auto span = internal::MakeSpan(
       "compute_target_tcp_proxies_v1::TargetTcpProxiesConnection::"
       "AggregatedListTargetTcpProxies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListTargetTcpProxies(std::move(request));
   return internal::MakeTracedStreamRange<
       std::pair<std::string,
@@ -56,7 +56,7 @@ TargetTcpProxiesTracingConnection::DeleteTargetTcpProxy(
   auto span = internal::MakeSpan(
       "compute_target_tcp_proxies_v1::TargetTcpProxiesConnection::"
       "DeleteTargetTcpProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTargetTcpProxy(request));
 }
@@ -79,7 +79,7 @@ TargetTcpProxiesTracingConnection::InsertTargetTcpProxy(
   auto span = internal::MakeSpan(
       "compute_target_tcp_proxies_v1::TargetTcpProxiesConnection::"
       "InsertTargetTcpProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertTargetTcpProxy(request));
 }
@@ -91,7 +91,7 @@ TargetTcpProxiesTracingConnection::ListTargetTcpProxies(
   auto span = internal::MakeSpan(
       "compute_target_tcp_proxies_v1::TargetTcpProxiesConnection::"
       "ListTargetTcpProxies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTargetTcpProxies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::TargetTcpProxy>(std::move(span),
@@ -105,7 +105,7 @@ TargetTcpProxiesTracingConnection::SetBackendService(
   auto span = internal::MakeSpan(
       "compute_target_tcp_proxies_v1::TargetTcpProxiesConnection::"
       "SetBackendService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetBackendService(request));
 }
 
@@ -116,7 +116,7 @@ TargetTcpProxiesTracingConnection::SetProxyHeader(
   auto span = internal::MakeSpan(
       "compute_target_tcp_proxies_v1::TargetTcpProxiesConnection::"
       "SetProxyHeader");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetProxyHeader(request));
 }
 

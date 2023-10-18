@@ -97,7 +97,7 @@ LoggingServiceV2TracingStub::AsyncTailLogEntries(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
   auto span = internal::MakeSpanGrpc("google.logging.v2.LoggingServiceV2",
                                      "TailLogEntries");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncTailLogEntries(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
@@ -113,10 +113,8 @@ LoggingServiceV2TracingStub::AsyncWriteLogEntries(
     google::logging::v2::WriteLogEntriesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.logging.v2.LoggingServiceV2",
                                      "WriteLogEntries");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncWriteLogEntries(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

@@ -61,10 +61,8 @@ EdgeContainerTracingStub::AsyncCreateCluster(
     google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "CreateCluster");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -76,10 +74,8 @@ EdgeContainerTracingStub::AsyncUpdateCluster(
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "UpdateCluster");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -91,10 +87,8 @@ EdgeContainerTracingStub::AsyncDeleteCluster(
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "DeleteCluster");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -143,10 +137,8 @@ EdgeContainerTracingStub::AsyncCreateNodePool(
     google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "CreateNodePool");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateNodePool(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -158,10 +150,8 @@ EdgeContainerTracingStub::AsyncUpdateNodePool(
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "UpdateNodePool");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateNodePool(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -173,10 +163,8 @@ EdgeContainerTracingStub::AsyncDeleteNodePool(
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "DeleteNodePool");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteNodePool(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -238,10 +226,8 @@ EdgeContainerTracingStub::AsyncCreateVpnConnection(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "CreateVpnConnection");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateVpnConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -254,10 +240,8 @@ EdgeContainerTracingStub::AsyncDeleteVpnConnection(
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "DeleteVpnConnection");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteVpnConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -269,10 +253,8 @@ EdgeContainerTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -283,10 +265,8 @@ future<Status> EdgeContainerTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

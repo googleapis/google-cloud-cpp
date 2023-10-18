@@ -48,10 +48,8 @@ NetAppTracingStub::AsyncCreateStoragePool(
     google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "CreateStoragePool");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateStoragePool(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -75,10 +73,8 @@ NetAppTracingStub::AsyncUpdateStoragePool(
     google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "UpdateStoragePool");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateStoragePool(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -90,10 +86,8 @@ NetAppTracingStub::AsyncDeleteStoragePool(
     google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "DeleteStoragePool");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteStoragePool(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -127,10 +121,8 @@ NetAppTracingStub::AsyncCreateVolume(
     google::cloud::netapp::v1::CreateVolumeRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp", "CreateVolume");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateVolume(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -142,10 +134,8 @@ NetAppTracingStub::AsyncUpdateVolume(
     google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp", "UpdateVolume");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateVolume(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -157,10 +147,8 @@ NetAppTracingStub::AsyncDeleteVolume(
     google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp", "DeleteVolume");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteVolume(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -172,10 +160,8 @@ NetAppTracingStub::AsyncRevertVolume(
     google::cloud::netapp::v1::RevertVolumeRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp", "RevertVolume");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRevertVolume(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -210,10 +196,8 @@ NetAppTracingStub::AsyncCreateSnapshot(
     google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp", "CreateSnapshot");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateSnapshot(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -225,10 +209,8 @@ NetAppTracingStub::AsyncDeleteSnapshot(
     google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp", "DeleteSnapshot");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteSnapshot(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -240,10 +222,8 @@ NetAppTracingStub::AsyncUpdateSnapshot(
     google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp", "UpdateSnapshot");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateSnapshot(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -279,10 +259,8 @@ NetAppTracingStub::AsyncCreateActiveDirectory(
     google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "CreateActiveDirectory");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateActiveDirectory(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -294,10 +272,8 @@ NetAppTracingStub::AsyncUpdateActiveDirectory(
     google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "UpdateActiveDirectory");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateActiveDirectory(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -309,10 +285,8 @@ NetAppTracingStub::AsyncDeleteActiveDirectory(
     google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "DeleteActiveDirectory");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteActiveDirectory(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -336,10 +310,8 @@ NetAppTracingStub::AsyncCreateKmsConfig(
     google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "CreateKmsConfig");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateKmsConfig(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -362,10 +334,8 @@ NetAppTracingStub::AsyncUpdateKmsConfig(
     google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "UpdateKmsConfig");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateKmsConfig(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -377,10 +347,8 @@ NetAppTracingStub::AsyncEncryptVolumes(
     google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp", "EncryptVolumes");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncEncryptVolumes(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -404,10 +372,8 @@ NetAppTracingStub::AsyncDeleteKmsConfig(
     google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "DeleteKmsConfig");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteKmsConfig(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -443,10 +409,8 @@ NetAppTracingStub::AsyncCreateReplication(
     google::cloud::netapp::v1::CreateReplicationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "CreateReplication");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateReplication(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -458,10 +422,8 @@ NetAppTracingStub::AsyncDeleteReplication(
     google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "DeleteReplication");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteReplication(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -473,10 +435,8 @@ NetAppTracingStub::AsyncUpdateReplication(
     google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "UpdateReplication");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateReplication(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -488,10 +448,8 @@ NetAppTracingStub::AsyncStopReplication(
     google::cloud::netapp::v1::StopReplicationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "StopReplication");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncStopReplication(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -503,10 +461,8 @@ NetAppTracingStub::AsyncResumeReplication(
     google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "ResumeReplication");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncResumeReplication(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -519,10 +475,8 @@ NetAppTracingStub::AsyncReverseReplicationDirection(
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
                                      "ReverseReplicationDirection");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncReverseReplicationDirection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -534,10 +488,8 @@ NetAppTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -548,10 +500,8 @@ future<Status> NetAppTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

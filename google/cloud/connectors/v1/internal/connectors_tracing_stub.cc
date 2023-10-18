@@ -61,10 +61,8 @@ ConnectorsTracingStub::AsyncCreateConnection(
     google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
                                      "CreateConnection");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -76,10 +74,8 @@ ConnectorsTracingStub::AsyncUpdateConnection(
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
                                      "UpdateConnection");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -91,10 +87,8 @@ ConnectorsTracingStub::AsyncDeleteConnection(
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
                                      "DeleteConnection");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -193,10 +187,8 @@ ConnectorsTracingStub::AsyncRefreshConnectionSchemaMetadata(
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
                                      "RefreshConnectionSchemaMetadata");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRefreshConnectionSchemaMetadata(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -258,10 +250,8 @@ ConnectorsTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -272,10 +262,8 @@ future<Status> ConnectorsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

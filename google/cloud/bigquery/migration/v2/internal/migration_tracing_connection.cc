@@ -61,7 +61,7 @@ MigrationServiceTracingConnection::ListMigrationWorkflows(
   auto span = internal::MakeSpan(
       "bigquery_migration_v2::MigrationServiceConnection::"
       "ListMigrationWorkflows");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMigrationWorkflows(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::migration::v2::MigrationWorkflow>(
@@ -105,7 +105,7 @@ MigrationServiceTracingConnection::ListMigrationSubtasks(
   auto span = internal::MakeSpan(
       "bigquery_migration_v2::MigrationServiceConnection::"
       "ListMigrationSubtasks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMigrationSubtasks(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::migration::v2::MigrationSubtask>(std::move(span),

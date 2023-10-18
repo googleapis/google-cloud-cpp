@@ -37,7 +37,7 @@ CloudCatalogTracingConnection::ListServices(
     google::cloud::billing::v1::ListServicesRequest request) {
   auto span =
       internal::MakeSpan("billing_v1::CloudCatalogConnection::ListServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::billing::v1::Service>(
       std::move(span), std::move(sr));
@@ -48,7 +48,7 @@ CloudCatalogTracingConnection::ListSkus(
     google::cloud::billing::v1::ListSkusRequest request) {
   auto span =
       internal::MakeSpan("billing_v1::CloudCatalogConnection::ListSkus");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSkus(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::billing::v1::Sku>(
       std::move(span), std::move(sr));

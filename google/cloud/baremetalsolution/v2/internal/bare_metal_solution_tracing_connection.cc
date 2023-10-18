@@ -37,7 +37,7 @@ BareMetalSolutionTracingConnection::ListInstances(
     google::cloud::baremetalsolution::v2::ListInstancesRequest request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ListInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInstances(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::baremetalsolution::v2::Instance>(std::move(span),
@@ -59,7 +59,7 @@ BareMetalSolutionTracingConnection::UpdateInstance(
         request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::UpdateInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
 }
 
@@ -78,7 +78,7 @@ BareMetalSolutionTracingConnection::ResetInstance(
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ResetInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ResetInstance(request));
 }
 
@@ -87,7 +87,7 @@ BareMetalSolutionTracingConnection::StartInstance(
     google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::StartInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->StartInstance(request));
 }
 
@@ -96,7 +96,7 @@ BareMetalSolutionTracingConnection::StopInstance(
     google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::StopInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->StopInstance(request));
 }
 
@@ -108,7 +108,7 @@ BareMetalSolutionTracingConnection::EnableInteractiveSerialConsole(
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::"
       "EnableInteractiveSerialConsole");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->EnableInteractiveSerialConsole(request));
 }
@@ -121,7 +121,7 @@ BareMetalSolutionTracingConnection::DisableInteractiveSerialConsole(
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::"
       "DisableInteractiveSerialConsole");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DisableInteractiveSerialConsole(request));
 }
@@ -131,7 +131,7 @@ BareMetalSolutionTracingConnection::DetachLun(
     google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::DetachLun");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DetachLun(request));
 }
 
@@ -140,7 +140,7 @@ BareMetalSolutionTracingConnection::ListSSHKeys(
     google::cloud::baremetalsolution::v2::ListSSHKeysRequest request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ListSSHKeys");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSSHKeys(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::baremetalsolution::v2::SSHKey>(std::move(span),
@@ -169,7 +169,7 @@ BareMetalSolutionTracingConnection::ListVolumes(
     google::cloud::baremetalsolution::v2::ListVolumesRequest request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ListVolumes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVolumes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::baremetalsolution::v2::Volume>(std::move(span),
@@ -190,7 +190,7 @@ BareMetalSolutionTracingConnection::UpdateVolume(
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::UpdateVolume");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateVolume(request));
 }
 
@@ -208,7 +208,7 @@ BareMetalSolutionTracingConnection::EvictVolume(
     google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::EvictVolume");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->EvictVolume(request));
 }
 
@@ -217,7 +217,7 @@ BareMetalSolutionTracingConnection::ResizeVolume(
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ResizeVolume");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ResizeVolume(request));
 }
 
@@ -226,7 +226,7 @@ BareMetalSolutionTracingConnection::ListNetworks(
     google::cloud::baremetalsolution::v2::ListNetworksRequest request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ListNetworks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNetworks(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::baremetalsolution::v2::Network>(std::move(span),
@@ -257,7 +257,7 @@ BareMetalSolutionTracingConnection::UpdateNetwork(
     google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::UpdateNetwork");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateNetwork(request));
 }
 
@@ -279,7 +279,7 @@ BareMetalSolutionTracingConnection::RestoreVolumeSnapshot(
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::"
       "RestoreVolumeSnapshot");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RestoreVolumeSnapshot(request));
 }
@@ -309,7 +309,7 @@ BareMetalSolutionTracingConnection::ListVolumeSnapshots(
     google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ListVolumeSnapshots");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVolumeSnapshots(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::baremetalsolution::v2::VolumeSnapshot>(std::move(span),
@@ -330,7 +330,7 @@ BareMetalSolutionTracingConnection::ListLuns(
     google::cloud::baremetalsolution::v2::ListLunsRequest request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ListLuns");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListLuns(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::baremetalsolution::v2::Lun>(std::move(span),
@@ -342,7 +342,7 @@ BareMetalSolutionTracingConnection::EvictLun(
     google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::EvictLun");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->EvictLun(request));
 }
 
@@ -360,7 +360,7 @@ BareMetalSolutionTracingConnection::ListNfsShares(
     google::cloud::baremetalsolution::v2::ListNfsSharesRequest request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ListNfsShares");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNfsShares(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::baremetalsolution::v2::NfsShare>(std::move(span),
@@ -373,7 +373,7 @@ BareMetalSolutionTracingConnection::UpdateNfsShare(
         request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::UpdateNfsShare");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateNfsShare(request));
 }
 
@@ -383,7 +383,7 @@ BareMetalSolutionTracingConnection::CreateNfsShare(
         request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::CreateNfsShare");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateNfsShare(request));
 }
 
@@ -403,7 +403,7 @@ BareMetalSolutionTracingConnection::DeleteNfsShare(
         request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::DeleteNfsShare");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteNfsShare(request));
 }
 
@@ -414,7 +414,7 @@ BareMetalSolutionTracingConnection::ListProvisioningQuotas(
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::"
       "ListProvisioningQuotas");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListProvisioningQuotas(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::baremetalsolution::v2::ProvisioningQuota>(std::move(span),
@@ -479,7 +479,7 @@ BareMetalSolutionTracingConnection::ListOSImages(
     google::cloud::baremetalsolution::v2::ListOSImagesRequest request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ListOSImages");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListOSImages(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::baremetalsolution::v2::OSImage>(std::move(span),

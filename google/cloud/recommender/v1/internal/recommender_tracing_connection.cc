@@ -37,7 +37,7 @@ RecommenderTracingConnection::ListInsights(
     google::cloud::recommender::v1::ListInsightsRequest request) {
   auto span =
       internal::MakeSpan("recommender_v1::RecommenderConnection::ListInsights");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInsights(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::recommender::v1::Insight>(std::move(span), std::move(sr));
@@ -66,7 +66,7 @@ RecommenderTracingConnection::ListRecommendations(
     google::cloud::recommender::v1::ListRecommendationsRequest request) {
   auto span = internal::MakeSpan(
       "recommender_v1::RecommenderConnection::ListRecommendations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRecommendations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::recommender::v1::Recommendation>(std::move(span),

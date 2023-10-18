@@ -37,7 +37,7 @@ RepositoryManagerTracingConnection::CreateConnection(
     google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::CreateConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateConnection(request));
 }
 
@@ -55,7 +55,7 @@ RepositoryManagerTracingConnection::ListConnections(
     google::devtools::cloudbuild::v2::ListConnectionsRequest request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::ListConnections");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListConnections(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::cloudbuild::v2::Connection>(std::move(span),
@@ -67,7 +67,7 @@ RepositoryManagerTracingConnection::UpdateConnection(
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::UpdateConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateConnection(request));
 }
 
@@ -76,7 +76,7 @@ RepositoryManagerTracingConnection::DeleteConnection(
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::DeleteConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteConnection(request));
 }
 
@@ -85,7 +85,7 @@ RepositoryManagerTracingConnection::CreateRepository(
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::CreateRepository");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateRepository(request));
 }
 
@@ -96,7 +96,7 @@ RepositoryManagerTracingConnection::BatchCreateRepositories(
         request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::BatchCreateRepositories");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchCreateRepositories(request));
 }
@@ -115,7 +115,7 @@ RepositoryManagerTracingConnection::ListRepositories(
     google::devtools::cloudbuild::v2::ListRepositoriesRequest request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::ListRepositories");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRepositories(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::cloudbuild::v2::Repository>(std::move(span),
@@ -127,7 +127,7 @@ RepositoryManagerTracingConnection::DeleteRepository(
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::DeleteRepository");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRepository(request));
 }
 
@@ -156,7 +156,7 @@ RepositoryManagerTracingConnection::FetchLinkableRepositories(
         request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::FetchLinkableRepositories");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->FetchLinkableRepositories(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::cloudbuild::v2::Repository>(std::move(span),

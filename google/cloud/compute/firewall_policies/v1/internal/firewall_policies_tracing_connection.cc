@@ -40,7 +40,7 @@ FirewallPoliciesTracingConnection::AddAssociation(
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::"
       "AddAssociation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddAssociation(request));
 }
 
@@ -50,7 +50,7 @@ FirewallPoliciesTracingConnection::AddRule(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::AddRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddRule(request));
 }
 
@@ -60,7 +60,7 @@ FirewallPoliciesTracingConnection::CloneRules(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::CloneRules");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CloneRules(request));
 }
 
@@ -71,7 +71,7 @@ FirewallPoliciesTracingConnection::DeleteFirewallPolicy(
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::"
       "DeleteFirewallPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteFirewallPolicy(request));
 }
@@ -125,7 +125,7 @@ FirewallPoliciesTracingConnection::InsertFirewallPolicy(
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::"
       "InsertFirewallPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertFirewallPolicy(request));
 }
@@ -137,7 +137,7 @@ FirewallPoliciesTracingConnection::ListFirewallPolicies(
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::"
       "ListFirewallPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListFirewallPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::FirewallPolicy>(std::move(span),
@@ -162,7 +162,7 @@ FirewallPoliciesTracingConnection::Move(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::Move");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->Move(request));
 }
 
@@ -173,7 +173,7 @@ FirewallPoliciesTracingConnection::PatchFirewallPolicy(
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::"
       "PatchFirewallPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchFirewallPolicy(request));
 }
@@ -184,7 +184,7 @@ FirewallPoliciesTracingConnection::PatchRule(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::PatchRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchRule(request));
 }
 
@@ -195,7 +195,7 @@ FirewallPoliciesTracingConnection::RemoveAssociation(
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::"
       "RemoveAssociation");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RemoveAssociation(request));
 }
 
@@ -205,7 +205,7 @@ FirewallPoliciesTracingConnection::RemoveRule(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::RemoveRule");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RemoveRule(request));
 }
 

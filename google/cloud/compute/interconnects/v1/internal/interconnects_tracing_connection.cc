@@ -38,7 +38,7 @@ InterconnectsTracingConnection::DeleteInterconnect(
         DeleteInterconnectRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_interconnects_v1::InterconnectsConnection::DeleteInterconnect");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteInterconnect(request));
 }
@@ -79,7 +79,7 @@ InterconnectsTracingConnection::InsertInterconnect(
         InsertInterconnectRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_interconnects_v1::InterconnectsConnection::InsertInterconnect");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertInterconnect(request));
 }
@@ -90,7 +90,7 @@ InterconnectsTracingConnection::ListInterconnects(
         request) {
   auto span = internal::MakeSpan(
       "compute_interconnects_v1::InterconnectsConnection::ListInterconnects");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInterconnects(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Interconnect>(std::move(span),
@@ -103,7 +103,7 @@ InterconnectsTracingConnection::PatchInterconnect(
         PatchInterconnectRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_interconnects_v1::InterconnectsConnection::PatchInterconnect");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchInterconnect(request));
 }
 
@@ -113,7 +113,7 @@ InterconnectsTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_interconnects_v1::InterconnectsConnection::SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 

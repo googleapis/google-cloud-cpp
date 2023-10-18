@@ -37,7 +37,7 @@ VmwareEngineTracingConnection::ListPrivateClouds(
     google::cloud::vmwareengine::v1::ListPrivateCloudsRequest request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ListPrivateClouds");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPrivateClouds(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::vmwareengine::v1::PrivateCloud>(std::move(span),
@@ -58,7 +58,7 @@ VmwareEngineTracingConnection::CreatePrivateCloud(
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreatePrivateCloud");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreatePrivateCloud(request));
 }
@@ -68,7 +68,7 @@ VmwareEngineTracingConnection::UpdatePrivateCloud(
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateCloud");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdatePrivateCloud(request));
 }
@@ -78,7 +78,7 @@ VmwareEngineTracingConnection::DeletePrivateCloud(
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeletePrivateCloud");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeletePrivateCloud(request));
 }
@@ -89,7 +89,7 @@ VmwareEngineTracingConnection::UndeletePrivateCloud(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UndeletePrivateCloud");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UndeletePrivateCloud(request));
 }
@@ -99,7 +99,7 @@ VmwareEngineTracingConnection::ListClusters(
     google::cloud::vmwareengine::v1::ListClustersRequest request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ListClusters");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListClusters(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::vmwareengine::v1::Cluster>(std::move(span), std::move(sr));
@@ -119,7 +119,7 @@ VmwareEngineTracingConnection::CreateCluster(
     google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateCluster(request));
 }
 
@@ -128,7 +128,7 @@ VmwareEngineTracingConnection::UpdateCluster(
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
 }
 
@@ -137,7 +137,7 @@ VmwareEngineTracingConnection::DeleteCluster(
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteCluster");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteCluster(request));
 }
 
@@ -146,7 +146,7 @@ VmwareEngineTracingConnection::ListSubnets(
     google::cloud::vmwareengine::v1::ListSubnetsRequest request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ListSubnets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSubnets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::vmwareengine::v1::Subnet>(std::move(span), std::move(sr));
@@ -166,7 +166,7 @@ VmwareEngineTracingConnection::UpdateSubnet(
     google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateSubnet");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateSubnet(request));
 }
 
@@ -175,7 +175,7 @@ VmwareEngineTracingConnection::ListNodeTypes(
     google::cloud::vmwareengine::v1::ListNodeTypesRequest request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ListNodeTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNodeTypes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::vmwareengine::v1::NodeType>(std::move(span),
@@ -216,7 +216,7 @@ VmwareEngineTracingConnection::ResetNsxCredentials(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ResetNsxCredentials");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ResetNsxCredentials(request));
 }
@@ -227,7 +227,7 @@ VmwareEngineTracingConnection::ResetVcenterCredentials(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ResetVcenterCredentials");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ResetVcenterCredentials(request));
 }
@@ -238,7 +238,7 @@ VmwareEngineTracingConnection::CreateHcxActivationKey(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateHcxActivationKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateHcxActivationKey(request));
 }
@@ -248,7 +248,7 @@ VmwareEngineTracingConnection::ListHcxActivationKeys(
     google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ListHcxActivationKeys");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListHcxActivationKeys(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::vmwareengine::v1::HcxActivationKey>(std::move(span),
@@ -279,7 +279,7 @@ VmwareEngineTracingConnection::ListNetworkPolicies(
     google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ListNetworkPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNetworkPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::vmwareengine::v1::NetworkPolicy>(std::move(span),
@@ -292,7 +292,7 @@ VmwareEngineTracingConnection::CreateNetworkPolicy(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateNetworkPolicy(request));
 }
@@ -303,7 +303,7 @@ VmwareEngineTracingConnection::UpdateNetworkPolicy(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateNetworkPolicy(request));
 }
@@ -314,7 +314,7 @@ VmwareEngineTracingConnection::DeleteNetworkPolicy(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteNetworkPolicy(request));
 }
@@ -325,7 +325,7 @@ VmwareEngineTracingConnection::CreateVmwareEngineNetwork(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateVmwareEngineNetwork");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateVmwareEngineNetwork(request));
 }
@@ -336,7 +336,7 @@ VmwareEngineTracingConnection::UpdateVmwareEngineNetwork(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateVmwareEngineNetwork");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateVmwareEngineNetwork(request));
 }
@@ -347,7 +347,7 @@ VmwareEngineTracingConnection::DeleteVmwareEngineNetwork(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteVmwareEngineNetwork");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteVmwareEngineNetwork(request));
 }
@@ -367,7 +367,7 @@ VmwareEngineTracingConnection::ListVmwareEngineNetworks(
     google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ListVmwareEngineNetworks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVmwareEngineNetworks(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::vmwareengine::v1::VmwareEngineNetwork>(std::move(span),
@@ -380,7 +380,7 @@ VmwareEngineTracingConnection::CreatePrivateConnection(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreatePrivateConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreatePrivateConnection(request));
 }
@@ -400,7 +400,7 @@ VmwareEngineTracingConnection::ListPrivateConnections(
     google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ListPrivateConnections");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPrivateConnections(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::vmwareengine::v1::PrivateConnection>(std::move(span),
@@ -413,7 +413,7 @@ VmwareEngineTracingConnection::UpdatePrivateConnection(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdatePrivateConnection(request));
 }
@@ -424,7 +424,7 @@ VmwareEngineTracingConnection::DeletePrivateConnection(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeletePrivateConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeletePrivateConnection(request));
 }
@@ -436,7 +436,7 @@ VmwareEngineTracingConnection::ListPrivateConnectionPeeringRoutes(
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "ListPrivateConnectionPeeringRoutes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPrivateConnectionPeeringRoutes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::vmwareengine::v1::PeeringRoute>(std::move(span),

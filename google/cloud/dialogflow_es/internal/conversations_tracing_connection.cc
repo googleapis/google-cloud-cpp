@@ -46,7 +46,7 @@ ConversationsTracingConnection::ListConversations(
     google::cloud::dialogflow::v2::ListConversationsRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationsConnection::ListConversations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListConversations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::v2::Conversation>(std::move(span),
@@ -76,7 +76,7 @@ ConversationsTracingConnection::ListMessages(
     google::cloud::dialogflow::v2::ListMessagesRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationsConnection::ListMessages");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListMessages(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::v2::Message>(std::move(span), std::move(sr));

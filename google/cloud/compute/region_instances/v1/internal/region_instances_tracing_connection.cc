@@ -38,7 +38,7 @@ RegionInstancesTracingConnection::BulkInsert(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_instances_v1::RegionInstancesConnection::BulkInsert");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->BulkInsert(request));
 }
 

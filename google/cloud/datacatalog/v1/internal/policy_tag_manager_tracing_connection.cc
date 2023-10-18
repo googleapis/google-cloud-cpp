@@ -63,7 +63,7 @@ PolicyTagManagerTracingConnection::ListTaxonomies(
     google::cloud::datacatalog::v1::ListTaxonomiesRequest request) {
   auto span = internal::MakeSpan(
       "datacatalog_v1::PolicyTagManagerConnection::ListTaxonomies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTaxonomies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::datacatalog::v1::Taxonomy>(std::move(span), std::move(sr));
@@ -109,7 +109,7 @@ PolicyTagManagerTracingConnection::ListPolicyTags(
     google::cloud::datacatalog::v1::ListPolicyTagsRequest request) {
   auto span = internal::MakeSpan(
       "datacatalog_v1::PolicyTagManagerConnection::ListPolicyTags");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPolicyTags(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::datacatalog::v1::PolicyTag>(std::move(span),

@@ -37,7 +37,7 @@ ExecutionsTracingConnection::ListExecutions(
     google::cloud::workflows::executions::v1::ListExecutionsRequest request) {
   auto span = internal::MakeSpan(
       "workflows_executions_v1::ExecutionsConnection::ListExecutions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListExecutions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::workflows::executions::v1::Execution>(std::move(span),

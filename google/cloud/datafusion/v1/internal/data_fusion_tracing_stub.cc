@@ -74,10 +74,8 @@ DataFusionTracingStub::AsyncCreateInstance(
     google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
                                      "CreateInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -89,10 +87,8 @@ DataFusionTracingStub::AsyncDeleteInstance(
     google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
                                      "DeleteInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -104,10 +100,8 @@ DataFusionTracingStub::AsyncUpdateInstance(
     google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
                                      "UpdateInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -119,10 +113,8 @@ DataFusionTracingStub::AsyncRestartInstance(
     google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
                                      "RestartInstance");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRestartInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -134,10 +126,8 @@ DataFusionTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -148,10 +138,8 @@ future<Status> DataFusionTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

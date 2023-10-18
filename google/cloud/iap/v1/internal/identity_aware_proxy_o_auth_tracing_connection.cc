@@ -78,7 +78,7 @@ IdentityAwareProxyOAuthServiceTracingConnection::ListIdentityAwareProxyClients(
   auto span = internal::MakeSpan(
       "iap_v1::IdentityAwareProxyOAuthServiceConnection::"
       "ListIdentityAwareProxyClients");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListIdentityAwareProxyClients(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::iap::v1::IdentityAwareProxyClient>(std::move(span),

@@ -35,7 +35,7 @@ TpuTracingConnection::TpuTracingConnection(
 StreamRange<google::cloud::tpu::v2::Node> TpuTracingConnection::ListNodes(
     google::cloud::tpu::v2::ListNodesRequest request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::ListNodes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNodes(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::tpu::v2::Node>(
       std::move(span), std::move(sr));
@@ -51,7 +51,7 @@ StatusOr<google::cloud::tpu::v2::Node> TpuTracingConnection::GetNode(
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::CreateNode(
     google::cloud::tpu::v2::CreateNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::CreateNode");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateNode(request));
 }
 
@@ -59,28 +59,28 @@ future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
 TpuTracingConnection::DeleteNode(
     google::cloud::tpu::v2::DeleteNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::DeleteNode");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteNode(request));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::StopNode(
     google::cloud::tpu::v2::StopNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::StopNode");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->StopNode(request));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::StartNode(
     google::cloud::tpu::v2::StartNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::StartNode");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->StartNode(request));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::UpdateNode(
     google::cloud::tpu::v2::UpdateNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::UpdateNode");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateNode(request));
 }
 
@@ -97,7 +97,7 @@ StreamRange<google::cloud::tpu::v2::AcceleratorType>
 TpuTracingConnection::ListAcceleratorTypes(
     google::cloud::tpu::v2::ListAcceleratorTypesRequest request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::ListAcceleratorTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAcceleratorTypes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::tpu::v2::AcceleratorType>(std::move(span), std::move(sr));
@@ -115,7 +115,7 @@ StreamRange<google::cloud::tpu::v2::RuntimeVersion>
 TpuTracingConnection::ListRuntimeVersions(
     google::cloud::tpu::v2::ListRuntimeVersionsRequest request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::ListRuntimeVersions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRuntimeVersions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::tpu::v2::RuntimeVersion>(std::move(span), std::move(sr));

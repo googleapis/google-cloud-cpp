@@ -39,7 +39,7 @@ ConversationDatasetsTracingConnection::CreateConversationDataset(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationDatasetsConnection::"
       "CreateConversationDataset");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateConversationDataset(request));
 }
@@ -60,7 +60,7 @@ ConversationDatasetsTracingConnection::ListConversationDatasets(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationDatasetsConnection::"
       "ListConversationDatasets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListConversationDatasets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::v2::ConversationDataset>(std::move(span),
@@ -75,7 +75,7 @@ ConversationDatasetsTracingConnection::DeleteConversationDataset(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationDatasetsConnection::"
       "DeleteConversationDataset");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteConversationDataset(request));
 }
@@ -87,7 +87,7 @@ ConversationDatasetsTracingConnection::ImportConversationData(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationDatasetsConnection::ImportConversationData");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ImportConversationData(request));
 }

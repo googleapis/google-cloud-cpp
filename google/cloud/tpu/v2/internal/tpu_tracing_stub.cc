@@ -53,10 +53,8 @@ TpuTracingStub::AsyncCreateNode(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::CreateNodeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "CreateNode");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateNode(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -67,10 +65,8 @@ TpuTracingStub::AsyncDeleteNode(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::DeleteNodeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "DeleteNode");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteNode(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -80,10 +76,8 @@ future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStopNode(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::StopNodeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "StopNode");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncStopNode(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -93,10 +87,8 @@ future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStartNode(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::StartNodeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "StartNode");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncStartNode(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -107,10 +99,8 @@ TpuTracingStub::AsyncUpdateNode(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::UpdateNodeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "UpdateNode");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateNode(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -194,10 +184,8 @@ TpuTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -208,10 +196,8 @@ future<Status> TpuTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

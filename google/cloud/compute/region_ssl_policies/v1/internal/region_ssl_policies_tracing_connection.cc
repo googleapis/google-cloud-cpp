@@ -40,7 +40,7 @@ RegionSslPoliciesTracingConnection::DeleteSslPolicy(
   auto span = internal::MakeSpan(
       "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
       "DeleteSslPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSslPolicy(request));
 }
 
@@ -62,7 +62,7 @@ RegionSslPoliciesTracingConnection::InsertSslPolicy(
   auto span = internal::MakeSpan(
       "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
       "InsertSslPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertSslPolicy(request));
 }
 
@@ -73,7 +73,7 @@ RegionSslPoliciesTracingConnection::ListRegionSslPolicies(
   auto span = internal::MakeSpan(
       "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
       "ListRegionSslPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionSslPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::SslPolicy>(std::move(span),
@@ -99,7 +99,7 @@ RegionSslPoliciesTracingConnection::PatchSslPolicy(
   auto span = internal::MakeSpan(
       "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
       "PatchSslPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchSslPolicy(request));
 }
 

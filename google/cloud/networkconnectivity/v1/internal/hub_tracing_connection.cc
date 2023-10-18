@@ -37,7 +37,7 @@ HubServiceTracingConnection::ListHubs(
     google::cloud::networkconnectivity::v1::ListHubsRequest request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::ListHubs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListHubs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkconnectivity::v1::Hub>(std::move(span),
@@ -58,7 +58,7 @@ HubServiceTracingConnection::CreateHub(
     google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::CreateHub");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateHub(request));
 }
 
@@ -67,7 +67,7 @@ HubServiceTracingConnection::UpdateHub(
     google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::UpdateHub");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateHub(request));
 }
 
@@ -76,7 +76,7 @@ HubServiceTracingConnection::DeleteHub(
     google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::DeleteHub");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteHub(request));
 }
 
@@ -85,7 +85,7 @@ HubServiceTracingConnection::ListHubSpokes(
     google::cloud::networkconnectivity::v1::ListHubSpokesRequest request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::ListHubSpokes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListHubSpokes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkconnectivity::v1::Spoke>(std::move(span),
@@ -97,7 +97,7 @@ HubServiceTracingConnection::ListSpokes(
     google::cloud::networkconnectivity::v1::ListSpokesRequest request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::ListSpokes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSpokes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkconnectivity::v1::Spoke>(std::move(span),
@@ -118,7 +118,7 @@ HubServiceTracingConnection::CreateSpoke(
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::CreateSpoke");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateSpoke(request));
 }
 
@@ -127,7 +127,7 @@ HubServiceTracingConnection::UpdateSpoke(
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::UpdateSpoke");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateSpoke(request));
 }
 
@@ -137,7 +137,7 @@ HubServiceTracingConnection::RejectHubSpoke(
         request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::RejectHubSpoke");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RejectHubSpoke(request));
 }
 
@@ -147,7 +147,7 @@ HubServiceTracingConnection::AcceptHubSpoke(
         request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::AcceptHubSpoke");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AcceptHubSpoke(request));
 }
 
@@ -156,7 +156,7 @@ HubServiceTracingConnection::DeleteSpoke(
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::DeleteSpoke");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSpoke(request));
 }
 
@@ -184,7 +184,7 @@ HubServiceTracingConnection::ListRoutes(
     google::cloud::networkconnectivity::v1::ListRoutesRequest request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::ListRoutes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRoutes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkconnectivity::v1::Route>(std::move(span),
@@ -196,7 +196,7 @@ HubServiceTracingConnection::ListRouteTables(
     google::cloud::networkconnectivity::v1::ListRouteTablesRequest request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::ListRouteTables");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRouteTables(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkconnectivity::v1::RouteTable>(std::move(span),
@@ -217,7 +217,7 @@ HubServiceTracingConnection::ListGroups(
     google::cloud::networkconnectivity::v1::ListGroupsRequest request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::ListGroups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListGroups(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::networkconnectivity::v1::Group>(std::move(span),

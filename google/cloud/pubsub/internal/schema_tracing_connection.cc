@@ -53,7 +53,7 @@ SchemaServiceTracingConnection::ListSchemas(
     google::pubsub::v1::ListSchemasRequest request) {
   auto span =
       internal::MakeSpan("pubsub::SchemaServiceConnection::ListSchemas");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSchemas(std::move(request));
   return internal::MakeTracedStreamRange<google::pubsub::v1::Schema>(
       std::move(span), std::move(sr));
@@ -64,7 +64,7 @@ SchemaServiceTracingConnection::ListSchemaRevisions(
     google::pubsub::v1::ListSchemaRevisionsRequest request) {
   auto span = internal::MakeSpan(
       "pubsub::SchemaServiceConnection::ListSchemaRevisions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSchemaRevisions(std::move(request));
   return internal::MakeTracedStreamRange<google::pubsub::v1::Schema>(
       std::move(span), std::move(sr));

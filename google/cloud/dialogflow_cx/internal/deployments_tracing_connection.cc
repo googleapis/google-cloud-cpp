@@ -37,7 +37,7 @@ DeploymentsTracingConnection::ListDeployments(
     google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::DeploymentsConnection::ListDeployments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDeployments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::cx::v3::Deployment>(std::move(span),

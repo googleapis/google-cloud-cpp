@@ -40,7 +40,7 @@ TargetSslProxiesTracingConnection::DeleteTargetSslProxy(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "DeleteTargetSslProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTargetSslProxy(request));
 }
@@ -63,7 +63,7 @@ TargetSslProxiesTracingConnection::InsertTargetSslProxy(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "InsertTargetSslProxy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertTargetSslProxy(request));
 }
@@ -75,7 +75,7 @@ TargetSslProxiesTracingConnection::ListTargetSslProxies(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "ListTargetSslProxies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTargetSslProxies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::TargetSslProxy>(std::move(span),
@@ -89,7 +89,7 @@ TargetSslProxiesTracingConnection::SetBackendService(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "SetBackendService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetBackendService(request));
 }
 
@@ -100,7 +100,7 @@ TargetSslProxiesTracingConnection::SetCertificateMap(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "SetCertificateMap");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetCertificateMap(request));
 }
 
@@ -111,7 +111,7 @@ TargetSslProxiesTracingConnection::SetProxyHeader(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "SetProxyHeader");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetProxyHeader(request));
 }
 
@@ -122,7 +122,7 @@ TargetSslProxiesTracingConnection::SetSslCertificates(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "SetSslCertificates");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetSslCertificates(request));
 }
@@ -134,7 +134,7 @@ TargetSslProxiesTracingConnection::SetSslPolicy(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "SetSslPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetSslPolicy(request));
 }
 

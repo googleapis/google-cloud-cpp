@@ -55,7 +55,7 @@ VizierServiceTracingConnection::ListStudies(
     google::cloud::aiplatform::v1::ListStudiesRequest request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::VizierServiceConnection::ListStudies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListStudies(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Study>(
       std::move(span), std::move(sr));
@@ -83,7 +83,7 @@ VizierServiceTracingConnection::SuggestTrials(
     google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::VizierServiceConnection::SuggestTrials");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SuggestTrials(request));
 }
 
@@ -110,7 +110,7 @@ VizierServiceTracingConnection::ListTrials(
     google::cloud::aiplatform::v1::ListTrialsRequest request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::VizierServiceConnection::ListTrials");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTrials(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Trial>(
       std::move(span), std::move(sr));
@@ -149,7 +149,7 @@ VizierServiceTracingConnection::CheckTrialEarlyStoppingState(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::VizierServiceConnection::CheckTrialEarlyStoppingState");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CheckTrialEarlyStoppingState(request));
 }

@@ -64,7 +64,7 @@ OsConfigServiceTracingConnection::ListPatchJobs(
     google::cloud::osconfig::v1::ListPatchJobsRequest request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigServiceConnection::ListPatchJobs");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPatchJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::osconfig::v1::PatchJob>(
       std::move(span), std::move(sr));
@@ -75,7 +75,7 @@ OsConfigServiceTracingConnection::ListPatchJobInstanceDetails(
     google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigServiceConnection::ListPatchJobInstanceDetails");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPatchJobInstanceDetails(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::osconfig::v1::PatchJobInstanceDetails>(std::move(span),
@@ -105,7 +105,7 @@ OsConfigServiceTracingConnection::ListPatchDeployments(
     google::cloud::osconfig::v1::ListPatchDeploymentsRequest request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigServiceConnection::ListPatchDeployments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListPatchDeployments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::osconfig::v1::PatchDeployment>(std::move(span),

@@ -39,7 +39,7 @@ EnvironmentsTracingConnection::CreateEnvironment(
         CreateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::CreateEnvironment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateEnvironment(request));
 }
 
@@ -59,7 +59,7 @@ EnvironmentsTracingConnection::ListEnvironments(
         request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::ListEnvironments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEnvironments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::orchestration::airflow::service::v1::Environment>(
@@ -73,7 +73,7 @@ EnvironmentsTracingConnection::UpdateEnvironment(
         UpdateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::UpdateEnvironment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateEnvironment(request));
 }
 
@@ -84,7 +84,7 @@ EnvironmentsTracingConnection::DeleteEnvironment(
         DeleteEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::DeleteEnvironment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteEnvironment(request));
 }
 
@@ -128,7 +128,7 @@ EnvironmentsTracingConnection::SaveSnapshot(
         SaveSnapshotRequest const& request) {
   auto span =
       internal::MakeSpan("composer_v1::EnvironmentsConnection::SaveSnapshot");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SaveSnapshot(request));
 }
 
@@ -139,7 +139,7 @@ EnvironmentsTracingConnection::LoadSnapshot(
         LoadSnapshotRequest const& request) {
   auto span =
       internal::MakeSpan("composer_v1::EnvironmentsConnection::LoadSnapshot");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->LoadSnapshot(request));
 }
 
@@ -150,7 +150,7 @@ EnvironmentsTracingConnection::DatabaseFailover(
         DatabaseFailoverRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::DatabaseFailover");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DatabaseFailover(request));
 }
 

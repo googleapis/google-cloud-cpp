@@ -42,7 +42,7 @@ StatusOr<google::cloud::run::v2::Task> TasksTracingConnection::GetTask(
 StreamRange<google::cloud::run::v2::Task> TasksTracingConnection::ListTasks(
     google::cloud::run::v2::ListTasksRequest request) {
   auto span = internal::MakeSpan("run_v2::TasksConnection::ListTasks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTasks(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::run::v2::Task>(
       std::move(span), std::move(sr));

@@ -44,7 +44,7 @@ ZonesTracingConnection::ListZones(
     google::cloud::cpp::compute::zones::v1::ListZonesRequest request) {
   auto span =
       internal::MakeSpan("compute_zones_v1::ZonesConnection::ListZones");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListZones(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Zone>(
       std::move(span), std::move(sr));

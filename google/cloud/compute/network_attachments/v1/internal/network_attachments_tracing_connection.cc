@@ -42,7 +42,7 @@ NetworkAttachmentsTracingConnection::AggregatedListNetworkAttachments(
   auto span = internal::MakeSpan(
       "compute_network_attachments_v1::NetworkAttachmentsConnection::"
       "AggregatedListNetworkAttachments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListNetworkAttachments(std::move(request));
   return internal::MakeTracedStreamRange<
       std::pair<std::string,
@@ -57,7 +57,7 @@ NetworkAttachmentsTracingConnection::DeleteNetworkAttachment(
   auto span = internal::MakeSpan(
       "compute_network_attachments_v1::NetworkAttachmentsConnection::"
       "DeleteNetworkAttachment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteNetworkAttachment(request));
 }
@@ -91,7 +91,7 @@ NetworkAttachmentsTracingConnection::InsertNetworkAttachment(
   auto span = internal::MakeSpan(
       "compute_network_attachments_v1::NetworkAttachmentsConnection::"
       "InsertNetworkAttachment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertNetworkAttachment(request));
 }
@@ -103,7 +103,7 @@ NetworkAttachmentsTracingConnection::ListNetworkAttachments(
   auto span = internal::MakeSpan(
       "compute_network_attachments_v1::NetworkAttachmentsConnection::"
       "ListNetworkAttachments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNetworkAttachments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::NetworkAttachment>(std::move(span),
@@ -117,7 +117,7 @@ NetworkAttachmentsTracingConnection::PatchNetworkAttachment(
   auto span = internal::MakeSpan(
       "compute_network_attachments_v1::NetworkAttachmentsConnection::"
       "PatchNetworkAttachment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchNetworkAttachment(request));
 }

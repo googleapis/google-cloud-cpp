@@ -71,10 +71,8 @@ FoldersTracingStub::AsyncCreateFolder(
     google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
                                      "CreateFolder");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateFolder(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -86,10 +84,8 @@ FoldersTracingStub::AsyncUpdateFolder(
     google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
                                      "UpdateFolder");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateFolder(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -101,10 +97,8 @@ FoldersTracingStub::AsyncMoveFolder(
     google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
                                      "MoveFolder");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncMoveFolder(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -116,10 +110,8 @@ FoldersTracingStub::AsyncDeleteFolder(
     google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
                                      "DeleteFolder");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteFolder(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -131,10 +123,8 @@ FoldersTracingStub::AsyncUndeleteFolder(
     google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
                                      "UndeleteFolder");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUndeleteFolder(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -180,10 +170,8 @@ FoldersTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -194,10 +182,8 @@ future<Status> FoldersTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

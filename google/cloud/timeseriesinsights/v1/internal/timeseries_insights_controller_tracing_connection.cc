@@ -41,7 +41,7 @@ TimeseriesInsightsControllerTracingConnection::ListDataSets(
   auto span = internal::MakeSpan(
       "timeseriesinsights_v1::TimeseriesInsightsControllerConnection::"
       "ListDataSets");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDataSets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::timeseriesinsights::v1::DataSet>(std::move(span),

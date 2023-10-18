@@ -40,7 +40,7 @@ BackendServicesTracingConnection::AddSignedUrlKey(
   auto span = internal::MakeSpan(
       "compute_backend_services_v1::BackendServicesConnection::"
       "AddSignedUrlKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddSignedUrlKey(request));
 }
 
@@ -52,7 +52,7 @@ BackendServicesTracingConnection::AggregatedListBackendServices(
   auto span = internal::MakeSpan(
       "compute_backend_services_v1::BackendServicesConnection::"
       "AggregatedListBackendServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListBackendServices(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>(
@@ -66,7 +66,7 @@ BackendServicesTracingConnection::DeleteBackendService(
   auto span = internal::MakeSpan(
       "compute_backend_services_v1::BackendServicesConnection::"
       "DeleteBackendService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteBackendService(request));
 }
@@ -78,7 +78,7 @@ BackendServicesTracingConnection::DeleteSignedUrlKey(
   auto span = internal::MakeSpan(
       "compute_backend_services_v1::BackendServicesConnection::"
       "DeleteSignedUrlKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteSignedUrlKey(request));
 }
@@ -121,7 +121,7 @@ BackendServicesTracingConnection::InsertBackendService(
   auto span = internal::MakeSpan(
       "compute_backend_services_v1::BackendServicesConnection::"
       "InsertBackendService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertBackendService(request));
 }
@@ -133,7 +133,7 @@ BackendServicesTracingConnection::ListBackendServices(
   auto span = internal::MakeSpan(
       "compute_backend_services_v1::BackendServicesConnection::"
       "ListBackendServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBackendServices(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::BackendService>(std::move(span),
@@ -146,7 +146,7 @@ BackendServicesTracingConnection::ListUsable(
         request) {
   auto span = internal::MakeSpan(
       "compute_backend_services_v1::BackendServicesConnection::ListUsable");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListUsable(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::BackendService>(std::move(span),
@@ -160,7 +160,7 @@ BackendServicesTracingConnection::PatchBackendService(
   auto span = internal::MakeSpan(
       "compute_backend_services_v1::BackendServicesConnection::"
       "PatchBackendService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchBackendService(request));
 }
@@ -172,7 +172,7 @@ BackendServicesTracingConnection::SetEdgeSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_backend_services_v1::BackendServicesConnection::"
       "SetEdgeSecurityPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetEdgeSecurityPolicy(request));
 }
@@ -194,7 +194,7 @@ BackendServicesTracingConnection::SetSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_backend_services_v1::BackendServicesConnection::"
       "SetSecurityPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetSecurityPolicy(request));
 }
 
@@ -205,7 +205,7 @@ BackendServicesTracingConnection::UpdateBackendService(
   auto span = internal::MakeSpan(
       "compute_backend_services_v1::BackendServicesConnection::"
       "UpdateBackendService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateBackendService(request));
 }

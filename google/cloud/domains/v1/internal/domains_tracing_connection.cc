@@ -56,7 +56,7 @@ DomainsTracingConnection::RegisterDomain(
     google::cloud::domains::v1::RegisterDomainRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::RegisterDomain");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RegisterDomain(request));
 }
 
@@ -75,7 +75,7 @@ DomainsTracingConnection::TransferDomain(
     google::cloud::domains::v1::TransferDomainRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::TransferDomain");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->TransferDomain(request));
 }
 
@@ -84,7 +84,7 @@ DomainsTracingConnection::ListRegistrations(
     google::cloud::domains::v1::ListRegistrationsRequest request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::ListRegistrations");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegistrations(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::domains::v1::Registration>(std::move(span), std::move(sr));
@@ -104,7 +104,7 @@ DomainsTracingConnection::UpdateRegistration(
     google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::UpdateRegistration");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateRegistration(request));
 }
@@ -115,7 +115,7 @@ DomainsTracingConnection::ConfigureManagementSettings(
         request) {
   auto span = internal::MakeSpan(
       "domains_v1::DomainsConnection::ConfigureManagementSettings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ConfigureManagementSettings(request));
 }
@@ -125,7 +125,7 @@ DomainsTracingConnection::ConfigureDnsSettings(
     google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::ConfigureDnsSettings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ConfigureDnsSettings(request));
 }
@@ -136,7 +136,7 @@ DomainsTracingConnection::ConfigureContactSettings(
         request) {
   auto span = internal::MakeSpan(
       "domains_v1::DomainsConnection::ConfigureContactSettings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ConfigureContactSettings(request));
 }
@@ -146,7 +146,7 @@ DomainsTracingConnection::ExportRegistration(
     google::cloud::domains::v1::ExportRegistrationRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::ExportRegistration");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ExportRegistration(request));
 }
@@ -156,7 +156,7 @@ DomainsTracingConnection::DeleteRegistration(
     google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::DeleteRegistration");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteRegistration(request));
 }

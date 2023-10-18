@@ -40,7 +40,7 @@ HttpsHealthChecksTracingConnection::DeleteHttpsHealthCheck(
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "DeleteHttpsHealthCheck");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteHttpsHealthCheck(request));
 }
@@ -63,7 +63,7 @@ HttpsHealthChecksTracingConnection::InsertHttpsHealthCheck(
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "InsertHttpsHealthCheck");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertHttpsHealthCheck(request));
 }
@@ -75,7 +75,7 @@ HttpsHealthChecksTracingConnection::ListHttpsHealthChecks(
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "ListHttpsHealthChecks");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListHttpsHealthChecks(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::HttpsHealthCheck>(std::move(span),
@@ -89,7 +89,7 @@ HttpsHealthChecksTracingConnection::PatchHttpsHealthCheck(
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "PatchHttpsHealthCheck");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchHttpsHealthCheck(request));
 }
@@ -101,7 +101,7 @@ HttpsHealthChecksTracingConnection::UpdateHttpsHealthCheck(
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "UpdateHttpsHealthCheck");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateHttpsHealthCheck(request));
 }

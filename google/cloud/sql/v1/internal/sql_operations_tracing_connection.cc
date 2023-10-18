@@ -45,7 +45,7 @@ SqlOperationsServiceTracingConnection::List(
     google::cloud::sql::v1::SqlOperationsListRequest request) {
   auto span =
       internal::MakeSpan("sql_v1::SqlOperationsServiceConnection::List");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->List(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::sql::v1::Operation>(
       std::move(span), std::move(sr));

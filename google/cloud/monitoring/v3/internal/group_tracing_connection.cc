@@ -37,7 +37,7 @@ GroupServiceTracingConnection::ListGroups(
     google::monitoring::v3::ListGroupsRequest request) {
   auto span =
       internal::MakeSpan("monitoring_v3::GroupServiceConnection::ListGroups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListGroups(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::Group>(
       std::move(span), std::move(sr));
@@ -82,7 +82,7 @@ GroupServiceTracingConnection::ListGroupMembers(
     google::monitoring::v3::ListGroupMembersRequest request) {
   auto span = internal::MakeSpan(
       "monitoring_v3::GroupServiceConnection::ListGroupMembers");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListGroupMembers(std::move(request));
   return internal::MakeTracedStreamRange<google::api::MonitoredResource>(
       std::move(span), std::move(sr));

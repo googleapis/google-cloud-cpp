@@ -37,7 +37,7 @@ ServiceUsageTracingConnection::EnableService(
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::EnableService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->EnableService(request));
 }
 
@@ -46,7 +46,7 @@ ServiceUsageTracingConnection::DisableService(
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::DisableService");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DisableService(request));
 }
 
@@ -64,7 +64,7 @@ ServiceUsageTracingConnection::ListServices(
     google::api::serviceusage::v1::ListServicesRequest request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::ListServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<
       google::api::serviceusage::v1::Service>(std::move(span), std::move(sr));
@@ -75,7 +75,7 @@ ServiceUsageTracingConnection::BatchEnableServices(
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::BatchEnableServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchEnableServices(request));
 }

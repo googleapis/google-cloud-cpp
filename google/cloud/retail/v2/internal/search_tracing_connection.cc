@@ -36,7 +36,7 @@ StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
 SearchServiceTracingConnection::Search(
     google::cloud::retail::v2::SearchRequest request) {
   auto span = internal::MakeSpan("retail_v2::SearchServiceConnection::Search");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->Search(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::retail::v2::SearchResponse::SearchResult>(std::move(span),

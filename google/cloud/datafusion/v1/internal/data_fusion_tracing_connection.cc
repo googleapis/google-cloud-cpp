@@ -37,7 +37,7 @@ DataFusionTracingConnection::ListAvailableVersions(
     google::cloud::datafusion::v1::ListAvailableVersionsRequest request) {
   auto span = internal::MakeSpan(
       "datafusion_v1::DataFusionConnection::ListAvailableVersions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAvailableVersions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::datafusion::v1::Version>(std::move(span), std::move(sr));
@@ -48,7 +48,7 @@ DataFusionTracingConnection::ListInstances(
     google::cloud::datafusion::v1::ListInstancesRequest request) {
   auto span =
       internal::MakeSpan("datafusion_v1::DataFusionConnection::ListInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInstances(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::datafusion::v1::Instance>(std::move(span), std::move(sr));
@@ -68,7 +68,7 @@ DataFusionTracingConnection::CreateInstance(
     google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("datafusion_v1::DataFusionConnection::CreateInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
@@ -77,7 +77,7 @@ DataFusionTracingConnection::DeleteInstance(
     google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("datafusion_v1::DataFusionConnection::DeleteInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
 
@@ -86,7 +86,7 @@ DataFusionTracingConnection::UpdateInstance(
     google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("datafusion_v1::DataFusionConnection::UpdateInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
 }
 
@@ -95,7 +95,7 @@ DataFusionTracingConnection::RestartInstance(
     google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "datafusion_v1::DataFusionConnection::RestartInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RestartInstance(request));
 }
 

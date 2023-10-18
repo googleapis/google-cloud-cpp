@@ -42,7 +42,7 @@ ManagedIdentitiesServiceTracingConnection::CreateMicrosoftAdDomain(
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::"
       "CreateMicrosoftAdDomain");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateMicrosoftAdDomain(request));
 }
@@ -63,7 +63,7 @@ ManagedIdentitiesServiceTracingConnection::ListDomains(
     google::cloud::managedidentities::v1::ListDomainsRequest request) {
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::ListDomains");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDomains(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::managedidentities::v1::Domain>(std::move(span),
@@ -84,7 +84,7 @@ ManagedIdentitiesServiceTracingConnection::UpdateDomain(
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::UpdateDomain");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateDomain(request));
 }
 
@@ -93,7 +93,7 @@ ManagedIdentitiesServiceTracingConnection::DeleteDomain(
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::DeleteDomain");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteDomain(request));
 }
 
@@ -102,7 +102,7 @@ ManagedIdentitiesServiceTracingConnection::AttachTrust(
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::AttachTrust");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AttachTrust(request));
 }
 
@@ -113,7 +113,7 @@ ManagedIdentitiesServiceTracingConnection::ReconfigureTrust(
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::"
       "ReconfigureTrust");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ReconfigureTrust(request));
 }
 
@@ -122,7 +122,7 @@ ManagedIdentitiesServiceTracingConnection::DetachTrust(
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::DetachTrust");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DetachTrust(request));
 }
 
@@ -132,7 +132,7 @@ ManagedIdentitiesServiceTracingConnection::ValidateTrust(
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::"
       "ValidateTrust");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ValidateTrust(request));
 }
 

@@ -37,7 +37,7 @@ CloudFilestoreManagerTracingConnection::ListInstances(
     google::cloud::filestore::v1::ListInstancesRequest request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::ListInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInstances(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::filestore::v1::Instance>(std::move(span), std::move(sr));
@@ -57,7 +57,7 @@ CloudFilestoreManagerTracingConnection::CreateInstance(
     google::cloud::filestore::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::CreateInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
@@ -66,7 +66,7 @@ CloudFilestoreManagerTracingConnection::UpdateInstance(
     google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::UpdateInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
 }
 
@@ -75,7 +75,7 @@ CloudFilestoreManagerTracingConnection::RestoreInstance(
     google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::RestoreInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RestoreInstance(request));
 }
 
@@ -84,7 +84,7 @@ CloudFilestoreManagerTracingConnection::DeleteInstance(
     google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::DeleteInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
 
@@ -93,7 +93,7 @@ CloudFilestoreManagerTracingConnection::ListSnapshots(
     google::cloud::filestore::v1::ListSnapshotsRequest request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::ListSnapshots");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSnapshots(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::filestore::v1::Snapshot>(std::move(span), std::move(sr));
@@ -113,7 +113,7 @@ CloudFilestoreManagerTracingConnection::CreateSnapshot(
     google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::CreateSnapshot");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateSnapshot(request));
 }
 
@@ -122,7 +122,7 @@ CloudFilestoreManagerTracingConnection::DeleteSnapshot(
     google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::DeleteSnapshot");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSnapshot(request));
 }
 
@@ -131,7 +131,7 @@ CloudFilestoreManagerTracingConnection::UpdateSnapshot(
     google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::UpdateSnapshot");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateSnapshot(request));
 }
 
@@ -140,7 +140,7 @@ CloudFilestoreManagerTracingConnection::ListBackups(
     google::cloud::filestore::v1::ListBackupsRequest request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::ListBackups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListBackups(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::filestore::v1::Backup>(
       std::move(span), std::move(sr));
@@ -160,7 +160,7 @@ CloudFilestoreManagerTracingConnection::CreateBackup(
     google::cloud::filestore::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::CreateBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateBackup(request));
 }
 
@@ -169,7 +169,7 @@ CloudFilestoreManagerTracingConnection::DeleteBackup(
     google::cloud::filestore::v1::DeleteBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::DeleteBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteBackup(request));
 }
 
@@ -178,7 +178,7 @@ CloudFilestoreManagerTracingConnection::UpdateBackup(
     google::cloud::filestore::v1::UpdateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::UpdateBackup");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateBackup(request));
 }
 

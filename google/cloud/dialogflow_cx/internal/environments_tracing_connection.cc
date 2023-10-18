@@ -37,7 +37,7 @@ EnvironmentsTracingConnection::ListEnvironments(
     google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::ListEnvironments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEnvironments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::cx::v3::Environment>(std::move(span),
@@ -59,7 +59,7 @@ EnvironmentsTracingConnection::CreateEnvironment(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::CreateEnvironment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateEnvironment(request));
 }
 
@@ -69,7 +69,7 @@ EnvironmentsTracingConnection::UpdateEnvironment(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::UpdateEnvironment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateEnvironment(request));
 }
 
@@ -88,7 +88,7 @@ EnvironmentsTracingConnection::LookupEnvironmentHistory(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::LookupEnvironmentHistory");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->LookupEnvironmentHistory(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::cx::v3::Environment>(std::move(span),
@@ -101,7 +101,7 @@ EnvironmentsTracingConnection::RunContinuousTest(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::RunContinuousTest");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RunContinuousTest(request));
 }
 
@@ -111,7 +111,7 @@ EnvironmentsTracingConnection::ListContinuousTestResults(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::ListContinuousTestResults");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListContinuousTestResults(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::cx::v3::ContinuousTestResult>(std::move(span),
@@ -123,7 +123,7 @@ EnvironmentsTracingConnection::DeployFlow(
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::DeployFlow");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeployFlow(request));
 }
 

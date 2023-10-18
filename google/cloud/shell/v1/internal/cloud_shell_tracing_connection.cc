@@ -45,7 +45,7 @@ CloudShellServiceTracingConnection::StartEnvironment(
     google::cloud::shell::v1::StartEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "shell_v1::CloudShellServiceConnection::StartEnvironment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->StartEnvironment(request));
 }
 
@@ -54,7 +54,7 @@ CloudShellServiceTracingConnection::AuthorizeEnvironment(
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "shell_v1::CloudShellServiceConnection::AuthorizeEnvironment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->AuthorizeEnvironment(request));
 }
@@ -64,7 +64,7 @@ CloudShellServiceTracingConnection::AddPublicKey(
     google::cloud::shell::v1::AddPublicKeyRequest const& request) {
   auto span =
       internal::MakeSpan("shell_v1::CloudShellServiceConnection::AddPublicKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddPublicKey(request));
 }
 
@@ -73,7 +73,7 @@ CloudShellServiceTracingConnection::RemovePublicKey(
     google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
   auto span = internal::MakeSpan(
       "shell_v1::CloudShellServiceConnection::RemovePublicKey");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RemovePublicKey(request));
 }
 

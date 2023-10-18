@@ -37,7 +37,7 @@ TraceServiceTracingConnection::ListTraces(
     google::devtools::cloudtrace::v1::ListTracesRequest request) {
   auto span =
       internal::MakeSpan("trace_v1::TraceServiceConnection::ListTraces");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTraces(std::move(request));
   return internal::MakeTracedStreamRange<
       google::devtools::cloudtrace::v1::Trace>(std::move(span), std::move(sr));

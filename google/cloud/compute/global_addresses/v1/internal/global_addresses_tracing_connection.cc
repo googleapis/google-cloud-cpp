@@ -39,7 +39,7 @@ GlobalAddressesTracingConnection::DeleteAddress(
         DeleteAddressRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::DeleteAddress");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAddress(request));
 }
 
@@ -59,7 +59,7 @@ GlobalAddressesTracingConnection::InsertAddress(
         InsertAddressRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::InsertAddress");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertAddress(request));
 }
 
@@ -70,7 +70,7 @@ GlobalAddressesTracingConnection::ListGlobalAddresses(
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::"
       "ListGlobalAddresses");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListGlobalAddresses(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::Address>(std::move(span), std::move(sr));
@@ -82,7 +82,7 @@ GlobalAddressesTracingConnection::Move(
         request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::Move");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->Move(request));
 }
 
@@ -92,7 +92,7 @@ GlobalAddressesTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 

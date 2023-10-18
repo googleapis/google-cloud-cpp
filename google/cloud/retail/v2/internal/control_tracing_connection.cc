@@ -72,7 +72,7 @@ ControlServiceTracingConnection::ListControls(
     google::cloud::retail::v2::ListControlsRequest request) {
   auto span =
       internal::MakeSpan("retail_v2::ControlServiceConnection::ListControls");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListControls(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::retail::v2::Control>(
       std::move(span), std::move(sr));

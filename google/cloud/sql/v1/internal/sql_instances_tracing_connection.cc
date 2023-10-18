@@ -125,7 +125,7 @@ StreamRange<google::cloud::sql::v1::DatabaseInstance>
 SqlInstancesServiceTracingConnection::List(
     google::cloud::sql::v1::SqlInstancesListRequest request) {
   auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::List");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->List(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::sql::v1::DatabaseInstance>(std::move(span), std::move(sr));

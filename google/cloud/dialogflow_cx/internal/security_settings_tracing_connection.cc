@@ -70,7 +70,7 @@ SecuritySettingsServiceTracingConnection::ListSecuritySettings(
     google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::SecuritySettingsServiceConnection::ListSecuritySettings");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListSecuritySettings(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::cx::v3::SecuritySettings>(std::move(span),

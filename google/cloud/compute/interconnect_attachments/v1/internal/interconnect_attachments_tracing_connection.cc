@@ -44,7 +44,7 @@ InterconnectAttachmentsTracingConnection::AggregatedListInterconnectAttachments(
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
       "AggregatedListInterconnectAttachments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListInterconnectAttachments(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string,
@@ -59,7 +59,7 @@ InterconnectAttachmentsTracingConnection::DeleteInterconnectAttachment(
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
       "DeleteInterconnectAttachment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteInterconnectAttachment(request));
 }
@@ -82,7 +82,7 @@ InterconnectAttachmentsTracingConnection::InsertInterconnectAttachment(
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
       "InsertInterconnectAttachment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertInterconnectAttachment(request));
 }
@@ -94,7 +94,7 @@ InterconnectAttachmentsTracingConnection::ListInterconnectAttachments(
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
       "ListInterconnectAttachments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInterconnectAttachments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::InterconnectAttachment>(std::move(span),
@@ -108,7 +108,7 @@ InterconnectAttachmentsTracingConnection::PatchInterconnectAttachment(
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
       "PatchInterconnectAttachment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchInterconnectAttachment(request));
 }
@@ -120,7 +120,7 @@ InterconnectAttachmentsTracingConnection::SetLabels(
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
       "SetLabels");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 

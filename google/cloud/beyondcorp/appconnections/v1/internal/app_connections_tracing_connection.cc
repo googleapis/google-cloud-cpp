@@ -42,7 +42,7 @@ AppConnectionsServiceTracingConnection::ListAppConnections(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
       "ListAppConnections");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAppConnections(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::beyondcorp::appconnections::v1::AppConnection>(
@@ -67,7 +67,7 @@ AppConnectionsServiceTracingConnection::CreateAppConnection(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
       "CreateAppConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateAppConnection(request));
 }
@@ -79,7 +79,7 @@ AppConnectionsServiceTracingConnection::UpdateAppConnection(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
       "UpdateAppConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateAppConnection(request));
 }
@@ -92,7 +92,7 @@ AppConnectionsServiceTracingConnection::DeleteAppConnection(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
       "DeleteAppConnection");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteAppConnection(request));
 }
@@ -105,7 +105,7 @@ AppConnectionsServiceTracingConnection::ResolveAppConnections(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
       "ResolveAppConnections");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ResolveAppConnections(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::beyondcorp::appconnections::v1::

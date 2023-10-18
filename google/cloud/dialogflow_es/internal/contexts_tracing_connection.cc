@@ -37,7 +37,7 @@ ContextsTracingConnection::ListContexts(
     google::cloud::dialogflow::v2::ListContextsRequest request) {
   auto span =
       internal::MakeSpan("dialogflow_es::ContextsConnection::ListContexts");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListContexts(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::dialogflow::v2::Context>(std::move(span), std::move(sr));

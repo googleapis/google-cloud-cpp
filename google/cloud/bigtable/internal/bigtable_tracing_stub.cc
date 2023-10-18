@@ -129,7 +129,7 @@ BigtableTracingStub::AsyncReadRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::ReadRowsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "ReadRows");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncReadRows(cq, context, request);
   return std::make_unique<internal::AsyncStreamingReadRpcTracing<
@@ -145,7 +145,7 @@ BigtableTracingStub::AsyncSampleRowKeys(
     google::bigtable::v2::SampleRowKeysRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "SampleRowKeys");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncSampleRowKeys(cq, context, request);
   return std::make_unique<internal::AsyncStreamingReadRpcTracing<
@@ -160,10 +160,8 @@ BigtableTracingStub::AsyncMutateRow(
     google::bigtable::v2::MutateRowRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRow");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncMutateRow(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -176,7 +174,7 @@ BigtableTracingStub::AsyncMutateRows(
     google::bigtable::v2::MutateRowsRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRows");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncMutateRows(cq, context, request);
   return std::make_unique<internal::AsyncStreamingReadRpcTracing<
@@ -191,10 +189,8 @@ BigtableTracingStub::AsyncCheckAndMutateRow(
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "CheckAndMutateRow");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCheckAndMutateRow(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
@@ -206,10 +202,8 @@ BigtableTracingStub::AsyncReadModifyWriteRow(
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "ReadModifyWriteRow");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncReadModifyWriteRow(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }

@@ -72,7 +72,7 @@ RecaptchaEnterpriseServiceTracingConnection::ListKeys(
     google::cloud::recaptchaenterprise::v1::ListKeysRequest request) {
   auto span = internal::MakeSpan(
       "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::ListKeys");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListKeys(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::recaptchaenterprise::v1::Key>(std::move(span),
@@ -157,7 +157,7 @@ RecaptchaEnterpriseServiceTracingConnection::ListFirewallPolicies(
   auto span = internal::MakeSpan(
       "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
       "ListFirewallPolicies");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListFirewallPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::recaptchaenterprise::v1::FirewallPolicy>(std::move(span),
@@ -203,7 +203,7 @@ RecaptchaEnterpriseServiceTracingConnection::ListRelatedAccountGroups(
   auto span = internal::MakeSpan(
       "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
       "ListRelatedAccountGroups");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRelatedAccountGroups(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>(
@@ -218,7 +218,7 @@ RecaptchaEnterpriseServiceTracingConnection::ListRelatedAccountGroupMemberships(
   auto span = internal::MakeSpan(
       "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
       "ListRelatedAccountGroupMemberships");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRelatedAccountGroupMemberships(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>(
@@ -234,7 +234,7 @@ RecaptchaEnterpriseServiceTracingConnection::
   auto span = internal::MakeSpan(
       "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
       "SearchRelatedAccountGroupMemberships");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->SearchRelatedAccountGroupMemberships(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>(

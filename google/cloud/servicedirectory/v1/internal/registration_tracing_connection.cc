@@ -47,7 +47,7 @@ RegistrationServiceTracingConnection::ListNamespaces(
     google::cloud::servicedirectory::v1::ListNamespacesRequest request) {
   auto span = internal::MakeSpan(
       "servicedirectory_v1::RegistrationServiceConnection::ListNamespaces");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListNamespaces(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::servicedirectory::v1::Namespace>(std::move(span),
@@ -96,7 +96,7 @@ RegistrationServiceTracingConnection::ListServices(
     google::cloud::servicedirectory::v1::ListServicesRequest request) {
   auto span = internal::MakeSpan(
       "servicedirectory_v1::RegistrationServiceConnection::ListServices");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::servicedirectory::v1::Service>(std::move(span),
@@ -143,7 +143,7 @@ RegistrationServiceTracingConnection::ListEndpoints(
     google::cloud::servicedirectory::v1::ListEndpointsRequest request) {
   auto span = internal::MakeSpan(
       "servicedirectory_v1::RegistrationServiceConnection::ListEndpoints");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListEndpoints(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::servicedirectory::v1::Endpoint>(std::move(span),

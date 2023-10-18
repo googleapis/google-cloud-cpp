@@ -50,7 +50,7 @@ RegionDiskTypesTracingConnection::ListRegionDiskTypes(
   auto span = internal::MakeSpan(
       "compute_region_disk_types_v1::RegionDiskTypesConnection::"
       "ListRegionDiskTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRegionDiskTypes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::DiskType>(std::move(span),

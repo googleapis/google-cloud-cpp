@@ -41,7 +41,7 @@ TargetInstancesTracingConnection::AggregatedListTargetInstances(
   auto span = internal::MakeSpan(
       "compute_target_instances_v1::TargetInstancesConnection::"
       "AggregatedListTargetInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListTargetInstances(std::move(request));
   return internal::MakeTracedStreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>(
@@ -55,7 +55,7 @@ TargetInstancesTracingConnection::DeleteTargetInstance(
   auto span = internal::MakeSpan(
       "compute_target_instances_v1::TargetInstancesConnection::"
       "DeleteTargetInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTargetInstance(request));
 }
@@ -78,7 +78,7 @@ TargetInstancesTracingConnection::InsertTargetInstance(
   auto span = internal::MakeSpan(
       "compute_target_instances_v1::TargetInstancesConnection::"
       "InsertTargetInstance");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertTargetInstance(request));
 }
@@ -90,7 +90,7 @@ TargetInstancesTracingConnection::ListTargetInstances(
   auto span = internal::MakeSpan(
       "compute_target_instances_v1::TargetInstancesConnection::"
       "ListTargetInstances");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListTargetInstances(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::TargetInstance>(std::move(span),
@@ -104,7 +104,7 @@ TargetInstancesTracingConnection::SetSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_target_instances_v1::TargetInstancesConnection::"
       "SetSecurityPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetSecurityPolicy(request));
 }
 

@@ -41,7 +41,7 @@ AcceleratorTypesTracingConnection::AggregatedListAcceleratorTypes(
   auto span = internal::MakeSpan(
       "compute_accelerator_types_v1::AcceleratorTypesConnection::"
       "AggregatedListAcceleratorTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->AggregatedListAcceleratorTypes(std::move(request));
   return internal::MakeTracedStreamRange<
       std::pair<std::string,
@@ -67,7 +67,7 @@ AcceleratorTypesTracingConnection::ListAcceleratorTypes(
   auto span = internal::MakeSpan(
       "compute_accelerator_types_v1::AcceleratorTypesConnection::"
       "ListAcceleratorTypes");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListAcceleratorTypes(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::AcceleratorType>(std::move(span),

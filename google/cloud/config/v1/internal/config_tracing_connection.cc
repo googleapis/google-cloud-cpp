@@ -37,7 +37,7 @@ ConfigTracingConnection::ListDeployments(
     google::cloud::config::v1::ListDeploymentsRequest request) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::ListDeployments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListDeployments(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::config::v1::Deployment>(
       std::move(span), std::move(sr));
@@ -56,7 +56,7 @@ ConfigTracingConnection::CreateDeployment(
     google::cloud::config::v1::CreateDeploymentRequest const& request) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::CreateDeployment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateDeployment(request));
 }
 
@@ -65,7 +65,7 @@ ConfigTracingConnection::UpdateDeployment(
     google::cloud::config::v1::UpdateDeploymentRequest const& request) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::UpdateDeployment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateDeployment(request));
 }
 
@@ -74,7 +74,7 @@ ConfigTracingConnection::DeleteDeployment(
     google::cloud::config::v1::DeleteDeploymentRequest const& request) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::DeleteDeployment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteDeployment(request));
 }
 
@@ -82,7 +82,7 @@ StreamRange<google::cloud::config::v1::Revision>
 ConfigTracingConnection::ListRevisions(
     google::cloud::config::v1::ListRevisionsRequest request) {
   auto span = internal::MakeSpan("config_v1::ConfigConnection::ListRevisions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListRevisions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::config::v1::Revision>(
       std::move(span), std::move(sr));
@@ -108,7 +108,7 @@ StreamRange<google::cloud::config::v1::Resource>
 ConfigTracingConnection::ListResources(
     google::cloud::config::v1::ListResourcesRequest request) {
   auto span = internal::MakeSpan("config_v1::ConfigConnection::ListResources");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListResources(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::config::v1::Resource>(
       std::move(span), std::move(sr));
@@ -154,7 +154,7 @@ future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigTracingConnection::LockDeployment(
     google::cloud::config::v1::LockDeploymentRequest const& request) {
   auto span = internal::MakeSpan("config_v1::ConfigConnection::LockDeployment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->LockDeployment(request));
 }
 
@@ -163,7 +163,7 @@ ConfigTracingConnection::UnlockDeployment(
     google::cloud::config::v1::UnlockDeploymentRequest const& request) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::UnlockDeployment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UnlockDeployment(request));
 }
 

@@ -74,7 +74,7 @@ TranslationServiceTracingConnection::BatchTranslateText(
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::BatchTranslateText");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchTranslateText(request));
 }
@@ -85,7 +85,7 @@ TranslationServiceTracingConnection::BatchTranslateDocument(
         request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::BatchTranslateDocument");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchTranslateDocument(request));
 }
@@ -95,7 +95,7 @@ TranslationServiceTracingConnection::CreateGlossary(
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::CreateGlossary");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateGlossary(request));
 }
 
@@ -104,7 +104,7 @@ TranslationServiceTracingConnection::ListGlossaries(
     google::cloud::translation::v3::ListGlossariesRequest request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::ListGlossaries");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListGlossaries(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::translation::v3::Glossary>(std::move(span), std::move(sr));
@@ -124,7 +124,7 @@ TranslationServiceTracingConnection::DeleteGlossary(
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::DeleteGlossary");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteGlossary(request));
 }
 

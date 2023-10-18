@@ -38,7 +38,7 @@ OsConfigZonalServiceTracingConnection::CreateOSPolicyAssignment(
         request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::CreateOSPolicyAssignment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateOSPolicyAssignment(request));
 }
@@ -49,7 +49,7 @@ OsConfigZonalServiceTracingConnection::UpdateOSPolicyAssignment(
         request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::UpdateOSPolicyAssignment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateOSPolicyAssignment(request));
 }
@@ -68,7 +68,7 @@ OsConfigZonalServiceTracingConnection::ListOSPolicyAssignments(
     google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::ListOSPolicyAssignments");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListOSPolicyAssignments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::osconfig::v1::OSPolicyAssignment>(std::move(span),
@@ -82,7 +82,7 @@ OsConfigZonalServiceTracingConnection::ListOSPolicyAssignmentRevisions(
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::"
       "ListOSPolicyAssignmentRevisions");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListOSPolicyAssignmentRevisions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::osconfig::v1::OSPolicyAssignment>(std::move(span),
@@ -96,7 +96,7 @@ OsConfigZonalServiceTracingConnection::DeleteOSPolicyAssignment(
         request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::DeleteOSPolicyAssignment");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteOSPolicyAssignment(request));
 }
@@ -118,7 +118,7 @@ OsConfigZonalServiceTracingConnection::ListOSPolicyAssignmentReports(
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::"
       "ListOSPolicyAssignmentReports");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListOSPolicyAssignmentReports(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::osconfig::v1::OSPolicyAssignmentReport>(std::move(span),
@@ -139,7 +139,7 @@ OsConfigZonalServiceTracingConnection::ListInventories(
     google::cloud::osconfig::v1::ListInventoriesRequest request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::ListInventories");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListInventories(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::osconfig::v1::Inventory>(std::move(span), std::move(sr));
@@ -159,7 +159,7 @@ OsConfigZonalServiceTracingConnection::ListVulnerabilityReports(
     google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::ListVulnerabilityReports");
-  auto scope = opentelemetry::trace::Scope(span);
+  internal::OTelScope scope(span);
   auto sr = child_->ListVulnerabilityReports(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::osconfig::v1::VulnerabilityReport>(std::move(span),
