@@ -111,12 +111,11 @@ MakeBatchSinkSpans(
     for (int i = 0; i < num_of_batches; ++i) {
       std::vector<std::pair<SpanContext, AttributesList>> links;
       links.reserve(kMaxOtelLinks);
-      GenerateLinks(
-          message_spans.begin() + (kMaxOtelLinks * i),
-          message_spans.begin() +
-              std::min(static_cast<int>(kMaxOtelLinks * (i + 1)),
-                       static_cast<int>(batch_size)),
-          links);
+      GenerateLinks(message_spans.begin() + (kMaxOtelLinks * i),
+                    message_spans.begin() +
+                        std::min(static_cast<int>(kMaxOtelLinks * (i + 1)),
+                                 static_cast<int>(batch_size)),
+                    links);
 
       opentelemetry::trace::StartSpanOptions options;
       options.parent = batch_sink_parent_span->GetContext();
