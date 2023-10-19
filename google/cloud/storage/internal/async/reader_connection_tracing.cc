@@ -54,28 +54,35 @@ class AsyncReaderConnectionTracing
   }
 
   future<ReadResponse> Read() override {
-    auto scope = opentelemetry::trace::Scope(span_);
-    return impl_->Read().then([count = ++count_,
-                               span = span_](auto f) -> ReadResponse {
-      auto r = f.get();
-      if (absl::holds_alternative<Status>(r)) {
-        span->AddEvent("gl-cpp.read", {
-                                          {sc::kMessageType, "RECEIVED"},
-                                          {sc::kMessageId, count},
-                                          {sc::kThreadId, CurrentThreadId()},
-                                      });
-        return internal::EndSpan(*span, absl::get<Status>(std::move(r)));
-      }
-      auto const& payload = absl::get<storage_experimental::ReadPayload>(r);
-      span->AddEvent("gl-cpp.read",
-                     {
-                         {sc::kMessageType, "RECEIVED"},
-                         {sc::kMessageId, count},
-                         {sc::kThreadId, CurrentThreadId()},
-                         {"message.starting_offset", payload.offset()},
-                     });
-      return r;
-    });
+    internal::OTelScope scope(span_);
+    return impl_->Read()
+        .then([count = ++count_, span = span_](auto f) -> ReadResponse {
+          auto r = f.get();
+          if (absl::holds_alternative<Status>(r)) {
+            span->AddEvent("gl-cpp.read",
+                           {
+                               {sc::kMessageType, "RECEIVED"},
+                               {sc::kMessageId, count},
+                               {sc::kThreadId, CurrentThreadId()},
+                           });
+            return internal::EndSpan(*span, absl::get<Status>(std::move(r)));
+          }
+          auto const& payload = absl::get<storage_experimental::ReadPayload>(r);
+          span->AddEvent("gl-cpp.read",
+                         {
+                             {sc::kMessageType, "RECEIVED"},
+                             {sc::kMessageId, count},
+                             {sc::kThreadId, CurrentThreadId()},
+                             {"message.starting_offset", payload.offset()},
+                         });
+          return r;
+        })
+        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent()](
+                  auto f) {
+          auto t = f.get();
+          internal::DetachOTelContext(oc);
+          return t;
+        });
   }
 
  private:

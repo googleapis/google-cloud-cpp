@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_OPENTELEMETRY_MATCHERS_H
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/future.h"
+#include "google/cloud/internal/opentelemetry_context.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
@@ -301,6 +303,70 @@ Options EnableTracing(Options options);
 
 // Returns options with OpenTelemetry tracing disabled.
 Options DisableTracing(Options options);
+
+/**
+ * A promise that acts more like an `AsyncGrpcOperation` with respect to
+ * `OTelContext`.
+ *
+ * The context is snapshotted when the future is returned. This is like the
+ * constructor for our `AsyncGrpcOperation`s. The context is reinstated when we
+ * set the value of the promise. This simulates the conditions of
+ * `AsyncGrpcOperation::Notify()`.
+ *
+ * Use this class to verify that spans do not remain active into the future of
+ * an async operation. For example, the following library code...
+ *
+ * @code
+ * TracingConnection::AsyncFoo() {
+ *   auto span = MakeSpan("span");
+ *   OTelScope scope(span);
+ *   using ::opentelemetry::context::RuntimeContext;
+ *   return child_->AsyncFoo().then([oc = RuntimeContext::GetCurrent()] {
+ *     ...
+ *     DetachOTelContext(oc);
+ *     return ...;
+ *   });
+ * }
+ * @endcode
+ *
+ * ... can be tested as follows:
+ *
+ * @code
+ * PromiseWithOTelContext<Response> p;
+ * EXPECT_CALL(*mock, AsyncFoo).WillOnce([] {
+ *   EXPECT_TRUE(ThereIsAnActiveSpan());
+ *   EXPECT_TRUE(OTelContextCaptured());
+ *   return p.get_future();
+ * });
+ * auto f = AsyncFoo().then([](auto f) {
+ *   auto t = f.get();
+ *   EXPECT_FALSE(ThereIsAnActiveSpan());
+ *   EXPECT_FALSE(OTelContextCaptured());
+ *   return t;
+ * });
+ * p.set_value(Response{});
+ * EXPECT_THAT(f.get(), ...);
+ * @endcode
+ */
+template <typename T>
+class PromiseWithOTelContext {
+ public:
+  // Return a future as if from an AsyncGrpcOperation constructor
+  future<T> get_future() {
+    oc_ = internal::CurrentOTelContext();
+    return p_.get_future();
+  }
+
+  // Satisfy the future as if from an AsyncGrpcOperation::Notify()
+  void set_value(T value) {
+    internal::ScopedOTelContext scope(oc_);
+    p_.set_value(std::move(value));
+  }
+
+ private:
+  promise<T> p_;
+  internal::OTelContext oc_;
+};
 
 }  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
