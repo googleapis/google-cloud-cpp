@@ -33,7 +33,7 @@ namespace generator_internal {
 namespace {
 
 std::vector<std::pair<std::string, std::string>> const& SnakeCaseExceptions() {
-  static const std::vector<std::pair<std::string, std::string>> kExceptions = {
+  static std::vector<std::pair<std::string, std::string>> const kExceptions = {
       {"big_query", "bigquery"}};
   return kExceptions;
 }
@@ -179,6 +179,12 @@ void ProcessArgIdempotencyOverride(
                   command_line_args);
 }
 
+void ProcessArgServiceNameMapping(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  ProcessRepeated("service_name_mapping", "service_name_mappings",
+                  command_line_args);
+}
+
 }  // namespace
 
 std::string CurrentCopyrightYear() {
@@ -274,6 +280,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgForwardingProductPath(command_line_args);
   ProcessArgEmitRpc(command_line_args);
   ProcessArgIdempotencyOverride(command_line_args);
+  ProcessArgServiceNameMapping(command_line_args);
   return command_line_args;
 }
 

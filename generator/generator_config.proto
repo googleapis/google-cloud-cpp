@@ -161,6 +161,10 @@ message ServiceConfiguration {
   // which by style convention is typically snake_case. When false, the field
   // names will be converted to camelCase.
   bool preserve_proto_field_names_in_json = 25;
+
+  // A mapping from the service name as defined in the googleapis repo to the
+  // name that will be used for the library generation.
+  map<string, string> service_name_mapping = 26;
 }
 
 message DiscoveryDocumentDefinedProduct {

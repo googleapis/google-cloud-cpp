@@ -344,6 +344,17 @@ TEST(ProcessCommandLineArgs, ProcessArgEmitRpc) {
                                                   HasSubstr("Emitted2")))));
 }
 
+TEST(ProcessCommandLineArgs, ProcessServiceNameMapping) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/pubsub/"
+      ",service_name_mapping=old_name1:new_name1"
+      ",service_name_mapping=old_name2:new_name2");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("service_name_mappings",
+                                     AllOf(HasSubstr("old_name1:new_name1"),
+                                           HasSubstr("old_name2:new_name2")))));
+}
+
 TEST(SafeReplaceAll, Success) {
   EXPECT_EQ("one@two", SafeReplaceAll("one,two", ",", "@"));
 }
