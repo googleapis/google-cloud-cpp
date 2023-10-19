@@ -17,8 +17,9 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module ci/gha/builds/lib/macos.sh
 source module ci/gha/builds/lib/bazel.sh
+source module ci/gha/builds/lib/macos.sh
+source module ci/lib/io.sh
 
 # Usage: macos-bazel.sh [bazel query expression]
 #
@@ -43,9 +44,6 @@ io::log_h1 "Starting Build"
 time {
   # Always run //google/cloud:status_test in case the list of targets has
   # no unit tests.
-  # See https://github.com/bazelbuild/bazel/issues/18965 we need to retry
-  # because Bazel crashes sometimes.
-  io::log_bold bazelisk "${args[@]}" test "${test_args[@]}" -- //google/cloud:status_test "${targets[@]}"
-  ci/retry-command.sh 3 1 \
-    bazelisk "${args[@]}" test "${test_args[@]}" -- //google/cloud:status_test "${targets[@]}"
+  io::run bazelisk "${args[@]}" test "${test_args[@]}" \
+    -- //google/cloud:status_test "${targets[@]}"
 }
