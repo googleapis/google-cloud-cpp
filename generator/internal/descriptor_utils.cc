@@ -636,7 +636,7 @@ VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
   VarsDictionary vars(initial_values.begin(), initial_values.end());
-  auto service_name = descriptor.name();
+  auto const& service_name = descriptor.name();
   vars["product_options_page"] = OptionsGroup(vars["product_path"]);
   vars["additional_pb_header_paths"] = FormatAdditionalPbHeaderPaths(vars);
   vars["class_comment_block"] =
