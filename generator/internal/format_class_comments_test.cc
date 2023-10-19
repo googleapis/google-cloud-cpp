@@ -52,7 +52,9 @@ service Service {
   auto const* service = pool().FindServiceByName("test.v1.Service");
   ASSERT_THAT(service, NotNull());
 
-  auto const actual = FormatClassCommentsFromServiceComments(*service);
+  auto const actual =
+      FormatClassCommentsFromServiceComments(*service, service->name());
+
   // Verify it has exactly one trailing `///` comment.
   EXPECT_THAT(actual, AllOf(EndsWith("\n///"), Not(EndsWith("\n///\n///"))));
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
@@ -79,7 +81,9 @@ service Service {
   auto const* service = pool().FindServiceByName("test.v1.Service");
   ASSERT_THAT(service, NotNull());
 
-  auto const actual = FormatClassCommentsFromServiceComments(*service);
+  auto const actual =
+      FormatClassCommentsFromServiceComments(*service, service->name());
+
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
   EXPECT_THAT(
       lines, AllOf(Contains("/// ServiceClient"), Contains("/// @par Equality"),
@@ -114,7 +118,9 @@ message Resource {
   auto const* service = pool().FindServiceByName("test.v1.Service");
   ASSERT_THAT(service, NotNull());
 
-  auto const actual = FormatClassCommentsFromServiceComments(*service);
+  auto const actual =
+      FormatClassCommentsFromServiceComments(*service, service->name());
+
   // Verify the first reference is separated by an empty line and that it ends
   // with a single `///` comment.
   EXPECT_THAT(actual, AllOf(HasSubstr("///\n/// [test.v1.OtherService]: "),
@@ -158,7 +164,8 @@ service Service {
       pool().FindServiceByName("google.monitoring.v3.Service");
   ASSERT_THAT(service, NotNull());
 
-  auto const actual = FormatClassCommentsFromServiceComments(*service);
+  auto const actual =
+      FormatClassCommentsFromServiceComments(*service, service->name());
   // Verify the relative link is converted to an absolute link.
   EXPECT_THAT(actual,
               AllOf(HasSubstr("[groups][google.monitoring.v3.Group]"),

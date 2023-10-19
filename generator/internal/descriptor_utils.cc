@@ -640,7 +640,7 @@ VarsDictionary CreateServiceVars(
   vars["product_options_page"] = OptionsGroup(vars["product_path"]);
   vars["additional_pb_header_paths"] = FormatAdditionalPbHeaderPaths(vars);
   vars["class_comment_block"] =
-      FormatClassCommentsFromServiceComments(descriptor);
+      FormatClassCommentsFromServiceComments(descriptor, service_name);
   vars["client_class_name"] = absl::StrCat(service_name, "Client");
   vars["client_cc_path"] = absl::StrCat(
       vars["product_path"], ServiceNameToFilePath(service_name), "_client.cc");
@@ -649,7 +649,6 @@ VarsDictionary CreateServiceVars(
   vars["client_samples_cc_path"] =
       absl::StrCat(vars["product_path"], "samples/",
                    ServiceNameToFilePath(service_name), "_client_samples.cc");
-
   vars["connection_class_name"] = absl::StrCat(service_name, "Connection");
   vars["connection_cc_path"] =
       absl::StrCat(vars["product_path"], ServiceNameToFilePath(service_name),

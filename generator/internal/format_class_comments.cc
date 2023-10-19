@@ -53,14 +53,15 @@ auto constexpr kFixedClientComment = R"""(
 }  // namespace
 
 std::string FormatClassCommentsFromServiceComments(
-    google::protobuf::ServiceDescriptor const& service) {
+    google::protobuf::ServiceDescriptor const& service,
+    std::string const& service_name) {
   google::protobuf::SourceLocation service_source_location;
   std::string formatted_comments;
   if (!service.GetSourceLocation(&service_source_location) ||
       service_source_location.leading_comments.empty()) {
     GCP_LOG(INFO) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
                   << " no leading_comments to format";
-    formatted_comments = absl::StrCat(" ", service.name(), "Client");
+    formatted_comments = absl::StrCat(" ", service_name, "Client");
   } else {
     formatted_comments = absl::StrReplaceAll(
         absl::StripSuffix(service_source_location.leading_comments, "\n"),
