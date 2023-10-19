@@ -44,8 +44,7 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
 namespace {
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
-    std::vector<
-        opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>> const&
+    std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
         message_spans) {
   using opentelemetry::trace::SpanContext;
   using AttributesList =
@@ -76,7 +75,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
   auto context = batch_sink_parent_span->GetContext();
   auto trace_id = internal::ToString(context.trace_id());
   auto span_id = internal::ToString(context.span_id());
-  for (auto& message_span : message_spans) {
+  for (auto const& message_span : message_spans) {
     message_span->AddEvent("gl-cpp.batch_flushed");
     message_span->SetAttribute("pubsub.batch_sink.trace_id", trace_id);
     message_span->SetAttribute("pubsub.batch_sink.span_id", span_id);
