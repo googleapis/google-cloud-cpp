@@ -43,16 +43,10 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
 
 namespace {
 
-/// Inserts a link for each span in @p links between the @p begin and @p end
-/// iterators.
-template <typename Iterator>
-void GenerateLinks(
-    Iterator begin, Iterator end,
-    std::vector<std::pair<
-        opentelemetry::trace::SpanContext,
-        std::vector<std::pair<opentelemetry::nostd::string_view,
-                              opentelemetry::common::AttributeValue>>>>&
-        links) {
+/// Inserts a link for each span in @p destination between the @p begin and @p
+/// end iterators.
+template <typename Iterator, typename OutputIterator>
+void GenerateLinks(Iterator begin, Iterator end, OutputIterator destination) {
   static_assert(
       std::is_same<
           absl::decay_t<decltype(*begin)>,
@@ -62,7 +56,7 @@ void GenerateLinks(
   using AttributesList =
       std::vector<std::pair<opentelemetry::nostd::string_view,
                             opentelemetry::common::AttributeValue>>;
-  std::transform(begin, end, std::back_inserter(links),
+  std::transform(begin, end, destination,
                  [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
                    return std::make_pair(
                        span->GetContext(),
@@ -87,7 +81,8 @@ MakeBatchSinkSpans(
   // span with no links and each child spans will contain links.
   bool const is_small_batch = batch_size <= kMaxOtelLinks;
   if (is_small_batch) {
-    GenerateLinks(message_spans.begin(), message_spans.end(), links);
+    GenerateLinks(message_spans.begin(), message_spans.end(),
+                  std::back_inserter(links));
   }
 
   auto batch_sink_parent_span =
@@ -115,7 +110,7 @@ MakeBatchSinkSpans(
                     message_spans.begin() +
                         std::min(static_cast<int>(kMaxOtelLinks * (i + 1)),
                                  static_cast<int>(batch_size)),
-                    links);
+                    std::back_inserter(links));
 
       opentelemetry::trace::StartSpanOptions options;
       options.parent = batch_sink_parent_span->GetContext();
