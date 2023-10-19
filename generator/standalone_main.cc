@@ -336,9 +336,9 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     }
 
     // Add the key value pairs as a single parameter with a colon delimiter.
-    for (auto const& [key, value] : service.service_name_mapping()) {
+    for (auto const& kv : service.service_name_mapping()) {
       args.emplace_back(absl::StrCat(
-          "--cpp_codegen_opt=service_name_mapping=", key, ":", value));
+          "--cpp_codegen_opt=service_name_mapping=", kv.first, ":", kv.second));
     }
 
     GCP_LOG(INFO) << "Generating service code using: "
