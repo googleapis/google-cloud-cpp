@@ -635,23 +635,18 @@ bool CheckParameterCommentSubstitutions() {
 /// If a service name mapping exists, return the new name.
 /// Parses a command line argument in the form:
 /// {"service_name_mappings": "service_a:new_service_a,service:new_service"}.
-std::string GetServiceNameMappingOrReturnDefault(VarsDictionary const& vars,
-                                                 std::string const& name) {
+std::string GetEffectiveServiceName(VarsDictionary const& vars,
+                                    std::string const& name) {
   auto service_name_mappings = vars.find("service_name_mappings");
-  if (service_name_mappings == vars.end()) {
-    return name;
-  }
+  if (service_name_mappings == vars.end()) return name;
+
   std::vector<std::string> mappings =
       absl::StrSplit(service_name_mappings->second, ',');
   for (auto& mapping : mappings) {
     std::vector<std::string> kv = absl::StrSplit(mapping, ':');
-    if (kv.size() != 2) {
-      continue;
-    }
-    if (kv[0] == name) {
-      return kv[1];
-    }
-  };
+    if (kv.size() != 2) continue;
+    if (kv[0] == name) return kv[1];
+  }
   return name;
 }
 
@@ -659,8 +654,7 @@ VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
   VarsDictionary vars(initial_values.begin(), initial_values.end());
-  auto const& service_name =
-      GetServiceNameMappingOrReturnDefault(vars, descriptor.name());
+  auto const& service_name = GetEffectiveServiceName(vars, descriptor.name());
   vars["product_options_page"] = OptionsGroup(vars["product_path"]);
   vars["additional_pb_header_paths"] = FormatAdditionalPbHeaderPaths(vars);
   vars["class_comment_block"] =
