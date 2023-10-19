@@ -23,7 +23,8 @@ namespace cloud {
 namespace generator_internal {
 
 std::string FormatClassCommentsFromServiceComments(
-    google::protobuf::ServiceDescriptor const& service);
+    google::protobuf::ServiceDescriptor const& service,
+    std::string const& service_name);
 
 }  // namespace generator_internal
 }  // namespace cloud
