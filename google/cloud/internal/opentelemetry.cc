@@ -122,6 +122,20 @@ Status EndSpan(opentelemetry::trace::Span& span, Status const& status) {
 // opentelemetry::nostd::shared_ptr<Span>& since the container isn't mutated.
 void EndSpan(opentelemetry::trace::Span& span) { EndSpanImpl(span, Status{}); }
 
+std::string ToString(opentelemetry::trace::TraceId const& trace_id) {
+  constexpr int kSize = opentelemetry::trace::TraceId::kSize * 2;
+  char trace_id_array[kSize];
+  trace_id.ToLowerBase16(trace_id_array);
+  return std::string(trace_id_array, kSize);
+}
+
+std::string ToString(opentelemetry::trace::SpanId const& span_id) {
+  constexpr int kSize = opentelemetry::trace::SpanId::kSize * 2;
+  char span_id_array[kSize];
+  span_id.ToLowerBase16(span_id_array);
+  return std::string(span_id_array, kSize);
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

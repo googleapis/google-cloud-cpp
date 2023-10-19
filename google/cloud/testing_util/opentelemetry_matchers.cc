@@ -15,6 +15,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/opentelemetry_context.h"
 #include "google/cloud/opentelemetry_options.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
@@ -156,12 +157,8 @@ std::string ToString(opentelemetry::trace::StatusCode c) {
 
 std::string ToString(opentelemetry::trace::SpanContext const& span_context) {
   std::stringstream ss;
-  char trace_id[32] = {0};
-  char span_id[16] = {0};
-  span_context.trace_id().ToLowerBase16(trace_id);
-  span_context.span_id().ToLowerBase16(span_id);
-  ss << "{trace_id: " << std::string(trace_id, 32)
-     << ", span_id: " << std::string(span_id, 16)
+  ss << "{trace_id: " << internal::ToString(span_context.trace_id())
+     << ", span_id: " << internal::ToString(span_context.span_id())
      << ", trace_flags: " << std::to_string(span_context.trace_flags().flags())
      << "}";
   return ss.str();

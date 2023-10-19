@@ -40,6 +40,7 @@ using ::google::cloud::testing_util::SpanLinkAttributesAre;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ElementsAre;
@@ -210,19 +211,45 @@ TEST(TracingMessageBatch, FlushLargeBatch) {
                              "messaging.pubsub.num_messages_in_batch", 129)))));
 }
 
-TEST(TracingMessageBatch, AddMessageSpanMetadataAddsEvent) {
+TEST(TracingMessageBatch, FlushAddsSpanIdAndTraceIdAttribute) {
   // The span catcher must be installed before the message span is created.
   auto span_catcher = InstallSpanCatcher();
   auto message_span = MakeSpan("test message span");
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, Flush);
   auto initial_spans = {message_span};
   auto message_batch =
       std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
 
-  message_batch->AddMessageSpanMetadata();
+  message_batch->Flush();
 
   // The span must end before it can be processed by the span catcher.
-  EndSpans(message_batch->GetMessageSpans());
+  EndSpans(initial_spans);
+  EndSpans(message_batch->GetBatchSinkSpans());
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      Contains(AllOf(
+          SpanNamed("test message span"),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("pubsub.batch_sink.trace_id", _),
+              OTelAttribute<std::string>("pubsub.batch_sink.span_id", _)))));
+}
+
+TEST(TracingMessageBatch, FlushSpanMetadataAddsEvent) {
+  // The span catcher must be installed before the message span is created.
+  auto span_catcher = InstallSpanCatcher();
+  auto message_span = MakeSpan("test message span");
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, Flush);
+  auto initial_spans = {message_span};
+  auto message_batch =
+      std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
+
+  message_batch->Flush();
+
+  // The span must end before it can be processed by the span catcher.
+  EndSpans(initial_spans);
 
   EXPECT_THAT(
       span_catcher->GetSpans(),
@@ -230,20 +257,21 @@ TEST(TracingMessageBatch, AddMessageSpanMetadataAddsEvent) {
                      SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
 }
 
-TEST(TracingMessageBatch, AddMessageSpanMetadataAddsEventForMultipleMessages) {
+TEST(TracingMessageBatch, FlushAddsEventForMultipleMessages) {
   // The span catcher must be installed before the message span is created.
   auto span_catcher = InstallSpanCatcher();
   auto span1 = MakeSpan("test message span1");
   auto span2 = MakeSpan("test message span2");
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, Flush);
   auto initial_spans = {span1, span2};
   auto message_batch =
       std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
 
-  message_batch->AddMessageSpanMetadata();
+  message_batch->Flush();
 
   // The span must end before it can be processed by the span catcher.
-  EndSpans(message_batch->GetMessageSpans());
+  EndSpans(initial_spans);
 
   EXPECT_THAT(
       span_catcher->GetSpans(),
