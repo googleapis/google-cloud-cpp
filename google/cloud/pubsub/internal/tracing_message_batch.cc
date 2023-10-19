@@ -41,20 +41,7 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
   child_->SaveMessage(std::move(m));
 }
 
-void AddMessageSpanMetadata(
-    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const&
-        batch_sink_parent_span,
-    std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-        message_spans) {
-  auto context = batch_sink_parent_span->GetContext();
-  auto trace_id = internal::ToString(context.trace_id());
-  auto span_id = internal::ToString(context.span_id());
-  for (auto& message_span : message_spans) {
-    message_span->AddEvent("gl-cpp.batch_flushed");
-    message_span->SetAttribute("pubsub.batch_sink.trace_id", trace_id);
-    message_span->SetAttribute("pubsub.batch_sink.span_id", span_id);
-  }
-}
+namespace {
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
     std::vector<
@@ -85,8 +72,20 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeParentSpan(
                          {{"messaging.pubsub.num_messages_in_batch",
                            static_cast<std::int64_t>(batch_size)}},
                          /*links*/ links);
+
+  auto context = batch_sink_parent_span->GetContext();
+  auto trace_id = internal::ToString(context.trace_id());
+  auto span_id = internal::ToString(context.span_id());
+  for (auto& message_span : message_spans) {
+    message_span->AddEvent("gl-cpp.batch_flushed");
+    message_span->SetAttribute("pubsub.batch_sink.trace_id", trace_id);
+    message_span->SetAttribute("pubsub.batch_sink.span_id", span_id);
+  }
+
   return batch_sink_parent_span;
 }
+
+}  // namespace
 
 void TracingMessageBatch::Flush() {
   decltype(message_spans_) message_spans;
@@ -95,10 +94,8 @@ void TracingMessageBatch::Flush() {
     message_spans.swap(message_spans_);
   }
 
-  auto batch_sink_parent_span = MakeParentSpan(message_spans);
-
   // TODO(#12528): Handle batches larger than 128.
-  AddMessageSpanMetadata(batch_sink_parent_span, std::move(message_spans));
+  auto batch_sink_parent_span = MakeParentSpan(std::move(message_spans));
 
   // Set the batch sink as the active span.
   auto async_scope = internal::GetTracer(internal::CurrentOptions())
