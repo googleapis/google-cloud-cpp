@@ -2550,6 +2550,26 @@ service {
   omit_repo_metadata: true
 }
 
+# Cloud Pub/Sub Generated Admin API
+service {
+  service_proto_path: "google/pubsub/v1/pubsub.proto"
+  product_path: "google/cloud/pubsub/admin"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  generate_round_robin_decorator: true
+  omitted_rpcs: [
+    "Acknowledge",
+    "ModifyAckDeadline",
+    "Publish",
+    "Pull(std::string const&, bool, std::int32_t)",
+    "Pull",
+    "StreamingPull"
+  ]
+  omit_repo_metadata: true
+  service_name_mapping { key: "Publisher" value: "TopicAdmin"}
+  service_name_mapping { key: "Subscriber" value: "SubscriptionAdmin"}
+}
+
 service {
   service_proto_path: "google/pubsub/v1/schema.proto"
   product_path: "google/cloud/pubsub"
