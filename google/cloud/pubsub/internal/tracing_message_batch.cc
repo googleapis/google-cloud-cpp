@@ -65,8 +65,9 @@ void GenerateLinks(Iterator begin, Iterator end, OutputIterator destination) {
 
 template <typename T>
 void GenerateBatchSinkChildrenSpans(std::vector<T> const& message_spans,
-                            T batch_sink_parent_span, std::ptrdiff_t batch_size,
-                            std::vector<T>& batch_sink_spans) {
+                                    T batch_sink_parent_span,
+                                    std::ptrdiff_t batch_size,
+                                    std::vector<T>& batch_sink_spans) {
   using LinksList = std::vector<
       std::pair<opentelemetry::trace::SpanContext,
                 std::vector<std::pair<opentelemetry::nostd::string_view,
@@ -125,8 +126,8 @@ MakeBatchSinkSpans(
 
   // Create N spans with up to 128 links per batch.
   if (!is_small_batch) {
-    GenerateBatchSinkChildrenSpans(message_spans, batch_sink_parent_span, batch_size,
-                           batch_sink_spans);
+    GenerateBatchSinkChildrenSpans(message_spans, batch_sink_parent_span,
+                                   batch_size, batch_sink_spans);
   }
 
   // Add metadata to the message spans about the batch sink span.
