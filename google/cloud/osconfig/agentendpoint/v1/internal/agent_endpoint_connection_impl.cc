@@ -84,8 +84,7 @@ AgentEndpointServiceConnectionImpl::ReceiveTaskNotification(
           ReceiveTaskNotificationResponse,
       google::cloud::osconfig::agentendpoint::v1::
           ReceiveTaskNotificationRequest>(
-      retry_policy(*current), backoff_policy(*current),
-      [](std::chrono::milliseconds) {}, factory,
+      retry_policy(*current), backoff_policy(*current), factory,
       AgentEndpointServiceReceiveTaskNotificationStreamingUpdater, request);
   return internal::MakeStreamRange(
       internal::StreamReader<google::cloud::osconfig::agentendpoint::v1::

@@ -310,8 +310,7 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
   };
   auto resumable =
       internal::MakeResumableStreamingReadRpc<$response_type$, $request_type$>(
-          retry_policy(*current), backoff_policy(*current),
-          [](std::chrono::milliseconds) {}, factory,
+          retry_policy(*current), backoff_policy(*current), factory,
           $service_name$$method_name$StreamingUpdater, request);
   return internal::MakeStreamRange(internal::StreamReader<$response_type$>(
       [resumable] { return resumable->Read(); }));

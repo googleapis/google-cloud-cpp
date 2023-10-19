@@ -173,8 +173,7 @@ GoldenKitchenSinkConnectionImpl::StreamingRead(google::test::admin::database::v1
   };
   auto resumable =
       internal::MakeResumableStreamingReadRpc<google::test::admin::database::v1::Response, google::test::admin::database::v1::Request>(
-          retry_policy(*current), backoff_policy(*current),
-          [](std::chrono::milliseconds) {}, factory,
+          retry_policy(*current), backoff_policy(*current), factory,
           GoldenKitchenSinkStreamingReadStreamingUpdater, request);
   return internal::MakeStreamRange(internal::StreamReader<google::test::admin::database::v1::Response>(
       [resumable] { return resumable->Read(); }));
