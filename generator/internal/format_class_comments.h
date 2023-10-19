@@ -22,6 +22,9 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
+/// The function does not just use service.name() and takes @p service_name in
+/// case there exists a service_name_mapping argument that is renaming the
+/// service.
 std::string FormatClassCommentsFromServiceComments(
     google::protobuf::ServiceDescriptor const& service,
     std::string const& service_name);
