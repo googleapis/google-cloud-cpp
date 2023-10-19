@@ -668,8 +668,7 @@ TensorboardServiceConnectionImpl::ReadTensorboardBlobData(
   auto resumable = internal::MakeResumableStreamingReadRpc<
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse,
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest>(
-      retry_policy(*current), backoff_policy(*current),
-      [](std::chrono::milliseconds) {}, factory,
+      retry_policy(*current), backoff_policy(*current), factory,
       TensorboardServiceReadTensorboardBlobDataStreamingUpdater, request);
   return internal::MakeStreamRange(
       internal::StreamReader<

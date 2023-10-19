@@ -99,8 +99,7 @@ FeaturestoreOnlineServingServiceConnectionImpl::StreamingReadFeatureValues(
   auto resumable = internal::MakeResumableStreamingReadRpc<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse,
       google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest>(
-      retry_policy(*current), backoff_policy(*current),
-      [](std::chrono::milliseconds) {}, factory,
+      retry_policy(*current), backoff_policy(*current), factory,
       FeaturestoreOnlineServingServiceStreamingReadFeatureValuesStreamingUpdater,
       request);
   return internal::MakeStreamRange(

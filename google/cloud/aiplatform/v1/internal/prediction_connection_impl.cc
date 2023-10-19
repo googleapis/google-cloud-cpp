@@ -102,8 +102,7 @@ PredictionServiceConnectionImpl::ServerStreamingPredict(
   auto resumable = internal::MakeResumableStreamingReadRpc<
       google::cloud::aiplatform::v1::StreamingPredictResponse,
       google::cloud::aiplatform::v1::StreamingPredictRequest>(
-      retry_policy(*current), backoff_policy(*current),
-      [](std::chrono::milliseconds) {}, factory,
+      retry_policy(*current), backoff_policy(*current), factory,
       PredictionServiceServerStreamingPredictStreamingUpdater, request);
   return internal::MakeStreamRange(
       internal::StreamReader<

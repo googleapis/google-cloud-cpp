@@ -89,8 +89,7 @@ BigQueryReadConnectionImpl::ReadRows(
   auto resumable = internal::MakeResumableStreamingReadRpc<
       google::cloud::bigquery::storage::v1::ReadRowsResponse,
       google::cloud::bigquery::storage::v1::ReadRowsRequest>(
-      retry_policy(*current), backoff_policy(*current),
-      [](std::chrono::milliseconds) {}, factory,
+      retry_policy(*current), backoff_policy(*current), factory,
       BigQueryReadReadRowsStreamingUpdater, request);
   return internal::MakeStreamRange(
       internal::StreamReader<
