@@ -57,6 +57,18 @@ void EndSpans(std::vector<opentelemetry::nostd::shared_ptr<
   }
 }
 
+/// Creates @p n spans.
+std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+CreateSpans(int n) {
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+      spans;
+  spans.resize(n);
+  std::generate(spans.begin(), spans.end(), [i = 0]() mutable {
+    return MakeSpan("test span " + std::to_string(i++));
+  });
+  return spans;
+}
+
 TEST(TracingMessageBatch, SaveMessage) {
   auto span = MakeSpan("test span");
   opentelemetry::trace::Scope scope(span);
@@ -76,7 +88,7 @@ TEST(TracingMessageBatch, SaveMultipleMessages) {
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, SaveMessage).Times(2);
   auto message_batch = std::make_unique<TracingMessageBatch>(std::move(mock));
-  auto message = pubsub::MessageBuilder().SetData("test").Build();
+  auto message = pubsub ::MessageBuilder().SetData("test").Build();
 
   // Save the first span.
   auto span1 = MakeSpan("test span");
@@ -182,13 +194,7 @@ TEST(TracingMessageBatch, FlushSmallBatch) {
 
 TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {
   auto constexpr kBatchSize = 128;
-  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      initial_spans;
-  initial_spans.reserve(kBatchSize);
-  for (int i = 0; i < kBatchSize; ++i) {
-    initial_spans.emplace_back(MakeSpan("test span " + std::to_string(i)));
-  }
-  ASSERT_THAT(initial_spans, ::testing::SizeIs(kBatchSize));
+  auto initial_spans = CreateSpans(kBatchSize);
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
@@ -215,14 +221,8 @@ TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {
 }
 
 TEST(TracingMessageBatch, FlushLargeBatch) {
-  auto constexpr kBatchSize = 128;
-  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      initial_spans;
-  initial_spans.reserve(kBatchSize);
-  for (int i = 0; i < kBatchSize; ++i) {
-    initial_spans.emplace_back(MakeSpan("test span " + std::to_string(i)));
-  }
-  ASSERT_THAT(initial_spans, ::testing::SizeIs(kBatchSize));
+  auto constexpr kBatchSize = 129;
+  auto initial_spans = CreateSpans(kBatchSize);
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
