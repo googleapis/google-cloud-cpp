@@ -30,14 +30,16 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage_experimental::ReadPayload;
-using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
-using ::google::cloud::testing_util::InstallSpanCatcher;
 using ReadResponse =
     ::google::cloud::storage_experimental::AsyncReaderConnection::ReadResponse;
-using ::google::cloud::storage::testing::canonical_errors::PermanentError;
+using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ::google::cloud::testing_util::EventNamed;
+using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::OTelContextCaptured;
+using ::google::cloud::testing_util::PromiseWithOTelContext;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
@@ -45,24 +47,46 @@ using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
+using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 
+auto expect_context = [](auto& p) {
+  return [&p] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
+    return p.get_future();
+  };
+};
+
+auto expect_no_context = [](auto f) {
+  auto t = f.get();
+  EXPECT_FALSE(ThereIsAnActiveSpan());
+  EXPECT_FALSE(OTelContextCaptured());
+  return t;
+};
+
 TEST(ReaderConnectionTracing, WithError) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<ReadResponse> p1;
+  PromiseWithOTelContext<ReadResponse> p2;
 
   auto mock = std::make_unique<MockAsyncReaderConnection>();
   EXPECT_CALL(*mock, Read)
-      .WillOnce(
-          [] { return make_ready_future(ReadResponse(ReadPayload("m1"))); })
-      .WillOnce(
-          [] { return make_ready_future(ReadResponse(PermanentError())); });
+      .WillOnce(expect_context(p1))
+      .WillOnce(expect_context(p2));
   auto actual = MakeTracingReaderConnection(
       internal::MakeSpan("test-span-name"), std::move(mock));
-  actual->Read().get();
-  actual->Read().get();
+
+  auto f1 = actual->Read().then(expect_no_context);
+  p1.set_value(ReadResponse(ReadPayload("m1")));
+  (void)f1.get();
+
+  auto f2 = actual->Read().then(expect_no_context);
+  p2.set_value(ReadResponse(PermanentError()));
+  (void)f2.get();
 
   auto spans = span_catcher->GetSpans();
   auto const expected_code = static_cast<std::int32_t>(PermanentError().code());
@@ -94,21 +118,29 @@ TEST(ReaderConnectionTracing, WithError) {
 TEST(ReaderConnectionTracing, WithSuccess) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<ReadResponse> p1;
+  PromiseWithOTelContext<ReadResponse> p2;
+  PromiseWithOTelContext<ReadResponse> p3;
 
   auto mock = std::make_unique<MockAsyncReaderConnection>();
   EXPECT_CALL(*mock, Read)
-      .WillOnce(
-          [] { return make_ready_future(ReadResponse(ReadPayload("m1"))); })
-      .WillOnce([] {
-        return make_ready_future(
-            ReadResponse(ReadPayload("m2").set_offset(1024)));
-      })
-      .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
+      .WillOnce(expect_context(p1))
+      .WillOnce(expect_context(p2))
+      .WillOnce(expect_context(p3));
   auto actual = MakeTracingReaderConnection(
       internal::MakeSpan("test-span-name"), std::move(mock));
-  (void)actual->Read().get();
-  (void)actual->Read().get();
-  (void)actual->Read().get();
+
+  auto f1 = actual->Read().then(expect_no_context);
+  p1.set_value(ReadResponse(ReadPayload("m1")));
+  (void)f1.get();
+
+  auto f2 = actual->Read().then(expect_no_context);
+  p2.set_value(ReadResponse(ReadPayload("m2").set_offset(1024)));
+  (void)f2.get();
+
+  auto f3 = actual->Read().then(expect_no_context);
+  p3.set_value(ReadResponse(Status{}));
+  (void)f3.get();
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(

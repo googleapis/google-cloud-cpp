@@ -39,7 +39,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
       InsertObjectParams p) override {
     auto span =
         internal::MakeSpan("storage::AsyncConnection::AsyncInsertObject");
-    auto scope = opentelemetry::trace::Scope(span);
+    internal::OTelScope scope(span);
     return internal::EndSpan(std::move(span),
                              impl_->AsyncInsertObject(std::move(p)));
   }
@@ -47,11 +47,13 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
   AsyncReadObject(ReadObjectParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::AsyncReadObject");
-    auto scope = opentelemetry::trace::Scope(span);
-    auto wrap = [span = std::move(span)](auto f)
+    internal::OTelScope scope(span);
+    auto wrap = [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+                 span = std::move(span)](auto f)
         -> StatusOr<
             std::unique_ptr<storage_experimental::AsyncReaderConnection>> {
       auto reader = f.get();
+      internal::DetachOTelContext(oc);
       if (!reader) return internal::EndSpan(*span, std::move(reader).status());
       return MakeTracingReaderConnection(std::move(span), *std::move(reader));
     };
@@ -62,10 +64,12 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
   AsyncReadObjectRange(ReadObjectParams p) override {
     auto span =
         internal::MakeSpan("storage::AsyncConnection::AsyncReadObjectRange");
-    auto scope = opentelemetry::trace::Scope(span);
+    internal::OTelScope scope(span);
     return impl_->AsyncReadObjectRange(std::move(p))
-        .then([span = std::move(span)](auto f) {
+        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+               span = std::move(span)](auto f) {
           auto result = f.get();
+          internal::DetachOTelContext(oc);
           internal::EndSpan(*span, result.status);
           return result;
         });
@@ -75,7 +79,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
       ComposeObjectParams p) override {
     auto span =
         internal::MakeSpan("storage::AsyncConnection::AsyncComposeObject");
-    auto scope = opentelemetry::trace::Scope(span);
+    internal::OTelScope scope(span);
     return internal::EndSpan(std::move(span),
                              impl_->AsyncComposeObject(std::move(p)));
   }
@@ -83,7 +87,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
   future<Status> AsyncDeleteObject(DeleteObjectParams p) override {
     auto span =
         internal::MakeSpan("storage::AsyncConnection::AsyncDeleteObject");
-    auto scope = opentelemetry::trace::Scope(span);
+    internal::OTelScope scope(span);
     return internal::EndSpan(std::move(span),
                              impl_->AsyncDeleteObject(std::move(p)));
   }
