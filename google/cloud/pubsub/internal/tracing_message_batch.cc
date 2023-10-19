@@ -78,9 +78,9 @@ MakeBatchSinkSpans(
   using AttributesList =
       std::vector<std::pair<opentelemetry::nostd::string_view,
                             opentelemetry::common::AttributeValue>>;
-  auto constexpr kMaxOtelLinks = 128;
+  int constexpr kMaxOtelLinks = 128;
   std::vector<std::pair<SpanContext, AttributesList>> links;
-  auto batch_size = static_cast<std::int64_t>(message_spans.size());
+  auto batch_size = message_spans.size();
   links.reserve(batch_size);
   // If the batch size is less than the max size, add the links to a single
   // span. If the batch size is greater than the max size, this will be a parent
@@ -99,8 +99,11 @@ MakeBatchSinkSpans(
 
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       batch_sink_spans;
-  auto num_of_batches = is_small_batch ? 0 : (batch_size / kMaxOtelLinks) + 1;
-  batch_sink_spans.reserve(num_of_batches + 1);
+  auto num_of_batches =
+      is_small_batch
+          ? 0
+          : (static_cast<std::int64_t>(batch_size) / kMaxOtelLinks) + 1;
+  batch_sink_spans.reserve(static_cast<size_t>(num_of_batches + 1));
   batch_sink_spans.emplace_back(batch_sink_parent_span);
 
   // Create N spans with up to 128 links per batch.
@@ -111,8 +114,8 @@ MakeBatchSinkSpans(
       GenerateLinks(
           message_spans.begin() + (kMaxOtelLinks * i),
           message_spans.begin() +
-              std::min(static_cast<std::int64_t>((kMaxOtelLinks * (i + 1))),
-                       static_cast<std::int64_t>(batch_size)),
+              std::min(static_cast<int>(kMaxOtelLinks * (i + 1)),
+                       static_cast<int>(batch_size)),
           links);
 
       opentelemetry::trace::StartSpanOptions options;
