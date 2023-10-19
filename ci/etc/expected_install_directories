@@ -868,6 +868,9 @@
 ./include/google/cloud/profiler/v2/internal
 ./include/google/cloud/profiler/v2/mocks
 ./include/google/cloud/pubsub
+./include/google/cloud/pubsub/admin
+./include/google/cloud/pubsub/admin/internal
+./include/google/cloud/pubsub/admin/mocks
 ./include/google/cloud/pubsub/internal
 ./include/google/cloud/pubsub/mocks
 ./include/google/cloud/pubsublite
