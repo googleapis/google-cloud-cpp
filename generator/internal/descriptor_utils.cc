@@ -632,11 +632,29 @@ bool CheckParameterCommentSubstitutions() {
   return all_substitutions_used;
 }
 
+/// If a service name mapping exists, return the new name.
+/// Parses a command line argument in the form:
+/// {"service_name_mappings": "service_a:new_service_a,service:new_service"}.
+std::string GetEffectiveServiceName(VarsDictionary const& vars,
+                                    std::string const& name) {
+  auto service_name_mappings = vars.find("service_name_mappings");
+  if (service_name_mappings == vars.end()) return name;
+
+  std::vector<std::string> mappings =
+      absl::StrSplit(service_name_mappings->second, ',');
+  for (auto& mapping : mappings) {
+    std::vector<std::string> kv = absl::StrSplit(mapping, ':');
+    if (kv.size() != 2) continue;
+    if (kv[0] == name) return kv[1];
+  }
+  return name;
+}
+
 VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
   VarsDictionary vars(initial_values.begin(), initial_values.end());
-  auto const& service_name = descriptor.name();
+  auto const& service_name = GetEffectiveServiceName(vars, descriptor.name());
   vars["product_options_page"] = OptionsGroup(vars["product_path"]);
   vars["additional_pb_header_paths"] = FormatAdditionalPbHeaderPaths(vars);
   vars["class_comment_block"] =
@@ -783,7 +801,8 @@ VarsDictionary CreateServiceVars(
   if (service_endpoint_env_var.empty()) {
     service_endpoint_env_var = absl::StrCat(
         "GOOGLE_CLOUD_CPP_",
-        absl::AsciiStrToUpper(CamelCaseToSnakeCase(service_name)), "_ENDPOINT");
+        absl::AsciiStrToUpper(CamelCaseToSnakeCase(descriptor.name())),
+        "_ENDPOINT");
   }
   absl::string_view service_endpoint_env_var_prefix = service_endpoint_env_var;
   if (!absl::ConsumeSuffix(&service_endpoint_env_var_prefix, "_ENDPOINT")) {

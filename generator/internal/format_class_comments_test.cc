@@ -173,6 +173,33 @@ service Service {
                     EndsWith("\n///"), Not(EndsWith("\n///\n///"))));
 }
 
+TEST_F(FormatClassCommentsTest, UsesServiceNameParameter) {
+  auto constexpr kContents = R"""(
+syntax = "proto3";
+import "test/v1/common.proto";
+package google.monitoring.v3;
+
+message Group {}
+
+// A brief description of the Service.
+//
+// Use a relative link [groups](#google.monitoring.v3.Group).
+service Service {
+    rpc Method(test.v1.Request) returns (test.v1.Response) {}
+}
+)""";
+
+  ASSERT_THAT(FindFile("test/v1/common.proto"), NotNull());
+  ASSERT_TRUE(AddProtoFile("google/monitoring/v3/service.proto", kContents));
+  auto const* service =
+      pool().FindServiceByName("google.monitoring.v3.Service");
+  ASSERT_THAT(service, NotNull());
+
+  auto const actual =
+      FormatClassCommentsFromServiceComments(*service, "NewService");
+  EXPECT_THAT(actual, AllOf(HasSubstr("NewService")));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud
