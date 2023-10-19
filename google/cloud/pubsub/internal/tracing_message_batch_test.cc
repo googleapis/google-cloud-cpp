@@ -181,14 +181,14 @@ TEST(TracingMessageBatch, FlushSmallBatch) {
 }
 
 TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {
-  int const k_batch_size = 128;
+  auto constexpr kBatchSize = 128;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       initial_spans;
-  initial_spans.reserve(k_batch_size);
-  for (int i = 0; i < k_batch_size; ++i) {
+  initial_spans.reserve(kBatchSize);
+  for (int i = 0; i < kBatchSize; ++i) {
     initial_spans.emplace_back(MakeSpan("test span " + std::to_string(i)));
   }
-  ASSERT_THAT(initial_spans, ::testing::SizeIs(k_batch_size));
+  ASSERT_THAT(initial_spans, ::testing::SizeIs(kBatchSize));
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
@@ -215,14 +215,14 @@ TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {
 }
 
 TEST(TracingMessageBatch, FlushLargeBatch) {
-  int const k_batch_size = 129;
+  auto constexpr kBatchSize = 128;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       initial_spans;
-  initial_spans.reserve(k_batch_size);
-  for (int i = 0; i < k_batch_size; ++i) {
+  initial_spans.reserve(kBatchSize);
+  for (int i = 0; i < kBatchSize; ++i) {
     initial_spans.emplace_back(MakeSpan("test span " + std::to_string(i)));
   }
-  ASSERT_THAT(initial_spans, ::testing::SizeIs(k_batch_size));
+  ASSERT_THAT(initial_spans, ::testing::SizeIs(kBatchSize));
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
@@ -241,10 +241,10 @@ TEST(TracingMessageBatch, FlushLargeBatch) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("BatchSink::AsyncPublish"),
-                             SpanHasAttributes(OTelAttribute<std::int64_t>(
-                                 "messaging.pubsub.num_messages_in_batch",
-                                 k_batch_size)))));
+              Contains(AllOf(
+                  SpanNamed("BatchSink::AsyncPublish"),
+                  SpanHasAttributes(OTelAttribute<std::int64_t>(
+                      "messaging.pubsub.num_messages_in_batch", kBatchSize)))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("BatchSink::AsyncPublish - Batch #0"),
                              SpanLinksSizeIs(128))));
