@@ -26,11 +26,13 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/options.h"
 #include <google/protobuf/util/time_util.h>
 #include <grpcpp/grpcpp.h>
+#include <algorithm>
 
 namespace google {
 namespace cloud {
@@ -232,6 +234,29 @@ class StreamingPartitionedDmlResult {
   std::unique_ptr<spanner::ResultSourceInterface> source_;
 };
 
+// Converts a `BatchWriteResponse` proto to a `spanner::BatchedCommitResult`.
+absl::variant<Status, spanner::BatchedCommitResult> FromProto(
+    absl::variant<Status, google::spanner::v1::BatchWriteResponse> proto) {
+  if (absl::holds_alternative<Status>(proto)) {
+    return absl::get<Status>(std::move(proto));
+  }
+  auto response =
+      absl::get<google::spanner::v1::BatchWriteResponse>(std::move(proto));
+  auto const& indexes = response.indexes();
+  auto status = MakeStatusFromRpcError(response.status());
+  spanner::BatchedCommitResult result;
+  result.indexes.resize(indexes.size());
+  std::transform(
+      indexes.begin(), indexes.end(), result.indexes.begin(),
+      [](std::int32_t index) { return static_cast<std::size_t>(index); });
+  if (status.ok()) {
+    result.commit_timestamp = MakeTimestamp(response.commit_timestamp());
+  } else {
+    result.commit_timestamp = std::move(status);
+  }
+  return result;
+}
+
 }  // namespace
 
 using ::google::cloud::Idempotency;
@@ -371,6 +396,11 @@ Status ConnectionImpl::Rollback(RollbackParams params) {
                       TransactionContext const& ctx) {
                  return RollbackImpl(session, s, ctx);
                });
+}
+
+spanner::BatchedCommitResultStream ConnectionImpl::BatchWrite(
+    BatchWriteParams params) {
+  return BatchWriteImpl(std::move(params));  // no client-side transaction
 }
 
 /**
@@ -1137,6 +1167,65 @@ Status ConnectionImpl::RollbackImpl(
       request, __func__);
   if (IsSessionNotFound(status)) session->set_bad();
   return status;
+}
+
+spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
+    BatchWriteParams params) {
+  SessionHolder session;
+  auto prepare_status = PrepareSession(session);
+  if (!prepare_status.ok()) {
+    return internal::MakeStreamRange<spanner::BatchedCommitResult>(
+        [status = std::move(prepare_status)] { return status; });
+  }
+
+  google::spanner::v1::BatchWriteRequest request;
+  request.set_session(session->session_name());
+  if (params.options.has<spanner::RequestPriorityOption>()) {
+    request.mutable_request_options()->set_priority(ProtoRequestPriority(
+        params.options.get<spanner::RequestPriorityOption>()));
+  }
+  if (params.options.has<spanner::RequestTagOption>()) {
+    request.mutable_request_options()->set_request_tag(
+        params.options.get<spanner::RequestTagOption>());
+  }
+  if (params.options.has<spanner::TransactionTagOption>()) {
+    request.mutable_request_options()->set_transaction_tag(
+        params.options.get<spanner::TransactionTagOption>());
+  }
+  for (auto& mutations : params.mutation_groups) {
+    auto* group = request.add_mutation_groups();
+    for (auto& m : mutations) {
+      *group->add_mutations() = std::move(m).as_proto();
+    }
+  }
+
+  auto stub = session_pool_->GetStub(*session);
+  auto factory = [stub = std::move(stub)](
+                     google::spanner::v1::BatchWriteRequest const& request) {
+    auto context = std::make_shared<grpc::ClientContext>();
+    internal::ConfigureContext(*context, internal::CurrentOptions());
+    RouteToLeader(*context);  // always for BatchWrite()
+    return stub->BatchWrite(std::move(context), request);
+  };
+  auto updater = [](google::spanner::v1::BatchWriteResponse const&,
+                    google::spanner::v1::BatchWriteRequest&) {
+    // There is no "resume" mechanism for BatchWrite().
+  };
+  auto reader = internal::MakeResumableStreamingReadRpc<
+      google::spanner::v1::BatchWriteResponse,
+      google::spanner::v1::BatchWriteRequest>(
+      RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
+      std::move(factory), std::move(updater), std::move(request));
+  return internal::MakeStreamRange<spanner::BatchedCommitResult>(
+      [reader = std::move(reader), session = std::move(session)] {
+        auto result = FromProto(reader->Read());
+        if (absl::holds_alternative<Status>(result)) {
+          if (IsSessionNotFound(absl::get<Status>(result))) {
+            session->set_bad();
+          }
+        }
+        return result;
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

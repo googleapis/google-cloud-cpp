@@ -1752,6 +1752,48 @@ void UpdateData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_update_data]
 
+void InsertDataAtLeastOnce(google::cloud::spanner::Client client) {
+  //! [commit-at-least-once-batched] [START spanner_batch_write_at_least_once]
+  namespace spanner = ::google::cloud::spanner;
+  // Use upserts as mutation groups are not replay protected.
+  auto commit_results = client.CommitAtLeastOnce({
+      // group #0
+      spanner::Mutations{
+          spanner::InsertOrUpdateMutationBuilder(
+              "Singers", {"SingerId", "FirstName", "LastName"})
+              .EmplaceRow(16, "Scarlet", "Terry")
+              .Build(),
+      },
+      // group #1
+      spanner::Mutations{
+          spanner::InsertOrUpdateMutationBuilder(
+              "Singers", {"SingerId", "FirstName", "LastName"})
+              .EmplaceRow(17, "Marc", "")
+              .EmplaceRow(18, "Catalina", "Smith")
+              .Build(),
+          spanner::InsertOrUpdateMutationBuilder(
+              "Albums", {"SingerId", "AlbumId", "AlbumTitle"})
+              .EmplaceRow(17, 1, "Total Junk")
+              .EmplaceRow(18, 2, "Go, Go, Go")
+              .Build(),
+      },
+  });
+  for (auto& commit_result : commit_results) {
+    if (!commit_result) throw std::move(commit_result).status();
+    std::cout << "Mutation group indexes [";
+    for (auto index : commit_result->indexes) std::cout << " " << index;
+    std::cout << " ]: ";
+    if (commit_result->commit_timestamp) {
+      auto const& ts = *commit_result->commit_timestamp;
+      std::cout << "Committed at " << ts.get<absl::Time>().value();
+    } else {
+      std::cout << commit_result->commit_timestamp.status();
+    }
+    std::cout << "\n";
+  }
+  //! [commit-at-least-once-batched] [END spanner_batch_write_at_least_once]
+}
+
 void DeleteDataAtLeastOnce(google::cloud::spanner::Client client) {
   //! [commit-at-least-once]
   namespace spanner = ::google::cloud::spanner;
@@ -4208,6 +4250,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"create-client-with-query-options", CreateClientWithQueryOptionsCommand},
       make_command_entry("insert-data", InsertData),
       make_command_entry("update-data", UpdateData),
+      make_command_entry("insert-data-at-least-once", InsertDataAtLeastOnce),
       make_command_entry("delete-data-at-least-once", DeleteDataAtLeastOnce),
       make_command_entry("delete-data", DeleteData),
       make_command_entry("insert-datatypes-data", InsertDatatypesData),
@@ -4964,6 +5007,11 @@ void RunAll(bool emulator) {
 
   SampleBanner("spanner_dml_standard_delete");
   DmlStandardDelete(client);
+
+  if (!emulator) {
+    SampleBanner("spanner_batch_write_at_least_once");
+    InsertDataAtLeastOnce(client);
+  }
 
   SampleBanner("delete-data-at-least-once");
   DeleteDataAtLeastOnce(client);

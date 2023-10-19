@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/client.h"
+#include "google/cloud/mocks/mock_stream_range.h"
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/mocks/mock_spanner_connection.h"
@@ -33,6 +34,7 @@
 #include <cstdint>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -47,14 +49,17 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
+using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::DoAll;
 using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::Field;
 using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::SaveArg;
+using ::testing::SizeIs;
 using ::testing::UnorderedElementsAre;
 
 TEST(ClientTest, CopyAndMove) {
@@ -976,6 +981,82 @@ TEST(ClientTest, CommitAtLeastOnce) {
       Options{}.set<TransactionTagOption>(transaction_tag));
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
+}
+
+TEST(ClientTest, CommitAtLeastOnceBatched) {
+  std::string const request_tag = "action=upsert";
+  std::string const transaction_tag = "app=cart,env=dev";
+  auto const timestamp =
+      spanner_internal::TimestampFromRFC3339("2023-09-27T06:11:34.335Z");
+  ASSERT_STATUS_OK(timestamp);
+  std::vector<Mutations> const mutation_groups = {
+      {MakeInsertOrUpdateMutation("table", {"col1", "col2"}, 10, 20)},
+      {MakeInsertOrUpdateMutation("table", {"col1", "col2"}, 11, 21)},
+  };
+
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, options()).WillRepeatedly(Return(Options{}));
+  EXPECT_CALL(*conn, BatchWrite)
+      .WillOnce([&](Connection::BatchWriteParams const& params) {
+        EXPECT_THAT(params.mutation_groups, SizeIs(2));
+        EXPECT_FALSE(params.options.has<RequestPriorityOption>());
+        EXPECT_FALSE(params.options.has<RequestTagOption>());
+        EXPECT_FALSE(params.options.has<TransactionTagOption>());
+        return mocks::MakeStreamRange<BatchedCommitResult>(
+            {{{0, 1}, timestamp}});
+      })
+      .WillOnce([&](Connection::BatchWriteParams const& params) {
+        EXPECT_THAT(params.mutation_groups, SizeIs(2));
+        EXPECT_TRUE(params.options.has<RequestPriorityOption>());
+        EXPECT_EQ(params.options.get<RequestPriorityOption>(),
+                  RequestPriority::kHigh);
+        EXPECT_TRUE(params.options.has<RequestTagOption>());
+        EXPECT_EQ(params.options.get<RequestTagOption>(), request_tag);
+        EXPECT_FALSE(params.options.has<TransactionTagOption>());
+        return mocks::MakeStreamRange<BatchedCommitResult>(
+            {{{0, 1}, timestamp}});
+      })
+      .WillOnce([&](Connection::BatchWriteParams const& params) {
+        EXPECT_THAT(params.mutation_groups, SizeIs(2));
+        EXPECT_FALSE(params.options.has<RequestPriorityOption>());
+        EXPECT_FALSE(params.options.has<RequestTagOption>());
+        EXPECT_TRUE(params.options.has<TransactionTagOption>());
+        EXPECT_EQ(params.options.get<TransactionTagOption>(), transaction_tag);
+        return mocks::MakeStreamRange<BatchedCommitResult>(
+            {{{0, 1}, timestamp}});
+      })
+      .WillOnce([](Connection::BatchWriteParams const& params) {
+        EXPECT_THAT(params.mutation_groups, SizeIs(2));
+        EXPECT_FALSE(params.options.has<RequestPriorityOption>());
+        EXPECT_FALSE(params.options.has<RequestTagOption>());
+        EXPECT_FALSE(params.options.has<TransactionTagOption>());
+        return mocks::MakeStreamRange<BatchedCommitResult>(
+            {}, Status(StatusCode::kInvalidArgument, "oops"));
+      });
+
+  Client client(conn);
+  for (auto const& opts : {
+           Options{},
+           Options{}
+               .set<RequestPriorityOption>(RequestPriority::kHigh)
+               .set<RequestTagOption>(request_tag),
+           Options{}.set<TransactionTagOption>(transaction_tag),
+       }) {
+    auto commit_results = client.CommitAtLeastOnce(mutation_groups, opts);
+    auto it = commit_results.begin();
+    ASSERT_NE(it, commit_results.end());
+    EXPECT_THAT(
+        *it,
+        IsOkAndHolds(AllOf(
+            Field(&BatchedCommitResult::indexes, ElementsAre(0, 1)),
+            Field(&BatchedCommitResult::commit_timestamp, Eq(timestamp)))));
+    EXPECT_EQ(++it, commit_results.end());
+  }
+  auto commit_results = client.CommitAtLeastOnce(mutation_groups, Options{});
+  auto it = commit_results.begin();
+  ASSERT_NE(it, commit_results.end());
+  EXPECT_THAT(*it, StatusIs(StatusCode::kInvalidArgument, "oops"));
+  EXPECT_EQ(++it, commit_results.end());
 }
 
 TEST(ClientTest, ProfileQuerySuccess) {

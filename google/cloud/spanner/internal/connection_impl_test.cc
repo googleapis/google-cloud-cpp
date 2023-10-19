@@ -76,6 +76,7 @@ using ::testing::AtLeast;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::Field;
 using ::testing::HasSubstr;
 using ::testing::InSequence;
 using ::testing::IsEmpty;
@@ -2396,6 +2397,66 @@ TEST(ConnectionImplTest, CommitAtLeastOnce) {
                     spanner::Mutations{}, spanner::CommitOptions{}});
   ASSERT_STATUS_OK(commit);
   EXPECT_EQ(commit_timestamp, commit->commit_timestamp);
+}
+
+TEST(ConnectionImplTest, CommitAtLeastOnceBatched) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  // A single `BatchWriteResponse` that covers all two mutation groups.
+  auto constexpr kResponseText = R"pb(
+    indexes: 0
+    indexes: 1
+    status {}
+    commit_timestamp { seconds: 123 }
+  )pb";
+  BatchWriteResponse response;
+  ASSERT_TRUE(TextFormat::ParseFromString(kResponseText, &response));
+  using BatchWriteRequest = google::spanner::v1::BatchWriteRequest;
+  EXPECT_CALL(*mock, BatchWrite)
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+                   BatchWriteRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_EQ(google::spanner::v1::RequestOptions::PRIORITY_UNSPECIFIED,
+                  request.request_options().priority());
+        EXPECT_THAT(request.request_options().request_tag(), IsEmpty());
+        EXPECT_THAT(request.request_options().transaction_tag(), IsEmpty());
+        EXPECT_THAT(
+            request.mutation_groups(),
+            ElementsAre(IsProtoEqual(BatchWriteRequest::MutationGroup()),
+                        IsProtoEqual(BatchWriteRequest::MutationGroup())));
+        return MakeReader<BatchWriteResponse>(
+            {}, Status(StatusCode::kUnavailable, "try-again in BatchWrite"));
+      })
+      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&,
+                    BatchWriteRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_EQ(google::spanner::v1::RequestOptions::PRIORITY_UNSPECIFIED,
+                  request.request_options().priority());
+        EXPECT_THAT(request.request_options().request_tag(), IsEmpty());
+        EXPECT_THAT(request.request_options().transaction_tag(), IsEmpty());
+        EXPECT_THAT(
+            request.mutation_groups(),
+            ElementsAre(IsProtoEqual(BatchWriteRequest::MutationGroup()),
+                        IsProtoEqual(BatchWriteRequest::MutationGroup())));
+        return MakeReader<BatchWriteResponse>({response});
+      });
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto commit_results = conn->BatchWrite(
+      {{spanner::Mutations{}, spanner::Mutations{}}, Options{}});
+  auto it = commit_results.begin();
+  ASSERT_NE(it, commit_results.end());
+  EXPECT_THAT(
+      *it,
+      IsOkAndHolds(AllOf(
+          Field(&spanner::BatchedCommitResult::indexes, ElementsAre(0, 1)),
+          Field(&spanner::BatchedCommitResult::commit_timestamp,
+                Eq(spanner::MakeTimestamp(response.commit_timestamp()))))));
+  EXPECT_EQ(++it, commit_results.end());
 }
 
 TEST(ConnectionImplTest, RollbackCreateSessionFailure) {

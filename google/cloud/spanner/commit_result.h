@@ -17,8 +17,12 @@
 
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "absl/types/optional.h"
+#include <cstddef>
 #include <cstdint>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -42,6 +46,26 @@ struct CommitResult {
   /// Additional statistics about the committed transaction.
   absl::optional<CommitStats> commit_stats;
 };
+
+/**
+ * The result of committing a Transaction containing a batch of mutation
+ * groups.  See the batched form of `Client::CommitAtLeastOnce()`.
+ */
+struct BatchedCommitResult {
+  /// The mutation groups applied in this batch. Each value is an index into
+  /// the `std::vector<Mutations>` passed to `Client::CommitAtLeastOnce()`.
+  std::vector<std::size_t> indexes;
+
+  /// If OK, the Cloud Spanner timestamp at which the transaction committed,
+  /// and otherwise the reason why the commit failed.
+  StatusOr<Timestamp> commit_timestamp;
+};
+
+/**
+ * Represents the stream of `BatchedCommitResult` objects returned from the
+ * batched `Client::CommitAtLeastOnce()`.
+ */
+using BatchedCommitResultStream = StreamRange<BatchedCommitResult>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner

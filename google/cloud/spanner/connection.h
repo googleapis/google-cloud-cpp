@@ -128,6 +128,12 @@ class Connection {
   struct RollbackParams {
     Transaction transaction;
   };
+
+  /// Wrap the arguments to `BatchWrite()`.
+  struct BatchWriteParams {
+    std::vector<Mutations> mutation_groups;
+    Options options;
+  };
   ///@}
 
   /// Returns the options used by the Connection.
@@ -171,6 +177,9 @@ class Connection {
 
   /// Defines the interface for `Client::Rollback()`
   virtual Status Rollback(RollbackParams);
+
+  /// Defines the interface for batched `Client::CommitAtLeastOnce()`
+  virtual BatchedCommitResultStream BatchWrite(BatchWriteParams);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -307,11 +307,20 @@ StatusOr<CommitResult> Client::Commit(Transaction transaction,
 StatusOr<CommitResult> Client::CommitAtLeastOnce(
     Transaction::ReadWriteOptions transaction_options, Mutations mutations,
     Options opts) {
+  // Note: This implementation differs from `CommitAtLeastOnce({mutations})`
+  // for historical reasons.
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->Commit({spanner_internal::MakeSingleUseCommitTransaction(
                             std::move(transaction_options)),
                         std::move(mutations),
                         CommitOptions(internal::CurrentOptions())});
+}
+
+BatchedCommitResultStream Client::CommitAtLeastOnce(
+    std::vector<Mutations> mutation_groups, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
+  return conn_->BatchWrite(
+      {std::move(mutation_groups), internal::CurrentOptions()});
 }
 
 Status Client::Rollback(Transaction transaction, Options opts) {
