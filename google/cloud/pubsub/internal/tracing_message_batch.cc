@@ -76,9 +76,8 @@ void GenerateBatchSinkChildrenSpans(std::vector<T> const& message_spans,
     return std::next(
         i, std::min(batch_size - 1, std::distance(i, message_spans.end())));
   };
-  int batches = message_spans.size() / batch_size;
   int count = 0;
-  for (auto i = message_spans.begin(); count <= batches; i = cut(i)) {
+  for (auto i = message_spans.begin(); i != message_spans.end(); i = cut(i)) {
     LinksList links;
     // Generate links between [i, min((i + batch_size) -1), end)) range.
     GenerateLinks(i, cut(i), std::back_inserter(links));
