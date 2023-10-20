@@ -32,7 +32,7 @@ if (bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND storage IN_LIST
     google_cloud_cpp_add_common_options(gcs2cbt)
 endif ()
 
-include(FindCurlWithTargets)
+find_package(CURL REQUIRED)
 include(FindgRPC)
 
 if (spanner IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND iam IN_LIST

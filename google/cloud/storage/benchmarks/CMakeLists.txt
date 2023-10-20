@@ -69,7 +69,6 @@ foreach (fname ${storage_benchmark_programs})
                 google-cloud-cpp::storage
                 google-cloud-cpp::common
                 absl::strings
-                CURL::libcurl
                 Threads::Threads
                 nlohmann_json)
     google_cloud_cpp_add_common_options(${target})
@@ -104,7 +103,6 @@ foreach (fname ${storage_benchmarks_unit_tests})
                 GTest::gmock_main
                 GTest::gmock
                 GTest::gtest
-                CURL::libcurl
                 absl::strings
                 nlohmann_json)
     google_cloud_cpp_add_common_options(${target})

@@ -14,7 +14,7 @@
 # limitations under the License.
 # ~~~
 
-include(FindCurlWithTargets)
+find_package(CURL REQUIRED)
 find_package(OpenSSL REQUIRED)
 
 # the client library

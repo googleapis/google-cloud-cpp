@@ -102,7 +102,6 @@ foreach (fname IN LISTS storage_client_integration_tests)
                 GTest::gmock_main
                 GTest::gmock
                 GTest::gtest
-                CURL::libcurl
                 Threads::Threads
                 absl::strings
                 nlohmann_json)

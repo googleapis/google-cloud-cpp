@@ -15,7 +15,7 @@
 # ~~~
 
 include(IncludeNlohmannJson)
-include(FindCurlWithTargets)
+find_package(CURL REQUIRED)
 find_package(OpenSSL REQUIRED)
 
 # the library
