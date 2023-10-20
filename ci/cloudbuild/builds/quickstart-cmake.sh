@@ -28,17 +28,36 @@ source module ci/lib/io.sh
 io::log_h2 "Installing google-cloud-cpp with vcpkg"
 vcpkg_dir="$(vcpkg::root_dir)"
 env -C "${vcpkg_dir}" ./vcpkg remove --outdated --recurse
-env -C "${vcpkg_dir}" ./vcpkg install google-cloud-cpp
+env -C "${vcpkg_dir}" ./vcpkg install --recurse "google-cloud-cpp[*]"
 
 # Compiles all the quickstart builds
-# shellcheck disable=SC2046
-libraries="$(printf ";%s" $(quickstart::libraries))"
-libraries="${libraries:1}"
-# TODO(#11426): We need to add an opentelemetry feature to our vcpkg port
-#libraries="${libraries};experimental-opentelemetry"
-cmake -G Ninja \
+# TODO(#12937) - cleanup this build
+# - `vcpkg`` still has retired features: `iot`, `debugger`, `gameservices`
+# - skip `compute`, `appengine`, `iam`, `policytroubleshooter`, `appengine`,
+#   `logging`, and `servicecontrol` because the `vcpkg` recipes are incomplete.
+mapfile -t features < <(
+  env -C "${vcpkg_dir}" ./vcpkg search google-cloud-cpp |
+    sed -n -e 's/^google-cloud-cpp\[\(.*\)\].*/\1/p' |
+    sed -e 's/dialogflow-/dialogflow_/' \
+      -e '/^grafeas$/d' \
+      -e '/^experimental-/d' \
+      -e '/^grpc-common$/d' \
+      -e '/^rest-common$/d' \
+      -e '/^debugger$/d' \
+      -e '/^gameservices$/d' \
+      -e '/^iot$/d' \
+      -e '/^compute$/d' \
+      -e '/^appengine$/d' \
+      -e '/^iam$/d' \
+      -e '/^logging$/d' \
+      -e '/^policytroubleshooter$/d' \
+      -e '/^servicecontrol$/d'
+)
+feature_list="$(printf ";%s" "${features[@]}")"
+feature_list="${feature_list:1}"
+io::run cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
   -DCMAKE_TOOLCHAIN_FILE="${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake" \
-  -DFEATURES="${libraries}"
-cmake --build "${PROJECT_ROOT}/cmake-out/quickstart" --target verify-quickstart-cmake
+  -DFEATURES="${feature_list}"
+io::run cmake --build "${PROJECT_ROOT}/cmake-out/quickstart" --target verify-quickstart-cmake
