@@ -473,7 +473,7 @@ TEST_F(ClientIntegrationTest, CommitAtLeastOnceBatched) {
     ASSERT_THAT(commit_result, IsOk());
     EXPECT_THAT(commit_result->indexes, Not(IsEmpty()));
     for (auto index : commit_result->indexes) {
-      ASSERT_THAT(index, AllOf(Ge(0), Lt(groups.size())));
+      ASSERT_THAT(index, AllOf(Ge(0U), Lt(groups.size())));
       auto ins = results.emplace(index, commit_result->commit_timestamp);
       EXPECT_TRUE(ins.second);  // Check that the indexes are unique.
     }
