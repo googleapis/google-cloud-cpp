@@ -13,9 +13,10 @@ sourceToBuild:
   repoType: GITHUB
   uri: https://github.com/googleapis/google-cloud-cpp
 substitutions:
-  _BUILD_NAME: clang-tidy-compute
+  _BUILD_NAME: clang-tidy
   _DISTRO: fedora-latest-cmake
   _TRIGGER_TYPE: daily
+  _SHARD: compute
 tags:
 - daily
 - nightly
