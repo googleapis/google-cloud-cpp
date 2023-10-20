@@ -90,12 +90,8 @@ std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
 MakeBatchSinkSpans(
     std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
         message_spans) {
-  using opentelemetry::trace::SpanContext;
-  using AttributesList =
-      std::vector<std::pair<opentelemetry::nostd::string_view,
-                            opentelemetry::common::AttributeValue>>;
   int constexpr kMaxOtelLinks = 128;
-  std::vector<std::pair<SpanContext, AttributesList>> links;
+  Links links;
   auto batch_size = message_spans.size();
   links.reserve(batch_size);
   // If the batch size is less than the max size, add the links to a single
