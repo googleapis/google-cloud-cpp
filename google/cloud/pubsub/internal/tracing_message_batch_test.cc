@@ -58,8 +58,7 @@ void EndSpans(std::vector<opentelemetry::nostd::shared_ptr<
 }
 
 /// Creates @p n spans.
-std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-CreateSpans(int n) {
+auto CreateSpans(int n) {
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       spans(n);
   std::generate(spans.begin(), spans.end(), [i = 0]() mutable {

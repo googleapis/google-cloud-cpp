@@ -43,6 +43,11 @@ void TracingMessageBatch::SaveMessage(pubsub::Message m) {
 
 namespace {
 
+using Links = std::vector<
+      std::pair<opentelemetry::trace::SpanContext,
+                std::vector<std::pair<opentelemetry::nostd::string_view,
+                                      opentelemetry::common::AttributeValue>>>>;
+
 /// Inserts a link for each span in @p destination between the @p begin and @p
 /// end iterators.
 template <typename Iterator, typename OutputIterator>
@@ -68,17 +73,13 @@ void GenerateBatchSinkChildrenSpans(std::vector<T> const& message_spans,
                                     T batch_sink_parent_span,
                                     std::ptrdiff_t batch_size,
                                     std::vector<T>& batch_sink_spans) {
-  using LinksList = std::vector<
-      std::pair<opentelemetry::trace::SpanContext,
-                std::vector<std::pair<opentelemetry::nostd::string_view,
-                                      opentelemetry::common::AttributeValue>>>>;
   auto cut = [&](auto i) {
     return std::next(
         i, std::min(batch_size - 1, std::distance(i, message_spans.end())));
   };
   int count = 0;
   for (auto i = message_spans.begin(); i != message_spans.end(); i = cut(i)) {
-    LinksList links;
+    Links links;
     // Generate links between [i, min((i + batch_size) -1), end)) range.
     GenerateLinks(i, cut(i), std::back_inserter(links));
     opentelemetry::trace::StartSpanOptions options;
@@ -156,7 +157,7 @@ void TracingMessageBatch::Flush() {
   // Set the batch sink parent span as the active span. This will always be the
   // first span in the vector.
   auto async_scope = internal::GetTracer(internal::CurrentOptions())
-                         ->WithActiveSpan(*batch_sink_spans.begin());
+                         ->WithActiveSpan(batch_sink_spans.front());
   {
     std::lock_guard<std::mutex> lk(batch_sink_mu_);
     batch_sink_spans_.swap(batch_sink_spans);
