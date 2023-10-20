@@ -635,6 +635,43 @@ class Client {
       Options opts = {});
 
   /**
+   * Commits the mutation groups, batched efficiently into transactions with
+   * at-least-once semantics, using a single RPC.
+   *
+   * All mutations within a group are committed atomically. There is no
+   * atomicity or ordering between groups however, so all groups must be
+   * independent of each other.
+   *
+   * Partial failure is possible. That is, some groups can commit successfully
+   * while others fail. The results of individual batches are returned via the
+   * response stream as their transactions complete.
+   *
+   * Mutation groups are not replay protected. That is, it is possible that
+   * each mutation group may be applied more than once. If the mutations are
+   * not idempotent, this may lead to a failure. For example, replays of an
+   * insert mutation might produce an "already exists" error, or, if you use
+   * generated or commit-timestamp-based keys, might result in additional
+   * rows being added to the mutation's table. We recommend structuring your
+   * mutation groups to be idempotent to avoid this issue.
+   *
+   * @note Prefer the `Commit` overloads if you want exactly-once semantics
+   *     or want to automatically reapply mutations after a `kAborted` error.
+   *
+   * @par Example
+   * @snippet samples.cc commit-at-least-once-batched
+   *
+   * @param mutation_groups The mutation groups to be batched into temporary
+   *     transactions and committed.
+   * @param opts (optional) The options to use for this call. Expected options
+   *     include any of the following types:
+   *       - `google::cloud::spanner::RequestPriorityOption`
+   *       - `google::cloud::spanner::RequestTagOption`
+   *       - `google::cloud::spanner::TransactionTagOption`
+   */
+  BatchedCommitResultStream CommitAtLeastOnce(
+      std::vector<Mutations> mutation_groups, Options opts = {});
+
+  /**
    * Rolls back a read-write transaction, releasing any locks it holds.
    *
    * At any time before `Commit`, the client can call `Rollback` to abort the

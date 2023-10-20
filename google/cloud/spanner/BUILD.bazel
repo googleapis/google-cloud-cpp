@@ -130,6 +130,7 @@ cc_library(
         ":google_cloud_cpp_spanner_mocks",
         ":spanner_client_testing",
         "//:common",
+        "//google/cloud:google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_absl//absl/numeric:int128",

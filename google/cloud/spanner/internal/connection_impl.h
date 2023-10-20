@@ -64,6 +64,7 @@ class ConnectionImpl : public spanner::Connection {
       ExecuteBatchDmlParams) override;
   StatusOr<spanner::CommitResult> Commit(CommitParams) override;
   Status Rollback(RollbackParams) override;
+  spanner::BatchedCommitResultStream BatchWrite(BatchWriteParams) override;
 
  private:
   Status PrepareSession(SessionHolder& session,
@@ -132,6 +133,8 @@ class ConnectionImpl : public spanner::Connection {
   Status RollbackImpl(SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       TransactionContext const& ctx);
+
+  spanner::BatchedCommitResultStream BatchWriteImpl(BatchWriteParams);
 
   template <typename ResultType>
   StatusOr<ResultType> ExecuteSqlImpl(

@@ -64,6 +64,8 @@ class MockConnection : public spanner::Connection {
   MOCK_METHOD(StatusOr<spanner::CommitResult>, Commit, (CommitParams),
               (override));
   MOCK_METHOD(Status, Rollback, (RollbackParams), (override));
+  MOCK_METHOD(spanner::BatchedCommitResultStream, BatchWrite,
+              (BatchWriteParams), (override));
 };
 
 /**

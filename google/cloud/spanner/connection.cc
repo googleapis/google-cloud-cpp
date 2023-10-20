@@ -105,6 +105,12 @@ Status Connection::Rollback(RollbackParams) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+BatchedCommitResultStream Connection::BatchWrite(BatchWriteParams) {
+  return internal::MakeStreamRange<BatchedCommitResult>(
+      [] { return Status(StatusCode::kUnimplemented, "not implemented"); });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud

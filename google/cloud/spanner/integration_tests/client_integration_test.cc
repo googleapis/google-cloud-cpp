@@ -21,6 +21,10 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <map>
+#include <tuple>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -32,7 +36,11 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::AnyOf;
+using ::testing::Eq;
+using ::testing::Ge;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::Lt;
 using ::testing::NotNull;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedElementsAreArray;
@@ -48,6 +56,14 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
     auto commit_result = client_->Commit(
         Mutations{MakeDeleteMutation("Singers", KeySet::All())});
     ASSERT_STATUS_OK(commit_result);
+  }
+
+  static StatusOr<Timestamp> DatabaseNow() {
+    auto statement = SqlStatement("SELECT CURRENT_TIMESTAMP()");
+    auto rows = client_->ExecuteQuery(std::move(statement));
+    auto row = GetSingularRow(StreamOf<std::tuple<Timestamp>>(rows));
+    if (!row) return std::move(row).status();
+    return std::get<0>(*row);
   }
 
   static void InsertTwoSingers() {
@@ -350,6 +366,155 @@ TEST_F(ClientIntegrationTest, CommitAtLeastOnce) {
     if (row) ids.push_back(std::get<0>(*row));
   }
   EXPECT_THAT(ids, UnorderedElementsAre(200, 299));
+}
+
+/// @test Verify the basics of batched CommitAtLeastOnce().
+TEST_F(ClientIntegrationTest, CommitAtLeastOnceBatched) {
+  auto const now = DatabaseNow();
+  ASSERT_THAT(now, IsOk());
+
+  std::string const table = "Singers";
+  std::vector<std::string> const columns = {
+      "SingerId", "FirstName", "LastName"  //
+  };
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
+  std::vector<std::vector<std::vector<RowType>>> const groups = {
+      // group #0
+      {
+          {
+              {1894, "Bessie", "Smith"},
+              {1901, "Louis", "Armstrong"},
+              {1911, "Mahalia", "Jackson"},
+          },
+          {
+              {1915, "Frank", "Sinatra"},
+              {1923, "Hank", "Williams"},
+          },
+          {
+              {1925, "Celia", "Cruz"},
+          },
+      },
+      // group #1
+      {
+          {
+              {1930, "Ray", "Charles"},
+              {1931, "Sam", "Cooke"},
+              {1932, "Patsy", "Cline"},
+          },
+          {
+              {1933, "Nina", "Simone"},
+              {1935, "Elvis", "Presley"},
+          },
+      },
+      // group #2
+      {
+          {
+              {1939, "Dusty", "Springfield"},
+              {1940, "Smokey", "Robinson"},
+          },
+          {
+              {1941, "Otis", "Redding"},
+              {1942, "Aretha", "Franklin"},
+          },
+          {
+              {1945, "Van", "Morrison"},
+          },
+      },
+      // group #3
+      {
+          {
+              {1946, "Freddie", "Mercury"},
+          },
+          {
+              {1947, "David", "Bowie"},
+          },
+          {
+              {1950, "Stevie", "Wonder"},
+          },
+          {
+              {1951, "Luther", "Vandross"},
+          },
+          {
+              {1953, "Chaka", "Khan"},
+          },
+      },
+      // group #4
+      {
+          {
+              {1958, "Prince", ""},
+              {1963, "Whitney", "Houston"},
+              {1967, "Kurt", "Cobain"},
+              {1968, "Thom", "Yorke"},
+              {1969, "Mariah", "Carey"},
+              {1988, "Adele", ""},
+          },
+      },
+  };
+  std::vector<Mutations> mutation_groups;
+  for (auto const& group : groups) {
+    Mutations mutations;
+    for (auto const& mutation : group) {
+      // Use upserts as mutation groups are not replay protected.
+      InsertOrUpdateMutationBuilder b(table, columns);
+      for (auto const& row : mutation) {
+        b.EmplaceRow(std::get<0>(row), std::get<1>(row), std::get<2>(row));
+      }
+      mutations.push_back(std::move(b).Build());
+    }
+    mutation_groups.push_back(std::move(mutations));
+  }
+
+  auto commit_results = client_->CommitAtLeastOnce(std::move(mutation_groups));
+  std::map<std::size_t, StatusOr<Timestamp>> results;
+  for (auto& commit_result : commit_results) {
+    if (results.empty() && EmulatorUnimplemented(commit_result.status())) {
+      GTEST_SKIP();
+    }
+    ASSERT_THAT(commit_result, IsOk());
+    EXPECT_THAT(commit_result->indexes, Not(IsEmpty()));
+    for (auto index : commit_result->indexes) {
+      ASSERT_THAT(index, AllOf(Ge(0), Lt(groups.size())));
+      auto ins = results.emplace(index, commit_result->commit_timestamp);
+      EXPECT_TRUE(ins.second);  // Check that the indexes are unique.
+    }
+    if (commit_result->commit_timestamp) {
+      // Check that we got a reasonable commit_timestamp.
+      EXPECT_THAT(*commit_result->commit_timestamp, Ge(*now));
+    }
+  }
+
+  // Check that all indexes are accounted for.
+  for (std::size_t i = 0; i != groups.size(); ++i) {
+    if (results.find(i) == results.end()) {
+      ADD_FAILURE() << "Expected: " << i << ", actual: missing";
+    }
+  }
+
+  // Snapshot the updated table.
+  auto rows = client_->Read(table, KeySet::All(), columns);
+  std::map<std::int64_t, RowType> singers;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    EXPECT_THAT(row, IsOk());
+    if (!row) break;
+    auto const singer_id = std::get<0>(*row);
+    singers.emplace(singer_id, std::move(*row));
+  }
+
+  // Check that the (successful) mutations were applied.
+  for (auto const& result : results) {
+    if (!result.second) continue;  // skip failed groups
+    for (auto const& mutation : groups[result.first]) {
+      for (auto const& row : mutation) {
+        auto const itr = singers.find(std::get<0>(row));
+        if (itr == singers.end()) {
+          ADD_FAILURE() << "Expected: " << testing::PrintToString(row)
+                        << ", actual: missing";
+        } else {
+          EXPECT_THAT(itr->second, Eq(row));
+        }
+      }
+    }
+  }
 }
 
 /// @test Test various forms of ExecuteQuery() and ExecuteDml()
