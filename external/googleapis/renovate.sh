@@ -66,7 +66,7 @@ banner "Creating commits"
 git commit -m"chore: update googleapis SHA circa $(date +%Y-%m-%d)" \
   bazel/google_cloud_cpp_deps.bzl cmake/GoogleapisConfig.cmake
 if ! git diff --quiet external/googleapis/protodeps \
-                      external/googleapis/protolists; then
+  external/googleapis/protolists; then
   git commit -m"Update the protodeps/protolists" \
     external/googleapis/protodeps external/googleapis/protolists
 fi
