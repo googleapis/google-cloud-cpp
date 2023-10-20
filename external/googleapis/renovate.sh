@@ -65,8 +65,11 @@ ci/cloudbuild/build.sh --docker --trigger=generate-libraries-pr || true
 banner "Creating commits"
 git commit -m"chore: update googleapis SHA circa $(date +%Y-%m-%d)" \
   bazel/google_cloud_cpp_deps.bzl cmake/GoogleapisConfig.cmake
-git commit -m"Update the protodeps/protolists" \
-  external/googleapis/protodeps external/googleapis/protolists
+if ! git diff --quiet external/googleapis/protodeps \
+                      external/googleapis/protolists; then
+  git commit -m"Update the protodeps/protolists" \
+    external/googleapis/protodeps external/googleapis/protolists
+fi
 git commit -m"Regenerate libraries" .
 
 banner "Showing git state"
