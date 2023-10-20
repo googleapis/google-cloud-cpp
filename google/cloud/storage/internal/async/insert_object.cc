@@ -21,28 +21,6 @@ namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
-
-template <typename T>
-struct AsContentType;
-
-template <>
-struct AsContentType<std::string> {
-  // NOLINTNEXTLINE(performance-unnecessary-value-param)
-  std::string operator()(absl::Cord c) { return static_cast<std::string>(c); }
-};
-
-template <>
-struct AsContentType<absl::Cord> {
-  absl::Cord operator()(absl::Cord c) { return c; }
-};
-
-void SetContent(google::storage::v2::ChecksummedData& data,
-                absl::Cord contents) {
-  SetMutableContent(data, AsContentType<ContentType>{}(std::move(contents)));
-}
-
-}  // namespace
 
 future<StatusOr<storage::ObjectMetadata>> InsertObject::Start() {
   auto future = result_.get_future();

@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/type_traits.h"
 #include "google/cloud/version.h"
+#include "absl/strings/cord.h"
 #include <google/storage/v2/storage.pb.h>
 #include <string>
 #include <type_traits>
@@ -167,6 +168,25 @@ inline ContentType StealMutableContent(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND
+
+template <typename T>
+struct AsContentType;
+
+template <>
+struct AsContentType<std::string> {
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+  std::string operator()(absl::Cord c) { return static_cast<std::string>(c); }
+};
+
+template <>
+struct AsContentType<absl::Cord> {
+  absl::Cord operator()(absl::Cord c) { return c; }
+};
+
+inline void SetContent(google::storage::v2::ChecksummedData& data,
+                       absl::Cord contents) {
+  SetMutableContent(data, AsContentType<ContentType>{}(std::move(contents)));
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
