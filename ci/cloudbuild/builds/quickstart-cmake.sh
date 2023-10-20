@@ -32,7 +32,7 @@ env -C "${vcpkg_dir}" ./vcpkg install --recurse "google-cloud-cpp[*]"
 
 # Compiles all the quickstart builds
 # TODO(#12937) - cleanup this build
-# - vpkg still has retired features (iot, debugger, gameservices)
+# - `vcpkg`` still has retired features: `iot`, `debugger`, `gameservices`
 # - skip `compute`, `appengine`, `iam`, `policytroubleshooter`, `appengine`,
 #   `logging`, and `servicecontrol` because the `vcpkg` recipes are incomplete.
 mapfile -t features < <(
