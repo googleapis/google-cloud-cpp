@@ -82,7 +82,6 @@ google_cloud_cpp_storage_grpc_srcs = [
     "internal/async/reader_connection_impl.cc",
     "internal/async/reader_connection_tracing.cc",
     "internal/async/token_impl.cc",
-    "internal/async/write_payload_impl.cc",
     "internal/grpc/bucket_access_control_parser.cc",
     "internal/grpc/bucket_metadata_parser.cc",
     "internal/grpc/bucket_name.cc",

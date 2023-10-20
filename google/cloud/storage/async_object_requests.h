@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/async/connection_fwd.h"
 #include "google/cloud/storage/internal/async/write_payload_fwd.h"
+#include "google/cloud/storage/internal/grpc/make_cord.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
 #include "absl/strings/cord.h"
@@ -31,14 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * An opaque representation of the data for an object payload.
- *
- * While applications do not need to create instances of this class, they may
- * need to use it in their mocks, to validate the contents of their requests.
  */
 class WritePayload {
  public:
   /// Creates an empty payload.
   WritePayload() = default;
+
+  /// Creates a payload from @p p.
+  explicit WritePayload(std::string p)
+      : impl_(storage_internal::MakeCord(std::move(p))) {}
+
+  /// Creates a payload from @p p.
+  template <typename T>
+  explicit WritePayload(std::vector<T> p)
+      : impl_(storage_internal::MakeCord(std::move(p))) {}
 
   /// Returns true if the payload has no data.
   bool empty() const { return impl_.empty(); }
@@ -109,6 +116,51 @@ class InsertObjectRequest {
         Impl>::InsertObjectRequestImpl;
   };
   Impl impl_;
+};
+
+/**
+ * A request to start or resume a resumable upload.
+ *
+ * This class can hold all the mandatory and optional parameters to start or
+ * resume a resumable upload. Resumable uploads can be used to stream large
+ * objects, as they can recover when the upload is interrupted. This request
+ * does not contain any of the payload for the object, that is provided via a
+ * `storage_experimental::AsyncWriter`.
+ *
+ * This class is in the public API for the library because it is required for
+ * mocking.
+ */
+class ResumableUploadRequest {
+ public:
+  ResumableUploadRequest() = default;
+  ResumableUploadRequest(std::string bucket_name, std::string object_name)
+      : impl_(std::move(bucket_name), std::move(object_name)) {}
+
+  std::string const& bucket_name() const { return impl_.bucket_name(); }
+  std::string const& object_name() const { return impl_.object_name(); }
+
+  template <typename... T>
+  ResumableUploadRequest& set_multiple_options(T&&... o) & {
+    impl_.set_multiple_options(std::forward<T>(o)...);
+    return *this;
+  }
+  template <typename... T>
+  ResumableUploadRequest&& set_multiple_options(T&&... o) && {
+    return std::move(set_multiple_options(std::forward<T>(o)...));
+  }
+
+  template <typename T>
+  bool HasOption() const {
+    return impl_.HasOption<T>();
+  }
+  template <typename T>
+  T GetOption() const {
+    return impl_.GetOption<T>();
+  }
+
+ protected:
+  friend class storage_internal::AsyncConnectionImpl;
+  storage::internal::ResumableUploadRequest impl_;
 };
 
 /**

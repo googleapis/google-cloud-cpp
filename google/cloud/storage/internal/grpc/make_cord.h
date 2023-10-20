@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_MAKE_CORD_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_MAKE_CORD_H
 
+#include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/version.h"
 #include "absl/meta/type_traits.h"
 #include "absl/strings/cord.h"
@@ -22,6 +23,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <memory>
+#include <numeric>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -40,11 +42,15 @@ using IsPayloadType = absl::disjunction<
     std::is_same<T, char>, std::is_same<T, signed char>,
     std::is_same<T, unsigned char>, std::is_same<T, std::uint8_t>>;
 
-/// Create an `absl::Cord`, without copying the data in @p p.
+/// Creates an `absl::Cord`, without copying the data in @p p.
 absl::Cord MakeCord(std::string p);
 
-/// Create an `absl::Cord`, without copying the data in @p p.
-template <typename T>
+/// Creates an `absl::Cord`, without copying the data in @p p.
+absl::Cord MakeCord(std::vector<std::string> p);
+
+/// Creates an `absl::Cord`, without copying the data in @p p.
+template <typename T,
+          typename std::enable_if<IsPayloadType<T>::value, int>::type = 0>
 absl::Cord MakeCord(std::vector<T> p) {
   static_assert(IsPayloadType<T>::value, "unexpected value type");
   auto holder = std::make_shared<std::vector<T>>(std::move(p));
@@ -52,6 +58,18 @@ absl::Cord MakeCord(std::vector<T> p) {
       reinterpret_cast<char const*>(holder->data()), holder->size());
   return absl::MakeCordFromExternal(contents,
                                     [b = std::move(holder)]() mutable {});
+}
+
+/// Creates an `absl::Cord`, without copying the data in @p p.
+template <typename T,
+          typename std::enable_if<IsPayloadType<T>::value, int>::type = 0>
+absl::Cord MakeCord(std::vector<std::vector<T>> p) {
+  return std::accumulate(std::make_move_iterator(p.begin()),
+                         std::make_move_iterator(p.end()), absl::Cord(),
+                         [](absl::Cord a, std::vector<T> b) {
+                           a.Append(MakeCord(std::move(b)));
+                           return a;
+                         });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -150,7 +150,7 @@ class AsyncClient {
                                           std::move(object_name))
              .set_multiple_options(std::forward<Args>(args)...),
          /*.payload=*/
-         storage_internal::MakeWritePayload(std::forward<Collection>(contents)),
+         WritePayload(std::forward<Collection>(contents)),
          /*.options=*/std::move(options)});
   }
 

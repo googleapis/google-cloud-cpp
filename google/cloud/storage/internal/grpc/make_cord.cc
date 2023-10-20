@@ -30,6 +30,15 @@ absl::Cord MakeCord(std::string p) {
                                     [b = std::move(holder)]() mutable {});
 }
 
+absl::Cord MakeCord(std::vector<std::string> p) {
+  return std::accumulate(std::make_move_iterator(p.begin()),
+                         std::make_move_iterator(p.end()), absl::Cord(),
+                         [](absl::Cord a, std::string b) {
+                           a.Append(MakeCord(std::move(b)));
+                           return a;
+                         });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
