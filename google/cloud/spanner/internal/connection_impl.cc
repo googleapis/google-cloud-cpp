@@ -1216,10 +1216,16 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
       google::spanner::v1::BatchWriteRequest>(
       RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
       std::move(factory), std::move(updater), std::move(request));
+  // Because there is no enclosing client-side transaction, we move the
+  // session into the stream range so that it is not returned to the pool
+  // until the stream is exhausted.
   return internal::MakeStreamRange<spanner::BatchedCommitResult>(
       [reader = std::move(reader), session = std::move(session)] {
         auto result = FromProto(reader->Read());
         if (absl::holds_alternative<Status>(result)) {
+          // "Session not found" can really only happen on the first
+          // response, but, rather than tracking that, we just check
+          // on non-first failures too.
           if (IsSessionNotFound(absl::get<Status>(result))) {
             session->set_bad();
           }
