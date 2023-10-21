@@ -465,6 +465,22 @@ DefaultSecurityCenterStub::TestIamPermissions(
   return response;
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             SimulateSecurityHealthAnalyticsCustomModuleResponse>
+DefaultSecurityCenterStub::SimulateSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& client_context,
+    google::cloud::securitycenter::v1::
+        SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  google::cloud::securitycenter::v1::
+      SimulateSecurityHealthAnalyticsCustomModuleResponse response;
+  auto status = grpc_stub_->SimulateSecurityHealthAnalyticsCustomModule(
+      &client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 DefaultSecurityCenterStub::UpdateExternalSystem(
     grpc::ClientContext& client_context,

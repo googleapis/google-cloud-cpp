@@ -210,6 +210,13 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    SimulateSecurityHealthAnalyticsCustomModule(
+        google::cloud::securitycenter::v1::
+            SimulateSecurityHealthAnalyticsCustomModuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateExternalSystem(
     google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&) {
   return Idempotency::kNonIdempotent;

@@ -325,6 +325,12 @@ class SecurityCenterConnection {
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
+  virtual StatusOr<google::cloud::securitycenter::v1::
+                       SimulateSecurityHealthAnalyticsCustomModuleResponse>
+  SimulateSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          SimulateSecurityHealthAnalyticsCustomModuleRequest const& request);
+
   virtual StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
   UpdateExternalSystem(
       google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&

@@ -221,6 +221,14 @@ class SecurityCenterMetadata : public SecurityCenterStub {
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::cloud::securitycenter::v1::
+               SimulateSecurityHealthAnalyticsCustomModuleResponse>
+  SimulateSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::
+          SimulateSecurityHealthAnalyticsCustomModuleRequest const& request)
+      override;
+
   StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
   UpdateExternalSystem(
       grpc::ClientContext& context,

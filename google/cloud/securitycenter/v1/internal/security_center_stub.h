@@ -221,6 +221,14 @@ class SecurityCenterStub {
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::securitycenter::v1::
+                       SimulateSecurityHealthAnalyticsCustomModuleResponse>
+  SimulateSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::
+          SimulateSecurityHealthAnalyticsCustomModuleRequest const&
+              request) = 0;
+
   virtual StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
   UpdateExternalSystem(
       grpc::ClientContext& context,
@@ -495,6 +503,14 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext& client_context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::
+               SimulateSecurityHealthAnalyticsCustomModuleResponse>
+  SimulateSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& client_context,
+      google::cloud::securitycenter::v1::
+          SimulateSecurityHealthAnalyticsCustomModuleRequest const& request)
+      override;
 
   StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
   UpdateExternalSystem(

@@ -384,6 +384,19 @@ SecurityCenterTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             SimulateSecurityHealthAnalyticsCustomModuleResponse>
+SecurityCenterTracingConnection::SimulateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securitycenter_v1::SecurityCenterConnection::"
+      "SimulateSecurityHealthAnalyticsCustomModule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->SimulateSecurityHealthAnalyticsCustomModule(request));
+}
+
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 SecurityCenterTracingConnection::UpdateExternalSystem(
     google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&

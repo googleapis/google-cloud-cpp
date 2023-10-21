@@ -116,8 +116,8 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.BulkMuteFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L734}
-  /// [google.cloud.securitycenter.v1.BulkMuteFindingsResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L771}
+  /// [google.cloud.securitycenter.v1.BulkMuteFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L755}
+  /// [google.cloud.securitycenter.v1.BulkMuteFindingsResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L792}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
@@ -155,8 +155,8 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.BulkMuteFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L734}
-  /// [google.cloud.securitycenter.v1.BulkMuteFindingsResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L771}
+  /// [google.cloud.securitycenter.v1.BulkMuteFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L755}
+  /// [google.cloud.securitycenter.v1.BulkMuteFindingsResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L792}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
@@ -191,7 +191,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L842}
+  /// [google.cloud.securitycenter.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L863}
   /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
   // clang-format on
@@ -230,7 +230,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L842}
+  /// [google.cloud.securitycenter.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L863}
   /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
   // clang-format on
@@ -262,7 +262,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.CreateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L862}
+  /// [google.cloud.securitycenter.v1.CreateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L883}
   /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
   // clang-format on
@@ -294,7 +294,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.CreateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L862}
+  /// [google.cloud.securitycenter.v1.CreateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L883}
   /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
   // clang-format on
@@ -327,7 +327,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.CreateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L774}
+  /// [google.cloud.securitycenter.v1.CreateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L795}
   /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
   ///
   // clang-format on
@@ -360,7 +360,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.CreateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L774}
+  /// [google.cloud.securitycenter.v1.CreateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L795}
   /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
   ///
   // clang-format on
@@ -389,7 +389,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L795}
+  /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L816}
   /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   // clang-format on
@@ -423,7 +423,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L795}
+  /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L816}
   /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   // clang-format on
@@ -455,7 +455,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L795}
+  /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L816}
   /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   // clang-format on
@@ -490,7 +490,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L817}
+  /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L838}
   /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   // clang-format on
@@ -524,7 +524,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L817}
+  /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L838}
   /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   // clang-format on
@@ -558,7 +558,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L817}
+  /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L838}
   /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   // clang-format on
@@ -587,7 +587,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.DeleteMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L878}
+  /// [google.cloud.securitycenter.v1.DeleteMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L899}
   ///
   // clang-format on
   Status DeleteMuteConfig(std::string const& name, Options opts = {});
@@ -613,7 +613,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.DeleteMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L878}
+  /// [google.cloud.securitycenter.v1.DeleteMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L899}
   ///
   // clang-format on
   Status DeleteMuteConfig(
@@ -639,7 +639,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.DeleteNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L892}
+  /// [google.cloud.securitycenter.v1.DeleteNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L913}
   ///
   // clang-format on
   Status DeleteNotificationConfig(std::string const& name, Options opts = {});
@@ -665,7 +665,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.DeleteNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L892}
+  /// [google.cloud.securitycenter.v1.DeleteNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L913}
   ///
   // clang-format on
   Status DeleteNotificationConfig(
@@ -695,7 +695,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L906}
+  /// [google.cloud.securitycenter.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L927}
   ///
   // clang-format on
   Status DeleteSecurityHealthAnalyticsCustomModule(std::string const& name,
@@ -724,7 +724,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L906}
+  /// [google.cloud.securitycenter.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L927}
   ///
   // clang-format on
   Status DeleteSecurityHealthAnalyticsCustomModule(
@@ -754,7 +754,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.GetBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L921}
+  /// [google.cloud.securitycenter.v1.GetBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L942}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport> GetBigQueryExport(
@@ -784,7 +784,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.GetBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L921}
+  /// [google.cloud.securitycenter.v1.GetBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L942}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport> GetBigQueryExport(
@@ -869,7 +869,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GetMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L935}
+  /// [google.cloud.securitycenter.v1.GetMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L956}
   /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   // clang-format on
@@ -899,7 +899,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GetMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L935}
+  /// [google.cloud.securitycenter.v1.GetMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L956}
   /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   // clang-format on
@@ -928,7 +928,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GetNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L949}
+  /// [google.cloud.securitycenter.v1.GetNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L970}
   /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   // clang-format on
@@ -958,7 +958,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GetNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L949}
+  /// [google.cloud.securitycenter.v1.GetNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L970}
   /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   // clang-format on
@@ -987,7 +987,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GetOrganizationSettingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L963}
+  /// [google.cloud.securitycenter.v1.GetOrganizationSettingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L984}
   /// [google.cloud.securitycenter.v1.OrganizationSettings]: @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
   ///
   // clang-format on
@@ -1017,7 +1017,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GetOrganizationSettingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L963}
+  /// [google.cloud.securitycenter.v1.GetOrganizationSettingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L984}
   /// [google.cloud.securitycenter.v1.OrganizationSettings]: @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
   ///
   // clang-format on
@@ -1050,7 +1050,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
-  /// [google.cloud.securitycenter.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L976}
+  /// [google.cloud.securitycenter.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L997}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::
@@ -1082,7 +1082,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
-  /// [google.cloud.securitycenter.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L976}
+  /// [google.cloud.securitycenter.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L997}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::
@@ -1114,7 +1114,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L991}
+  /// [google.cloud.securitycenter.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1012}
   /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
   // clang-format on
@@ -1146,7 +1146,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L991}
+  /// [google.cloud.securitycenter.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1012}
   /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
   // clang-format on
@@ -1176,7 +1176,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GetSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1006}
+  /// [google.cloud.securitycenter.v1.GetSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1027}
   /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
   // clang-format on
@@ -1206,7 +1206,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GetSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1006}
+  /// [google.cloud.securitycenter.v1.GetSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1027}
   /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
   // clang-format on
@@ -1247,8 +1247,8 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GroupAssetsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1018}
-  /// [google.cloud.securitycenter.v1.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1339}
+  /// [google.cloud.securitycenter.v1.GroupAssetsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1039}
+  /// [google.cloud.securitycenter.v1.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1360}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v1::GroupResult> GroupAssets(
@@ -1309,8 +1309,8 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GroupFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1177}
-  /// [google.cloud.securitycenter.v1.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1339}
+  /// [google.cloud.securitycenter.v1.GroupFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1198}
+  /// [google.cloud.securitycenter.v1.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1360}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v1::GroupResult> GroupFindings(
@@ -1355,8 +1355,8 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.GroupFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1177}
-  /// [google.cloud.securitycenter.v1.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1339}
+  /// [google.cloud.securitycenter.v1.GroupFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1198}
+  /// [google.cloud.securitycenter.v1.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1360}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v1::GroupResult> GroupFindings(
@@ -1395,8 +1395,8 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1549}
-  /// [google.cloud.securitycenter.v1.ListAssetsResponse.ListAssetsResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1699}
+  /// [google.cloud.securitycenter.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1570}
+  /// [google.cloud.securitycenter.v1.ListAssetsResponse.ListAssetsResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1720}
   ///
   // clang-format on
   StreamRange<
@@ -1435,7 +1435,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1349}
+  /// [google.cloud.securitycenter.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1370}
   /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
   // clang-format on
@@ -1477,7 +1477,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1349}
+  /// [google.cloud.securitycenter.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1370}
   /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
   // clang-format on
@@ -1523,8 +1523,8 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.ListFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1742}
-  /// [google.cloud.securitycenter.v1.ListFindingsResponse.ListFindingsResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1895}
+  /// [google.cloud.securitycenter.v1.ListFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1763}
+  /// [google.cloud.securitycenter.v1.ListFindingsResponse.ListFindingsResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1916}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::
@@ -1561,7 +1561,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.ListMuteConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1383}
+  /// [google.cloud.securitycenter.v1.ListMuteConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1404}
   /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   // clang-format on
@@ -1600,7 +1600,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.ListMuteConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1383}
+  /// [google.cloud.securitycenter.v1.ListMuteConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1404}
   /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
   // clang-format on
@@ -1637,7 +1637,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.ListNotificationConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1419}
+  /// [google.cloud.securitycenter.v1.ListNotificationConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1440}
   /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   // clang-format on
@@ -1676,7 +1676,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.ListNotificationConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1419}
+  /// [google.cloud.securitycenter.v1.ListNotificationConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1440}
   /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
   // clang-format on
@@ -1718,7 +1718,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
-  /// [google.cloud.securitycenter.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1452}
+  /// [google.cloud.securitycenter.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1473}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v1::
@@ -1761,7 +1761,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
-  /// [google.cloud.securitycenter.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1452}
+  /// [google.cloud.securitycenter.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1473}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v1::
@@ -1803,7 +1803,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1485}
+  /// [google.cloud.securitycenter.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1506}
   /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
   // clang-format on
@@ -1846,7 +1846,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1485}
+  /// [google.cloud.securitycenter.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1506}
   /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
   // clang-format on
@@ -1886,7 +1886,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.ListSourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1517}
+  /// [google.cloud.securitycenter.v1.ListSourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1538}
   /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
   // clang-format on
@@ -1925,7 +1925,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.ListSourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1517}
+  /// [google.cloud.securitycenter.v1.ListSourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1538}
   /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
   // clang-format on
@@ -1964,7 +1964,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.RunAssetDiscoveryRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2022}
+  /// [google.cloud.securitycenter.v1.RunAssetDiscoveryRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2043}
   /// [google.cloud.securitycenter.v1.RunAssetDiscoveryResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
   ///
   // clang-format on
@@ -2006,7 +2006,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.RunAssetDiscoveryRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2022}
+  /// [google.cloud.securitycenter.v1.RunAssetDiscoveryRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2043}
   /// [google.cloud.securitycenter.v1.RunAssetDiscoveryResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
   ///
   // clang-format on
@@ -2042,7 +2042,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
-  /// [google.cloud.securitycenter.v1.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1980}
+  /// [google.cloud.securitycenter.v1.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2001}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
@@ -2074,7 +2074,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
-  /// [google.cloud.securitycenter.v1.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1980}
+  /// [google.cloud.securitycenter.v1.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2001}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
@@ -2106,7 +2106,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
-  /// [google.cloud.securitycenter.v1.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2003}
+  /// [google.cloud.securitycenter.v1.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2024}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> SetMute(
@@ -2137,7 +2137,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
-  /// [google.cloud.securitycenter.v1.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2003}
+  /// [google.cloud.securitycenter.v1.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2024}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> SetMute(
@@ -2293,6 +2293,78 @@ class SecurityCenterClient {
 
   // clang-format off
   ///
+  /// Simulates a given SecurityHealthAnalyticsCustomModule and Resource.
+  ///
+  /// @param parent  Required. The relative resource name of the organization, project, or
+  ///  folder. See:
+  ///  https://cloud.google.com/apis/design/resource_names#relative_resource_name
+  ///  An example is:
+  ///  "organizations/{organization_id}".
+  /// @param custom_config  Required. The user specified custom configuration to test.
+  /// @param resource  Required. Resource data to simulate custom module against.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.SimulateSecurityHealthAnalyticsCustomModuleResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.SimulateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2056}
+  /// [google.cloud.securitycenter.v1.SimulateSecurityHealthAnalyticsCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2090}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securitycenter::v1::
+               SimulateSecurityHealthAnalyticsCustomModuleResponse>
+  SimulateSecurityHealthAnalyticsCustomModule(
+      std::string const& parent,
+      google::cloud::securitycenter::v1::CustomConfig const& custom_config,
+      google::cloud::securitycenter::v1::
+          SimulateSecurityHealthAnalyticsCustomModuleRequest::
+              SimulatedResource const& resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Simulates a given SecurityHealthAnalyticsCustomModule and Resource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.SimulateSecurityHealthAnalyticsCustomModuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.SimulateSecurityHealthAnalyticsCustomModuleResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.SimulateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2056}
+  /// [google.cloud.securitycenter.v1.SimulateSecurityHealthAnalyticsCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2090}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securitycenter::v1::
+               SimulateSecurityHealthAnalyticsCustomModuleResponse>
+  SimulateSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          SimulateSecurityHealthAnalyticsCustomModuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Updates external system. This is for a given finding.
   ///
   /// @param external_system  Required. The external system resource to update.
@@ -2313,7 +2385,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.ExternalSystem]: @googleapis_reference_link{google/cloud/securitycenter/v1/external_system.proto#L31}
-  /// [google.cloud.securitycenter.v1.UpdateExternalSystemRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2034}
+  /// [google.cloud.securitycenter.v1.UpdateExternalSystemRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2111}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
@@ -2345,7 +2417,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.ExternalSystem]: @googleapis_reference_link{google/cloud/securitycenter/v1/external_system.proto#L31}
-  /// [google.cloud.securitycenter.v1.UpdateExternalSystemRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2034}
+  /// [google.cloud.securitycenter.v1.UpdateExternalSystemRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2111}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
@@ -2379,7 +2451,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
-  /// [google.cloud.securitycenter.v1.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2045}
+  /// [google.cloud.securitycenter.v1.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2122}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> UpdateFinding(
@@ -2411,7 +2483,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
-  /// [google.cloud.securitycenter.v1.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2045}
+  /// [google.cloud.securitycenter.v1.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2122}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> UpdateFinding(
@@ -2439,7 +2511,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
-  /// [google.cloud.securitycenter.v1.UpdateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2065}
+  /// [google.cloud.securitycenter.v1.UpdateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2142}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> UpdateMuteConfig(
@@ -2470,7 +2542,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
-  /// [google.cloud.securitycenter.v1.UpdateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2065}
+  /// [google.cloud.securitycenter.v1.UpdateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2142}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> UpdateMuteConfig(
@@ -2498,7 +2570,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
-  /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2075}
+  /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2152}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
@@ -2531,7 +2603,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
-  /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2075}
+  /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2152}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
@@ -2566,7 +2638,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
-  /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2075}
+  /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2152}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
@@ -2594,7 +2666,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.OrganizationSettings]: @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
-  /// [google.cloud.securitycenter.v1.UpdateOrganizationSettingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2087}
+  /// [google.cloud.securitycenter.v1.UpdateOrganizationSettingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2164}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
@@ -2627,7 +2699,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.OrganizationSettings]: @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
-  /// [google.cloud.securitycenter.v1.UpdateOrganizationSettingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2087}
+  /// [google.cloud.securitycenter.v1.UpdateOrganizationSettingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2164}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
@@ -2660,7 +2732,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
-  /// [google.cloud.securitycenter.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2099}
+  /// [google.cloud.securitycenter.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2176}
   ///
   // clang-format on
   StatusOr<
@@ -2699,7 +2771,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
-  /// [google.cloud.securitycenter.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2099}
+  /// [google.cloud.securitycenter.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2176}
   ///
   // clang-format on
   StatusOr<
@@ -2728,7 +2800,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
-  /// [google.cloud.securitycenter.v1.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2109}
+  /// [google.cloud.securitycenter.v1.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2186}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Source> UpdateSource(
@@ -2759,7 +2831,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
-  /// [google.cloud.securitycenter.v1.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2109}
+  /// [google.cloud.securitycenter.v1.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2186}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Source> UpdateSource(
@@ -2785,7 +2857,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.SecurityMarks]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_marks.proto#L32}
-  /// [google.cloud.securitycenter.v1.UpdateSecurityMarksRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2120}
+  /// [google.cloud.securitycenter.v1.UpdateSecurityMarksRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2197}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
@@ -2817,7 +2889,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.SecurityMarks]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_marks.proto#L32}
-  /// [google.cloud.securitycenter.v1.UpdateSecurityMarksRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2120}
+  /// [google.cloud.securitycenter.v1.UpdateSecurityMarksRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2197}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
@@ -2852,7 +2924,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.CreateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2139}
+  /// [google.cloud.securitycenter.v1.CreateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2216}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
@@ -2885,7 +2957,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.CreateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2139}
+  /// [google.cloud.securitycenter.v1.CreateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2216}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
@@ -2913,7 +2985,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.DeleteBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2207}
+  /// [google.cloud.securitycenter.v1.DeleteBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2284}
   ///
   // clang-format on
   Status DeleteBigQueryExport(std::string const& name, Options opts = {});
@@ -2939,7 +3011,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.DeleteBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2207}
+  /// [google.cloud.securitycenter.v1.DeleteBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2284}
   ///
   // clang-format on
   Status DeleteBigQueryExport(
@@ -2968,7 +3040,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.UpdateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2161}
+  /// [google.cloud.securitycenter.v1.UpdateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2238}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
@@ -3000,7 +3072,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.UpdateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2161}
+  /// [google.cloud.securitycenter.v1.UpdateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2238}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
@@ -3043,7 +3115,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.ListBigQueryExportsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2172}
+  /// [google.cloud.securitycenter.v1.ListBigQueryExportsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2249}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
@@ -3086,7 +3158,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.ListBigQueryExportsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2172}
+  /// [google.cloud.securitycenter.v1.ListBigQueryExportsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2249}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v1::BigQueryExport>

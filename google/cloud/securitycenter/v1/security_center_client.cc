@@ -654,6 +654,34 @@ SecurityCenterClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             SimulateSecurityHealthAnalyticsCustomModuleResponse>
+SecurityCenterClient::SimulateSecurityHealthAnalyticsCustomModule(
+    std::string const& parent,
+    google::cloud::securitycenter::v1::CustomConfig const& custom_config,
+    google::cloud::securitycenter::v1::
+        SimulateSecurityHealthAnalyticsCustomModuleRequest::
+            SimulatedResource const& resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      SimulateSecurityHealthAnalyticsCustomModuleRequest request;
+  request.set_parent(parent);
+  *request.mutable_custom_config() = custom_config;
+  *request.mutable_resource() = resource;
+  return connection_->SimulateSecurityHealthAnalyticsCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             SimulateSecurityHealthAnalyticsCustomModuleResponse>
+SecurityCenterClient::SimulateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        SimulateSecurityHealthAnalyticsCustomModuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SimulateSecurityHealthAnalyticsCustomModule(request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 SecurityCenterClient::UpdateExternalSystem(
     google::cloud::securitycenter::v1::ExternalSystem const& external_system,

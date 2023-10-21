@@ -245,6 +245,14 @@ class MockSecurityCenterConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::securitycenter::v1::
+                   SimulateSecurityHealthAnalyticsCustomModuleResponse>,
+      SimulateSecurityHealthAnalyticsCustomModule,
+      (google::cloud::securitycenter::v1::
+           SimulateSecurityHealthAnalyticsCustomModuleRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::securitycenter::v1::ExternalSystem>,
       UpdateExternalSystem,
       (google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
