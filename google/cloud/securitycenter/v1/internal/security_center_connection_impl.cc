@@ -797,6 +797,26 @@ SecurityCenterConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             SimulateSecurityHealthAnalyticsCustomModuleResponse>
+SecurityCenterConnectionImpl::SimulateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SimulateSecurityHealthAnalyticsCustomModule(
+          request),
+      [this](grpc::ClientContext& context,
+             google::cloud::securitycenter::v1::
+                 SimulateSecurityHealthAnalyticsCustomModuleRequest const&
+                     request) {
+        return stub_->SimulateSecurityHealthAnalyticsCustomModule(context,
+                                                                  request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 SecurityCenterConnectionImpl::UpdateExternalSystem(
     google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&

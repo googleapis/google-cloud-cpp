@@ -450,6 +450,22 @@ SecurityCenterTracingStub::TestIamPermissions(
                            child_->TestIamPermissions(context, request));
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             SimulateSecurityHealthAnalyticsCustomModuleResponse>
+SecurityCenterTracingStub::SimulateSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.securitycenter.v1.SecurityCenter",
+                             "SimulateSecurityHealthAnalyticsCustomModule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->SimulateSecurityHealthAnalyticsCustomModule(context, request));
+}
+
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 SecurityCenterTracingStub::UpdateExternalSystem(
     grpc::ClientContext& context,

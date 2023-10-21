@@ -356,6 +356,17 @@ SecurityCenterAuth::TestIamPermissions(
   return child_->TestIamPermissions(context, request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             SimulateSecurityHealthAnalyticsCustomModuleResponse>
+SecurityCenterAuth::SimulateSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SimulateSecurityHealthAnalyticsCustomModule(context, request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 SecurityCenterAuth::UpdateExternalSystem(
     grpc::ClientContext& context,

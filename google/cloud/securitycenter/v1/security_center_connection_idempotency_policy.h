@@ -154,6 +154,11 @@ class SecurityCenterConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request);
 
+  virtual google::cloud::Idempotency
+  SimulateSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          SimulateSecurityHealthAnalyticsCustomModuleRequest const& request);
+
   virtual google::cloud::Idempotency UpdateExternalSystem(
       google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
           request);

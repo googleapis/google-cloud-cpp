@@ -262,6 +262,14 @@ SecurityCenterConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             SimulateSecurityHealthAnalyticsCustomModuleResponse>
+SecurityCenterConnection::SimulateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        SimulateSecurityHealthAnalyticsCustomModuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 SecurityCenterConnection::UpdateExternalSystem(
     google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&) {

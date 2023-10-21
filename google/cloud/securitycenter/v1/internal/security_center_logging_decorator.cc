@@ -461,6 +461,23 @@ SecurityCenterLogging::TestIamPermissions(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             SimulateSecurityHealthAnalyticsCustomModuleResponse>
+SecurityCenterLogging::SimulateSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::securitycenter::v1::
+                 SimulateSecurityHealthAnalyticsCustomModuleRequest const&
+                     request) {
+        return child_->SimulateSecurityHealthAnalyticsCustomModule(context,
+                                                                   request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 SecurityCenterLogging::UpdateExternalSystem(
     grpc::ClientContext& context,

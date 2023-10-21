@@ -374,7 +374,7 @@ class BatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L238}
-  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L349}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L355}
   ///
   // clang-format on
   StatusOr<google::cloud::batch::v1::Task> GetTask(std::string const& name,
@@ -404,7 +404,7 @@ class BatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L238}
-  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L349}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L355}
   ///
   // clang-format on
   StatusOr<google::cloud::batch::v1::Task> GetTask(
@@ -441,7 +441,7 @@ class BatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L204}
-  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L349}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L355}
   ///
   // clang-format on
   StreamRange<google::cloud::batch::v1::Task> ListTasks(
@@ -480,7 +480,7 @@ class BatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L204}
-  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L349}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L355}
   ///
   // clang-format on
   StreamRange<google::cloud::batch::v1::Task> ListTasks(
