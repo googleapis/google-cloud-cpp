@@ -28,6 +28,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -87,6 +88,7 @@ using ::testing::Property;
 using ::testing::Return;
 using ::testing::Sequence;
 using ::testing::StartsWith;
+using ::testing::StrictMock;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedPointwise;
 using ::testing::Unused;
@@ -2405,15 +2407,6 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatched) {
                               "placeholder_database_id");
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  // A single `BatchWriteResponse` that covers all two mutation groups.
-  auto constexpr kResponseText = R"pb(
-    indexes: 0
-    indexes: 1
-    status {}
-    commit_timestamp { seconds: 123 }
-  )pb";
-  BatchWriteResponse response;
-  ASSERT_TRUE(TextFormat::ParseFromString(kResponseText, &response));
   using BatchWriteRequest = google::spanner::v1::BatchWriteRequest;
   EXPECT_CALL(*mock, BatchWrite)
       .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
@@ -2441,7 +2434,14 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatched) {
             request.mutation_groups(),
             ElementsAre(IsProtoEqual(BatchWriteRequest::MutationGroup()),
                         IsProtoEqual(BatchWriteRequest::MutationGroup())));
-        return MakeReader<BatchWriteResponse>({response});
+        // A single `BatchWriteResponse` that covers all two mutation groups.
+        return MakeReader<BatchWriteResponse>({
+            R"pb(
+              indexes: 0
+              indexes: 1
+              status {}
+              commit_timestamp { seconds: 123 }
+            )pb"});
       });
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -2451,12 +2451,64 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatched) {
   auto it = commit_results.begin();
   ASSERT_NE(it, commit_results.end());
   EXPECT_THAT(
-      *it,
-      IsOkAndHolds(AllOf(
-          Field(&spanner::BatchedCommitResult::indexes, ElementsAre(0, 1)),
-          Field(&spanner::BatchedCommitResult::commit_timestamp,
-                Eq(spanner::MakeTimestamp(response.commit_timestamp()))))));
+      *it, IsOkAndHolds(AllOf(
+               Field(&spanner::BatchedCommitResult::indexes, ElementsAre(0, 1)),
+               Field(&spanner::BatchedCommitResult::commit_timestamp,
+                     Eq(spanner::MakeTimestamp(absl::FromUnixSeconds(123)))))));
   EXPECT_EQ(++it, commit_results.end());
+}
+
+TEST(ConnectionImplTest, CommitAtLeastOnceBatchedSessionNotFound) {
+  auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name-1"})))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name-2"})));
+  using BatchWriteRequest = google::spanner::v1::BatchWriteRequest;
+  EXPECT_CALL(*mock, BatchWrite)
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+                   BatchWriteRequest const& request) {
+        EXPECT_EQ("test-session-name-1", request.session());
+        EXPECT_THAT(request.mutation_groups(), IsEmpty());
+        return MakeReader<BatchWriteResponse>(
+            {}, SessionNotFoundError(request.session()));
+      })
+      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&,
+                    BatchWriteRequest const& request) {
+        EXPECT_EQ("test-session-name-2", request.session());
+        EXPECT_THAT(request.mutation_groups(), IsEmpty());
+        return MakeReader<BatchWriteResponse>(
+            {R"pb(status {}
+                  commit_timestamp { seconds: 123 })pb"});
+      });
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  {
+    auto commit_results = conn->BatchWrite({{}, Options{}});
+    auto it = commit_results.begin();
+    ASSERT_NE(it, commit_results.end());
+    EXPECT_THAT(*it, Not(IsOk()));
+    EXPECT_TRUE(IsSessionNotFound(it->status())) << it->status();
+    EXPECT_EQ(++it, commit_results.end());
+  }
+
+  // "test-session-name-1" should not have been returned to the pool.
+  // The best (only?) way to verify this is to make another write and
+  // check that another session was allocated (hence the strict mock).
+  {
+    auto commit_results = conn->BatchWrite({{}, Options{}});
+    auto it = commit_results.begin();
+    ASSERT_NE(it, commit_results.end());
+    EXPECT_THAT(
+        *it,
+        IsOkAndHolds(AllOf(
+            Field(&spanner::BatchedCommitResult::indexes, IsEmpty()),
+            Field(&spanner::BatchedCommitResult::commit_timestamp,
+                  Eq(spanner::MakeTimestamp(absl::FromUnixSeconds(123)))))));
+    EXPECT_EQ(++it, commit_results.end());
+  }
 }
 
 TEST(ConnectionImplTest, RollbackCreateSessionFailure) {
@@ -3088,25 +3140,66 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
 }
 
 TEST(ConnectionImplTest, ReadSessionNotFound) {
-  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  auto finish_status = SessionNotFoundError("test-session-name");
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name-1"})))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name-2"})));
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce(
-          Return(ByMove(MakeReader<PartialResultSet>({}, finish_status))));
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+                   google::spanner::v1::ReadRequest const& request) {
+        EXPECT_THAT(request.session(), Eq("test-session-name-1"));
+        EXPECT_THAT(request.transaction().id(), Eq("test-txn-id-1"));
+        return MakeReader<PartialResultSet>(
+            {}, SessionNotFoundError(request.session()));
+      })
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+                   google::spanner::v1::ReadRequest const& request) {
+        EXPECT_THAT(request.session(), Eq("test-session-name-2"));
+        EXPECT_THAT(request.transaction().id(), Eq("test-txn-id-2"));
+        return MakeReader<PartialResultSet>({
+            R"pb(
+              metadata: {
+                row_type: {
+                  fields: {
+                    name: "UserId",
+                    type: { code: INT64 }
+                  }
+                  fields: {
+                    name: "UserName",
+                    type: { code: STRING }
+                  }
+                }
+              }
+            )pb"});
+      });
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
-  auto txn = spanner::MakeReadWriteTransaction();
-  SetTransactionId(txn, "test-txn-id");
-  auto params = spanner::Connection::ReadParams{txn};
-  auto response = GetSingularRow(conn->Read(std::move(params)));
-  EXPECT_THAT(response, Not(IsOk()));
-  auto const& status = response.status();
-  EXPECT_TRUE(IsSessionNotFound(status)) << status;
-  EXPECT_THAT(txn, HasBadSession());
+  {
+    auto txn = spanner::MakeReadWriteTransaction();
+    SetTransactionId(txn, "test-txn-id-1");
+    auto params = spanner::Connection::ReadParams{txn};
+    auto response = GetSingularRow(conn->Read(std::move(params)));
+    EXPECT_THAT(response, Not(IsOk()));
+    auto const& status = response.status();
+    EXPECT_TRUE(IsSessionNotFound(status)) << status;
+    EXPECT_THAT(txn, HasBadSession());
+  }
+
+  // "test-session-name-1" should not have been returned to the pool.
+  // The best (only?) way to verify this is to make another read and
+  // check that another session was allocated (hence the strict mock).
+  {
+    auto txn = spanner::MakeReadWriteTransaction();
+    SetTransactionId(txn, "test-txn-id-2");
+    auto params = spanner::Connection::ReadParams{txn};
+    auto rows = conn->Read(std::move(params));
+    using RowType = std::tuple<std::int64_t, std::string>;
+    auto stream = spanner::StreamOf<RowType>(rows);
+    auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+    EXPECT_THAT(actual, IsEmpty());
+  }
 }
 
 TEST(ConnectionImplTest, PartitionReadSessionNotFound) {
