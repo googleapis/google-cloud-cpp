@@ -148,4 +148,4 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
-[troubleshooting-guide]: https://cloud.google.com/iam/docs/troubleshooting-access
+[troubleshooting-guide]: https://cloud.google.com/policy-intelligence/docs/troubleshoot-access

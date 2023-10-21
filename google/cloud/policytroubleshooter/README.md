@@ -61,6 +61,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/iam/docs/troubleshooting-access
+[cloud-service-docs]: https://cloud.google.com/policy-intelligence/docs/troubleshoot-access
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/policytroubleshooter/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/policytroubleshooter
