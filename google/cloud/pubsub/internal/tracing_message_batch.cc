@@ -63,70 +63,60 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
   return links;
 }
 
-template <typename T>
-void GenerateBatchSinkChildrenSpans(std::vector<T> const& message_spans,
-                                    T batch_sink_parent_span,
-                                    std::ptrdiff_t batch_size,
-                                    std::vector<T>& batch_sink_spans) {
-  auto cut = [&](auto i) {
-    return std::next(
-        i, std::min(batch_size - 1, std::distance(i, message_spans.end())));
-  };
-  int count = 0;
-  for (auto i = message_spans.begin(); i != message_spans.end(); i = cut(i)) {
-    Links links = MakeLinks(i, cut(i));
-    // Generate links between [i, min((i + batch_size) -1), end)) range.
-    opentelemetry::trace::StartSpanOptions options;
-    options.parent = batch_sink_parent_span->GetContext();
-    auto batch_sink_span = internal::MakeSpan(
-        "BatchSink::AsyncPublish - Batch #" + std::to_string(count++),
-        /*attributes=*/{{}},
-        /*links=*/links, options);
-    batch_sink_spans.emplace_back(batch_sink_span);
-  }
-}
-
-std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-MakeBatchSinkSpans(
-    std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-        message_spans) {
-  int constexpr kMaxOtelLinks = 128;
-  Links links;
-  auto batch_size = message_spans.size();
-  links.reserve(batch_size);
-  // If the batch size is less than the max size, add the links to a single
-  // span. If the batch size is greater than the max size, this will be a parent
-  // span with no links and each child spans will contain links.
-  bool const is_small_batch = batch_size <= kMaxOtelLinks;
-  if (is_small_batch) {
-    links = MakeLinks(message_spans.begin(), message_spans.end());
-  }
-
-  auto batch_sink_parent_span =
+auto MakeParent(Links links, Spans const& message_spans) {
+  auto batch_sink_parent =
       internal::MakeSpan("BatchSink::AsyncPublish",
                          /*attributes=*/
                          {{"messaging.pubsub.num_messages_in_batch",
-                           static_cast<std::int64_t>(batch_size)}},
-                         /*links*/ links);
-
-  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      batch_sink_spans;
-  batch_sink_spans.emplace_back(batch_sink_parent_span);
-
-  // Create N spans with up to 128 links per batch.
-  if (!is_small_batch) {
-    GenerateBatchSinkChildrenSpans(message_spans, batch_sink_parent_span,
-                                   batch_size, batch_sink_spans);
-  }
+                           static_cast<std::int64_t>(message_spans.size())}},
+                         /*links*/ std::move(links));
 
   // Add metadata to the message spans about the batch sink span.
-  auto context = batch_sink_parent_span->GetContext();
+  auto context = batch_sink_parent->GetContext();
   auto trace_id = internal::ToString(context.trace_id());
   auto span_id = internal::ToString(context.span_id());
   for (auto const& message_span : message_spans) {
     message_span->AddEvent("gl-cpp.batch_flushed");
     message_span->SetAttribute("pubsub.batch_sink.trace_id", trace_id);
     message_span->SetAttribute("pubsub.batch_sink.span_id", span_id);
+  }
+  return batch_sink_parent;
+}
+
+auto MakeChild(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent,
+    int count, Links links) {
+  opentelemetry::trace::StartSpanOptions options;
+  options.parent = parent->GetContext();
+  return internal::MakeSpan(
+      "BatchSink::AsyncPublish - Batch #" + std::to_string(count),
+      /*attributes=*/{{}},
+      /*links=*/links, options);
+}
+
+Spans MakeBatchSinkSpans(Spans message_spans) {
+  int constexpr kMaxOtelLinks = 128;
+  Spans batch_sink_spans;
+  // If the batch size is less than the max size, add the links to a single
+  // span. If the batch size is greater than the max size, this will be a parent
+  // span with no links and each child spans will contain links.
+  if (message_spans.size() <= kMaxOtelLinks) {
+    batch_sink_spans.push_back(MakeParent(
+        MakeLinks(message_spans.begin(), message_spans.end()), message_spans));
+    return batch_sink_spans;
+  }
+  batch_sink_spans.push_back(MakeParent({{}}, message_spans));
+  auto batch_sink_parent = batch_sink_spans.front();
+
+  auto cut = [&message_spans](auto i) {
+    auto const batch_size = static_cast<std::ptrdiff_t>(kMaxOtelLinks);
+    return std::next(
+        i, std::min(batch_size, std::distance(i, message_spans.end())));
+  };
+  int count = 0;
+  for (auto i = message_spans.begin(); i != message_spans.end(); i = cut(i)) {
+    batch_sink_spans.push_back(
+        MakeChild(batch_sink_parent, count++, MakeLinks(i, cut(i))));
   }
 
   return batch_sink_spans;
