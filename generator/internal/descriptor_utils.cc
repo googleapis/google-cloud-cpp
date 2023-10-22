@@ -634,20 +634,19 @@ bool CheckParameterCommentSubstitutions() {
 
 /// If a service name mapping exists, return the new name.
 /// Parses a command line argument in the form:
-/// {"service_name_mappings": "service_a:new_service_a,service:new_service"}.
+/// {"service_name_mappings": "service_a=new_service_a,service=new_service"}.
 std::string GetEffectiveServiceName(VarsDictionary const& vars,
-                                    std::string const& name) {
+                                    absl::string_view name) {
   auto service_name_mappings = vars.find("service_name_mappings");
-  if (service_name_mappings == vars.end()) return name;
-
-  std::vector<std::string> mappings =
-      absl::StrSplit(service_name_mappings->second, ',');
-  for (auto& mapping : mappings) {
-    std::vector<std::string> kv = absl::StrSplit(mapping, ':');
-    if (kv.size() != 2) continue;
-    if (kv[0] == name) return kv[1];
+  if (service_name_mappings == vars.end())
+    return std::string(name.data(), name.size());
+  std::map<absl::string_view, std::string> map;
+  for (absl::string_view arg :
+       absl::StrSplit(service_name_mappings->second, ',')) {
+    map.insert(absl::StrSplit(arg, absl::MaxSplits('=', 1)));
   }
-  return name;
+  if (map.find(name) != map.end()) return map.find(name)->second;
+  return std::string(name.data(), name.size());
 }
 
 VarsDictionary CreateServiceVars(
