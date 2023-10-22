@@ -98,7 +98,7 @@ Spans MakeBatchSinkSpans(Spans message_spans) {
   int constexpr kMaxOtelLinks = 128;
   Spans batch_sink_spans;
   // If the batch size is less than the max size, add the links to a single
-  // span. If the batch size is greater than the max size, this will be a parent
+  // span. If the batch size is greater than the max size, create a parent
   // span with no links and each child spans will contain links.
   if (message_spans.size() <= kMaxOtelLinks) {
     batch_sink_spans.push_back(MakeParent(
@@ -115,6 +115,8 @@ Spans MakeBatchSinkSpans(Spans message_spans) {
   };
   int count = 0;
   for (auto i = message_spans.begin(); i != message_spans.end(); i = cut(i)) {
+    // Generates child spans with links between [i, min(i + batch_size, end))
+    // such that each child span will have exactly batch_size elements or less.
     batch_sink_spans.push_back(
         MakeChild(batch_sink_parent, count++, MakeLinks(i, cut(i))));
   }
