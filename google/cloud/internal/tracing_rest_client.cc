@@ -94,7 +94,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> HttpStart(
   opentelemetry::trace::StartSpanOptions span_options;
   span_options.kind = opentelemetry::trace::SpanKind::kClient;
   span_options.start_system_time = start;
-  return internal::GetTracer(options)->StartSpan("SendRequest", span_options);
+  return internal::MakeSpan("SendRequest", span_options);
 }
 
 StatusOr<std::unique_ptr<RestResponse>> EndStartSpan(

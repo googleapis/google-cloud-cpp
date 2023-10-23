@@ -79,16 +79,15 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
   namespace sc = opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
-  return GetTracer(internal::CurrentOptions())
-      ->StartSpan(
-          absl::StrCat(absl::string_view{service.data(), service.size()}, "/",
-                       absl::string_view{method.data(), method.size()}),
-          {{sc::kRpcSystem, sc::RpcSystemValues::kGrpc},
-           {sc::kRpcService, service},
-           {sc::kRpcMethod, method},
-           {sc::kNetworkTransport, sc::NetTransportValues::kIpTcp},
-           {"grpc.version", grpc::Version()}},
-          options);
+  return internal::MakeSpan(
+      absl::StrCat(absl::string_view{service.data(), service.size()}, "/",
+                   absl::string_view{method.data(), method.size()}),
+      {{sc::kRpcSystem, sc::RpcSystemValues::kGrpc},
+       {sc::kRpcService, service},
+       {sc::kRpcMethod, method},
+       {sc::kNetworkTransport, sc::NetTransportValues::kIpTcp},
+       {"grpc.version", grpc::Version()}},
+      options);
 }
 
 void InjectTraceContext(

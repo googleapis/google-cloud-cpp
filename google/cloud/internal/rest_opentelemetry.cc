@@ -74,14 +74,12 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
   namespace sc = opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
-  auto span =
-      internal::GetTracer(internal::CurrentOptions())
-          ->StartSpan(absl::StrCat("HTTP/", absl::string_view{method.data(),
-                                                              method.size()}),
-                      {{sc::kNetworkTransport, sc::NetTransportValues::kIpTcp},
-                       {sc::kHttpRequestMethod, method},
-                       {sc::kUrlFull, request.path()}},
-                      options);
+  auto span = internal::MakeSpan(
+      absl::StrCat("HTTP/", absl::string_view{method.data(), method.size()}),
+      {{sc::kNetworkTransport, sc::NetTransportValues::kIpTcp},
+       {sc::kHttpRequestMethod, method},
+       {sc::kUrlFull, request.path()}},
+      options);
   for (auto const& kv : request.headers()) {
     auto const name = "http.request.header." + kv.first;
     if (kv.second.empty()) {
