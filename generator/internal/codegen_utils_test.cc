@@ -347,12 +347,23 @@ TEST(ProcessCommandLineArgs, ProcessArgEmitRpc) {
 TEST(ProcessCommandLineArgs, ProcessServiceNameMapping) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/"
-      ",service_name_mapping=old_name1:new_name1"
-      ",service_name_mapping=old_name2:new_name2");
+      ",service_name_mapping=old_name1=new_name1"
+      ",service_name_mapping=old_name2=new_name2");
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, Contains(Pair("service_name_mappings",
-                                     AllOf(HasSubstr("old_name1:new_name1"),
-                                           HasSubstr("old_name2:new_name2")))));
+                                     AllOf(HasSubstr("old_name1=new_name1"),
+                                           HasSubstr("old_name2=new_name2")))));
+}
+
+TEST(ProcessCommandLineArgs, ProcessServiceNameToComment) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/pubsub/"
+      ",service_name_to_comment=name1=comment1"
+      ",service_name_to_comment=name2=comment2");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("service_name_to_comments",
+                                     AllOf(HasSubstr("name1=comment1"),
+                                           HasSubstr("name2=comment2")))));
 }
 
 TEST(SafeReplaceAll, Success) {
