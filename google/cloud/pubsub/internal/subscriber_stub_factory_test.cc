@@ -88,11 +88,11 @@ TEST_F(SubscriberStubFactory, RoundRobin) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockSubscriberStub>();
         EXPECT_CALL(*mock, CreateSubscription)
-            .WillOnce(
-                [](grpc::ClientContext&, google::pubsub::v1::Subscription const&) {
-                  return StatusOr<google::pubsub::v1::Subscription>(
-                      Status(StatusCode::kUnavailable, "nothing here"));
-                });
+            .WillOnce([](grpc::ClientContext&,
+                         google::pubsub::v1::Subscription const&) {
+              return StatusOr<google::pubsub::v1::Subscription>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
         return mock;
       });
   // Verify the round robin decorator is present.
@@ -151,8 +151,9 @@ TEST_F(SubscriberStubFactory, Metadata) {
             .WillOnce([this](grpc::ClientContext& context,
                              google::pubsub::v1::Subscription const& request) {
               // Verify the Metadata decorator is present
-              IsContextMDValid(
-                  context, "google.pubsub.v1.Subscriber.CreateSubscription", request);
+              IsContextMDValid(context,
+                               "google.pubsub.v1.Subscriber.CreateSubscription",
+                               request);
               return StatusOr<google::pubsub::v1::Subscription>(
                   Status(StatusCode::kUnavailable, "nothing here"));
             });
@@ -179,11 +180,11 @@ TEST_F(SubscriberStubFactory, Logging) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockSubscriberStub>();
         EXPECT_CALL(*mock, CreateSubscription)
-            .WillOnce(
-                [](grpc::ClientContext&, google::pubsub::v1::Subscription const&) {
-                  return StatusOr<google::pubsub::v1::Subscription>(
-                      Status(StatusCode::kUnavailable, "nothing here"));
-                });
+            .WillOnce([](grpc::ClientContext&,
+                         google::pubsub::v1::Subscription const&) {
+              return StatusOr<google::pubsub::v1::Subscription>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
         return mock;
       });
   EXPECT_CALL(factory, Call)

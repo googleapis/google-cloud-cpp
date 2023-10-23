@@ -39,6 +39,14 @@ std::shared_ptr<SubscriberStub> CreateRoundRobinSubscriberStub(
   return std::make_shared<SubscriberRoundRobin>(std::move(children));
 }
 
+std::shared_ptr<grpc::Channel> CreateGrpcChannel(
+    google::cloud::internal::GrpcAuthenticationStrategy& auth,
+    Options const& options, int channel_id) {
+  return auth.CreateChannel(
+      options.get<EndpointOption>(),
+      pubsub_internal::MakeChannelArguments(options, channel_id));
+}
+
 }  // namespace
 
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
@@ -58,10 +66,10 @@ std::shared_ptr<SubscriberStub> CreateDecoratedStubs(
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
   auto child_factory = [base_factory, &auth, options](int id) {
-    auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                       internal::MakeChannelArguments(options));
+    auto channel = CreateGrpcChannel(*auth, options, id);
     return base_factory(std::move(channel));
   };
+
   auto stub = CreateRoundRobinSubscriberStub(options, std::move(child_factory));
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<SubscriberAuth>(std::move(auth), std::move(stub));
