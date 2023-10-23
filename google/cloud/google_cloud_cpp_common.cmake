@@ -263,7 +263,8 @@ install(
 add_library(google_cloud_cpp_mocks INTERFACE)
 set(google_cloud_cpp_mocks_hdrs
     # cmake-format: sort
-    mocks/current_options.h mocks/mock_stream_range.h)
+    mocks/current_options.h mocks/mock_async_streaming_read_write_rpc.h
+    mocks/mock_stream_range.h)
 export_list_to_bazel("google_cloud_cpp_mocks.bzl" "google_cloud_cpp_mocks_hdrs"
                      YEAR "2022")
 target_link_libraries(

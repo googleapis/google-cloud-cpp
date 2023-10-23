@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
-#include "google/cloud/pubsublite/testing/mock_async_reader_writer.h"
+#include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
 #include "google/cloud/pubsublite/testing/mock_retry_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
@@ -63,8 +63,8 @@ bool operator==(FakeResponse const& lhs, FakeResponse const& rhs) {
 }
 
 using AsyncReaderWriter =
-    ::google::cloud::pubsublite_testing::MockAsyncReaderWriter<FakeRequest,
-                                                               FakeResponse>;
+    ::google::cloud::mocks::MockAsyncStreamingReadWriteRpc<FakeRequest,
+                                                           FakeResponse>;
 
 using AsyncReadWriteStreamReturnType =
     std::unique_ptr<AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>;

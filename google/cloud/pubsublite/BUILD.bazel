@@ -82,6 +82,7 @@ cc_library(
             ":google_cloud_cpp_pubsublite_mocks",
             ":pubsublite_testing",
             "//:common",
+            "//:mocks",
             "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
             "//google/cloud/testing_util:google_cloud_cpp_testing_private",
             "@com_google_absl//absl/memory",

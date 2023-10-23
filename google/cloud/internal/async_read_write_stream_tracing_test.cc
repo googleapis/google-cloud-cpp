@@ -14,6 +14,7 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/async_read_write_stream_tracing.h"
+#include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
@@ -41,22 +42,8 @@ using ::testing::IsEmpty;
 using ::testing::Optional;
 using ::testing::Return;
 
-template <typename Request, typename Response>
-class MockAsyncStreamingReadWriteRpc
-    : public AsyncStreamingReadWriteRpc<Request, Response> {
- public:
-  ~MockAsyncStreamingReadWriteRpc() override = default;
-
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<Response>>, Read, (), (override));
-  MOCK_METHOD(future<bool>, Write, (Request const&, grpc::WriteOptions),
-              (override));
-  MOCK_METHOD(future<bool>, WritesDone, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-};
-
-using MockStream = MockAsyncStreamingReadWriteRpc<int, int>;
+using MockStream =
+    google::cloud::mocks::MockAsyncStreamingReadWriteRpc<int, int>;
 using TestedStream = AsyncStreamingReadWriteRpcTracing<int, int>;
 
 TEST(AsyncStreamingReadWriteRpcTracing, Cancel) {
