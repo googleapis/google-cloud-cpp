@@ -185,6 +185,12 @@ void ProcessArgServiceNameMapping(
                   command_line_args);
 }
 
+void ProcessArgServiceNameToComment(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  ProcessRepeated("service_name_to_comment", "service_name_to_comments",
+                  command_line_args);
+}
+
 }  // namespace
 
 std::string CurrentCopyrightYear() {
@@ -281,6 +287,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgEmitRpc(command_line_args);
   ProcessArgIdempotencyOverride(command_line_args);
   ProcessArgServiceNameMapping(command_line_args);
+  ProcessArgServiceNameToComment(command_line_args);
   return command_line_args;
 }
 

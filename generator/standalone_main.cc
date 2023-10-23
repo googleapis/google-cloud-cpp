@@ -335,10 +335,17 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
           "--cpp_codegen_opt=preserve_proto_field_names_in_json=false");
     }
 
-    // Add the key value pairs as a single parameter with a colon delimiter.
+    // Add the key value pairs as a single parameter with an equals delimiter.
     for (auto const& kv : service.service_name_mapping()) {
       args.emplace_back(absl::StrCat(
-          "--cpp_codegen_opt=service_name_mapping=", kv.first, ":", kv.second));
+          "--cpp_codegen_opt=service_name_mapping=", kv.first, "=", kv.second));
+    }
+
+    // Add the key value pairs as a single parameter with an equals delimiter.
+    for (auto const& kv : service.service_name_mapping()) {
+      args.emplace_back(
+          absl::StrCat("--cpp_codegen_opt=service_name_to_comment=", kv.first,
+                       "=", kv.second));
     }
 
     GCP_LOG(INFO) << "Generating service code using: "

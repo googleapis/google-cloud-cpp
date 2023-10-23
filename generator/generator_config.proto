@@ -165,6 +165,11 @@ message ServiceConfiguration {
   // A mapping from the service name as defined in the googleapis repo to the
   // name that will be used for the library generation.
   map<string, string> service_name_mapping = 26;
+
+  // A mapping from the service name as defined in the googleapis repo or
+  // overridden by an entry in service_name_mapping to a comment for the
+  // service. This will replace the service comment from the upstream repo.
+  map<string, string> service_name_to_comment = 27;
 }
 
 message DiscoveryDocumentDefinedProduct {
