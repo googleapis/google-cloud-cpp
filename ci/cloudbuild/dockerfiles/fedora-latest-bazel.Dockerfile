@@ -60,5 +60,5 @@ ENV GO_LOCATION=/usr/local/go
 ENV PATH=${GO_LOCATION}/bin:${PATH}
 RUN go version
 WORKDIR /var/tmp/downloads/cloud-bigtable-clients-test
-RUN curl -fsSL https://github.com/googleapis/cloud-bigtable-clients-test/archive/v0.0.1.tar.gz | \
+RUN curl -fsSL https://github.com/googleapis/cloud-bigtable-clients-test/archive/v0.0.2.tar.gz | \
     tar -xzf - --strip-components=1
