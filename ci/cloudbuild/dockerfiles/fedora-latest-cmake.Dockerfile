@@ -175,14 +175,6 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
-# Install ctcache to speed up our clang-tidy build
-WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/matus-chochlik/ctcache/archive/0ad2e227e8a981a9c1a6060ee6c8ec144bb976c6.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cp clang-tidy /usr/local/bin/clang-tidy-wrapper && \
-    cp clang-tidy-cache /usr/local/bin/clang-tidy-cache && \
-    cd /var/tmp && rm -fr build
-
 # Installs Universal Ctags (which is different than the default "Exuberant
 # Ctags"), which is needed by the ABI checker. See https://ctags.io/
 WORKDIR /var/tmp/build
@@ -203,14 +195,14 @@ RUN curl -fsSL https://github.com/lvc/abi-dumper/archive/16bb467cd7d343dd3a16782
     mv abi-dumper.pl /usr/local/bin/abi-dumper && \
     chmod +x /usr/local/bin/abi-dumper
 
-# Install the Cloud SDK and some of the emulators. We use the emulators to run
-# integration tests for the client libraries.
-COPY . /var/tmp/ci
-WORKDIR /var/tmp/downloads
-ENV CLOUDSDK_PYTHON=python3
-RUN /var/tmp/ci/install-cloud-sdk.sh
-ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
-ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
+WORKDIR /var/tmp/build
+RUN curl -fsSL https://github.com/coryan/ctcache/archive/872c14416ea739334c6171761303d07739188dec.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    pip3 install --quiet --disable-pip-version-check google-cloud-storage && \
+    pip3 install --quiet --disable-pip-version-check -r requirements.txt && \
+    cp clang-tidy /usr/local/bin/clang-tidy-wrapper && \
+    cp clang-tidy-cache /usr/local/bin/clang-tidy-cache && \
+    cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/sccache
 RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
@@ -221,3 +213,12 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccac
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*
+
+# Install the Cloud SDK and some of the emulators. We use the emulators to run
+# integration tests for the client libraries.
+COPY . /var/tmp/ci
+WORKDIR /var/tmp/downloads
+ENV CLOUDSDK_PYTHON=python3
+RUN /var/tmp/ci/install-cloud-sdk.sh
+ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
+ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
