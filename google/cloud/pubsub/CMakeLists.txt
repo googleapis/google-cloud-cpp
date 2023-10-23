@@ -58,6 +58,8 @@ add_library(
     internal/batching_publisher_tracing_connection.h
     internal/blocking_publisher_connection_impl.cc
     internal/blocking_publisher_connection_impl.h
+    internal/blocking_publisher_tracing_connection.cc
+    internal/blocking_publisher_tracing_connection.h
     internal/containing_publisher_connection.h
     internal/create_channel.cc
     internal/create_channel.h
@@ -307,6 +309,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/ack_handler_wrapper_test.cc
         internal/batching_publisher_connection_test.cc
         internal/batching_publisher_tracing_connection_test.cc
+        internal/blocking_publisher_tracing_connection_test.cc
         internal/default_batch_sink_test.cc
         internal/default_pull_ack_handler_test.cc
         internal/defaults_test.cc

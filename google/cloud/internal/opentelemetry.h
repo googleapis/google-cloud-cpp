@@ -198,6 +198,13 @@ future<T> EndSpan(
   });
 }
 
+/// Ends a span with an OK status.
+template <typename T>
+T EndSpan(opentelemetry::trace::Span& span, T value) {
+  EndSpanImpl(span, Status{});
+  return value;
+}
+
 /**
  * Ends a span with an ok status.
  *
