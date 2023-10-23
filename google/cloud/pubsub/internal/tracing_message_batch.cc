@@ -63,7 +63,7 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
   return links;
 }
 
-auto MakeParent(Links links, Spans const& message_spans) {
+auto MakeParent(Links const& links, Spans const& message_spans) {
   auto batch_sink_parent =
       internal::MakeSpan("BatchSink::AsyncPublish",
                          /*attributes=*/
@@ -84,8 +84,8 @@ auto MakeParent(Links links, Spans const& message_spans) {
 }
 
 auto MakeChild(
-    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent,
-    int count, Links links) {
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& parent,
+    int count, Links const& links) {
   opentelemetry::trace::StartSpanOptions options;
   options.parent = parent->GetContext();
   return internal::MakeSpan(
