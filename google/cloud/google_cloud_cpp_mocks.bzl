@@ -18,5 +18,6 @@
 
 google_cloud_cpp_mocks_hdrs = [
     "mocks/current_options.h",
+    "mocks/mock_async_streaming_read_write_rpc.h",
     "mocks/mock_stream_range.h",
 ]

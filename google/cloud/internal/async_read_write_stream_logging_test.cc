@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_read_write_stream_logging.h"
+#include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/scoped_log.h"
@@ -32,28 +33,13 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
-template <typename Request, typename Response>
-class MockAsyncStreamingReadWriteRpc
-    : public AsyncStreamingReadWriteRpc<Request, Response> {
- public:
-  ~MockAsyncStreamingReadWriteRpc() override = default;
-
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<Response>>, Read, (), (override));
-  MOCK_METHOD(future<bool>, Write, (Request const&, grpc::WriteOptions),
-              (override));
-  MOCK_METHOD(future<bool>, WritesDone, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-};
-
 class StreamingReadRpcLoggingTest : public ::testing::Test {
  protected:
   testing_util::ScopedLog log_;
 };
 
-using MockStream = MockAsyncStreamingReadWriteRpc<google::protobuf::Timestamp,
-                                                  google::protobuf::Duration>;
+using MockStream = google::cloud::mocks::MockAsyncStreamingReadWriteRpc<
+    google::protobuf::Timestamp, google::protobuf::Duration>;
 using TestedStream =
     AsyncStreamingReadWriteRpcLogging<google::protobuf::Timestamp,
                                       google::protobuf::Duration>;

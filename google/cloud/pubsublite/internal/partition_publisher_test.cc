@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/partition_publisher.h"
+#include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
 #include "google/cloud/pubsublite/testing/mock_alarm_registry.h"
-#include "google/cloud/pubsublite/testing/mock_async_reader_writer.h"
 #include "google/cloud/pubsublite/testing/mock_resumable_async_reader_writer_stream.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -52,11 +52,11 @@ using google::cloud::pubsublite::v1::PubSubMessage;
 
 using ::google::cloud::pubsublite_testing::MockAlarmRegistry;
 using ::google::cloud::pubsublite_testing::MockAlarmRegistryCancelToken;
-using ::google::cloud::pubsublite_testing::MockAsyncReaderWriter;
 using ::google::cloud::pubsublite_testing::MockResumableAsyncReaderWriter;
 
 using AsyncReaderWriter =
-    MockAsyncReaderWriter<PublishRequest, PublishResponse>;
+    google::cloud::mocks::MockAsyncStreamingReadWriteRpc<PublishRequest,
+                                                         PublishResponse>;
 
 using AsyncReadWriteStreamReturnType = std::unique_ptr<
     AsyncStreamingReadWriteRpc<PublishRequest, PublishResponse>>;
