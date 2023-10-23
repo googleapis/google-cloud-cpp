@@ -17,9 +17,11 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -203,6 +205,88 @@ TEST_F(SubscriberStubFactory, Logging) {
   // Verify the logging decorator is present.
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("CreateSubscription")));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::ValidateNoPropagator;
+using ::google::cloud::testing_util::ValidatePropagator;
+using ::testing::ElementsAre;
+using ::testing::IsEmpty;
+
+TEST_F(SubscriberStubFactory, TracingEnabled) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockSubscriberStub>();
+        EXPECT_CALL(*mock, CreateSubscription)
+            .WillOnce([](grpc::ClientContext& context,
+                         google::pubsub::v1::Subscription const&) {
+              ValidatePropagator(context);
+              return StatusOr<google::pubsub::v1::Subscription>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
+        return mock;
+      });
+
+  CompletionQueue cq;
+  grpc::ClientContext context;
+  google::pubsub::v1::Subscription req;
+  auto stub = CreateDecoratedStubs(
+      std::move(cq),
+      EnableTracing(
+          Options{}
+              .set<EndpointOption>("localhost:1")
+              .set<GrpcNumChannelsOption>(1)
+              .set<UnifiedCredentialsOption>(MakeInsecureCredentials())),
+      factory.AsStdFunction());
+  req.set_name("projects/test-project/topics/my-subscription");
+  auto response = stub->CreateSubscription(context, req);
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(SpanNamed("google.pubsub.v1.Subscriber/CreateSubscription")));
+}
+
+TEST_F(SubscriberStubFactory, TracingDisabled) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockSubscriberStub>();
+        EXPECT_CALL(*mock, CreateSubscription)
+            .WillOnce([](grpc::ClientContext& context,
+                         google::pubsub::v1::Subscription const&) {
+              ValidateNoPropagator(context);
+              return StatusOr<google::pubsub::v1::Subscription>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
+        return mock;
+      });
+
+  CompletionQueue cq;
+  grpc::ClientContext context;
+  google::pubsub::v1::Subscription req;
+  auto stub = CreateDecoratedStubs(
+      std::move(cq),
+      DisableTracing(
+          Options{}
+              .set<EndpointOption>("localhost:1")
+              .set<GrpcNumChannelsOption>(1)
+              .set<UnifiedCredentialsOption>(MakeInsecureCredentials())),
+      factory.AsStdFunction());
+  req.set_name("projects/test-project/topics/my-subscription");
+  auto response = stub->CreateSubscription(context, req);
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+
+  EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
