@@ -90,11 +90,11 @@ StatusOr<std::unique_ptr<RestResponse>> EndResponseSpan(
 }
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> HttpStart(
-    std::chrono::system_clock::time_point start, Options const& options) {
+    std::chrono::system_clock::time_point start) {
   opentelemetry::trace::StartSpanOptions span_options;
   span_options.kind = opentelemetry::trace::SpanKind::kClient;
   span_options.start_system_time = start;
-  return internal::GetTracer(options)->StartSpan("SendRequest", span_options);
+  return internal::MakeSpan("SendRequest", span_options);
 }
 
 StatusOr<std::unique_ptr<RestResponse>> EndStartSpan(
@@ -127,7 +127,7 @@ StatusOr<std::unique_ptr<RestResponse>> WrappedRequest(
   auto scope = opentelemetry::trace::Scope(span);
   InjectTraceContext(context, propagator);
   auto start = std::chrono::system_clock::now();
-  auto start_span = HttpStart(start, internal::CurrentOptions());
+  auto start_span = HttpStart(start);
   auto response =
       EndStartSpan(*start_span, start, context, make_request(context, request));
   return EndResponseSpan(std::move(span), context, std::move(response));
