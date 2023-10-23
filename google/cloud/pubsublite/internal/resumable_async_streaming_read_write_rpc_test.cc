@@ -72,12 +72,10 @@ using AsyncReadWriteStreamReturnType =
 using ResumableAsyncReadWriteStream = std::unique_ptr<
     ResumableAsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>;
 
-const Status kFailStatus = Status(StatusCode::kUnavailable, "Unavailable");
-const FakeResponse kBasicResponse = FakeResponse{"key0", "value0_0"};
-const FakeResponse kBasicResponse1 = FakeResponse{"key0", "value0_1"};
-const FakeRequest kBasicRequest = FakeRequest{"key0"};
-
-Status FailStatus() { return Status(StatusCode::kUnavailable, "Unavailable"); }
+auto FailStatus() { return Status(StatusCode::kUnavailable, "Unavailable"); }
+auto BasicResponse0() { return FakeResponse{"key0", "value0_0"}; }
+auto BasicResponse1() { return FakeResponse{"key0", "value0_1"}; }
+auto BasicRequest() { return FakeRequest{"key0"}; }
 
 StreamInitializer<FakeRequest, FakeResponse> InitializeInline() {
   return [](AsyncReadWriteStreamReturnType stream) {
@@ -668,23 +666,23 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
 
   auto start = stream_->Start();
 
-  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(BasicRequest(), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  ASSERT_TRUE(stream_->Write(kBasicRequest).get());
+  ASSERT_TRUE(stream_->Write(BasicRequest()).get());
 
   EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(Return(
-          ByMove(make_ready_future(absl::make_optional(kBasicResponse)))));
+          ByMove(make_ready_future(absl::make_optional(BasicResponse0())))));
   auto response0 = stream_->Read().get();
   ASSERT_TRUE(response0.has_value());
-  EXPECT_EQ(*response0, kBasicResponse);
+  EXPECT_EQ(*response0, BasicResponse0());
 
   EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(Return(
-          ByMove(make_ready_future(absl::make_optional(kBasicResponse1)))));
+          ByMove(make_ready_future(absl::make_optional(BasicResponse1())))));
   response0 = stream_->Read().get();
   ASSERT_TRUE(response0.has_value());
-  EXPECT_EQ(*response0, kBasicResponse1);
+  EXPECT_EQ(*response0, BasicResponse1());
 
   // start future doesn't finish until
   // permanent error or `Finish`
@@ -714,7 +712,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   auto shutdown = stream_->Shutdown();
   shutdown.get();
 
-  ASSERT_FALSE(stream_->Write(kBasicRequest).get());
+  ASSERT_FALSE(stream_->Write(BasicRequest()).get());
   ASSERT_FALSE(stream_->Read().get().has_value());
   EXPECT_THAT(start.get(), IsOk());
 }
@@ -727,9 +725,9 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   promise<bool> write_promise;
   promise<absl::optional<FakeResponse>> read_promise;
 
-  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(BasicRequest(), _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
-  auto write = stream_->Write(kBasicRequest);
+  auto write = stream_->Write(BasicRequest());
 
   EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise.get_future())));
@@ -750,7 +748,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   // read and write are finished
   EXPECT_EQ(finish_future.wait_for(ms(kFutureWaitMs)),
             std::future_status::timeout);
-  read_promise.set_value(absl::make_optional(kBasicResponse));
+  read_promise.set_value(absl::make_optional(BasicResponse0()));
 
   ASSERT_FALSE(write.get());
   ASSERT_FALSE(read.get().has_value());
@@ -766,9 +764,9 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   promise<Status> finish_promise;
   promise<bool> write_promise;
 
-  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(BasicRequest(), _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
-  auto write = stream_->Write(kBasicRequest);
+  auto write = stream_->Write(BasicRequest());
 
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(finish_promise.get_future())));
@@ -788,7 +786,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   // error from retry loop or `Finish`
   EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
-  finish_promise.set_value(kFailStatus);
+  finish_promise.set_value(FailStatus());
   ASSERT_FALSE(write.get());
   shutdown.get();
   EXPECT_THAT(start.get(), IsOk());
@@ -802,12 +800,12 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   promise<bool> write_promise;
 
-  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(BasicRequest(), _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
-  auto write = stream_->Write(kBasicRequest);
+  auto write = stream_->Write(BasicRequest());
 
   EXPECT_CALL(first_stream_ref_, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
+      .WillOnce(Return(ByMove(make_ready_future(FailStatus()))));
 
   auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& mock_retry_policy_ref = *mock_retry_policy;
@@ -822,7 +820,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   write_promise.set_value(false);
 
-  EXPECT_EQ(start.get(), kFailStatus);
+  EXPECT_EQ(start.get(), FailStatus());
   auto shutdown = stream_->Shutdown();
   shutdown.get();
 }
@@ -834,9 +832,9 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   auto start = stream_->Start();
   promise<bool> write_promise;
 
-  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(BasicRequest(), _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
-  auto write = stream_->Write(kBasicRequest);
+  auto write = stream_->Write(BasicRequest());
 
   EXPECT_CALL(first_stream_ref_, Cancel);
   EXPECT_CALL(first_stream_ref_, Finish)
@@ -867,9 +865,9 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   auto start = stream_->Start();
 
-  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(BasicRequest(), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  ASSERT_TRUE(stream_->Write(kBasicRequest).get());
+  ASSERT_TRUE(stream_->Write(BasicRequest()).get());
 
   promise<absl::optional<FakeResponse>> read_promise;
   EXPECT_CALL(first_stream_ref_, Read)
@@ -877,7 +875,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   auto response0 = stream_->Read();
 
   EXPECT_CALL(first_stream_ref_, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
+      .WillOnce(Return(ByMove(make_ready_future(FailStatus()))));
 
   auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
@@ -890,7 +888,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
 
   EXPECT_CALL(retry_policy_ref, IsExhausted).WillOnce(Return(false));
-  EXPECT_CALL(retry_policy_ref, OnFailure(kFailStatus)).WillOnce(Return(true));
+  EXPECT_CALL(retry_policy_ref, OnFailure(FailStatus())).WillOnce(Return(true));
   EXPECT_CALL(backoff_policy_ref, OnCompletion)
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
@@ -905,17 +903,17 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   EXPECT_CALL(second_stream_ref, Read)
       .WillOnce(Return(
-          ByMove(make_ready_future(absl::make_optional(kBasicResponse)))));
+          ByMove(make_ready_future(absl::make_optional(BasicResponse0())))));
   auto response0_opt_val = stream_->Read().get();
   ASSERT_TRUE(response0_opt_val.has_value());
-  EXPECT_EQ(*response0_opt_val, kBasicResponse);
+  EXPECT_EQ(*response0_opt_val, BasicResponse0());
 
   EXPECT_CALL(second_stream_ref, Read)
       .WillOnce(Return(
-          ByMove(make_ready_future(absl::make_optional(kBasicResponse1)))));
+          ByMove(make_ready_future(absl::make_optional(BasicResponse1())))));
   response0_opt_val = stream_->Read().get();
   ASSERT_TRUE(response0_opt_val.has_value());
-  EXPECT_EQ(*response0_opt_val, kBasicResponse1);
+  EXPECT_EQ(*response0_opt_val, BasicResponse1());
 
   // start shouldn't finish until permanent
   // error from retry loop or `Finish`
@@ -944,16 +942,16 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(ByMove(read_promise.get_future())));
   auto read = stream_->Read();
 
-  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(BasicRequest(), _))
       .WillOnce(Return(ByMove(make_ready_future(false))));
-  auto write = stream_->Write(kBasicRequest);
+  auto write = stream_->Write(BasicRequest());
 
   // write shouldn't finish until retry
   // loop done
   EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
   EXPECT_CALL(first_stream_ref_, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
+      .WillOnce(Return(ByMove(make_ready_future(FailStatus()))));
 
   auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
@@ -966,7 +964,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
 
   EXPECT_CALL(retry_policy_ref, IsExhausted).WillOnce(Return(false));
-  EXPECT_CALL(retry_policy_ref, OnFailure(kFailStatus)).WillOnce(Return(true));
+  EXPECT_CALL(retry_policy_ref, OnFailure(FailStatus())).WillOnce(Return(true));
   EXPECT_CALL(backoff_policy_ref, OnCompletion)
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
@@ -976,16 +974,16 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(ByMove(make_ready_future(true))));
   EXPECT_CALL(initializer_, Call).WillOnce(InitializeInline());
 
-  read_promise.set_value(absl::make_optional(kBasicResponse));
+  read_promise.set_value(absl::make_optional(BasicResponse0()));
 
   auto read_response = read.get();
   ASSERT_TRUE(read_response.has_value());
-  EXPECT_EQ(*read_response, kBasicResponse);
+  EXPECT_EQ(*read_response, BasicResponse0());
   ASSERT_FALSE(write.get());
 
-  EXPECT_CALL(second_stream_ref, Write(kBasicRequest, _))
+  EXPECT_CALL(second_stream_ref, Write(BasicRequest(), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  write = stream_->Write(kBasicRequest);
+  write = stream_->Write(BasicRequest());
   ASSERT_TRUE(write.get());
 
   // start shouldn't finish until permanent
@@ -1011,9 +1009,9 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   auto start = stream_->Start();
   promise<bool> write_promise;
 
-  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(BasicRequest(), _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
-  auto write = stream_->Write(kBasicRequest);
+  auto write = stream_->Write(BasicRequest());
 
   EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(
@@ -1025,7 +1023,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
   EXPECT_CALL(first_stream_ref_, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
+      .WillOnce(Return(ByMove(make_ready_future(FailStatus()))));
 
   auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
@@ -1038,7 +1036,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
 
   EXPECT_CALL(retry_policy_ref, IsExhausted).WillOnce(Return(false));
-  EXPECT_CALL(retry_policy_ref, OnFailure(kFailStatus)).WillOnce(Return(true));
+  EXPECT_CALL(retry_policy_ref, OnFailure(FailStatus())).WillOnce(Return(true));
   EXPECT_CALL(backoff_policy_ref, OnCompletion)
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
@@ -1055,10 +1053,10 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   EXPECT_CALL(second_stream_ref, Read)
       .WillOnce(Return(
-          ByMove(make_ready_future(absl::make_optional(kBasicResponse)))));
+          ByMove(make_ready_future(absl::make_optional(BasicResponse0())))));
   auto response0 = stream_->Read().get();
   ASSERT_TRUE(response0.has_value());
-  EXPECT_EQ(*response0, kBasicResponse);
+  EXPECT_EQ(*response0, BasicResponse0());
 
   // start shouldn't finish until permanent
   // error from retry loop or `Finish`
@@ -1088,7 +1086,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   auto read = stream_->Read();
 
   EXPECT_CALL(first_stream_ref_, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
+      .WillOnce(Return(ByMove(make_ready_future(FailStatus()))));
 
   auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& mock_retry_policy_ref = *mock_retry_policy;
@@ -1114,13 +1112,13 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   read_promise.set_value(absl::optional<FakeResponse>());
 
   EXPECT_CALL(second_stream_ref, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
+      .WillOnce(Return(ByMove(make_ready_future(FailStatus()))));
   EXPECT_CALL(mock_retry_policy_ref, IsExhausted).WillOnce(Return(true));
 
   start_promise.set_value(false);
 
   ASSERT_FALSE(read.get().has_value());
-  EXPECT_EQ(start.get(), kFailStatus);
+  EXPECT_EQ(start.get(), FailStatus());
   auto shutdown = stream_->Shutdown();
   shutdown.get();
 }
@@ -1136,12 +1134,12 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   auto start = stream_->Start();
   promise<bool> write_promise;
 
-  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(BasicRequest(), _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
-  auto write = stream_->Write(kBasicRequest);
+  auto write = stream_->Write(BasicRequest());
 
   EXPECT_CALL(first_stream_ref_, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
+      .WillOnce(Return(ByMove(make_ready_future(FailStatus()))));
 
   auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
@@ -1154,7 +1152,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
 
   EXPECT_CALL(retry_policy_ref, IsExhausted).WillOnce(Return(false));
-  EXPECT_CALL(retry_policy_ref, OnFailure(kFailStatus)).WillOnce(Return(true));
+  EXPECT_CALL(retry_policy_ref, OnFailure(FailStatus())).WillOnce(Return(true));
   EXPECT_CALL(backoff_policy_ref, OnCompletion)
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
@@ -1200,7 +1198,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   auto read = stream_->Read();
 
   EXPECT_CALL(first_stream_ref_, Finish)
-      .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
+      .WillOnce(Return(ByMove(make_ready_future(FailStatus()))));
 
   auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
@@ -1213,7 +1211,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
 
   EXPECT_CALL(retry_policy_ref, IsExhausted).WillOnce(Return(false));
-  EXPECT_CALL(retry_policy_ref, OnFailure(kFailStatus)).WillOnce(Return(true));
+  EXPECT_CALL(retry_policy_ref, OnFailure(FailStatus())).WillOnce(Return(true));
   EXPECT_CALL(backoff_policy_ref, OnCompletion)
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
@@ -1230,7 +1228,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   // finish until retry loop finishes
   EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
-  auto write = stream_->Write(kBasicRequest);
+  auto write = stream_->Write(BasicRequest());
   EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   start_promise.set_value(true);
 
