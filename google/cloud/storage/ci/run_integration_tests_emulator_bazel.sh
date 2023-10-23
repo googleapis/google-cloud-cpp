@@ -59,7 +59,6 @@ readonly PRODUCTION_ONLY_BASE=(
 for base in "${PRODUCTION_ONLY_BASE[@]}"; do
   production_only_targets+=(
     "${base}-default"
-    "${base}-legacy-http"
     "${base}-grpc-media"
     "${base}-grpc-metadata"
   )
@@ -88,7 +87,6 @@ excluded_targets+=(
   "-//google/cloud/storage/tests:error_injection_integration_test-default"
   "-//google/cloud/storage/tests:error_injection_integration_test-grpc-media"
   "-//google/cloud/storage/tests:error_injection_integration_test-grpc-metadata"
-  "-//google/cloud/storage/tests:error_injection_integration_test-legacy-http"
 )
 for target in "${production_only_targets[@]}"; do
   excluded_targets+=("-${target}")
