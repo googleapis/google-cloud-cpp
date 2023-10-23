@@ -34,7 +34,6 @@ namespace {
 
 auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
 
-using ::google::cloud::pubsub::BlockingPublisherConnection;
 using ::google::cloud::pubsub::MessageBuilder;
 using ::google::cloud::pubsub::Topic;
 using ::google::cloud::pubsub_internal::MakeBlockingPublisherTracingConnection;
@@ -51,11 +50,8 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::_;
 using ::testing::AllOf;
-using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Not;
-using ::testing::Pair;
-using ::testing::StartsWith;
 
 TEST(BlockingPublisherTracingConnectionTest, PublishSpanOnSuccess) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
