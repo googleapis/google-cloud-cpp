@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) try {
   access_tuple.set_principal(argv[1]);
   access_tuple.set_full_resource_name(argv[2]);
   access_tuple.set_permission(argv[3]);
-  auto const response = client.TroubleshootIamPolicy(request);
+  auto response = client.TroubleshootIamPolicy(request);
   if (!response) throw std::move(response).status();
   std::cout << response->DebugString() << "\n";
 
