@@ -24,6 +24,12 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A function that creates a SubscriberStub using a pre-configured channel.
+ */
+using BaseSubscriberStubFactory = std::function<std::shared_ptr<SubscriberStub>(
+    std::shared_ptr<grpc::Channel>)>;
+
 /// Create a SubscriberStub using a pre-configured channel.
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
     std::shared_ptr<grpc::Channel> channel);
@@ -36,6 +42,17 @@ std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
  */
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
                                                             int channel_id);
+
+/**
+ * Creates a test SubscriberStub configured with @p cq and @p options and @p
+ * base_factory.
+ *
+ * Used for unit testing to create decorated stubs. Accepts a stub factory so we
+ * can inject mock stubs in our unit tests.
+ */
+std::shared_ptr<SubscriberStub> CreateDecoratedStubs(
+    google::cloud::CompletionQueue cq, Options const& options,
+    BaseSubscriberStubFactory const& base_factory);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

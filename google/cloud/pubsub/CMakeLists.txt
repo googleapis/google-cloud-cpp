@@ -325,6 +325,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/session_shutdown_manager_test.cc
         internal/streaming_subscription_batch_source_test.cc
         internal/subscriber_connection_impl_test.cc
+        internal/subscriber_stub_factory_test.cc
         internal/subscription_concurrency_control_test.cc
         internal/subscription_lease_management_test.cc
         internal/subscription_message_queue_test.cc
