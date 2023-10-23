@@ -638,14 +638,14 @@ bool CheckParameterCommentSubstitutions() {
 std::string GetEffectiveServiceName(VarsDictionary const& vars,
                                     absl::string_view name) {
   auto service_name_mappings = vars.find("service_name_mappings");
-  if (service_name_mappings == vars.end())
-    return std::string(name.data(), name.size());
-  std::map<absl::string_view, std::string> map;
-  for (absl::string_view arg :
-       absl::StrSplit(service_name_mappings->second, ',')) {
-    map.insert(absl::StrSplit(arg, absl::MaxSplits('=', 1)));
+  if (service_name_mappings != vars.end()) {
+    std::map<absl::string_view, absl::string_view> map;
+    for (absl::string_view arg :
+         absl::StrSplit(service_name_mappings->second, ',')) {
+      map.insert(absl::StrSplit(arg, absl::MaxSplits('=', 1)));
+    }
+    if (map.find(name) != map.end()) return map.find(name)->second;
   }
-  if (map.find(name) != map.end()) return map.find(name)->second;
   return std::string(name.data(), name.size());
 }
 
