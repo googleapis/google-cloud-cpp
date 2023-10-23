@@ -53,7 +53,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
 }
 
 StatusOr<std::string> EndPublishSpan(
-    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
     StatusOr<std::string> message_id) {
   if (message_id) span->SetAttribute("messaging.message_id", *message_id);
   return internal::EndSpan(*span, std::move(message_id));
