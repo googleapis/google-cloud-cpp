@@ -650,6 +650,7 @@ std::string GetEffectiveServiceName(VarsDictionary const& vars,
     }
     return std::string(name.data(), name.size());
   }
+                                    }
 
   VarsDictionary CreateServiceVars(
       google::protobuf::ServiceDescriptor const& descriptor,
