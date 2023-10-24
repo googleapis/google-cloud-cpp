@@ -51,54 +51,6 @@ TEST(WritePayloadImpl, GetImpl) {
   EXPECT_EQ(WritePayloadImpl::GetImpl(actual), absl::Cord(expected));
 }
 
-template <typename T>
-class Typed : public ::testing::Test {
- public:
-  using TestType = T;
-};
-
-using TestVariations = ::testing::Types<
-#if GOOGLE_CLOUD_CPP_CPP_VERSION >= 201703L
-    std::vector<std::byte>,
-#endif
-    std::string, std::vector<char>, std::vector<signed char>,
-    std::vector<unsigned char>, std::vector<std::uint8_t> >;
-
-TYPED_TEST_SUITE(Typed, TestVariations);
-
-TYPED_TEST(Typed, MakeWritePayload) {
-  using Collection = typename TestFixture::TestType;
-
-  auto const expected =
-      std::string{"The quick brown fox jumps over the lazy dog"};
-
-  auto const actual =
-      MakeWritePayload(internal::RandomDataToCollection<Collection>(expected));
-  EXPECT_FALSE(actual.empty());
-  EXPECT_EQ(actual.size(), expected.size());
-  EXPECT_THAT(actual.payload(), Not(IsEmpty()));
-  auto full = absl::StrJoin(actual.payload(), "");
-  EXPECT_EQ(full, expected);
-}
-
-TYPED_TEST(Typed, MakeWritePayloadFromVector) {
-  using Collection = typename TestFixture::TestType;
-
-  static auto generator = internal::MakeDefaultPRNG();
-  auto constexpr kTestDataSize = 1024;
-  auto const part = internal::RandomData<std::string>(generator, kTestDataSize);
-  auto const expected = part + part + part;
-  auto const actual = MakeWritePayload(std::vector<Collection>{
-      {internal::RandomDataToCollection<Collection>(part),
-       internal::RandomDataToCollection<Collection>(part),
-       internal::RandomDataToCollection<Collection>(part)}});
-  EXPECT_FALSE(actual.empty());
-  EXPECT_EQ(actual.size(), expected.size());
-  EXPECT_THAT(actual.payload(), Not(IsEmpty()));
-  auto full = absl::StrJoin(actual.payload(), "");
-  EXPECT_EQ(full, expected);
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

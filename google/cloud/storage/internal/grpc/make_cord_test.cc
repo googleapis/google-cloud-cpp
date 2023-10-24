@@ -46,6 +46,17 @@ TEST(MakeCord, FromStringLong) {
   EXPECT_THAT(chunks, ElementsAre(absl::string_view(input)));
 }
 
+TEST(MakeCord, FromStringVector) {
+  auto const a = std::string(1024, 'a');
+  auto const b = std::string(2048, 'b');
+  auto const c = std::string(4096, 'c');
+  auto actual = MakeCord(std::vector<std::string>{a, b, c});
+  std::vector<absl::string_view> chunks{actual.chunk_begin(),
+                                        actual.chunk_end()};
+  EXPECT_THAT(chunks, ElementsAre(absl::string_view(a), absl::string_view(b),
+                                  absl::string_view(c)));
+}
+
 template <typename T>
 class MakeCordFromVector : public ::testing::Test {
  public:

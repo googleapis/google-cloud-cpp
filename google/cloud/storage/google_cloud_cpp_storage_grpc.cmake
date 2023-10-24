@@ -68,7 +68,6 @@ else ()
         internal/async/token_impl.cc
         internal/async/token_impl.h
         internal/async/write_payload_fwd.h
-        internal/async/write_payload_impl.cc
         internal/async/write_payload_impl.h
         internal/grpc/bucket_access_control_parser.cc
         internal/grpc/bucket_access_control_parser.h
