@@ -230,7 +230,7 @@ TEST(JsonUtilsTest, RemoveKeys) {
 }
 
 TEST(JsonUtilsTest, RemoveEmptyArrays) {
-  std::vector<std::string> keys = {"start_time", "query_parameters"};
+  std::vector<std::string> keys = {"start_time"};
   auto constexpr kJsonText =
       R"({"start_time":"10", "project_id": "1", "query_parameters":[]})";
 
@@ -241,9 +241,20 @@ TEST(JsonUtilsTest, RemoveEmptyArrays) {
 }
 
 TEST(JsonUtilsTest, RemoveEmptyObjects) {
-  std::vector<std::string> keys = {"start_time", "query"};
+  std::vector<std::string> keys = {"start_time"};
   auto constexpr kJsonText =
       R"({"start_time":"10", "project_id": "1", "query":{}})";
+
+  auto json = RemoveJsonKeysAndEmptyFields(kJsonText, keys);
+  auto const* expected = R"({"project_id":"1"})";
+
+  EXPECT_EQ(expected, json.dump());
+}
+
+TEST(JsonUtilsTest, RemoveEmptyObjectsRecursively) {
+  std::vector<std::string> keys = {"start_time"};
+  auto constexpr kJsonText =
+      R"({"start_time":"10", "project_id": "1", "query_parameters": {"query":{}, "params":[]}})";
 
   auto json = RemoveJsonKeysAndEmptyFields(kJsonText, keys);
   auto const* expected = R"({"project_id":"1"})";

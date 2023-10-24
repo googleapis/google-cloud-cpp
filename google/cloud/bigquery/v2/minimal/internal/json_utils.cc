@@ -93,6 +93,19 @@ void ToJson(std::chrono::system_clock::time_point const& field,
   j[name] = std::to_string(m);
 }
 
+void removeEmptyArraysAndObjects(nlohmann::json& j) {
+  for (auto item = j.begin(); item != j.end(); ) {
+    if ((item.value().is_array() || item.value().is_object()) && !item.value().empty()) {
+      removeEmptyArraysAndObjects(*item);
+    }
+    if (item.value().empty()) {
+      j.erase(item++);
+    } else {
+      ++item;
+    }
+  }
+}
+
 nlohmann::json RemoveJsonKeysAndEmptyFields(
     std::string const& json_payload, std::vector<std::string> const& keys) {
   nlohmann::json::parser_callback_t remove_empty_call_back =
@@ -106,15 +119,11 @@ nlohmann::json RemoveJsonKeysAndEmptyFields(
               [&parsed](std::string const& key) { return parsed == key; });
           return !discard;
         }
-        if (event == nlohmann::json::parse_event_t::object_end) {
-          return parsed != nullptr && !parsed.empty();
-        }
-        if (event == nlohmann::json::parse_event_t::array_end) {
-          return !parsed.empty();
-        }
         return true;
       };
-  return nlohmann::json::parse(json_payload, remove_empty_call_back, false);
+  auto basic_json = nlohmann::json::parse(json_payload, remove_empty_call_back, false);
+  removeEmptyArraysAndObjects(basic_json);
+  return basic_json;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
