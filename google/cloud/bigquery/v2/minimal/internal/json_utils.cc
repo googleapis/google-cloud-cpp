@@ -93,10 +93,10 @@ void ToJson(std::chrono::system_clock::time_point const& field,
   j[name] = std::to_string(m);
 }
 
-void removeEmptyArraysAndObjects(nlohmann::json& j) {
+nlohmann::json RemoveEmptyArraysAndObjects(nlohmann::json j) {
   for (auto item = j.begin(); item != j.end(); ) {
     if ((item.value().is_array() || item.value().is_object()) && !item.value().empty()) {
-      removeEmptyArraysAndObjects(*item);
+      item.value() = RemoveEmptyArraysAndObjects(*item);
     }
     if (item.value().empty()) {
       j.erase(item++);
@@ -104,6 +104,7 @@ void removeEmptyArraysAndObjects(nlohmann::json& j) {
       ++item;
     }
   }
+  return j;
 }
 
 nlohmann::json RemoveJsonKeysAndEmptyFields(
@@ -121,9 +122,7 @@ nlohmann::json RemoveJsonKeysAndEmptyFields(
         }
         return true;
       };
-  auto basic_json = nlohmann::json::parse(json_payload, remove_empty_call_back, false);
-  removeEmptyArraysAndObjects(basic_json);
-  return basic_json;
+  return RemoveEmptyArraysAndObjects(nlohmann::json::parse(json_payload, remove_empty_call_back, false));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
