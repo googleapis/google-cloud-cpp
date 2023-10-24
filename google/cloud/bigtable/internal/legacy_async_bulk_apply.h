@@ -68,7 +68,7 @@ class AsyncRetryBulkApply
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<bigtable::DataClient> client_;
-  BulkMutatorState state_;
+  bigtable_internal::BulkMutatorState state_;
   promise<std::vector<FailedMutation>> promise_;
 };
 

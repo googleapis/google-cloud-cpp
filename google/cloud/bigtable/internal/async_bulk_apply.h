@@ -65,7 +65,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
   std::shared_ptr<BigtableStub> stub_;
   std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
-  bigtable::internal::BulkMutatorState state_;
+  BulkMutatorState state_;
   std::atomic<bool> keep_reading_{true};
   promise<std::vector<bigtable::FailedMutation>> promise_;
   internal::CallContext call_context_;

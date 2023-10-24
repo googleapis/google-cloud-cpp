@@ -84,8 +84,8 @@ TEST(BulkMutatorTest, Simple) {
           });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                std::move(mut));
+  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
+                                         std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   auto status = mutator.MakeOneRequest(*mock);
@@ -126,8 +126,8 @@ TEST(BulkMutatorTest, RetryPartialFailure) {
           });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                std::move(mut));
+  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
+                                         std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -172,8 +172,8 @@ TEST(BulkMutatorTest, PermanentFailure) {
           });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                std::move(mut));
+  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
+                                         std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -220,8 +220,8 @@ TEST(BulkMutatorTest, PartialStream) {
           });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                std::move(mut));
+  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
+                                         std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice: for the r1 and r2 cases.
@@ -279,8 +279,8 @@ TEST(BulkMutatorTest, RetryOnlyIdempotent) {
           });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                std::move(mut));
+  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
+                                         std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -321,8 +321,8 @@ TEST(BulkMutatorTest, UnconfirmedAreFailed) {
   // PERMISSION_DENIED (not retryable).
 
   auto policy = DefaultIdempotentMutationPolicy();
-  internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                std::move(mut));
+  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
+                                         std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   auto status = mutator.MakeOneRequest(*mock);
@@ -348,8 +348,8 @@ TEST(BulkMutatorTest, ConfiguresContext) {
           });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                std::move(mut));
+  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
+                                         std::move(mut));
 
   MockFunction<void(grpc::ClientContext&)> mock_setup;
   EXPECT_CALL(mock_setup, Call).Times(1);
@@ -377,8 +377,8 @@ TEST(BulkMutatorTest, MutationStatusReportedOnOkStream) {
           });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                std::move(mut));
+  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
+                                         std::move(mut));
 
   auto status = mutator.MakeOneRequest(*mock);
   EXPECT_STATUS_OK(status);
@@ -412,8 +412,8 @@ TEST(BulkMutatorTest, ReportEitherRetryableMutationFailOrStreamFail) {
           });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                std::move(mut));
+  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
+                                         std::move(mut));
 
   auto status = mutator.MakeOneRequest(*mock);
   EXPECT_THAT(status, StatusIs(StatusCode::kDataLoss));
@@ -456,8 +456,8 @@ TEST(BulkMutatorTest, ReportOnlyLatestMutationStatus) {
           });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                std::move(mut));
+  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
+                                         std::move(mut));
 
   auto status = mutator.MakeOneRequest(*mock);
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));

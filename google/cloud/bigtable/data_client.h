@@ -27,6 +27,7 @@ namespace cloud {
 // Forward declare some classes so we can be friends.
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class BulkMutator;
 class LegacyAsyncRowReader;
 class LegacyRowReader;
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -37,7 +38,6 @@ class Table;
 namespace internal {
 class AsyncRetryBulkApply;
 class LegacyAsyncRowSampler;
-class BulkMutator;
 class LoggingDataClient;
 }  // namespace internal
 
@@ -118,7 +118,7 @@ class DataClient {
   friend class Table;
   friend class internal::AsyncRetryBulkApply;
   friend class internal::LegacyAsyncRowSampler;
-  friend class internal::BulkMutator;
+  friend class bigtable_internal::BulkMutator;
   friend class bigtable_internal::LegacyRowReader;
   friend class bigtable_internal::LegacyAsyncRowReader;
   friend class internal::LoggingDataClient;
