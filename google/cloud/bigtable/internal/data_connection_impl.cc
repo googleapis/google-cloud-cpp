@@ -146,9 +146,8 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
     std::string const& table_name, bigtable::BulkMutation mut) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (mut.empty()) return {};
-  bigtable::internal::BulkMutator mutator(app_profile_id(*current), table_name,
-                                          *idempotency_policy(*current),
-                                          std::move(mut));
+  BulkMutator mutator(app_profile_id(*current), table_name,
+                      *idempotency_policy(*current), std::move(mut));
   // We wait to allocate the policies until they are needed as a
   // micro-optimization.
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
