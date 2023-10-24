@@ -13,7 +13,7 @@ resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/94f
 substitutions:
   _BUILD_NAME: clang-tidy
   _DISTRO: fedora-latest-cmake
-  _SHARD: storage
+  _SHARD: bigquery
   _TRIGGER_TYPE: pr
 tags:
 - pr
