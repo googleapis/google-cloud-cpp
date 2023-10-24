@@ -22,17 +22,22 @@ source module ci/cloudbuild/builds/lib/ctest.sh
 source module ci/cloudbuild/builds/lib/features.sh
 source module ci/cloudbuild/builds/lib/integration.sh
 source module ci/lib/io.sh
+source module ci/lib/shard.sh
 
 export CC=clang
 export CXX=clang++
 export CTCACHE_DIR=~/.cache/ctcache
 
 mapfile -t cmake_args < <(cmake::common_args)
-read -r ENABLED_FEATURES < <(features::always_build_cmake)
-# Add some features that we don't always build, but we want to run clang-tidy
-# over them.
-ENABLED_FEATURES="${ENABLED_FEATURES},generator"
+mapfile -t features < <(shard::cmake_features "${SHARD}")
+ENABLED_FEATURES="$(printf ",%s" "${features[@]}")"
+ENABLED_FEATURES="${ENABLED_FEATURES:1}"
 readonly ENABLED_FEATURES
+
+enable_docfx=OFF
+if shard::cmake_features "${SHARD}" | grep -q docfx; then
+  enable_docfx=ON
+fi
 
 # See https://github.com/matus-chochlik/ctcache for docs about the clang-tidy-cache
 # Note: we use C++14 for this build because we don't want tidy suggestions that
@@ -41,7 +46,7 @@ io::run cmake "${cmake_args[@]}" \
   -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper \
   -DCMAKE_CXX_STANDARD=14 \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" \
-  -DGOOGLE_CLOUD_CPP_INTERNAL_DOCFX=ON
+  -DGOOGLE_CLOUD_CPP_INTERNAL_DOCFX="${enable_docfx}"
 io::run cmake --build cmake-out
 
 # Does not build integration tests.

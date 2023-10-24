@@ -46,6 +46,7 @@ substitutions:
   _LOGS_BUCKET: 'cloud-cpp-community-publiclogs'
   _TAG1: 'team-only'
   _LIBRARIES: 'all_bar_compute'
+  _SHARD: '__default__'
 
 timeout: 36000s
 tags: [
@@ -61,7 +62,7 @@ availableSecrets:
   - versionName: 'projects/${PROJECT_ID}/secrets/CODECOV_TOKEN/versions/latest'
     env: 'CODECOV_TOKEN'
 
-logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}'
+logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}-${_SHARD}'
 
 steps:
   # Builds the docker image that will be used by the main build step.
@@ -92,8 +93,8 @@ steps:
     - >
       /workspace/ci/cloudbuild/cache.sh restore
       --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
-      --key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h
-      --fallback_key=main/${_DISTRO}-${_BUILD_NAME}/h
+      --key=${_TRIGGER_SOURCE}/${_DISTRO}/${_BUILD_NAME}/${_SHARD}/h
+      --fallback_key=main/${_DISTRO}/${_BUILD_NAME}/${_SHARD}/h
       || true
 
   # Runs the specified build in the image that was created in the first step.
@@ -104,6 +105,7 @@ steps:
   env: [
     'BAZEL_REMOTE_CACHE=https://storage.googleapis.com/${_CACHE_BUCKET}/bazel-cache/${_DISTRO}-${_BUILD_NAME}',
     'LIBRARIES=${_LIBRARIES}',
+    'SHARD=${_SHARD}',
     'SCCACHE_GCS_BUCKET=${_CACHE_BUCKET}',
     'SCCACHE_GCS_KEY_PREFIX=sccache/${_DISTRO}-${_BUILD_NAME}',
     'SCCACHE_GCS_RW_MODE=READ_WRITE',
@@ -121,7 +123,7 @@ steps:
     - >
       /workspace/ci/cloudbuild/cache.sh save
       --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
-      --key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h
+      --key=${_TRIGGER_SOURCE}/${_DISTRO}/${_BUILD_NAME}/${_SHARD}/h
       --path=.cache/bazelisk
       --path=.cache/ctcache
       --path=.cache/vcpkg

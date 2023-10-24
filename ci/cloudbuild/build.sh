@@ -170,6 +170,7 @@ if [[ -n "${TRIGGER_FLAG}" ]]; then
   : "${BUILD_FLAG:="$(grep _BUILD_NAME "${trigger_file}" | awk '{print $2}')"}"
   : "${DISTRO_FLAG:="$(grep _DISTRO "${trigger_file}" | awk '{print $2}')"}"
   : "${LIBRARIES:="$(grep _LIBRARIES "${trigger_file}" | awk '{print $2}')"}"
+  : "${SHARD:="$(grep ' _SHARD:' "${trigger_file}" | awk '{print $2}')"}"
 fi
 
 if [[ -z "${BUILD_FLAG}" ]]; then
@@ -183,6 +184,7 @@ fi
 : "${BRANCH_NAME:=$(git branch --show-current)}"
 : "${COMMIT_SHA:=$(git rev-parse HEAD)}"
 : "${LIBRARIES:=all}"
+: "${SHARD:=__default__}"
 CODECOV_TOKEN="$(tr -d '[:space:]' <<<"${CODECOV_TOKEN:-}")"
 
 export CODECOV_TOKEN
@@ -275,6 +277,7 @@ if [[ -n "${CLOUD_FLAG}" ]]; then
   subs+=("BRANCH_NAME=${BRANCH_NAME}")
   subs+=("COMMIT_SHA=${COMMIT_SHA}")
   subs+=("_LIBRARIES=${LIBRARIES}")
+  subs+=("_SHARD=${SHARD}")
   printf "Substitutions:\n"
   printf "  %s\n" "${subs[@]}"
   args=(
@@ -294,7 +297,10 @@ DOCKER_FLAG="true"
 # Uses docker to locally build the specified image and run the build command.
 if [[ "${DOCKER_FLAG}" = "true" ]]; then
   io::log_h1 "Starting docker build: ${BUILD_FLAG}"
-  out_dir="${PROJECT_ROOT}/build-out/${DISTRO_FLAG}-${BUILD_FLAG}"
+  out_dir="${PROJECT_ROOT}/build-out/${DISTRO_FLAG}/${BUILD_FLAG}"
+  if [[ -n "${SHARD:-}" ]]; then
+    out_dir="${out_dir}/${SHARD}"
+  fi
   out_home="${out_dir}/h"
   out_cmake="${out_dir}/cmake-out"
   if [[ "${CLEAN_FLAG}" = "true" ]]; then
@@ -336,6 +342,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--env=VERBOSE_FLAG=${VERBOSE_FLAG:-}"
     "--env=USE_BAZEL_VERSION=${USE_BAZEL_VERSION:-}"
     "--env=LIBRARIES=${LIBRARIES:-}"
+    "--env=SHARD=${SHARD:-}"
     # Mounts an empty volume over "build-out" to isolate builds from each
     # other. Doesn't affect GCB builds, but it helps our local docker builds.
     "--volume=/workspace/build-out"
