@@ -45,12 +45,13 @@ class WritePayload {
   /**
    * Creates a payload from @p p.
    *
-   * @tparam T in general, must be either:
-   * - `char`, an integer type that is *exactly* 8-bits wide (such as
-   *   `std::uint8_t`, or `std::byte`), or
-   * - a `std::string`, or
-   * - a `std::vector<U>`, where `U` is one of the 8-bit integral types, or
-   * - a `std::vector<std::string>`.
+   * @tparam T must be either:
+   * - `char`, or
+   * - `std::byte`, or
+   * - an integer type that is *exactly* 8-bits wide (such as `std::int8_t`), or
+   * - `std::string`, or
+   * - `std::vector<U>`, where `U` is `char`, `std::byte`, or or an integer type
+   *   that is exactly 8-bits wide
    *
    * @param p the resulting object takes ownership of the data in @p p.
    */
