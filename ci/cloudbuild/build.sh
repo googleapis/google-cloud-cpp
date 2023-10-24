@@ -297,7 +297,10 @@ DOCKER_FLAG="true"
 # Uses docker to locally build the specified image and run the build command.
 if [[ "${DOCKER_FLAG}" = "true" ]]; then
   io::log_h1 "Starting docker build: ${BUILD_FLAG}"
-  out_dir="${PROJECT_ROOT}/build-out/${DISTRO_FLAG}-${BUILD_FLAG}"
+  out_dir="${PROJECT_ROOT}/build-out/${DISTRO_FLAG}/${BUILD_FLAG}"
+  if [[ -n "${SHARD:-}" ]]; then
+    out_dir="${out_dir}/${SHARD}"
+  fi
   out_home="${out_dir}/h"
   out_cmake="${out_dir}/cmake-out"
   if [[ "${CLEAN_FLAG}" = "true" ]]; then
@@ -339,7 +342,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--env=VERBOSE_FLAG=${VERBOSE_FLAG:-}"
     "--env=USE_BAZEL_VERSION=${USE_BAZEL_VERSION:-}"
     "--env=LIBRARIES=${LIBRARIES:-}"
-    "--env=_SHARD=${SHARD:-}"
+    "--env=SHARD=${SHARD:-}"
     # Mounts an empty volume over "build-out" to isolate builds from each
     # other. Doesn't affect GCB builds, but it helps our local docker builds.
     "--volume=/workspace/build-out"
