@@ -340,7 +340,7 @@ TEST_P(CreateServiceNameMappingTest, KeySetCorrectly) {
        std::make_pair("additional_proto_files",
                       "google/cloud/add1.proto,google/cloud/add2.proto"),
        std::make_pair("service_name_mappings",
-                      "FrobberService:NewFrobberService")});
+                      "FrobberService=NewFrobberService")});
   auto iter = service_vars_.find(GetParam().first);
   EXPECT_TRUE(iter != service_vars_.end());
   EXPECT_THAT(iter->second, HasSubstr(GetParam().second));
