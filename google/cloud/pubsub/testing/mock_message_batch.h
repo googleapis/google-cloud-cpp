@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/internal/message_batch.h"
 #include "google/cloud/pubsub/message.h"
+#include "google/cloud/future_void.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 
@@ -33,7 +34,7 @@ class MockMessageBatch : public pubsub_internal::MessageBatch {
   ~MockMessageBatch() override = default;
 
   MOCK_METHOD(void, SaveMessage, (pubsub::Message), (override));
-  MOCK_METHOD(void, Flush, (), (override));
+  MOCK_METHOD(future<void>, Flush, (), (override));
   MOCK_METHOD(void, FlushCallback, (), (override));
 };
 

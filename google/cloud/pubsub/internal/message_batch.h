@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_BATCH_H
 
 #include "google/cloud/pubsub/message.h"
+#include "google/cloud/future_void.h"
 #include "google/cloud/options.h"
 
 namespace google {
@@ -40,8 +41,9 @@ class MessageBatch {
   virtual void SaveMessage(pubsub::Message m) = 0;
 
   // Captures information about a batch of messages before it's flushed. Invoked
-  // in `BatchingPublisherConnection::FlushImpl(...)`.
-  virtual void Flush() = 0;
+  // in `BatchingPublisherConnection::FlushImpl(...)`. Returns a task to run
+  // after FlushCallback().
+  virtual future<void> Flush() = 0;
 
   // Captures information about the response after we receive it from
   // the server. Invoked in the `BatchSink::AsyncPublish(...)` callback.

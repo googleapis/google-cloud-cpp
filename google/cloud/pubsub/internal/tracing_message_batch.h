@@ -44,21 +44,12 @@ class TracingMessageBatch : public MessageBatch {
       std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
           message_spans)
       : child_(std::move(child)), message_spans_(std::move(message_spans)) {}
-  // For testing only.
-  TracingMessageBatch(
-      std::unique_ptr<MessageBatch> child,
-      std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-          message_spans,
-      std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-          batch_sink_spans)
-      : child_(std::move(child)),
-        message_spans_(std::move(message_spans)),
-        batch_sink_spans_(std::move(batch_sink_spans)) {}
+
   ~TracingMessageBatch() override = default;
 
   void SaveMessage(pubsub::Message m) override;
 
-  void Flush() override;
+  future<void> Flush() override;
 
   void FlushCallback() override;
 
@@ -66,18 +57,11 @@ class TracingMessageBatch : public MessageBatch {
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
   GetMessageSpans() const;
 
-  // For testing only.
-  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-  GetBatchSinkSpans() const;
-
  private:
   std::unique_ptr<MessageBatch> child_;
   std::mutex message_mu_;
-  std::mutex batch_sink_mu_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       message_spans_;  // ABSL_GUARDED_BY(message_mu_)
-  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      batch_sink_spans_;  // ABSL_GUARDED_BY(batch_sink_mu_)
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
