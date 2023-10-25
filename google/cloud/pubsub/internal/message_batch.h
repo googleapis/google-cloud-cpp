@@ -16,8 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_BATCH_H
 
 #include "google/cloud/pubsub/message.h"
-#include "google/cloud/future_void.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include <functional>
 
 namespace google {
 namespace cloud {

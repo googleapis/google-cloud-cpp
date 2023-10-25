@@ -22,6 +22,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include <functional>
 #include <memory>
 
 namespace google {
@@ -58,9 +59,9 @@ class TracingMessageBatch : public MessageBatch {
 
  private:
   std::unique_ptr<MessageBatch> child_;
-  std::mutex message_mu_;
+  std::mutex mu_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      message_spans_;  // ABSL_GUARDED_BY(message_mu_)
+      message_spans_;  // ABSL_GUARDED_BY(mu_)
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

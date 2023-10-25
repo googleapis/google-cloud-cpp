@@ -17,7 +17,7 @@
 
 #include "google/cloud/pubsub/internal/message_batch.h"
 #include "google/cloud/future.h"
-
+#include <functional>
 namespace google {
 namespace cloud {
 namespace pubsub_internal {

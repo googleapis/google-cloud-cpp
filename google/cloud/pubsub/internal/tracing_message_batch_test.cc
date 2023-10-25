@@ -86,7 +86,7 @@ TEST(TracingMessageBatch, SaveMultipleMessages) {
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, SaveMessage).Times(2);
   auto message_batch = std::make_unique<TracingMessageBatch>(std::move(mock));
-  auto message = pubsub ::MessageBuilder().SetData("test").Build();
+  auto message = pubsub::MessageBuilder().SetData("test").Build();
 
   // Save the first span.
   auto span1 = MakeSpan("test span");
