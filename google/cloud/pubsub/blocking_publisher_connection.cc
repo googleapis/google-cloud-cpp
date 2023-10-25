@@ -38,7 +38,7 @@ namespace {
 
 std::shared_ptr<pubsub::BlockingPublisherConnection>
 BlockingConnectionFromDecoratedStub(
-    Options opts, std::unique_ptr<BackgroundThreads> background,
+    Options const& opts, std::unique_ptr<BackgroundThreads> background,
     std::shared_ptr<pubsub_internal::PublisherStub> stub) {
   std::shared_ptr<pubsub::BlockingPublisherConnection> connection =
       std::make_shared<pubsub_internal::BlockingPublisherConnectionImpl>(
