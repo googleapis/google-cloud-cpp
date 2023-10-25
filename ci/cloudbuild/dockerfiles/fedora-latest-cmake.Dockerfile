@@ -195,6 +195,7 @@ RUN curl -fsSL https://github.com/lvc/abi-dumper/archive/16bb467cd7d343dd3a16782
     mv abi-dumper.pl /usr/local/bin/abi-dumper && \
     chmod +x /usr/local/bin/abi-dumper
 
+# Install ctcache (with global caching support) to speed up our clang-tidy build
 WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/coryan/ctcache/archive/872c14416ea739334c6171761303d07739188dec.tar.gz | \
     tar -xzf - --strip-components=1 && \
