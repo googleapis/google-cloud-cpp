@@ -892,6 +892,10 @@
 ./include/google/cloud/recommender/v1/internal
 ./include/google/cloud/recommender/v1/mocks
 ./include/google/cloud/redis
+./include/google/cloud/redis/cluster
+./include/google/cloud/redis/cluster/v1
+./include/google/cloud/redis/cluster/v1/internal
+./include/google/cloud/redis/cluster/v1/mocks
 ./include/google/cloud/redis/mocks
 ./include/google/cloud/redis/v1
 ./include/google/cloud/redis/v1/internal

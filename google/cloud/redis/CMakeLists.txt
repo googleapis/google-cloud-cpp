@@ -16,7 +16,7 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
+set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/" "cluster/v1/")
 
 google_cloud_cpp_add_ga_grpc_library(redis
                                      "Google Cloud Memorystore for Redis API")
