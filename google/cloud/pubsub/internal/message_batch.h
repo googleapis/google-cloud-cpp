@@ -41,13 +41,9 @@ class MessageBatch {
   virtual void SaveMessage(pubsub::Message m) = 0;
 
   // Captures information about a batch of messages before it's flushed. Invoked
-  // in `BatchingPublisherConnection::FlushImpl(...)`. Returns a task to run
-  // after FlushCallback().
-  virtual future<void> Flush() = 0;
-
-  // Captures information about the response after we receive it from
-  // the server. Invoked in the `BatchSink::AsyncPublish(...)` callback.
-  virtual void FlushCallback() = 0;
+  // in `BatchingPublisherConnection::FlushImpl(...)`. Returns a task to invoke
+  // in another callback.
+  virtual std::function<void(future<void>)> Flush() = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

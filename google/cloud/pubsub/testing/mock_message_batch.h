@@ -34,8 +34,7 @@ class MockMessageBatch : public pubsub_internal::MessageBatch {
   ~MockMessageBatch() override = default;
 
   MOCK_METHOD(void, SaveMessage, (pubsub::Message), (override));
-  MOCK_METHOD(future<void>, Flush, (), (override));
-  MOCK_METHOD(void, FlushCallback, (), (override));
+  MOCK_METHOD(std::function<void(future<void>)>, Flush, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

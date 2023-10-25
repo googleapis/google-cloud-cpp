@@ -129,13 +129,14 @@ TEST(TracingMessageBatch, Flush) {
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future();
+    return [](auto) {};
   });
   auto initial_spans = {message_span};
   auto message_batch =
       std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
 
-  message_batch->Flush();
+  auto end_spans = message_batch->Flush();
+  end_spans(make_ready_future());
 
   EXPECT_THAT(message_batch->GetMessageSpans(), IsEmpty());
 
@@ -158,13 +159,14 @@ TEST(TracingMessageBatch, FlushSmallBatch) {
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future();
+    return [](auto) {};
   });
   auto initial_spans = {message_span1, message_span2};
   auto message_batch =
       std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
 
-  message_batch->Flush();
+  auto end_spans = message_batch->Flush();
+  end_spans(make_ready_future());
 
   EXPECT_THAT(message_batch->GetMessageSpans(), IsEmpty());
 
@@ -191,12 +193,13 @@ TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future();
+    return [](auto) {};
   });
   auto message_batch =
       std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
 
-  message_batch->Flush();
+  auto end_spans = message_batch->Flush();
+  end_spans(make_ready_future());
 
   EXPECT_THAT(message_batch->GetMessageSpans(), IsEmpty());
 
@@ -216,12 +219,13 @@ TEST(TracingMessageBatch, FlushLargeBatch) {
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future();
+    return [](auto) {};
   });
   auto message_batch =
       std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
 
-  message_batch->Flush();
+  auto end_spans = message_batch->Flush();
+  end_spans(make_ready_future());
 
   EXPECT_THAT(message_batch->GetMessageSpans(), IsEmpty());
 
@@ -244,12 +248,13 @@ TEST(TracingMessageBatch, FlushAddsSpanIdAndTraceIdAttribute) {
   auto span_catcher = InstallSpanCatcher();
   auto message_span = MakeSpan("test message span");
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
-  EXPECT_CALL(*mock, Flush).WillOnce([] { return make_ready_future(); });
+  EXPECT_CALL(*mock, Flush).WillOnce([] { return [](auto) {}; });
   auto initial_spans = {message_span};
   auto message_batch =
       std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
 
-  message_batch->Flush();
+  auto end_spans = message_batch->Flush();
+  end_spans(make_ready_future());
 
   // The span must end before it can be processed by the span catcher.
   EndSpans(initial_spans);
@@ -268,12 +273,13 @@ TEST(TracingMessageBatch, FlushSpanMetadataAddsEvent) {
   auto span_catcher = InstallSpanCatcher();
   auto message_span = MakeSpan("test message span");
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
-  EXPECT_CALL(*mock, Flush).WillOnce([] { return make_ready_future(); });
+  EXPECT_CALL(*mock, Flush).WillOnce([] { return [](auto) {}; });
   auto initial_spans = {message_span};
   auto message_batch =
       std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
 
-  message_batch->Flush();
+  auto end_spans = message_batch->Flush();
+  end_spans(make_ready_future());
 
   // The span must end before it can be processed by the span catcher.
   EndSpans(initial_spans);
@@ -290,12 +296,13 @@ TEST(TracingMessageBatch, FlushAddsEventForMultipleMessages) {
   auto span1 = MakeSpan("test message span1");
   auto span2 = MakeSpan("test message span2");
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
-  EXPECT_CALL(*mock, Flush).WillOnce([] { return make_ready_future(); });
+  EXPECT_CALL(*mock, Flush).WillOnce([] { return [](auto) {}; });
   auto initial_spans = {span1, span2};
   auto message_batch =
       std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
 
-  message_batch->Flush();
+  auto end_spans = message_batch->Flush();
+  end_spans(make_ready_future());
 
   // The span must end before it can be processed by the span catcher.
   EndSpans(initial_spans);
@@ -307,14 +314,6 @@ TEST(TracingMessageBatch, FlushAddsEventForMultipleMessages) {
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanNamed("test message span2"),
                          SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
-}
-
-TEST(TracingMessageBatch, FlushCallback) {
-  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
-  EXPECT_CALL(*mock, FlushCallback);
-  auto message_batch = std::make_unique<TracingMessageBatch>(std::move(mock));
-
-  message_batch->FlushCallback();
 }
 
 // TODO(#12528): Add an end to end test.

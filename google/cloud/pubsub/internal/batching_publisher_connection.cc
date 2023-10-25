@@ -23,7 +23,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct Batch {
   std::vector<promise<StatusOr<std::string>>> waiters;
   std::weak_ptr<BatchingPublisherConnection> weak;
-  std::shared_ptr<MessageBatch> batch;
 
   void operator()(future<StatusOr<google::pubsub::v1::PublishResponse>> f) {
     auto response = f.get();
@@ -42,7 +41,6 @@ struct Batch {
     for (auto& w : waiters) {
       w.set_value(std::move(*response->mutable_message_ids(idx++)));
     }
-    batch->FlushCallback();
   }
 
   void SatisfyAllWaiters(Status const& status) {
@@ -200,9 +198,8 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   batch.weak = shared_from_this();
   request.set_topic(topic_full_name_);
 
-  batch_->Flush();
-  batch.batch = batch_;
-  sink_->AsyncPublish(std::move(request)).then(std::move(batch));
+  auto handler = batch_->Flush();
+  sink_->AsyncPublish(std::move(request)).then(std::move(batch)).then(std::move(handler));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

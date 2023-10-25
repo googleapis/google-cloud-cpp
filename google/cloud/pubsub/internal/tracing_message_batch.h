@@ -21,6 +21,7 @@
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/future.h"
 #include <memory>
 
 namespace google {
@@ -48,10 +49,8 @@ class TracingMessageBatch : public MessageBatch {
   ~TracingMessageBatch() override = default;
 
   void SaveMessage(pubsub::Message m) override;
-
-  future<void> Flush() override;
-
-  void FlushCallback() override;
+  
+ std::function<void(future<void>)> Flush() override;
 
   // For testing only.
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>

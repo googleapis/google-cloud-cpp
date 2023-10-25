@@ -17,7 +17,6 @@
 #include "google/cloud/pubsub/internal/tracing_message_batch.h"
 #include "google/cloud/pubsub/internal/message_batch.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/future_void.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "opentelemetry/context/runtime_context.h"
 #include "opentelemetry/trace/context.h"
@@ -127,7 +126,7 @@ Spans MakeBatchSinkSpans(Spans message_spans) {
 
 }  // namespace
 
-future<void> TracingMessageBatch::Flush() {
+std::function<void(future<void>)> TracingMessageBatch::Flush() {
   decltype(message_spans_) message_spans;
   {
     std::lock_guard<std::mutex> lk(message_mu_);
@@ -141,14 +140,12 @@ future<void> TracingMessageBatch::Flush() {
   auto async_scope = internal::GetTracer(internal::CurrentOptions())
                          ->WithActiveSpan(batch_sink_spans.front());
 
-  return child_->Flush().then([spans = std::move(batch_sink_spans)](auto f) {
-    for (auto& span : spans) {
-      internal::EndSpan(*span);
-    }
-  });
+  return [next = child_->Flush(),
+          spans = std::move(batch_sink_spans)](auto) mutable {
+    for (auto& span : spans) internal::EndSpan(*span);
+    next(make_ready_future());
+  };
 }
-
-void TracingMessageBatch::FlushCallback() { child_->FlushCallback(); }
 
 std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
 TracingMessageBatch::GetMessageSpans() const {
