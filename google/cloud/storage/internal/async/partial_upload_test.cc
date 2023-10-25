@@ -38,10 +38,6 @@ using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 
-struct StringOption {
-  using Type = std::string;
-};
-
 auto constexpr kExpectedChunkSize = 2 * 1024 * 1024L;
 
 std::string RandomData(google::cloud::internal::DefaultPRNG& generator,

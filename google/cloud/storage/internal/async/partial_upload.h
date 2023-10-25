@@ -48,8 +48,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *     std::unique_ptr<storage::internal::HashFunction> hash_function,
  *     std::shared_ptr<StreamingBidirWriteRpc> rpc,
  *     google::storage::v2::BidiWriteObjectRequest request,
- *     bool finalize, absl::Cord data,
- *     google::cloud::internal::ImmutableOptions options) {
+ *     absl::Cord data, LastMessageAction action) {
  *   auto constexpr kMax = static_cast<std::size_t>(
  *       google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
  *   do {
@@ -63,13 +62,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *     data.set_crc32c(crc32c);
  *     auto wopt = grpc::WriteOptions{};
  *     auto const last_message = data_.empty();
- *     request.set_finish_write(last_message && finalize);
- *     if (finalize last_message) {
- *       // This is the last block, compute full checksums and set flags.
- *       auto status = Finalize(request, wopt, *hash_function);
- *       if (!status.ok()) {
- *         rpc->Cancel();
- *         co_return false;
+ *     if (last_message) {
+ *       wopt.set_last_message();
+ *       if (action == kFlush) request.set_flush(true);
+ *       if (action == kFinalize) {
+ *         // This is the last block, compute full checksums and set flags.
+ *         auto status = Finalize(request, wopt, *hash_function);
+ *         if (!status.ok()) {
+ *           rpc->Cancel();
+ *           co_return status;
+ *         }
  *       }
  *     }
  *     // Write the data, breaking out of the loop on error.
