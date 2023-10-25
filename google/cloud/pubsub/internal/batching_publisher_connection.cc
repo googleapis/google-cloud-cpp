@@ -199,7 +199,9 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   request.set_topic(topic_full_name_);
 
   auto handler = batch_->Flush();
-  sink_->AsyncPublish(std::move(request)).then(std::move(batch)).then(std::move(handler));
+  sink_->AsyncPublish(std::move(request))
+      .then(std::move(batch))
+      .then(std::move(handler));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
