@@ -56,15 +56,6 @@ StatusOr<std::string> BlockingPublisherConnectionImpl::Publish(
 
 Options BlockingPublisherConnectionImpl::options() { return options_; }
 
-std::shared_ptr<pubsub::BlockingPublisherConnection>
-MakeTestBlockingPublisherConnection(
-    Options opts, std::vector<std::shared_ptr<PublisherStub>> mocks) {
-  auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto stub = MakeTestPublisherStub(background->cq(), opts, std::move(mocks));
-  return std::make_shared<pubsub_internal::BlockingPublisherConnectionImpl>(
-      std::move(background), std::move(stub), std::move(opts));
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud

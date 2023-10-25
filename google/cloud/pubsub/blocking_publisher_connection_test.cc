@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -177,6 +178,68 @@ TEST(BlockingPublisherConnectionTest, HandleTransient) {
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(*response, "test-message-id");
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::IsEmpty;
+using ::testing::UnorderedElementsAre;
+
+TEST(BlockingPublisherConnectionTest, TracingEnabled) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce([&](grpc::ClientContext&,
+                    google::pubsub::v1::PublishRequest const& request) {
+        std::cout << "mock";
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(1, request.messages_size());
+        EXPECT_EQ("test-data-0", request.messages(0).data());
+        google::pubsub::v1::PublishResponse response;
+        response.add_message_ids("test-message-id-0");
+        return response;
+      });
+
+  auto publisher = MakeTestPublisherConnection(mock, EnableTracing(Options{}));
+  google::cloud::internal::OptionsSpan span(publisher->options());
+
+  // Only capture spans from the Publish call, not the options call.
+  auto span_catcher = InstallSpanCatcher();
+  auto response = publisher->Publish(
+      {topic, MessageBuilder{}.SetData("test-data-0").Build()});
+
+  EXPECT_THAT(span_catcher->GetSpans(),
+              UnorderedElementsAre(
+                  SpanNamed("projects/test-project/topics/test-topic send"),
+                  SpanNamed("google.pubsub.v1.Publisher/Publish")));
+}
+
+TEST(BlockingPublisherConnectionTest, TracingDisabled) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce([&](grpc::ClientContext&,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(1, request.messages_size());
+        EXPECT_EQ("test-data-0", request.messages(0).data());
+        google::pubsub::v1::PublishResponse response;
+        response.add_message_ids("test-message-id-0");
+        return response;
+      });
+
+  auto publisher = MakeTestPublisherConnection(mock, DisableTracing(Options{}));
+  google::cloud::internal::OptionsSpan span(publisher->options());
+  auto response = publisher->Publish(
+      {topic, MessageBuilder{}.SetData("test-data-0").Build()});
+
+  EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
