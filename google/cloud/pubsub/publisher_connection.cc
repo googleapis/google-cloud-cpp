@@ -28,6 +28,7 @@
 #include "google/cloud/pubsub/internal/publisher_tracing_connection.h"
 #include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
 #include "google/cloud/pubsub/internal/sequential_batch_sink.h"
+#include "google/cloud/pubsub/internal/tracing_message_batch.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/non_constructible.h"
@@ -50,7 +51,11 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
     std::shared_ptr<pubsub_internal::BatchSink> sink =
         pubsub_internal::DefaultBatchSink::Create(stub, cq, opts);
     std::shared_ptr<pubsub_internal::MessageBatch> message_batch =
-        std::make_shared<pubsub_internal::NoOpMessageBatch>();
+        std::make_unique<pubsub_internal::NoOpMessageBatch>();
+    if (google::cloud::internal::TracingEnabled(opts)) {
+      message_batch = std::make_shared<pubsub_internal::TracingMessageBatch>(
+          std::move(message_batch));
+    }
     if (opts.get<pubsub::MessageOrderingOption>()) {
       auto factory = [topic, opts, sink, cq,
                       message_batch](std::string const& key) {

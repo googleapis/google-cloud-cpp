@@ -363,13 +363,19 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
+  publisher->Flush({});
 
+  auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
-      span_catcher->GetSpans(),
+      spans,
       UnorderedElementsAre(
           SpanNamed("projects/test-project/topics/test-topic send"),
-          SpanNamed("publisher flow control"), SpanNamed("publish scheduler"),
-          SpanNamed("google.pubsub.v1.Publisher/Publish")));
+           SpanNamed("publisher flow control"), SpanNamed("publish scheduler"),
+           SpanNamed("BatchSink::AsyncPublish"),
+           SpanNamed("google.pubsub.v1.Publisher/Publish"),
+           SpanNamed("pubsub::BatchingPublisherConnection::Flush"),
+           SpanNamed("pubsub::FlowControlledPublisherConnection::Flush"),
+           SpanNamed("pubsub::Publisher::Flush")));
 }
 
 TEST(MakePublisherConnectionTest, TracingDisabled) {
@@ -389,9 +395,11 @@ TEST(MakePublisherConnectionTest, TracingDisabled) {
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
+  publisher->Flush({});
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
 }
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace

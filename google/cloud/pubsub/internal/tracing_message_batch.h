@@ -38,11 +38,11 @@ class TracingMessageBatchPeer;
  */
 class TracingMessageBatch : public MessageBatch {
  public:
-  explicit TracingMessageBatch(std::unique_ptr<MessageBatch> child)
+  explicit TracingMessageBatch(std::shared_ptr<MessageBatch> child)
       : child_(std::move(child)) {}
   // For testing only.
   TracingMessageBatch(
-      std::unique_ptr<MessageBatch> child,
+      std::shared_ptr<MessageBatch> child,
       std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
           message_spans)
       : child_(std::move(child)), message_spans_(std::move(message_spans)) {}
@@ -58,7 +58,7 @@ class TracingMessageBatch : public MessageBatch {
   GetMessageSpans() const;
 
  private:
-  std::unique_ptr<MessageBatch> child_;
+  std::shared_ptr<MessageBatch> child_;
   std::mutex mu_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       message_spans_;  // ABSL_GUARDED_BY(mu_)

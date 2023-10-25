@@ -68,9 +68,9 @@ auto CreateSpans(int n) {
 TEST(TracingMessageBatch, SaveMessage) {
   auto span = MakeSpan("test span");
   opentelemetry::trace::Scope scope(span);
-  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  auto mock = std::make_shared<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, SaveMessage);
-  auto message_batch = std::make_unique<TracingMessageBatch>(std::move(mock));
+  auto message_batch = std::make_shared<TracingMessageBatch>(std::move(mock));
   auto message = pubsub::MessageBuilder().SetData("test").Build();
 
   message_batch->SaveMessage(message);
@@ -81,9 +81,9 @@ TEST(TracingMessageBatch, SaveMessage) {
 }
 
 TEST(TracingMessageBatch, SaveMultipleMessages) {
-  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  auto mock = std::make_shared<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, SaveMessage).Times(2);
-  auto message_batch = std::make_unique<TracingMessageBatch>(std::move(mock));
+  auto message_batch = std::make_shared<TracingMessageBatch>(std::move(mock));
   auto message = pubsub::MessageBuilder().SetData("test").Build();
 
   // Save the first span.
@@ -105,9 +105,9 @@ TEST(TracingMessageBatch, SaveMessageAddsEvent) {
   auto span_catcher = InstallSpanCatcher();
   auto span = MakeSpan("test span");
   opentelemetry::trace::Scope scope(span);
-  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  auto mock = std::make_shared<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, SaveMessage);
-  auto message_batch = std::make_unique<TracingMessageBatch>(std::move(mock));
+  auto message_batch = std::make_shared<TracingMessageBatch>(std::move(mock));
   auto message = pubsub::MessageBuilder().SetData("test").Build();
 
   message_batch->SaveMessage(message);
@@ -154,14 +154,14 @@ TEST(TracingMessageBatch, FlushSmallBatch) {
   auto message_span1 = MakeSpan("test span 1");
   auto message_span2 = MakeSpan("test span 2");
   auto span_catcher = InstallSpanCatcher();
-  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  auto mock = std::make_shared<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return [](auto) {};
   });
   auto initial_spans = {message_span1, message_span2};
   auto message_batch =
-      std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
+      std::make_shared<TracingMessageBatch>(std::move(mock), initial_spans);
 
   auto end_spans = message_batch->Flush();
   end_spans(make_ready_future());
@@ -214,13 +214,13 @@ TEST(TracingMessageBatch, FlushLargeBatch) {
   auto constexpr kBatchSize = 129;
   auto initial_spans = CreateSpans(kBatchSize);
   auto span_catcher = InstallSpanCatcher();
-  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  auto mock = std::make_shared<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return [](auto) {};
   });
   auto message_batch =
-      std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
+      std::make_shared<TracingMessageBatch>(std::move(mock), initial_spans);
 
   auto end_spans = message_batch->Flush();
   end_spans(make_ready_future());
