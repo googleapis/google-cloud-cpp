@@ -96,7 +96,7 @@ void ToJson(std::chrono::system_clock::time_point const& field,
 nlohmann::json RemoveEmptyArraysAndObjects(nlohmann::json j) {
   for (auto item = j.begin(); item != j.end(); ) {
     if ((item.value().is_array() || item.value().is_object()) && !item.value().empty()) {
-      item.value() = RemoveEmptyArraysAndObjects(*item);
+      item.value() = RemoveEmptyArraysAndObjects(std::move(*item));
     }
     if (item.value().empty()) {
       item = j.erase(item);
