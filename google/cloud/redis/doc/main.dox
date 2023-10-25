@@ -6,7 +6,8 @@ An idiomatic C++ client library for the [Google Cloud Memorystore for Redis
 API][cloud-service-docs], a service to create and manage Redis instances on the
 Google Cloud Platform.
 
-While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note Google Cloud C++ client libraries do
+**not** follow [Semantic Versioning](https://semver.org/).
 
 @tableofcontents{HTML:2}
 
@@ -21,12 +22,18 @@ which should give you a taste of the Google Cloud Memorystore for Redis API C++ 
 ## Main classes
 
 <!-- inject-client-list-start -->
-The main class in this library is
-[`redis_v1::CloudRedisClient`](@ref google::cloud::redis_v1::CloudRedisClient). All RPCs are exposed
-as member functions of this class. Other classes provide helpers, configuration
-parameters, and infrastructure to mock
-[`redis_v1::CloudRedisClient`](@ref google::cloud::redis_v1::CloudRedisClient) when testing your
+This library offers multiple `*Client` classes, which are listed below. Each one
+of these classes exposes all the RPCs for a service as member functions of the
+class. This library groups multiple services because they are part of the same
+product or are often used together. A typical example may be the administrative
+and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
+
+- [\c redis_cluster_v1::CloudRedisClusterClient](@ref google::cloud::redis_cluster_v1::CloudRedisClusterClient)
+- [\c redis_v1::CloudRedisClient](@ref google::cloud::redis_v1::CloudRedisClient)
 <!-- inject-client-list-end -->
 
 ## More Information
@@ -38,7 +45,8 @@ application.
   authentication credentials used by the library.
 - @ref redis-override-retry - describes how to change the default retry
   policies.
-- @ref redis-env - describes environment variables that can configure the behavior of the library.
+- @ref redis-env - describes environment variables that can configure the
+  behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/memorystore/docs/redis
 

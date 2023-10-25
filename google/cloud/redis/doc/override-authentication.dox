@@ -11,6 +11,10 @@ The following example shows how to explicitly load a service account key file:
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_redis_client_samples.cc with-service-account
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c redis_cluster_v1::CloudRedisClusterClient](@ref redis_cluster_v1::CloudRedisClusterClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -26,6 +30,12 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page redis_cluster_v1::CloudRedisClusterClient-service-account-snippet Override redis_cluster_v1::CloudRedisClusterClient Authentication Defaults
+
+@snippet google/cloud/redis/cluster/v1/samples/cloud_redis_cluster_client_samples.cc with-service-account
+
+*/
 
 /*! @page redis_v1::CloudRedisClient-service-account-snippet Override redis_v1::CloudRedisClient Authentication Defaults
 
