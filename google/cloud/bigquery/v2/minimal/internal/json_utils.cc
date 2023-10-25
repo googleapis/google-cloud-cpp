@@ -99,7 +99,7 @@ nlohmann::json RemoveEmptyArraysAndObjects(nlohmann::json j) {
       item.value() = RemoveEmptyArraysAndObjects(*item);
     }
     if (item.value().empty()) {
-      j.erase(item++);
+      item = j.erase(item);
     } else {
       ++item;
     }
