@@ -39,8 +39,8 @@ std::shared_ptr<BlockingPublisherConnection> MakeTestPublisherConnection(
     std::shared_ptr<pubsub_internal::PublisherStub> mock, Options opts = {}) {
   opts = pubsub_internal::DefaultPublisherOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
-  return pubsub_testing::MakeTestBlockingPublisherConnection(
-      std::move(opts), {std::move(mock)});
+  return pubsub_testing::MakeTestBlockingPublisherConnection(std::move(opts),
+                                                             {std::move(mock)});
 }
 
 TEST(BlockingPublisherConnectionTest, Basic) {

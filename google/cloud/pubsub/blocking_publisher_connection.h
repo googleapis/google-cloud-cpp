@@ -107,10 +107,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<pubsub::BlockingPublisherConnection>
 MakeTestBlockingPublisherConnection(
-    Options const& opts, std::vector<std::shared_ptr<pubsub_internal::PublisherStub>> mocks);
+    Options const& opts,
+    std::vector<std::shared_ptr<pubsub_internal::PublisherStub>> mocks);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsub_intesting
+}  // namespace pubsub_testing
 
 }  // namespace cloud
 }  // namespace google
