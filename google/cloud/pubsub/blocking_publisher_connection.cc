@@ -74,7 +74,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<pubsub::BlockingPublisherConnection>
 MakeTestBlockingPublisherConnection(
-    Options opts, std::vector<std::shared_ptr<PublisherStub>> mocks) {
+    Options const& opts, std::vector<std::shared_ptr<PublisherStub>> mocks) {
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto stub = MakeTestPublisherStub(background->cq(), opts, std::move(mocks));
   return pubsub::BlockingConnectionFromDecoratedStub(
