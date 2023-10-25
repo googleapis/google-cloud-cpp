@@ -14,10 +14,12 @@
 
 #include "google/cloud/pubsub/blocking_publisher_connection.h"
 #include "google/cloud/pubsub/internal/blocking_publisher_connection_impl.h"
+#include "google/cloud/pubsub/internal/blocking_publisher_tracing_connection.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/publisher_stub_factory.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include <memory>
 
 namespace google {
@@ -32,6 +34,25 @@ StatusOr<std::string> BlockingPublisherConnection::Publish(PublishParams) {
   return Status{StatusCode::kUnimplemented, "needs-override"};
 }
 
+namespace {
+
+std::shared_ptr<pubsub::BlockingPublisherConnection>
+BlockingConnectionFromDecoratedStub(
+    Options const& opts, std::unique_ptr<BackgroundThreads> background,
+    std::shared_ptr<pubsub_internal::PublisherStub> stub) {
+  std::shared_ptr<pubsub::BlockingPublisherConnection> connection =
+      std::make_shared<pubsub_internal::BlockingPublisherConnectionImpl>(
+          std::move(background), std::move(stub), opts);
+
+  if (google::cloud::internal::TracingEnabled(opts)) {
+    connection = pubsub_internal::MakeBlockingPublisherTracingConnection(
+        std::move(connection));
+  }
+  return connection;
+}
+
+}  // namespace
+
 std::shared_ptr<BlockingPublisherConnection> MakeBlockingPublisherConnection(
     Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -41,11 +62,28 @@ std::shared_ptr<BlockingPublisherConnection> MakeBlockingPublisherConnection(
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto stub =
       pubsub_internal::MakeRoundRobinPublisherStub(background->cq(), opts);
-  return std::make_shared<pubsub_internal::BlockingPublisherConnectionImpl>(
-      std::move(background), std::move(stub), std::move(opts));
+  return BlockingConnectionFromDecoratedStub(
+      std::move(opts), std::move(background), std::move(stub));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
+
+namespace pubsub_testing {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::shared_ptr<pubsub::BlockingPublisherConnection>
+MakeTestBlockingPublisherConnection(
+    Options const& opts,
+    std::vector<std::shared_ptr<pubsub_internal::PublisherStub>> mocks) {
+  auto background = internal::MakeBackgroundThreadsFactory(opts)();
+  auto stub = MakeTestPublisherStub(background->cq(), opts, std::move(mocks));
+  return pubsub::BlockingConnectionFromDecoratedStub(
+      std::move(opts), std::move(background), std::move(stub));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsub_testing
+
 }  // namespace cloud
 }  // namespace google
