@@ -17,8 +17,10 @@
 
 #include "google/cloud/pubsub/internal/message_batch.h"
 #include "google/cloud/pubsub/message.h"
+#include "google/cloud/future.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
+#include <functional>
 
 namespace google {
 namespace cloud {
@@ -33,8 +35,7 @@ class MockMessageBatch : public pubsub_internal::MessageBatch {
   ~MockMessageBatch() override = default;
 
   MOCK_METHOD(void, SaveMessage, (pubsub::Message), (override));
-  MOCK_METHOD(void, Flush, (), (override));
-  MOCK_METHOD(void, FlushCallback, (), (override));
+  MOCK_METHOD(std::function<void(future<void>)>, Flush, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -66,6 +66,7 @@ TEST(BatchingPublisherConnectionTest, FastDestructor) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
 
   AsyncSequencer<void> async;
@@ -102,6 +103,7 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
 
   AsyncSequencer<void> async;
@@ -171,6 +173,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
@@ -225,6 +228,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
@@ -275,6 +279,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
 TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
 
   auto constexpr kSinglePayload = 128;
@@ -345,6 +350,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
 TEST(BatchingPublisherConnectionTest, BatchByMessageSizeOversizedSingleton) {
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
 
   auto constexpr kSinglePayload = 128;
@@ -429,6 +435,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeOversizedSingleton) {
 TEST(BatchingPublisherConnectionTest, BatchTorture) {
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
 
   auto constexpr kMaxMessages = 20;
@@ -495,6 +502,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
@@ -551,6 +559,7 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
@@ -630,6 +639,7 @@ TEST(BatchingPublisherConnectionTest, HandleError) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
 
   auto const error_status = Status(StatusCode::kPermissionDenied, "uh-oh");
@@ -660,6 +670,7 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
@@ -688,6 +699,7 @@ TEST(BatchingPublisherConnectionTest, HandleErrorWithOrderingPartialBatch) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
 
   auto const error_status = Status(StatusCode::kPermissionDenied, "uh-oh");
@@ -738,6 +750,7 @@ TEST(BatchingPublisherConnectionTest, HandleErrorWithOrderingResume) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   auto mock_batch =
       std::make_shared<NiceMock<pubsub_testing::MockMessageBatch>>();
+  EXPECT_CALL(*mock_batch, Flush).WillRepeatedly([] { return [](auto) {}; });
   pubsub::Topic const topic("test-project", "test-topic");
   auto const ordering_key = std::string{"test-key"};
 

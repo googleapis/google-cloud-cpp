@@ -16,7 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NOOP_MESSAGE_BATCH_H
 
 #include "google/cloud/pubsub/internal/message_batch.h"
-
+#include "google/cloud/future.h"
+#include <functional>
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
@@ -33,9 +34,9 @@ class NoOpMessageBatch : public MessageBatch {
 
   void SaveMessage(pubsub::Message) override{};
 
-  void Flush() override{};
-
-  void FlushCallback() override{};
+  std::function<void(future<void>)> Flush() override {
+    return [](auto) {};
+  }
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
