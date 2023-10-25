@@ -39,7 +39,7 @@ std::shared_ptr<BlockingPublisherConnection> MakeTestPublisherConnection(
     std::shared_ptr<pubsub_internal::PublisherStub> mock, Options opts = {}) {
   opts = pubsub_internal::DefaultPublisherOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
-  return pubsub_internal::MakeTestBlockingPublisherConnection(
+  return pubsub_testing::MakeTestBlockingPublisherConnection(
       std::move(opts), {std::move(mock)});
 }
 
@@ -193,7 +193,6 @@ TEST(BlockingPublisherConnectionTest, TracingEnabled) {
   EXPECT_CALL(*mock, Publish)
       .WillOnce([&](grpc::ClientContext&,
                     google::pubsub::v1::PublishRequest const& request) {
-        std::cout << "mock";
         EXPECT_EQ(topic.FullName(), request.topic());
         EXPECT_EQ(1, request.messages_size());
         EXPECT_EQ("test-data-0", request.messages(0).data());
