@@ -370,12 +370,12 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
       spans,
       UnorderedElementsAre(
           SpanNamed("projects/test-project/topics/test-topic send"),
-           SpanNamed("publisher flow control"), SpanNamed("publish scheduler"),
-           SpanNamed("BatchSink::AsyncPublish"),
-           SpanNamed("google.pubsub.v1.Publisher/Publish"),
-           SpanNamed("pubsub::BatchingPublisherConnection::Flush"),
-           SpanNamed("pubsub::FlowControlledPublisherConnection::Flush"),
-           SpanNamed("pubsub::Publisher::Flush")));
+          SpanNamed("publisher flow control"), SpanNamed("publish scheduler"),
+          SpanNamed("BatchSink::AsyncPublish"),
+          SpanNamed("google.pubsub.v1.Publisher/Publish"),
+          SpanNamed("pubsub::BatchingPublisherConnection::Flush"),
+          SpanNamed("pubsub::FlowControlledPublisherConnection::Flush"),
+          SpanNamed("pubsub::Publisher::Flush")));
 }
 
 TEST(MakePublisherConnectionTest, TracingDisabled) {
