@@ -555,6 +555,43 @@ std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
   return absl::StrJoin(additional_pb_header_paths, ",");
 }
 
+// If a service name mapping exists, return the new name.
+// Parses a command line argument in the form:
+// {"service_name_mappings": "service_a=new_service_a,service=new_service"}.
+std::string GetEffectiveServiceName(VarsDictionary const& vars,
+                                    absl::string_view name) {
+  auto service_name_mappings = vars.find("service_name_mappings");
+  if (service_name_mappings == vars.end()) {
+    return std::string(name.data(), name.size());
+  }
+  for (absl::string_view arg :
+       absl::StrSplit(service_name_mappings->second, ',')) {
+    std::pair<absl::string_view, absl::string_view> p =
+        absl::StrSplit(arg, absl::MaxSplits('=', 1));
+    if (p.first == name) return std::string(p.second.data(), p.second.size());
+  }
+  return std::string(name.data(), name.size());
+}
+
+// If a service name mapping exists, return the replacement comment.
+// If it does not exist, return a null optional.
+// Parses a command line argument in the form:
+// {"service_name_to_comments": "service_a=comment_a,service_b=comment_b"}.
+absl::optional<std::string> GetReplacementComment(VarsDictionary const& vars,
+                                                  absl::string_view name) {
+  auto service_name_to_comments = vars.find("service_name_to_comments");
+  if (service_name_to_comments == vars.end()) {
+    return absl::nullopt;
+  }
+  for (absl::string_view arg :
+       absl::StrSplit(service_name_to_comments->second, ',')) {
+    std::pair<absl::string_view, absl::string_view> p =
+        absl::StrSplit(arg, absl::MaxSplits('=', 1));
+    if (p.first == name) return std::string(p.second.data(), p.second.size());
+  }
+  return absl::nullopt;
+}
+
 }  // namespace
 
 std::string CppTypeToString(FieldDescriptor const* field) {
@@ -632,26 +669,6 @@ bool CheckParameterCommentSubstitutions() {
   return all_substitutions_used;
 }
 
-/// If a service name mapping exists, return the new name.
-/// Parses a command line argument in the form:
-/// {"service_name_mappings": "service_a=new_service_a,service=new_service"}.
-std::string GetEffectiveServiceName(VarsDictionary const& vars,
-                                    absl::string_view name) {
-  auto service_name_mappings = vars.find("service_name_mappings");
-  if (service_name_mappings != vars.end()) {
-    std::map<absl::string_view, absl::string_view> map;
-    for (absl::string_view arg :
-         absl::StrSplit(service_name_mappings->second, ',')) {
-      map.insert(absl::StrSplit(arg, absl::MaxSplits('=', 1)));
-    }
-    auto result = map.find(name);
-    if (result != map.end()) {
-      return std::string(result->second.data(), result->second.size());
-    }
-  }
-  return std::string(name.data(), name.size());
-}
-
 VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
@@ -659,8 +676,8 @@ VarsDictionary CreateServiceVars(
   auto const& service_name = GetEffectiveServiceName(vars, descriptor.name());
   vars["product_options_page"] = OptionsGroup(vars["product_path"]);
   vars["additional_pb_header_paths"] = FormatAdditionalPbHeaderPaths(vars);
-  vars["class_comment_block"] =
-      FormatClassCommentsFromServiceComments(descriptor, service_name);
+  vars["class_comment_block"] = FormatClassCommentsFromServiceComments(
+      descriptor, service_name, GetReplacementComment(vars, service_name));
   vars["client_class_name"] = absl::StrCat(service_name, "Client");
   vars["client_cc_path"] = absl::StrCat(
       vars["product_path"], ServiceNameToFilePath(service_name), "_client.cc");

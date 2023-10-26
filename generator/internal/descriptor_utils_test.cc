@@ -329,7 +329,7 @@ INSTANTIATE_TEST_SUITE_P(
       return std::get<0>(info.param);
     });
 
-class CreateServiceNameMappingTest : public CreateServiceVarsTest {};
+using CreateServiceNameMappingTest = CreateServiceVarsTest;
 
 TEST_P(CreateServiceNameMappingTest, KeySetCorrectly) {
   FileDescriptor const* service_file_descriptor =
@@ -463,6 +463,141 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair(
             "tracing_stub_header_path",
             "google/cloud/frobber/internal/new_frobber_tracing_stub.h")),
+    [](testing::TestParamInfo<CreateServiceVarsTest::ParamType> const& info) {
+      return std::get<0>(info.param);
+    });
+
+using CreateServiceNameToCommentMappingTest = CreateServiceVarsTest;
+
+TEST_P(CreateServiceNameToCommentMappingTest, KeySetCorrectly) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto");
+  service_vars_ = CreateServiceVars(
+      *service_file_descriptor->service(0),
+      {std::make_pair("product_path", "google/cloud/frobber/"),
+       std::make_pair("additional_proto_files",
+                      "google/cloud/add1.proto,google/cloud/add2.proto"),
+       std::make_pair("service_name_to_comments",
+                      "FrobberService= New leading comments about service "
+                      "FrobberService.\n")});
+  auto iter = service_vars_.find(GetParam().first);
+  EXPECT_TRUE(iter != service_vars_.end());
+  EXPECT_THAT(iter->second, HasSubstr(GetParam().second));
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    ServiceVars, CreateServiceNameToCommentMappingTest,
+    testing::Values(
+        std::make_pair("product_options_page", "google-cloud-frobber-options"),
+        std::make_pair("additional_pb_header_paths",
+                       "google/cloud/add1.pb.h,google/cloud/add2.pb.h"),
+        // Only field that should be modified.
+        std::make_pair("class_comment_block",
+                       "///\n/// New leading comments about service "
+                       "FrobberService.\n"),
+        std::make_pair("client_class_name", "FrobberServiceClient"),
+        std::make_pair("client_cc_path",
+                       "google/cloud/frobber/"
+                       "frobber_client.cc"),
+        std::make_pair("client_header_path",
+                       "google/cloud/frobber/"
+                       "frobber_client.h"),
+        std::make_pair("connection_class_name", "FrobberServiceConnection"),
+        std::make_pair("connection_cc_path",
+                       "google/cloud/frobber/"
+                       "frobber_connection.cc"),
+        std::make_pair("connection_header_path",
+                       "google/cloud/frobber/"
+                       "frobber_connection.h"),
+        std::make_pair("connection_rest_cc_path",
+                       "google/cloud/frobber/"
+                       "frobber_rest_connection.cc"),
+        std::make_pair("connection_rest_header_path",
+                       "google/cloud/frobber/"
+                       "frobber_rest_connection.h"),
+        std::make_pair("connection_options_name",
+                       "FrobberServiceConnectionOptions"),
+        std::make_pair("connection_options_traits_name",
+                       "FrobberServiceConnectionOptionsTraits"),
+        std::make_pair("grpc_service",
+                       "google.cloud.frobber.v1.FrobberService"),
+        std::make_pair("grpc_stub_fqn",
+                       "google::cloud::frobber::v1::FrobberService"),
+        std::make_pair("idempotency_class_name",
+                       "FrobberServiceConnectionIdempotencyPolicy"),
+        std::make_pair("idempotency_policy_cc_path",
+                       "google/cloud/frobber/"
+                       "frobber_connection_idempotency_policy.cc"),
+        std::make_pair("idempotency_policy_header_path",
+                       "google/cloud/frobber/"
+                       "frobber_connection_idempotency_policy.h"),
+        std::make_pair("limited_error_count_retry_policy_name",
+                       "FrobberServiceLimitedErrorCountRetryPolicy"),
+        std::make_pair("limited_time_retry_policy_name",
+                       "FrobberServiceLimitedTimeRetryPolicy"),
+        std::make_pair("logging_class_name", "FrobberServiceLogging"),
+        std::make_pair("logging_cc_path",
+                       "google/cloud/frobber/internal/"
+                       "frobber_logging_decorator.cc"),
+        std::make_pair("logging_header_path",
+                       "google/cloud/frobber/internal/"
+                       "frobber_logging_decorator.h"),
+        std::make_pair("metadata_class_name", "FrobberServiceMetadata"),
+        std::make_pair("metadata_cc_path",
+                       "google/cloud/frobber/internal/"
+                       "frobber_metadata_decorator.cc"),
+        std::make_pair("metadata_header_path",
+                       "google/cloud/frobber/internal/"
+                       "frobber_metadata_decorator.h"),
+        std::make_pair("mock_connection_class_name",
+                       "MockFrobberServiceConnection"),
+        std::make_pair("mock_connection_header_path",
+                       "google/cloud/frobber/mocks/"
+                       "mock_frobber_connection.h"),
+        std::make_pair("option_defaults_cc_path",
+                       "google/cloud/frobber/internal/"
+                       "frobber_option_defaults.cc"),
+        std::make_pair("option_defaults_header_path",
+                       "google/cloud/frobber/internal/"
+                       "frobber_option_defaults.h"),
+        std::make_pair("options_header_path",
+                       "google/cloud/frobber/frobber_options.h"),
+        std::make_pair("product_namespace", "frobber"),
+        std::make_pair("product_internal_namespace", "frobber_internal"),
+        std::make_pair("proto_file_name",
+                       "google/cloud/frobber/v1/frobber.proto"),
+        std::make_pair("proto_grpc_header_path",
+                       "google/cloud/frobber/v1/frobber.grpc.pb.h"),
+        std::make_pair("retry_policy_name", "FrobberServiceRetryPolicy"),
+        std::make_pair("retry_traits_name", "FrobberServiceRetryTraits"),
+        std::make_pair("retry_traits_header_path",
+                       "google/cloud/frobber/internal/frobber_retry_traits.h"),
+        std::make_pair("service_endpoint", ""),
+        std::make_pair("service_endpoint_env_var",
+                       "GOOGLE_CLOUD_CPP_FROBBER_SERVICE_ENDPOINT"),
+        std::make_pair("service_name", "FrobberService"),
+        std::make_pair("stub_class_name", "FrobberServiceStub"),
+        std::make_pair("stub_cc_path",
+                       "google/cloud/frobber/internal/frobber_stub.cc"),
+        std::make_pair("stub_header_path",
+                       "google/cloud/frobber/internal/frobber_stub.h"),
+        std::make_pair("stub_factory_cc_path",
+                       "google/cloud/frobber/internal/frobber_stub_factory.cc"),
+        std::make_pair("stub_factory_header_path",
+                       "google/cloud/frobber/internal/frobber_stub_factory.h"),
+        std::make_pair("tracing_connection_class_name",
+                       "FrobberServiceTracingConnection"),
+        std::make_pair(
+            "tracing_connection_cc_path",
+            "google/cloud/frobber/internal/frobber_tracing_connection.cc"),
+        std::make_pair(
+            "tracing_connection_header_path",
+            "google/cloud/frobber/internal/frobber_tracing_connection.h"),
+        std::make_pair("tracing_stub_class_name", "FrobberServiceTracingStub"),
+        std::make_pair("tracing_stub_cc_path",
+                       "google/cloud/frobber/internal/frobber_tracing_stub.cc"),
+        std::make_pair("tracing_stub_header_path",
+                       "google/cloud/frobber/internal/frobber_tracing_stub.h")),
     [](testing::TestParamInfo<CreateServiceVarsTest::ParamType> const& info) {
       return std::get<0>(info.param);
     });
