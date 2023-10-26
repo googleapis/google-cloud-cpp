@@ -68,6 +68,13 @@ BackendBucketsConnection::GetBackendBucket(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+BackendBucketsConnection::GetIamPolicy(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsConnection::InsertBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
@@ -101,6 +108,20 @@ BackendBucketsConnection::SetEdgeSecurityPolicy(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+BackendBucketsConnection::SetIamPolicy(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+BackendBucketsConnection::TestIamPermissions(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

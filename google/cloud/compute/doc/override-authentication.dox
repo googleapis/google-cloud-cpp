@@ -88,6 +88,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_routes_v1::RoutesClient](@ref compute_routes_v1::RoutesClient-service-account-snippet)
 - [\c compute_security_policies_v1::SecurityPoliciesClient](@ref compute_security_policies_v1::SecurityPoliciesClient-service-account-snippet)
 - [\c compute_service_attachments_v1::ServiceAttachmentsClient](@ref compute_service_attachments_v1::ServiceAttachmentsClient-service-account-snippet)
+- [\c compute_snapshot_settings_v1::SnapshotSettingsClient](@ref compute_snapshot_settings_v1::SnapshotSettingsClient-service-account-snippet)
 - [\c compute_snapshots_v1::SnapshotsClient](@ref compute_snapshots_v1::SnapshotsClient-service-account-snippet)
 - [\c compute_ssl_certificates_v1::SslCertificatesClient](@ref compute_ssl_certificates_v1::SslCertificatesClient-service-account-snippet)
 - [\c compute_ssl_policies_v1::SslPoliciesClient](@ref compute_ssl_policies_v1::SslPoliciesClient-service-account-snippet)
@@ -569,6 +570,12 @@ guide for more details.
 /*! @page compute_service_attachments_v1::ServiceAttachmentsClient-service-account-snippet Override compute_service_attachments_v1::ServiceAttachmentsClient Authentication Defaults
 
 @snippet google/cloud/compute/service_attachments/v1/samples/service_attachments_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_snapshot_settings_v1::SnapshotSettingsClient-service-account-snippet Override compute_snapshot_settings_v1::SnapshotSettingsClient Authentication Defaults
+
+@snippet google/cloud/compute/snapshot_settings/v1/samples/snapshot_settings_client_samples.cc with-service-account
 
 */
 

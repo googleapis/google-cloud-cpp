@@ -415,6 +415,23 @@ DefaultBackendServicesRestStub::AsyncSetSecurityPolicy(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+DefaultBackendServicesRestStub::TestIamPermissions(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backend_services::v1::
+        TestIamPermissionsRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+      *service_, rest_context, request.test_permissions_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "backendServices", "/", request.resource(), "/",
+                   "testIamPermissions"));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendServicesRestStub::AsyncUpdateBackendService(
     CompletionQueue& cq,

@@ -1238,6 +1238,15 @@ discovery_products {
   }
 
   rest_services {
+    service_proto_path: "google/cloud/compute/snapshot_settings/v1/snapshot_settings.proto"
+    product_path: "google/cloud/compute/snapshot_settings/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
     service_proto_path: "google/cloud/compute/snapshots/v1/snapshots.proto"
     product_path: "google/cloud/compute/snapshots/v1"
     initial_copyright_year: "2023"

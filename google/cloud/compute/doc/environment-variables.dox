@@ -314,6 +314,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeSnapshotsConnection()`.
 
+- `GOOGLE_CLOUD_CPP_SNAPSHOT_SETTINGS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeSnapshotSettingsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_SSL_CERTIFICATES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeSslCertificatesConnection()`.

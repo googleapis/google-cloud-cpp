@@ -202,6 +202,10 @@ class PublicDelegatedPrefixesConnection {
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           AggregatedListPublicDelegatedPrefixesRequest request);
 
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Announce(
+      google::cloud::cpp::compute::public_delegated_prefixes::v1::
+          AnnounceRequest const& request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePublicDelegatedPrefix(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
@@ -226,6 +230,10 @@ class PublicDelegatedPrefixesConnection {
   PatchPublicDelegatedPrefix(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           PatchPublicDelegatedPrefixRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
+      google::cloud::cpp::compute::public_delegated_prefixes::v1::
+          WithdrawRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

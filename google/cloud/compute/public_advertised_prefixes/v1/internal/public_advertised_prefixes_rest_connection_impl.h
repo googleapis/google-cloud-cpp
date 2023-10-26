@@ -54,6 +54,10 @@ class PublicAdvertisedPrefixesRestConnectionImpl
 
   Options options() override { return options_; }
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Announce(
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          AnnounceRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
@@ -78,6 +82,10 @@ class PublicAdvertisedPrefixesRestConnectionImpl
   PatchPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           PatchPublicAdvertisedPrefixRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          WithdrawRequest const& request) override;
 
  private:
   static std::unique_ptr<compute_public_advertised_prefixes_v1::

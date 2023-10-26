@@ -133,6 +133,13 @@ class MockBackendServicesConnection
                    SetSecurityPolicyRequest const& request),
               (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::backend_services::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateBackendService,
               (google::cloud::cpp::compute::backend_services::v1::

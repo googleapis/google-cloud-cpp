@@ -42,6 +42,16 @@ PublicAdvertisedPrefixesRestMetadata::PublicAdvertisedPrefixesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicAdvertisedPrefixesRestMetadata::AsyncAnnounce(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        AnnounceRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncAnnounce(cq, std::move(rest_context), request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestMetadata::AsyncDeletePublicAdvertisedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -90,6 +100,16 @@ PublicAdvertisedPrefixesRestMetadata::AsyncPatchPublicAdvertisedPrefix(
   SetMetadata(*rest_context);
   return child_->AsyncPatchPublicAdvertisedPrefix(cq, std::move(rest_context),
                                                   request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicAdvertisedPrefixesRestMetadata::AsyncWithdraw(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        WithdrawRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncWithdraw(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

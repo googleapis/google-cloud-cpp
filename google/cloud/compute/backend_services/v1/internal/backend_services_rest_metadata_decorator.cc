@@ -176,6 +176,15 @@ BackendServicesRestMetadata::AsyncSetSecurityPolicy(
   return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+BackendServicesRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backend_services::v1::
+        TestIamPermissionsRequest const& request) {
+  SetMetadata(rest_context);
+  return child_->TestIamPermissions(rest_context, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestMetadata::AsyncUpdateBackendService(
     CompletionQueue& cq,

@@ -100,6 +100,11 @@ class RegionBackendServicesRestMetadata : public RegionBackendServicesRestStub {
       google::cloud::cpp::compute::region_backend_services::v1::
           SetSecurityPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::region_backend_services::v1::
+                         TestIamPermissionsRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateBackendService(
       google::cloud::CompletionQueue& cq,

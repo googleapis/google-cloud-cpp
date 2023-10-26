@@ -246,6 +246,10 @@ class BackendServicesConnection {
   SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::
                         SetSecurityPolicyRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::backend_services::v1::
+                         TestIamPermissionsRequest const& request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::
                            UpdateBackendServiceRequest const& request);

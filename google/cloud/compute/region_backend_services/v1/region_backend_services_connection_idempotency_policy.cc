@@ -101,6 +101,13 @@ Idempotency RegionBackendServicesConnectionIdempotencyPolicy::SetSecurityPolicy(
 }
 
 Idempotency
+RegionBackendServicesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::region_backend_services::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
 RegionBackendServicesConnectionIdempotencyPolicy::UpdateBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
         UpdateBackendServiceRequest const&) {

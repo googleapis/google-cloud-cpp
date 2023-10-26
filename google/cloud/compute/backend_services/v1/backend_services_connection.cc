@@ -151,6 +151,13 @@ BackendServicesConnection::SetSecurityPolicy(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+BackendServicesConnection::TestIamPermissions(
+    google::cloud::cpp::compute::backend_services::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::UpdateBackendService(
     google::cloud::cpp::compute::backend_services::v1::

@@ -38,6 +38,10 @@ class PublicAdvertisedPrefixesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<PublicAdvertisedPrefixesConnectionIdempotencyPolicy>
   clone() const;
 
+  virtual google::cloud::Idempotency Announce(
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          AnnounceRequest const& request);
+
   virtual google::cloud::Idempotency DeletePublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           DeletePublicAdvertisedPrefixRequest const& request);
@@ -57,6 +61,10 @@ class PublicAdvertisedPrefixesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency PatchPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           PatchPublicAdvertisedPrefixRequest const& request);
+
+  virtual google::cloud::Idempotency Withdraw(
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          WithdrawRequest const& request);
 };
 
 std::unique_ptr<PublicAdvertisedPrefixesConnectionIdempotencyPolicy>

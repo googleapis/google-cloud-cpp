@@ -66,6 +66,11 @@ class BackendBucketsRestMetadata : public BackendBucketsRestStub {
       google::cloud::cpp::compute::backend_buckets::v1::
           GetBackendBucketRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::backend_buckets::v1::
+          GetIamPolicyRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncInsertBackendBucket(
       google::cloud::CompletionQueue& cq,
@@ -91,6 +96,16 @@ class BackendBucketsRestMetadata : public BackendBucketsRestStub {
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::backend_buckets::v1::
           SetEdgeSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::backend_buckets::v1::
+          SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::backend_buckets::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateBackendBucket(

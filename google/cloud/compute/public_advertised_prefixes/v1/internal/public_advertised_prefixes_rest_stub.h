@@ -39,6 +39,13 @@ class PublicAdvertisedPrefixesRestStub {
   virtual ~PublicAdvertisedPrefixesRestStub() = default;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAnnounce(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          AnnounceRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeletePublicAdvertisedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -72,6 +79,13 @@ class PublicAdvertisedPrefixesRestStub {
           PatchPublicAdvertisedPrefixRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncWithdraw(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          WithdrawRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -94,6 +108,12 @@ class DefaultPublicAdvertisedPrefixesRestStub
   DefaultPublicAdvertisedPrefixesRestStub(
       std::shared_ptr<rest_internal::RestClient> service,
       std::shared_ptr<rest_internal::RestClient> operations, Options options);
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAnnounce(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          AnnounceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeletePublicAdvertisedPrefix(
@@ -127,6 +147,12 @@ class DefaultPublicAdvertisedPrefixesRestStub
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           PatchPublicAdvertisedPrefixRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncWithdraw(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          WithdrawRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

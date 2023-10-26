@@ -76,6 +76,16 @@ BackendBucketsTracingConnection::GetBackendBucket(
   return internal::EndSpan(*span, child_->GetBackendBucket(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+BackendBucketsTracingConnection::GetIamPolicy(
+    google::cloud::cpp::compute::backend_buckets::v1::GetIamPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsTracingConnection::InsertBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
@@ -124,6 +134,27 @@ BackendBucketsTracingConnection::SetEdgeSecurityPolicy(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetEdgeSecurityPolicy(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+BackendBucketsTracingConnection::SetIamPolicy(
+    google::cloud::cpp::compute::backend_buckets::v1::SetIamPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+BackendBucketsTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

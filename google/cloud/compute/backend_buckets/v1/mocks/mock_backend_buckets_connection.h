@@ -71,6 +71,11 @@ class MockBackendBucketsConnection
                    GetBackendBucketRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+              (google::cloud::cpp::compute::backend_buckets::v1::
+                   GetIamPolicyRequest const& request),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
@@ -94,6 +99,18 @@ class MockBackendBucketsConnection
               (google::cloud::cpp::compute::backend_buckets::v1::
                    SetEdgeSecurityPolicyRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+              (google::cloud::cpp::compute::backend_buckets::v1::
+                   SetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::backend_buckets::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateBackendBucket,
