@@ -201,6 +201,10 @@ class BackendBucketsConnection {
   GetBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::
                        GetBackendBucketRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          GetIamPolicyRequest const& request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::
                           InsertBackendBucketRequest const& request);
@@ -216,6 +220,14 @@ class BackendBucketsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_buckets::v1::
                             SetEdgeSecurityPolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::backend_buckets::v1::
+                         TestIamPermissionsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::

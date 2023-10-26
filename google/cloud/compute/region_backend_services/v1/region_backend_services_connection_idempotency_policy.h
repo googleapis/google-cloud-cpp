@@ -78,6 +78,10 @@ class RegionBackendServicesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_backend_services::v1::
           SetSecurityPolicyRequest const& request);
 
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::region_backend_services::v1::
+          TestIamPermissionsRequest const& request);
+
   virtual google::cloud::Idempotency UpdateBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
           UpdateBackendServiceRequest const& request);

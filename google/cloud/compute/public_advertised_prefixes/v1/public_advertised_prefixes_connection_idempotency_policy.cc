@@ -36,6 +36,12 @@ PublicAdvertisedPrefixesConnectionIdempotencyPolicy::clone() const {
       *this);
 }
 
+Idempotency PublicAdvertisedPrefixesConnectionIdempotencyPolicy::Announce(
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        AnnounceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency PublicAdvertisedPrefixesConnectionIdempotencyPolicy::
     DeletePublicAdvertisedPrefix(
         google::cloud::cpp::compute::public_advertised_prefixes::v1::
@@ -68,6 +74,12 @@ Idempotency PublicAdvertisedPrefixesConnectionIdempotencyPolicy::
     PatchPublicAdvertisedPrefix(
         google::cloud::cpp::compute::public_advertised_prefixes::v1::
             PatchPublicAdvertisedPrefixRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency PublicAdvertisedPrefixesConnectionIdempotencyPolicy::Withdraw(
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        WithdrawRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

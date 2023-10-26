@@ -34,6 +34,27 @@ PublicAdvertisedPrefixesClient::PublicAdvertisedPrefixesClient(
 PublicAdvertisedPrefixesClient::~PublicAdvertisedPrefixesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicAdvertisedPrefixesClient::Announce(
+    std::string const& project, std::string const& public_advertised_prefix,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::public_advertised_prefixes::v1::AnnounceRequest
+      request;
+  request.set_project(project);
+  request.set_public_advertised_prefix(public_advertised_prefix);
+  return connection_->Announce(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicAdvertisedPrefixesClient::Announce(
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        AnnounceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Announce(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesClient::DeletePublicAdvertisedPrefix(
     std::string const& project, std::string const& public_advertised_prefix,
     Options opts) {
@@ -141,6 +162,27 @@ PublicAdvertisedPrefixesClient::PatchPublicAdvertisedPrefix(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchPublicAdvertisedPrefix(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicAdvertisedPrefixesClient::Withdraw(
+    std::string const& project, std::string const& public_advertised_prefix,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::public_advertised_prefixes::v1::WithdrawRequest
+      request;
+  request.set_project(project);
+  request.set_public_advertised_prefix(public_advertised_prefix);
+  return connection_->Withdraw(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicAdvertisedPrefixesClient::Withdraw(
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        WithdrawRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Withdraw(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

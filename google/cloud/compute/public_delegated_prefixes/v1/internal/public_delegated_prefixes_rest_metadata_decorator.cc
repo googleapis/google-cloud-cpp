@@ -51,6 +51,16 @@ PublicDelegatedPrefixesRestMetadata::AggregatedListPublicDelegatedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicDelegatedPrefixesRestMetadata::AsyncAnnounce(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        AnnounceRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncAnnounce(cq, std::move(rest_context), request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesRestMetadata::AsyncDeletePublicDelegatedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -99,6 +109,16 @@ PublicDelegatedPrefixesRestMetadata::AsyncPatchPublicDelegatedPrefix(
   SetMetadata(*rest_context);
   return child_->AsyncPatchPublicDelegatedPrefix(cq, std::move(rest_context),
                                                  request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicDelegatedPrefixesRestMetadata::AsyncWithdraw(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        WithdrawRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncWithdraw(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

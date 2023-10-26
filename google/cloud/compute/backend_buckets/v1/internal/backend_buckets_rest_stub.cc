@@ -160,6 +160,23 @@ DefaultBackendBucketsRestStub::GetBackendBucket(
                    "backendBuckets", "/", request.backend_bucket()));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+DefaultBackendBucketsRestStub::GetIamPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::GetIamPolicyRequest const&
+        request) {
+  auto const& opts = internal::CurrentOptions();
+  return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
+      *service_, rest_context, request, false,
+      absl::StrCat(
+          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
+          "/", "projects", "/", request.project(), "/", "global", "/",
+          "backendBuckets", "/", request.resource(), "/", "getIamPolicy"),
+      rest_internal::TrimEmptyQueryParameters({std::make_pair(
+          "options_requested_policy_version",
+          std::to_string(request.options_requested_policy_version()))}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendBucketsRestStub::AsyncInsertBackendBucket(
     CompletionQueue& cq,
@@ -281,6 +298,38 @@ DefaultBackendBucketsRestStub::AsyncSetEdgeSecurityPolicy(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+DefaultBackendBucketsRestStub::SetIamPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::SetIamPolicyRequest const&
+        request) {
+  auto const& opts = internal::CurrentOptions();
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
+      *service_, rest_context, request.global_set_policy_request_resource(),
+      false,
+      absl::StrCat(
+          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
+          "/", "projects", "/", request.project(), "/", "global", "/",
+          "backendBuckets", "/", request.resource(), "/", "setIamPolicy"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+DefaultBackendBucketsRestStub::TestIamPermissions(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        TestIamPermissionsRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+      *service_, rest_context, request.test_permissions_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "backendBuckets", "/", request.resource(), "/",
+                   "testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

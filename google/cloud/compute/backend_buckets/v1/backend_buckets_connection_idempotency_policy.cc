@@ -58,6 +58,12 @@ Idempotency BackendBucketsConnectionIdempotencyPolicy::GetBackendBucket(
   return Idempotency::kIdempotent;
 }
 
+Idempotency BackendBucketsConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency BackendBucketsConnectionIdempotencyPolicy::InsertBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
         InsertBackendBucketRequest const&) {
@@ -79,6 +85,18 @@ Idempotency BackendBucketsConnectionIdempotencyPolicy::PatchBackendBucket(
 Idempotency BackendBucketsConnectionIdempotencyPolicy::SetEdgeSecurityPolicy(
     google::cloud::cpp::compute::backend_buckets::v1::
         SetEdgeSecurityPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackendBucketsConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        SetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackendBucketsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

@@ -35,6 +35,22 @@ PublicAdvertisedPrefixesRestLogging::PublicAdvertisedPrefixesRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicAdvertisedPrefixesRestLogging::AsyncAnnounce(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        AnnounceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                 AnnounceRequest const& request) {
+        return child_->AsyncAnnounce(cq, std::move(rest_context), request);
+      },
+      cq, std::move(rest_context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestLogging::AsyncDeletePublicAdvertisedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -109,6 +125,22 @@ PublicAdvertisedPrefixesRestLogging::AsyncPatchPublicAdvertisedPrefix(
                  PatchPublicAdvertisedPrefixRequest const& request) {
         return child_->AsyncPatchPublicAdvertisedPrefix(
             cq, std::move(rest_context), request);
+      },
+      cq, std::move(rest_context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicAdvertisedPrefixesRestLogging::AsyncWithdraw(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        WithdrawRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                 WithdrawRequest const& request) {
+        return child_->AsyncWithdraw(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }

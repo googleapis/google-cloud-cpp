@@ -87,6 +87,10 @@ class RegionBackendServicesTracingConnection
   SetSecurityPolicy(google::cloud::cpp::compute::region_backend_services::v1::
                         SetSecurityPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::region_backend_services::v1::
+                         TestIamPermissionsRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::

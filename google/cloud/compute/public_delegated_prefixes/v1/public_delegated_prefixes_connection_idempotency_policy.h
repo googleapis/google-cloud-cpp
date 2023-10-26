@@ -42,6 +42,10 @@ class PublicDelegatedPrefixesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           AggregatedListPublicDelegatedPrefixesRequest request);
 
+  virtual google::cloud::Idempotency Announce(
+      google::cloud::cpp::compute::public_delegated_prefixes::v1::
+          AnnounceRequest const& request);
+
   virtual google::cloud::Idempotency DeletePublicDelegatedPrefix(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           DeletePublicDelegatedPrefixRequest const& request);
@@ -61,6 +65,10 @@ class PublicDelegatedPrefixesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency PatchPublicDelegatedPrefix(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           PatchPublicDelegatedPrefixRequest const& request);
+
+  virtual google::cloud::Idempotency Withdraw(
+      google::cloud::cpp::compute::public_delegated_prefixes::v1::
+          WithdrawRequest const& request);
 };
 
 std::unique_ptr<PublicDelegatedPrefixesConnectionIdempotencyPolicy>

@@ -98,6 +98,20 @@ BackendBucketsRestLogging::GetBackendBucket(
       rest_context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+BackendBucketsRestLogging::GetIamPolicy(
+    rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::GetIamPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::cpp::compute::backend_buckets::v1::
+                 GetIamPolicyRequest const& request) {
+        return child_->GetIamPolicy(rest_context, request);
+      },
+      rest_context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsRestLogging::AsyncInsertBackendBucket(
     CompletionQueue& cq,
@@ -161,6 +175,34 @@ BackendBucketsRestLogging::AsyncSetEdgeSecurityPolicy(
                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+BackendBucketsRestLogging::SetIamPolicy(
+    rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::SetIamPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::cpp::compute::backend_buckets::v1::
+                 SetIamPolicyRequest const& request) {
+        return child_->SetIamPolicy(rest_context, request);
+      },
+      rest_context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+BackendBucketsRestLogging::TestIamPermissions(
+    rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::cpp::compute::backend_buckets::v1::
+                 TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(rest_context, request);
+      },
+      rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

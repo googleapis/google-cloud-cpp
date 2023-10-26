@@ -60,6 +60,10 @@ class PublicDelegatedPrefixesRestConnectionImpl
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           AggregatedListPublicDelegatedPrefixesRequest request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Announce(
+      google::cloud::cpp::compute::public_delegated_prefixes::v1::
+          AnnounceRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePublicDelegatedPrefix(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
@@ -84,6 +88,10 @@ class PublicDelegatedPrefixesRestConnectionImpl
   PatchPublicDelegatedPrefix(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           PatchPublicDelegatedPrefixRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
+      google::cloud::cpp::compute::public_delegated_prefixes::v1::
+          WithdrawRequest const& request) override;
 
  private:
   static std::unique_ptr<

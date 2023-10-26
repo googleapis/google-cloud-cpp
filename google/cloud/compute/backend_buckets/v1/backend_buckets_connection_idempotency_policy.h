@@ -53,6 +53,10 @@ class BackendBucketsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::backend_buckets::v1::
           GetBackendBucketRequest const& request);
 
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          GetIamPolicyRequest const& request);
+
   virtual google::cloud::Idempotency InsertBackendBucket(
       google::cloud::cpp::compute::backend_buckets::v1::
           InsertBackendBucketRequest const& request);
@@ -68,6 +72,14 @@ class BackendBucketsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency SetEdgeSecurityPolicy(
       google::cloud::cpp::compute::backend_buckets::v1::
           SetEdgeSecurityPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          TestIamPermissionsRequest const& request);
 
   virtual google::cloud::Idempotency UpdateBackendBucket(
       google::cloud::cpp::compute::backend_buckets::v1::

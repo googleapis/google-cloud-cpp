@@ -50,6 +50,12 @@ class PublicDelegatedPrefixesRestLogging
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           AggregatedListPublicDelegatedPrefixesRequest const& request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAnnounce(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::public_delegated_prefixes::v1::
+          AnnounceRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeletePublicDelegatedPrefix(
       google::cloud::CompletionQueue& cq,
@@ -82,6 +88,12 @@ class PublicDelegatedPrefixesRestLogging
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           PatchPublicDelegatedPrefixRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncWithdraw(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::public_delegated_prefixes::v1::
+          WithdrawRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

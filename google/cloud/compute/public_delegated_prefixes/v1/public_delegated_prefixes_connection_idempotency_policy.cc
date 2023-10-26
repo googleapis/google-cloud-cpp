@@ -43,6 +43,12 @@ Idempotency PublicDelegatedPrefixesConnectionIdempotencyPolicy::
   return Idempotency::kIdempotent;
 }
 
+Idempotency PublicDelegatedPrefixesConnectionIdempotencyPolicy::Announce(
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        AnnounceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency
 PublicDelegatedPrefixesConnectionIdempotencyPolicy::DeletePublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
@@ -75,6 +81,12 @@ Idempotency
 PublicDelegatedPrefixesConnectionIdempotencyPolicy::PatchPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         PatchPublicDelegatedPrefixRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency PublicDelegatedPrefixesConnectionIdempotencyPolicy::Withdraw(
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        WithdrawRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

@@ -398,6 +398,22 @@ RegionBackendServicesRestConnectionImpl::SetSecurityPolicy(
       });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionBackendServicesRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::region_backend_services::v1::
+        TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::cpp::compute::region_backend_services::v1::
+                 TestIamPermissionsRequest const& request) {
+        return stub_->TestIamPermissions(rest_context, request);
+      },
+      request, __func__);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesRestConnectionImpl::UpdateBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::

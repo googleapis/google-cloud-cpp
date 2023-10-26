@@ -214,6 +214,22 @@ BackendBucketsRestConnectionImpl::GetBackendBucket(
       request, __func__);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+BackendBucketsRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::backend_buckets::v1::GetIamPolicyRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::cpp::compute::backend_buckets::v1::
+                 GetIamPolicyRequest const& request) {
+        return stub_->GetIamPolicy(rest_context, request);
+      },
+      request, __func__);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsRestConnectionImpl::InsertBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
@@ -405,6 +421,38 @@ BackendBucketsRestConnectionImpl::SetEdgeSecurityPolicy(
         r.set_project(request.project());
         r.set_operation(op);
       });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+BackendBucketsRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::backend_buckets::v1::SetIamPolicyRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::cpp::compute::backend_buckets::v1::
+                 SetIamPolicyRequest const& request) {
+        return stub_->SetIamPolicy(rest_context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+BackendBucketsRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::cpp::compute::backend_buckets::v1::
+                 TestIamPermissionsRequest const& request) {
+        return stub_->TestIamPermissions(rest_context, request);
+      },
+      request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

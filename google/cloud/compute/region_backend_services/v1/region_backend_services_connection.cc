@@ -115,6 +115,13 @@ RegionBackendServicesConnection::SetSecurityPolicy(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionBackendServicesConnection::TestIamPermissions(
+    google::cloud::cpp::compute::region_backend_services::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesConnection::UpdateBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::

@@ -50,6 +50,12 @@ class MockPublicAdvertisedPrefixesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              Announce,
+              (google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                   AnnounceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePublicAdvertisedPrefix,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
                    DeletePublicAdvertisedPrefixRequest const& request),
@@ -78,6 +84,12 @@ class MockPublicAdvertisedPrefixesConnection
               PatchPublicAdvertisedPrefix,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
                    PatchPublicAdvertisedPrefixRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              Withdraw,
+              (google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                   WithdrawRequest const& request),
               (override));
 };
 
