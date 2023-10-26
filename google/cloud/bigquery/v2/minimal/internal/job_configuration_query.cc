@@ -77,8 +77,7 @@ void to_json(nlohmann::json& j, JobConfigurationQuery const& c) {
       {"clustering", c.clustering},
       {"destinationEncryptionConfiguration",
        c.destination_encryption_configuration},
-      {"scriptOptions", c.script_options},
-      {"systemVariables", c.system_variables}};
+      {"scriptOptions", c.script_options}};
 }
 void from_json(nlohmann::json const& j, JobConfigurationQuery& c) {
   SafeGetTo(c.query, j, "query");

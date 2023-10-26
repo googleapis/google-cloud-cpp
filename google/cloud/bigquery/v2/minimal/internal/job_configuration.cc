@@ -35,8 +35,7 @@ std::string JobConfiguration::DebugString(absl::string_view name,
 }
 
 void to_json(nlohmann::json& j, JobConfiguration const& c) {
-  j = nlohmann::json{{"jobType", c.job_type},
-                     {"query", c.query},
+  j = nlohmann::json{{"query", c.query},
                      {"dryRun", c.dry_run},
                      {"labels", c.labels}};
 

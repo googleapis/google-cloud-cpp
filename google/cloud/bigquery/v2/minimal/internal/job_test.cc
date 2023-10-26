@@ -1295,8 +1295,52 @@ TEST(JobTest, ListFormatJobDebugString) {
 })");
 }
 
-TEST(JobTest, JobToFromJson) {
+TEST(JobTest, JobToJson) {
   auto const* const expected_text =
+      R"({"configuration":{"dryRun":true,"jobTimeoutMs":"10")"
+      R"(,"labels":{"label-key1":"label-val1"},"query":{"allowLargeResults":true)"
+      R"(,"clustering":{"fields":["clustering-field-1","clustering-field-2"]})"
+      R"(,"connectionProperties":[{"key":"conn-prop-key","value":"conn-prop-val"}])"
+      R"(,"createDisposition":"job-create-disposition","createSession":true)"
+      R"(,"defaultDataset":{"datasetId":"1","projectId":"2"})"
+      R"(,"destinationEncryptionConfiguration":{"kmsKeyName":"encryption-key-name"})"
+      R"(,"destinationTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
+      R"(,"flattenResults":true,"maximumBytesBilled":"0","parameterMode":"job-param-mode")"
+      R"(,"preserveNulls":true,"priority":"job-priority","query":"select 1;")"
+      R"(,"queryParameters":[{"name":"query-parameter-name")"
+      R"(,"parameterType":{"arrayType":{"structTypes":[{"description":"array-struct-description")"
+      R"(,"name":"array-struct-name","type":{"structTypes":[])"
+      R"(,"type":"array-struct-type"}}],"type":"array-type"})"
+      R"(,"structTypes":[{"description":"qp-struct-description","name":"qp-struct-name")"
+      R"(,"type":{"structTypes":[],"type":"qp-struct-type"}}])"
+      R"(,"type":"query-parameter-type"},"parameterValue":{"arrayValues":[{"arrayValues":[{"arrayValues":[])"
+      R"(,"structValues":{"array-map-key":{"arrayValues":[])"
+      R"(,"structValues":{},"value":"array-map-value"}},"value":"array-val-2"}])"
+      R"(,"structValues":{},"value":"array-val-1"}])"
+      R"(,"structValues":{"qp-map-key":{"arrayValues":[],"structValues":{})"
+      R"(,"value":"qp-map-value"}},"value":"query-parameter-value"}}])"
+      R"(,"rangePartitioning":{"field":"rp-field-1","range":{"end":"range-end")"
+      R"(,"interval":"range-interval","start":"range-start"}})"
+      R"(,"schemaUpdateOptions":["job-update-options"])"
+      R"(,"scriptOptions":{"keyResultStatement":"FIRST_SELECT")"
+      R"(,"statementByteBudget":10,"statementTimeoutMs":"10"})"
+      R"(,"timePartitioning":{"expirationTime":"0","field":"tp-field-1","type":"tp-field-type"})"
+      R"(,"useLegacySql":true,"useQueryCache":true,"writeDisposition":"job-write-disposition"}})"
+      R"(,"jobReference":{"jobId":"2","location":"us-east","projectId":"1"}})";
+
+  auto expected_json = nlohmann::json::parse(expected_text, nullptr, false);
+  EXPECT_TRUE(expected_json.is_object());
+
+  auto actual = MakeJob();
+
+  nlohmann::json actual_json;
+  to_json(actual_json, actual);
+
+  EXPECT_EQ(expected_json, actual_json);
+}
+
+TEST(JobTest, JobFromJson) {
+  auto const* const actual_text =
       R"({"configuration":{"dryRun":true,"jobTimeoutMs":"10","jobType":"QUERY")"
       R"(,"labels":{"label-key1":"label-val1"},"query":{"allowLargeResults":true)"
       R"(,"clustering":{"fields":["clustering-field-1","clustering-field-2"]})"
@@ -1404,15 +1448,10 @@ TEST(JobTest, JobToFromJson) {
       R"(,"status":{"errorResult":{"location":"","message":"","reason":""})"
       R"(,"errors":[],"state":"DONE"},"user_email":"a@b.com"})";
 
-  auto expected_json = nlohmann::json::parse(expected_text, nullptr, false);
-  EXPECT_TRUE(expected_json.is_object());
+  auto actual_json = nlohmann::json::parse(actual_text, nullptr, false);
+  EXPECT_TRUE(actual_json.is_object());
 
   auto expected = MakeJob();
-
-  nlohmann::json actual_json;
-  to_json(actual_json, expected);
-
-  EXPECT_EQ(expected_json, actual_json);
 
   Job actual;
   from_json(actual_json, actual);
@@ -1420,8 +1459,117 @@ TEST(JobTest, JobToFromJson) {
   bigquery_v2_minimal_testing::AssertEquals(expected, actual);
 }
 
-TEST(JobTest, ListFormatJobToFromJson) {
+TEST(JobTest, ListFormatJobToJson) {
   auto const* const expected_text =
+      R"({"configuration":{"dryRun":true,"jobTimeoutMs":"10")"
+      R"(,"labels":{"label-key1":"label-val1"})"
+      R"(,"query":{"allowLargeResults":true,"clustering":{"fields":["clustering-field-1")"
+      R"(,"clustering-field-2"]},"connectionProperties":[{"key":"conn-prop-key")"
+      R"(,"value":"conn-prop-val"}],"createDisposition":"job-create-disposition")"
+      R"(,"createSession":true,"defaultDataset":{"datasetId":"1","projectId":"2"})"
+      R"(,"destinationEncryptionConfiguration":{"kmsKeyName":"encryption-key-name"})"
+      R"(,"destinationTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
+      R"(,"flattenResults":true,"maximumBytesBilled":"0","parameterMode":"job-param-mode")"
+      R"(,"preserveNulls":true,"priority":"job-priority","query":"select 1;")"
+      R"(,"queryParameters":[{"name":"query-parameter-name")"
+      R"(,"parameterType":{"arrayType":{"structTypes":[{"description":"array-struct-description")"
+      R"(,"name":"array-struct-name","type":{"structTypes":[],"type":"array-struct-type"}}])"
+      R"(,"type":"array-type"},"structTypes":[{"description":"qp-struct-description")"
+      R"(,"name":"qp-struct-name","type":{"structTypes":[],"type":"qp-struct-type"}}])"
+      R"(,"type":"query-parameter-type"},"parameterValue":{"arrayValues":[{"arrayValues":[{"arrayValues":[])"
+      R"(,"structValues":{"array-map-key":{"arrayValues":[],"structValues":{})"
+      R"(,"value":"array-map-value"}},"value":"array-val-2"}],"structValues":{})"
+      R"(,"value":"array-val-1"}],"structValues":{"qp-map-key":{"arrayValues":[])"
+      R"(,"structValues":{},"value":"qp-map-value"}},"value":"query-parameter-value"}}])"
+      R"(,"rangePartitioning":{"field":"rp-field-1","range":{"end":"range-end")"
+      R"(,"interval":"range-interval","start":"range-start"}})"
+      R"(,"schemaUpdateOptions":["job-update-options"])"
+      R"(,"scriptOptions":{"keyResultStatement":"FIRST_SELECT")"
+      R"(,"statementByteBudget":10,"statementTimeoutMs":"10"})"
+      R"(,"timePartitioning":{"expirationTime":"0","field":"tp-field-1","type":"tp-field-type"})"
+      R"(,"useLegacySql":true,"useQueryCache":true,"writeDisposition":"job-write-disposition"}})"
+      R"(,"errorResult":{"location":"","message":"","reason":""},"id":"1")"
+      R"(,"jobReference":{"jobId":"2","location":"us-east","projectId":"1"},"kind":"Job")"
+      R"(,"principal_subject":"principal-sub","state":"DONE","statistics":{"completionRatio":1234.1234)"
+      R"(,"creationTime":"10","dataMaskingStatistics":{"dataMaskingApplied":true},"endTime":"10")"
+      R"(,"finalExecutionDurationMs":"10","numChildJobs":"1234","parentJobId":"parent-job-123")"
+      R"(,"query":{"billingTier":1234,"cacheHit":true,"dclTargetDataset":{"datasetId":"1","projectId":"2"})"
+      R"(,"dclTargetTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
+      R"(,"dclTargetView":{"datasetId":"1","projectId":"2","tableId":"3"})"
+      R"(,"ddlAffectedRowAccessPolicyCount":"1234","ddlOperationPerformed":"ddl_operation_performed")"
+      R"(,"ddlTargetDataset":{"datasetId":"1","projectId":"2"})"
+      R"(,"ddlTargetRoutine":{"datasetId":"1","projectId":"2","routineId":"3"})"
+      R"(,"ddlTargetRowAccessPolicy":{"datasetId":"1","policyId":"3")"
+      R"(,"projectId":"1234","tableId":"2"},"ddlTargetTable":{"datasetId":"1")"
+      R"(,"projectId":"2","tableId":"3"},"dmlStats":{"deletedRowCount":"1234")"
+      R"(,"insertedRowCount":"1234","updatedRowCount":"1234"},"estimatedBytesProcessed":"1234")"
+      R"(,"materializedViewStatistics":{"materializedView":[{"chosen":true,"estimatedBytesSaved":"1234")"
+      R"(,"rejectedReason":"BASE_TABLE_DATA_CHANGE")"
+      R"(,"tableReference":{"datasetId":"1","projectId":"2","tableId":"3"}}]})"
+      R"(,"metadataCacheStatistics":{"tableMetadataCacheUsage":[{"explanation":"test-table-metadata")"
+      R"(,"tableReference":{"datasetId":"1","projectId":"2","tableId":"3"})"
+      R"(,"unusedReason":"EXCEEDED_MAX_STALENESS"}]})"
+      R"(,"numDmlAffectedRows":"1234","performanceInsights":{"avgPreviousExecutionMs":"10")"
+      R"(,"stagePerformanceChangeInsights":{"inputDataChange":{"recordsReadDiffPercentage":12.119999885559082})"
+      R"(,"stageId":"1234"},"stagePerformanceStandaloneInsights":{"insufficientShuffleQuota":true)"
+      R"(,"slotContention":true,"stageId":"1234"}},"queryPlan":[{"completedParallelInputs":"1234")"
+      R"(,"computeMode":"BIGQUERY","computeMsAvg":"10","computeMsMax":"10")"
+      R"(,"computeRatioAvg":1234.1234,"computeRatioMax":1234.1234,"endMs":"10","id":"1234")"
+      R"(,"inputStages":["1234"],"name":"test-explain","parallelInputs":"1234")"
+      R"(,"readMsAvg":"10","readMsMax":"10","readRatioAvg":1234.1234,"readRatioMax":1234.1234)"
+      R"(,"recordsRead":"1234","recordsWritten":"1234","shuffleOutputBytes":"1234")"
+      R"(,"shuffleOutputBytesSpilled":"1234","slotMs":"10","startMs":"10","status":"explain-status")"
+      R"(,"steps":[{"kind":"sub-step-kind","substeps":["sub-step-1"]}],"waitMsAvg":"10")"
+      R"(,"waitMsMax":"10","waitRatioAvg":1234.1234,"waitRatioMax":1234.1234,"writeMsAvg":"10")"
+      R"(,"writeMsMax":"10","writeRatioAvg":1234.1234,"writeRatioMax":1234.1234}])"
+      R"(,"referencedRoutines":[{"datasetId":"1","projectId":"2","routineId":"3"}])"
+      R"(,"referencedTables":[{"datasetId":"1","projectId":"2","tableId":"3"}])"
+      R"(,"schema":{"fields":[{"categories":{"names":[]},"collation":"")"
+      R"(,"defaultValueExpression":"","description":"","fields":{"fields":[]})"
+      R"(,"maxLength":0,"mode":"fmode","name":"fname-1","policyTags":{"names":[]})"
+      R"(,"precision":0,"rangeElementType":{"type":""},"roundingMode":"")"
+      R"(,"scale":0,"type":""}]},"searchStatistics":{"indexUnusedReasons":[{)"
+      R"("baseTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
+      R"(,"code":"BASE_TABLE_TOO_SMALL","indexName":"test-index","message":""}])"
+      R"(,"indexUsageMode":"PARTIALLY_USED"},"statementType":"statement_type")"
+      R"(,"timeline":[{"activeUnits":"1234","completedUnits":"1234","elapsedMs":"10")"
+      R"(,"estimatedRunnableUnits":"1234","pendingUnits":"1234","totalSlotMs":"10"}])"
+      R"(,"totalBytesBilled":"1234","totalBytesProcessed":"1234")"
+      R"(,"totalBytesProcessedAccuracy":"total_bytes_processed_accuracy")"
+      R"(,"totalPartitionsProcessed":"1234","totalSlotMs":"10","transferredBytes":"1234")"
+      R"(,"undeclaredQueryParameters":[{"name":"query-parameter-name")"
+      R"(,"parameterType":{"arrayType":{"structTypes":[{"description":"array-struct-description")"
+      R"(,"name":"array-struct-name","type":{"structTypes":[],"type":"array-struct-type"}}])"
+      R"(,"type":"array-type"},"structTypes":[{"description":"qp-struct-description")"
+      R"(,"name":"qp-struct-name","type":{"structTypes":[],"type":"qp-struct-type"}}])"
+      R"(,"type":"query-parameter-type"},"parameterValue":{"arrayValues":[{"arrayValues":[{"arrayValues":[])"
+      R"(,"structValues":{"array-map-key":{"arrayValues":[],"structValues":{})"
+      R"(,"value":"array-map-value"}},"value":"array-val-2"}],"structValues":{},"value":"array-val-1"}])"
+      R"(,"structValues":{"qp-map-key":{"arrayValues":[],"structValues":{},"value":"qp-map-value"}})"
+      R"(,"value":"query-parameter-value"}}]},"quotaDeferments":["quota-defer-1"])"
+      R"(,"reservation_id":"reservation-id-123","rowLevelSecurityStatistics":{"rowLevelSecurityApplied":true})"
+      R"(,"scriptStatistics":{"evaluationKind":"STATEMENT")"
+      R"(,"stackFrames":[{"endColumn":1234,"endLine":1234,"procedureId":"proc-id")"
+      R"(,"startColumn":1234,"startLine":1234,"text":"stack-frame-text"}]})"
+      R"(,"sessionInfo":{"sessionId":"session-id-123"},"startTime":"10")"
+      R"(,"totalBytesProcessed":"1234","totalSlotMs":"10")"
+      R"(,"transactionInfo":{"transactionId":"transaction-id-123"}})"
+      R"(,"status":{"errorResult":{"location":"","message":"","reason":""})"
+      R"(,"errors":[],"state":"DONE"},"user_email":"a@b.com"})";
+
+  auto expected_json = nlohmann::json::parse(expected_text, nullptr, false);
+  EXPECT_TRUE(expected_json.is_object());
+
+  auto expected = MakeListFormatJob();
+
+  nlohmann::json actual_json;
+  to_json(actual_json, expected);
+
+  EXPECT_EQ(expected_json, actual_json);
+}
+
+TEST(JobTest, ListFormatJobFromJson) {
+  auto const* const actual_text =
       R"({"configuration":{"dryRun":true,"jobTimeoutMs":"10")"
       R"(,"jobType":"QUERY","labels":{"label-key1":"label-val1"})"
       R"(,"query":{"allowLargeResults":true,"clustering":{"fields":["clustering-field-1")"
@@ -1527,15 +1675,10 @@ TEST(JobTest, ListFormatJobToFromJson) {
       R"(,"status":{"errorResult":{"location":"","message":"","reason":""})"
       R"(,"errors":[],"state":"DONE"},"user_email":"a@b.com"})";
 
-  auto expected_json = nlohmann::json::parse(expected_text, nullptr, false);
-  EXPECT_TRUE(expected_json.is_object());
+  auto actual_json = nlohmann::json::parse(actual_text, nullptr, false);
+  EXPECT_TRUE(actual_json.is_object());
 
   auto expected = MakeListFormatJob();
-
-  nlohmann::json actual_json;
-  to_json(actual_json, expected);
-
-  EXPECT_EQ(expected_json, actual_json);
 
   ListFormatJob actual;
   from_json(actual_json, actual);

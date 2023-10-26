@@ -30,7 +30,7 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct JobConfiguration {
-  std::string job_type;
+  std::string job_type;     // Output only
   bool dry_run = false;
   std::chrono::milliseconds job_timeout = std::chrono::milliseconds(0);
   std::map<std::string, std::string> labels;

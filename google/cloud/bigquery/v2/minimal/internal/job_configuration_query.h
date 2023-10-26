@@ -53,7 +53,7 @@ struct JobConfigurationQuery {
   Clustering clustering;
   EncryptionConfiguration destination_encryption_configuration;
   ScriptOptions script_options;
-  SystemVariables system_variables;
+  SystemVariables system_variables;       // output only
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},

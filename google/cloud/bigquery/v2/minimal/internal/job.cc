@@ -94,15 +94,8 @@ void from_json(nlohmann::json const& j, JobReference& jb) {
 }
 
 void to_json(nlohmann::json& j, Job const& jb) {
-  j = nlohmann::json{{"kind", jb.kind},
-                     {"etag", jb.etag},
-                     {"id", jb.id},
-                     {"selfLink", jb.self_link},
-                     {"user_email", jb.user_email},
-                     {"status", jb.status},
-                     {"jobReference", jb.job_reference},
-                     {"configuration", jb.configuration},
-                     {"statistics", jb.statistics}};
+  j = nlohmann::json{{"jobReference", jb.job_reference},
+                     {"configuration", jb.configuration}};
 }
 void from_json(nlohmann::json const& j, Job& jb) {
   SafeGetTo(jb.kind, j, "kind");
