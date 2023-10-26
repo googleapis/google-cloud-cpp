@@ -22,7 +22,7 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
-/* The function formats class comments based on the pre-existing service
+/** The function formats class comments based on the pre-existing service
  * comments.
  *
  * The function does not just use service.name() and takes @p service_name in
@@ -35,7 +35,8 @@ namespace generator_internal {
  */
 std::string FormatClassCommentsFromServiceComments(
     google::protobuf::ServiceDescriptor const& service,
-    std::string const& service_name, std::string const& replacement_comment);
+    std::string const& service_name,
+    absl::optional<std::string> const& replacement_comment);
 
 }  // namespace generator_internal
 }  // namespace cloud

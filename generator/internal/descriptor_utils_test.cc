@@ -329,7 +329,7 @@ INSTANTIATE_TEST_SUITE_P(
       return std::get<0>(info.param);
     });
 
-class CreateServiceNameMappingTest : public CreateServiceVarsTest {};
+using CreateServiceNameMappingTest = CreateServiceVarsTest;
 
 TEST_P(CreateServiceNameMappingTest, KeySetCorrectly) {
   FileDescriptor const* service_file_descriptor =
@@ -467,7 +467,7 @@ INSTANTIATE_TEST_SUITE_P(
       return std::get<0>(info.param);
     });
 
-class CreateServiceNameToCommentMappingTest : public CreateServiceVarsTest {};
+using CreateServiceNameToCommentMappingTest = CreateServiceVarsTest;
 
 TEST_P(CreateServiceNameToCommentMappingTest, KeySetCorrectly) {
   FileDescriptor const* service_file_descriptor =

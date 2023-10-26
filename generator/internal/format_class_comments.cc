@@ -54,7 +54,8 @@ auto constexpr kFixedClientComment = R"""(
 
 std::string FormatClassCommentsFromServiceComments(
     google::protobuf::ServiceDescriptor const& service,
-    std::string const& service_name, std::string const& replacement_comment) {
+    std::string const& service_name,
+    absl::optional<std::string> const& replacement_comment) {
   google::protobuf::SourceLocation service_source_location;
   std::string formatted_comments;
   // Use the service descriptor to populate the service_source_location.
@@ -64,9 +65,8 @@ std::string FormatClassCommentsFromServiceComments(
                   << " no leading_comments to format";
     formatted_comments = absl::StrCat(" ", service_name, "Client");
   } else {
-    if (!replacement_comment.empty()) {
-      service_source_location.leading_comments = replacement_comment;
-    }
+    service_source_location.leading_comments = replacement_comment.value_or(
+	        std::move(service_source_location.leading_comments));
     formatted_comments = absl::StrReplaceAll(
         absl::StripSuffix(service_source_location.leading_comments, "\n"),
         {{"\n\n", "\n///\n/// "},
