@@ -154,6 +154,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_routes_v1::RoutesClient](@ref compute_routes_v1::RoutesClient-retry-snippet)
 - [\c compute_security_policies_v1::SecurityPoliciesClient](@ref compute_security_policies_v1::SecurityPoliciesClient-retry-snippet)
 - [\c compute_service_attachments_v1::ServiceAttachmentsClient](@ref compute_service_attachments_v1::ServiceAttachmentsClient-retry-snippet)
+- [\c compute_snapshot_settings_v1::SnapshotSettingsClient](@ref compute_snapshot_settings_v1::SnapshotSettingsClient-retry-snippet)
 - [\c compute_snapshots_v1::SnapshotsClient](@ref compute_snapshots_v1::SnapshotsClient-retry-snippet)
 - [\c compute_ssl_certificates_v1::SslCertificatesClient](@ref compute_ssl_certificates_v1::SslCertificatesClient-retry-snippet)
 - [\c compute_ssl_policies_v1::SslPoliciesClient](@ref compute_ssl_policies_v1::SslPoliciesClient-retry-snippet)
@@ -1083,6 +1084,18 @@ This shows how to override the retry policies for compute_service_attachments_v1
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/compute/service_attachments/v1/samples/service_attachments_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_snapshot_settings_v1::SnapshotSettingsClient-retry-snippet Override compute_snapshot_settings_v1::SnapshotSettingsClient Retry Policies
+
+This shows how to override the retry policies for compute_snapshot_settings_v1::SnapshotSettingsClient:
+
+@snippet google/cloud/compute/snapshot_settings/v1/samples/snapshot_settings_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/snapshot_settings/v1/samples/snapshot_settings_client_samples.cc custom-idempotency-policy
 
 */
 

@@ -26,23 +26,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SnapshotSettingsConnectionIdempotencyPolicy::~SnapshotSettingsConnectionIdempotencyPolicy() = default;
+SnapshotSettingsConnectionIdempotencyPolicy::
+    ~SnapshotSettingsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SnapshotSettingsConnectionIdempotencyPolicy>
 SnapshotSettingsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SnapshotSettingsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SnapshotSettingsConnectionIdempotencyPolicy::GetSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest const&) {
+Idempotency SnapshotSettingsConnectionIdempotencyPolicy::GetSnapshotSettings(
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        GetSnapshotSettingsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SnapshotSettingsConnectionIdempotencyPolicy::PatchSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const&) {
+Idempotency SnapshotSettingsConnectionIdempotencyPolicy::PatchSnapshotSettings(
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        PatchSnapshotSettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SnapshotSettingsConnectionIdempotencyPolicy>
-    MakeDefaultSnapshotSettingsConnectionIdempotencyPolicy() {
+MakeDefaultSnapshotSettingsConnectionIdempotencyPolicy() {
   return std::make_unique<SnapshotSettingsConnectionIdempotencyPolicy>();
 }
 

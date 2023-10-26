@@ -17,11 +17,11 @@
 // source: google/cloud/compute/snapshot_settings/v1/snapshot_settings.proto
 
 #include "google/cloud/compute/snapshot_settings/v1/snapshot_settings_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/snapshot_settings/v1/internal/snapshot_settings_option_defaults.h"
 #include "google/cloud/compute/snapshot_settings/v1/internal/snapshot_settings_tracing_connection.h"
 #include "google/cloud/compute/snapshot_settings/v1/snapshot_settings_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
@@ -35,16 +35,18 @@ SnapshotSettingsConnection::~SnapshotSettingsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
 SnapshotSettingsConnection::GetSnapshotSettings(
-    google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest const&) {
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        GetSnapshotSettingsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotSettingsConnection::PatchSnapshotSettings(
-    google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const&) {
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        PatchSnapshotSettingsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

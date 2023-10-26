@@ -42,17 +42,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSnapshotSettingsConnection : public compute_snapshot_settings_v1::SnapshotSettingsConnection {
+class MockSnapshotSettingsConnection
+    : public compute_snapshot_settings_v1::SnapshotSettingsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>,
-  GetSnapshotSettings,
-  (google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest const& request), (override));
+              GetSnapshotSettings,
+              (google::cloud::cpp::compute::snapshot_settings::v1::
+                   GetSnapshotSettingsRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchSnapshotSettings,
-  (google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request), (override));
+              PatchSnapshotSettings,
+              (google::cloud::cpp::compute::snapshot_settings::v1::
+                   PatchSnapshotSettingsRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
