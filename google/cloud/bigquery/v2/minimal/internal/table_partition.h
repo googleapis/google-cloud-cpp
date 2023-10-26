@@ -45,9 +45,9 @@ void to_json(nlohmann::json& j, TimePartitioning const& t);
 void from_json(nlohmann::json const& j, TimePartitioning& t);
 
 struct Range {
-  std::string start;
-  std::string end;
-  std::string interval;
+  int start;
+  int end;
+  int interval;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},

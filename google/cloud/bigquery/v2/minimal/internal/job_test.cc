@@ -51,8 +51,8 @@ TEST(JobTest, JobDebugString) {
       R"( destination_table { project_id: "2" dataset_id: "1" table_id: "3" })"
       R"( time_partitioning { type: "tp-field-type" expiration_time { "0" })"
       R"( field: "tp-field-1" } range_partitioning {)"
-      R"( field: "rp-field-1" range { start: "range-start" end: "range-end")"
-      R"( interval: "range-interval" } } clustering { fields: "clustering-field-1")"
+      R"( field: "rp-field-1" range { start: 0 end: 2)"
+      R"( interval: 1 } } clustering { fields: "clustering-field-1")"
       R"( fields: "clustering-field-2" } destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" } script_options {)"
       R"( statement_timeout { "10ms" } statement_byte_budget: 10)"
@@ -158,8 +158,8 @@ TEST(JobTest, JobDebugString) {
       R"( destination_table { project_id: "2" dataset_id: "1" table_id: "3" })"
       R"( time_partitioning { type: "tp-field-type" expiration_time { "0" })"
       R"( field: "tp-field-1" } range_partitioning {)"
-      R"( field: "rp-field-1" range { start: "range-start" end: "range-end")"
-      R"( interval: "range-interval" } } clustering { fields: "clustering-field-1")"
+      R"( field: "rp-field-1" range { start: 0 end: 2)"
+      R"( interval: 1 } } clustering { fields: "clustering-field-1")"
       R"( fields: "clustering-field-2" } destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" } script_options {)"
       R"( statement_timeout { "10ms" } statement_byte_budget: 10)"
@@ -309,9 +309,9 @@ TEST(JobTest, JobDebugString) {
       range_partitioning {
         field: "rp-field-1"
         range {
-          start: "range-start"
-          end: "range-end"
-          interval: "range-interval"
+          start: 0
+          end: 2
+          interval: 1
         }
       }
       clustering {
@@ -681,7 +681,7 @@ TEST(JobTest, ListFormatJobDebugString) {
       R"( table_id: "3" } time_partitioning { type: "tp-field-type")"
       R"( expiration_time { "0" } field: "tp-field-1" })"
       R"( range_partitioning { field: "rp-field-1" range {)"
-      R"( start: "range-start" end: "range-end" interval: "range-interval" } })"
+      R"( start: 0 end: 2 interval: 1 } })"
       R"( clustering { fields: "clustering-field-1")"
       R"( fields: "clustering-field-2" } destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" } script_options {)"
@@ -794,7 +794,7 @@ TEST(JobTest, ListFormatJobDebugString) {
       R"( table_id: "3" } time_partitioning { type: "tp-field-type")"
       R"( expiration_time { "0" } field: "tp-field-1" })"
       R"( range_partitioning { field: "rp-field-1" range {)"
-      R"( start: "range-start" end: "range-end" interval: "range-interval" } })"
+      R"( start: 0 end: 2 interval: 1 } })"
       R"( clustering { fields: "clustering-field-1")"
       R"( fields: "clustering-field-2" } destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" } script_options {)"
@@ -946,9 +946,9 @@ TEST(JobTest, ListFormatJobDebugString) {
       range_partitioning {
         field: "rp-field-1"
         range {
-          start: "range-start"
-          end: "range-end"
-          interval: "range-interval"
+          start: 0
+          end: 2
+          interval: 1
         }
       }
       clustering {
@@ -1319,8 +1319,8 @@ TEST(JobTest, JobToFromJson) {
       R"(,"structValues":{},"value":"array-val-1"}])"
       R"(,"structValues":{"qp-map-key":{"arrayValues":[],"structValues":{})"
       R"(,"value":"qp-map-value"}},"value":"query-parameter-value"}}])"
-      R"(,"rangePartitioning":{"field":"rp-field-1","range":{"end":"range-end")"
-      R"(,"interval":"range-interval","start":"range-start"}})"
+      R"(,"rangePartitioning":{"field":"rp-field-1","range":{"end":2)"
+      R"(,"interval":1,"start":0}})"
       R"(,"schemaUpdateOptions":["job-update-options"])"
       R"(,"scriptOptions":{"keyResultStatement":"FIRST_SELECT")"
       R"(,"statementByteBudget":10,"statementTimeoutMs":"10"})"
@@ -1442,8 +1442,8 @@ TEST(JobTest, ListFormatJobToFromJson) {
       R"(,"value":"array-map-value"}},"value":"array-val-2"}],"structValues":{})"
       R"(,"value":"array-val-1"}],"structValues":{"qp-map-key":{"arrayValues":[])"
       R"(,"structValues":{},"value":"qp-map-value"}},"value":"query-parameter-value"}}])"
-      R"(,"rangePartitioning":{"field":"rp-field-1","range":{"end":"range-end")"
-      R"(,"interval":"range-interval","start":"range-start"}})"
+      R"(,"rangePartitioning":{"field":"rp-field-1","range":{"end":2)"
+      R"(,"interval":1,"start":0}})"
       R"(,"schemaUpdateOptions":["job-update-options"])"
       R"(,"scriptOptions":{"keyResultStatement":"FIRST_SELECT")"
       R"(,"statementByteBudget":10,"statementTimeoutMs":"10"})"

@@ -36,9 +36,9 @@ std::string Range::DebugString(absl::string_view name,
                                TracingOptions const& options,
                                int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("start", start)
-      .StringField("end", end)
-      .StringField("interval", interval)
+      .Field("start", start)
+      .Field("end", end)
+      .Field("interval", interval)
       .Build();
 }
 

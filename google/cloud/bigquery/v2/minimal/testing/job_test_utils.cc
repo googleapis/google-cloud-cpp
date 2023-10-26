@@ -260,9 +260,9 @@ Clustering MakeClustering() {
 RangePartitioning MakeRangePartitioning() {
   RangePartitioning rp;
   rp.field = "rp-field-1";
-  rp.range.end = "range-end";
-  rp.range.start = "range-start";
-  rp.range.interval = "range-interval";
+  rp.range.end = 2;
+  rp.range.start = 0;
+  rp.range.interval = 1;
 
   return rp;
 }
