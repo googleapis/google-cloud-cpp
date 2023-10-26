@@ -66,7 +66,7 @@ std::string FormatClassCommentsFromServiceComments(
     formatted_comments = absl::StrCat(" ", service_name, "Client");
   } else {
     service_source_location.leading_comments = replacement_comment.value_or(
-	        std::move(service_source_location.leading_comments));
+        std::move(service_source_location.leading_comments));
     formatted_comments = absl::StrReplaceAll(
         absl::StripSuffix(service_source_location.leading_comments, "\n"),
         {{"\n\n", "\n///\n/// "},

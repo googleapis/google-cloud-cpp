@@ -52,8 +52,8 @@ service Service {
   auto const* service = pool().FindServiceByName("test.v1.Service");
   ASSERT_THAT(service, NotNull());
 
-  auto const actual =
-      FormatClassCommentsFromServiceComments(*service, service->name(), absl::nullopt);
+  auto const actual = FormatClassCommentsFromServiceComments(
+      *service, service->name(), absl::nullopt);
 
   // Verify it has exactly one trailing `///` comment.
   EXPECT_THAT(actual, AllOf(EndsWith("\n///"), Not(EndsWith("\n///\n///"))));
@@ -81,8 +81,8 @@ service Service {
   auto const* service = pool().FindServiceByName("test.v1.Service");
   ASSERT_THAT(service, NotNull());
 
-  auto const actual =
-      FormatClassCommentsFromServiceComments(*service, service->name(), absl::nullopt);
+  auto const actual = FormatClassCommentsFromServiceComments(
+      *service, service->name(), absl::nullopt);
 
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
   EXPECT_THAT(
@@ -118,8 +118,8 @@ message Resource {
   auto const* service = pool().FindServiceByName("test.v1.Service");
   ASSERT_THAT(service, NotNull());
 
-  auto const actual =
-      FormatClassCommentsFromServiceComments(*service, service->name(), absl::nullopt);
+  auto const actual = FormatClassCommentsFromServiceComments(
+      *service, service->name(), absl::nullopt);
 
   // Verify the first reference is separated by an empty line and that it ends
   // with a single `///` comment.
@@ -164,8 +164,8 @@ service Service {
       pool().FindServiceByName("google.monitoring.v3.Service");
   ASSERT_THAT(service, NotNull());
 
-  auto const actual =
-      FormatClassCommentsFromServiceComments(*service, service->name(), absl::nullopt);
+  auto const actual = FormatClassCommentsFromServiceComments(
+      *service, service->name(), absl::nullopt);
   // Verify the relative link is converted to an absolute link.
   EXPECT_THAT(actual,
               AllOf(HasSubstr("[groups][google.monitoring.v3.Group]"),
@@ -195,8 +195,8 @@ service Service {
       pool().FindServiceByName("google.monitoring.v3.Service");
   ASSERT_THAT(service, NotNull());
 
-  auto const actual =
-      FormatClassCommentsFromServiceComments(*service, "NewService", absl::nullopt);
+  auto const actual = FormatClassCommentsFromServiceComments(
+      *service, "NewService", absl::nullopt);
   EXPECT_THAT(actual, AllOf(HasSubstr("NewService")));
 }
 
