@@ -652,6 +652,27 @@ std::string GetEffectiveServiceName(VarsDictionary const& vars,
   return std::string(name.data(), name.size());
 }
 
+/// If a service name mapping exists, return the replacement comment.
+/// If it does not exist, return a null optional.
+/// Parses a command line argument in the form:
+/// {"service_name_to_comments": "service_a=comment_a,service_b=comment_b"}.
+absl::optional<std::string> GetReplacementComment(VarsDictionary const& vars,
+                                                  absl::string_view name) {
+  auto service_name_to_comments = vars.find("service_name_to_comments");
+  if (service_name_to_comments != vars.end()) {
+    std::map<absl::string_view, absl::string_view> map;
+    for (absl::string_view arg :
+         absl::StrSplit(service_name_to_comments->second, ',')) {
+      map.insert(absl::StrSplit(arg, absl::MaxSplits('=', 1)));
+    }
+    auto result = map.find(name);
+    if (result != map.end()) {
+      return std::string(result->second.data(), result->second.size());
+    }
+  }
+  return absl::nullopt;
+}
+
 VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
@@ -659,8 +680,9 @@ VarsDictionary CreateServiceVars(
   auto const& service_name = GetEffectiveServiceName(vars, descriptor.name());
   vars["product_options_page"] = OptionsGroup(vars["product_path"]);
   vars["additional_pb_header_paths"] = FormatAdditionalPbHeaderPaths(vars);
-  vars["class_comment_block"] =
-      FormatClassCommentsFromServiceComments(descriptor, service_name);
+  vars["class_comment_block"] = FormatClassCommentsFromServiceComments(
+      descriptor, service_name,
+      GetReplacementComment(vars, service_name).value_or(""));
   vars["client_class_name"] = absl::StrCat(service_name, "Client");
   vars["client_cc_path"] = absl::StrCat(
       vars["product_path"], ServiceNameToFilePath(service_name), "_client.cc");

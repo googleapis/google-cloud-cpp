@@ -53,7 +53,7 @@ service Service {
   ASSERT_THAT(service, NotNull());
 
   auto const actual =
-      FormatClassCommentsFromServiceComments(*service, service->name());
+      FormatClassCommentsFromServiceComments(*service, service->name(), "");
 
   // Verify it has exactly one trailing `///` comment.
   EXPECT_THAT(actual, AllOf(EndsWith("\n///"), Not(EndsWith("\n///\n///"))));
@@ -82,7 +82,7 @@ service Service {
   ASSERT_THAT(service, NotNull());
 
   auto const actual =
-      FormatClassCommentsFromServiceComments(*service, service->name());
+      FormatClassCommentsFromServiceComments(*service, service->name(), "");
 
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
   EXPECT_THAT(
@@ -119,7 +119,7 @@ message Resource {
   ASSERT_THAT(service, NotNull());
 
   auto const actual =
-      FormatClassCommentsFromServiceComments(*service, service->name());
+      FormatClassCommentsFromServiceComments(*service, service->name(), "");
 
   // Verify the first reference is separated by an empty line and that it ends
   // with a single `///` comment.
@@ -165,7 +165,7 @@ service Service {
   ASSERT_THAT(service, NotNull());
 
   auto const actual =
-      FormatClassCommentsFromServiceComments(*service, service->name());
+      FormatClassCommentsFromServiceComments(*service, service->name(), "");
   // Verify the relative link is converted to an absolute link.
   EXPECT_THAT(actual,
               AllOf(HasSubstr("[groups][google.monitoring.v3.Group]"),
@@ -173,7 +173,7 @@ service Service {
                     EndsWith("\n///"), Not(EndsWith("\n///\n///"))));
 }
 
-TEST_F(FormatClassCommentsTest, UsesServiceNameParameter) {
+TEST_F(FormatClassCommentsTest, ReplacesServiceName) {
   auto constexpr kContents = R"""(
 syntax = "proto3";
 import "test/v1/common.proto";
@@ -196,8 +196,35 @@ service Service {
   ASSERT_THAT(service, NotNull());
 
   auto const actual =
-      FormatClassCommentsFromServiceComments(*service, "NewService");
+      FormatClassCommentsFromServiceComments(*service, "NewService", "");
   EXPECT_THAT(actual, AllOf(HasSubstr("NewService")));
+}
+
+TEST_F(FormatClassCommentsTest, ReplacesServiceComment) {
+  auto constexpr kContents = R"""(
+syntax = "proto3";
+import "test/v1/common.proto";
+package google.monitoring.v3;
+
+message Group {}
+
+// A brief description of the Service.
+//
+// Use a relative link [groups](#google.monitoring.v3.Group).
+service Service {
+    rpc Method(test.v1.Request) returns (test.v1.Response) {}
+}
+)""";
+
+  ASSERT_THAT(FindFile("test/v1/common.proto"), NotNull());
+  ASSERT_TRUE(AddProtoFile("google/monitoring/v3/service.proto", kContents));
+  auto const* service =
+      pool().FindServiceByName("google.monitoring.v3.Service");
+  ASSERT_THAT(service, NotNull());
+
+  auto const actual = FormatClassCommentsFromServiceComments(
+      *service, service->name(), "New Service comments");
+  EXPECT_THAT(actual, AllOf(HasSubstr("New Service comments")));
 }
 
 }  // namespace

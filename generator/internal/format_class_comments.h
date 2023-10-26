@@ -22,12 +22,20 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
-/// The function does not just use service.name() and takes @p service_name in
-/// case there exists a service_name_mapping argument that is renaming the
-/// service.
+/* The function formats class comments based on the pre-existing service
+ * comments.
+ *
+ * The function does not just use service.name() and takes @p service_name in
+ * case there exists a service_name_mapping argument that is renaming the
+ * service.
+ *
+ * Additionally, it will replace the comment with the value from
+ * service_name_to_comment if it exists. This can map to the original service
+ * name or a mapped name.
+ */
 std::string FormatClassCommentsFromServiceComments(
     google::protobuf::ServiceDescriptor const& service,
-    std::string const& service_name);
+    std::string const& service_name, std::string const& replacement_comment);
 
 }  // namespace generator_internal
 }  // namespace cloud
