@@ -97,25 +97,25 @@ auto MakeChild(
 
 int64_t GetMaxOtelLinks() {
   auto constexpr kOtelSpanLinkCountLimit = "OTEL_SPAN_LINK_COUNT_LIMIT";
-  int64_t kMaxOtelLinks = 128;
+  int64_t max_otel_links = 128;
   try {
-    kMaxOtelLinks =
+    max_otel_links =
         std::stoi(internal::GetEnv(kOtelSpanLinkCountLimit).value_or("128"));
   } catch (std::invalid_argument const&) {
-    return kMaxOtelLinks;
+    return max_otel_links;
   } catch (std::out_of_range const&) {
-    return kMaxOtelLinks;
+    return max_otel_links;
   }
-  return kMaxOtelLinks;
+  return max_otel_links;
 }
 
 Spans MakeBatchSinkSpans(Spans message_spans) {
-  int64_t kMaxOtelLinks = GetMaxOtelLinks();
+  int64_t max_otel_links = GetMaxOtelLinks();
   Spans batch_sink_spans;
   // If the batch size is less than the max size, add the links to a single
   // span. If the batch size is greater than the max size, create a parent
   // span with no links and each child spans will contain links.
-  if (static_cast<int64_t>(message_spans.size()) <= kMaxOtelLinks) {
+  if (static_cast<int64_t>(message_spans.size()) <= max_otel_links) {
     batch_sink_spans.push_back(MakeParent(
         MakeLinks(message_spans.begin(), message_spans.end()), message_spans));
     return batch_sink_spans;
@@ -123,8 +123,8 @@ Spans MakeBatchSinkSpans(Spans message_spans) {
   batch_sink_spans.push_back(MakeParent({{}}, message_spans));
   auto batch_sink_parent = batch_sink_spans.front();
 
-  auto cut = [&message_spans, &kMaxOtelLinks](auto i) {
-    auto const batch_size = static_cast<std::ptrdiff_t>(kMaxOtelLinks);
+  auto cut = [&message_spans, &max_otel_links](auto i) {
+    auto const batch_size = static_cast<std::ptrdiff_t>(max_otel_links);
     return std::next(
         i, std::min(batch_size, std::distance(i, message_spans.end())));
   };
