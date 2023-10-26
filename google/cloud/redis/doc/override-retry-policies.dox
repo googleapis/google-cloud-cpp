@@ -67,17 +67,19 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section redis-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
-For example, this will override the retry policies for `redis_v1::CloudRedisClient`:
+For example, this will override the retry policies for `redis_cluster_v1::CloudRedisClusterClient`:
 
-@snippet cloud_redis_client_samples.cc set-retry-policy
+@snippet cloud_redis_cluster_client_samples.cc set-retry-policy
 
 This assumes you have created a custom idempotency policy. Such as:
 
-@snippet cloud_redis_client_samples.cc custom-idempotency-policy
+@snippet cloud_redis_cluster_client_samples.cc custom-idempotency-policy
+
 
 Follow these links to find examples for other \c *Client classes:
 
 - [\c redis_cluster_v1::CloudRedisClusterClient](@ref redis_cluster_v1::CloudRedisClusterClient-retry-snippet)
+- [\c redis_v1::CloudRedisClient](@ref redis_v1::CloudRedisClient-retry-snippet)
 
 <!-- inject-retry-snippet-end -->
 
