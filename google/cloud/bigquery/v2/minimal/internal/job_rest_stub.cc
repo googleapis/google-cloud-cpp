@@ -30,6 +30,7 @@ StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
     rest_internal::RestContext& rest_context, GetJobRequest const& request) {
   // Prepare the RestRequest from GetJobRequest.
   auto rest_request = PrepareRestRequest<GetJobRequest>(rest_context, request);
+  if (!rest_request) return rest_request.status();
 
   // Call the rest stub and parse the RestResponse.
   rest_internal::RestContext context;
@@ -42,6 +43,7 @@ StatusOr<ListJobsResponse> DefaultBigQueryJobRestStub::ListJobs(
   // Prepare the RestRequest from ListJobsRequest.
   auto rest_request =
       PrepareRestRequest<ListJobsRequest>(rest_context, request);
+  if (!rest_request) return rest_request.status();
 
   // Call the rest stub and parse the RestResponse.
   rest_internal::RestContext context;
@@ -57,6 +59,7 @@ StatusOr<InsertJobResponse> DefaultBigQueryJobRestStub::InsertJob(
   // 2) Adds any query parameters and headers.
   auto rest_request =
       PrepareRestRequest<InsertJobRequest>(rest_context, request);
+  if (!rest_request) return rest_request.status();
 
   rest_request->AddHeader("Content-Type", "application/json");
 
@@ -80,6 +83,7 @@ StatusOr<CancelJobResponse> DefaultBigQueryJobRestStub::CancelJob(
   // Prepare the RestRequest from CancelJobRequest.
   auto rest_request =
       PrepareRestRequest<CancelJobRequest>(rest_context, request);
+  if (!rest_request) return rest_request.status();
 
   // For cancel jobs, request body is empty:
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/cancel#request-body
@@ -99,6 +103,7 @@ StatusOr<QueryResponse> DefaultBigQueryJobRestStub::Query(
   // 2) Adds any query parameters and headers.
   auto rest_request =
       PrepareRestRequest<PostQueryRequest>(rest_context, request);
+  if (!rest_request) return rest_request.status();
 
   rest_request->AddHeader("Content-Type", "application/json");
 
@@ -123,6 +128,7 @@ StatusOr<GetQueryResultsResponse> DefaultBigQueryJobRestStub::GetQueryResults(
   // Prepare the RestRequest from GetQueryResultsRequest.
   auto rest_request =
       PrepareRestRequest<GetQueryResultsRequest>(rest_context, request);
+  if (!rest_request) return rest_request.status();
 
   // Call the rest stub and parse the RestResponse.
   rest_internal::RestContext context;

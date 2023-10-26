@@ -16,6 +16,10 @@
 #include "google/cloud/pubsub/internal/message_batch.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "opentelemetry/context/runtime_context.h"
+#include "opentelemetry/trace/context.h"
+#include "opentelemetry/trace/span.h"
+#include <opentelemetry/trace/semantic_conventions.h>
 #include <algorithm>
 #include <memory>
 #include <string>
@@ -23,6 +27,7 @@
 #include "opentelemetry/context/runtime_context.h"
 #include "opentelemetry/trace/context.h"
 #include "opentelemetry/trace/span.h"
+#include <opentelemetry/trace/semantic_conventions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
@@ -66,10 +71,11 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
 }
 
 auto MakeParent(Links const& links, Spans const& message_spans) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto batch_sink_parent =
       internal::MakeSpan("BatchSink::AsyncPublish",
                          /*attributes=*/
-                         {{"messaging.pubsub.num_messages_in_batch",
+                         {{sc::kMessagingBatchMessageCount,
                            static_cast<std::int64_t>(message_spans.size())}},
                          /*links*/ std::move(links));
 

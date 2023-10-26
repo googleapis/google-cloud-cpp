@@ -43,10 +43,6 @@ class BlockingPublisherConnectionImpl
   Options options_;
 };
 
-std::shared_ptr<pubsub::BlockingPublisherConnection>
-MakeTestBlockingPublisherConnection(
-    Options opts, std::vector<std::shared_ptr<PublisherStub>> mocks);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
