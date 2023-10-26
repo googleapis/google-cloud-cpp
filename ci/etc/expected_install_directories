@@ -489,6 +489,10 @@
 ./include/google/cloud/compute/service_attachments/v1
 ./include/google/cloud/compute/service_attachments/v1/internal
 ./include/google/cloud/compute/service_attachments/v1/mocks
+./include/google/cloud/compute/snapshot_settings
+./include/google/cloud/compute/snapshot_settings/v1
+./include/google/cloud/compute/snapshot_settings/v1/internal
+./include/google/cloud/compute/snapshot_settings/v1/mocks
 ./include/google/cloud/compute/snapshots
 ./include/google/cloud/compute/snapshots/v1
 ./include/google/cloud/compute/snapshots/v1/internal
