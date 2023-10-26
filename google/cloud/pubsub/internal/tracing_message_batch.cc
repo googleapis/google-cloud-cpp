@@ -16,10 +16,6 @@
 #include "google/cloud/pubsub/internal/message_batch.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include "opentelemetry/context/runtime_context.h"
-#include "opentelemetry/trace/context.h"
-#include "opentelemetry/trace/span.h"
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <algorithm>
 #include <memory>
 #include <string>
