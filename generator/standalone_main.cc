@@ -342,7 +342,7 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     }
 
     // Add the key value pairs as a single parameter with an equals delimiter.
-    for (auto const& kv : service.service_name_mapping()) {
+    for (auto const& kv : service.service_name_to_comment()) {
       args.emplace_back(
           absl::StrCat("--cpp_codegen_opt=service_name_to_comment=", kv.first,
                        "=", kv.second));

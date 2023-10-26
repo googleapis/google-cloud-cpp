@@ -22,7 +22,8 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
-/** The function formats class comments based on the pre-existing service
+/**
+ * The function formats class comments based on the pre-existing service
  * comments.
  *
  * The function does not just use service.name() and takes @p service_name in
