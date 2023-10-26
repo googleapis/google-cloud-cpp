@@ -40,6 +40,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::SizeIs;
 
 std::shared_ptr<PublisherConnection> MakeTestPublisherConnection(
     Topic topic, std::shared_ptr<pubsub_internal::PublisherStub> mock,
@@ -366,6 +367,7 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   publisher->Flush({});
 
   auto spans = span_catcher->GetSpans();
+  ASSERT_THAT(spans, SizeIs(8));
   EXPECT_THAT(
       spans,
       UnorderedElementsAre(
