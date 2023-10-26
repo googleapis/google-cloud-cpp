@@ -88,6 +88,7 @@ set(service_dirs
     "routes/v1/"
     "security_policies/v1/"
     "service_attachments/v1/"
+    "snapshot_settings/v1/"
     "snapshots/v1/"
     "ssl_certificates/v1/"
     "ssl_policies/v1/"
