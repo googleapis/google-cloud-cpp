@@ -155,7 +155,7 @@ struct ScriptOptions {
   std::chrono::milliseconds statement_timeout = std::chrono::milliseconds(0);
   std::int64_t statement_byte_budget = 0;
 
-  KeyResultStatementKind key_result_statement;
+  KeyResultStatementKind key_result_statement = KeyResultStatementKind::UnSpecified();
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},

@@ -112,7 +112,7 @@ struct ExplainQueryStage {
   double write_ratio_max = 0;
 
   std::vector<ExplainQueryStep> steps;
-  ComputeMode compute_mode;
+  ComputeMode compute_mode = ComputeMode::UnSpecified();
 
   std::string DebugString(absl::string_view eq_name,
                           TracingOptions const& options = {},
@@ -250,7 +250,7 @@ struct IndexUnusedReason {
   std::string index_name;
 
   TableReference base_table;
-  IndexedUnusedReasonCode code;
+  IndexedUnusedReasonCode code = IndexedUnusedReasonCode::UnSpecified();
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
@@ -266,7 +266,7 @@ bool operator==(IndexUnusedReason const& lhs, IndexUnusedReason const& rhs);
 // For more details on field members, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#searchstatistics.
 struct SearchStatistics {
-  IndexUsageMode index_usage_mode;
+  IndexUsageMode index_usage_mode = IndexUsageMode::UnSpecified();
   std::vector<IndexUnusedReason> index_unused_reasons;
 
   std::string DebugString(absl::string_view name,
@@ -374,7 +374,7 @@ struct MaterializedView {
   bool chosen = false;
   std::int64_t estimated_bytes_saved = 0;
 
-  RejectedReason rejected_reason;
+  RejectedReason rejected_reason = RejectedReason::UnSpecified();
   TableReference table_reference;
 
   std::string DebugString(absl::string_view name,
@@ -426,7 +426,7 @@ struct TableMetadataCacheUsage {
   std::string explanation;
 
   TableReference table_reference;
-  MetadataCacheUnusedReason unused_reason;
+  MetadataCacheUnusedReason unused_reason = MetadataCacheUnusedReason::UnSpecified();
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},

@@ -80,7 +80,7 @@ bool operator==(ScriptStackFrame const& lhs, ScriptStackFrame const& rhs);
 // For more details, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#scriptstatistics
 struct ScriptStatistics {
-  EvaluationKind evaluation_kind;
+  EvaluationKind evaluation_kind = EvaluationKind::UnSpecified();
   std::vector<ScriptStackFrame> stack_frames;
 
   std::string DebugString(absl::string_view name,
