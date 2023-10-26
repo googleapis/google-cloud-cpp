@@ -19,56 +19,62 @@
 
 syntax = "proto3";
 
-package google.cloud.cpp.compute.region_instances.v1;
+package google.cloud.cpp.compute.snapshot_settings.v1;
 
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common_015.proto";
 import "google/cloud/compute/v1/internal/common_016.proto";
+import "google/cloud/compute/v1/internal/common_113.proto";
 import "google/cloud/extended_operations.proto";
 
-// Service for the regionInstances resource.
-// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstances
-service RegionInstances {
+// Service for the snapshotSettings resource.
+// https://cloud.google.com/compute/docs/reference/rest/v1/snapshotSettings
+service SnapshotSettings {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
       "https://www.googleapis.com/auth/cloud-platform,"
-      "https://www.googleapis.com/auth/compute";
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
-  // Creates multiple instances in a given region. Count specifies the number of
-  // instances to create.
-  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstances/bulkInsert
-  rpc BulkInsert(BulkInsertRequest)
+  // Get snapshot settings.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/snapshotSettings/get
+  rpc GetSnapshotSettings(GetSnapshotSettingsRequest)
+      returns (google.cloud.cpp.compute.v1.SnapshotSettings) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/global/snapshotSettings"
+    };
+    option (google.api.method_signature) = "project";
+  }
+
+  // Patch snapshot settings.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/snapshotSettings/patch
+  rpc PatchSnapshotSettings(PatchSnapshotSettingsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project}/regions/{region}/instances/bulkInsert"
-      body: "bulk_insert_instance_resource"
+      patch: "/compute/v1/projects/{project}/global/snapshotSettings"
+      body: "snapshot_settings_resource"
     };
     option (google.api.method_signature) =
-        "project,region,bulk_insert_instance_resource";
-    option (google.cloud.operation_service) = "RegionOperations";
+        "project,update_mask,snapshot_settings_resource";
+    option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
 
-// Request message for BulkInsert.
-message BulkInsertRequest {
-  // The BulkInsertInstanceResource for this request.
-  optional google.cloud.cpp.compute.v1.BulkInsertInstanceResource
-      bulk_insert_instance_resource = 1 [json_name = "__json_request_body"];
-
+// Request message for GetSnapshotSettings.
+message GetSnapshotSettingsRequest {
   // Project ID for this request.
-  string project = 2 [
+  string project = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
+}
+
+// Request message for PatchSnapshotSettings.
+message PatchSnapshotSettingsRequest {
+  // Project ID for this request.
+  string project = 1 [
     (google.api.field_behavior) = REQUIRED,
     (google.cloud.operation_request_field) = "project",
     json_name = "project"
-  ];
-
-  // The name of the region for this request.
-  string region = 3 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region",
-    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -81,5 +87,12 @@ message BulkInsertRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4 [json_name = "requestId"];
+  optional string request_id = 2 [json_name = "requestId"];
+
+  // The SnapshotSettings for this request.
+  optional google.cloud.cpp.compute.v1.SnapshotSettings
+      snapshot_settings_resource = 3 [json_name = "__json_request_body"];
+
+  // update_mask indicates fields to be updated as part of this request.
+  optional string update_mask = 4 [json_name = "updateMask"];
 }

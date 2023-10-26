@@ -21,24 +21,19 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-// Guest OS features.
-message GuestOsFeature {
-  // The ID of a supported feature. To add multiple values, use commas to
-  // separate values. Set to one or more of the following values: -
-  // VIRTIO_SCSI_MULTIQUEUE - WINDOWS - MULTI_IP_SUBNET - UEFI_COMPATIBLE -
-  // GVNIC - SEV_CAPABLE - SUSPEND_RESUME_COMPATIBLE - SEV_LIVE_MIGRATABLE -
-  // SEV_SNP_CAPABLE For more information, see Enabling guest operating system
-  // features.
-  // FEATURE_TYPE_UNSPECIFIED:
-  // GVNIC:
-  // MULTI_IP_SUBNET:
-  // SECURE_BOOT:
-  // SEV_CAPABLE:
-  // SEV_LIVE_MIGRATABLE:
-  // SEV_LIVE_MIGRATABLE_V2:
-  // SEV_SNP_CAPABLE:
-  // UEFI_COMPATIBLE:
-  // VIRTIO_SCSI_MULTIQUEUE:
-  // WINDOWS:
-  optional string type = 1 [json_name = "type"];
+import "google/cloud/compute/v1/internal/common_007.proto";
+
+message ZoneSetPolicyRequest {
+  // Flatten Policy to create a backwacd compatible wire-format. Deprecated. Use
+  // 'policy' to specify bindings.
+  repeated Binding bindings = 1 [json_name = "bindings"];
+
+  // Flatten Policy to create a backward compatible wire-format. Deprecated. Use
+  // 'policy' to specify the etag.
+  optional string etag = 2 [json_name = "etag"];
+
+  // REQUIRED: The complete policy to be applied to the 'resource'. The size of
+  // the policy is limited to a few 10s of KB. An empty policy is in general a
+  // valid policy but certain services (like Projects) might reject them.
+  optional Policy policy = 3 [json_name = "policy"];
 }
