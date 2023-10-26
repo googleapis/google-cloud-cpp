@@ -54,8 +54,8 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
+        "@com_google_googleapis//google/cloud/redis/cluster/v1:cluster_cc_grpc",
         "@com_google_googleapis//google/cloud/redis/v1:redis_cc_grpc",
-        "@com_google_googleapis//google/cloud/redis/cluster/v1:redis_cc_grpc",
     ],
 )
 
