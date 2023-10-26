@@ -29,9 +29,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SubscriptionAdminLogging::SubscriptionAdminLogging(
     std::shared_ptr<SubscriptionAdminStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const& components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> const& components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::pubsub::v1::Subscription>
@@ -82,8 +82,7 @@ SubscriptionAdminLogging::ListSubscriptions(
       context, request, __func__, tracing_options_);
 }
 
-Status
-SubscriptionAdminLogging::DeleteSubscription(
+Status SubscriptionAdminLogging::DeleteSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSubscriptionRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -94,8 +93,7 @@ SubscriptionAdminLogging::DeleteSubscription(
       context, request, __func__, tracing_options_);
 }
 
-Status
-SubscriptionAdminLogging::ModifyPushConfig(
+Status SubscriptionAdminLogging::ModifyPushConfig(
     grpc::ClientContext& context,
     google::pubsub::v1::ModifyPushConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -106,8 +104,7 @@ SubscriptionAdminLogging::ModifyPushConfig(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::Snapshot>
-SubscriptionAdminLogging::GetSnapshot(
+StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminLogging::GetSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::GetSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -130,8 +127,7 @@ SubscriptionAdminLogging::ListSnapshots(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::Snapshot>
-SubscriptionAdminLogging::CreateSnapshot(
+StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminLogging::CreateSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::CreateSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -142,8 +138,7 @@ SubscriptionAdminLogging::CreateSnapshot(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::Snapshot>
-SubscriptionAdminLogging::UpdateSnapshot(
+StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminLogging::UpdateSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -154,8 +149,7 @@ SubscriptionAdminLogging::UpdateSnapshot(
       context, request, __func__, tracing_options_);
 }
 
-Status
-SubscriptionAdminLogging::DeleteSnapshot(
+Status SubscriptionAdminLogging::DeleteSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -166,8 +160,7 @@ SubscriptionAdminLogging::DeleteSnapshot(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::SeekResponse>
-SubscriptionAdminLogging::Seek(
+StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminLogging::Seek(
     grpc::ClientContext& context,
     google::pubsub::v1::SeekRequest const& request) {
   return google::cloud::internal::LogWrapper(

@@ -42,35 +42,35 @@ TopicAdminMetadata::TopicAdminMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::pubsub::v1::Topic>
-TopicAdminMetadata::CreateTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::Topic const& request) {
-  SetMetadata(context, absl::StrCat("name=", internal::UrlEncode(request.name())));
+StatusOr<google::pubsub::v1::Topic> TopicAdminMetadata::CreateTopic(
+    grpc::ClientContext& context, google::pubsub::v1::Topic const& request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateTopic(context, request);
 }
 
-StatusOr<google::pubsub::v1::Topic>
-TopicAdminMetadata::UpdateTopic(
+StatusOr<google::pubsub::v1::Topic> TopicAdminMetadata::UpdateTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateTopicRequest const& request) {
-  SetMetadata(context, absl::StrCat("topic.name=", internal::UrlEncode(request.topic().name())));
+  SetMetadata(
+      context,
+      absl::StrCat("topic.name=", internal::UrlEncode(request.topic().name())));
   return child_->UpdateTopic(context, request);
 }
 
-StatusOr<google::pubsub::v1::Topic>
-TopicAdminMetadata::GetTopic(
+StatusOr<google::pubsub::v1::Topic> TopicAdminMetadata::GetTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::GetTopicRequest const& request) {
-  SetMetadata(context, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context,
+              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->GetTopic(context, request);
 }
 
-StatusOr<google::pubsub::v1::ListTopicsResponse>
-TopicAdminMetadata::ListTopics(
+StatusOr<google::pubsub::v1::ListTopicsResponse> TopicAdminMetadata::ListTopics(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicsRequest const& request) {
-  SetMetadata(context, absl::StrCat("project=", internal::UrlEncode(request.project())));
+  SetMetadata(context,
+              absl::StrCat("project=", internal::UrlEncode(request.project())));
   return child_->ListTopics(context, request);
 }
 
@@ -78,7 +78,8 @@ StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
 TopicAdminMetadata::ListTopicSubscriptions(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context,
+              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ListTopicSubscriptions(context, request);
 }
 
@@ -86,15 +87,16 @@ StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
 TopicAdminMetadata::ListTopicSnapshots(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
-  SetMetadata(context, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context,
+              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ListTopicSnapshots(context, request);
 }
 
-Status
-TopicAdminMetadata::DeleteTopic(
+Status TopicAdminMetadata::DeleteTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteTopicRequest const& request) {
-  SetMetadata(context, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context,
+              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->DeleteTopic(context, request);
 }
 
@@ -102,12 +104,14 @@ StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
 TopicAdminMetadata::DetachSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
-  SetMetadata(context, absl::StrCat("subscription=", internal::UrlEncode(request.subscription())));
+  SetMetadata(context,
+              absl::StrCat("subscription=",
+                           internal::UrlEncode(request.subscription())));
   return child_->DetachSubscription(context, request);
 }
 
 void TopicAdminMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+                                     std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context);
 }
@@ -119,8 +123,8 @@ void TopicAdminMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    context.AddMetadata(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);

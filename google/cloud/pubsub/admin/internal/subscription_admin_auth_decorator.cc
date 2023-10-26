@@ -30,7 +30,8 @@ SubscriptionAdminAuth::SubscriptionAdminAuth(
     std::shared_ptr<SubscriptionAdminStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::pubsub::v1::Subscription> SubscriptionAdminAuth::CreateSubscription(
+StatusOr<google::pubsub::v1::Subscription>
+SubscriptionAdminAuth::CreateSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::Subscription const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -38,7 +39,8 @@ StatusOr<google::pubsub::v1::Subscription> SubscriptionAdminAuth::CreateSubscrip
   return child_->CreateSubscription(context, request);
 }
 
-StatusOr<google::pubsub::v1::Subscription> SubscriptionAdminAuth::GetSubscription(
+StatusOr<google::pubsub::v1::Subscription>
+SubscriptionAdminAuth::GetSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::GetSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -46,7 +48,8 @@ StatusOr<google::pubsub::v1::Subscription> SubscriptionAdminAuth::GetSubscriptio
   return child_->GetSubscription(context, request);
 }
 
-StatusOr<google::pubsub::v1::Subscription> SubscriptionAdminAuth::UpdateSubscription(
+StatusOr<google::pubsub::v1::Subscription>
+SubscriptionAdminAuth::UpdateSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -54,7 +57,8 @@ StatusOr<google::pubsub::v1::Subscription> SubscriptionAdminAuth::UpdateSubscrip
   return child_->UpdateSubscription(context, request);
 }
 
-StatusOr<google::pubsub::v1::ListSubscriptionsResponse> SubscriptionAdminAuth::ListSubscriptions(
+StatusOr<google::pubsub::v1::ListSubscriptionsResponse>
+SubscriptionAdminAuth::ListSubscriptions(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSubscriptionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -86,7 +90,8 @@ StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminAuth::GetSnapshot(
   return child_->GetSnapshot(context, request);
 }
 
-StatusOr<google::pubsub::v1::ListSnapshotsResponse> SubscriptionAdminAuth::ListSnapshots(
+StatusOr<google::pubsub::v1::ListSnapshotsResponse>
+SubscriptionAdminAuth::ListSnapshots(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSnapshotsRequest const& request) {
   auto status = auth_->ConfigureContext(context);

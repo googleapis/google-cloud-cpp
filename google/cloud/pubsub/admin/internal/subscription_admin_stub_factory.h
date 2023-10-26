@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_SUBSCRIPTION_ADMIN_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_SUBSCRIPTION_ADMIN_STUB_FACTORY_H
 
+#include "google/cloud/pubsub/admin/internal/subscription_admin_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/pubsub/admin/internal/subscription_admin_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 

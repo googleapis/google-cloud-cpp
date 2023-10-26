@@ -46,7 +46,8 @@ StatusOr<google::pubsub::v1::Subscription>
 SubscriptionAdminMetadata::CreateSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::Subscription const& request) {
-  SetMetadata(context, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateSubscription(context, request);
 }
 
@@ -54,7 +55,9 @@ StatusOr<google::pubsub::v1::Subscription>
 SubscriptionAdminMetadata::GetSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::GetSubscriptionRequest const& request) {
-  SetMetadata(context, absl::StrCat("subscription=", internal::UrlEncode(request.subscription())));
+  SetMetadata(context,
+              absl::StrCat("subscription=",
+                           internal::UrlEncode(request.subscription())));
   return child_->GetSubscription(context, request);
 }
 
@@ -62,7 +65,9 @@ StatusOr<google::pubsub::v1::Subscription>
 SubscriptionAdminMetadata::UpdateSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateSubscriptionRequest const& request) {
-  SetMetadata(context, absl::StrCat("subscription.name=", internal::UrlEncode(request.subscription().name())));
+  SetMetadata(context,
+              absl::StrCat("subscription.name=",
+                           internal::UrlEncode(request.subscription().name())));
   return child_->UpdateSubscription(context, request);
 }
 
@@ -70,31 +75,34 @@ StatusOr<google::pubsub::v1::ListSubscriptionsResponse>
 SubscriptionAdminMetadata::ListSubscriptions(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSubscriptionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("project=", internal::UrlEncode(request.project())));
+  SetMetadata(context,
+              absl::StrCat("project=", internal::UrlEncode(request.project())));
   return child_->ListSubscriptions(context, request);
 }
 
-Status
-SubscriptionAdminMetadata::DeleteSubscription(
+Status SubscriptionAdminMetadata::DeleteSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSubscriptionRequest const& request) {
-  SetMetadata(context, absl::StrCat("subscription=", internal::UrlEncode(request.subscription())));
+  SetMetadata(context,
+              absl::StrCat("subscription=",
+                           internal::UrlEncode(request.subscription())));
   return child_->DeleteSubscription(context, request);
 }
 
-Status
-SubscriptionAdminMetadata::ModifyPushConfig(
+Status SubscriptionAdminMetadata::ModifyPushConfig(
     grpc::ClientContext& context,
     google::pubsub::v1::ModifyPushConfigRequest const& request) {
-  SetMetadata(context, absl::StrCat("subscription=", internal::UrlEncode(request.subscription())));
+  SetMetadata(context,
+              absl::StrCat("subscription=",
+                           internal::UrlEncode(request.subscription())));
   return child_->ModifyPushConfig(context, request);
 }
 
-StatusOr<google::pubsub::v1::Snapshot>
-SubscriptionAdminMetadata::GetSnapshot(
+StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminMetadata::GetSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::GetSnapshotRequest const& request) {
-  SetMetadata(context, absl::StrCat("snapshot=", internal::UrlEncode(request.snapshot())));
+  SetMetadata(context, absl::StrCat("snapshot=",
+                                    internal::UrlEncode(request.snapshot())));
   return child_->GetSnapshot(context, request);
 }
 
@@ -102,7 +110,8 @@ StatusOr<google::pubsub::v1::ListSnapshotsResponse>
 SubscriptionAdminMetadata::ListSnapshots(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSnapshotsRequest const& request) {
-  SetMetadata(context, absl::StrCat("project=", internal::UrlEncode(request.project())));
+  SetMetadata(context,
+              absl::StrCat("project=", internal::UrlEncode(request.project())));
   return child_->ListSnapshots(context, request);
 }
 
@@ -110,7 +119,8 @@ StatusOr<google::pubsub::v1::Snapshot>
 SubscriptionAdminMetadata::CreateSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::CreateSnapshotRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateSnapshot(context, request);
 }
 
@@ -118,28 +128,31 @@ StatusOr<google::pubsub::v1::Snapshot>
 SubscriptionAdminMetadata::UpdateSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateSnapshotRequest const& request) {
-  SetMetadata(context, absl::StrCat("snapshot.name=", internal::UrlEncode(request.snapshot().name())));
+  SetMetadata(context,
+              absl::StrCat("snapshot.name=",
+                           internal::UrlEncode(request.snapshot().name())));
   return child_->UpdateSnapshot(context, request);
 }
 
-Status
-SubscriptionAdminMetadata::DeleteSnapshot(
+Status SubscriptionAdminMetadata::DeleteSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSnapshotRequest const& request) {
-  SetMetadata(context, absl::StrCat("snapshot=", internal::UrlEncode(request.snapshot())));
+  SetMetadata(context, absl::StrCat("snapshot=",
+                                    internal::UrlEncode(request.snapshot())));
   return child_->DeleteSnapshot(context, request);
 }
 
-StatusOr<google::pubsub::v1::SeekResponse>
-SubscriptionAdminMetadata::Seek(
+StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminMetadata::Seek(
     grpc::ClientContext& context,
     google::pubsub::v1::SeekRequest const& request) {
-  SetMetadata(context, absl::StrCat("subscription=", internal::UrlEncode(request.subscription())));
+  SetMetadata(context,
+              absl::StrCat("subscription=",
+                           internal::UrlEncode(request.subscription())));
   return child_->Seek(context, request);
 }
 
 void SubscriptionAdminMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context);
 }
@@ -151,8 +164,8 @@ void SubscriptionAdminMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    context.AddMetadata(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);

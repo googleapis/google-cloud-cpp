@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_SUBSCRIPTION_ADMIN_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_SUBSCRIPTION_ADMIN_TRACING_STUB_H
 
+#include "google/cloud/pubsub/admin/internal/subscription_admin_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsub/admin/internal/subscription_admin_stub.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -35,7 +35,8 @@ class SubscriptionAdminTracingStub : public SubscriptionAdminStub {
  public:
   ~SubscriptionAdminTracingStub() override = default;
 
-  explicit SubscriptionAdminTracingStub(std::shared_ptr<SubscriptionAdminStub> child);
+  explicit SubscriptionAdminTracingStub(
+      std::shared_ptr<SubscriptionAdminStub> child);
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       grpc::ClientContext& context,
@@ -87,7 +88,8 @@ class SubscriptionAdminTracingStub : public SubscriptionAdminStub {
 
  private:
   std::shared_ptr<SubscriptionAdminStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

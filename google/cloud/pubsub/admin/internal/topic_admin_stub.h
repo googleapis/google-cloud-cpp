@@ -34,36 +34,39 @@ class TopicAdminStub {
   virtual ~TopicAdminStub() = 0;
 
   virtual StatusOr<google::pubsub::v1::Topic> CreateTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::Topic const& request) = 0;
+      grpc::ClientContext& context,
+      google::pubsub::v1::Topic const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::UpdateTopicRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::pubsub::v1::UpdateTopicRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Topic> GetTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::GetTopicRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::pubsub::v1::GetTopicRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
-    grpc::ClientContext& context,
-    google::pubsub::v1::ListTopicsRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::pubsub::v1::ListTopicsRequest const& request) = 0;
 
-  virtual StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> ListTopicSubscriptions(
-    grpc::ClientContext& context,
-    google::pubsub::v1::ListTopicSubscriptionsRequest const& request) = 0;
+  virtual StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
+  ListTopicSubscriptions(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ListTopicSubscriptionsRequest const& request) = 0;
 
-  virtual StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> ListTopicSnapshots(
-    grpc::ClientContext& context,
-    google::pubsub::v1::ListTopicSnapshotsRequest const& request) = 0;
+  virtual StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
+  ListTopicSnapshots(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ListTopicSnapshotsRequest const& request) = 0;
 
   virtual Status DeleteTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::DeleteTopicRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::pubsub::v1::DeleteTopicRequest const& request) = 0;
 
-  virtual StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
-    grpc::ClientContext& context,
-    google::pubsub::v1::DetachSubscriptionRequest const& request) = 0;
+  virtual StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
+  DetachSubscription(
+      grpc::ClientContext& context,
+      google::pubsub::v1::DetachSubscriptionRequest const& request) = 0;
 };
 
 class DefaultTopicAdminStub : public TopicAdminStub {
@@ -72,45 +75,39 @@ class DefaultTopicAdminStub : public TopicAdminStub {
       std::unique_ptr<google::pubsub::v1::Publisher::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::pubsub::v1::Topic>
-  CreateTopic(
-    grpc::ClientContext& client_context,
-    google::pubsub::v1::Topic const& request) override;
+  StatusOr<google::pubsub::v1::Topic> CreateTopic(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::Topic const& request) override;
 
-  StatusOr<google::pubsub::v1::Topic>
-  UpdateTopic(
-    grpc::ClientContext& client_context,
-    google::pubsub::v1::UpdateTopicRequest const& request) override;
+  StatusOr<google::pubsub::v1::Topic> UpdateTopic(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::UpdateTopicRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::Topic>
-  GetTopic(
-    grpc::ClientContext& client_context,
-    google::pubsub::v1::GetTopicRequest const& request) override;
+  StatusOr<google::pubsub::v1::Topic> GetTopic(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::GetTopicRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::ListTopicsResponse>
-  ListTopics(
-    grpc::ClientContext& client_context,
-    google::pubsub::v1::ListTopicsRequest const& request) override;
+  StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::ListTopicsRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
   ListTopicSubscriptions(
-    grpc::ClientContext& client_context,
-    google::pubsub::v1::ListTopicSubscriptionsRequest const& request) override;
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::ListTopicSubscriptionsRequest const& request)
+      override;
 
-  StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
-  ListTopicSnapshots(
-    grpc::ClientContext& client_context,
-    google::pubsub::v1::ListTopicSnapshotsRequest const& request) override;
+  StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> ListTopicSnapshots(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::ListTopicSnapshotsRequest const& request) override;
 
-  Status
-  DeleteTopic(
-    grpc::ClientContext& client_context,
-    google::pubsub::v1::DeleteTopicRequest const& request) override;
+  Status DeleteTopic(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::DeleteTopicRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
-  DetachSubscription(
-    grpc::ClientContext& client_context,
-    google::pubsub::v1::DetachSubscriptionRequest const& request) override;
+  StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::DetachSubscriptionRequest const& request) override;
 
  private:
   std::unique_ptr<google::pubsub::v1::Publisher::StubInterface> grpc_stub_;

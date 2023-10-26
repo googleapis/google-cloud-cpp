@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_TOPIC_ADMIN_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_TOPIC_ADMIN_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/pubsub/admin/internal/topic_admin_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -54,9 +54,11 @@ class TopicAdminAuth : public TopicAdminStub {
       grpc::ClientContext& context,
       google::pubsub::v1::ListTopicsRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> ListTopicSubscriptions(
+  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
+  ListTopicSubscriptions(
       grpc::ClientContext& context,
-      google::pubsub::v1::ListTopicSubscriptionsRequest const& request) override;
+      google::pubsub::v1::ListTopicSubscriptionsRequest const& request)
+      override;
 
   StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> ListTopicSnapshots(
       grpc::ClientContext& context,

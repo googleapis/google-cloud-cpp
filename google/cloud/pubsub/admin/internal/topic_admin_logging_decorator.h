@@ -35,8 +35,8 @@ class TopicAdminLogging : public TopicAdminStub {
  public:
   ~TopicAdminLogging() override = default;
   TopicAdminLogging(std::shared_ptr<TopicAdminStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                    TracingOptions tracing_options,
+                    std::set<std::string> const& components);
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       grpc::ClientContext& context,
@@ -54,9 +54,11 @@ class TopicAdminLogging : public TopicAdminStub {
       grpc::ClientContext& context,
       google::pubsub::v1::ListTopicsRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> ListTopicSubscriptions(
+  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
+  ListTopicSubscriptions(
       grpc::ClientContext& context,
-      google::pubsub::v1::ListTopicSubscriptionsRequest const& request) override;
+      google::pubsub::v1::ListTopicSubscriptionsRequest const& request)
+      override;
 
   StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> ListTopicSnapshots(
       grpc::ClientContext& context,

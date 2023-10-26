@@ -31,8 +31,7 @@ TopicAdminAuth::TopicAdminAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::pubsub::v1::Topic> TopicAdminAuth::CreateTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::Topic const& request) {
+    grpc::ClientContext& context, google::pubsub::v1::Topic const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateTopic(context, request);
@@ -62,7 +61,8 @@ StatusOr<google::pubsub::v1::ListTopicsResponse> TopicAdminAuth::ListTopics(
   return child_->ListTopics(context, request);
 }
 
-StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> TopicAdminAuth::ListTopicSubscriptions(
+StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
+TopicAdminAuth::ListTopicSubscriptions(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -70,7 +70,8 @@ StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> TopicAdminAuth::Lis
   return child_->ListTopicSubscriptions(context, request);
 }
 
-StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> TopicAdminAuth::ListTopicSnapshots(
+StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
+TopicAdminAuth::ListTopicSnapshots(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -86,7 +87,8 @@ Status TopicAdminAuth::DeleteTopic(
   return child_->DeleteTopic(context, request);
 }
 
-StatusOr<google::pubsub::v1::DetachSubscriptionResponse> TopicAdminAuth::DetachSubscription(
+StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
+TopicAdminAuth::DetachSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);

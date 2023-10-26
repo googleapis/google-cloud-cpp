@@ -31,158 +31,148 @@ SubscriptionAdminStub::~SubscriptionAdminStub() = default;
 
 StatusOr<google::pubsub::v1::Subscription>
 DefaultSubscriptionAdminStub::CreateSubscription(
-  grpc::ClientContext& client_context,
-  google::pubsub::v1::Subscription const& request) {
-    google::pubsub::v1::Subscription response;
-    auto status =
-        grpc_stub_->CreateSubscription(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::Subscription const& request) {
+  google::pubsub::v1::Subscription response;
+  auto status =
+      grpc_stub_->CreateSubscription(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::pubsub::v1::Subscription>
 DefaultSubscriptionAdminStub::GetSubscription(
-  grpc::ClientContext& client_context,
-  google::pubsub::v1::GetSubscriptionRequest const& request) {
-    google::pubsub::v1::Subscription response;
-    auto status =
-        grpc_stub_->GetSubscription(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::GetSubscriptionRequest const& request) {
+  google::pubsub::v1::Subscription response;
+  auto status =
+      grpc_stub_->GetSubscription(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::pubsub::v1::Subscription>
 DefaultSubscriptionAdminStub::UpdateSubscription(
-  grpc::ClientContext& client_context,
-  google::pubsub::v1::UpdateSubscriptionRequest const& request) {
-    google::pubsub::v1::Subscription response;
-    auto status =
-        grpc_stub_->UpdateSubscription(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::UpdateSubscriptionRequest const& request) {
+  google::pubsub::v1::Subscription response;
+  auto status =
+      grpc_stub_->UpdateSubscription(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::pubsub::v1::ListSubscriptionsResponse>
 DefaultSubscriptionAdminStub::ListSubscriptions(
-  grpc::ClientContext& client_context,
-  google::pubsub::v1::ListSubscriptionsRequest const& request) {
-    google::pubsub::v1::ListSubscriptionsResponse response;
-    auto status =
-        grpc_stub_->ListSubscriptions(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::ListSubscriptionsRequest const& request) {
+  google::pubsub::v1::ListSubscriptionsResponse response;
+  auto status =
+      grpc_stub_->ListSubscriptions(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultSubscriptionAdminStub::DeleteSubscription(
-  grpc::ClientContext& client_context,
-  google::pubsub::v1::DeleteSubscriptionRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteSubscription(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultSubscriptionAdminStub::DeleteSubscription(
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::DeleteSubscriptionRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteSubscription(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultSubscriptionAdminStub::ModifyPushConfig(
-  grpc::ClientContext& client_context,
-  google::pubsub::v1::ModifyPushConfigRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->ModifyPushConfig(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultSubscriptionAdminStub::ModifyPushConfig(
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::ModifyPushConfigRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->ModifyPushConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::pubsub::v1::Snapshot>
 DefaultSubscriptionAdminStub::GetSnapshot(
-  grpc::ClientContext& client_context,
-  google::pubsub::v1::GetSnapshotRequest const& request) {
-    google::pubsub::v1::Snapshot response;
-    auto status =
-        grpc_stub_->GetSnapshot(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::GetSnapshotRequest const& request) {
+  google::pubsub::v1::Snapshot response;
+  auto status = grpc_stub_->GetSnapshot(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::pubsub::v1::ListSnapshotsResponse>
 DefaultSubscriptionAdminStub::ListSnapshots(
-  grpc::ClientContext& client_context,
-  google::pubsub::v1::ListSnapshotsRequest const& request) {
-    google::pubsub::v1::ListSnapshotsResponse response;
-    auto status =
-        grpc_stub_->ListSnapshots(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::ListSnapshotsRequest const& request) {
+  google::pubsub::v1::ListSnapshotsResponse response;
+  auto status = grpc_stub_->ListSnapshots(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::pubsub::v1::Snapshot>
 DefaultSubscriptionAdminStub::CreateSnapshot(
-  grpc::ClientContext& client_context,
-  google::pubsub::v1::CreateSnapshotRequest const& request) {
-    google::pubsub::v1::Snapshot response;
-    auto status =
-        grpc_stub_->CreateSnapshot(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::CreateSnapshotRequest const& request) {
+  google::pubsub::v1::Snapshot response;
+  auto status = grpc_stub_->CreateSnapshot(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::pubsub::v1::Snapshot>
 DefaultSubscriptionAdminStub::UpdateSnapshot(
-  grpc::ClientContext& client_context,
-  google::pubsub::v1::UpdateSnapshotRequest const& request) {
-    google::pubsub::v1::Snapshot response;
-    auto status =
-        grpc_stub_->UpdateSnapshot(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::UpdateSnapshotRequest const& request) {
+  google::pubsub::v1::Snapshot response;
+  auto status = grpc_stub_->UpdateSnapshot(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultSubscriptionAdminStub::DeleteSnapshot(
-  grpc::ClientContext& client_context,
-  google::pubsub::v1::DeleteSnapshotRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteSnapshot(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultSubscriptionAdminStub::DeleteSnapshot(
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::DeleteSnapshotRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteSnapshot(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-StatusOr<google::pubsub::v1::SeekResponse>
-DefaultSubscriptionAdminStub::Seek(
-  grpc::ClientContext& client_context,
-  google::pubsub::v1::SeekRequest const& request) {
-    google::pubsub::v1::SeekResponse response;
-    auto status =
-        grpc_stub_->Seek(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::pubsub::v1::SeekResponse> DefaultSubscriptionAdminStub::Seek(
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::SeekRequest const& request) {
+  google::pubsub::v1::SeekResponse response;
+  auto status = grpc_stub_->Seek(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

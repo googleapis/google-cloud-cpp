@@ -27,17 +27,15 @@ namespace cloud {
 namespace pubsub_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TopicAdminLogging::TopicAdminLogging(
-    std::shared_ptr<TopicAdminStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const& components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+TopicAdminLogging::TopicAdminLogging(std::shared_ptr<TopicAdminStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> const& components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
-StatusOr<google::pubsub::v1::Topic>
-TopicAdminLogging::CreateTopic(
-    grpc::ClientContext& context,
-    google::pubsub::v1::Topic const& request) {
+StatusOr<google::pubsub::v1::Topic> TopicAdminLogging::CreateTopic(
+    grpc::ClientContext& context, google::pubsub::v1::Topic const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              google::pubsub::v1::Topic const& request) {
@@ -46,8 +44,7 @@ TopicAdminLogging::CreateTopic(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::Topic>
-TopicAdminLogging::UpdateTopic(
+StatusOr<google::pubsub::v1::Topic> TopicAdminLogging::UpdateTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -58,8 +55,7 @@ TopicAdminLogging::UpdateTopic(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::Topic>
-TopicAdminLogging::GetTopic(
+StatusOr<google::pubsub::v1::Topic> TopicAdminLogging::GetTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::GetTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -70,8 +66,7 @@ TopicAdminLogging::GetTopic(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::ListTopicsResponse>
-TopicAdminLogging::ListTopics(
+StatusOr<google::pubsub::v1::ListTopicsResponse> TopicAdminLogging::ListTopics(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicsRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -106,8 +101,7 @@ TopicAdminLogging::ListTopicSnapshots(
       context, request, __func__, tracing_options_);
 }
 
-Status
-TopicAdminLogging::DeleteTopic(
+Status TopicAdminLogging::DeleteTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(

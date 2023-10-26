@@ -33,10 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TopicAdminMetadata : public TopicAdminStub {
  public:
   ~TopicAdminMetadata() override = default;
-  TopicAdminMetadata(
-      std::shared_ptr<TopicAdminStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  TopicAdminMetadata(std::shared_ptr<TopicAdminStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       grpc::ClientContext& context,
@@ -54,9 +53,11 @@ class TopicAdminMetadata : public TopicAdminStub {
       grpc::ClientContext& context,
       google::pubsub::v1::ListTopicsRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> ListTopicSubscriptions(
+  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
+  ListTopicSubscriptions(
       grpc::ClientContext& context,
-      google::pubsub::v1::ListTopicSubscriptionsRequest const& request) override;
+      google::pubsub::v1::ListTopicSubscriptionsRequest const& request)
+      override;
 
   StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> ListTopicSnapshots(
       grpc::ClientContext& context,

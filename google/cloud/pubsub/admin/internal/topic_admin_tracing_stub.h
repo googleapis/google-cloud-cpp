@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_TOPIC_ADMIN_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_TOPIC_ADMIN_TRACING_STUB_H
 
+#include "google/cloud/pubsub/admin/internal/topic_admin_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsub/admin/internal/topic_admin_stub.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -53,9 +53,11 @@ class TopicAdminTracingStub : public TopicAdminStub {
       grpc::ClientContext& context,
       google::pubsub::v1::ListTopicsRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> ListTopicSubscriptions(
+  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
+  ListTopicSubscriptions(
       grpc::ClientContext& context,
-      google::pubsub::v1::ListTopicSubscriptionsRequest const& request) override;
+      google::pubsub::v1::ListTopicSubscriptionsRequest const& request)
+      override;
 
   StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> ListTopicSnapshots(
       grpc::ClientContext& context,
@@ -71,7 +73,8 @@ class TopicAdminTracingStub : public TopicAdminStub {
 
  private:
   std::shared_ptr<TopicAdminStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

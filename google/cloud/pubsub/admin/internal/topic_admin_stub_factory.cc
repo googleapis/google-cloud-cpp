@@ -17,17 +17,17 @@
 // source: google/pubsub/v1/pubsub.proto
 
 #include "google/cloud/pubsub/admin/internal/topic_admin_stub_factory.h"
+#include "google/cloud/pubsub/admin/internal/topic_admin_auth_decorator.h"
+#include "google/cloud/pubsub/admin/internal/topic_admin_logging_decorator.h"
+#include "google/cloud/pubsub/admin/internal/topic_admin_metadata_decorator.h"
+#include "google/cloud/pubsub/admin/internal/topic_admin_stub.h"
+#include "google/cloud/pubsub/admin/internal/topic_admin_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsub/admin/internal/topic_admin_auth_decorator.h"
-#include "google/cloud/pubsub/admin/internal/topic_admin_logging_decorator.h"
-#include "google/cloud/pubsub/admin/internal/topic_admin_metadata_decorator.h"
-#include "google/cloud/pubsub/admin/internal/topic_admin_stub.h"
-#include "google/cloud/pubsub/admin/internal/topic_admin_tracing_stub.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 #include <memory>
 
@@ -36,29 +36,25 @@ namespace cloud {
 namespace pubsub_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<TopicAdminStub>
-CreateDefaultTopicAdminStub(
+std::shared_ptr<TopicAdminStub> CreateDefaultTopicAdminStub(
     google::cloud::CompletionQueue cq, Options const& options) {
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::pubsub::v1::Publisher::NewStub(channel);
   std::shared_ptr<TopicAdminStub> stub =
-    std::make_shared<DefaultTopicAdminStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultTopicAdminStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<TopicAdminAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<TopicAdminAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<TopicAdminMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<TopicAdminLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

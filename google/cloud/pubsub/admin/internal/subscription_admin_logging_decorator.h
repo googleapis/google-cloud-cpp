@@ -35,8 +35,8 @@ class SubscriptionAdminLogging : public SubscriptionAdminStub {
  public:
   ~SubscriptionAdminLogging() override = default;
   SubscriptionAdminLogging(std::shared_ptr<SubscriptionAdminStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                           TracingOptions tracing_options,
+                           std::set<std::string> const& components);
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       grpc::ClientContext& context,
