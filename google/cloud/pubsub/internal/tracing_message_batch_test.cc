@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/testing/mock_message_batch.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -32,6 +33,7 @@ using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::LinkHasSpanContext;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
@@ -312,6 +314,35 @@ TEST(TracingMessageBatch, FlushAddsEventForMultipleMessages) {
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanNamed("test message span2"),
                          SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
+}
+
+TEST(TracingMessageBatch, FlushBatchUsingEnvVariable) {
+  auto constexpr kOtelSpanLinkCountLimit = "OTEL_SPAN_LINK_COUNT_LIMIT";
+  auto constexpr kBatchSize = 200;
+  ScopedEnvironment config(kOtelSpanLinkCountLimit, "200");
+  auto initial_spans = CreateSpans(kBatchSize);
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, Flush).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return [](auto) {};
+  });
+  auto message_batch =
+      std::make_unique<TracingMessageBatch>(std::move(mock), initial_spans);
+
+  auto end_spans = message_batch->Flush();
+  end_spans(make_ready_future());
+
+  EXPECT_THAT(message_batch->GetMessageSpans(), IsEmpty());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                     SpanNamed("BatchSink::AsyncPublish"),
+                     SpanHasAttributes(OTelAttribute<std::int64_t>(
+                         "messaging.pubsub.num_messages_in_batch", kBatchSize)),
+                     SpanLinksSizeIs(kBatchSize))));
 }
 
 // TODO(#12528): Add an end to end test.

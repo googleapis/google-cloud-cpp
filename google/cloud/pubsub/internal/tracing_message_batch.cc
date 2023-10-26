@@ -17,6 +17,7 @@
 #include "google/cloud/pubsub/internal/tracing_message_batch.h"
 #include "google/cloud/pubsub/internal/message_batch.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "opentelemetry/context/runtime_context.h"
 #include "opentelemetry/trace/context.h"
@@ -94,13 +95,27 @@ auto MakeChild(
       /*links=*/links, options);
 }
 
+int64_t GetMaxOtelLinks() {
+  auto constexpr kOtelSpanLinkCountLimit = "OTEL_SPAN_LINK_COUNT_LIMIT";
+  int64_t kMaxOtelLinks = 128;
+  try {
+    kMaxOtelLinks =
+        std::stoi(internal::GetEnv(kOtelSpanLinkCountLimit).value_or("128"));
+  } catch (std::invalid_argument const&) {
+    return kMaxOtelLinks;
+  } catch (std::out_of_range const&) {
+    return kMaxOtelLinks;
+  }
+  return kMaxOtelLinks;
+}
+
 Spans MakeBatchSinkSpans(Spans message_spans) {
-  int constexpr kMaxOtelLinks = 128;
+  int64_t kMaxOtelLinks = GetMaxOtelLinks();
   Spans batch_sink_spans;
   // If the batch size is less than the max size, add the links to a single
   // span. If the batch size is greater than the max size, create a parent
   // span with no links and each child spans will contain links.
-  if (message_spans.size() <= kMaxOtelLinks) {
+  if (static_cast<int64_t>(message_spans.size()) <= kMaxOtelLinks) {
     batch_sink_spans.push_back(MakeParent(
         MakeLinks(message_spans.begin(), message_spans.end()), message_spans));
     return batch_sink_spans;
@@ -108,7 +123,7 @@ Spans MakeBatchSinkSpans(Spans message_spans) {
   batch_sink_spans.push_back(MakeParent({{}}, message_spans));
   auto batch_sink_parent = batch_sink_spans.front();
 
-  auto cut = [&message_spans](auto i) {
+  auto cut = [&message_spans, &kMaxOtelLinks](auto i) {
     auto const batch_size = static_cast<std::ptrdiff_t>(kMaxOtelLinks);
     return std::next(
         i, std::min(batch_size, std::distance(i, message_spans.end())));
