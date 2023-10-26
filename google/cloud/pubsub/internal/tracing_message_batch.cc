@@ -12,23 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 #include "google/cloud/pubsub/internal/tracing_message_batch.h"
 #include "google/cloud/pubsub/internal/message_batch.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include "opentelemetry/context/runtime_context.h"
-#include "opentelemetry/trace/context.h"
-#include "opentelemetry/trace/span.h"
 #include <algorithm>
 #include <memory>
 #include <string>
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "opentelemetry/context/runtime_context.h"
+#include "opentelemetry/trace/context.h"
+#include "opentelemetry/trace/span.h"
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 void TracingMessageBatch::SaveMessage(pubsub::Message m) {
   auto active_span = opentelemetry::trace::GetSpan(
@@ -152,9 +155,22 @@ TracingMessageBatch::GetMessageSpans() const {
   return message_spans_;
 }
 
+std::shared_ptr<MessageBatch> MakeTracingMessageBatch(
+    std::shared_ptr<MessageBatch> message_batch) {
+  return std::make_shared<TracingMessageBatch>(std::move(message_batch));
+}
+
+#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<MessageBatch> MakeTracingMessageBatch(
+    std::shared_ptr<MessageBatch> message_batch) {
+  return message_batch;
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
