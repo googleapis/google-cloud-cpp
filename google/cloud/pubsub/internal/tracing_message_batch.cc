@@ -97,14 +97,9 @@ auto MakeChild(
 
 int64_t GetMaxOtelLinks() {
   auto constexpr kOtelSpanLinkCountLimit = "OTEL_SPAN_LINK_COUNT_LIMIT";
-  int64_t max_otel_links = 128;
-  try {
-    max_otel_links =
-        std::stoi(internal::GetEnv(kOtelSpanLinkCountLimit).value_or("128"));
-  } catch (std::invalid_argument const&) {
-    return max_otel_links;
-  } catch (std::out_of_range const&) {
-    return max_otel_links;
+  int64_t max_otel_links;
+  if( !absl::SimpleAtoi(internal::GetEnv(kOtelSpanLinkCountLimit).value_or("128"), max_otel_links) {
+    max_otel_links = 128;
   }
   return max_otel_links;
 }
