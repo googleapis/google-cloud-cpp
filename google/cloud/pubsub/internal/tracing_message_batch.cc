@@ -110,7 +110,7 @@ Spans MakeBatchSinkSpans(Spans message_spans) {
   batch_sink_spans.push_back(MakeParent({{}}, message_spans));
   auto batch_sink_parent = batch_sink_spans.front();
 
-  auto cut = [&message_spans](auto i) {
+  auto cut = [&message_spans, &kMaxOtelLinks](auto i) {
     auto const batch_size = static_cast<std::ptrdiff_t>(kMaxOtelLinks);
     return std::next(
         i, std::min(batch_size, std::distance(i, message_spans.end())));
