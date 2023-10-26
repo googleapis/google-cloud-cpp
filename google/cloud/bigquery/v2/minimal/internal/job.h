@@ -44,7 +44,7 @@ void from_json(nlohmann::json const& j, JobStatus& jb);
 struct JobReference {
   std::string project_id;
   std::string job_id;
-  std::string location;
+  std::string location = "US";
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
