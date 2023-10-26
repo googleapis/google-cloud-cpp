@@ -55,6 +55,12 @@ sed -i -f - cmake/GoogleapisConfig.cmake <<EOT
   }
 EOT
 
+if git diff --quiet bazel/google_cloud_cpp_deps.bzl \
+  cmake/GoogleapisConfig.cmake; then
+  echo "No updates"
+  exit 0
+fi
+
 banner "Updating the protodeps/protolists"
 external/googleapis/update_libraries.sh
 
@@ -70,7 +76,9 @@ if ! git diff --quiet external/googleapis/protodeps \
   git commit -m"Update the protodeps/protolists" \
     external/googleapis/protodeps external/googleapis/protolists
 fi
-git commit -m"Regenerate libraries" .
+if ! git diff --quiet .; then
+  git commit -m"Regenerate libraries" .
+fi
 
 banner "Showing git state"
 git status --untracked-files=no
