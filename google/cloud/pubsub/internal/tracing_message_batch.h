@@ -16,53 +16,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_TRACING_MESSAGE_BATCH_H
 
 #include "google/cloud/pubsub/internal/message_batch.h"
-#include "google/cloud/pubsub/internal/publisher_stub.h"
-#include "google/cloud/pubsub/version.h"
-#include "google/cloud/future.h"
-#include "google/cloud/internal/opentelemetry.h"
-#include <functional>
+#include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Records spans related to a batch messages across calls and
- * callbacks in the `BatchingPublisherConnection`.
- */
-class TracingMessageBatch : public MessageBatch {
- public:
-  explicit TracingMessageBatch(std::shared_ptr<MessageBatch> child)
-      : child_(std::move(child)) {}
-  // For testing only.
-  TracingMessageBatch(
-      std::shared_ptr<MessageBatch> child,
-      std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-          message_spans)
-      : child_(std::move(child)), message_spans_(std::move(message_spans)) {}
-
-  ~TracingMessageBatch() override = default;
-
-  void SaveMessage(pubsub::Message m) override;
-
-  std::function<void(future<void>)> Flush() override;
-
-  // For testing only.
-  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-  GetMessageSpans() const;
-
- private:
-  std::shared_ptr<MessageBatch> child_;
-  std::mutex mu_;
-  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      message_spans_;  // ABSL_GUARDED_BY(mu_)
-};
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<MessageBatch> MakeTracingMessageBatch(
     std::shared_ptr<MessageBatch> message_batch);

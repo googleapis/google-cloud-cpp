@@ -14,16 +14,18 @@
 
 #include "google/cloud/pubsub/internal/tracing_message_batch.h"
 #include "google/cloud/pubsub/internal/message_batch.h"
-#include "google/cloud/pubsub/version.h"
-#include "google/cloud/internal/opentelemetry.h"
-#include <algorithm>
+#include "google/cloud/version.h"
 #include <memory>
-#include <string>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/future.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "opentelemetry/context/runtime_context.h"
 #include "opentelemetry/trace/context.h"
+#include "opentelemetry/trace/semantic_conventions.h"
 #include "opentelemetry/trace/span.h"
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <algorithm>
+#include <string>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
@@ -33,19 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-void TracingMessageBatch::SaveMessage(pubsub::Message m) {
-  auto active_span = opentelemetry::trace::GetSpan(
-      opentelemetry::context::RuntimeContext::GetCurrent());
-  active_span->AddEvent("gl-cpp.added_to_batch");
-  {
-    std::lock_guard<std::mutex> lk(mu_);
-    message_spans_.push_back(std::move(active_span));
-  }
-  child_->SaveMessage(std::move(m));
-}
-
 namespace {
-
 using Spans =
     std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>;
 using Attributes =
@@ -130,31 +120,71 @@ Spans MakeBatchSinkSpans(Spans message_spans) {
 
 }  // namespace
 
-std::function<void(future<void>)> TracingMessageBatch::Flush() {
-  decltype(message_spans_) message_spans;
-  {
-    std::lock_guard<std::mutex> lk(mu_);
-    message_spans.swap(message_spans_);
+/**
+ * Records spans related to a batch messages across calls and
+ * callbacks in the `BatchingPublisherConnection`.
+ */
+class TracingMessageBatch : public MessageBatch {
+ public:
+  explicit TracingMessageBatch(std::shared_ptr<MessageBatch> child)
+      : child_(std::move(child)) {}
+  // For testing only.
+  TracingMessageBatch(
+      std::shared_ptr<MessageBatch> child,
+      std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+          message_spans)
+      : child_(std::move(child)), message_spans_(std::move(message_spans)) {}
+
+  ~TracingMessageBatch() override = default;
+
+  void SaveMessage(pubsub::Message m) override {
+    auto active_span = opentelemetry::trace::GetSpan(
+        opentelemetry::context::RuntimeContext::GetCurrent());
+    active_span->AddEvent("gl-cpp.added_to_batch");
+    {
+      std::lock_guard<std::mutex> lk(mu_);
+      message_spans_.push_back(std::move(active_span));
+    }
+    child_->SaveMessage(std::move(m));
   }
 
-  auto batch_sink_spans = MakeBatchSinkSpans(std::move(message_spans));
+  std::function<void(future<void>)> Flush() override {
+    decltype(message_spans_) message_spans;
+    {
+      std::lock_guard<std::mutex> lk(mu_);
+      message_spans.swap(message_spans_);
+    }
 
-  // Set the batch sink parent span as the active span. This will always be the
-  // first span in the vector.
-  auto async_scope = internal::GetTracer(internal::CurrentOptions())
-                         ->WithActiveSpan(batch_sink_spans.front());
+    auto batch_sink_spans = MakeBatchSinkSpans(std::move(message_spans));
 
-  return [next = child_->Flush(),
-          spans = std::move(batch_sink_spans)](auto f) mutable {
-    for (auto& span : spans) internal::EndSpan(*span);
-    next(std::move(f));
-  };
-}
+    // Set the batch sink parent span as the active span. This will always be
+    // the first span in the vector.
+    auto async_scope = internal::GetTracer(internal::CurrentOptions())
+                           ->WithActiveSpan(batch_sink_spans.front());
 
-std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-TracingMessageBatch::GetMessageSpans() const {
-  return message_spans_;
-}
+    return [next = child_->Flush(),
+            spans = std::move(batch_sink_spans)](auto f) mutable {
+      std::cout << "end spans" << spans.size() << std::endl;
+      for (auto& span : spans) {
+        internal::EndSpan(*span);
+      }
+      next(std::move(f));
+    };
+  }
+
+  // For testing only.
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+  GetMessageSpans() {
+    std::lock_guard<std::mutex> lk(mu_);
+    return message_spans_;
+  }
+
+ private:
+  std::shared_ptr<MessageBatch> child_;
+  std::mutex mu_;
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+      message_spans_;  // ABSL_GUARDED_BY(mu_)
+};
 
 std::shared_ptr<MessageBatch> MakeTracingMessageBatch(
     std::shared_ptr<MessageBatch> message_batch) {

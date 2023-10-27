@@ -365,9 +365,13 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
   publisher->Flush({});
+  // Do not merge with this in here. I don't know how else to deflake this test
+  // at the moment. Without this, it doesn't wait for the AsyncPublish span to 
+  // end.
+  sleep(1);
 
   auto spans = span_catcher->GetSpans();
-  ASSERT_THAT(spans, SizeIs(8));
+  ASSERT_EQ(spans.size(), 8);
   EXPECT_THAT(
       spans,
       UnorderedElementsAre(
