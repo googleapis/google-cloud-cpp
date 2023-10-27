@@ -67,15 +67,15 @@ TEST(TracingHttpPayload, Success) {
                      OTelAttribute<std::int64_t>("read.buffer.size", bs),
                      OTelAttribute<std::int64_t>("read.returned.size", rs)));
   };
-  EXPECT_THAT(
-      spans,
-      UnorderedElementsAre(
-          AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
-                SpanKindIsClient(),
-                SpanHasAttributes(OTelAttribute<std::string>(
-                    sc::kNetworkTransport, sc::NetTransportValues::kIpTcp))),
-          make_read_matcher(16, 16), make_read_matcher(16, 16),
-          make_read_matcher(16, 11), make_read_matcher(16, 0)));
+  EXPECT_THAT(spans,
+              UnorderedElementsAre(
+                  AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+                        SpanKindIsClient(),
+                        SpanHasAttributes(OTelAttribute<std::string>(
+                            /*sc::kNetworkTransport=*/"network.transport",
+                            sc::NetTransportValues::kIpTcp))),
+                  make_read_matcher(16, 16), make_read_matcher(16, 16),
+                  make_read_matcher(16, 11), make_read_matcher(16, 0)));
 }
 
 TEST(TracingHttpPayload, Failure) {
@@ -115,19 +115,19 @@ TEST(TracingHttpPayload, Failure) {
                          "gl-cpp.status_code", static_cast<std::int32_t>(code)),
                      OTelAttribute<std::int64_t>("read.buffer.size", bs)));
   };
-  EXPECT_THAT(
-      spans,
-      UnorderedElementsAre(
-          AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
-                SpanKindIsClient(),
-                SpanHasAttributes(
-                    OTelAttribute<std::string>(sc::kNetworkTransport,
-                                               sc::NetTransportValues::kIpTcp),
-                    OTelAttribute<int>(
-                        "gl-cpp.status_code",
-                        static_cast<int>(StatusCode::kUnavailable)))),
-          make_read_success_matcher(16, 16),
-          make_read_error_matcher(16, StatusCode::kUnavailable)));
+  EXPECT_THAT(spans,
+              UnorderedElementsAre(
+                  AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+                        SpanKindIsClient(),
+                        SpanHasAttributes(
+                            OTelAttribute<std::string>(
+                                /*sc::kNetworkTransport=*/"network.transport",
+                                sc::NetTransportValues::kIpTcp),
+                            OTelAttribute<int>(
+                                "gl-cpp.status_code",
+                                static_cast<int>(StatusCode::kUnavailable)))),
+                  make_read_success_matcher(16, 16),
+                  make_read_error_matcher(16, StatusCode::kUnavailable)));
 }
 
 }  // namespace

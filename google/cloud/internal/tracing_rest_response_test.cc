@@ -80,15 +80,15 @@ TEST(TracingRestResponseTest, Success) {
                      OTelAttribute<std::int64_t>("read.returned.size", rs)));
   };
   auto const content_size = static_cast<std::int64_t>(MockContents().size());
-  EXPECT_THAT(
-      spans,
-      UnorderedElementsAre(
-          AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
-                SpanKindIsClient(),
-                SpanHasAttributes(OTelAttribute<std::string>(
-                    sc::kNetworkTransport, sc::NetTransportValues::kIpTcp))),
-          make_read_event_matcher(kBufferSize, content_size),
-          make_read_event_matcher(kBufferSize, 0)));
+  EXPECT_THAT(spans,
+              UnorderedElementsAre(
+                  AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+                        SpanKindIsClient(),
+                        SpanHasAttributes(OTelAttribute<std::string>(
+                            /*sc::kNetworkTransport=*/"network.transport",
+                            sc::NetTransportValues::kIpTcp))),
+                  make_read_event_matcher(kBufferSize, content_size),
+                  make_read_event_matcher(kBufferSize, 0)));
 }
 
 }  // namespace
