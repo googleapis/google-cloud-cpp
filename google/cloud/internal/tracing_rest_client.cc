@@ -23,7 +23,6 @@
 #include "absl/functional/function_ref.h"
 #include "absl/strings/match.h"
 #include "absl/strings/numbers.h"
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <array>
 #include <cstdint>
 
@@ -46,15 +45,18 @@ StatusOr<std::unique_ptr<RestResponse>> EndResponseSpan(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
     RestContext& context,
     StatusOr<std::unique_ptr<RestResponse>> request_result) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
   if (context.primary_ip_address() && context.primary_port()) {
-    span->SetAttribute(sc::kServerAddress, *context.primary_ip_address());
-    span->SetAttribute(sc::kServerPort, *context.primary_port());
+    span->SetAttribute(/*sc::kServerAddress=*/"server.address",
+                       *context.primary_ip_address());
+    span->SetAttribute(/*sc::kServerPort=*/"server.port",
+                       *context.primary_port());
   }
 
   if (context.local_ip_address() && context.local_port()) {
-    span->SetAttribute(sc::kClientAddress, *context.local_ip_address());
-    span->SetAttribute(sc::kClientPort, *context.local_port());
+    span->SetAttribute(/*sc::kClientAddress=*/"client.address",
+                       *context.local_ip_address());
+    span->SetAttribute(/*sc::kClientPort=*/"client.port",
+                       *context.local_port());
   }
   for (auto const& kv : context.headers()) {
     auto const name = "http.request.header." + kv.first;

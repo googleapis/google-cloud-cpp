@@ -70,8 +70,9 @@ TEST(OpenTelemetry, MakeSpanGrpc) {
               OTelAttribute<std::string>(sc::kRpcService,
                                          "google.cloud.foo.v1.Foo"),
               OTelAttribute<std::string>(sc::kRpcMethod, "GetBar"),
-              OTelAttribute<std::string>(sc::kNetworkTransport,
-                                         sc::NetTransportValues::kIpTcp),
+              OTelAttribute<std::string>(
+                  /*sc::kNetworkTransport=*/"network.transport",
+                  sc::NetTransportValues::kIpTcp),
               OTelAttribute<std::string>("grpc.version", grpc::Version())))));
 }
 

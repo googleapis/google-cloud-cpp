@@ -85,7 +85,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
       {{sc::kRpcSystem, sc::RpcSystemValues::kGrpc},
        {sc::kRpcService, service},
        {sc::kRpcMethod, method},
-       {sc::kNetworkTransport, sc::NetTransportValues::kIpTcp},
+       {/*sc::kNetworkTransport=*/"network.transport",
+        sc::NetTransportValues::kIpTcp},
        {"grpc.version", grpc::Version()}},
       options);
 }
