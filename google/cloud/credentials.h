@@ -325,8 +325,7 @@ struct AccessTokenLifetimeOption {
  *
  * @warning gRPC does not have a programmatic mechanism to set the CA
  *     certificates for the default credentials. This option only has no effect
- *     with `MakeGoogleDefaultCredentials()`, or
- *     `MakeServiceAccountCredentials()`.
+ *     with `MakeGoogleDefaultCredentials()`.
  *     Consider using the `GRPC_DEFAULT_SSL_ROOTS_FILE_PATH` environment
  *     variable in these cases.
  *
