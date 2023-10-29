@@ -13,9 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/tracing_message_batch.h"
-#include "google/cloud/pubsub/internal/message_batch.h"
-#include "google/cloud/version.h"
-#include <memory>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/future.h"
