@@ -135,9 +135,8 @@ std::function<void(future<void>)> TracingMessageBatch::Flush() {
 
   auto batch_sink_spans = MakeBatchSinkSpans(std::move(message_spans));
 
-  // Give the batch sink parent span its own context. This means the span is
-  // root span with no parent. The parent span always be the first span in the
-  // vector.
+  // The first span in `batch_sink_spans` is the parent to the other spans in
+  // the vector.
   internal::OTelScope scope(batch_sink_spans.front());
   return [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
           next = child_->Flush(),

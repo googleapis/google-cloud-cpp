@@ -129,7 +129,7 @@ TEST(TracingMessageBatch, Flush) {
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     EXPECT_TRUE(OTelContextCaptured());
-    return [](auto) {};
+    return [](auto) { EXPECT_FALSE(OTelContextCaptured()); };
   });
   auto initial_spans = {message_span};
   auto message_batch =
