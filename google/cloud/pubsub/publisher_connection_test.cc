@@ -351,9 +351,22 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
+
+  std::mutex mu;
+  std::condition_variable cv;
+  auto constexpr kMessageCount = 1;
+  int publish_count = 0;
+  int received_count = 0;
+
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::cloud::CompletionQueue&, auto,
-                    google::pubsub::v1::PublishRequest const&) {
+                    google::pubsub::v1::PublishRequest const& request) {
+        {
+          std::lock_guard<std::mutex> lk(mu);
+          received_count += request.messages_size();
+          ++publish_count;
+        }
+        cv.notify_all();
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         return make_ready_future(make_status_or(response));
@@ -365,10 +378,11 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
   publisher->Flush({});
-  // Do not merge with this in here. I don't know how else to deflake this test
-  // at the moment. Without this, it doesn't wait for the AsyncPublish span to
-  // end.
-  sleep(1);
+
+  // Wait until we have received all of the messages before we start satisfying
+  // any promises. We need to wait so that all the spans can be captured.
+  std::unique_lock<std::mutex> lk(mu);
+  cv.wait(lk, [&] { return received_count == kMessageCount; });
 
   auto spans = span_catcher->GetSpans();
   ASSERT_EQ(spans.size(), 8);
