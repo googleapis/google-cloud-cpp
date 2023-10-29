@@ -44,7 +44,6 @@ using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::Contains;
-using ::testing::IsEmpty;
 
 namespace {
 
@@ -70,7 +69,7 @@ auto CreateSpans(int n) {
 void SaveMessages(
     std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
         spans,
-    std::shared_ptr<MessageBatch> message_batch, bool end_spans = true) {
+   std::shared_ptr<MessageBatch> const& message_batch, bool end_spans = true) {
   for (size_t i = 0; i < spans.size(); i++) {
     auto message =
         pubsub::MessageBuilder().SetData("test" + std::to_string(i)).Build();
