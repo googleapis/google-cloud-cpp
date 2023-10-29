@@ -128,12 +128,6 @@ class TracingMessageBatch : public MessageBatch {
  public:
   explicit TracingMessageBatch(std::shared_ptr<MessageBatch> child)
       : child_(std::move(child)) {}
-  // For testing only.
-  TracingMessageBatch(
-      std::shared_ptr<MessageBatch> child,
-      std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-          message_spans)
-      : child_(std::move(child)), message_spans_(std::move(message_spans)) {}
 
   ~TracingMessageBatch() override = default;
 
@@ -164,19 +158,11 @@ class TracingMessageBatch : public MessageBatch {
 
     return [next = child_->Flush(),
             spans = std::move(batch_sink_spans)](auto f) mutable {
-      std::cout << "end spans" << spans.size() << std::endl;
       for (auto& span : spans) {
         internal::EndSpan(*span);
       }
       next(std::move(f));
     };
-  }
-
-  // For testing only.
-  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-  GetMessageSpans() {
-    std::lock_guard<std::mutex> lk(mu_);
-    return message_spans_;
   }
 
  private:

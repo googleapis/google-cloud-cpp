@@ -366,7 +366,7 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
           .get();
   publisher->Flush({});
   // Do not merge with this in here. I don't know how else to deflake this test
-  // at the moment. Without this, it doesn't wait for the AsyncPublish span to 
+  // at the moment. Without this, it doesn't wait for the AsyncPublish span to
   // end.
   sleep(1);
 
