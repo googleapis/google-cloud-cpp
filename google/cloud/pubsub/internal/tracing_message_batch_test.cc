@@ -33,8 +33,8 @@ using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::LinkHasSpanContext;
 using ::google::cloud::testing_util::OTelAttribute;
-using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::OTelContextCaptured;
+using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -70,7 +70,7 @@ auto CreateSpans(int n) {
 void SaveMessages(
     std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
         spans,
-   std::shared_ptr<MessageBatch> const& message_batch, bool end_spans = true) {
+    std::shared_ptr<MessageBatch> const& message_batch, bool end_spans = true) {
   for (size_t i = 0; i < spans.size(); i++) {
     auto message =
         pubsub::MessageBuilder().SetData("test" + std::to_string(i)).Build();
@@ -262,8 +262,7 @@ TEST(TracingMessageBatch, FlushSpanAddsEvent) {
   EXPECT_THAT(
       span_catcher->GetSpans(),
       Contains(AllOf(SpanNamed("test span 0"),
-                     SpanHasEvents(
-                                   EventNamed("gl-cpp.batch_flushed")))));
+                     SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
 }
 
 TEST(TracingMessageBatch, FlushAddsEventForMultipleMessages) {
