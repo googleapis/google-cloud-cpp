@@ -233,6 +233,29 @@ StatusOr<google::storage::v2::WriteObjectRequest> ToProtoImpl(
   return r;
 }
 
+Status FinalizeChecksums(google::storage::v2::ObjectChecksums& checksums,
+                         storage::internal::HashValues const& hashes) {
+  // The client library accepts CRC32C and MD5 checksums in the format required
+  // by the REST APIs, that is, base64-encoded. We need to convert this to the
+  // format expected by proto, which is just a 32-bit integer for CRC32C and a
+  // byte array for MD5.
+  //
+  // These conversions may fail, because the value is provided by the
+  // application in some cases.
+  if (!hashes.crc32c.empty()) {
+    auto as_proto = storage_internal::Crc32cToProto(hashes.crc32c);
+    if (!as_proto) return std::move(as_proto).status();
+    checksums.set_crc32c(*as_proto);
+  }
+
+  if (!hashes.md5.empty()) {
+    auto as_proto = storage_internal::MD5ToProto(hashes.md5);
+    if (!as_proto) return std::move(as_proto).status();
+    checksums.set_md5_hash(*as_proto);
+  }
+  return {};
+}
+
 }  // namespace
 
 StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
@@ -768,28 +791,18 @@ Status Finalize(google::storage::v2::WriteObjectRequest& write_request,
                 storage::internal::HashValues hashes) {
   write_request.set_finish_write(true);
   options.set_last_message();
+  return FinalizeChecksums(*write_request.mutable_object_checksums(),
+                           Merge(std::move(hashes), hash_function.Finish()));
+}
 
-  hashes = Merge(std::move(hashes), hash_function.Finish());
-  auto& checksums = *write_request.mutable_object_checksums();
-  // The client library accepts CRC32C and MD5 checksums in the format required
-  // by the REST APIs, that is, base64-encoded. We need to convert this to the
-  // format expected by proto, which is just a 32-bit integer for CRC32C and a
-  // byte array for MD5.
-  //
-  // These conversions may fail, because the value is provided by the
-  // application in some cases.
-  if (!hashes.crc32c.empty()) {
-    auto as_proto = storage_internal::Crc32cToProto(hashes.crc32c);
-    if (!as_proto) return std::move(as_proto).status();
-    checksums.set_crc32c(*as_proto);
-  }
-
-  if (!hashes.md5.empty()) {
-    auto as_proto = storage_internal::MD5ToProto(hashes.md5);
-    if (!as_proto) return std::move(as_proto).status();
-    checksums.set_md5_hash(*as_proto);
-  }
-  return {};
+Status Finalize(google::storage::v2::BidiWriteObjectRequest& write_request,
+                grpc::WriteOptions& options,
+                storage::internal::HashFunction& hash_function,
+                storage::internal::HashValues hashes) {
+  write_request.set_finish_write(true);
+  options.set_last_message();
+  return FinalizeChecksums(*write_request.mutable_object_checksums(),
+                           Merge(std::move(hashes), hash_function.Finish()));
 }
 
 // If this is the last `Write()` call of the last `InsertObjectMedia()` set the
