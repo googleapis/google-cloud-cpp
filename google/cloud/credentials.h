@@ -322,10 +322,10 @@ struct AccessTokenLifetimeOption {
  *   does not use the default root of trust. Though it might be possible to
  *   set the `GRPC_DEFAULT_SSL_ROOTS_FILE_PATH` environment variable instead.
  *
- * You should set this option both in the credentials and the client options.
- * For example:
+ * You should set this option both in the credentials and in the connection
+ * `google::cloud::Options` parameter. For example:
  * @code
- * using gc = ::google::cloud;
+ * namespace gc = ::google::cloud;
  * auto ca = gc::Options{}.set<gc::CARootsFilePathOption>("path/to/roots.pem");
  * auto credentials = gc::MakeServiceAccountCredentials(..., ca);
  * // Make a copy, only needed if you plan to use `ca` again.
