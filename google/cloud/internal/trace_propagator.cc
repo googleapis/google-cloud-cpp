@@ -19,6 +19,7 @@
 #include <opentelemetry/context/propagation/composite_propagator.h>
 #include <opentelemetry/trace/context.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
+#include <cstdlib>
 
 namespace google {
 namespace cloud {
@@ -68,6 +69,7 @@ class CloudTraceContext
     span_id[2 * SpanId::kSize] = '\0';
     char* end = nullptr;
     std::uint64_t span_id_dec = std::strtoull(span_id.data(), &end, 16);
+    if (end - span_id.data() != 2 * SpanId::kSize) return;
     carrier.Set(
         "x-cloud-trace-context",
         absl::StrCat(absl::string_view{trace_id.data(), trace_id.size()}, "/",
