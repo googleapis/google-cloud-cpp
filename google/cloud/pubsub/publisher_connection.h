@@ -172,8 +172,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<pubsub::PublisherConnection> MakeTestPublisherConnection(
     pubsub::Topic topic, Options opts,
     std::vector<std::shared_ptr<PublisherStub>> stubs,
-    std::shared_ptr<MessageBatch> message_batch =
-        std::make_shared<NoOpMessageBatch>());
+    std::shared_ptr<MessageBatch> message_batch);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

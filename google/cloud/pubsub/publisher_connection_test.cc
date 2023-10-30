@@ -360,13 +360,12 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
       std::make_shared<pubsub_testing::MockMessageBatch>();
   std::mutex mu;
   std::condition_variable cv;
-  auto constexpr kMessageCount = 1;
-  int publish_count = 0;  // ABSL_GUARDED_BY(mu)
-  EXPECT_CALL(*mock_message_batch, SaveMessage(_)).Times(kMessageCount);
+  bool is_publish_complete = false;  // ABSL_GUARDED_BY(mu)
+  EXPECT_CALL(*mock_message_batch, SaveMessage(_)).Times(1);
   EXPECT_CALL(*mock_message_batch, Flush).WillOnce([&] {
     {
       std::lock_guard<std::mutex> lk(mu);
-      ++publish_count;
+      is_publish_complete = true;
     }
     cv.notify_all();
     return [](auto) {};
@@ -389,7 +388,7 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
 
   // Wait until the BatchSink span ends before calling `GetSpans`.
   std::unique_lock<std::mutex> lk(mu);
-  cv.wait(lk, [&] { return publish_count == kMessageCount; });
+  cv.wait(lk, [&] { return is_publish_complete; });
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(

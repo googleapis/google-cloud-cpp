@@ -46,8 +46,7 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
     pubsub::Topic topic, Options opts,
     std::shared_ptr<BackgroundThreads> background,
     std::shared_ptr<pubsub_internal::PublisherStub> stub,
-    std::shared_ptr<pubsub_internal::MessageBatch> message_batch =
-        std::make_shared<pubsub_internal::NoOpMessageBatch>()) {
+    std::shared_ptr<pubsub_internal::MessageBatch> message_batch) {
   auto make_connection = [&]() -> std::shared_ptr<pubsub::PublisherConnection> {
     auto cq = background->cq();
     std::shared_ptr<pubsub_internal::BatchSink> sink =
@@ -130,8 +129,9 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto stub =
       pubsub_internal::MakeRoundRobinPublisherStub(background->cq(), opts);
-  return ConnectionFromDecoratedStub(std::move(topic), std::move(opts),
-                                     std::move(background), std::move(stub));
+  return ConnectionFromDecoratedStub(
+      std::move(topic), std::move(opts), std::move(background), std::move(stub),
+      std::make_shared<pubsub_internal::NoOpMessageBatch>());
 }
 
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
