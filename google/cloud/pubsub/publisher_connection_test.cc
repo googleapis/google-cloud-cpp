@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/options.h"
+#include "google/cloud/pubsub/testing/mock_message_batch.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/api_client_header.h"
@@ -37,17 +38,21 @@ namespace {
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
 std::shared_ptr<PublisherConnection> MakeTestPublisherConnection(
     Topic topic, std::shared_ptr<pubsub_internal::PublisherStub> mock,
-    Options opts = {}) {
+    Options opts = {},
+    std::shared_ptr<pubsub_internal::MessageBatch> message_batch =
+        std::make_shared<pubsub_internal::NoOpMessageBatch>()) {
   opts = pubsub_internal::DefaultPublisherOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
   return pubsub_internal::MakeTestPublisherConnection(
-      std::move(topic), std::move(opts), {std::move(mock)});
+      std::move(topic), std::move(opts), {std::move(mock)},
+      std::move(message_batch));
 }
 
 TEST(PublisherConnectionTest, Basic) {
@@ -350,25 +355,48 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
+
+  auto mock_message_batch =
+      std::make_shared<pubsub_testing::MockMessageBatch>();
+  std::mutex mu;
+  std::condition_variable cv;
+  auto constexpr kMessageCount = 1;
+  int publish_count = 0;  // ABSL_GUARDED_BY(mu)
+  EXPECT_CALL(*mock_message_batch, SaveMessage(_)).Times(kMessageCount);
+  EXPECT_CALL(*mock_message_batch, Flush).WillOnce([&] {
+    {
+      std::lock_guard<std::mutex> lk(mu);
+      ++publish_count;
+    }
+    cv.notify_all();
+    return [](auto) {};
+  });
+
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::cloud::CompletionQueue&, auto,
-                    google::pubsub::v1::PublishRequest const&) {
+                    google::pubsub::v1::PublishRequest const& request) {
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         return make_ready_future(make_status_or(response));
       });
-  auto publisher =
-      MakeTestPublisherConnection(topic, mock, EnableTracing(Options{}));
+  auto publisher = MakeTestPublisherConnection(
+      topic, mock, EnableTracing(Options{}), mock_message_batch);
 
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
 
+  // Wait until we have ended the BatchSink span before calling `GetSpans`.
+  std::unique_lock<std::mutex> lk(mu);
+  cv.wait(lk, [&] { return publish_count == kMessageCount; });
+
+  auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
-      span_catcher->GetSpans(),
+      spans,
       UnorderedElementsAre(
           SpanNamed("projects/test-project/topics/test-topic send"),
           SpanNamed("publisher flow control"), SpanNamed("publish scheduler"),
+          SpanNamed("BatchSink::AsyncPublish"),
           SpanNamed("google.pubsub.v1.Publisher/Publish")));
 }
 
