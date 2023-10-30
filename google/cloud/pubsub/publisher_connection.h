@@ -17,8 +17,6 @@
 
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
-#include "google/cloud/pubsub/internal/message_batch.h"
-#include "google/cloud/pubsub/internal/noop_message_batch.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/publisher_options.h"
@@ -171,8 +169,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<pubsub::PublisherConnection> MakeTestPublisherConnection(
     pubsub::Topic topic, Options opts,
-    std::vector<std::shared_ptr<PublisherStub>> stubs,
-    std::shared_ptr<MessageBatch> message_batch);
+    std::vector<std::shared_ptr<PublisherStub>> stubs);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

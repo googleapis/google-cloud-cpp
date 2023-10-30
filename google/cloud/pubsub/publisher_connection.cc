@@ -28,7 +28,6 @@
 #include "google/cloud/pubsub/internal/publisher_tracing_connection.h"
 #include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
 #include "google/cloud/pubsub/internal/sequential_batch_sink.h"
-#include "google/cloud/pubsub/internal/tracing_message_batch.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/non_constructible.h"
@@ -45,15 +44,13 @@ namespace {
 std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
     pubsub::Topic topic, Options opts,
     std::shared_ptr<BackgroundThreads> background,
-    std::shared_ptr<pubsub_internal::PublisherStub> stub,
-    std::shared_ptr<pubsub_internal::MessageBatch> message_batch) {
+    std::shared_ptr<pubsub_internal::PublisherStub> stub) {
   auto make_connection = [&]() -> std::shared_ptr<pubsub::PublisherConnection> {
     auto cq = background->cq();
     std::shared_ptr<pubsub_internal::BatchSink> sink =
         pubsub_internal::DefaultBatchSink::Create(stub, cq, opts);
-    if (google::cloud::internal::TracingEnabled(opts)) {
-      message_batch = MakeTracingMessageBatch(std::move(message_batch));
-    }
+    std::shared_ptr<pubsub_internal::MessageBatch> message_batch =
+        std::make_shared<pubsub_internal::NoOpMessageBatch>();
     if (opts.get<pubsub::MessageOrderingOption>()) {
       auto factory = [topic, opts, sink, cq,
                       message_batch](std::string const& key) {
@@ -129,9 +126,8 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto stub =
       pubsub_internal::MakeRoundRobinPublisherStub(background->cq(), opts);
-  return ConnectionFromDecoratedStub(
-      std::move(topic), std::move(opts), std::move(background), std::move(stub),
-      std::make_shared<pubsub_internal::NoOpMessageBatch>());
+  return ConnectionFromDecoratedStub(std::move(topic), std::move(opts),
+                                     std::move(background), std::move(stub));
 }
 
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
@@ -154,14 +150,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<pubsub::PublisherConnection> MakeTestPublisherConnection(
     pubsub::Topic topic, Options opts,
-    std::vector<std::shared_ptr<PublisherStub>> stubs,
-    std::shared_ptr<MessageBatch> message_batch) {
+    std::vector<std::shared_ptr<PublisherStub>> stubs) {
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto stub = pubsub_internal::MakeTestPublisherStub(background->cq(), opts,
                                                      std::move(stubs));
-  return pubsub::ConnectionFromDecoratedStub(
-      std::move(topic), std::move(opts), std::move(background), std::move(stub),
-      std::move(message_batch));
+  return pubsub::ConnectionFromDecoratedStub(std::move(topic), std::move(opts),
+                                             std::move(background),
+                                             std::move(stub));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
