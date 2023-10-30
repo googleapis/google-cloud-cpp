@@ -27,6 +27,9 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "opentelemetry/context/runtime_context.h"
+#include "opentelemetry/trace/context.h"
+#include "opentelemetry/trace/span.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -347,7 +350,9 @@ TEST(PublisherConnectionTest, HandleTransientEnabledRetry) {
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::IsEmpty;
 using ::testing::UnorderedElementsAre;
 
@@ -363,12 +368,21 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   bool is_publish_complete = false;  // ABSL_GUARDED_BY(mu)
   EXPECT_CALL(*mock_message_batch, SaveMessage(_)).Times(1);
   EXPECT_CALL(*mock_message_batch, Flush).WillOnce([&] {
-    {
-      std::lock_guard<std::mutex> lk(mu);
-      is_publish_complete = true;
-    }
-    cv.notify_all();
-    return [](auto) {};
+    // Batch sink span should still be active when Flush is called.
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
+    return [&](auto) {
+      // Batch sink span should no longer be active, but there will be another
+      // active span so instead we can test the otel context is no longer
+      // captured.
+      EXPECT_FALSE(OTelContextCaptured());
+      // Wait until the lambda returned from Flush is executed to GetSpans.
+      {
+        std::lock_guard<std::mutex> lk(mu);
+        is_publish_complete = true;
+      }
+      cv.notify_all();
+    };
   });
 
   EXPECT_CALL(*mock, AsyncPublish)
