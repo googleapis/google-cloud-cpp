@@ -54,16 +54,16 @@ void to_json(nlohmann::json& j, JobReference const& jb);
 void from_json(nlohmann::json const& j, JobReference& jb);
 
 struct Job {
-  std::string kind;                // output only
-  std::string etag;                // output only
-  std::string id;                  // output only
-  std::string self_link;           // output only
-  std::string user_email;          // output only
+  std::string kind;        // output only
+  std::string etag;        // output only
+  std::string id;          // output only
+  std::string self_link;   // output only
+  std::string user_email;  // output only
 
-  JobStatus status;                // output only
+  JobStatus status;  // output only
   JobReference job_reference;
   JobConfiguration configuration;
-  JobStatistics statistics;        // output only
+  JobStatistics statistics;  // output only
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
