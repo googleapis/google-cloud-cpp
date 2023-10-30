@@ -306,15 +306,36 @@ struct AccessTokenLifetimeOption {
  * Configures a custom CA (Certificates Authority) certificates file.
  *
  * Most applications should use the system's root certificates and should avoid
- * setting this option unnecessarily. A common exception to this recommendation
- * are containerized applications. These often deploy without system's root
- * certificates and need to explicitly configure a root of trust.
+ * setting this option unnecessarily.
  *
  * The value of this option should be the name of a file in [PEM format].
  * Consult your security team and/or system administrator for the contents of
  * this file. Be aware of the security implications of adding new CA
  * certificates to this file. Only use trustworthy sources for the CA
  * certificates.
+ *
+ * The most common cases where this option is needed include:
+ *
+ * - Containerized applications that deploy without the system's root
+ *   certificates and need to explicitly configure a root of trust.
+ * - Applications using gRPC-based services on Windows and macOS, where gRPC
+ *   does not use the default root of trust. Though it might be possible to
+ *   set the `GRPC_DEFAULT_SSL_ROOTS_FILE_PATH` environment variable instead.
+ *
+ * You should set this option both in the credentials and the client options.
+ * For example:
+ * @code
+ * using gc = ::google::cloud;
+ * auto ca = gc::Options{}.set<gc::CARootsFilePathOption>("path/to/roots.pem");
+ * auto credentials = gc::MakeServiceAccountCredentials(..., ca);
+ * // Make a copy, only needed if you plan to use `ca` again.
+ * auto opts = ca;
+ * // Using bigtable to illustrate the option usage, this applies to all
+ * // libraries in `google-cloud-cpp`.
+ * auto connection = gc::bigtable::MakeDataConnection(
+ *     opts.set<gc::UnifiedCredentialsOption>(credentials));
+ * // Use `connection` as usual.
+ * @endcode
  *
  * For REST-based libraries this configures the [CAINFO option] in libcurl.
  * These are used for all credentials that require authentication, including the
