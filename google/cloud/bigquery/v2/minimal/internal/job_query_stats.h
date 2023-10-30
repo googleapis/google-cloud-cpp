@@ -426,7 +426,8 @@ struct TableMetadataCacheUsage {
   std::string explanation;
 
   TableReference table_reference;
-  MetadataCacheUnusedReason unused_reason = MetadataCacheUnusedReason::UnSpecified();
+  MetadataCacheUnusedReason unused_reason =
+      MetadataCacheUnusedReason::UnSpecified();
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
