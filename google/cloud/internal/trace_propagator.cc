@@ -19,6 +19,7 @@
 #include <opentelemetry/context/propagation/composite_propagator.h>
 #include <opentelemetry/trace/context.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
+#include <cstdlib>
 
 namespace google {
 namespace cloud {
@@ -60,13 +61,15 @@ class CloudTraceContext
     using opentelemetry::trace::TraceId;
     std::array<char, 2 * TraceId::kSize> trace_id;
     span_context.trace_id().ToLowerBase16(trace_id);
-    std::array<char, 2 * SpanId::kSize> span_id;
-    span_context.span_id().ToLowerBase16(span_id);
-    std::uint64_t span_id_dec;
-    if (!absl::SimpleHexAtoi(absl::string_view{span_id.data(), span_id.size()},
-                             &span_id_dec)) {
-      return;
-    }
+    // We would prefer to use `absl::SimpleHexAtoi`, but it is not available in
+    // the oldest version of Abseil we support. So we use `std::strtoull`, which
+    // requires the input to be null-terminated.
+    std::array<char, 2 * SpanId::kSize + 1> span_id;
+    span_context.span_id().ToLowerBase16({span_id.data(), span_id.size() - 1});
+    span_id[2 * SpanId::kSize] = '\0';
+    char* end = nullptr;
+    std::uint64_t span_id_dec = std::strtoull(span_id.data(), &end, 16);
+    if (end - span_id.data() != 2 * SpanId::kSize) return;
     carrier.Set(
         "x-cloud-trace-context",
         absl::StrCat(absl::string_view{trace_id.data(), trace_id.size()}, "/",
