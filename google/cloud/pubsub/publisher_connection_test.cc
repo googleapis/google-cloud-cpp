@@ -347,7 +347,6 @@ TEST(PublisherConnectionTest, HandleTransientEnabledRetry) {
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
-using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::IsEmpty;
