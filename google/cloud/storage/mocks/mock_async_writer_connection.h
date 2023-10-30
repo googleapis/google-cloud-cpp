@@ -25,13 +25,12 @@ namespace storage_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockAsyncWriterConnection
-    : public storage_experimental::MockAsyncWriterConnection {
+    : public storage_experimental::AsyncWriterConnection {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(std::string, upload_id, (), (const, override));
-  MOCK_METHOD((absl::variant<std::int64_t, storage::ObjectMetadata>)
-                  persisted_state,
-              (), (const, override));
+  MOCK_METHOD((absl::variant<std::int64_t, storage::ObjectMetadata>),
+              persisted_state, (), (const, override));
   MOCK_METHOD(future<Status>, Write, (WritePayload), (const, override));
   MOCK_METHOD(future<StatusOr<storage::ObjectMetadata>>, Finalize,
               (WritePayload), (override));
