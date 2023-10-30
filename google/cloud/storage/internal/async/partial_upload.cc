@@ -51,7 +51,6 @@ void PartialUpload::Write() {
   auto wopt = grpc::WriteOptions{};
   auto const last_message = data_.empty();
   if (last_message) {
-    wopt.set_last_message();
     if (action_ == LastMessageAction::kFinalize) {
       auto status = Finalize(request_, wopt, *hash_function_);
       if (!status.ok()) return WriteError(std::move(status));

@@ -145,7 +145,7 @@ TEST(PartialUpload, FlushChunkAligned) {
   auto rpc = std::make_unique<MockStream>();
   EXPECT_CALL(*rpc, Write)
       .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
-        EXPECT_TRUE(wopt.is_last_message());
+        EXPECT_FALSE(wopt.is_last_message());
         EXPECT_EQ(request.write_offset(), 0);
         EXPECT_FALSE(request.has_write_object_spec());
         EXPECT_TRUE(request.has_upload_id());
@@ -275,7 +275,7 @@ TEST(PartialUpload, NotFinalizeChunkPartial) {
         return sequencer.PushBack("Write");
       })
       .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
-        EXPECT_TRUE(wopt.is_last_message());
+        EXPECT_FALSE(wopt.is_last_message());
         EXPECT_EQ(request.write_offset(), 2 * kExpectedChunkSize);
         EXPECT_FALSE(request.has_write_object_spec());
         EXPECT_FALSE(request.has_upload_id());
