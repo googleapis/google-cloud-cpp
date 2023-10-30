@@ -289,9 +289,9 @@ TEST(GetJobResponseTest, DebugString) {
       R"( field: "" range { start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
       R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
-      R"( key_result_statement { value: "" } } system_variables {)"
+      R"( key_result_statement { value: "KEY_RESULT_STATEMENT_KIND_UNSPECIFIED" } } system_variables {)"
       R"( values { } } } } reference { project_id: "p123" job_id: "j123")"
-      R"( location: "" } status { state: "DONE" error_result { reason: "")"
+      R"( location: "US" } status { state: "DONE" error_result { reason: "")"
       R"( location: "" message: "" } } statistics { creation_time { "0" })"
       R"( start_time { "0" } end_time { "0" } total_slot_time { "0" })"
       R"( final_execution_duration { "0" } total_bytes_processed: 0)"
@@ -299,7 +299,7 @@ TEST(GetJobResponseTest, DebugString) {
       R"( row_level_security_applied: false data_masking_applied: false)"
       R"( completion_ratio: 0 parent_job_id: "" session_id: "")"
       R"( transaction_id: "" reservation_id: "" script_statistics {)"
-      R"( evaluation_kind { value: "" } } job_query_stats {)"
+      R"( evaluation_kind { value: "EVALUATION_KIND_UNSPECIFIED" } } job_query_stats {)"
       R"( estimated_bytes_processed: 0 total_partitions_processed: 0)"
       R"( total_bytes_processed: 0 total_bytes_billed: 0 billing_tier: 0)"
       R"( num_dml_affected_rows: 0 ddl_affected_row_access_policy_count: 0)"
@@ -315,7 +315,7 @@ TEST(GetJobResponseTest, DebugString) {
       R"( dataset_id: "" } dcl_target_table { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_view { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_dataset { project_id: "" dataset_id: "" })"
-      R"( search_statistics { index_usage_mode { value: "" } })"
+      R"( search_statistics { index_usage_mode { value: "INDEX_USAGE_MODE_UNSPECIFIED" } })"
       R"( performance_insights { avg_previous_execution_time { "0" })"
       R"( stage_performance_standalone_insights { stage_id: 0 )"
       R"(slot_contention: false insufficient_shuffle_quota: false })"
@@ -342,15 +342,15 @@ TEST(GetJobResponseTest, DebugString) {
       R"( start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
       R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
-      R"( key_result_statement { value: "" } } system_variables { values { } } } })"
-      R"( reference { project_id: "p123" job_id: "j123" location: "" } status {)"
+      R"( key_result_statement { value: "KEY_RES...<truncated>..." } } system_variables { values { } } } })"
+      R"( reference { project_id: "p123" job_id: "j123" location: "US" } status {)"
       R"( state: "DONE" error_result { reason: "" location: "" message: "" } })"
       R"( statistics { creation_time { "0" } start_time { "0" } end_time { "0" })"
       R"( total_slot_time { "0" } final_execution_duration { "0" })"
       R"( total_bytes_processed: 0 num_child_jobs: 0)"
       R"( row_level_security_applied: false data_masking_applied: false)"
       R"( completion_ratio: 0 parent_job_id: "" session_id: "" transaction_id: "")"
-      R"( reservation_id: "" script_statistics { evaluation_kind { value: "" } })"
+      R"( reservation_id: "" script_statistics { evaluation_kind { value: "EVALUAT...<truncated>..." } })"
       R"( job_query_stats { estimated_bytes_processed: 0 total_partitions_processed: 0)"
       R"( total_bytes_processed: 0 total_bytes_billed: 0 billing_tier: 0)"
       R"( num_dml_affected_rows: 0 ddl_affected_row_access_policy_count: 0)"
@@ -365,7 +365,7 @@ TEST(GetJobResponseTest, DebugString) {
       R"( dataset_id: "" } dcl_target_table { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_view { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_dataset { project_id: "" dataset_id: "" })"
-      R"( search_statistics { index_usage_mode { value: "" } })"
+      R"( search_statistics { index_usage_mode { value: "INDEX_U...<truncated>..." } })"
       R"( performance_insights { avg_previous_execution_time { "0" })"
       R"( stage_performance_standalone_insights { stage_id: 0)"
       R"( slot_contention: false insufficient_shuffle_quota: false })"
@@ -444,7 +444,7 @@ TEST(GetJobResponseTest, DebugString) {
           }
           statement_byte_budget: 0
           key_result_statement {
-            value: ""
+            value: "KEY_RESULT_STATEMENT_KIND_UNSPECIFIED"
           }
         }
         system_variables {
@@ -456,7 +456,7 @@ TEST(GetJobResponseTest, DebugString) {
     reference {
       project_id: "p123"
       job_id: "j123"
-      location: ""
+      location: "US"
     }
     status {
       state: "DONE"
@@ -493,7 +493,7 @@ TEST(GetJobResponseTest, DebugString) {
       reservation_id: ""
       script_statistics {
         evaluation_kind {
-          value: ""
+          value: "EVALUATION_KIND_UNSPECIFIED"
         }
       }
       job_query_stats {
@@ -554,7 +554,7 @@ TEST(GetJobResponseTest, DebugString) {
         }
         search_statistics {
           index_usage_mode {
-            value: ""
+            value: "INDEX_USAGE_MODE_UNSPECIFIED"
           }
         }
         performance_insights {
@@ -625,9 +625,9 @@ TEST(ListJobsResponseTest, DebugString) {
       R"( field: "" range { start: "" end: "" interval: "" } })"
       R"( clustering { } destination_encryption_configuration {)"
       R"( kms_key_name: "" } script_options { statement_timeout { "0" })"
-      R"( statement_byte_budget: 0 key_result_statement { value: "" } })"
+      R"( statement_byte_budget: 0 key_result_statement { value: "KEY_RESULT_STATEMENT_KIND_UNSPECIFIED" } })"
       R"( system_variables { values { } } } } reference {)"
-      R"( project_id: "p123" job_id: "j123" location: "" } status {)"
+      R"( project_id: "p123" job_id: "j123" location: "US" } status {)"
       R"( state: "DONE" error_result { reason: "" location: "")"
       R"( message: "" } } statistics { creation_time { "0" })"
       R"( start_time { "0" } end_time { "0" } total_slot_time { "0" })"
@@ -636,7 +636,7 @@ TEST(ListJobsResponseTest, DebugString) {
       R"( row_level_security_applied: false data_masking_applied: false)"
       R"( completion_ratio: 0 parent_job_id: "" session_id: "")"
       R"( transaction_id: "" reservation_id: "" script_statistics {)"
-      R"( evaluation_kind { value: "" } } job_query_stats {)"
+      R"( evaluation_kind { value: "EVALUATION_KIND_UNSPECIFIED" } } job_query_stats {)"
       R"( estimated_bytes_processed: 0 total_partitions_processed: 0)"
       R"( total_bytes_processed: 0 total_bytes_billed: 0 billing_tier: 0)"
       R"( num_dml_affected_rows: 0 ddl_affected_row_access_policy_count: 0)"
@@ -651,7 +651,7 @@ TEST(ListJobsResponseTest, DebugString) {
       R"( dataset_id: "" } dcl_target_table { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_view { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_dataset { project_id: "" dataset_id: "" })"
-      R"( search_statistics { index_usage_mode { value: "" } })"
+      R"( search_statistics { index_usage_mode { value: "INDEX_USAGE_MODE_UNSPECIFIED" } })"
       R"( performance_insights { avg_previous_execution_time { "0" })"
       R"( stage_performance_standalone_insights { stage_id: 0 slot_contention: false)"
       R"( insufficient_shuffle_quota: false } stage_performance_change_insights {)"
@@ -679,15 +679,15 @@ TEST(ListJobsResponseTest, DebugString) {
       R"( start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
       R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
-      R"( key_result_statement { value: "" } } system_variables { values { } } } })"
-      R"( reference { project_id: "p123" job_id: "j123" location: "" } status {)"
+      R"( key_result_statement { value: "KEY_RES...<truncated>..." } } system_variables { values { } } } })"
+      R"( reference { project_id: "p123" job_id: "j123" location: "US" } status {)"
       R"( state: "DONE" error_result { reason: "" location: "" message: "" } })"
       R"( statistics { creation_time { "0" } start_time { "0" } end_time { "0" })"
       R"( total_slot_time { "0" } final_execution_duration { "0" })"
       R"( total_bytes_processed: 0 num_child_jobs: 0)"
       R"( row_level_security_applied: false data_masking_applied: false)"
       R"( completion_ratio: 0 parent_job_id: "" session_id: "" transaction_id: "")"
-      R"( reservation_id: "" script_statistics { evaluation_kind { value: "" } })"
+      R"( reservation_id: "" script_statistics { evaluation_kind { value: "EVALUAT...<truncated>..." } })"
       R"( job_query_stats { estimated_bytes_processed: 0)"
       R"( total_partitions_processed: 0 total_bytes_processed: 0)"
       R"( total_bytes_billed: 0 billing_tier: 0 num_dml_affected_rows: 0)"
@@ -703,7 +703,7 @@ TEST(ListJobsResponseTest, DebugString) {
       R"( dataset_id: "" } dcl_target_table { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_view { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_dataset { project_id: "" dataset_id: "" })"
-      R"( search_statistics { index_usage_mode { value: "" } })"
+      R"( search_statistics { index_usage_mode { value: "INDEX_U...<truncated>..." } })"
       R"( performance_insights { avg_previous_execution_time { "0" })"
       R"( stage_performance_standalone_insights { stage_id: 0)"
       R"( slot_contention: false insufficient_shuffle_quota: false })"
@@ -776,7 +776,7 @@ TEST(ListJobsResponseTest, DebugString) {
           }
           statement_byte_budget: 0
           key_result_statement {
-            value: ""
+            value: "KEY_RESULT_STATEMENT_KIND_UNSPECIFIED"
           }
         }
         system_variables {
@@ -788,7 +788,7 @@ TEST(ListJobsResponseTest, DebugString) {
     reference {
       project_id: "p123"
       job_id: "j123"
-      location: ""
+      location: "US"
     }
     status {
       state: "DONE"
@@ -825,7 +825,7 @@ TEST(ListJobsResponseTest, DebugString) {
       reservation_id: ""
       script_statistics {
         evaluation_kind {
-          value: ""
+          value: "EVALUATION_KIND_UNSPECIFIED"
         }
       }
       job_query_stats {
@@ -886,7 +886,7 @@ TEST(ListJobsResponseTest, DebugString) {
         }
         search_statistics {
           index_usage_mode {
-            value: ""
+            value: "INDEX_USAGE_MODE_UNSPECIFIED"
           }
         }
         performance_insights {
@@ -942,6 +942,7 @@ TEST(InsertJobResponseTest, Success) {
       R"(,"defaultDataset":{"datasetId":"1","projectId":"2"})"
       R"(,"destinationEncryptionConfiguration":{"kmsKeyName":"encryption-key-name"})"
       R"(,"destinationTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
+
       R"(,"flattenResults":true,"maximumBytesBilled":"0","parameterMode":"job-param-mode")"
       R"(,"preserveNulls":true,"priority":"job-priority","query":"select 1;")"
       R"(,"queryParameters":[{"name":"query-parameter-name")"
@@ -1117,9 +1118,9 @@ TEST(InsertJobResponseTest, DebugString) {
       R"( field: "" range { start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
       R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
-      R"( key_result_statement { value: "" } } system_variables {)"
+      R"( key_result_statement { value: "KEY_RESULT_STATEMENT_KIND_UNSPECIFIED" } } system_variables {)"
       R"( values { } } } } reference { project_id: "p123" job_id: "j123")"
-      R"( location: "" } status { state: "DONE" error_result { reason: "")"
+      R"( location: "US" } status { state: "DONE" error_result { reason: "")"
       R"( location: "" message: "" } } statistics { creation_time { "0" })"
       R"( start_time { "0" } end_time { "0" } total_slot_time { "0" })"
       R"( final_execution_duration { "0" } total_bytes_processed: 0)"
@@ -1127,7 +1128,7 @@ TEST(InsertJobResponseTest, DebugString) {
       R"( row_level_security_applied: false data_masking_applied: false)"
       R"( completion_ratio: 0 parent_job_id: "" session_id: "")"
       R"( transaction_id: "" reservation_id: "" script_statistics {)"
-      R"( evaluation_kind { value: "" } } job_query_stats {)"
+      R"( evaluation_kind { value: "EVALUATION_KIND_UNSPECIFIED" } } job_query_stats {)"
       R"( estimated_bytes_processed: 0 total_partitions_processed: 0)"
       R"( total_bytes_processed: 0 total_bytes_billed: 0 billing_tier: 0)"
       R"( num_dml_affected_rows: 0 ddl_affected_row_access_policy_count: 0)"
@@ -1143,7 +1144,7 @@ TEST(InsertJobResponseTest, DebugString) {
       R"( dataset_id: "" } dcl_target_table { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_view { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_dataset { project_id: "" dataset_id: "" })"
-      R"( search_statistics { index_usage_mode { value: "" } })"
+      R"( search_statistics { index_usage_mode { value: "INDEX_USAGE_MODE_UNSPECIFIED" } })"
       R"( performance_insights { avg_previous_execution_time { "0" })"
       R"( stage_performance_standalone_insights { stage_id: 0 )"
       R"(slot_contention: false insufficient_shuffle_quota: false })"
@@ -1170,15 +1171,15 @@ TEST(InsertJobResponseTest, DebugString) {
       R"( start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
       R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
-      R"( key_result_statement { value: "" } } system_variables { values { } } } })"
-      R"( reference { project_id: "p123" job_id: "j123" location: "" } status {)"
+      R"( key_result_statement { value: "KEY_RES...<truncated>..." } } system_variables { values { } } } })"
+      R"( reference { project_id: "p123" job_id: "j123" location: "US" } status {)"
       R"( state: "DONE" error_result { reason: "" location: "" message: "" } })"
       R"( statistics { creation_time { "0" } start_time { "0" } end_time { "0" })"
       R"( total_slot_time { "0" } final_execution_duration { "0" })"
       R"( total_bytes_processed: 0 num_child_jobs: 0)"
       R"( row_level_security_applied: false data_masking_applied: false)"
       R"( completion_ratio: 0 parent_job_id: "" session_id: "" transaction_id: "")"
-      R"( reservation_id: "" script_statistics { evaluation_kind { value: "" } })"
+      R"( reservation_id: "" script_statistics { evaluation_kind { value: "EVALUAT...<truncated>..." } })"
       R"( job_query_stats { estimated_bytes_processed: 0 total_partitions_processed: 0)"
       R"( total_bytes_processed: 0 total_bytes_billed: 0 billing_tier: 0)"
       R"( num_dml_affected_rows: 0 ddl_affected_row_access_policy_count: 0)"
@@ -1193,7 +1194,7 @@ TEST(InsertJobResponseTest, DebugString) {
       R"( dataset_id: "" } dcl_target_table { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_view { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_dataset { project_id: "" dataset_id: "" })"
-      R"( search_statistics { index_usage_mode { value: "" } })"
+      R"( search_statistics { index_usage_mode { value: "INDEX_U...<truncated>..." } })"
       R"( performance_insights { avg_previous_execution_time { "0" })"
       R"( stage_performance_standalone_insights { stage_id: 0)"
       R"( slot_contention: false insufficient_shuffle_quota: false })"
@@ -1273,7 +1274,7 @@ TEST(InsertJobResponseTest, DebugString) {
           }
           statement_byte_budget: 0
           key_result_statement {
-            value: ""
+            value: "KEY_RESULT_STATEMENT_KIND_UNSPECIFIED"
           }
         }
         system_variables {
@@ -1285,7 +1286,7 @@ TEST(InsertJobResponseTest, DebugString) {
     reference {
       project_id: "p123"
       job_id: "j123"
-      location: ""
+      location: "US"
     }
     status {
       state: "DONE"
@@ -1322,7 +1323,7 @@ TEST(InsertJobResponseTest, DebugString) {
       reservation_id: ""
       script_statistics {
         evaluation_kind {
-          value: ""
+          value: "EVALUATION_KIND_UNSPECIFIED"
         }
       }
       job_query_stats {
@@ -1383,7 +1384,7 @@ TEST(InsertJobResponseTest, DebugString) {
         }
         search_statistics {
           index_usage_mode {
-            value: ""
+            value: "INDEX_USAGE_MODE_UNSPECIFIED"
           }
         }
         performance_insights {
@@ -1618,9 +1619,9 @@ TEST(CancelJobResponseTest, DebugString) {
       R"( field: "" range { start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
       R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
-      R"( key_result_statement { value: "" } } system_variables {)"
+      R"( key_result_statement { value: "KEY_RESULT_STATEMENT_KIND_UNSPECIFIED" } } system_variables {)"
       R"( values { } } } } reference { project_id: "p123" job_id: "j123")"
-      R"( location: "" } status { state: "DONE" error_result { reason: "")"
+      R"( location: "US" } status { state: "DONE" error_result { reason: "")"
       R"( location: "" message: "" } } statistics { creation_time { "0" })"
       R"( start_time { "0" } end_time { "0" } total_slot_time { "0" })"
       R"( final_execution_duration { "0" } total_bytes_processed: 0)"
@@ -1628,7 +1629,7 @@ TEST(CancelJobResponseTest, DebugString) {
       R"( row_level_security_applied: false data_masking_applied: false)"
       R"( completion_ratio: 0 parent_job_id: "" session_id: "")"
       R"( transaction_id: "" reservation_id: "" script_statistics {)"
-      R"( evaluation_kind { value: "" } } job_query_stats {)"
+      R"( evaluation_kind { value: "EVALUATION_KIND_UNSPECIFIED" } } job_query_stats {)"
       R"( estimated_bytes_processed: 0 total_partitions_processed: 0)"
       R"( total_bytes_processed: 0 total_bytes_billed: 0 billing_tier: 0)"
       R"( num_dml_affected_rows: 0 ddl_affected_row_access_policy_count: 0)"
@@ -1644,7 +1645,7 @@ TEST(CancelJobResponseTest, DebugString) {
       R"( dataset_id: "" } dcl_target_table { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_view { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_dataset { project_id: "" dataset_id: "" })"
-      R"( search_statistics { index_usage_mode { value: "" } })"
+      R"( search_statistics { index_usage_mode { value: "INDEX_USAGE_MODE_UNSPECIFIED" } })"
       R"( performance_insights { avg_previous_execution_time { "0" })"
       R"( stage_performance_standalone_insights { stage_id: 0 )"
       R"(slot_contention: false insufficient_shuffle_quota: false })"
@@ -1673,15 +1674,15 @@ TEST(CancelJobResponseTest, DebugString) {
       R"( start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
       R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
-      R"( key_result_statement { value: "" } } system_variables { values { } } } })"
-      R"( reference { project_id: "p123" job_id: "j123" location: "" } status {)"
+      R"( key_result_statement { value: "KEY_RES...<truncated>..." } } system_variables { values { } } } })"
+      R"( reference { project_id: "p123" job_id: "j123" location: "US" } status {)"
       R"( state: "DONE" error_result { reason: "" location: "" message: "" } })"
       R"( statistics { creation_time { "0" } start_time { "0" } end_time { "0" })"
       R"( total_slot_time { "0" } final_execution_duration { "0" })"
       R"( total_bytes_processed: 0 num_child_jobs: 0)"
       R"( row_level_security_applied: false data_masking_applied: false)"
       R"( completion_ratio: 0 parent_job_id: "" session_id: "" transaction_id: "")"
-      R"( reservation_id: "" script_statistics { evaluation_kind { value: "" } })"
+      R"( reservation_id: "" script_statistics { evaluation_kind { value: "EVALUAT...<truncated>..." } })"
       R"( job_query_stats { estimated_bytes_processed: 0 total_partitions_processed: 0)"
       R"( total_bytes_processed: 0 total_bytes_billed: 0 billing_tier: 0)"
       R"( num_dml_affected_rows: 0 ddl_affected_row_access_policy_count: 0)"
@@ -1696,7 +1697,7 @@ TEST(CancelJobResponseTest, DebugString) {
       R"( dataset_id: "" } dcl_target_table { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_view { project_id: "" dataset_id: "")"
       R"( table_id: "" } dcl_target_dataset { project_id: "" dataset_id: "" })"
-      R"( search_statistics { index_usage_mode { value: "" } })"
+      R"( search_statistics { index_usage_mode { value: "INDEX_U...<truncated>..." } })"
       R"( performance_insights { avg_previous_execution_time { "0" })"
       R"( stage_performance_standalone_insights { stage_id: 0)"
       R"( slot_contention: false insufficient_shuffle_quota: false })"
@@ -1777,7 +1778,7 @@ TEST(CancelJobResponseTest, DebugString) {
           }
           statement_byte_budget: 0
           key_result_statement {
-            value: ""
+            value: "KEY_RESULT_STATEMENT_KIND_UNSPECIFIED"
           }
         }
         system_variables {
@@ -1789,7 +1790,7 @@ TEST(CancelJobResponseTest, DebugString) {
     reference {
       project_id: "p123"
       job_id: "j123"
-      location: ""
+      location: "US"
     }
     status {
       state: "DONE"
@@ -1826,7 +1827,7 @@ TEST(CancelJobResponseTest, DebugString) {
       reservation_id: ""
       script_statistics {
         evaluation_kind {
-          value: ""
+          value: "EVALUATION_KIND_UNSPECIFIED"
         }
       }
       job_query_stats {
@@ -1887,7 +1888,7 @@ TEST(CancelJobResponseTest, DebugString) {
         }
         search_statistics {
           index_usage_mode {
-            value: ""
+            value: "INDEX_USAGE_MODE_UNSPECIFIED"
           }
         }
         performance_insights {
