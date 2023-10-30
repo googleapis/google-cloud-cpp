@@ -374,7 +374,7 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
 
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::cloud::CompletionQueue&, auto,
-                    google::pubsub::v1::PublishRequest const& request) {
+                    google::pubsub::v1::PublishRequest const&) {
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         return make_ready_future(make_status_or(response));
@@ -385,8 +385,9 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
+  publisher->Flush({});
 
-  // Wait until we have ended the BatchSink span before calling `GetSpans`.
+  // Wait until the BatchSink span ends before calling `GetSpans`.
   std::unique_lock<std::mutex> lk(mu);
   cv.wait(lk, [&] { return publish_count == kMessageCount; });
 
@@ -397,7 +398,10 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
           SpanNamed("projects/test-project/topics/test-topic send"),
           SpanNamed("publisher flow control"), SpanNamed("publish scheduler"),
           SpanNamed("BatchSink::AsyncPublish"),
-          SpanNamed("google.pubsub.v1.Publisher/Publish")));
+          SpanNamed("google.pubsub.v1.Publisher/Publish"),
+          SpanNamed("pubsub::BatchingPublisherConnection::Flush"),
+          SpanNamed("pubsub::FlowControlledPublisherConnection::Flush"),
+          SpanNamed("pubsub::Publisher::Flush")));
 }
 
 TEST(MakePublisherConnectionTest, TracingDisabled) {
