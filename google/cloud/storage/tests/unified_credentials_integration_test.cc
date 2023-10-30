@@ -272,10 +272,10 @@ TEST_P(UnifiedCredentialsIntegrationTest, ServiceAccountEmptyTrustStore) {
 TEST_P(UnifiedCredentialsIntegrationTest, AccessToken) {
   if (UsingEmulator()) GTEST_SKIP();
   // First use the default credentials to obtain an access token, then use the
-  // access token to test the DynamicAccessTokenCredentials() function. In a
-  // real application one would fetch access tokens from something more
-  // interesting, like the IAM credentials service. This is just a reasonably
-  // easy way to get a working access token for the test.
+  // access token to test the AccessTokenCredentials() function. In a real
+  // application one would fetch access tokens from something more interesting,
+  // like the IAM credentials service. This is just a reasonably easy way to get
+  // a working access token for the test.
   auto default_credentials = oauth2::GoogleDefaultCredentials();
   ASSERT_THAT(default_credentials, IsOk());
   auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
