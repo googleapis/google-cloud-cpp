@@ -154,10 +154,10 @@ class TracingMessageBatch : public MessageBatch {
     return [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
             next = child_->Flush(),
             spans = std::move(batch_sink_spans)](auto f) mutable {
-      internal::DetachOTelContext(oc);
       for (auto& span : spans) {
         internal::EndSpan(*span);
       }
+      internal::DetachOTelContext(oc);
       next(std::move(f));
     };
   }
