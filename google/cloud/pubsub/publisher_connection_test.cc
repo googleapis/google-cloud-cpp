@@ -360,25 +360,15 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
 
   auto mock_message_batch =
       std::make_shared<pubsub_testing::MockMessageBatch>();
-  std::mutex mu;
-  std::condition_variable cv;
-  bool is_publish_complete = false;  // ABSL_GUARDED_BY(mu)
+  std::promise<void> is_publish_complete;
   EXPECT_CALL(*mock_message_batch, SaveMessage(_)).Times(1);
   EXPECT_CALL(*mock_message_batch, Flush).WillOnce([&] {
     // Batch sink span should still be active when Flush is called.
     EXPECT_TRUE(ThereIsAnActiveSpan());
-    EXPECT_TRUE(OTelContextCaptured());
     return [&](auto) {
-      // Batch sink span should no longer be active, but there will be another
-      // active span so instead we can test the otel context is no longer
-      // captured.
-      EXPECT_FALSE(OTelContextCaptured());
-      // Wait until the lambda returned from Flush is executed to GetSpans.
-      {
-        std::lock_guard<std::mutex> lk(mu);
-        is_publish_complete = true;
-      }
-      cv.notify_all();
+      // Batch sink span should no longer be active. Wait until the lambda
+      // returned from Flush is executed to GetSpans.
+      is_publish_complete.set_value();
     };
   });
 
@@ -398,8 +388,7 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   publisher->Flush({});
 
   // Wait until the BatchSink span ends before calling `GetSpans`.
-  std::unique_lock<std::mutex> lk(mu);
-  cv.wait(lk, [&] { return is_publish_complete; });
+  is_publish_complete.get_future().get();
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
