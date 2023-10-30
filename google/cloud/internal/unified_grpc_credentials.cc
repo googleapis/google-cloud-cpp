@@ -89,9 +89,12 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
           cfg.json_object(), std::move(options));
     }
     void visit(ExternalAccountConfig const& cfg) override {
+      grpc::SslCredentialsOptions ssl_options;
+      auto cainfo = LoadCAInfo(options);
+      if (cainfo) ssl_options.pem_root_certs = std::move(*cainfo);
       result = std::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::CompositeChannelCredentials(
-              grpc::SslCredentials(grpc::SslCredentialsOptions()),
+              grpc::SslCredentials(ssl_options),
               GrpcExternalAccountCredentials(cfg)));
     }
   } visitor(std::move(cq), std::move(options));

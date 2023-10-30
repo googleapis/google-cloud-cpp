@@ -28,8 +28,7 @@ GrpcServiceAccountAuthentication::GrpcServiceAccountAuthentication(
 
 std::shared_ptr<grpc::Channel> GrpcServiceAccountAuthentication::CreateChannel(
     std::string const& endpoint, grpc::ChannelArguments const& arguments) {
-  // TODO(#6311) - support setting SSL options
-  auto credentials = grpc::SslCredentials(grpc::SslCredentialsOptions{});
+  auto credentials = grpc::SslCredentials(ssl_options_);
   return grpc::CreateCustomChannel(endpoint, credentials, arguments);
 }
 
