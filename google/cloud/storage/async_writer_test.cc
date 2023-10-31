@@ -31,6 +31,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::ResultOf;
+using ::testing::Return;
 
 template <typename Matcher>
 auto WritePayloadContents(Matcher&& m) {
@@ -43,6 +44,8 @@ auto WritePayloadContents(Matcher&& m) {
 TEST(AsyncWriterTest, Basic) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, UploadId).WillOnce(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState).WillOnce(Return(16384));
   EXPECT_CALL(*mock, Write(WritePayloadContents(ElementsAre("aaa"))))
       .WillOnce([] { return make_ready_future(Status{}); });
   EXPECT_CALL(*mock, Write(WritePayloadContents(ElementsAre("bbb"))))
@@ -54,6 +57,8 @@ TEST(AsyncWriterTest, Basic) {
 
   auto token = storage_internal::MakeAsyncToken(mock.get());
   AsyncWriter writer(std::move(mock));
+  EXPECT_EQ(writer.UploadId(), "test-upload-id");
+  EXPECT_EQ(absl::get<std::int64_t>(writer.PersistedState()), 16384);
   token = writer.Write(std::move(token), WritePayload{std::string("aaa")})
               .get()
               .value();
