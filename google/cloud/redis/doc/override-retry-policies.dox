@@ -1,5 +1,4 @@
 /*!
-
 @page redis-override-retry Override Retry, Backoff, and Idempotency Policies
 
 When it is safe to do so, the library automatically retries requests that fail
@@ -68,14 +67,19 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section redis-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
-For example, this will override the retry policies for `redis_v1::CloudRedisClient`:
+For example, this will override the retry policies for `redis_cluster_v1::CloudRedisClusterClient`:
 
-@snippet cloud_redis_client_samples.cc set-retry-policy
+@snippet cloud_redis_cluster_client_samples.cc set-retry-policy
 
 This assumes you have created a custom idempotency policy. Such as:
 
-@snippet cloud_redis_client_samples.cc custom-idempotency-policy
+@snippet cloud_redis_cluster_client_samples.cc custom-idempotency-policy
 
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c redis_cluster_v1::CloudRedisClusterClient](@ref redis_cluster_v1::CloudRedisClusterClient-retry-snippet)
+- [\c redis_v1::CloudRedisClient](@ref redis_v1::CloudRedisClient-retry-snippet)
 
 <!-- inject-retry-snippet-end -->
 
@@ -90,6 +94,18 @@ This assumes you have created a custom idempotency policy. Such as:
 */
 
 // <!-- inject-retry-pages-start -->
+
+/*! @page redis_cluster_v1::CloudRedisClusterClient-retry-snippet Override redis_cluster_v1::CloudRedisClusterClient Retry Policies
+
+This shows how to override the retry policies for redis_cluster_v1::CloudRedisClusterClient:
+
+@snippet google/cloud/redis/cluster/v1/samples/cloud_redis_cluster_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/redis/cluster/v1/samples/cloud_redis_cluster_client_samples.cc custom-idempotency-policy
+
+*/
 
 /*! @page redis_v1::CloudRedisClient-retry-snippet Override redis_v1::CloudRedisClient Retry Policies
 

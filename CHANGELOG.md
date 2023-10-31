@@ -18,6 +18,10 @@ the APIs in these libraries are stable, and are ready for production use.
 - fix(compute): `RegionSecurityPoliciesClient::PatchSecurityPolicy` added
   `update_mask` field.
 
+### [Memorystore for Redis](/google/cloud/redis/README.md)
+
+New `CloudRedisClusterClient`.
+
 ### Other Changes
 
 - fix(oauth2): only enable via `GOOGLE_CLOUD_CPP_ENABLE`

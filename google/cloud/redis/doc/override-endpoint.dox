@@ -7,15 +7,26 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `redis_v1::CloudRedisClient`:
+For example, this will override the default endpoint for `redis_cluster_v1::CloudRedisClusterClient`:
 
-@snippet cloud_redis_client_samples.cc set-client-endpoint
+@snippet cloud_redis_cluster_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c redis_cluster_v1::CloudRedisClusterClient](@ref redis_cluster_v1::CloudRedisClusterClient-endpoint-snippet)
+- [\c redis_v1::CloudRedisClient](@ref redis_v1::CloudRedisClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page redis_cluster_v1::CloudRedisClusterClient-endpoint-snippet Override redis_cluster_v1::CloudRedisClusterClient Endpoint Configuration
+
+@snippet google/cloud/redis/cluster/v1/samples/cloud_redis_cluster_client_samples.cc set-client-endpoint
+
+*/
 
 /*! @page redis_v1::CloudRedisClient-endpoint-snippet Override redis_v1::CloudRedisClient Endpoint Configuration
 
