@@ -718,7 +718,7 @@ planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2023-09-01.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-11-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1002,7 +1002,7 @@ planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2023-09-01.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-11-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1169,7 +1169,7 @@ planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2023-09-01.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-11-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1324,7 +1324,7 @@ planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2023-09-01.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-11-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1525,7 +1525,7 @@ planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2023-09-01.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-11-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
