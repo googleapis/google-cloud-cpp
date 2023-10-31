@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2021 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,15 +18,14 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
-source module ci/cloudbuild/builds/lib/integration.sh
+source module ci/cloudbuild/builds/lib/conformance.sh
 source module ci/lib/io.sh
 
 export CC=clang
 export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
-args+=("--config=asan")
-io::run bazel test "${args[@]}" --test_tag_filters=-integration-test ...
+# At the moment, we only have conformance tests for bigtable, so only build that.
+io::run bazel test "${args[@]}" --test_tag_filters=-integration-test //google/cloud/bigtable/...
 
-mapfile -t integration_args < <(integration::bazel_args)
-integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
+conformance::bazel_with_proxies "${args[@]}"
