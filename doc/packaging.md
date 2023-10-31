@@ -196,6 +196,29 @@ curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 ```
 
+#### opentelemetry-cpp
+
+The project has an **optional** dependency on the OpenTelemetry library. We
+recommend installing this library because:
+
+- the dependency will become required in the google-cloud-cpp v3.x series.
+- it is needed to produce distributed traces of the library.
+
+```bash
+mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+```
+
 #### Compile and install the main project
 
 We can now compile and install `google-cloud-cpp`:
@@ -208,7 +231,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -293,6 +316,30 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### opentelemetry-cpp
+
+The project has an **optional** dependency on the OpenTelemetry library. We
+recommend installing this library because:
+
+- the dependency will become required in the google-cloud-cpp v3.x series.
+- it is needed to produce distributed traces of the library.
+
+```bash
+mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile and install `google-cloud-cpp`:
@@ -305,7 +352,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -471,6 +518,30 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### opentelemetry-cpp
+
+The project has an **optional** dependency on the OpenTelemetry library. We
+recommend installing this library because:
+
+- the dependency will become required in the google-cloud-cpp v3.x series.
+- it is needed to produce distributed traces of the library.
+
+```bash
+mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 Use the following environment variables to configure the compiler used by CMake.
 
 export CXX=g++-8
@@ -489,7 +560,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -627,6 +698,30 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### opentelemetry-cpp
+
+The project has an **optional** dependency on the OpenTelemetry library. We
+recommend installing this library because:
+
+- the dependency will become required in the google-cloud-cpp v3.x series.
+- it is needed to produce distributed traces of the library.
+
+```bash
+mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile and install `google-cloud-cpp`:
@@ -639,7 +734,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -796,6 +891,30 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### opentelemetry-cpp
+
+The project has an **optional** dependency on the OpenTelemetry library. We
+recommend installing this library because:
+
+- the dependency will become required in the google-cloud-cpp v3.x series.
+- it is needed to produce distributed traces of the library.
+
+```bash
+mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile and install `google-cloud-cpp`:
@@ -808,7 +927,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -880,6 +999,30 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### opentelemetry-cpp
+
+The project has an **optional** dependency on the OpenTelemetry library. We
+recommend installing this library because:
+
+- the dependency will become required in the google-cloud-cpp v3.x series.
+- it is needed to produce distributed traces of the library.
+
+```bash
+mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile and install `google-cloud-cpp`:
@@ -892,7 +1035,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1037,6 +1180,30 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### opentelemetry-cpp
+
+The project has an **optional** dependency on the OpenTelemetry library. We
+recommend installing this library because:
+
+- the dependency will become required in the google-cloud-cpp v3.x series.
+- it is needed to produce distributed traces of the library.
+
+```bash
+mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile and install `google-cloud-cpp`:
@@ -1049,7 +1216,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1204,6 +1371,30 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### opentelemetry-cpp
+
+The project has an **optional** dependency on the OpenTelemetry library. We
+recommend installing this library because:
+
+- the dependency will become required in the google-cloud-cpp v3.x series.
+- it is needed to produce distributed traces of the library.
+
+```bash
+mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile and install `google-cloud-cpp`:
@@ -1216,7 +1407,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1402,6 +1593,30 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### opentelemetry-cpp
+
+The project has an **optional** dependency on the OpenTelemetry library. We
+recommend installing this library because:
+
+- the dependency will become required in the google-cloud-cpp v3.x series.
+- it is needed to produce distributed traces of the library.
+
+```bash
+mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile and install `google-cloud-cpp`:
@@ -1414,7 +1629,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1606,6 +1821,30 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### opentelemetry-cpp
+
+The project has an **optional** dependency on the OpenTelemetry library. We
+recommend installing this library because:
+
+- the dependency will become required in the google-cloud-cpp v3.x series.
+- it is needed to produce distributed traces of the library.
+
+```bash
+mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile and install `google-cloud-cpp`:
@@ -1618,7 +1857,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1811,6 +2050,30 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### opentelemetry-cpp
+
+The project has an **optional** dependency on the OpenTelemetry library. We
+recommend installing this library because:
+
+- the dependency will become required in the google-cloud-cpp v3.x series.
+- it is needed to produce distributed traces of the library.
+
+```bash
+mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile and install `google-cloud-cpp`:
@@ -1823,7 +2086,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
