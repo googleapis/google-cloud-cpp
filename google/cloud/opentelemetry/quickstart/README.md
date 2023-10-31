@@ -49,11 +49,6 @@ Google Cloud client libraries depends on Abseil, which also defines these types
 in the same namespace. In order to avoid ambiguous symbols, we must set certain
 flags when compiling `opentelemetry-cpp`.
 
-### Testing
-
-The client library is only tested against the latest version of
-`opentelemetry-cpp`. As of 2023-05, that is [v1.9.0][opentelemetry-cpp-v1-9-0].
-
 ## Using with Bazel
 
 > :warning: If you are using Windows or macOS there are additional instructions
@@ -230,7 +225,6 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [opentelemetry]: https://opentelemetry.io
 [opentelemetry-cpp]: https://github.com/open-telemetry/opentelemetry-cpp
 [opentelemetry-cpp-install]: https://github.com/open-telemetry/opentelemetry-cpp/INSTALL.md
-[opentelemetry-cpp-v1-9-0]: https://github.com/open-telemetry/opentelemetry-cpp/releases/tag/v1.9.0
 [packaging guide]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md
 [quickstart-storage]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/quickstart
 [quickstart-trace]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/trace/quickstart
