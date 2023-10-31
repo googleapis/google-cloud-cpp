@@ -30,7 +30,7 @@ auto HandleFinishAfterError(std::string msg) {
     auto status = f.get();
     if (!status.ok()) return status;
     // A `Write()` or `Read()` operation unexpectedly returned `ok == false`.
-    // The `Finish()` call should return the error detailed, it returned
+    // The `Finish()` call should return the detailed error, but returned
     // "success". This is some kind of internal error in the client library,
     // gRPC, or the service.
     return internal::InternalError(std::move(m), GCP_ERROR_INFO());
@@ -77,16 +77,17 @@ AsyncWriterConnectionImpl::~AsyncWriterConnectionImpl() {
   //     destructor is called.
   Finish();
   // When `impl_->Finish()` is satisfied then `finished_` is satisfied too.
-  // This extends the lifetime of `impl_` until it is safe to delete `impl_`.
-  finished_.then([impl = std::move(impl_)](auto) mutable {  //
+  // This extends the lifetime of `impl_` until it is safe to delete.
+  finished_.then([impl = std::move(impl_)](auto) mutable {
+    // Break the ownership cycle between the completion queue and this callback.
     impl.reset();
   });
 }
 
-std::string AsyncWriterConnectionImpl::upload_id() const { return upload_id_; }
+std::string AsyncWriterConnectionImpl::UploadId() const { return upload_id_; }
 
 absl::variant<std::int64_t, storage::ObjectMetadata>
-AsyncWriterConnectionImpl::persisted_state() const {
+AsyncWriterConnectionImpl::PersistedState() const {
   return persisted_state_;
 }
 

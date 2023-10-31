@@ -36,13 +36,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * The client library uses the
  * `google.storage.v2.StorageService.BidiWriteObject` RPC to perform
  * asynchronous resumable uploads to Google Cloud Storage. As the name implies,
- * this is a bi-directional RPC. The `Write()` messages upload the object data.
- * The `Read()` messages include information about how much of the uploaded data
- * has been persisted. Only `Write()` messages that explicitly request a 'flush'
- * or finalize the upload trigger a `Read()` message.
+ * this is a bi-directional RPC. The messages sent via this RPC are
+ * `google.storage.v2.BidiWriteObjectRequest` and
+ * `google.storage.v2.BidiWriteObjectResponse`.
+ * - The `BidiWriteObjectRequest` messages upload the object data.
+ * - The last `BidiWriteObjectRequest` message in an upload must include a
+ *   `finalize` attribute. These messages result in a `BidiWriteObjectResponse`
+ *   message, which includes the metadata of the GCS object created by the
+ *   upload.
+ * - `BidiWriteObjectRequest` messages may include a `flush` attribute. Such
+ *   messages result in a `BidiReadObjectResponse` message, which includes how
+ *   much of the uploaded data has been persisted.
+ *
+ * This interface uses different member functions to write messages with and
+ * without the `finalize` attribute.  The functions have different return types
+ * reflecting the absence of response messages for `BidiWriteObjectRequest`
+ * messages that do not finalize an upload.
+ *
+ * This interface does not provide a member function to create
+ * `BidiWriteObjectRequest` messages with a `flush` attribute.
  *
  * This interface can be used to mock the behavior of these bidirectional
- * streaming RPCs. Application may use these mocks in their own tests.
+ * streaming RPCs. Applications may use these mocks in their own tests.
  *
  * @warning
  * @parblock
@@ -51,14 +66,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * If using this class directly keep in mind the following restrictions:
  *
- * - Applications must never destroy an `AsyncWriterConnection` object while any
+ * - Never destroy an `AsyncWriterConnection` object while any
  *   calls to `Write()` or `Finalize()` are pending.
- * - Applications must have at most one call to `Write()` pending.
- * - Applications must not issue any `Finalize()` calls while a `Write()` call
- *   is pending.
- * - Applications must only issue one `Finalize()` call.
+ * - Have at most one call to `Write()` pending.
+ * - Do not issue any `Finalize()` calls while a `Write()` call is pending.
+ * - Only issue one `Finalize()` call.
  * @endparblock
- *
  */
 class AsyncWriterConnection {
  public:
@@ -68,11 +81,11 @@ class AsyncWriterConnection {
   virtual void Cancel() = 0;
 
   /// Returns the upload id. Used to checkpoint the state and resume uploads.
-  virtual std::string upload_id() const = 0;
+  virtual std::string UploadId() const = 0;
 
-  /// Returns the last known state of the upload. Updated by `Query()` and
-  /// during initialization.
-  virtual absl::variant<std::int64_t, storage::ObjectMetadata> persisted_state()
+  /// Returns the last known state of the upload. Updated during initialization
+  /// and by a successful `Finalize()` request.
+  virtual absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState()
       const = 0;
 
   /// Uploads some data to the service.

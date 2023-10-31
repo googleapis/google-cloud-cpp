@@ -51,8 +51,8 @@ class AsyncWriterConnectionImpl
 
   void Cancel() override { return impl_->Cancel(); }
 
-  std::string upload_id() const override;
-  absl::variant<std::int64_t, storage::ObjectMetadata> persisted_state()
+  std::string UploadId() const override;
+  absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState()
       const override;
 
   future<Status> Write(storage_experimental::WritePayload payload) override;
@@ -79,7 +79,7 @@ class AsyncWriterConnectionImpl
   bool first_request_ = true;
 
   // `Finish()` must be called exactly once. If it has not been called by the
-  // time the destructor is reached, then the destructor must arrange for a
+  // time the destructor is reached, then the destructor will arrange for a
   // call.
   bool finish_called_ = false;
 

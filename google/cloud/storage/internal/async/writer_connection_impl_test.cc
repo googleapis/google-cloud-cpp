@@ -94,9 +94,9 @@ TEST(AsyncWriterConnectionTest, Basic) {
 
   AsyncWriterConnectionImpl tested(TestOptions(), std::move(mock),
                                    "test-upload-id", hash, 1024);
-  EXPECT_EQ(tested.upload_id(), "test-upload-id");
-  ASSERT_TRUE(absl::holds_alternative<std::int64_t>(tested.persisted_state()));
-  EXPECT_EQ(absl::get<std::int64_t>(tested.persisted_state()), 1024);
+  EXPECT_EQ(tested.UploadId(), "test-upload-id");
+  ASSERT_TRUE(absl::holds_alternative<std::int64_t>(tested.PersistedState()));
+  EXPECT_EQ(absl::get<std::int64_t>(tested.PersistedState()), 1024);
 }
 
 TEST(AsyncWriterConnectionTest, ResumeFinalized) {
@@ -111,10 +111,10 @@ TEST(AsyncWriterConnectionTest, ResumeFinalized) {
 
   AsyncWriterConnectionImpl tested(TestOptions(), std::move(mock),
                                    "test-upload-id", hash, MakeTestObject());
-  EXPECT_EQ(tested.upload_id(), "test-upload-id");
+  EXPECT_EQ(tested.UploadId(), "test-upload-id");
   ASSERT_TRUE(absl::holds_alternative<storage::ObjectMetadata>(
-      tested.persisted_state()));
-  EXPECT_EQ(absl::get<storage::ObjectMetadata>(tested.persisted_state()),
+      tested.PersistedState()));
+  EXPECT_EQ(absl::get<storage::ObjectMetadata>(tested.PersistedState()),
             MakeTestObject());
 }
 
@@ -131,9 +131,9 @@ TEST(AsyncWriterConnectionTest, Cancel) {
   AsyncWriterConnectionImpl tested(TestOptions(), std::move(mock),
                                    "test-upload-id", hash, 1024);
   tested.Cancel();
-  EXPECT_EQ(tested.upload_id(), "test-upload-id");
-  ASSERT_TRUE(absl::holds_alternative<std::int64_t>(tested.persisted_state()));
-  EXPECT_EQ(absl::get<std::int64_t>(tested.persisted_state()), 1024);
+  EXPECT_EQ(tested.UploadId(), "test-upload-id");
+  ASSERT_TRUE(absl::holds_alternative<std::int64_t>(tested.PersistedState()));
+  EXPECT_EQ(absl::get<std::int64_t>(tested.PersistedState()), 1024);
 }
 
 TEST(AsyncWriterConnectionTest, WriteSimple) {
