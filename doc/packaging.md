@@ -123,6 +123,13 @@ quickstart guides also cover this use-case.
 | [nlohmann/json][nlohmann-json-gh] |             3.4.0 | JSON for Modern C++                                                                           |
 | [protobuf][protobuf-gh]           |             v21.1 | C++ Micro-generator support                                                                   |
 
+`google-cloud-cpp` also has an **optional** dependency on the following
+libraries:
+
+| Library                           | Minimum version | Description                |
+| --------------------------------- | --------------- | -------------------------- |
+| [OpenTelemetry][opentelemetry-gh] | 1.9.1           | An observability framework |
+
 Note that these libraries may also depend on other libraries. The following
 instructions include steps to install these indirect dependencies too.
 
@@ -2159,6 +2166,7 @@ cmake --build cmake-out --target install
 [ninja-build]: https://ninja-build.org/
 [nlohmann-json-gh]: https://github.com/nlohmann/json
 [openssl-gh]: https://github.com/openssl/openssl
+[opentelemetry-gh]: https://github.com/open-telemetry/opentelemetry-cpp
 [protobuf-gh]: https://github.com/protocolbuffers/protobuf
 [spanner-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/spanner#readme
 [storage-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storage#readme

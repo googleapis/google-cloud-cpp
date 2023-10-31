@@ -22,9 +22,15 @@ export CXX=clang++
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/ctest.sh
+source module ci/cloudbuild/builds/lib/features.sh
 source module ci/cloudbuild/builds/lib/integration.sh
 source module ci/cloudbuild/builds/lib/vcpkg.sh
 source module ci/lib/io.sh
+
+mapfile -t feature_list < <(features::always_build | grep -v "experimental-")
+ENABLED_FEATURES="$(printf ",%s" "${feature_list[@]}")"
+ENABLED_FEATURES="${ENABLED_FEATURES:1}"
+readonly ENABLED_FEATURES
 
 io::log_h2 "Configuring"
 vcpkg_root="$(vcpkg::root_dir)"
@@ -32,6 +38,7 @@ cmake -GNinja -S . -B cmake-out/build \
   "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_root}/scripts/buildsystems/vcpkg.cmake" \
   "-DVCPKG_MANIFEST_DIR=ci/etc/oldest-deps" \
   "-DVCPKG_FEATURE_FLAGS=versions,manifest" \
+  "-DGOOGLE_CLOUD_CPP_ENABLE=${ENABLED_FEATURES}" \
   "-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON"
 
 io::log_h2 "Building"
