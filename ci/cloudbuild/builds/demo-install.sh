@@ -51,7 +51,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ## [DONE packaging.md]
