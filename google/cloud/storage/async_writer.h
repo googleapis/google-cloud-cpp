@@ -46,7 +46,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * This API does not support resuming uploading data from streaming data
  * sources. If the upload is interrupted you must be able to start sending data
- * from an arbitrary point
+ * from an arbitrary point.
  */
 class AsyncWriter {
  public:
