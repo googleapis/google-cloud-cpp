@@ -27,7 +27,10 @@
 template <typename T, typename... Args>
   requires(!std::is_void_v<T> && !std::is_reference_v<T>) /**/
 struct std::coroutine_traits<google::cloud::future<T>, Args...> {
-  struct promise_type {
+  // C++20 coroutines require snake_case for this type. Our clang-tidy
+  // configuration is set to follow the Google Style Guide, which require
+  // PascalCase.
+  struct promise_type {  // NOLINT(readability-identifier-naming)
     google::cloud::promise<T> impl;
 
     [[nodiscard]] google::cloud::future<T> get_return_object() noexcept {
@@ -58,7 +61,10 @@ struct std::coroutine_traits<google::cloud::future<T>, Args...> {
 /// Specialize `std::coroutine_traits` for `google::cloud::future<void>`.
 template <typename... Args>
 struct std::coroutine_traits<google::cloud::future<void>, Args...> {
-  struct promise_type {
+  // C++20 coroutines require snake_case for this type. Our clang-tidy
+  // configuration is set to follow the Google Style Guide, which require
+  // PascalCase.
+  struct promise_type {  // NOLINT(readability-identifier-naming)
     google::cloud::promise<void> impl;
 
     [[nodiscard]] google::cloud::future<void> get_return_object() noexcept {
@@ -86,7 +92,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 template <typename T>
 auto operator co_await(future<T> f) noexcept
   requires(!std::is_reference_v<T>) /**/ {
-  struct awaiter {
+  struct Awaiter {
     future<T> impl;
 
     /// Return `true` if the future is already satisfied.
@@ -97,10 +103,10 @@ auto operator co_await(future<T> f) noexcept
 
     /// Suspend execution until the future becomes satisfied.
     void await_suspend(std::coroutine_handle<> h) {
-      struct continuation : public internal::continuation_base {
+      struct Continuation : public internal::continuation_base {
         std::coroutine_handle<> handle;
 
-        explicit continuation(std::coroutine_handle<>&& h)
+        explicit Continuation(std::coroutine_handle<>&& h)
             : handle(std::move(h)) {}
 
         // When the future becomes satisfied we resume the coroutine. At that
@@ -114,14 +120,14 @@ auto operator co_await(future<T> f) noexcept
       // future.
       auto shared_state = internal::CoroutineSupport::get_shared_state(impl);
       shared_state->set_continuation(
-          std::make_unique<continuation>(std::move(h)));
+          std::make_unique<Continuation>(std::move(h)));
     }
 
     // Get the value (or exception) from the future.
     T await_resume() { return impl.get(); }
   };
 
-  return awaiter{std::move(f)};
+  return Awaiter{std::move(f)};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
