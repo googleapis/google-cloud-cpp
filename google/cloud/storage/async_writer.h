@@ -33,32 +33,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Perform resumable uploads asynchronously.
  *
- * Resumable uploads allow applications to continue uploading data even after
- * disconnects and even after application restarts. To resume an upload the
- * library first queries the current state of the upload, the upload uses this
- * information to send the remaining data. Applications only need to checkpoint
- * a string, the `UploadId()`, to resume an upload even after the application
- * itself restarts.
+ * Resumable uploads allow applications to continue uploading data after network
+ * disconnects and application restarts. To resume an upload the library first
+ * queries the current state of the upload. The upload uses this information to
+ * send the remaining data. Applications only need to checkpoint a string, the
+ * `UploadId()`, to resume an upload even after the application itself restarts.
  *
  * Some data sources do not permit rewinding to an arbitrary point, for example:
- * if the application is receiving streaming data from an external sourcein it
- * may be impossible to shutdown the application and recover the data streamed
- * while the application was down.
+ * if the application is receiving streaming data from an external source it may
+ * be impossible to shutdown the application and recover the data streamed while
+ * the application was down.
  *
- * Nevertheless, even with streaming data sources, resumable uploads can be used
- * to recover from most network problems between the application and Google
- * Cloud Storage. The application can buffer any streaming data in memory, and
- * periodically force a flush in the resumable upload. The service will return
- * the number of bytes persisted and the application and then discard the
- * corresponding bytes from its buffer.
- *
- * Some caveats apply:
- * - The application should be prepared for "partial flush" results, that is
- *   service may indicate than fewer bytes were persisted vs. the number of
- *   bytes sent.
- * - The application can continue to upload data after a flush. It is possible
- *   that a flush request returns more persisted bytes than were available when
- *   the flush request is sent.
+ * This API does not support resuming uploading data from streaming data
+ * sources. If the upload is interrupted you must be able to start sending data
+ * from an arbitrary point
  */
 class AsyncWriter {
  public:
@@ -79,6 +67,10 @@ class AsyncWriter {
    *
    * Applications that need to resume uploads after a restart should checkpoint
    * this value to persistent storage.
+   *
+   * @note
+   * Calling this function on a default-constructed or moved-from `AsyncWriter`
+   * results in undefined behavior.
    */
   std::string UploadId() const;
 
@@ -92,34 +84,26 @@ class AsyncWriter {
    * Applications may finalize an upload, and then try to resume the upload. In
    * this case this function returns `storage::ObjectMetadata`.
    *
-   * More commonly, applications resume an upload that is in progress, or
-   * periodically flush the
-   *
    * During an upload the service will periodically persist the uploaded data.
    * Applications should not assume that all data "sent" is persisted. The
    * service may buffer the data in ephemeral storage before persisting it.
    *
    * If the application needs to resume an upload that was interrupted, then it
-   * must check `persisted_state()` before sending data. The service will assume
+   * must check `PersistedState()` before sending data. The service will assume
    * that new data starts at the correct offset.
    *
-   * If an upload is resumed after it is finalized the library will return a
+   * If an upload is resumed after it is finalized, the library will return a
    * variant holding `storage::ObjectMetadata` value.
    *
    * Otherwise the variant returns the size of the persisted data. The
    * application should send the remaining data to upload, starting from this
    * point.
+   *
+   * @note
+   * Calling this function on a default-constructed or moved-from `AsyncWriter`
+   * results in undefined behavior.
    */
   absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState() const;
-
-  /**
-   * Returns the offset for the next `Write()` or `Finalize()` call.
-   *
-   * This is automatically updated once the `Write()` call is satisfied.
-   * Applications may use this information to seek the right data from the
-   * source.
-   */
-  absl::optional<std::int64_t> current_offset() const;
 
   /// Upload @p payload returning a new token to continue the upload.
   future<StatusOr<AsyncToken>> Write(AsyncToken token, WritePayload payload);

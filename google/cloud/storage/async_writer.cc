@@ -33,8 +33,6 @@ future<StatusOr<T>> StreamError(internal::ErrorInfoBuilder eib) {
       StatusOr<T>(internal::CancelledError("closed stream", std::move(eib))));
 }
 
-using FlushResponse = std::pair<AsyncToken, future<StatusOr<std::int64_t>>>;
-
 }  // namespace
 
 AsyncWriter::AsyncWriter(std::unique_ptr<AsyncWriterConnection> impl)
@@ -42,11 +40,15 @@ AsyncWriter::AsyncWriter(std::unique_ptr<AsyncWriterConnection> impl)
 
 AsyncWriter::~AsyncWriter() = default;
 
-std::string AsyncWriter::UploadId() const { return impl_->UploadId(); }
+std::string AsyncWriter::UploadId() const {
+  if (impl_) return impl_->UploadId();
+  return {};
+}
 
 absl::variant<std::int64_t, storage::ObjectMetadata>
 AsyncWriter::PersistedState() const {
-  return impl_->PersistedState();
+  if (impl_) return impl_->PersistedState();
+  return -1;
 }
 
 future<StatusOr<AsyncToken>> AsyncWriter::Write(AsyncToken token,
