@@ -109,6 +109,7 @@ class ScopedOTelContext {
 
   ~ScopedOTelContext() {
     if (noop_) return;
+    // NOLINTNEXTLINE(modernize-loop-convert)
     for (auto it = contexts_.rbegin(); it != contexts_.rend(); ++it) {
       DetachOTelContext(*it);
     }
