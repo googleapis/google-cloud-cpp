@@ -347,6 +347,25 @@ DefaultArtifactRegistryStub::AsyncDeleteVersion(
       request, std::move(context));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultArtifactRegistryStub::AsyncBatchDeleteVersions(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::devtools::artifactregistry::v1::
+                 BatchDeleteVersionsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncBatchDeleteVersions(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
 DefaultArtifactRegistryStub::ListFiles(
     grpc::ClientContext& client_context,

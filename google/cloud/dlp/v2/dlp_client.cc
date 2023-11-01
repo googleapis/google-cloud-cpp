@@ -365,6 +365,95 @@ StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceClient::ActivateJobTrigger(
   return connection_->ActivateJobTrigger(request);
 }
 
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceClient::CreateDiscoveryConfig(
+    std::string const& parent,
+    google::privacy::dlp::v2::DiscoveryConfig const& discovery_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::CreateDiscoveryConfigRequest request;
+  request.set_parent(parent);
+  *request.mutable_discovery_config() = discovery_config;
+  return connection_->CreateDiscoveryConfig(request);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceClient::CreateDiscoveryConfig(
+    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDiscoveryConfig(request);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceClient::UpdateDiscoveryConfig(
+    std::string const& name,
+    google::privacy::dlp::v2::DiscoveryConfig const& discovery_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::UpdateDiscoveryConfigRequest request;
+  request.set_name(name);
+  *request.mutable_discovery_config() = discovery_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDiscoveryConfig(request);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceClient::UpdateDiscoveryConfig(
+    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDiscoveryConfig(request);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceClient::GetDiscoveryConfig(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::GetDiscoveryConfigRequest request;
+  request.set_name(name);
+  return connection_->GetDiscoveryConfig(request);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceClient::GetDiscoveryConfig(
+    google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDiscoveryConfig(request);
+}
+
+StreamRange<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceClient::ListDiscoveryConfigs(std::string const& parent,
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::ListDiscoveryConfigsRequest request;
+  request.set_parent(parent);
+  return connection_->ListDiscoveryConfigs(request);
+}
+
+StreamRange<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceClient::ListDiscoveryConfigs(
+    google::privacy::dlp::v2::ListDiscoveryConfigsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDiscoveryConfigs(std::move(request));
+}
+
+Status DlpServiceClient::DeleteDiscoveryConfig(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::DeleteDiscoveryConfigRequest request;
+  request.set_name(name);
+  return connection_->DeleteDiscoveryConfig(request);
+}
+
+Status DlpServiceClient::DeleteDiscoveryConfig(
+    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDiscoveryConfig(request);
+}
+
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceClient::CreateDlpJob(
     std::string const& parent,
     google::privacy::dlp::v2::InspectJobConfig const& inspect_job,

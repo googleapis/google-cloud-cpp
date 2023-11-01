@@ -158,6 +158,12 @@ class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::DeleteVersionRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteVersions(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request) override;
+
   StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse> ListFiles(
       grpc::ClientContext& context,
       google::devtools::artifactregistry::v1::ListFilesRequest const& request)

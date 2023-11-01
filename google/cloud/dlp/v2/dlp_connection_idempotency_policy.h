@@ -102,6 +102,21 @@ class DlpServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ActivateJobTrigger(
       google::privacy::dlp::v2::ActivateJobTriggerRequest const& request);
 
+  virtual google::cloud::Idempotency CreateDiscoveryConfig(
+      google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateDiscoveryConfig(
+      google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request);
+
+  virtual google::cloud::Idempotency GetDiscoveryConfig(
+      google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request);
+
+  virtual google::cloud::Idempotency ListDiscoveryConfigs(
+      google::privacy::dlp::v2::ListDiscoveryConfigsRequest request);
+
+  virtual google::cloud::Idempotency DeleteDiscoveryConfig(
+      google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request);
+
   virtual google::cloud::Idempotency CreateDlpJob(
       google::privacy::dlp::v2::CreateDlpJobRequest const& request);
 

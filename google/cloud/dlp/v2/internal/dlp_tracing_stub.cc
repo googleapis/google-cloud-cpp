@@ -291,6 +291,65 @@ DlpServiceTracingStub::ActivateJobTrigger(
                            child_->ActivateJobTrigger(context, request));
 }
 
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceTracingStub::CreateDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "CreateDiscoveryConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateDiscoveryConfig(context, request));
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceTracingStub::UpdateDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "UpdateDiscoveryConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDiscoveryConfig(context, request));
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceTracingStub::GetDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "GetDiscoveryConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetDiscoveryConfig(context, request));
+}
+
+StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
+DlpServiceTracingStub::ListDiscoveryConfigs(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "ListDiscoveryConfigs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListDiscoveryConfigs(context, request));
+}
+
+Status DlpServiceTracingStub::DeleteDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "DeleteDiscoveryConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteDiscoveryConfig(context, request));
+}
+
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceTracingStub::CreateDlpJob(
     grpc::ClientContext& context,
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {

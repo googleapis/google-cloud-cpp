@@ -144,6 +144,31 @@ Idempotency DlpServiceConnectionIdempotencyPolicy::ActivateJobTrigger(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DlpServiceConnectionIdempotencyPolicy::CreateDiscoveryConfig(
+    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateDiscoveryConfig(
+    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetDiscoveryConfig(
+    google::privacy::dlp::v2::GetDiscoveryConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListDiscoveryConfigs(
+    google::privacy::dlp::v2::ListDiscoveryConfigsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteDiscoveryConfig(
+    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DlpServiceConnectionIdempotencyPolicy::CreateDlpJob(
     google::privacy::dlp::v2::CreateDlpJobRequest const&) {
   return Idempotency::kNonIdempotent;

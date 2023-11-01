@@ -377,6 +377,28 @@ ArtifactRegistryClient::DeleteVersion(
   return connection_->DeleteVersion(request);
 }
 
+future<StatusOr<
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+ArtifactRegistryClient::BatchDeleteVersions(
+    std::string const& parent, std::vector<std::string> const& names,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest request;
+  request.set_parent(parent);
+  *request.mutable_names() = {names.begin(), names.end()};
+  return connection_->BatchDeleteVersions(request);
+}
+
+future<StatusOr<
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+ArtifactRegistryClient::BatchDeleteVersions(
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchDeleteVersions(request);
+}
+
 StreamRange<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryClient::ListFiles(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

@@ -171,6 +171,37 @@ DlpServiceConnection::ActivateJobTrigger(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceConnection::CreateDiscoveryConfig(
+    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceConnection::UpdateDiscoveryConfig(
+    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceConnection::GetDiscoveryConfig(
+    google::privacy::dlp::v2::GetDiscoveryConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceConnection::ListDiscoveryConfigs(
+    google::privacy::dlp::v2::
+        ListDiscoveryConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::DiscoveryConfig>>();
+}
+
+Status DlpServiceConnection::DeleteDiscoveryConfig(
+    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceConnection::CreateDlpJob(
     google::privacy::dlp::v2::CreateDlpJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

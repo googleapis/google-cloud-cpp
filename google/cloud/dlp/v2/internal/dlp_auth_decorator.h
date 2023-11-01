@@ -148,6 +148,32 @@ class DlpServiceAuth : public DlpServiceStub {
       google::privacy::dlp::v2::ActivateJobTriggerRequest const& request)
       override;
 
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> CreateDiscoveryConfig(
+      grpc::ClientContext& context,
+      google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> UpdateDiscoveryConfig(
+      grpc::ClientContext& context,
+      google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> GetDiscoveryConfig(
+      grpc::ClientContext& context,
+      google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
+  ListDiscoveryConfigs(
+      grpc::ClientContext& context,
+      google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request)
+      override;
+
+  Status DeleteDiscoveryConfig(
+      grpc::ClientContext& context,
+      google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request)
+      override;
+
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
       grpc::ClientContext& context,
       google::privacy::dlp::v2::CreateDlpJobRequest const& request) override;

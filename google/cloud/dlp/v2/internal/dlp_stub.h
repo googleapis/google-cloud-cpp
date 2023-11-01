@@ -144,6 +144,33 @@ class DlpServiceStub {
       grpc::ClientContext& context,
       google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) = 0;
 
+  virtual StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+  CreateDiscoveryConfig(
+      grpc::ClientContext& context,
+      google::privacy::dlp::v2::CreateDiscoveryConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+  UpdateDiscoveryConfig(
+      grpc::ClientContext& context,
+      google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+  GetDiscoveryConfig(
+      grpc::ClientContext& context,
+      google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
+  ListDiscoveryConfigs(
+      grpc::ClientContext& context,
+      google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) = 0;
+
+  virtual Status DeleteDiscoveryConfig(
+      grpc::ClientContext& context,
+      google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const&
+          request) = 0;
+
   virtual StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
       grpc::ClientContext& context,
       google::privacy::dlp::v2::CreateDlpJobRequest const& request) = 0;
@@ -312,6 +339,32 @@ class DefaultDlpServiceStub : public DlpServiceStub {
   StatusOr<google::privacy::dlp::v2::DlpJob> ActivateJobTrigger(
       grpc::ClientContext& client_context,
       google::privacy::dlp::v2::ActivateJobTriggerRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> CreateDiscoveryConfig(
+      grpc::ClientContext& client_context,
+      google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> UpdateDiscoveryConfig(
+      grpc::ClientContext& client_context,
+      google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> GetDiscoveryConfig(
+      grpc::ClientContext& client_context,
+      google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
+  ListDiscoveryConfigs(
+      grpc::ClientContext& client_context,
+      google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request)
+      override;
+
+  Status DeleteDiscoveryConfig(
+      grpc::ClientContext& client_context,
+      google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(

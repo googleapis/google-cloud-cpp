@@ -236,6 +236,50 @@ DlpServiceMetadata::ActivateJobTrigger(
   return child_->ActivateJobTrigger(context, request);
 }
 
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceMetadata::CreateDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDiscoveryConfig(context, request);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceMetadata::UpdateDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateDiscoveryConfig(context, request);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceMetadata::GetDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetDiscoveryConfig(context, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
+DlpServiceMetadata::ListDiscoveryConfigs(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDiscoveryConfigs(context, request);
+}
+
+Status DlpServiceMetadata::DeleteDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDiscoveryConfig(context, request);
+}
+
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceMetadata::CreateDlpJob(
     grpc::ClientContext& context,
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {

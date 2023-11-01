@@ -193,6 +193,14 @@ class MockArtifactRegistryConnection
       (override));
 
   MOCK_METHOD(
+      future<StatusOr<
+          google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>,
+      BatchDeleteVersions,
+      (google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       (StreamRange<google::devtools::artifactregistry::v1::File>), ListFiles,
       (google::devtools::artifactregistry::v1::ListFilesRequest request),
       (override));

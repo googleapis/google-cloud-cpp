@@ -143,6 +143,11 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteVersion(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::BatchDeleteVersions(
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListFiles(
     google::devtools::artifactregistry::v1::ListFilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;

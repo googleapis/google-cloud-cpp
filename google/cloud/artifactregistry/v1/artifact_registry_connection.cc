@@ -190,6 +190,15 @@ ArtifactRegistryConnection::DeleteVersion(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+ArtifactRegistryConnection::BatchDeleteVersions(
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryConnection::ListFiles(
     google::devtools::artifactregistry::v1::
