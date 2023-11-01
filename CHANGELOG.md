@@ -28,7 +28,8 @@ New `CloudRedisClusterClient`.
   ([#13005](https://github.com/googleapis/google-cloud-cpp/pull/13005))
 - fix(otel): end async client spans properly
   ([#12919](https://github.com/googleapis/google-cloud-cpp/pull/12919))
-
+- fix(otel): support abseil <= 20210324 ([#12993](https://github.com/googleapis/google-cloud-cpp/pull/12993))
+- 
 ### [Spanner](/google/cloud/spanner/README.md)
 
 - feat(spanner): single-RPC, batched commit of mutation groups
@@ -38,6 +39,8 @@ New `CloudRedisClusterClient`.
 
 - feat(common): mock for `AsyncStreamingReadWriteRpc`
   ([#12950](https://github.com/googleapis/google-cloud-cpp/pull/12950))
+- fix(common): missed using `CARootsFilePathOption` ([#12997](https://github.com/googleapis/google-cloud-cpp/pull/12997))
+- fix(generator): do not override default sleeper in streaming-read RPCs ([#12920](https://github.com/googleapis/google-cloud-cpp/pull/12920))
 
 ### Other Changes
 
