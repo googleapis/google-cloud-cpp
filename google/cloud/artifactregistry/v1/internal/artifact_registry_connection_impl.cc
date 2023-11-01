@@ -627,6 +627,39 @@ ArtifactRegistryConnectionImpl::DeleteVersion(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+ArtifactRegistryConnectionImpl::BatchDeleteVersions(
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>(
+      background_->cq(), request,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::devtools::artifactregistry::v1::
+                         BatchDeleteVersionsRequest const& request) {
+        return stub->AsyncBatchDeleteVersions(cq, std::move(context), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchDeleteVersions(request),
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryConnectionImpl::ListFiles(
     google::devtools::artifactregistry::v1::ListFilesRequest request) {

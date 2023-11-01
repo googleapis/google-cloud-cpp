@@ -138,6 +138,12 @@ class ArtifactRegistryTracingConnection
       google::devtools::artifactregistry::v1::DeleteVersionRequest const&
           request) override;
 
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+  BatchDeleteVersions(
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request) override;
+
   StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
       google::devtools::artifactregistry::v1::ListFilesRequest request)
       override;

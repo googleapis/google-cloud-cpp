@@ -125,6 +125,25 @@ class DlpServiceTracingConnection : public dlp_v2::DlpServiceConnection {
       google::privacy::dlp::v2::ActivateJobTriggerRequest const& request)
       override;
 
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> CreateDiscoveryConfig(
+      google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> UpdateDiscoveryConfig(
+      google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> GetDiscoveryConfig(
+      google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request)
+      override;
+
+  StreamRange<google::privacy::dlp::v2::DiscoveryConfig> ListDiscoveryConfigs(
+      google::privacy::dlp::v2::ListDiscoveryConfigsRequest request) override;
+
+  Status DeleteDiscoveryConfig(
+      google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request)
+      override;
+
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
       google::privacy::dlp::v2::CreateDlpJobRequest const& request) override;
 

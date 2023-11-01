@@ -221,6 +221,50 @@ StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceAuth::ActivateJobTrigger(
   return child_->ActivateJobTrigger(context, request);
 }
 
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceAuth::CreateDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDiscoveryConfig(context, request);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceAuth::UpdateDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDiscoveryConfig(context, request);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceAuth::GetDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetDiscoveryConfig(context, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
+DlpServiceAuth::ListDiscoveryConfigs(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDiscoveryConfigs(context, request);
+}
+
+Status DlpServiceAuth::DeleteDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDiscoveryConfig(context, request);
+}
+
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceAuth::CreateDlpJob(
     grpc::ClientContext& context,
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {

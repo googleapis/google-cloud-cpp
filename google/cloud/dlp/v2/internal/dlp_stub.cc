@@ -308,6 +308,70 @@ DefaultDlpServiceStub::ActivateJobTrigger(
   return response;
 }
 
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DefaultDlpServiceStub::CreateDiscoveryConfig(
+    grpc::ClientContext& client_context,
+    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
+  google::privacy::dlp::v2::DiscoveryConfig response;
+  auto status =
+      grpc_stub_->CreateDiscoveryConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DefaultDlpServiceStub::UpdateDiscoveryConfig(
+    grpc::ClientContext& client_context,
+    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
+  google::privacy::dlp::v2::DiscoveryConfig response;
+  auto status =
+      grpc_stub_->UpdateDiscoveryConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DefaultDlpServiceStub::GetDiscoveryConfig(
+    grpc::ClientContext& client_context,
+    google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
+  google::privacy::dlp::v2::DiscoveryConfig response;
+  auto status =
+      grpc_stub_->GetDiscoveryConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
+DefaultDlpServiceStub::ListDiscoveryConfigs(
+    grpc::ClientContext& client_context,
+    google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
+  google::privacy::dlp::v2::ListDiscoveryConfigsResponse response;
+  auto status =
+      grpc_stub_->ListDiscoveryConfigs(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultDlpServiceStub::DeleteDiscoveryConfig(
+    grpc::ClientContext& client_context,
+    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteDiscoveryConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 StatusOr<google::privacy::dlp::v2::DlpJob> DefaultDlpServiceStub::CreateDlpJob(
     grpc::ClientContext& client_context,
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {

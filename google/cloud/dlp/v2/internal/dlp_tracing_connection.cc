@@ -232,6 +232,53 @@ DlpServiceTracingConnection::ActivateJobTrigger(
   return internal::EndSpan(*span, child_->ActivateJobTrigger(request));
 }
 
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceTracingConnection::CreateDiscoveryConfig(
+    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateDiscoveryConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateDiscoveryConfig(request));
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceTracingConnection::UpdateDiscoveryConfig(
+    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateDiscoveryConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateDiscoveryConfig(request));
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceTracingConnection::GetDiscoveryConfig(
+    google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::GetDiscoveryConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDiscoveryConfig(request));
+}
+
+StreamRange<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceTracingConnection::ListDiscoveryConfigs(
+    google::privacy::dlp::v2::ListDiscoveryConfigsRequest request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::ListDiscoveryConfigs");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDiscoveryConfigs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::DiscoveryConfig>(std::move(span),
+                                                 std::move(sr));
+}
+
+Status DlpServiceTracingConnection::DeleteDiscoveryConfig(
+    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteDiscoveryConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteDiscoveryConfig(request));
+}
+
 StatusOr<google::privacy::dlp::v2::DlpJob>
 DlpServiceTracingConnection::CreateDlpJob(
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {

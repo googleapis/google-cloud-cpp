@@ -114,6 +114,10 @@ class ArtifactRegistryConnectionIdempotencyPolicy {
       google::devtools::artifactregistry::v1::DeleteVersionRequest const&
           request);
 
+  virtual google::cloud::Idempotency BatchDeleteVersions(
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListFiles(
       google::devtools::artifactregistry::v1::ListFilesRequest request);
 

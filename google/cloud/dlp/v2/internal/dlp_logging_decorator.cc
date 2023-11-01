@@ -308,6 +308,70 @@ DlpServiceLogging::ActivateJobTrigger(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceLogging::CreateDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::privacy::dlp::v2::CreateDiscoveryConfigRequest const&
+                 request) {
+        return child_->CreateDiscoveryConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceLogging::UpdateDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const&
+                 request) {
+        return child_->UpdateDiscoveryConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceLogging::GetDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
+        return child_->GetDiscoveryConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
+DlpServiceLogging::ListDiscoveryConfigs(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::privacy::dlp::v2::ListDiscoveryConfigsRequest const&
+                 request) {
+        return child_->ListDiscoveryConfigs(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status DlpServiceLogging::DeleteDiscoveryConfig(
+    grpc::ClientContext& context,
+    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const&
+                 request) {
+        return child_->DeleteDiscoveryConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceLogging::CreateDlpJob(
     grpc::ClientContext& context,
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {

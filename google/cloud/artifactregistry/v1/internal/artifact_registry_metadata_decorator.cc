@@ -257,6 +257,17 @@ ArtifactRegistryMetadata::AsyncDeleteVersion(
   return child_->AsyncDeleteVersion(cq, std::move(context), request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryMetadata::AsyncBatchDeleteVersions(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchDeleteVersions(cq, std::move(context), request);
+}
+
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
 ArtifactRegistryMetadata::ListFiles(
     grpc::ClientContext& context,

@@ -258,6 +258,18 @@ ArtifactRegistryTracingConnection::DeleteVersion(
   return internal::EndSpan(std::move(span), child_->DeleteVersion(request));
 }
 
+future<StatusOr<
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+ArtifactRegistryTracingConnection::BatchDeleteVersions(
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::BatchDeleteVersions");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchDeleteVersions(request));
+}
+
 StreamRange<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryTracingConnection::ListFiles(
     google::devtools::artifactregistry::v1::ListFilesRequest request) {

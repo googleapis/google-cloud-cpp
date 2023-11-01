@@ -321,6 +321,23 @@ ArtifactRegistryLogging::AsyncDeleteVersion(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryLogging::AsyncBatchDeleteVersions(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::devtools::artifactregistry::v1::
+                 BatchDeleteVersionsRequest const& request) {
+        return child_->AsyncBatchDeleteVersions(cq, std::move(context),
+                                                request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
 ArtifactRegistryLogging::ListFiles(
     grpc::ClientContext& context,

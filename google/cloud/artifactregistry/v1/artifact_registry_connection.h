@@ -287,6 +287,12 @@ class ArtifactRegistryConnection {
       google::devtools::artifactregistry::v1::DeleteVersionRequest const&
           request);
 
+  virtual future<StatusOr<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+  BatchDeleteVersions(
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request);
+
   virtual StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
       google::devtools::artifactregistry::v1::ListFilesRequest request);
 

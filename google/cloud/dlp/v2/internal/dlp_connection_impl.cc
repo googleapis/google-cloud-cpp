@@ -433,6 +433,99 @@ DlpServiceConnectionImpl::ActivateJobTrigger(
       request, __func__);
 }
 
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceConnectionImpl::CreateDiscoveryConfig(
+    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDiscoveryConfig(request),
+      [this](grpc::ClientContext& context,
+             google::privacy::dlp::v2::CreateDiscoveryConfigRequest const&
+                 request) {
+        return stub_->CreateDiscoveryConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceConnectionImpl::UpdateDiscoveryConfig(
+    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDiscoveryConfig(request),
+      [this](grpc::ClientContext& context,
+             google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const&
+                 request) {
+        return stub_->UpdateDiscoveryConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceConnectionImpl::GetDiscoveryConfig(
+    google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDiscoveryConfig(request),
+      [this](
+          grpc::ClientContext& context,
+          google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
+        return stub_->GetDiscoveryConfig(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceConnectionImpl::ListDiscoveryConfigs(
+    google::privacy::dlp::v2::ListDiscoveryConfigsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListDiscoveryConfigs(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::privacy::dlp::v2::DiscoveryConfig>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::privacy::dlp::v2::ListDiscoveryConfigsRequest const&
+                       request) {
+              return stub->ListDiscoveryConfigs(context, request);
+            },
+            r, function_name);
+      },
+      [](google::privacy::dlp::v2::ListDiscoveryConfigsResponse r) {
+        std::vector<google::privacy::dlp::v2::DiscoveryConfig> result(
+            r.discovery_configs().size());
+        auto& messages = *r.mutable_discovery_configs();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+Status DlpServiceConnectionImpl::DeleteDiscoveryConfig(
+    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDiscoveryConfig(request),
+      [this](grpc::ClientContext& context,
+             google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const&
+                 request) {
+        return stub_->DeleteDiscoveryConfig(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::privacy::dlp::v2::DlpJob>
 DlpServiceConnectionImpl::CreateDlpJob(
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
