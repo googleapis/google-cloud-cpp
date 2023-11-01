@@ -39,7 +39,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * send the remaining data. Applications only need to checkpoint a string, the
  * `UploadId()`, to resume an upload even after the application itself restarts.
  *
- * Some data sources do not permit rewinding to an arbitrary point, for example:
+ * Some data sources do not permit rewinding to an arbitrary point. For example:
  * if the application is receiving streaming data from an external source it may
  * be impossible to shutdown the application and recover the data streamed while
  * the application was down.
