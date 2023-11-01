@@ -24,16 +24,20 @@ New `CloudRedisClusterClient`.
 
 ### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
 
-- doc(otel): add packaging instructions ([#13005](https://github.com/googleapis/google-cloud-cpp/pull/13005))
-- fix(otel): end async client spans properly ([#12919](https://github.com/googleapis/google-cloud-cpp/pull/12919))
+- doc(otel): add packaging instructions
+  ([#13005](https://github.com/googleapis/google-cloud-cpp/pull/13005))
+- fix(otel): end async client spans properly
+  ([#12919](https://github.com/googleapis/google-cloud-cpp/pull/12919))
 
 ### [Spanner](/google/cloud/spanner/README.md)
 
-- feat(spanner): single-RPC, batched commit of mutation groups ([#12930](https://github.com/googleapis/google-cloud-cpp/pull/12930))
+- feat(spanner): single-RPC, batched commit of mutation groups
+  ([#12930](https://github.com/googleapis/google-cloud-cpp/pull/12930))
 
 ### [Common Libraries](/google/cloud/README.md)
 
-- feat(common): mock for `AsyncStreamingReadWriteRpc` ([#12950](https://github.com/googleapis/google-cloud-cpp/pull/12950))
+- feat(common): mock for `AsyncStreamingReadWriteRpc`
+  ([#12950](https://github.com/googleapis/google-cloud-cpp/pull/12950))
 
 ### Other Changes
 
