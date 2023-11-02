@@ -109,7 +109,7 @@ This will step will take a while. You can leave this and move onto step 3.
 ```bash
 git add .
 git checkout -b bump-rc
-git commit -am "chore: version bump to X.XY.Zrc" // Change this to the the correct version
+git commit -am "chore: version bump to X.XY.Z-rc" // Change this to the the correct version
 git push
 ```
 
