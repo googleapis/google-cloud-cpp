@@ -119,8 +119,7 @@ Watch for this PR to come through, kick off the builds, approve, and merge it.
 
 ## 3. Creating the release
 
-**NOTE:** Do NOT create the release branch before the PR created in step 1 and 2
-are *merged*.
+**NOTE:** Do NOT create the release branch before the PR created in step 1 is *merged*.
 
 We want to create the release from a stable point in the default branch
 (`main`), and we want this point to include the updated release notes and API
