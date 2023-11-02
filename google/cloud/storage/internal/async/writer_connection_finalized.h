@@ -29,13 +29,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Applications may resume an upload that was already finalized. For example,
  * the application may resume all pending uploads when it starts, using some
- * kind of database to keep the pending uploads. Such an application may
- * finalize an upload, crash or be terminated before having an opportunity to
- * update its database, and then try to resume the upload only to discover it
- * is finalized.
+ * kind of database to keep the pending uploads. Such an application may:
+ *
+ * - Finalize an upload.
+ * - Crash or be terminated before having an opportunity to update its database.
+ * - Try to resume the upload.
+ *
+ * At this point the application would discover the upload is finalized.
  *
  * In this case we want to return an implementation of `AsyncWriterConnection`
- * that contains the result of a finalized upload, but cannot
+ * that contains the result of the finalized upload, but does not require an
+ * underlying streaming RPC. No such RPC is needed or can successfully upload
+ * additional data.
  */
 class AsyncWriterConnectionFinalized
     : public storage_experimental::AsyncWriterConnection {

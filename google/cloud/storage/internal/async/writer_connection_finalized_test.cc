@@ -23,6 +23,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::VariantWith;
 
 auto MakeTestObject() {
   return storage::ObjectMetadata{}
@@ -44,9 +45,8 @@ TEST(AsyncWriterConnectionFinalized, Basic) {
   AsyncWriterConnectionFinalized tested("test-upload-id", expected);
 
   EXPECT_EQ(tested.UploadId(), "test-upload-id");
-  auto const state = tested.PersistedState();
-  ASSERT_TRUE(absl::holds_alternative<storage::ObjectMetadata>(state));
-  EXPECT_EQ(absl::get<storage::ObjectMetadata>(state), expected);
+  EXPECT_THAT(tested.PersistedState(),
+              VariantWith<storage::ObjectMetadata>(expected));
 
   EXPECT_THAT(tested.Write({}).get(),
               StatusIs(StatusCode::kFailedPrecondition));
