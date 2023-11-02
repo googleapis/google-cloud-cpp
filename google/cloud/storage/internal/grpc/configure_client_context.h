@@ -90,6 +90,14 @@ void ApplyRoutingHeaders(
 void ApplyRoutingHeaders(grpc::ClientContext& context,
                          storage::internal::UploadChunkRequest const& request);
 
+/**
+ * The generated `StorageMetadata` stub can not handle dynamic routing headers
+ * for bi-directional streaming. So we manually match and extract the headers in
+ * this function.
+ */
+void ApplyResumableUploadRoutingHeader(grpc::ClientContext& context,
+                                       std::string const& upload_id);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

@@ -54,13 +54,18 @@ void ApplyRoutingHeaders(
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,
                          storage::internal::UploadChunkRequest const& request) {
+  ApplyResumableUploadRoutingHeader(context, request.upload_session_url());
+}
+
+void ApplyResumableUploadRoutingHeader(grpc::ClientContext& context,
+                                       std::string const& upload_id) {
   static auto* slash_format =
       new std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize};
   static auto* colon_format =
       new std::regex{"(projects/[^/]+/buckets/[^:]+):.*", std::regex::optimize};
   for (auto const* re : {slash_format, colon_format}) {
     std::smatch match;
-    if (!std::regex_match(request.upload_session_url(), match, *re)) continue;
+    if (!std::regex_match(upload_id, match, *re)) continue;
     context.AddMetadata(
         "x-goog-request-params",
         "bucket=" + google::cloud::internal::UrlEncode(match[1].str()));

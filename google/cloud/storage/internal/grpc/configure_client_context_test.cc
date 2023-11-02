@@ -192,6 +192,44 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkNoMatch) {
   EXPECT_THAT(metadata, Not(Contains(Pair("x-goog-request-params", _))));
 }
 
+TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadId) {
+  using ::testing::Eq;
+  using ::testing::Matcher;
+
+  struct TestCase {
+    std::string upload_id;
+    ::testing::Matcher<std::string> matcher;
+  } const cases[] = {
+      {"projects/_/buckets/test-bucket/test-upload-id",
+       Eq("bucket=projects%2F_%2Fbuckets%2Ftest-bucket")},
+      {"projects/_/buckets/test-bucket:test-upload-id",
+       Eq("bucket=projects%2F_%2Fbuckets%2Ftest-bucket")},
+      {"projects/_/buckets/test-bucket/test/upload/id",
+       Eq("bucket=projects%2F_%2Fbuckets%2Ftest-bucket")},
+      {"projects/_/buckets/test-bucket:test/upload/id",
+       Eq("bucket=projects%2F_%2Fbuckets%2Ftest-bucket")},
+  };
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing with " + test.upload_id);
+    grpc::ClientContext context;
+    ApplyResumableUploadRoutingHeader(context, test.upload_id);
+    auto metadata = GetMetadata(context);
+    EXPECT_THAT(metadata,
+                Contains(Pair("x-goog-request-params", test.matcher)));
+  }
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadIdNoMatch) {
+  using ::testing::Eq;
+  using ::testing::Matcher;
+
+  grpc::ClientContext context;
+  ApplyResumableUploadRoutingHeader(context, "not-a-match");
+  auto metadata = GetMetadata(context);
+  EXPECT_THAT(metadata, Not(Contains(Pair("x-goog-request-params", _))));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
