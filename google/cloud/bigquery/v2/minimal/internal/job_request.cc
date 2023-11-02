@@ -29,6 +29,17 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// JobCreationMode Enum Codes
+JobCreationMode JobCreationMode::UnSpecified() {
+  return JobCreationMode{"JOB_CREATION_MODE_UNSPECIFIED"};
+}
+JobCreationMode JobCreationMode::Required() {
+  return JobCreationMode{"JOB_CREATION_REQUIRED"};
+}
+JobCreationMode JobCreationMode::Optional() {
+  return JobCreationMode{"JOB_CREATION_OPTIONAL"};
+}
+
 Projection Projection::Full() {
   Projection projection;
   projection.value = "FULL";
@@ -91,6 +102,14 @@ std::string InsertJobRequest::DebugString(absl::string_view name,
   return internal::DebugFormatter(name, options, indent)
       .StringField("project_id", project_id_)
       .SubMessage("job", job_)
+      .Build();
+}
+
+std::string JobCreationMode::DebugString(absl::string_view name,
+                                         TracingOptions const& options,
+                                         int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
       .Build();
 }
 
@@ -349,6 +368,7 @@ std::string QueryRequest::DebugString(absl::string_view name,
       .Field("labels", labels())
       .SubMessage("default_dataset", default_dataset())
       .SubMessage("format_options", format_options())
+      .SubMessage("job_creation_mode", job_creation_mode())
       .Build();
 }
 
