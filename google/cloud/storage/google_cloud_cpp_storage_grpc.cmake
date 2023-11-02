@@ -76,6 +76,8 @@ else ()
         internal/async/write_payload_impl.h
         internal/async/writer_connection_impl.cc
         internal/async/writer_connection_impl.h
+        internal/async/writer_connection_tracing.cc
+        internal/async/writer_connection_tracing.h
         internal/grpc/bucket_access_control_parser.cc
         internal/grpc/bucket_access_control_parser.h
         internal/grpc/bucket_metadata_parser.cc
@@ -290,6 +292,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/async/reader_connection_tracing_test.cc
         internal/async/write_payload_impl_test.cc
         internal/async/writer_connection_impl_test.cc
+        internal/async/writer_connection_tracing_test.cc
         internal/grpc/bucket_access_control_parser_test.cc
         internal/grpc/bucket_metadata_parser_test.cc
         internal/grpc/bucket_name_test.cc
