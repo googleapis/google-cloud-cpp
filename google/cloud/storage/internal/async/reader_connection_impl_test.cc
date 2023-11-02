@@ -31,6 +31,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::ResultOf;
+using ::testing::VariantWith;
 
 using MockStream = google::cloud::testing_util::MockAsyncStreamingReadRpc<
     google::storage::v2::ReadObjectResponse>;
@@ -74,11 +75,9 @@ TEST(ReaderConnectionImpl, CleanFinish) {
   });
 
   AsyncReaderConnectionImpl tested(TestOptions(), std::move(mock));
-  auto actual = tested.Read().get();
-  ASSERT_TRUE(absl::holds_alternative<ReadPayload>(actual));
   EXPECT_THAT(
-      absl::get<ReadPayload>(actual),
-      AllOf(
+      tested.Read().get(),
+      VariantWith<ReadPayload>(AllOf(
           ResultOf(
               "contents match",
               [](storage_experimental::ReadPayload const& p) {
@@ -105,21 +104,17 @@ TEST(ReaderConnectionImpl, CleanFinish) {
               [](storage_experimental::ReadPayload const& p) {
                 return p.offset();
               },
-              1024)));
+              1024))));
 
-  actual = tested.Read().get();
-  ASSERT_TRUE(absl::holds_alternative<ReadPayload>(actual));
-  EXPECT_THAT(absl::get<ReadPayload>(actual),
-              ResultOf(
+  EXPECT_THAT(tested.Read().get(),
+              VariantWith<ReadPayload>(ResultOf(
                   "contents match",
                   [](storage_experimental::ReadPayload const& p) {
                     return p.contents();
                   },
-                  ElementsAre("test-only-2")));
+                  ElementsAre("test-only-2"))));
 
-  actual = tested.Read().get();
-  ASSERT_TRUE(absl::holds_alternative<Status>(actual));
-  EXPECT_THAT(absl::get<Status>(actual), IsOk());
+  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(IsOk()));
 }
 
 TEST(ReaderConnectionImpl, WithError) {
@@ -133,9 +128,7 @@ TEST(ReaderConnectionImpl, WithError) {
   });
 
   AsyncReaderConnectionImpl tested(TestOptions(), std::move(mock));
-  auto actual = tested.Read().get();
-  ASSERT_TRUE(absl::holds_alternative<Status>(actual));
-  EXPECT_EQ(absl::get<Status>(actual), PermanentError());
+  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(PermanentError()));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

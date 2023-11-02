@@ -48,6 +48,7 @@ using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::Return;
+using ::testing::VariantWith;
 
 auto ExpectSent(std::int64_t id, std::uint64_t size) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
@@ -77,7 +78,7 @@ TEST(WriterConnectionTracing, FullCycle) {
   auto actual = MakeTracingWriterConnection(
       internal::MakeSpan("test-span-name"), std::move(mock));
   EXPECT_EQ(actual->UploadId(), "test-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(actual->PersistedState()), 16384);
+  EXPECT_THAT(actual->PersistedState(), VariantWith<std::int64_t>(16384));
   EXPECT_STATUS_OK(actual->Write(WritePayload{std::string(1024, 'A')}).get());
   EXPECT_STATUS_OK(actual->Write(WritePayload{std::string(2048, 'B')}).get());
   auto response = actual->Finalize({}).get();

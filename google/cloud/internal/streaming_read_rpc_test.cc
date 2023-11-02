@@ -28,6 +28,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
+using ::testing::VariantWith;
 
 struct FakeRequest {
   std::string key;
@@ -87,9 +88,7 @@ TEST(StreamingReadRpcImpl, EmptyStream) {
 
   StreamingReadRpcImpl<FakeResponse> impl(
       std::make_shared<grpc::ClientContext>(), std::move(mock));
-  auto v = impl.Read();
-  ASSERT_FALSE(absl::holds_alternative<FakeResponse>(v));
-  EXPECT_THAT(absl::get<Status>(std::move(v)), IsOk());
+  EXPECT_THAT(impl.Read(), VariantWith<Status>(IsOk()));
 }
 
 TEST(StreamingReadRpcImpl, EmptyWithError) {
@@ -101,10 +100,8 @@ TEST(StreamingReadRpcImpl, EmptyWithError) {
 
   StreamingReadRpcImpl<FakeResponse> impl(
       std::make_shared<grpc::ClientContext>(), std::move(mock));
-  auto v = impl.Read();
-  ASSERT_FALSE(absl::holds_alternative<FakeResponse>(v));
-  EXPECT_THAT(absl::get<Status>(std::move(v)),
-              StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
+  EXPECT_THAT(impl.Read(), VariantWith<Status>(StatusIs(
+                               StatusCode::kPermissionDenied, "uh-oh")));
 }
 
 TEST(StreamingReadRpcImpl, ErrorAfterData) {
@@ -197,10 +194,8 @@ TEST(StreamingReadRpcImpl, ErrorStream) {
   auto under_test = StreamingReadRpcError<FakeResponse>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
   under_test.Cancel();  // just a smoke test
-  auto result = under_test.Read();
-  ASSERT_TRUE(absl::holds_alternative<Status>(result));
-  EXPECT_THAT(absl::get<Status>(result),
-              StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
+  EXPECT_THAT(under_test.Read(), VariantWith<Status>(StatusIs(
+                                     StatusCode::kPermissionDenied, "uh-oh")));
 }
 
 }  // namespace

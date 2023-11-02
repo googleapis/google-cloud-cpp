@@ -32,6 +32,7 @@ using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::ResultOf;
 using ::testing::Return;
+using ::testing::VariantWith;
 
 template <typename Matcher>
 auto WritePayloadContents(Matcher&& m) {
@@ -58,7 +59,7 @@ TEST(AsyncWriterTest, Basic) {
   auto token = storage_internal::MakeAsyncToken(mock.get());
   AsyncWriter writer(std::move(mock));
   EXPECT_EQ(writer.UploadId(), "test-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(writer.PersistedState()), 16384);
+  EXPECT_THAT(writer.PersistedState(), VariantWith<std::int64_t>(16384));
   token = writer.Write(std::move(token), WritePayload{std::string("aaa")})
               .get()
               .value();

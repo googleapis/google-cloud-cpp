@@ -39,12 +39,14 @@ using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
+using ::testing::VariantWith;
 
 using AsyncWriteObjectStream =
     ::google::cloud::internal::AsyncStreamingWriteRpc<
@@ -353,8 +355,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 
-  response = data.get();
-  ASSERT_TRUE(absl::holds_alternative<Status>(response));
+  EXPECT_THAT(data.get(), VariantWith<Status>(IsOk()));
 }
 
 TEST_F(AsyncConnectionImplTest, AsyncReadObjectPermanentError) {
