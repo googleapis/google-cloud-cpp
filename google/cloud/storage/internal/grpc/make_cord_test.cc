@@ -82,7 +82,8 @@ TYPED_TEST(MakeCordFromVector, MakeCord) {
       reinterpret_cast<char const*>(buffer.data()), buffer.size());
 
   auto const actual = MakeCord(buffer);
-  auto chunks = actual.Chunks();
+  std::vector<absl::string_view> chunks{actual.chunk_begin(),
+                                        actual.chunk_end()};
   EXPECT_THAT(chunks, ElementsAre(view));
 }
 
