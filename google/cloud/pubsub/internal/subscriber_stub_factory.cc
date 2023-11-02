@@ -62,6 +62,31 @@ std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
   return CreateDefaultSubscriberStub(CreateChannel(opts, channel_id));
 }
 
+std::shared_ptr<SubscriberStub> MakeDefaultSubscriberStub(
+    google::cloud::CompletionQueue cq, Options const& options) {
+  return CreateDecoratedStubs(
+      std::move(cq), options, [](std::shared_ptr<grpc::Channel> c) {
+        return std::make_shared<DefaultSubscriberStub>(
+            google::pubsub::v1::Subscriber::NewStub(std::move(c)));
+      });
+}
+
+std::shared_ptr<SubscriberStub> MakeRoundRobinSubscriberStub(
+    google::cloud::CompletionQueue cq, Options const& options) {
+  return MakeDefaultSubscriberStub(std::move(cq), std::move(options));
+}
+
+std::shared_ptr<SubscriberStub> MakeTestSubscriberStub(
+    google::cloud::CompletionQueue cq, Options const& options,
+    std::vector<std::shared_ptr<SubscriberStub>> mocks) {
+  return CreateDecoratedStubs(
+      std::move(cq), options,
+      [mocks = std::move(mocks)](std::shared_ptr<grpc::Channel> const&) {
+        return std::make_shared<pubsub_internal::SubscriberRoundRobin>(
+            std::move(mocks));
+      });
+}
+
 std::shared_ptr<SubscriberStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,
     BaseSubscriberStubFactory const& base_factory) {
