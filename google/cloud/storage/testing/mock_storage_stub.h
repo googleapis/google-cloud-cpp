@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_STORAGE_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_STORAGE_STUB_H
 
+#include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include <gmock/gmock.h>
@@ -253,6 +254,11 @@ class MockAsyncInsertStream
 using MockAsyncObjectMediaStream =
     google::cloud::testing_util::MockAsyncStreamingReadRpc<
         google::storage::v2::ReadObjectResponse>;
+
+using MockAsyncBidiWriteObjectStream =
+    google::cloud::mocks::MockAsyncStreamingReadWriteRpc<
+        google::storage::v2::BidiWriteObjectRequest,
+        google::storage::v2::BidiWriteObjectResponse>;
 
 }  // namespace testing
 }  // namespace storage
