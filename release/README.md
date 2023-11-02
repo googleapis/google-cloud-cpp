@@ -10,17 +10,19 @@ project that need to create a new release. We expect the reader to be familiar
 the project itself, [git][git-docs], [GitHub][github-guides], and
 [semantic versioning](https://semver.org).
 
-## Preparing for a release
+## 1. Preparing for a release
 
 To create a new release you need to perform some maintenance tasks, these are
 enumerated below.
 
-### Verify CI passing
+### a. Verify CI passing
 
 Before beginning the release process, verify all CI builds are passing on the
 `main` branch. This is displayed in the GitHub page for the project.
 
-### Update the root CMakeLists.txt
+### b. Create a PR to prepare the pre-release
+
+#### Update the root CMakeLists.txt
 
 Set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to the empty string.
 
@@ -28,13 +30,13 @@ Set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to the empty string.
 set(PROJECT_VERSION_PRE_RELEASE "")
 ```
 
-### Update the version info
+#### Update the version info
 
 Run any CMake-based build to update `google/cloud/internal/version_info.h`. If
 you do not feel like waiting for a build, make the corresponding change in
 `google/cloud/internal/version_info.h` manually.
 
-### Update CHANGELOG.md
+#### Update CHANGELOG.md
 
 To update the [`CHANGELOG.md`] file, first change the "TBD" placeholder in the
 latest release header to the current YYYY-MM.
@@ -50,6 +52,9 @@ to output a summary of the potentially interesting changes since the previous
 release. Paste that output below the release header updated above, and manually
 tweak as needed.
 
+**NOTE:** If you can, add the script output into the PR description so that
+reviewers know what you removed.
+
 - A change in an existing library warrants its own library section.
 - Library sections should be listed in alphabetical order (Update `sections` in
   `release/changes.sh`).
@@ -58,21 +63,71 @@ tweak as needed.
 - A change that affects all libraries should only be documented in the
   `Common Libraries` section.
 
-### Run checkers
+#### Run checkers
 
 ```bash
 ci/cloudbuild/build.sh -t checkers-pr
 ```
 
-### Send a PR with all these changes
+#### Send a PR with all these changes
 
-In general, do not create the release branch before this PR is *merged*. We want
-to create the release from a stable point in the default branch (`main`), and we
-want this point to include the updated release notes and API baselines. There
-may be exceptions to this guideline, you are encouraged to use your own
-judgment.
+```bash
+git add .
+git checkout -b release-changelog
+git commit -am "docs(release): update changelog for the $(date +%Y-%m) release"
+git push
+```
 
-## Creating the release
+## 2. Bump the version number in `main`
+
+Working in your fork of `google-cloud-cpp`: bump the version numbers to the
+*next* version, i.e., one version past the release you just did above. Then send
+the PR for review against `main`. You need to:
+
+### a. Make the following changes
+
+- In the top-level `CMakeLists.txt` file:
+  - a. Increment the version number in the `project()` function.
+  - b. Set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to "rc".
+- In the `CHANGELOG.md` file:
+  - Add a "vX.Y.Z - TBD" header, corresponding to the new version number.
+
+### b. Run the following script
+
+- Update the ABI baseline to include the new version numbers in the inline
+  namespace by running `ci/cloudbuild/build.sh -t check-api-pr`. This will leave
+  the updated ABI files in `ci/abi-dumps`, and also update the
+  `google/cloud/internal/version_info.h` file.
+
+This will step will take a while. You can leave this and move onto step 3.
+
+### c. Send the PR for review
+
+**NOTE:** Do NOT send this PR for review before the release is created in step
+3\.
+
+```bash
+git add .
+git checkout -b bump-rc
+git commit -am "chore: version bump to $(sed -n 's/.* VERSION //p' CMakeLists.txt)-rc"
+git push
+```
+
+**NOTE:** The Renovate bot will automatically update the Bazel deps in the
+quickstart `WORKSPACE.bazel` files after it sees the new release published.
+Watch for this PR to come through, kick off the builds, approve, and merge it.
+
+## 3. Creating the release
+
+**NOTE:** Do NOT create the release branch before the PR created in step 1 is
+*merged*.
+
+We want to create the release from a stable point in the default branch
+(`main`), and we want this point to include the updated release notes and API
+baselines. There may be exceptions to this guideline, you are encouraged to use
+your own judgment.
+
+### a. Run the release script
 
 We next need to create the release tag, the release branch, and create the
 release in the GitHub UI. We use a script ([`release/release.sh`]) to automate
@@ -97,7 +152,7 @@ release/release.sh -f googleapis/google-cloud-cpp
 **NOTE:** This script can be run from any directory. It operates only on the
 specified repo.
 
-### Publish the release
+### b. Publish the release
 
 Review the new release in the GitHub web UI (the link to the pre-release will be
 output from the `release.sh` script that was run in the previous step). If
@@ -107,7 +162,7 @@ everything looks OK:
 1. Check the latest release checkbox.
 1. Click the update release button.
 
-## Check the published reference docs
+## 4. Check the published reference docs
 
 The `publish-docs-release` build should start automatically when you create the
 release branch. This build will upload the docs for the new release to the
@@ -119,27 +174,7 @@ It can take up to a day after the build finishes for the new docs to show up at
 the above URL. You can watch the status of the build at
 https://console.cloud.google.com/cloud-build/builds;region=us-east1?project=cloud-cpp-testing-resources&query=tags%3D%22publish-docs%22
 
-## Bump the version number in `main`
-
-Working in your fork of `google-cloud-cpp`: bump the version numbers to the
-*next* version, i.e., one version past the release you just did above. Then send
-the PR for review against `main`. You need to:
-
-- In the top-level `CMakeLists.txt` file:
-  - Increment the version number in the `project()` function.
-  - Set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to "rc".
-- In the `CHANGELOG.md` file:
-  - Add a "vX.Y.Z - TBD" header, corresponding to the new version number.
-- Update the ABI baseline to include the new version numbers in the inline
-  namespace by running `ci/cloudbuild/build.sh -t check-api-pr`. This will leave
-  the updated ABI files in `ci/abi-dumps`, and also update the
-  `google/cloud/internal/version_info.h` file.
-
-**NOTE:** The Renovate bot will automatically update the Bazel deps in the
-quickstart `WORKSPACE.bazel` files after it sees the new release published.
-Watch for this PR to come through, kick off the builds, approve, and merge it.
-
-## Review the protections for the `v[0-9].*` branches
+## 5. Review the protections for the `v[0-9].*` branches
 
 We use the [GitHub Branch Settings][github-branch-settings] to protect the
 release branches against accidental mistakes. From time to time changes in the
@@ -166,76 +201,128 @@ Please note that we use more strict settings for release branches than for
 - Turn on the `Restrict who can push to matching branches`. Only Google team
   members should be pushing to release branches.
 
-## Push the release to Microsoft vcpkg
+## 6. Push the release to Microsoft vcpkg
 
 [PR#32391] is probably a good example of the changes you will need to make.
 
-- Create a fork of https://github.com/Microsoft/vcpkg.git.
+### a. Get to your clone of vckpkg
 
-- Clone the fork and/or sync the `master` branch in your fork to the upstream
-  version.
+#### Create a fork of https://github.com/Microsoft/vcpkg.git
 
-- Save the version.
+Clone the fork
 
-  ```shell
-  VERSION=... # e.g. v2.13.0
-  ```
+```shell
+git clone git@github.com:<username>/vcpkg.git
+```
 
-- Create a feature branch.
+#### Sync the `master` branch in your fork to the upstream version
 
-  ```shell
-  git checkout -b google-cloud-cpp-update-to-${VERSION}
-  ```
+```shell
+cd vcpkg
+git pull upstream master
+```
 
-- Update the version and list of features (any new GA libraries) in these files:
+### b. Make a PR for the version update
 
-  ```
-  ports/google-cloud-cpp/portfile.cmake
-  ports/google-cloud-cpp/vcpkg.json
-  ```
+#### Save the version as an environment variable
 
-- Update the [SHA512]. To compute it, run:
+```shell
+VERSION=... # e.g. v2.13.0
+```
 
-  ```shell
-  curl -fSsL https://github.com/googleapis/google-cloud-cpp/archive/${VERSION}.tar.gz | sha512sum
-  ```
+#### Create a feature branch.
 
-- Commit the changes
+```shell
+git checkout -b google-cloud-cpp-update-to-${VERSION}
+```
 
-  ```shell
-  git commit -m"[google-cloud-cpp] update to ${VERSION}" ports
-  ```
+#### Update the version and list of features (any new GA libraries):
 
-- Update the version information (you really do need two commits)
+In `ports/google-cloud-cpp/vcpkg.json`
 
-  ```shell
-  ./vcpkg x-add-version google-cloud-cpp --overwrite-version
-  git commit --amend --no-edit .
-  ```
+- a. Update the version field
+- b. Either update or remove the port-version field
+- c. Add a new entry for any new features
+- d. Format the changes
 
-- Remove any older versions
+```shell
+./vcpkg format-manifest ports/google-cloud-cpp/vcpkg.json
+```
 
-  ```shell
-  ./bootstrap-vcpkg.sh
-  ./vcpkg remove --outdated --recurse
-  ```
+#### Update the [SHA512]. To compute it, run:
 
-- Test the changes
+```shell
+curl -fSsL https://github.com/googleapis/google-cloud-cpp/archive/${VERSION}.tar.gz | sha512sum
+```
 
-  ```shell
-  ./vcpkg install 'google-cloud-cpp[*]'
-  ```
+In `ports/google-cloud-cpp/portfile.cmake`, use the generated SHA.
 
-## Monitor the automation on Conda
+#### Commit the changes
+
+```shell
+git commit -m"[google-cloud-cpp] update to the latest release (${VERSION})"
+```
+
+#### Update the version information (you really do need two commits)
+
+```shell
+./vcpkg x-add-version google-cloud-cpp --overwrite-version
+git commit --amend --no-edit .
+```
+
+#### Test the changes
+
+##### Remove any older versions
+
+```shell
+./bootstrap-vcpkg.sh
+./vcpkg remove --outdated --recurse
+```
+
+##### Install the new libraries
+
+```
+for feature in <new_features>; do ./vcpkg remove google-cloud-cpp; ./vcpkg install "google-cloud-cpp[core,${feature}]" || break; done
+```
+
+##### Install all the libraries
+
+```shell
+./vcpkg remove google-cloud-cpp && ./vcpkg install 'google-cloud-cpp[*]'
+```
+
+#### Push the branch to your fork
+
+```shelll
+git push origin
+```
+
+#### Make the PR with the following description
+
+Updates google-cloud-cpp to the latest release (vX.YZ.A)
+
+Tested locally (on x64-linux) with:
+
+```
+for feature in <new_features>; do ./vcpkg remove google-cloud-cpp; ./vcpkg install "google-cloud-cpp[core,${feature}]" || break; done
+```
+
+and
+
+```
+./vcpkg remove google-cloud-cpp && ./vcpkg install 'google-cloud-cpp[*]'
+```
+
+## 7. Monitor the automation on Conda
 
 On [Conda](https://conda.io) things are mostly automated. A robot will create a
 PR, similar to [PR#138]. If you want, subscribe to notifications in the
 [conda feedstock repository] or just look at the PRs in that repository over the
 next 24 hours.
 
-## Push the release to Conan
+## 8. \[optional\] Push the release to Conan
 
-(Optional) Create a PR to update the `google-cloud-cpp` package in
+Create a PR to update the `google-cloud-cpp` package in
 [Conan](https://conan.io). These PRs are more involved.
 
 This package manager uses CMake, but ignores the library and target definitions
