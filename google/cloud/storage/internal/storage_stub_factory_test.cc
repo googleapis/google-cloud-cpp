@@ -18,6 +18,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
@@ -116,8 +117,8 @@ TEST_F(StorageStubFactory, ReadObject) {
       });
 
   ScopedLog log;
-  CompletionQueue cq;
-  auto p = CreateTestStub(cq, factory.AsStdFunction());
+  internal::AutomaticallyCreatedBackgroundThreads pool;
+  auto p = CreateTestStub(pool.cq(), factory.AsStdFunction());
   auto stream = p.second->ReadObject(std::make_shared<grpc::ClientContext>(),
                                      google::storage::v2::ReadObjectRequest{});
   auto response = stream->Read();
@@ -160,10 +161,10 @@ TEST_F(StorageStubFactory, WriteObject) {
       });
 
   ScopedLog log;
-  CompletionQueue cq;
-  auto p = CreateTestStub(cq, factory.AsStdFunction());
-  auto stream =
-      p.second->AsyncWriteObject(cq, std::make_shared<grpc::ClientContext>());
+  internal::AutomaticallyCreatedBackgroundThreads pool;
+  auto p = CreateTestStub(pool.cq(), factory.AsStdFunction());
+  auto stream = p.second->AsyncWriteObject(
+      pool.cq(), std::make_shared<grpc::ClientContext>());
   EXPECT_TRUE(stream->Start().get());
   auto close = stream->Finish().get();
   EXPECT_THAT(close, StatusIs(StatusCode::kUnavailable));
@@ -199,8 +200,8 @@ TEST_F(StorageStubFactory, StartResumableWrite) {
       });
 
   ScopedLog log;
-  CompletionQueue cq;
-  auto p = CreateTestStub(cq, factory.AsStdFunction());
+  internal::AutomaticallyCreatedBackgroundThreads pool;
+  auto p = CreateTestStub(pool.cq(), factory.AsStdFunction());
   grpc::ClientContext context;
   auto response = p.second->StartResumableWrite(
       context, google::storage::v2::StartResumableWriteRequest{});
@@ -236,8 +237,8 @@ TEST_F(StorageStubFactory, QueryWriteStatus) {
       });
 
   ScopedLog log;
-  CompletionQueue cq;
-  auto p = CreateTestStub(cq, factory.AsStdFunction());
+  internal::AutomaticallyCreatedBackgroundThreads pool;
+  auto p = CreateTestStub(pool.cq(), factory.AsStdFunction());
   grpc::ClientContext context;
   auto response = p.second->QueryWriteStatus(
       context, google::storage::v2::QueryWriteStatusRequest{});
@@ -269,9 +270,9 @@ TEST_F(StorageStubFactory, TracingEnabled) {
         return mock;
       });
 
-  CompletionQueue cq;
+  internal::AutomaticallyCreatedBackgroundThreads pool;
   auto stub =
-      CreateDecoratedStubs(std::move(cq),
+      CreateDecoratedStubs(pool.cq(),
                            EnableTracing(Options{}
                                              .set<EndpointOption>("localhost:1")
                                              .set<GrpcNumChannelsOption>(1)
@@ -301,9 +302,9 @@ TEST_F(StorageStubFactory, TracingDisabled) {
         return mock;
       });
 
-  CompletionQueue cq;
+  internal::AutomaticallyCreatedBackgroundThreads pool;
   auto stub = CreateDecoratedStubs(
-                  std::move(cq),
+                  pool.cq(),
                   DisableTracing(Options{}
                                      .set<EndpointOption>("localhost:1")
                                      .set<GrpcNumChannelsOption>(1)
