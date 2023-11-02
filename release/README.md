@@ -20,7 +20,7 @@ enumerated below.
 Before beginning the release process, verify all CI builds are passing on the
 `main` branch. This is displayed in the GitHub page for the project.
 
-### b. Create a PR with to prepare the pre-release
+### b. Create a PR to prepare the pre-release
 
 #### Update the root CMakeLists.txt
 
@@ -74,7 +74,7 @@ ci/cloudbuild/build.sh -t checkers-pr
 ```bash
 git add .
 git checkout -b release-changelog
-git commit -am "docs(release): update changelog for XX-20XX release" // Change this to the month of the release
+git commit -am "docs(release): update changelog for the $(date +%Y-%m) release"
 git push
 ```
 
@@ -109,7 +109,7 @@ This will step will take a while. You can leave this and move onto step 3.
 ```bash
 git add .
 git checkout -b bump-rc
-git commit -am "chore: version bump to X.XY.Z-rc" // Change this to the the correct version
+git commit -am "chore: version bump to $(sed -n 's/.* VERSION //p' CMakeLists.txt)-rc"
 git push
 ```
 
