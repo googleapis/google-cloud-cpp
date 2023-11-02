@@ -193,21 +193,18 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkNoMatch) {
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadId) {
-  using ::testing::Eq;
-  using ::testing::Matcher;
-
   struct TestCase {
     std::string upload_id;
-    ::testing::Matcher<std::string> matcher;
+    std::string expected;
   } const cases[] = {
       {"projects/_/buckets/test-bucket/test-upload-id",
-       Eq("bucket=projects%2F_%2Fbuckets%2Ftest-bucket")},
+       "bucket=projects%2F_%2Fbuckets%2Ftest-bucket"},
       {"projects/_/buckets/test-bucket:test-upload-id",
-       Eq("bucket=projects%2F_%2Fbuckets%2Ftest-bucket")},
+       "bucket=projects%2F_%2Fbuckets%2Ftest-bucket"},
       {"projects/_/buckets/test-bucket/test/upload/id",
-       Eq("bucket=projects%2F_%2Fbuckets%2Ftest-bucket")},
+       "bucket=projects%2F_%2Fbuckets%2Ftest-bucket"},
       {"projects/_/buckets/test-bucket:test/upload/id",
-       Eq("bucket=projects%2F_%2Fbuckets%2Ftest-bucket")},
+       "bucket=projects%2F_%2Fbuckets%2Ftest-bucket"},
   };
 
   for (auto const& test : cases) {
@@ -216,7 +213,7 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadId) {
     ApplyResumableUploadRoutingHeader(context, test.upload_id);
     auto metadata = GetMetadata(context);
     EXPECT_THAT(metadata,
-                Contains(Pair("x-goog-request-params", test.matcher)));
+                Contains(Pair("x-goog-request-params", test.expected)));
   }
 }
 
