@@ -55,6 +55,9 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
 
 auto MakeParent(Links const& links, Spans const& message_spans) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
+  // // Detach current otel context before creating the span.
+  internal::DetachOTelContext(
+      opentelemetry::context::RuntimeContext::GetCurrent());
   auto batch_sink_parent =
       internal::MakeSpan("BatchSink::AsyncPublish",
                          /*attributes=*/
@@ -150,8 +153,12 @@ class TracingMessageBatch : public MessageBatch {
 
     // The first span in `batch_sink_spans` is the parent to the other spans in
     // the vector.
-    internal::OTelScope scope(batch_sink_spans.front());
-    return [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+    auto scope =
+        std::make_shared<internal::OTelScope>(batch_sink_spans.front());
+    // You must capture the scope, so it stays alive until the callback function
+    // is called.
+    return [scope = std::move(scope),
+            oc = opentelemetry::context::RuntimeContext::GetCurrent(),
             next = child_->Flush(),
             spans = std::move(batch_sink_spans)](auto f) mutable {
       for (auto& span : spans) {
