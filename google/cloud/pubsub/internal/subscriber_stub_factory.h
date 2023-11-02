@@ -44,6 +44,31 @@ std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
                                                             int channel_id);
 
 /**
+ * Creates a SubscriberStub configured with @p cq and @p options.
+ *
+ * By default, a SubscriberRoundRobinStub is created using the number of
+ * GrpcNumChannelsOption.
+ */
+std::shared_ptr<SubscriberStub> MakeDefaultSubscriberStub(
+    google::cloud::CompletionQueue cq, Options const& options);
+
+/**
+ * Creates a SubscriberStub configured with @p cq and @p options.
+ */
+std::shared_ptr<SubscriberStub> MakeRoundRobinSubscriberStub(
+    google::cloud::CompletionQueue cq, Options const& options);
+
+/**
+ * Creates a test SubscriberStub configured with @p cq and @p options and @p
+ * mocks.
+ *
+ * Used for testing the stubs at the connection layer.
+ */
+std::shared_ptr<SubscriberStub> MakeTestSubscriberStub(
+    google::cloud::CompletionQueue cq, Options const& options,
+    std::vector<std::shared_ptr<SubscriberStub>> mocks);
+
+/**
  * Creates a test SubscriberStub configured with @p cq and @p options and @p
  * base_factory.
  *
