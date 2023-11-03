@@ -121,6 +121,26 @@ TEST(OptionsTest, UserSetCommonOptions) {
   EXPECT_THAT(*s, HasSubstr("test-prefix"));
 }
 
+TEST(OptionsTest, SetOtelLinkLimitEnvOverrides) {
+  ScopedEnvironment env("OTEL_SPAN_LINK_COUNT_LIMIT", "5");
+  auto opts =
+      DefaultPublisherOptions(Options{}.set<pubsub::MaxOtelLinkCountOption>(1));
+  EXPECT_EQ(5U, opts.get<pubsub::MaxOtelLinkCountOption>());
+}
+
+TEST(OptionsTest, UnsetOtelLinkLimitEnv) {
+  ScopedEnvironment env("OTEL_SPAN_LINK_COUNT_LIMIT", absl::nullopt);
+  auto opts =
+      DefaultPublisherOptions(Options{}.set<pubsub::MaxOtelLinkCountOption>(1));
+  EXPECT_EQ(1U, opts.get<pubsub::MaxOtelLinkCountOption>());
+}
+
+TEST(OptionsTest, UnsetOtelLinkLimitEnvNoUserOption) {
+  ScopedEnvironment env("OTEL_SPAN_LINK_COUNT_LIMIT", absl::nullopt);
+  auto opts = DefaultPublisherOptions(Options{});
+  EXPECT_EQ(128U, opts.get<pubsub::MaxOtelLinkCountOption>());
+}
+
 TEST(OptionsTest, PublisherDefaults) {
   auto opts = DefaultPublisherOptions(Options{});
   EXPECT_EQ(ms(10), opts.get<pubsub::MaxHoldTimeOption>());
@@ -136,6 +156,7 @@ TEST(OptionsTest, PublisherDefaults) {
   EXPECT_EQ(GRPC_COMPRESS_DEFLATE,
             opts.get<pubsub::CompressionAlgorithmOption>());
   EXPECT_FALSE(opts.has<pubsub::CompressionThresholdOption>());
+  EXPECT_EQ(128, opts.get<pubsub::MaxOtelLinkCountOption>());
 }
 
 TEST(OptionsTest, UserSetPublisherOptions) {
@@ -148,7 +169,8 @@ TEST(OptionsTest, UserSetPublisherOptions) {
                                   .set<pubsub::MaxPendingMessagesOption>(4)
                                   .set<pubsub::MessageOrderingOption>(true)
                                   .set<pubsub::FullPublisherActionOption>(
-                                      pubsub::FullPublisherAction::kIgnored));
+                                      pubsub::FullPublisherAction::kIgnored)
+                                  .set<pubsub::MaxOtelLinkCountOption>(1));
 
   EXPECT_EQ(ms(100), opts.get<pubsub::MaxHoldTimeOption>());
   EXPECT_EQ(1U, opts.get<pubsub::MaxBatchMessagesOption>());
@@ -158,6 +180,7 @@ TEST(OptionsTest, UserSetPublisherOptions) {
   EXPECT_TRUE(opts.get<pubsub::MessageOrderingOption>());
   EXPECT_EQ(pubsub::FullPublisherAction::kIgnored,
             opts.get<pubsub::FullPublisherActionOption>());
+  EXPECT_EQ(1U, opts.get<pubsub::MaxOtelLinkCountOption>());
 }
 
 TEST(OptionsTest, SubscriberDefaults) {

@@ -220,12 +220,38 @@ struct CompressionAlgorithmOption {
   using Type = int;
 };
 
+/**
+ * The maximum number of Open Telemetry span links.
+ *
+ * This option controls the number of links contained in a single publish span.
+ *
+ * @note Application developers should keep in mind that Cloud Trace
+ *    sets [limits][cloud-trace-quota-link] on the number of links per span
+ *    (128). Additionally, Open Telemetry sets the default
+ *    [limit][otel-quota-link] to 128.
+ *
+ * @ingroup pubsub-options
+ *
+ * @par Environment variable
+ *    This option is controlled by the `OTEL_SPAN_LINK_COUNT_LIMIT`
+ *    environment variable. If the environment variable is unset or unparsable,
+ *    it uses the user provided value, and then the default of 128.
+ *
+ * [otel-quota-link]:
+ * https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/#span-limits
+ * [cloud-trace-quota-link]:
+ * https://github.com/googleapis/googleapis/blob/52180f8ba240022dd8ce756ee69fe5a3c429ad4d/google/devtools/cloudtrace/v2/trace.proto#L266
+ */
+struct MaxOtelLinkCountOption {
+  using Type = std::size_t;
+};
+
 /// The list of options specific to publishers.
 using PublisherOptionList =
     OptionList<MaxHoldTimeOption, MaxBatchMessagesOption, MaxBatchBytesOption,
                MaxPendingMessagesOption, MaxPendingBytesOption,
                MessageOrderingOption, FullPublisherActionOption,
-               CompressionThresholdOption>;
+               CompressionThresholdOption, MaxOtelLinkCountOption>;
 
 /**
  * The maximum deadline for each incoming message.
