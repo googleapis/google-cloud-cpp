@@ -15,8 +15,10 @@
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/resource_names.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
+#include <chrono>
 #include <fstream>
 #include <sstream>
 
@@ -30,21 +32,16 @@ void AccessToken(std::vector<std::string> const& argv) {
   }
 
   // Create a namespace alias to make the code easier to read.
+  namespace gc = ::google::cloud;
   namespace cbt = ::google::cloud::bigtable;
   namespace cbta = ::google::cloud::bigtable_admin;
-  using ::google::cloud::GrpcCredentialOption;
-  using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
 
   //! [test access token]
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& access_token) {
-    auto call_credentials = grpc::AccessTokenCredentials(access_token);
-    auto channel_credentials =
-        grpc::SslCredentials(grpc::SslCredentialsOptions());
-    auto credentials = grpc::CompositeChannelCredentials(channel_credentials,
-                                                         call_credentials);
-    auto options = Options{}.set<GrpcCredentialOption>(credentials);
+    auto creds = gc::MakeAccessTokenCredentials(
+        access_token, std::chrono::system_clock::now() + std::chrono::hours(1));
+    auto options = gc::Options{}.set<gc::UnifiedCredentialsOption>(creds);
 
     cbta::BigtableTableAdminClient admin(
         cbta::MakeBigtableTableAdminConnection(options));
@@ -68,11 +65,9 @@ void JWTAccessToken(std::vector<std::string> const& argv) {
         "<service_account_file_json>"};
   }
   // Create a namespace alias to make the code easier to read.
+  namespace gc = ::google::cloud;
   namespace cbt = ::google::cloud::bigtable;
   namespace cbta = ::google::cloud::bigtable_admin;
-  using ::google::cloud::GrpcCredentialOption;
-  using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
 
   //! [test jwt access token]
   [](std::string const& project_id, std::string const& instance_id,
@@ -86,13 +81,8 @@ void JWTAccessToken(std::vector<std::string> const& argv) {
     }
     std::string json_key(std::istreambuf_iterator<char>{stream}, {});
 
-    auto call_credentials =
-        grpc::ServiceAccountJWTAccessCredentials(json_key, 6000);
-    auto channel_credentials =
-        grpc::SslCredentials(grpc::SslCredentialsOptions());
-    auto credentials = grpc::CompositeChannelCredentials(channel_credentials,
-                                                         call_credentials);
-    auto options = Options{}.set<GrpcCredentialOption>(credentials);
+    auto creds = gc::MakeServiceAccountCredentials(std::move(json_key));
+    auto options = gc::Options{}.set<gc::UnifiedCredentialsOption>(creds);
 
     cbta::BigtableTableAdminClient admin(
         cbta::MakeBigtableTableAdminConnection(options));
@@ -107,41 +97,6 @@ void JWTAccessToken(std::vector<std::string> const& argv) {
   }
   //! [test jwt access token]
   (argv.at(0), argv.at(1), argv.at(2));
-}
-
-void GCECredentials(std::vector<std::string> const& argv) {
-  if (argv.size() != 2) {
-    throw Usage{"test-gce-credentials: <project-id> <instance-id>"};
-  }
-  // Create a namespace alias to make the code easier to read.
-  namespace cbt = ::google::cloud::bigtable;
-  namespace cbta = ::google::cloud::bigtable_admin;
-  using ::google::cloud::GrpcCredentialOption;
-  using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
-
-  //! [test gce credentials]
-  [](std::string const& project_id, std::string const& instance_id) {
-    auto call_credentials = grpc::GoogleComputeEngineCredentials();
-    auto channel_credentials =
-        grpc::SslCredentials(grpc::SslCredentialsOptions());
-    auto credentials = grpc::CompositeChannelCredentials(channel_credentials,
-                                                         call_credentials);
-    auto options = Options{}.set<GrpcCredentialOption>(credentials);
-
-    cbta::BigtableTableAdminClient admin(
-        cbta::MakeBigtableTableAdminConnection(options));
-
-    google::bigtable::admin::v2::ListTablesRequest r;
-    r.set_parent(cbt::InstanceName(project_id, instance_id));
-    r.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
-    auto tables = admin.ListTables(std::move(r));
-    for (auto& table : tables) {
-      if (!table) throw std::move(table).status();
-    }
-  }
-  //! [test gce credentials]
-  (argv.at(0), argv.at(1));
 }
 
 void RunAll(std::vector<std::string> const& argv) {
@@ -178,7 +133,6 @@ int main(int argc, char* argv[]) try {
   google::cloud::bigtable::examples::Commands commands = {
       {"test-access-token", AccessToken},
       {"test-jwt-access-token", JWTAccessToken},
-      {"test-gce-credentials", GCECredentials},
       {"auto", RunAll},
   };
 
