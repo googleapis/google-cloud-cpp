@@ -156,7 +156,7 @@ TEST(TracingMessageBatch, FlushOnlyIncludeSampledLink) {
                              SpanNamed("BatchSink::AsyncPublish"),
                              SpanHasAttributes(OTelAttribute<std::int64_t>(
                                  sc::kMessagingBatchMessageCount, 2)),
-                             SpanHasLinks(AllOf(
+                             SpanLinksAre(AllOf(
                                  LinkHasSpanContext(message_span->GetContext()),
                                  SpanLinkAttributesAre(OTelAttribute<int64_t>(
                                      "messaging.pubsub.message.link", 0)))))));
