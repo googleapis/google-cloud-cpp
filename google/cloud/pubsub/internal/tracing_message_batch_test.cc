@@ -34,6 +34,7 @@ using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::LinkHasSpanContext;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::OTelContextCaptured;
+using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
@@ -239,9 +240,12 @@ TEST(TracingMessageBatch, FlushAddsSpanIdAndTraceIdAttribute) {
       span_catcher->GetSpans(),
       Contains(AllOf(
           SpanNamed("test span 0"),
-          SpanHasAttributes(
-              OTelAttribute<std::string>("pubsub.batch_sink.trace_id", _),
-              OTelAttribute<std::string>("pubsub.batch_sink.span_id", _)))));
+          SpanHasEvents(AllOf(
+              EventNamed("gl-cpp.batch_flushed"),
+              SpanEventAttributesAre(
+                  OTelAttribute<std::string>("pubsub.batch_sink.trace_id", _),
+                  OTelAttribute<std::string>("pubsub.batch_sink.span_id",
+                                             _)))))));
 }
 
 TEST(TracingMessageBatch, FlushSpanAddsEvent) {
