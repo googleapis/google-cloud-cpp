@@ -56,10 +56,11 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
 auto MakeParent(Links const& links, Spans const& message_spans) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto batch_sink_parent =
-      internal::MakeSpan("BatchSink::AsyncPublish",
+      internal::MakeSpan("publish",
                          /*attributes=*/
                          {{sc::kMessagingBatchMessageCount,
-                           static_cast<std::int64_t>(message_spans.size())}},
+                           static_cast<std::int64_t>(message_spans.size())}, 
+                           {sc::kCodeFunction, "BatchSink::AsyncPublish"}},
                          /*links*/ std::move(links));
 
   // Add metadata to the message spans about the batch sink span.
@@ -80,7 +81,7 @@ auto MakeChild(
   opentelemetry::trace::StartSpanOptions options;
   options.parent = parent->GetContext();
   return internal::MakeSpan(
-      "BatchSink::AsyncPublish - Batch #" + std::to_string(count),
+      "publish #" + std::to_string(count),
       /*attributes=*/{{}},
       /*links=*/links, options);
 }
