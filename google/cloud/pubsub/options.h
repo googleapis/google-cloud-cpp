@@ -227,15 +227,15 @@ struct CompressionAlgorithmOption {
  *
  * @note Application developers should keep in mind that Cloud Trace
  *    sets [limits][cloud-trace-quota-link] on the number of links per span
- * (128). Additionally, Open Telemetry sets the default [limit][otel-quota-link]
- * to 128.
+ *    (128). Additionally, Open Telemetry sets the default
+ *    [limit][otel-quota-link] to 128.
  *
  * @ingroup pubsub-options
  *
  * @par Environment variable
- * This option is controlled by the `OTEL_SPAN_LINK_COUNT_LIMIT`
- * environment variable. If the environment variable is empty, it checks the
- * user provided value, and then the default.
+ *    This option is controlled by the `OTEL_SPAN_LINK_COUNT_LIMIT`
+ *    environment variable. If the environment variable is unset or unparsable,
+ *    it uses the user provided value, and then the default of 128.
  *
  * [otel-quota-link]:
  * https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/#span-limits
