@@ -151,8 +151,12 @@ class TracingMessageBatch : public MessageBatch {
 
     // The first span in `batch_sink_spans` is the parent to the other spans in
     // the vector.
-    internal::OTelScope scope(batch_sink_spans.front());
-    return [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+    auto scope =
+        std::make_shared<internal::OTelScope>(batch_sink_spans.front());
+    // Capture the scope so it stays alive until the returned function
+    // is called.
+    return [scope = std::move(scope),
+            oc = opentelemetry::context::RuntimeContext::GetCurrent(),
             next = child_->Flush(),
             spans = std::move(batch_sink_spans)](auto f) mutable {
       for (auto& span : spans) {
