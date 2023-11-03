@@ -135,8 +135,8 @@ class InsertObjectRequest {
  *
  * This class can hold all the mandatory and optional parameters to start or
  * resume a resumable upload. Resumable uploads can be used to stream large
- * objects, as they can recover when the upload is interrupted. This request
- * does not contain any of the payload for the object, that is provided via a
+ * objects as they can recover when the upload is interrupted. This request
+ * does not contain any of the payload for the object; that is provided via a
  * `storage_experimental::AsyncWriter`.
  *
  * This class is in the public API for the library because it is required for
