@@ -129,7 +129,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
                 SpanNamed("projects/test-project/topics/test-topic send"),
                 SpanWithStatus(opentelemetry::trace::StatusCode::kError),
                 SpanHasAttributes(
-                    OTelAttribute<std::string>(sc::kMessagingSystem, "pubsub"),
+                    OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
                     OTelAttribute<std::string>(
                         sc::kMessagingDestinationName,
                         "projects/test-project/topics/test-topic"),
