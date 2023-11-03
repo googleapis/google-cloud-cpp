@@ -35,6 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 using Spans =
     std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>;
+
 using Attributes =
     std::vector<std::pair<opentelemetry::nostd::string_view,
                           opentelemetry::common::AttributeValue>>;
@@ -67,9 +68,9 @@ auto MakeParent(Links const& links, Spans const& message_spans) {
   auto trace_id = internal::ToString(context.trace_id());
   auto span_id = internal::ToString(context.span_id());
   for (auto const& message_span : message_spans) {
-    message_span->AddEvent("gl-cpp.batch_flushed");
-    message_span->SetAttribute("pubsub.batch_sink.trace_id", trace_id);
-    message_span->SetAttribute("pubsub.batch_sink.span_id", span_id);
+    message_span->AddEvent("gl-cpp.batch_flushed",
+                           Attributes{{"pubsub.batch_sink.trace_id", trace_id},
+                                      {"pubsub.batch_sink.span_id", span_id}});
   }
   return batch_sink_parent;
 }
