@@ -16,8 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_IMPL_H
 
 #include "google/cloud/storage/async_connection.h"
+#include "google/cloud/storage/async_object_requests.h"
 #include "google/cloud/storage/async_reader_connection.h"
 #include "google/cloud/storage/idempotency_policy.h"
+#include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/invocation_id_generator.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
@@ -26,8 +28,11 @@
 #include "google/cloud/version.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
+#include <google/storage/v2/storage.pb.h>
+#include <functional>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -37,7 +42,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GrpcChannelRefresh;
 class StorageStub;
 
-class AsyncConnectionImpl : public storage_experimental::AsyncConnection {
+class AsyncConnectionImpl
+    : public storage_experimental::AsyncConnection,
+      public std::enable_shared_from_this<AsyncConnectionImpl> {
  public:
   explicit AsyncConnectionImpl(CompletionQueue cq,
                                std::shared_ptr<GrpcChannelRefresh> refresh,
@@ -56,12 +63,37 @@ class AsyncConnectionImpl : public storage_experimental::AsyncConnection {
   future<storage_experimental::AsyncReadObjectRangeResponse>
   AsyncReadObjectRange(ReadObjectParams p) override;
 
+  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  AsyncWriteObject(WriteObjectParams p) override;
+
   future<StatusOr<storage::ObjectMetadata>> AsyncComposeObject(
       ComposeObjectParams p) override;
 
   future<Status> AsyncDeleteObject(DeleteObjectParams p) override;
 
  private:
+  std::weak_ptr<AsyncConnectionImpl> WeakFromThis() {
+    return shared_from_this();
+  }
+
+  future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
+  AsyncStartResumableWrite(internal::ImmutableOptions current,
+                           storage::internal::ResumableUploadRequest request);
+
+  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  WriteObjectImpl(
+      internal::ImmutableOptions current,
+      storage_experimental::ResumableUploadRequest request,
+      StatusOr<google::storage::v2::StartResumableWriteResponse> response);
+
+  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  WriteObjectImpl(
+      internal::ImmutableOptions current,
+      std::function<void(grpc::ClientContext&)> configure_context,
+      std::string upload_id,
+      std::shared_ptr<storage::internal::HashFunction> hash_function,
+      std::int64_t persisted_size);
+
   CompletionQueue cq_;
   std::shared_ptr<GrpcChannelRefresh> refresh_;
   std::shared_ptr<StorageStub> stub_;

@@ -30,6 +30,7 @@ namespace cloud {
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AsyncReaderConnection;
+class AsyncWriterConnection;
 
 /**
  * The `*Connection` object for `AsyncClient`.
@@ -76,7 +77,8 @@ class AsyncConnection {
    * prevent breaking any mocks when additional parameters are needed.
    */
   struct ReadObjectParams {
-    /// The metadata attributes to create the object.
+    /// What object to read, what portion of the object to read, and any
+    /// pre-conditions on the read.
     ReadObjectRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
@@ -90,6 +92,25 @@ class AsyncConnection {
   /// Read a range from an object returning all the contents.
   virtual future<AsyncReadObjectRangeResponse> AsyncReadObjectRange(
       ReadObjectParams p) = 0;
+
+  /**
+   * A thin wrapper around the `WriteObject()` parameters.
+   *
+   * We use a single struct as the input parameter for this function to
+   * prevent breaking any mocks when additional parameters are needed.
+   */
+  struct WriteObjectParams {
+    /// The metadata attributes for the new object.
+    ResumableUploadRequest request;
+    /// Any options modifying the RPC behavior, including per-client and
+    /// per-connection options.
+    Options options;
+  };
+
+  /// Start (or resume) a streaming write.
+  virtual future<
+      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  AsyncWriteObject(WriteObjectParams p) = 0;
 
   /**
    * A thin wrapper around the `ComposeObject()` parameters.

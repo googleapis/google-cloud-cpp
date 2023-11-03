@@ -40,6 +40,10 @@ class MockAsyncConnection : public storage_experimental::AsyncConnection {
       AsyncReadObject, (ReadObjectParams), (override));
   MOCK_METHOD(future<storage_experimental::AsyncReadObjectRangeResponse>,
               AsyncReadObjectRange, (ReadObjectParams), (override));
+  MOCK_METHOD(
+      future<StatusOr<
+          std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
+      AsyncWriteObject, (WriteObjectParams), (override));
   MOCK_METHOD(future<StatusOr<storage::ObjectMetadata>>, AsyncComposeObject,
               (ComposeObjectParams), (override));
   MOCK_METHOD(future<Status>, AsyncDeleteObject, (DeleteObjectParams),
