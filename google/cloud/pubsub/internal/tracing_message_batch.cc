@@ -152,7 +152,7 @@ class TracingMessageBatch : public MessageBatch {
     // the vector.
     auto scope =
         std::make_shared<internal::OTelScope>(batch_sink_spans.front());
-    // Capture the scope so it stays alive the returned function
+    // Capture the scope so it stays alive until the returned function
     // is called.
     return [scope = std::move(scope),
             oc = opentelemetry::context::RuntimeContext::GetCurrent(),
