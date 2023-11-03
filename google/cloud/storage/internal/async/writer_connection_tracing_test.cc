@@ -166,7 +166,6 @@ TEST(WriterConnectionTracing, WriteError) {
 }
 
 TEST(WriterConnectionTracing, FlushError) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
@@ -189,7 +188,6 @@ TEST(WriterConnectionTracing, FlushError) {
 }
 
 TEST(WriterConnectionTracing, QueryError) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
