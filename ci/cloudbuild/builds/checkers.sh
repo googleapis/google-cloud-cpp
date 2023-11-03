@@ -216,7 +216,7 @@ time {
 printf "%-50s" "Running markdown formatter:" >&2
 time {
   # See `.mdformat.toml` for the configuration parameters.
-  git_files -z -- '*.md' | grep -zv CHANGELOG.md | xargs -r -P "$(nproc)" -n 50 -0 mdformat
+  git_files -z -- '*.md' ':!./CHANGELOG.md' | xargs -r -P "$(nproc)" -n 50 -0 mdformat
   git_files -z -- '*.md' | xargs -r -0 chmod go=u-w
 }
 
