@@ -33,6 +33,7 @@
 #include <google/protobuf/util/time_util.h>
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
+#include <functional>
 
 namespace google {
 namespace cloud {
@@ -40,6 +41,57 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
+
+class DirectedReadVisitor {
+ public:
+  explicit DirectedReadVisitor(
+      std::function<google::spanner::v1::DirectedReadOptions*()> factory)
+      : factory_(std::move(factory)) {}
+
+  void operator()(absl::monostate) const {
+    // No inclusions/exclusions.
+  }
+
+  void operator()(spanner::IncludeReplicas const& replicas) const {
+    auto* include_replicas = factory_()->mutable_include_replicas();
+    for (auto const& replica_selection : replicas.replica_selections()) {
+      ToProto(replica_selection, include_replicas->add_replica_selections());
+    }
+    if (replicas.auto_failover_disabled()) {
+      include_replicas->set_auto_failover_disabled(true);
+    }
+  }
+
+  void operator()(spanner::ExcludeReplicas const& replicas) const {
+    auto* exclude_replicas = factory_()->mutable_exclude_replicas();
+    for (auto const& replica_selection : replicas.replica_selections()) {
+      ToProto(replica_selection, exclude_replicas->add_replica_selections());
+    }
+  }
+
+ private:
+  static void ToProto(
+      spanner::ReplicaSelection const& from,
+      google::spanner::v1::DirectedReadOptions::ReplicaSelection* to) {
+    if (auto location = from.location()) {
+      to->set_location(*location);
+    }
+    if (auto type = from.type()) {
+      switch (*type) {
+        case spanner::ReplicaType::kReadWrite:
+          to->set_type(google::spanner::v1::DirectedReadOptions::
+                           ReplicaSelection::READ_WRITE);
+          break;
+        case spanner::ReplicaType::kReadOnly:
+          to->set_type(google::spanner::v1::DirectedReadOptions::
+                           ReplicaSelection::READ_ONLY);
+          break;
+      }
+    }
+  }
+
+  std::function<google::spanner::v1::DirectedReadOptions*()> factory_;
+};
 
 inline std::shared_ptr<spanner::RetryPolicy> const& RetryPolicyPrototype() {
   return internal::CurrentOptions().get<spanner::SpannerRetryPolicyOption>();
@@ -494,6 +546,10 @@ spanner::RowStream ConnectionImpl::ReadImpl(
         *std::move(params.read_options.request_tag));
   }
   request->mutable_request_options()->set_transaction_tag(ctx.tag);
+  absl::visit(DirectedReadVisitor([&request] {
+                return request->mutable_directed_read_options();
+              }),
+              params.directed_read_option);
 
   // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
   // the lifetime of the lambda.
@@ -676,6 +732,10 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
         *params.query_options.request_tag());
   }
   request.mutable_request_options()->set_transaction_tag(ctx.tag);
+  absl::visit(DirectedReadVisitor([&request] {
+                return request.mutable_directed_read_options();
+              }),
+              params.directed_read_option);
 
   for (;;) {
     auto reader = retry_resume_fn(request);
@@ -1030,11 +1090,14 @@ ConnectionImpl::ExecutePartitionedDmlImpl(
   }
   s->set_id(begin->id());
 
-  SqlParams sql_params(
-      {MakeTransactionFromIds(session->session_name(), begin->id(),
-                              ctx.route_to_leader, ctx.tag),
-       std::move(params.statement), std::move(params.query_options),
-       /*partition_token=*/{}});
+  SqlParams sql_params{
+      MakeTransactionFromIds(session->session_name(), begin->id(),
+                             ctx.route_to_leader, ctx.tag),
+      std::move(params.statement),
+      std::move(params.query_options),
+      /*partition_token=*/absl::nullopt,
+      /*partition_data_boost=*/false,
+      spanner::DirectedReadOption::Type{}};
   auto dml_result = CommonQueryImpl<StreamingPartitionedDmlResult>(
       session, s, ctx, std::move(sql_params),
       google::spanner::v1::ExecuteSqlRequest::NORMAL);

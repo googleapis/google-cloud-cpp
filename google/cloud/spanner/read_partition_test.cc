@@ -58,7 +58,11 @@ using ::google::cloud::spanner_internal::ReadPartitionTester;
 using ::google::cloud::spanner_testing::HasSessionAndTransaction;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::testing::AllOf;
+using ::testing::ElementsAre;
 using ::testing::Not;
+using ::testing::Property;
+using ::testing::VariantWith;
 
 TEST(ReadPartitionTest, MakeReadPartition) {
   std::string partition_token("token");
@@ -199,8 +203,10 @@ TEST(ReadPartitionTest, MakeReadParams) {
       "txn-id", true, "tag", "session", "token", "Students", KeySet::All(),
       columns, false, read_options));
 
-  Connection::ReadParams params =
-      spanner_internal::MakeReadParams(expected_partition.Partition());
+  Connection::ReadParams params = spanner_internal::MakeReadParams(
+      expected_partition.Partition(),
+      IncludeReplicas({ReplicaSelection(ReplicaType::kReadWrite)},
+                      /*auto_failover_disabled=*/true));
 
   EXPECT_EQ(*params.partition_token, "token");
   EXPECT_EQ(params.read_options, read_options);
@@ -210,6 +216,12 @@ TEST(ReadPartitionTest, MakeReadParams) {
   EXPECT_EQ(params.table, "Students");
   EXPECT_THAT(params.transaction,
               HasSessionAndTransaction("session", "txn-id", true, "tag"));
+  EXPECT_THAT(
+      params.directed_read_option,
+      VariantWith<IncludeReplicas>(AllOf(
+          Property(&IncludeReplicas::replica_selections,
+                   ElementsAre(ReplicaSelection(ReplicaType::kReadWrite))),
+          Property(&IncludeReplicas::auto_failover_disabled, true))));
 }
 
 }  // namespace

@@ -113,6 +113,7 @@ add_library(
     database_admin_connection.cc
     database_admin_connection.h
     date.h
+    directed_read_replicas.h
     encryption_config.h
     iam_updater.h
     instance.cc

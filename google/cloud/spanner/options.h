@@ -39,12 +39,14 @@
  */
 
 #include "google/cloud/spanner/backoff_policy.h"
+#include "google/cloud/spanner/directed_read_replicas.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/options.h"
+#include "absl/types/variant.h"
 #include <chrono>
 #include <cstddef>
 #include <cstdint>
@@ -321,6 +323,23 @@ struct PartitionsMaximumOption {
  */
 struct PartitionDataBoostOption {
   using Type = bool;
+};
+
+/**
+ * Option for `google::cloud::Options` to indicate which replicas or regions
+ * should be used for reads/queries in read-only or single-use transactions.
+ * Use of DirectedReadOptions within a read-write transaction will result in
+ * a `kInvalidArgument` error.
+ *
+ * The `IncludeReplicas` variant lists the replicas to try (in order) to
+ * process the request, and what to do if the list is exhausted without
+ * finding a healthy replica.
+ *
+ * Alternately, the `ExcludeReplicas` variant lists replicas that should
+ * be excluded from serving the request.
+ */
+struct DirectedReadOption {
+  using Type = absl::variant<absl::monostate, IncludeReplicas, ExcludeReplicas>;
 };
 
 /**

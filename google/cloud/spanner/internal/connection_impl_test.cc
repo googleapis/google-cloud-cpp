@@ -127,41 +127,40 @@ class ProtoBuilder {
 };
 
 // Matchers for mock calls.
-MATCHER_P(HasSession, session, "request has expected session name") {
+MATCHER_P(HasSession, session, "has expected session name") {
   return arg.session() == session;
 }
 
-MATCHER_P(HasTransactionId, transaction_id,
-          "request has expected transaction id") {
+MATCHER_P(HasTransactionId, transaction_id, "has expected transaction id") {
   return arg.transaction().id() == transaction_id;
 }
 
 // As above, but for Commit and Rollback requests, which don't have a
 // `TransactionSelector` but just store the "naked" ID directly in the proto.
 MATCHER_P(HasNakedTransactionId, transaction_id,
-          "commit or rollback request has expected transaction id") {
+          "has expected transaction id") {
   return arg.transaction_id() == transaction_id;
 }
 
 MATCHER_P(HasReturnStats, return_commit_stats,
-          "commit request has expected return-stats value") {
+          "has expected return-stats value") {
   return arg.return_commit_stats() == return_commit_stats;
 }
 
-MATCHER(HasBeginTransaction, "request has begin TransactionSelector set") {
+MATCHER(HasBeginTransaction, "has begin TransactionSelector set") {
   return arg.transaction().has_begin();
 }
 
-MATCHER_P(HasDatabase, database, "request has expected database") {
+MATCHER_P(HasDatabase, database, "has expected database") {
   return arg.database() == database.FullName();
 }
 
-MATCHER_P(HasCreatorRole, role, "request has expected creator role") {
+MATCHER_P(HasCreatorRole, role, "has expected creator role") {
   return arg.session_template().creator_role() == role;
 }
 
 // Matches a `spanner::Transaction` that is bound to a "bad" session.
-MATCHER(HasBadSession, "bound to a session that's marked bad") {
+MATCHER(HasBadSession, "is bound to a session that's marked bad") {
   return Visit(arg, [&](SessionHolder& session,
                         StatusOr<google::spanner::v1::TransactionSelector>&,
                         TransactionContext const&) {
@@ -177,16 +176,24 @@ MATCHER(HasBadSession, "bound to a session that's marked bad") {
   });
 }
 
-MATCHER_P(HasPriority, priority, "request has expected priority") {
+MATCHER_P(HasPriority, priority, "has expected priority") {
   return arg.request_options().priority() == priority;
 }
 
-MATCHER_P(HasRequestTag, tag, "request has expected request tag") {
+MATCHER_P(HasRequestTag, tag, "has expected request tag") {
   return arg.request_options().request_tag() == tag;
 }
 
-MATCHER_P(HasTransactionTag, tag, "request has expected transaction tag") {
+MATCHER_P(HasTransactionTag, tag, "has expected transaction tag") {
   return arg.request_options().transaction_tag() == tag;
+}
+
+MATCHER_P(HasReplicaLocation, location, "has expected replica location") {
+  return arg.location() == location;
+}
+
+MATCHER_P(HasReplicaType, type, "has expected replica type") {
+  return arg.type() == type;
 }
 
 // Ideally this would be a matcher, but matcher args are `const` and `RowStream`
@@ -469,6 +476,51 @@ TEST(ConnectionImplTest, ReadSuccess) {
   auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
   EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType(12, "Steve")),
                                   IsOkAndHolds(RowType(42, "Ann"))));
+}
+
+TEST(ConnectionImplTest, ReadDirectedRead) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock, BeginTransaction).Times(0);
+  EXPECT_CALL(*mock, StreamingRead)
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+                   google::spanner::v1::ReadRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_TRUE(request.has_directed_read_options());
+        auto const& directed_read_options = request.directed_read_options();
+        EXPECT_TRUE(directed_read_options.has_include_replicas());
+        EXPECT_THAT(
+            directed_read_options.include_replicas().replica_selections(),
+            ElementsAre(
+                HasReplicaLocation("us-east4"),
+                HasReplicaType(google::spanner::v1::DirectedReadOptions::
+                                   ReplicaSelection::READ_ONLY)));
+        return MakeReader<PartialResultSet>(
+            {R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb"});
+      });
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  spanner::Transaction txn =
+      MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
+  auto rows = conn->Read(
+      {txn,
+       "table",
+       spanner::KeySet::All(),
+       {"UserId", "UserName"},
+       spanner::ReadOptions{},
+       /*partition_token=*/absl::nullopt,
+       /*partition_data_boost=*/false,
+       spanner::IncludeReplicas(
+           {spanner::ReplicaSelection("us-east4"),
+            spanner::ReplicaSelection(spanner::ReplicaType::kReadOnly)},
+           true)});
+  EXPECT_TRUE(ContainsNoRows(rows));
+  EXPECT_THAT(txn, HasSessionAndTransaction("test-session-name", "ABCDEF00",
+                                            false, ""));
 }
 
 TEST(ConnectionImplTest, ReadPermanentFailure) {
@@ -792,6 +844,47 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
       ElementsAre(IsOkAndHolds(RowType(12, "Steve", absl::nullopt)),
                   IsOkAndHolds(RowType(
                       42, "Ann", spanner::MakeNumeric(12345678, -2).value()))));
+}
+
+TEST(ConnectionImplTest, ExecuteQueryDirectedRead) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock, BeginTransaction).Times(0);
+  EXPECT_CALL(*mock, ExecuteStreamingSql)
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+                   google::spanner::v1::ExecuteSqlRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_TRUE(request.has_directed_read_options());
+        auto const& directed_read_options = request.directed_read_options();
+        EXPECT_TRUE(directed_read_options.has_exclude_replicas());
+        EXPECT_THAT(
+            directed_read_options.exclude_replicas().replica_selections(),
+            ElementsAre(
+                HasReplicaType(google::spanner::v1::DirectedReadOptions::
+                                   ReplicaSelection::READ_WRITE),
+                HasReplicaLocation("us-east4")));
+        return MakeReader<PartialResultSet>(
+            {R"pb(metadata: { transaction: { id: "00FEDCBA" } })pb"});
+      });
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  spanner::Transaction txn =
+      MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
+  auto rows = conn->ExecuteQuery(
+      {txn, spanner::SqlStatement("SELECT * FROM Table"),
+       spanner::QueryOptions{},
+       /*partition_token=*/absl::nullopt,
+       /*partition_data_boost=*/false,
+       spanner::ExcludeReplicas(
+           {spanner::ReplicaSelection(spanner::ReplicaType::kReadWrite),
+            spanner::ReplicaSelection("us-east4")})});
+  EXPECT_TRUE(ContainsNoRows(rows));
+  EXPECT_THAT(txn, HasSessionAndTransaction("test-session-name", "00FEDCBA",
+                                            false, ""));
 }
 
 TEST(ConnectionImplTest, ExecuteQueryPgNumericResult) {
@@ -2665,7 +2758,7 @@ TEST(ConnectionImplTest, ReadPartition) {
         EXPECT_EQ("DEADBEEF", request.partition_token());
         EXPECT_TRUE(request.data_boost_enabled());
         return MakeReader<PartialResultSet>(
-            {R"pb(metadata: { transaction: { id: " ABCDEF00 " } })pb"});
+            {R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb"});
       });
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -2820,7 +2913,7 @@ TEST(ConnectionImplTest, QueryPartition) {
         EXPECT_EQ("DEADBEEF", request.partition_token());
         EXPECT_TRUE(request.data_boost_enabled());
         return MakeReader<PartialResultSet>(
-            {R"pb(metadata: { transaction: { id: " ABCDEF00 " } })pb"});
+            {R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb"});
       });
 
   auto conn = MakeConnectionImpl(db, mock);
