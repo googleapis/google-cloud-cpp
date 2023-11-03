@@ -616,6 +616,26 @@ TEST_F(AsyncConnectionImplTest,
   EXPECT_THAT(r, StatusIs(PermanentError().code()));
 }
 
+TEST_F(AsyncConnectionImplTest, AsyncWriteObjectInvalidRequest) {
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncStartResumableWrite).Times(0);
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  // Intentionally create an invalid key. Converting this key to a proto message
+  // will fail, and that should result in a
+  auto key = storage::EncryptionDataFromBinaryKey("123");
+  key.sha256 = "not-a-valid-base-64-SHA256";
+  auto pending = connection->AsyncWriteObject(
+      {storage_experimental::ResumableUploadRequest("test-bucket",
+                                                    "test-object")
+           .set_multiple_options(storage::EncryptionKey(key)),
+       connection->options()});
+
+  auto r = pending.get();
+  EXPECT_THAT(r, StatusIs(StatusCode::kInvalidArgument));
+}
+
 TEST_F(AsyncConnectionImplTest, AsyncWriteObjectTooManyTransients) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
