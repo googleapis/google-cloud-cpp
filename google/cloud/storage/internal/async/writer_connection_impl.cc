@@ -128,8 +128,10 @@ future<Status> AsyncWriterConnectionImpl::Flush(
   auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
                                   std::move(p), PartialUpload::kFlush);
 
-  return coro->Start().then(
-      [coro, size, this](auto f) { return OnPartialUpload(size, f.get()); });
+  return coro->Start().then([coro, size, this](auto f) mutable {
+    coro.reset();  // breaks the cycle between the completion queue and coro
+    return OnPartialUpload(size, f.get());
+  });
 }
 
 future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::Query() {
