@@ -56,6 +56,15 @@ AsyncWriterConnectionFinalized::Finalize(storage_experimental::WritePayload) {
       StatusOr<storage::ObjectMetadata>(MakeError(GCP_ERROR_INFO())));
 }
 
+future<Status> AsyncWriterConnectionFinalized::Flush(
+    storage_experimental::WritePayload) {
+  return make_ready_future(MakeError(GCP_ERROR_INFO()));
+}
+
+future<StatusOr<std::int64_t>> AsyncWriterConnectionFinalized::Query() {
+  return make_ready_future(StatusOr<std::int64_t>(MakeError(GCP_ERROR_INFO())));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
