@@ -173,7 +173,8 @@ struct ReadPartitionInternals {
   }
 
   static spanner::Connection::ReadParams MakeReadParams(
-      spanner::ReadPartition const& read_partition) {
+      spanner::ReadPartition const& read_partition,
+      spanner::DirectedReadOption::Type directed_read_option) {
     return spanner::Connection::ReadParams{
         MakeTransactionFromIds(
             read_partition.SessionId(), read_partition.TransactionId(),
@@ -183,7 +184,8 @@ struct ReadPartitionInternals {
         read_partition.ColumnNames(),
         read_partition.ReadOptions(),
         read_partition.PartitionToken(),
-        read_partition.DataBoost()};
+        read_partition.DataBoost(),
+        std::move(directed_read_option)};
   }
 };
 
@@ -201,8 +203,10 @@ inline spanner::ReadPartition MakeReadPartition(
 }
 
 inline spanner::Connection::ReadParams MakeReadParams(
-    spanner::ReadPartition const& read_partition) {
-  return ReadPartitionInternals::MakeReadParams(read_partition);
+    spanner::ReadPartition const& read_partition,
+    spanner::DirectedReadOption::Type directed_read_option) {
+  return ReadPartitionInternals::MakeReadParams(
+      read_partition, std::move(directed_read_option));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

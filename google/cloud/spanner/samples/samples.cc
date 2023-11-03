@@ -2578,6 +2578,48 @@ void SetRequestTag(google::cloud::spanner::Client client) {
 }
 //! [END spanner_set_request_tag]
 
+//! [START spanner_directed_read]
+void DirectedRead(std::string const& project_id, std::string const& instance_id,
+                  std::string const& database_id) {
+  namespace spanner = ::google::cloud::spanner;
+
+  // Create a client with a DirectedReadOption.
+  auto client = spanner::Client(
+      spanner::MakeConnection(
+          spanner::Database(project_id, instance_id, database_id)),
+      google::cloud::Options{}.set<spanner::DirectedReadOption>(
+          spanner::ExcludeReplicas({spanner::ReplicaSelection("us-east4")})));
+
+  spanner::SqlStatement select(
+      "SELECT SingerId, AlbumId, AlbumTitle FROM Albums");
+  using RowType = std::tuple<std::int64_t, std::int64_t, std::string>;
+
+  // A DirectedReadOption on the operation will override the option set
+  // at the client level.
+  auto rows = client.ExecuteQuery(
+      std::move(select),
+      google::cloud::Options{}.set<spanner::DirectedReadOption>(
+          spanner::IncludeReplicas(
+              {spanner::ReplicaSelection(spanner::ReplicaType::kReadWrite)},
+              /*auto_failover_disabled=*/true)));
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
+    std::cout << "SingerId: " << std::get<0>(*row)
+              << " AlbumId: " << std::get<1>(*row)
+              << " AlbumTitle: " << std::get<2>(*row) << "\n";
+  }
+  std::cout << "Read completed for [spanner_directed_read]\n";
+}
+//! [END spanner_directed_read]
+
+void DirectedReadCommand(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "directed-read <project-id> <instance-id>  <database-id>");
+  }
+  DirectedRead(argv[0], argv[1], argv[2]);
+}
+
 //! [START spanner_batch_client]
 void UsePartitionQuery(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
@@ -2709,8 +2751,9 @@ void QueryUsingIndex(google::cloud::spanner::Client client) {
 
 void CreateClientWithQueryOptions(std::string const& project_id,
                                   std::string const& instance_id,
-                                  std::string const& db_id) {
-  auto db = ::google::cloud::spanner::Database(project_id, instance_id, db_id);
+                                  std::string const& database_id) {
+  auto db =
+      ::google::cloud::spanner::Database(project_id, instance_id, database_id);
   //! [START spanner_create_client_with_query_options]
   namespace spanner = ::google::cloud::spanner;
   spanner::Client client(
@@ -4152,10 +4195,9 @@ std::string Basename(absl::string_view name) {
 
 int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
+  using CommandMap = std::map<std::string, CommandType>;
 
   using SampleFunction = void (*)(google::cloud::spanner::Client);
-
-  using CommandMap = std::map<std::string, CommandType>;
   auto make_command_entry = [](std::string const& sample_name,
                                SampleFunction sample) {
     auto make_command = [](std::string const& sample_name,
@@ -4277,6 +4319,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("set-transaction-tag", SetTransactionTag),
       make_command_entry("read-stale-data", ReadStaleData),
       make_command_entry("set-request-tag", SetRequestTag),
+      {"directed-read", DirectedReadCommand},
       make_command_entry("use-partition-query", UsePartitionQuery),
       make_command_entry("read-data-with-index", ReadDataWithIndex),
       make_command_entry("query-new-column", QueryNewColumn),
@@ -4886,6 +4929,9 @@ void RunAll(bool emulator) {
 
   SampleBanner("spanner_set_request_tag");
   SetRequestTag(client);
+
+  SampleBanner("spanner_directed_read");
+  DirectedRead(project_id, instance_id, database_id);
 
   SampleBanner("spanner_batch_client");
   UsePartitionQuery(client);

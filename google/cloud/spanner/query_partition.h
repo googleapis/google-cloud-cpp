@@ -165,13 +165,17 @@ struct QueryPartitionInternals {
 
   static spanner::Connection::SqlParams MakeSqlParams(
       spanner::QueryPartition const& query_partition,
-      spanner::QueryOptions const& query_options) {
+      spanner::QueryOptions const& query_options,
+      spanner::DirectedReadOption::Type directed_read_option) {
     return {MakeTransactionFromIds(query_partition.session_id(),
                                    query_partition.transaction_id(),
                                    query_partition.route_to_leader(),
                                    query_partition.transaction_tag()),
-            query_partition.sql_statement(), query_options,
-            query_partition.partition_token(), query_partition.data_boost()};
+            query_partition.sql_statement(),
+            query_options,
+            query_partition.partition_token(),
+            query_partition.data_boost(),
+            std::move(directed_read_option)};
   }
 };
 
@@ -187,8 +191,10 @@ inline spanner::QueryPartition MakeQueryPartition(
 
 inline spanner::Connection::SqlParams MakeSqlParams(
     spanner::QueryPartition const& query_partition,
-    spanner::QueryOptions const& query_options) {
-  return QueryPartitionInternals::MakeSqlParams(query_partition, query_options);
+    spanner::QueryOptions const& query_options,
+    spanner::DirectedReadOption::Type directed_read_option) {
+  return QueryPartitionInternals::MakeSqlParams(
+      query_partition, query_options, std::move(directed_read_option));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
