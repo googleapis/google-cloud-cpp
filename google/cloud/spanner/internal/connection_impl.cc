@@ -44,6 +44,8 @@ namespace {
 
 class DirectedReadVisitor {
  public:
+  // @p `factory` produces a mutable `DirectedReadOptions` proto should it be
+  // needed by a visitor to one of the `DirectedReadOption::Type` variants.
   explicit DirectedReadVisitor(
       std::function<google::spanner::v1::DirectedReadOptions*()> factory)
       : factory_(std::move(factory)) {}
@@ -55,7 +57,7 @@ class DirectedReadVisitor {
   void operator()(spanner::IncludeReplicas const& replicas) const {
     auto* include_replicas = factory_()->mutable_include_replicas();
     for (auto const& replica_selection : replicas.replica_selections()) {
-      ToProto(replica_selection, include_replicas->add_replica_selections());
+      *include_replicas->add_replica_selections() = ToProto(replica_selection);
     }
     if (replicas.auto_failover_disabled()) {
       include_replicas->set_auto_failover_disabled(true);
@@ -65,29 +67,30 @@ class DirectedReadVisitor {
   void operator()(spanner::ExcludeReplicas const& replicas) const {
     auto* exclude_replicas = factory_()->mutable_exclude_replicas();
     for (auto const& replica_selection : replicas.replica_selections()) {
-      ToProto(replica_selection, exclude_replicas->add_replica_selections());
+      *exclude_replicas->add_replica_selections() = ToProto(replica_selection);
     }
   }
 
  private:
-  static void ToProto(
-      spanner::ReplicaSelection const& from,
-      google::spanner::v1::DirectedReadOptions::ReplicaSelection* to) {
+  static google::spanner::v1::DirectedReadOptions::ReplicaSelection ToProto(
+      spanner::ReplicaSelection const& from) {
+    google::spanner::v1::DirectedReadOptions::ReplicaSelection proto;
     if (auto location = from.location()) {
-      to->set_location(*location);
+      proto.set_location(*location);
     }
     if (auto type = from.type()) {
       switch (*type) {
         case spanner::ReplicaType::kReadWrite:
-          to->set_type(google::spanner::v1::DirectedReadOptions::
-                           ReplicaSelection::READ_WRITE);
+          proto.set_type(google::spanner::v1::DirectedReadOptions::
+                             ReplicaSelection::READ_WRITE);
           break;
         case spanner::ReplicaType::kReadOnly:
-          to->set_type(google::spanner::v1::DirectedReadOptions::
-                           ReplicaSelection::READ_ONLY);
+          proto.set_type(google::spanner::v1::DirectedReadOptions::
+                             ReplicaSelection::READ_ONLY);
           break;
       }
     }
+    return proto;
   }
 
   std::function<google::spanner::v1::DirectedReadOptions*()> factory_;
