@@ -103,8 +103,8 @@ TEST(TracingMessageBatch, SaveMessageAddsEvent) {
 
 TEST(TracingMessageBatch, Flush) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
-  auto message_span = MakeSpan("test span");
   auto span_catcher = InstallSpanCatcher();
+  auto message_span = MakeSpan("test span");
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, SaveMessage(_));
   EXPECT_CALL(*mock, Flush).WillOnce([] {
@@ -134,11 +134,43 @@ TEST(TracingMessageBatch, Flush) {
                                  "messaging.pubsub.message.link", 0)))))));
 }
 
+TEST(TracingMessageBatch, FlushOnlyIncludeSampledLink) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  // Create span before the span catcher so it is not sampled.
+  auto unsampled_span = MakeSpan("test skipped span");
+  auto span_catcher = InstallSpanCatcher();
+  auto message_span = MakeSpan("test span");
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, SaveMessage(_)).Times(2);
+  EXPECT_CALL(*mock, Flush).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
+    return [](auto) { EXPECT_FALSE(OTelContextCaptured()); };
+  });
+  auto message_batch = MakeTracingMessageBatch(std::move(mock));
+  auto initial_spans = {message_span, unsampled_span};
+  SaveMessages(initial_spans, message_batch);
+
+  auto end_spans = message_batch->Flush();
+  end_spans(make_ready_future());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                             SpanNamed("BatchSink::AsyncPublish"),
+                             SpanHasAttributes(OTelAttribute<std::int64_t>(
+                                 sc::kMessagingBatchMessageCount, 2)),
+                             SpanLinksAre(AllOf(
+                                 LinkHasSpanContext(message_span->GetContext()),
+                                 SpanLinkAttributesAre(OTelAttribute<int64_t>(
+                                     "messaging.pubsub.message.link", 0)))))));
+}
+
 TEST(TracingMessageBatch, FlushSmallBatch) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
   auto message_span1 = MakeSpan("test span 1");
   auto message_span2 = MakeSpan("test span 2");
-  auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, SaveMessage(_)).Times(2);
   EXPECT_CALL(*mock, Flush).WillOnce([] {
@@ -179,10 +211,9 @@ TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return [](auto) {};
   });
+  auto span_catcher = InstallSpanCatcher();
   auto message_batch = MakeTracingMessageBatch(std::move(mock));
   SaveMessages(CreateSpans(kBatchSize), message_batch);
-  // Only catch the batch sink spans.
-  auto span_catcher = InstallSpanCatcher();
 
   auto end_spans = message_batch->Flush();
   end_spans(make_ready_future());
@@ -209,10 +240,9 @@ TEST(TracingMessageBatch, FlushLargeBatch) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return [](auto) {};
   });
+  auto span_catcher = InstallSpanCatcher();
   auto message_batch = MakeTracingMessageBatch(std::move(mock));
   SaveMessages(CreateSpans(kBatchSize), message_batch);
-  // Only catch the batch sink spans.
-  auto span_catcher = InstallSpanCatcher();
 
   auto end_spans = message_batch->Flush();
   end_spans(make_ready_future());
@@ -302,8 +332,6 @@ TEST(TracingMessageBatch, FlushAddsEventForMultipleMessages) {
                          SpanNamed("test span 1"),
                          SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
 }
-
-// TODO(#12528): Add an end to end test.
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
