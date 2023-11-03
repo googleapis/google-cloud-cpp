@@ -136,6 +136,110 @@ TEST(PartialUpload, FinalizeChunkAligned) {
   EXPECT_THAT(success, IsOkAndHolds(true));
 }
 
+TEST(PartialUpload, FinalizeChunkPartial) {
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const buffer = RandomData(generator, 2 * kExpectedChunkSize + 1024);
+  auto const view = absl::string_view(buffer.data(), buffer.size());
+  auto const v0 = view.substr(0, kExpectedChunkSize);
+  auto const v1 = view.substr(kExpectedChunkSize, kExpectedChunkSize);
+  auto const v2 = view.substr(2 * kExpectedChunkSize);
+
+  AsyncSequencer<bool> sequencer;
+  auto rpc = std::make_unique<MockStream>();
+  EXPECT_CALL(*rpc, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_FALSE(wopt.is_last_message());
+        EXPECT_EQ(request.write_offset(), 0);
+        EXPECT_FALSE(request.has_write_object_spec());
+        EXPECT_TRUE(request.has_upload_id());
+        EXPECT_EQ(request.upload_id(), "test-upload-id");
+        EXPECT_FALSE(request.finish_write());
+        EXPECT_EQ(request.checksummed_data().crc32c(), Crc32c(v0));
+        EXPECT_FALSE(request.has_object_checksums());
+        return sequencer.PushBack("Write");
+      })
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_FALSE(wopt.is_last_message());
+        EXPECT_EQ(request.write_offset(), kExpectedChunkSize);
+        EXPECT_FALSE(request.has_write_object_spec());
+        EXPECT_FALSE(request.has_upload_id());
+        EXPECT_FALSE(request.finish_write());
+        EXPECT_EQ(request.checksummed_data().crc32c(), Crc32c(v1));
+        EXPECT_FALSE(request.has_object_checksums());
+        return sequencer.PushBack("Write");
+      })
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_TRUE(wopt.is_last_message());
+        EXPECT_EQ(request.write_offset(), 2 * kExpectedChunkSize);
+        EXPECT_FALSE(request.has_write_object_spec());
+        EXPECT_FALSE(request.has_upload_id());
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_EQ(request.checksummed_data().crc32c(), Crc32c(v2));
+        EXPECT_TRUE(request.has_object_checksums());
+        EXPECT_EQ(request.object_checksums().crc32c(), Crc32c(view));
+        return sequencer.PushBack("Write");
+      });
+
+  auto hash = std::make_unique<storage::internal::Crc32cHashFunction>();
+  Request request;
+  request.set_upload_id("test-upload-id");
+  auto call = PartialUpload::Call(std::move(rpc), std::move(hash), request,
+                                  absl::Cord(buffer), PartialUpload::kFinalize);
+
+  auto result = call->Start();
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  ASSERT_TRUE(result.is_ready());
+  auto success = result.get();
+  EXPECT_THAT(success, IsOkAndHolds(true));
+}
+
+TEST(PartialUpload, FlushChunkEmpty) {
+  AsyncSequencer<bool> sequencer;
+  auto rpc = std::make_unique<MockStream>();
+  EXPECT_CALL(*rpc, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_FALSE(wopt.is_last_message());
+        EXPECT_EQ(request.write_offset(), 0);
+        EXPECT_FALSE(request.has_write_object_spec());
+        EXPECT_TRUE(request.has_upload_id());
+        EXPECT_EQ(request.upload_id(), "test-upload-id");
+        EXPECT_FALSE(request.finish_write());
+        EXPECT_EQ(request.checksummed_data().crc32c(), 0);
+        EXPECT_FALSE(request.has_object_checksums());
+        EXPECT_TRUE(request.flush());
+        EXPECT_TRUE(request.state_lookup());
+        return sequencer.PushBack("Write");
+      });
+
+  auto hash = std::make_unique<storage::internal::Crc32cHashFunction>();
+  Request request;
+  request.set_upload_id("test-upload-id");
+  auto call = PartialUpload::Call(std::move(rpc), std::move(hash), request,
+                                  absl::Cord(), PartialUpload::kFlush);
+
+  auto result = call->Start();
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  ASSERT_TRUE(result.is_ready());
+  auto success = result.get();
+  EXPECT_THAT(success, IsOkAndHolds(true));
+}
+
 TEST(PartialUpload, FlushChunkAligned) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const buffer = RandomData(generator, kExpectedChunkSize);
@@ -154,6 +258,7 @@ TEST(PartialUpload, FlushChunkAligned) {
         EXPECT_EQ(request.checksummed_data().crc32c(), Crc32c(view));
         EXPECT_FALSE(request.has_object_checksums());
         EXPECT_TRUE(request.flush());
+        EXPECT_TRUE(request.state_lookup());
         return sequencer.PushBack("Write");
       });
 
@@ -174,10 +279,13 @@ TEST(PartialUpload, FlushChunkAligned) {
   EXPECT_THAT(success, IsOkAndHolds(true));
 }
 
-TEST(PartialUpload, FinalizeChunkPartial) {
+TEST(PartialUpload, FlushChunkPartial) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const buffer = RandomData(generator, 2 * kExpectedChunkSize + 1024);
   auto const view = absl::string_view(buffer.data(), buffer.size());
+  auto const v0 = view.substr(0, kExpectedChunkSize);
+  auto const v1 = view.substr(kExpectedChunkSize, kExpectedChunkSize);
+  auto const v2 = view.substr(2 * kExpectedChunkSize);
 
   AsyncSequencer<bool> sequencer;
   auto rpc = std::make_unique<MockStream>();
@@ -189,9 +297,10 @@ TEST(PartialUpload, FinalizeChunkPartial) {
         EXPECT_TRUE(request.has_upload_id());
         EXPECT_EQ(request.upload_id(), "test-upload-id");
         EXPECT_FALSE(request.finish_write());
-        EXPECT_EQ(request.checksummed_data().crc32c(),
-                  Crc32c(view.substr(0, kExpectedChunkSize)));
+        EXPECT_EQ(request.checksummed_data().crc32c(), Crc32c(v0));
         EXPECT_FALSE(request.has_object_checksums());
+        EXPECT_FALSE(request.flush());
+        EXPECT_FALSE(request.state_lookup());
         return sequencer.PushBack("Write");
       })
       .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
@@ -200,21 +309,22 @@ TEST(PartialUpload, FinalizeChunkPartial) {
         EXPECT_FALSE(request.has_write_object_spec());
         EXPECT_FALSE(request.has_upload_id());
         EXPECT_FALSE(request.finish_write());
-        EXPECT_EQ(request.checksummed_data().crc32c(),
-                  Crc32c(view.substr(kExpectedChunkSize, kExpectedChunkSize)));
+        EXPECT_EQ(request.checksummed_data().crc32c(), Crc32c(v1));
         EXPECT_FALSE(request.has_object_checksums());
+        EXPECT_FALSE(request.flush());
+        EXPECT_FALSE(request.state_lookup());
         return sequencer.PushBack("Write");
       })
       .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
-        EXPECT_TRUE(wopt.is_last_message());
+        EXPECT_FALSE(wopt.is_last_message());
         EXPECT_EQ(request.write_offset(), 2 * kExpectedChunkSize);
         EXPECT_FALSE(request.has_write_object_spec());
         EXPECT_FALSE(request.has_upload_id());
-        EXPECT_TRUE(request.finish_write());
-        EXPECT_EQ(request.checksummed_data().crc32c(),
-                  Crc32c(view.substr(2 * kExpectedChunkSize)));
-        EXPECT_TRUE(request.has_object_checksums());
-        EXPECT_EQ(request.object_checksums().crc32c(), Crc32c(view));
+        EXPECT_FALSE(request.finish_write());
+        EXPECT_EQ(request.checksummed_data().crc32c(), Crc32c(v2));
+        EXPECT_FALSE(request.has_object_checksums());
+        EXPECT_TRUE(request.flush());
+        EXPECT_TRUE(request.state_lookup());
         return sequencer.PushBack("Write");
       });
 
@@ -222,7 +332,7 @@ TEST(PartialUpload, FinalizeChunkPartial) {
   Request request;
   request.set_upload_id("test-upload-id");
   auto call = PartialUpload::Call(std::move(rpc), std::move(hash), request,
-                                  absl::Cord(buffer), PartialUpload::kFinalize);
+                                  absl::Cord(buffer), PartialUpload::kFlush);
 
   auto result = call->Start();
 
