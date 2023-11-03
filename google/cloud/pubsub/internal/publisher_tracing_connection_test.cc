@@ -124,22 +124,22 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted));
   EXPECT_THAT(
       span_catcher->GetSpans(),
-      ElementsAre(
-          AllOf(SpanHasInstrumentationScope(), SpanKindIsProducer(),
-                SpanNamed("projects/test-project/topics/test-topic send"),
-                SpanWithStatus(opentelemetry::trace::StatusCode::kError),
-                SpanHasAttributes(
-                    OTelAttribute<std::string>(sc::kMessagingSystem, "pubsub"),
-                    OTelAttribute<std::string>(
-                        sc::kMessagingDestinationName,
-                        "projects/test-project/topics/test-topic"),
-                    OTelAttribute<std::string>(
-                        sc::kMessagingDestinationTemplate, "topic"),
-                    OTelAttribute<std::string>("messaging.pubsub.ordering_key",
-                                               "ordering-key-0"),
-                    OTelAttribute<int>("gl-cpp.status_code", kErrorCode),
-                    OTelAttribute<std::int64_t>(
-                        "messaging.message.total_size_bytes", 45)))));
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsProducer(),
+          SpanNamed("projects/test-project/topics/test-topic send"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError),
+          SpanHasAttributes(
+              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>(
+                  sc::kMessagingDestinationName,
+                  "projects/test-project/topics/test-topic"),
+              OTelAttribute<std::string>(sc::kMessagingDestinationTemplate,
+                                         "topic"),
+              OTelAttribute<std::string>("messaging.pubsub.ordering_key",
+                                         "ordering-key-0"),
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode),
+              OTelAttribute<std::int64_t>("messaging.message.total_size_bytes",
+                                          45)))));
 }
 
 TEST(PublisherTracingConnectionTest, PublishInjectsTraceContext) {
