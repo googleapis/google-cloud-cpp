@@ -56,6 +56,7 @@ void PartialUpload::Write() {
       if (!status.ok()) return WriteError(std::move(status));
     } else if (action_ == LastMessageAction::kFlush) {
       request_.set_flush(true);
+      request_.set_state_lookup(true);
     }
   }
   (void)rpc_->Write(request_, std::move(wopt))
