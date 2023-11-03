@@ -155,15 +155,18 @@ TEST(TracingMessageBatch, FlushOnlyIncludeSampledLink) {
   end_spans(make_ready_future());
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
-                             SpanNamed("BatchSink::AsyncPublish"),
-                             SpanHasAttributes(OTelAttribute<std::int64_t>(
-                                 sc::kMessagingBatchMessageCount, 2)),
-                             SpanLinksAre(AllOf(
-                                 LinkHasSpanContext(message_span->GetContext()),
-                                 SpanLinkAttributesAre(OTelAttribute<int64_t>(
-                                     "messaging.pubsub.message.link", 0)))))));
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("publish"),
+          SpanHasAttributes(
+              OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 2),
+              OTelAttribute<std::string>(sc::kCodeFunction,
+                                         "BatchSink::AsyncPublish")),
+          SpanLinksAre(AllOf(LinkHasSpanContext(message_span->GetContext()),
+                             SpanLinkAttributesAre(OTelAttribute<int64_t>(
+                                 "messaging.pubsub.message.link", 0)))))));
 }
 
 TEST(TracingMessageBatch, FlushSmallBatch) {
