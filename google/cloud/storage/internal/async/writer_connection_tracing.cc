@@ -97,10 +97,42 @@ class AsyncWriterConnectionTracing
         });
   }
 
+  future<Status> Flush(storage_experimental::WritePayload p) override {
+    internal::OTelScope scope(span_);
+    auto size = static_cast<std::uint64_t>(p.size());
+    return impl_->Flush(std::move(p))
+        .then([count = ++sent_count_, span = span_, size](auto f) {
+          span->AddEvent("gl-cpp.flush", {
+                                             {sc::kMessageType, "SENT"},
+                                             {sc::kMessageId, count},
+                                             {sc::kThreadId, CurrentThreadId()},
+                                             {"gl-cpp.size", size},
+                                         });
+          auto status = f.get();
+          if (!status.ok()) return internal::EndSpan(*span, std::move(status));
+          return status;
+        });
+  }
+
+  future<StatusOr<std::int64_t>> Query() override {
+    internal::OTelScope scope(span_);
+    return impl_->Query().then([count = ++recv_count_, span = span_](auto f) {
+      span->AddEvent("gl-cpp.query", {
+                                         {sc::kMessageType, "RECEIVE"},
+                                         {sc::kMessageId, count},
+                                         {sc::kThreadId, CurrentThreadId()},
+                                     });
+      auto response = f.get();
+      if (!response) return internal::EndSpan(*span, std::move(response));
+      return response;
+    });
+  }
+
  private:
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
   std::unique_ptr<storage_experimental::AsyncWriterConnection> impl_;
   std::int64_t sent_count_ = 0;
+  std::int64_t recv_count_ = 0;
 };
 
 }  // namespace

@@ -58,6 +58,8 @@ class AsyncWriterConnectionImpl
   future<Status> Write(storage_experimental::WritePayload payload) override;
   future<StatusOr<storage::ObjectMetadata>> Finalize(
       storage_experimental::WritePayload) override;
+  future<Status> Flush(storage_experimental::WritePayload payload) override;
+  future<StatusOr<std::int64_t>> Query() override;
 
  private:
   google::storage::v2::BidiWriteObjectRequest MakeRequest();
