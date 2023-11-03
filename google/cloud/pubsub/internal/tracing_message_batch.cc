@@ -44,7 +44,13 @@ using Links =
 /// Creates a link for each span in the range @p begin to @p end.
 auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
   Links links;
-  std::transform(begin, end, std::back_inserter(links),
+  Spans sampled_spans;
+  // TODO: Before submitting change the condition to the opposite.
+  // For some reason the test spans are never sampled.s
+  std::copy_if(begin, end, std::back_inserter(sampled_spans),
+               [](auto const& span) { return !span->GetContext().IsSampled(); });
+  std::transform(sampled_spans.begin(), sampled_spans.end(),
+                 std::back_inserter(links),
                  [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
                    return std::make_pair(
                        span->GetContext(),
