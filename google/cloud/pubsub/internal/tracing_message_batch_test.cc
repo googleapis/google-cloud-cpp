@@ -16,6 +16,7 @@
 
 #include "google/cloud/pubsub/internal/tracing_message_batch.h"
 #include "google/cloud/pubsub/message.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/testing/mock_message_batch.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
@@ -103,6 +104,8 @@ TEST(TracingMessageBatch, SaveMessageAddsEvent) {
 
 TEST(TracingMessageBatch, Flush) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
+  internal::OptionsSpan options(
+      Options{}.set<pubsub::MaxOtelLinkCountOption>(128));
   auto message_span = MakeSpan("test span");
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
@@ -136,6 +139,8 @@ TEST(TracingMessageBatch, Flush) {
 
 TEST(TracingMessageBatch, FlushSmallBatch) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
+  internal::OptionsSpan options(
+      Options{}.set<pubsub::MaxOtelLinkCountOption>(128));
   auto message_span1 = MakeSpan("test span 1");
   auto message_span2 = MakeSpan("test span 2");
   auto span_catcher = InstallSpanCatcher();
@@ -173,6 +178,8 @@ TEST(TracingMessageBatch, FlushSmallBatch) {
 TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto constexpr kBatchSize = 128;
+  internal::OptionsSpan options(
+      Options{}.set<pubsub::MaxOtelLinkCountOption>(128));
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, SaveMessage(_)).Times(kBatchSize);
   EXPECT_CALL(*mock, Flush).WillOnce([] {
@@ -202,6 +209,8 @@ TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {
 
 TEST(TracingMessageBatch, FlushLargeBatch) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
+  internal::OptionsSpan options(
+      Options{}.set<pubsub::MaxOtelLinkCountOption>(128));
   auto constexpr kBatchSize = 129;
   auto mock = std::make_shared<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, SaveMessage(_)).Times(kBatchSize);
@@ -232,9 +241,44 @@ TEST(TracingMessageBatch, FlushLargeBatch) {
               Contains(AllOf(SpanNamed("publish #1"), SpanLinksSizeIs(1))));
 }
 
+TEST(TracingMessageBatch, FlushBatchWithCustomLimit) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto constexpr kBatchSize = 5;
+  internal::OptionsSpan span(Options{}.set<pubsub::MaxOtelLinkCountOption>(5));
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, SaveMessage(_)).Times(kBatchSize + 1);
+  EXPECT_CALL(*mock, Flush).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return [](auto) {};
+  });
+  auto message_batch = MakeTracingMessageBatch(std::move(mock));
+  auto span_catcher = InstallSpanCatcher();
+  SaveMessages(CreateSpans(kBatchSize + 1), message_batch);
+
+  auto end_spans = message_batch->Flush();
+  end_spans(make_ready_future());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("publish"),
+          SpanHasAttributes(
+              OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 6),
+              OTelAttribute<std::string>(sc::kCodeFunction,
+                                         "BatchSink::AsyncPublish")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("publish #0"), SpanLinksSizeIs(5))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("publish #1"), SpanLinksSizeIs(1))));
+}
+
 TEST(TracingMessageBatch, FlushAddsSpanIdAndTraceIdAttribute) {
   // The span catcher must be installed before the message span is created.
   auto span_catcher = InstallSpanCatcher();
+  internal::OptionsSpan options(
+      Options{}.set<pubsub::MaxOtelLinkCountOption>(128));
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, SaveMessage(_));
   EXPECT_CALL(*mock, Flush).WillOnce([] { return [](auto) {}; });
@@ -262,6 +306,8 @@ TEST(TracingMessageBatch, FlushAddsSpanIdAndTraceIdAttribute) {
 TEST(TracingMessageBatch, FlushSpanAddsEvent) {
   // The span catcher must be installed before the message span is created.
   auto span_catcher = InstallSpanCatcher();
+  internal::OptionsSpan options(
+      Options{}.set<pubsub::MaxOtelLinkCountOption>(128));
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] { return [](auto) {}; });
   EXPECT_CALL(*mock, SaveMessage(_));
@@ -283,6 +329,8 @@ TEST(TracingMessageBatch, FlushSpanAddsEvent) {
 TEST(TracingMessageBatch, FlushAddsEventForMultipleMessages) {
   // The span catcher must be installed before the message span is created.
   auto span_catcher = InstallSpanCatcher();
+  internal::OptionsSpan options(
+      Options{}.set<pubsub::MaxOtelLinkCountOption>(128));
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, Flush).WillOnce([] { return [](auto) {}; });
   EXPECT_CALL(*mock, SaveMessage(_)).Times(2);
@@ -302,8 +350,6 @@ TEST(TracingMessageBatch, FlushAddsEventForMultipleMessages) {
                          SpanNamed("test span 1"),
                          SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
 }
-
-// TODO(#12528): Add an end to end test.
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

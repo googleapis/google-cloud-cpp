@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/internal/tracing_message_batch.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "opentelemetry/context/runtime_context.h"
@@ -87,12 +88,13 @@ auto MakeChild(
 }
 
 Spans MakeBatchSinkSpans(Spans message_spans) {
-  int64_t max_otel_links = 128;
+  size_t max_otel_links =
+      internal::CurrentOptions().get<pubsub::MaxOtelLinkCountOption>();
   Spans batch_sink_spans;
   // If the batch size is less than the max size, add the links to a single
   // span. If the batch size is greater than the max size, create a parent
   // span with no links and each child spans will contain links.
-  if (static_cast<int64_t>(message_spans.size()) <= max_otel_links) {
+  if (message_spans.size() <= max_otel_links) {
     batch_sink_spans.push_back(MakeParent(
         MakeLinks(message_spans.begin(), message_spans.end()), message_spans));
     return batch_sink_spans;
