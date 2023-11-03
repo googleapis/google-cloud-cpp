@@ -35,6 +35,7 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::An;
+using ::testing::VariantWith;
 
 using Request = google::storage::v2::BidiWriteObjectRequest;
 using Response = google::storage::v2::BidiWriteObjectResponse;
@@ -95,8 +96,7 @@ TEST(AsyncWriterConnectionTest, Basic) {
   AsyncWriterConnectionImpl tested(TestOptions(), std::move(mock),
                                    "test-upload-id", hash, 1024);
   EXPECT_EQ(tested.UploadId(), "test-upload-id");
-  ASSERT_TRUE(absl::holds_alternative<std::int64_t>(tested.PersistedState()));
-  EXPECT_EQ(absl::get<std::int64_t>(tested.PersistedState()), 1024);
+  EXPECT_THAT(tested.PersistedState(), VariantWith<std::int64_t>(1024));
 }
 
 TEST(AsyncWriterConnectionTest, ResumeFinalized) {
@@ -112,10 +112,8 @@ TEST(AsyncWriterConnectionTest, ResumeFinalized) {
   AsyncWriterConnectionImpl tested(TestOptions(), std::move(mock),
                                    "test-upload-id", hash, MakeTestObject());
   EXPECT_EQ(tested.UploadId(), "test-upload-id");
-  ASSERT_TRUE(absl::holds_alternative<storage::ObjectMetadata>(
-      tested.PersistedState()));
-  EXPECT_EQ(absl::get<storage::ObjectMetadata>(tested.PersistedState()),
-            MakeTestObject());
+  EXPECT_THAT(tested.PersistedState(),
+              VariantWith<storage::ObjectMetadata>(MakeTestObject()));
 }
 
 TEST(AsyncWriterConnectionTest, Cancel) {
@@ -132,8 +130,7 @@ TEST(AsyncWriterConnectionTest, Cancel) {
                                    "test-upload-id", hash, 1024);
   tested.Cancel();
   EXPECT_EQ(tested.UploadId(), "test-upload-id");
-  ASSERT_TRUE(absl::holds_alternative<std::int64_t>(tested.PersistedState()));
-  EXPECT_EQ(absl::get<std::int64_t>(tested.PersistedState()), 1024);
+  EXPECT_THAT(tested.PersistedState(), VariantWith<std::int64_t>(1024));
 }
 
 TEST(AsyncWriterConnectionTest, WriteSimple) {

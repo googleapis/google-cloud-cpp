@@ -45,6 +45,7 @@ using ::testing::Contains;
 using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Return;
+using ::testing::VariantWith;
 
 class MetadataDecoratorTest : public ::testing::Test {
  protected:
@@ -248,7 +249,7 @@ TEST_F(MetadataDecoratorTest, StreamingRead) {
   GoldenKitchenSinkMetadata stub(mock_, {});
   auto response =
       stub.StreamingRead(std::make_shared<grpc::ClientContext>(), Request{});
-  EXPECT_THAT(absl::get<Status>(response->Read()), Not(IsOk()));
+  EXPECT_THAT(response->Read(), VariantWith<Status>(Not(IsOk())));
 }
 
 TEST_F(MetadataDecoratorTest, StreamingWrite) {

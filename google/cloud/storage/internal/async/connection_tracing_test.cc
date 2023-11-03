@@ -35,6 +35,7 @@ using ::google::cloud::storage_experimental::AsyncConnection;
 using ::google::cloud::storage_mocks::MockAsyncConnection;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::PromiseWithOTelContext;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
@@ -47,6 +48,7 @@ using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::Return;
+using ::testing::VariantWith;
 
 Options TracingEnabled() {
   return Options{}.set<OpenTelemetryTracingOption>(true);
@@ -155,8 +157,7 @@ TEST(ConnectionTracing, AsyncReadObjectSuccess) {
   auto result = f.get();
   ASSERT_STATUS_OK(result);
   auto reader = *std::move(result);
-  auto r = reader->Read().get();
-  ASSERT_TRUE(absl::holds_alternative<Status>(r));
+  EXPECT_THAT(reader->Read().get(), VariantWith<Status>(IsOk()));
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, ElementsAre(AllOf(

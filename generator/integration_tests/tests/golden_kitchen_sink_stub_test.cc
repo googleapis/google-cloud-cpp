@@ -34,6 +34,7 @@ using ::google::test::admin::database::v1::Request;
 using ::google::test::admin::database::v1::Response;
 using ::testing::_;
 using ::testing::Return;
+using ::testing::VariantWith;
 
 class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
                                           v1::GoldenKitchenSink::StubInterface {
@@ -459,12 +460,11 @@ TEST_F(GoldenKitchenSinkStubTest, StreamingRead) {
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
   auto success_stream =
       stub.StreamingRead(std::make_shared<grpc::ClientContext>(), request);
-  auto success_status = absl::get<Status>(success_stream->Read());
-  EXPECT_THAT(success_status, IsOk());
+  EXPECT_THAT(success_stream->Read(), VariantWith<Status>(IsOk()));
   auto failure_stream =
       stub.StreamingRead(std::make_shared<grpc::ClientContext>(), request);
-  auto failure_status = absl::get<Status>(failure_stream->Read());
-  EXPECT_THAT(failure_status, StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(failure_stream->Read(),
+              VariantWith<Status>(StatusIs(StatusCode::kUnavailable)));
 }
 
 class MockWriteObjectResponse

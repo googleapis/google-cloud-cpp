@@ -44,6 +44,7 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::VariantWith;
 
 // The point of these tests is to verify that the `CreateStorageStub` factory
 // function injects the right decorators. We do this by observing the
@@ -123,10 +124,8 @@ TEST_F(StorageStubFactory, ReadObject) {
   auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction());
   auto stream = stub->ReadObject(std::make_shared<grpc::ClientContext>(),
                                  google::storage::v2::ReadObjectRequest{});
-  auto response = stream->Read();
-  ASSERT_TRUE(absl::holds_alternative<Status>(response));
-  auto status = absl::get<Status>(std::move(response));
-  EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(stream->Read(),
+              VariantWith<Status>(StatusIs(StatusCode::kUnavailable)));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("ReadObject")));
 }
 
