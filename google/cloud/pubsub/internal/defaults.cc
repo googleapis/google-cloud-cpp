@@ -22,7 +22,7 @@
 #include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
-#include <absl/strings/numbers.h>
+#include "absl/strings/numbers.h"
 #include <chrono>
 #include <limits>
 #include <thread>
