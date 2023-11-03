@@ -183,7 +183,8 @@ bool OTelContextCaptured() {
 SpanCatcher::SpanCatcher()
     : previous_(opentelemetry::trace::Provider::GetTracerProvider()) {
   auto exporter =
-      std::make_unique<opentelemetry::exporter::memory::InMemorySpanExporter>();
+      std::make_unique<opentelemetry::exporter::memory::InMemorySpanExporter>(
+          1000);
   span_data_ = exporter->GetData();
   auto processor =
       std::make_unique<opentelemetry::sdk::trace::SimpleSpanProcessor>(

@@ -58,7 +58,10 @@ namespace {
 using ::google::cloud::spanner_internal::QueryPartitionTester;
 using ::google::cloud::spanner_testing::HasSessionAndTransaction;
 using ::google::cloud::testing_util::IsOk;
+using ::testing::ElementsAre;
 using ::testing::Not;
+using ::testing::Property;
+using ::testing::VariantWith;
 
 TEST(QueryPartitionTest, MakeQueryPartition) {
   std::string stmt("SELECT * FROM foo WHERE name = @name");
@@ -151,7 +154,8 @@ TEST(QueryPartitionTest, MakeSqlParams) {
 
   Connection::SqlParams params = spanner_internal::MakeSqlParams(
       expected_partition.Partition(),
-      QueryOptions{}.set_request_tag("request_tag"));
+      QueryOptions{}.set_request_tag("request_tag"),
+      ExcludeReplicas({ReplicaSelection(ReplicaType::kReadWrite)}));
 
   EXPECT_EQ(params.statement,
             SqlStatement("SELECT * FROM foo WHERE name = @name",
@@ -161,6 +165,10 @@ TEST(QueryPartitionTest, MakeSqlParams) {
   EXPECT_THAT(params.transaction,
               HasSessionAndTransaction("session", "txn-id", true, "tag"));
   EXPECT_EQ(*params.query_options.request_tag(), "request_tag");
+  EXPECT_THAT(params.directed_read_option,
+              VariantWith<ExcludeReplicas>(Property(
+                  &ExcludeReplicas::replica_selections,
+                  ElementsAre(ReplicaSelection(ReplicaType::kReadWrite)))));
 }
 
 }  // namespace

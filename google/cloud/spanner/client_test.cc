@@ -57,10 +57,12 @@ using ::testing::Eq;
 using ::testing::Field;
 using ::testing::HasSubstr;
 using ::testing::Pair;
+using ::testing::Property;
 using ::testing::Return;
 using ::testing::SaveArg;
 using ::testing::SizeIs;
 using ::testing::UnorderedElementsAre;
+using ::testing::VariantWith;
 
 TEST(ClientTest, CopyAndMove) {
   auto conn1 = std::make_shared<MockConnection>();
@@ -91,7 +93,6 @@ TEST(ClientTest, ReadSuccess) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -106,17 +107,29 @@ TEST(ClientTest, ReadSuccess) {
   )pb";
   google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
-  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, NextRow())
-      .WillOnce(Return(spanner_mocks::MakeRow("Steve", 12)))
-      .WillOnce(Return(spanner_mocks::MakeRow("Ann", 42)))
-      .WillOnce(Return(Row()));
 
   EXPECT_CALL(*conn, Read)
-      .WillOnce(Return(ByMove(RowStream(std::move(source)))));
+      .WillOnce([&metadata](Connection::ReadParams const& params) {
+        EXPECT_THAT(
+            params.directed_read_option,
+            VariantWith<IncludeReplicas>(AllOf(
+                Property(&IncludeReplicas::replica_selections,
+                         ElementsAre(ReplicaSelection(ReplicaType::kReadOnly))),
+                Property(&IncludeReplicas::auto_failover_disabled, true))));
+        auto source = std::make_unique<MockResultSetSource>();
+        EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+        EXPECT_CALL(*source, NextRow())
+            .WillOnce(Return(spanner_mocks::MakeRow("Steve", 12)))
+            .WillOnce(Return(spanner_mocks::MakeRow("Ann", 42)))
+            .WillOnce(Return(Row()));
+        return RowStream(std::move(source));
+      });
 
   KeySet keys = KeySet::All();
-  auto rows = client.Read("table", std::move(keys), {"column1", "column2"});
+  auto rows = client.Read("table", std::move(keys), {"column1", "column2"},
+                          Options{}.set<DirectedReadOption>(IncludeReplicas(
+                              {ReplicaSelection(ReplicaType::kReadOnly)},
+                              /*auto_failover_disabled=*/true)));
 
   using RowType = std::tuple<std::string, std::int64_t>;
   auto stream = StreamOf<RowType>(rows);
@@ -171,7 +184,6 @@ TEST(ClientTest, ExecuteQuerySuccess) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -186,17 +198,30 @@ TEST(ClientTest, ExecuteQuerySuccess) {
   )pb";
   google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
-  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, NextRow())
-      .WillOnce(Return(spanner_mocks::MakeRow("Steve", 12)))
-      .WillOnce(Return(spanner_mocks::MakeRow("Ann", 42)))
-      .WillOnce(Return(Row()));
 
   EXPECT_CALL(*conn, ExecuteQuery)
-      .WillOnce(Return(ByMove(RowStream(std::move(source)))));
+      .WillOnce([&metadata](Connection::SqlParams const& params) {
+        EXPECT_THAT(
+            params.directed_read_option,
+            VariantWith<IncludeReplicas>(AllOf(
+                Property(&IncludeReplicas::replica_selections,
+                         ElementsAre(ReplicaSelection("us-east4"))),
+                Property(&IncludeReplicas::auto_failover_disabled, false))));
+        auto source = std::make_unique<MockResultSetSource>();
+        EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+        EXPECT_CALL(*source, NextRow())
+            .WillOnce(Return(spanner_mocks::MakeRow("Steve", 12)))
+            .WillOnce(Return(spanner_mocks::MakeRow("Ann", 42)))
+            .WillOnce(Return(Row()));
+        return RowStream(std::move(source));
+      });
 
   KeySet keys = KeySet::All();
-  auto rows = client.ExecuteQuery(SqlStatement("SELECT * FROM Table;"));
+  auto rows =
+      client.ExecuteQuery(SqlStatement("SELECT * FROM Table;"),
+                          Options{}.set<DirectedReadOption>(IncludeReplicas(
+                              {ReplicaSelection("us-east4")},
+                              /*auto_failover_disabled=*/false)));
 
   using RowType = std::tuple<std::string, std::int64_t>;
   auto stream = StreamOf<RowType>(rows);
@@ -379,7 +404,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
 
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // placeholder
-  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}, {}, {}};
   Connection::CommitParams actual_commit_params{txn, {}, {}};
 
   auto source = std::make_unique<MockResultSetSource>();
@@ -428,7 +453,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
 TEST(ClientTest, CommitMutatorRollback) {
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // placeholder
-  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}, {}, {}};
 
   auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
@@ -470,7 +495,7 @@ TEST(ClientTest, CommitMutatorRollback) {
 TEST(ClientTest, CommitMutatorRollbackError) {
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // placeholder
-  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}, {}, {}};
 
   auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
@@ -1063,7 +1088,6 @@ TEST(ClientTest, ProfileQuerySuccess) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText0 = R"pb(
     row_type: {
       fields: {
@@ -1089,17 +1113,29 @@ TEST(ClientTest, ProfileQuerySuccess) {
   )pb";
   google::spanner::v1::ResultSetStats stats;
   ASSERT_TRUE(TextFormat::ParseFromString(kText1, &stats));
-  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, NextRow())
-      .WillOnce(Return(spanner_mocks::MakeRow("Ann", 42)))
-      .WillOnce(Return(Row()));
-  EXPECT_CALL(*source, Stats()).WillRepeatedly(Return(stats));
 
   EXPECT_CALL(*conn, ProfileQuery)
-      .WillOnce(Return(ByMove(ProfileQueryResult(std::move(source)))));
+      .WillOnce([&metadata, &stats](Connection::SqlParams const& params) {
+        EXPECT_THAT(params.directed_read_option,
+                    VariantWith<ExcludeReplicas>(Property(
+                        &ExcludeReplicas::replica_selections,
+                        ElementsAre(ReplicaSelection(ReplicaType::kReadWrite),
+                                    ReplicaSelection("us-east4")))));
+        auto source = std::make_unique<MockResultSetSource>();
+        EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+        EXPECT_CALL(*source, NextRow())
+            .WillOnce(Return(spanner_mocks::MakeRow("Ann", 42)))
+            .WillOnce(Return(Row()));
+        EXPECT_CALL(*source, Stats()).WillRepeatedly(Return(stats));
+        return ProfileQueryResult(std::move(source));
+      });
 
   KeySet keys = KeySet::All();
-  auto rows = client.ProfileQuery(SqlStatement("SELECT * FROM Table;"));
+  auto rows = client.ProfileQuery(
+      SqlStatement("SELECT * FROM Table;"),
+      Options{}.set<DirectedReadOption>(
+          ExcludeReplicas({ReplicaSelection(ReplicaType::kReadWrite),
+                           ReplicaSelection("us-east4")})));
 
   using RowType = std::tuple<std::string, std::int64_t>;
   auto stream = StreamOf<RowType>(rows);

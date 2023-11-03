@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/commit_result.h"
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/mutations.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/partition_options.h"
 #include "google/cloud/spanner/partitioned_dml_result.h"
 #include "google/cloud/spanner/query_options.h"
@@ -79,6 +80,7 @@ class Connection {
     ReadOptions read_options;
     absl::optional<std::string> partition_token;
     bool partition_data_boost = false;  // when partition_token
+    DirectedReadOption::Type directed_read_option;
   };
 
   /// Wrap the arguments to `PartitionRead()`.
@@ -95,6 +97,7 @@ class Connection {
     QueryOptions query_options;
     absl::optional<std::string> partition_token;
     bool partition_data_boost = false;  // when partition_token
+    DirectedReadOption::Type directed_read_option;
   };
 
   /// Wrap the arguments to `ExecutePartitionedDml()`.

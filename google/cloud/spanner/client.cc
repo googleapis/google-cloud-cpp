@@ -35,7 +35,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-// Extracts an option value as an `absl::optional`.
+// Returns an option value as an `absl::optional`. If `OptionType` is
+// not present in `opts`, the returned optional is empty (disengaged).
 template <typename OptionType>
 absl::optional<typename OptionType::Type> OptOpt(Options const& opts) {
   absl::optional<typename OptionType::Type> optopt;
@@ -43,41 +44,58 @@ absl::optional<typename OptionType::Type> OptOpt(Options const& opts) {
   return optopt;
 }
 
+// Extracts (removes and returns) an option value from `opts`. If
+// `OptionType` is not present, returns a default-constructed value.
+template <typename OptionType>
+typename OptionType::Type ExtractOpt(Options& opts) {
+  auto option = internal::ExtractOption<OptionType>(opts);
+  return option ? *std::move(option) : typename OptionType::Type();
+}
+
 }  // namespace
 
 RowStream Client::Read(std::string table, KeySet keys,
                        std::vector<std::string> columns, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
+  opts = internal::MergeOptions(std::move(opts), opts_);
+  auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
   return conn_->Read({spanner_internal::MakeSingleUseTransaction(
                           Transaction::ReadOnlyOptions()),
                       std::move(table), std::move(keys), std::move(columns),
-                      ToReadOptions(internal::CurrentOptions()),
-                      absl::nullopt});
+                      ToReadOptions(internal::CurrentOptions()), absl::nullopt,
+                      false, std::move(directed_read_option)});
 }
 
 RowStream Client::Read(Transaction::SingleUseOptions transaction_options,
                        std::string table, KeySet keys,
                        std::vector<std::string> columns, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
+  opts = internal::MergeOptions(std::move(opts), opts_);
+  auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
   return conn_->Read({spanner_internal::MakeSingleUseTransaction(
                           std::move(transaction_options)),
                       std::move(table), std::move(keys), std::move(columns),
-                      ToReadOptions(internal::CurrentOptions()),
-                      absl::nullopt});
+                      ToReadOptions(internal::CurrentOptions()), absl::nullopt,
+                      false, std::move(directed_read_option)});
 }
 
 RowStream Client::Read(Transaction transaction, std::string table, KeySet keys,
                        std::vector<std::string> columns, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
+  opts = internal::MergeOptions(std::move(opts), opts_);
+  auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
   return conn_->Read({std::move(transaction), std::move(table), std::move(keys),
                       std::move(columns),
-                      ToReadOptions(internal::CurrentOptions()),
-                      absl::nullopt});
+                      ToReadOptions(internal::CurrentOptions()), absl::nullopt,
+                      false, std::move(directed_read_option)});
 }
 
 RowStream Client::Read(ReadPartition const& read_partition, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
-  return conn_->Read(spanner_internal::MakeReadParams(read_partition));
+  opts = internal::MergeOptions(std::move(opts), opts_);
+  auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
+  return conn_->Read(spanner_internal::MakeReadParams(
+      read_partition, std::move(directed_read_option)));
 }
 
 StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
@@ -87,70 +105,87 @@ StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
   return conn_->PartitionRead(
       {{std::move(transaction), std::move(table), std::move(keys),
         std::move(columns), ToReadOptions(internal::CurrentOptions()),
-        absl::nullopt},
+        absl::nullopt, false, DirectedReadOption::Type{}},
        ToPartitionOptions(internal::CurrentOptions())});
 }
 
 RowStream Client::ExecuteQuery(SqlStatement statement, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
-  return conn_->ExecuteQuery({spanner_internal::MakeSingleUseTransaction(
-                                  Transaction::ReadOnlyOptions()),
-                              std::move(statement),
-                              QueryOptions(internal::CurrentOptions()),
-                              absl::nullopt});
+  opts = internal::MergeOptions(std::move(opts), opts_);
+  auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
+  return conn_->ExecuteQuery(
+      {spanner_internal::MakeSingleUseTransaction(
+           Transaction::ReadOnlyOptions()),
+       std::move(statement), QueryOptions(internal::CurrentOptions()),
+       absl::nullopt, false, std::move(directed_read_option)});
 }
 
 RowStream Client::ExecuteQuery(
     Transaction::SingleUseOptions transaction_options, SqlStatement statement,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
-  return conn_->ExecuteQuery({spanner_internal::MakeSingleUseTransaction(
-                                  std::move(transaction_options)),
-                              std::move(statement),
-                              QueryOptions(internal::CurrentOptions()),
-                              absl::nullopt});
+  opts = internal::MergeOptions(std::move(opts), opts_);
+  auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
+  return conn_->ExecuteQuery(
+      {spanner_internal::MakeSingleUseTransaction(
+           std::move(transaction_options)),
+       std::move(statement), QueryOptions(internal::CurrentOptions()),
+       absl::nullopt, false, std::move(directed_read_option)});
 }
 
 RowStream Client::ExecuteQuery(Transaction transaction, SqlStatement statement,
                                Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
+  opts = internal::MergeOptions(std::move(opts), opts_);
+  auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
   return conn_->ExecuteQuery({std::move(transaction), std::move(statement),
                               QueryOptions(internal::CurrentOptions()),
-                              absl::nullopt});
+                              absl::nullopt, false,
+                              std::move(directed_read_option)});
 }
 
 RowStream Client::ExecuteQuery(QueryPartition const& partition, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
+  opts = internal::MergeOptions(std::move(opts), opts_);
+  auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
   return conn_->ExecuteQuery(spanner_internal::MakeSqlParams(
-      partition, QueryOptions(internal::CurrentOptions())));
+      partition, QueryOptions(internal::CurrentOptions()),
+      std::move(directed_read_option)));
 }
 
 ProfileQueryResult Client::ProfileQuery(SqlStatement statement, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
-  return conn_->ProfileQuery({spanner_internal::MakeSingleUseTransaction(
-                                  Transaction::ReadOnlyOptions()),
-                              std::move(statement),
-                              QueryOptions(internal::CurrentOptions()),
-                              absl::nullopt});
+  opts = internal::MergeOptions(std::move(opts), opts_);
+  auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
+  return conn_->ProfileQuery(
+      {spanner_internal::MakeSingleUseTransaction(
+           Transaction::ReadOnlyOptions()),
+       std::move(statement), QueryOptions(internal::CurrentOptions()),
+       absl::nullopt, false, std::move(directed_read_option)});
 }
 
 ProfileQueryResult Client::ProfileQuery(
     Transaction::SingleUseOptions transaction_options, SqlStatement statement,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
-  return conn_->ProfileQuery({spanner_internal::MakeSingleUseTransaction(
-                                  std::move(transaction_options)),
-                              std::move(statement),
-                              QueryOptions(internal::CurrentOptions()),
-                              absl::nullopt});
+  opts = internal::MergeOptions(std::move(opts), opts_);
+  auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
+  return conn_->ProfileQuery(
+      {spanner_internal::MakeSingleUseTransaction(
+           std::move(transaction_options)),
+       std::move(statement), QueryOptions(internal::CurrentOptions()),
+       absl::nullopt, false, std::move(directed_read_option)});
 }
 
 ProfileQueryResult Client::ProfileQuery(Transaction transaction,
                                         SqlStatement statement, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
+  opts = internal::MergeOptions(std::move(opts), opts_);
+  auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
   return conn_->ProfileQuery({std::move(transaction), std::move(statement),
                               QueryOptions(internal::CurrentOptions()),
-                              absl::nullopt});
+                              absl::nullopt, false,
+                              std::move(directed_read_option)});
 }
 
 StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
@@ -166,7 +201,7 @@ StatusOr<DmlResult> Client::ExecuteDml(Transaction transaction,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->ExecuteDml({std::move(transaction), std::move(statement),
                             QueryOptions(internal::CurrentOptions()),
-                            absl::nullopt});
+                            absl::nullopt, false, DirectedReadOption::Type{}});
 }
 
 StatusOr<ProfileDmlResult> Client::ProfileDml(Transaction transaction,
@@ -175,7 +210,7 @@ StatusOr<ProfileDmlResult> Client::ProfileDml(Transaction transaction,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->ProfileDml({std::move(transaction), std::move(statement),
                             QueryOptions(internal::CurrentOptions()),
-                            absl::nullopt});
+                            absl::nullopt, false, DirectedReadOption::Type{}});
 }
 
 StatusOr<ExecutionPlan> Client::AnalyzeSql(Transaction transaction,
@@ -184,7 +219,7 @@ StatusOr<ExecutionPlan> Client::AnalyzeSql(Transaction transaction,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->AnalyzeSql({std::move(transaction), std::move(statement),
                             QueryOptions(internal::CurrentOptions()),
-                            absl::nullopt});
+                            absl::nullopt, false, DirectedReadOption::Type{}});
 }
 
 StatusOr<BatchDmlResult> Client::ExecuteBatchDml(

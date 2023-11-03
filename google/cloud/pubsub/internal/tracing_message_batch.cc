@@ -43,10 +43,14 @@ using Attributes =
 using Links =
     std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
 
-/// Creates a link for each span in the range @p begin to @p end.
+/// Creates a link for each sampled span in the range @p begin to @p end.
 auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
   Links links;
-  std::transform(begin, end, std::back_inserter(links),
+  Spans sampled_spans;
+  std::copy_if(begin, end, std::back_inserter(sampled_spans),
+               [](auto const& span) { return span->GetContext().IsSampled(); });
+  std::transform(sampled_spans.begin(), sampled_spans.end(),
+                 std::back_inserter(links),
                  [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
                    return std::make_pair(
                        span->GetContext(),
@@ -153,8 +157,12 @@ class TracingMessageBatch : public MessageBatch {
 
     // The first span in `batch_sink_spans` is the parent to the other spans in
     // the vector.
-    internal::OTelScope scope(batch_sink_spans.front());
-    return [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+    auto scope =
+        std::make_shared<internal::OTelScope>(batch_sink_spans.front());
+    // Capture the scope so it stays alive until the returned function
+    // is called.
+    return [scope = std::move(scope),
+            oc = opentelemetry::context::RuntimeContext::GetCurrent(),
             next = child_->Flush(),
             spans = std::move(batch_sink_spans)](auto f) mutable {
       for (auto& span : spans) {
