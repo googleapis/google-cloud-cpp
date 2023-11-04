@@ -163,14 +163,14 @@ std::function<void(std::chrono::milliseconds)> MakeTracedSleeper(
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-void AddSpanAttribute(std::string const& key, std::string const& value) {
-  if (TracingEnabled(CurrentOptions())) {
-    auto span = opentelemetry::trace::Tracer::GetCurrentSpan();
-    span->SetAttribute(key, value);
-  }
+void AddSpanAttribute(Options const& options, std::string const& key,
+                      std::string const& value) {
+  if (!TracingEnabled(options)) return;
+  auto span = opentelemetry::trace::Tracer::GetCurrentSpan();
+  span->SetAttribute(key, value);
 }
 #else
-void AddSpanAttribute(std::string const&, std::string const&) {}
+void AddSpanAttribute(Options const&, std::string const&, std::string const&) {}
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace internal

@@ -816,7 +816,7 @@ TEST(AsyncRestPollingLoopTest, TraceCapturesOperationName) {
   EXPECT_THAT(spans,
               ElementsAre(AllOf(SpanNamed("span"),
                                 SpanHasAttributes(OTelAttribute<std::string>(
-                                    "gcloud.LRO_name", "test-op-name")))));
+                                    "gl-cpp.LRO_name", "test-op-name")))));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
