@@ -262,7 +262,8 @@ class AsyncRestPollingLoopImpl
 
   void OnStart(StatusOr<OperationType> op) {
     if (!op) return promise_.set_value(std::move(op));
-    internal::AddSpanAttribute("gcloud.LRO_name", op->name());
+    internal::AddSpanAttribute(internal::CurrentOptions(), "gl-cpp.LRO_name",
+                               op->name());
     if (is_operation_done_(*op)) return promise_.set_value(std::move(op));
     GCP_LOG(DEBUG) << location_ << "() polling loop starting for "
                    << op->name();

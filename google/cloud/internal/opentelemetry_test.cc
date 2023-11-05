@@ -409,8 +409,7 @@ TEST(OpenTelemetry, AddSpanAttributeEnabled) {
 
   auto span = MakeSpan("span");
   auto scope = opentelemetry::trace::Scope(span);
-  OptionsSpan o(EnableTracing(Options{}));
-  AddSpanAttribute("key", "value");
+  AddSpanAttribute(EnableTracing(Options{}), "key", "value");
   span->End();
 
   auto spans = span_catcher->GetSpans();
@@ -425,8 +424,7 @@ TEST(OpenTelemetry, AddSpanAttributeDisabled) {
 
   auto span = MakeSpan("span");
   auto scope = opentelemetry::trace::Scope(span);
-  OptionsSpan o(DisableTracing(Options{}));
-  AddSpanAttribute("key", "value");
+  AddSpanAttribute(DisableTracing(Options{}), "key", "value");
   span->End();
 
   auto spans = span_catcher->GetSpans();
