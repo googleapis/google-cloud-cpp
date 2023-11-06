@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async_connection.h"
 #include "google/cloud/storage/async_reader.h"
 #include "google/cloud/storage/async_token.h"
+#include "google/cloud/storage/async_writer.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
@@ -249,6 +250,27 @@ class AsyncClient {
              .set_multiple_options(std::forward<Args>(args)...,
                                    storage::ReadRange(offset, offset + limit)),
          std::move(options)});
+  }
+
+  template <typename... Args>
+  future<StatusOr<std::pair<AsyncWriter, AsyncToken>>> WriteObject(
+      std::string bucket_name, std::string object_name, Args&&... args) {
+    auto options = SpanOptions(std::forward<Args>(args)...);
+    return connection_
+        ->AsyncWriteObject(
+            {ResumableUploadRequest(std::move(bucket_name),
+                                    std::move(object_name))
+                 .set_multiple_options(std::forward<Args>(args)...),
+             std::move(options)})
+        .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
+          auto impl = f.get();
+          if (!impl) return std::move(impl).status();
+          auto t = absl::holds_alternative<storage::ObjectMetadata>(
+                       (*impl)->PersistedState())
+                       ? AsyncToken()
+                       : storage_internal::MakeAsyncToken(impl->get());
+          return std::make_pair(AsyncWriter(*std::move(impl)), std::move(t));
+        });
   }
 
   /**
