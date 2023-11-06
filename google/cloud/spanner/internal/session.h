@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_H
 
 #include "google/cloud/spanner/internal/channel.h"
-#include "google/cloud/spanner/internal/clock.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/internal/clock.h"
 #include <atomic>
 #include <memory>
 #include <string>
@@ -35,7 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class Session {
  public:
-  using Clock = ::google::cloud::spanner_internal::SteadyClock;
+  using Clock = ::google::cloud::internal::SteadyClock;
   Session(std::string session_name, std::shared_ptr<Channel> channel,
           std::shared_ptr<Clock> clock = std::make_shared<Clock>())
       : session_name_(std::move(session_name)),

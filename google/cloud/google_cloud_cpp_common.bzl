@@ -38,6 +38,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/big_endian.h",
     "internal/build_info.h",
     "internal/call_context.h",
+    "internal/clock.h",
     "internal/compiler_info.h",
     "internal/compute_engine_util.h",
     "internal/credentials_impl.h",

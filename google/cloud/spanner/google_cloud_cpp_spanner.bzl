@@ -68,7 +68,6 @@ google_cloud_cpp_spanner_hdrs = [
     "instance_admin_client.h",
     "instance_admin_connection.h",
     "internal/channel.h",
-    "internal/clock.h",
     "internal/connection_impl.h",
     "internal/database_admin_logging.h",
     "internal/database_admin_metadata.h",

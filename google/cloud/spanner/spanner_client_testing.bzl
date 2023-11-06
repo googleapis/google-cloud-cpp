@@ -21,7 +21,6 @@ spanner_client_testing_hdrs = [
     "testing/cleanup_stale_instances.h",
     "testing/database_integration_test.h",
     "testing/debug_log.h",
-    "testing/fake_clock.h",
     "testing/instance_location.h",
     "testing/matchers.h",
     "testing/mock_database_admin_stub.h",

@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/clock.h"
-#include "google/cloud/spanner/testing/fake_clock.h"
+#include "google/cloud/internal/clock.h"
+#include "google/cloud/testing_util/fake_clock.h"
 #include <gmock/gmock.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
 namespace {
 
-using ::google::cloud::spanner_testing::FakeClock;
+using ::google::cloud::testing_util::FakeClock;
 
 TEST(Clock, SteadyClock) {
   auto clock = std::make_shared<SteadyClock>();
@@ -62,7 +62,7 @@ TEST(Clock, FakeClock) {
 }
 
 }  // namespace
+}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
