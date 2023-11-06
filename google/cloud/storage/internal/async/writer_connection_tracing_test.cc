@@ -63,6 +63,19 @@ auto ExpectWrite(std::int64_t id, std::uint64_t size) {
   return AllOf(EventNamed("gl-cpp.write"), ExpectSent(id, size));
 }
 
+auto ExpectFlush(std::int64_t id, std::uint64_t size) {
+  return AllOf(EventNamed("gl-cpp.flush"), ExpectSent(id, size));
+}
+
+auto ExpectQuery(std::int64_t id) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  return AllOf(EventNamed("gl-cpp.query"),
+               SpanEventAttributesAre(
+                   OTelAttribute<std::string>(sc::kMessageType, "RECEIVE"),
+                   OTelAttribute<std::int64_t>(sc::kMessageId, id),
+                   OTelAttribute<std::string>(sc::kThreadId, _)));
+}
+
 TEST(WriterConnectionTracing, FullCycle) {
   auto span_catcher = InstallSpanCatcher();
 
@@ -72,6 +85,12 @@ TEST(WriterConnectionTracing, FullCycle) {
   EXPECT_CALL(*mock, Write).Times(2).WillRepeatedly([] {
     return make_ready_future(Status{});
   });
+  EXPECT_CALL(*mock, Flush).Times(2).WillRepeatedly([] {
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, Query).Times(2).WillRepeatedly([] {
+    return make_ready_future(StatusOr<std::int64_t>(1024));
+  });
   EXPECT_CALL(*mock, Finalize).WillOnce([] {
     return make_ready_future(make_status_or(storage::ObjectMetadata{}));
   });
@@ -80,7 +99,11 @@ TEST(WriterConnectionTracing, FullCycle) {
   EXPECT_EQ(actual->UploadId(), "test-upload-id");
   EXPECT_THAT(actual->PersistedState(), VariantWith<std::int64_t>(16384));
   EXPECT_STATUS_OK(actual->Write(WritePayload{std::string(1024, 'A')}).get());
+  EXPECT_STATUS_OK(actual->Flush(WritePayload{std::string(1024, 'A')}).get());
+  EXPECT_STATUS_OK(actual->Query().get());
   EXPECT_STATUS_OK(actual->Write(WritePayload{std::string(2048, 'B')}).get());
+  EXPECT_STATUS_OK(actual->Flush(WritePayload{std::string(2048, 'B')}).get());
+  EXPECT_STATUS_OK(actual->Query().get());
   auto response = actual->Finalize({}).get();
   EXPECT_STATUS_OK(response);
 
@@ -91,8 +114,9 @@ TEST(WriterConnectionTracing, FullCycle) {
                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                  SpanHasInstrumentationScope(), SpanKindIsClient(),
                  SpanHasEvents(
-                     ExpectWrite(1, 1024), ExpectWrite(2, 2048),
-                     AllOf(EventNamed("gl-cpp.finalize"), ExpectSent(3, 0))))));
+                     ExpectWrite(1, 1024), ExpectFlush(2, 1024), ExpectQuery(1),
+                     ExpectWrite(3, 2048), ExpectFlush(4, 2048), ExpectQuery(2),
+                     AllOf(EventNamed("gl-cpp.finalize"), ExpectSent(5, 0))))));
 }
 
 TEST(WriterConnectionTracing, FinalizeError) {
@@ -139,6 +163,50 @@ TEST(WriterConnectionTracing, WriteError) {
                                        PermanentError().message()),
                         SpanHasInstrumentationScope(), SpanKindIsClient(),
                         SpanHasEvents(ExpectWrite(1, 1024)))));
+}
+
+TEST(WriterConnectionTracing, FlushError) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, Flush).WillOnce([] {
+    return make_ready_future(PermanentError());
+  });
+  auto actual = MakeTracingWriterConnection(
+      internal::MakeSpan("test-span-name"), std::move(mock));
+  auto status = actual->Flush(WritePayload{std::string(1024, 'A')}).get();
+  EXPECT_THAT(status, StatusIs(PermanentError().code()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(SpanNamed("test-span-name"),
+                        SpanWithStatus(opentelemetry::trace::StatusCode::kError,
+                                       PermanentError().message()),
+                        SpanHasInstrumentationScope(), SpanKindIsClient(),
+                        SpanHasEvents(ExpectFlush(1, 1024)))));
+}
+
+TEST(WriterConnectionTracing, QueryError) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, Query).WillOnce([] {
+    return make_ready_future(StatusOr<std::int64_t>(PermanentError()));
+  });
+  auto actual = MakeTracingWriterConnection(
+      internal::MakeSpan("test-span-name"), std::move(mock));
+  auto status = actual->Query().get();
+  EXPECT_THAT(status, StatusIs(PermanentError().code()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(SpanNamed("test-span-name"),
+                        SpanWithStatus(opentelemetry::trace::StatusCode::kError,
+                                       PermanentError().message()),
+                        SpanHasInstrumentationScope(), SpanKindIsClient(),
+                        SpanHasEvents(ExpectQuery(1)))));
 }
 
 TEST(WriterConnectionTracing, Cancel) {

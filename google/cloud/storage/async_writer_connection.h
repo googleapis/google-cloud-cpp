@@ -47,14 +47,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * - `BidiWriteObjectRequest` messages may include a `flush` attribute. Such
  *   messages result in a `BidiReadObjectResponse` message, which includes how
  *   much of the uploaded data has been persisted.
+ * - `BidiWriteObjectRequest` messages may not include more than
+ *   `google.storage.v2.ServiceConstants.MAX_WRITE_CHUNK_BYTES` bytes of
+ *   payload.
  *
- * This interface uses different member functions to write messages with and
- * without the `finalize` attribute.  The functions have different return types
- * reflecting the absence of response messages for `BidiWriteObjectRequest`
- * messages that do not finalize an upload.
+ * In this interface different member functions write messages with different
+ * attributes.
  *
- * This interface does not provide a member function to create
- * `BidiWriteObjectRequest` messages with a `flush` attribute.
+ * The `Write()` member function uploads some data, without setting any
+ * `finalize` or `flush` attributes. If necessary, the data is broken into
+ * multiple `BidiWriteObjectRequest` messages.
+ *
+ * The `Finalize()` member function uploads some data and sets the `finalize`
+ * attribute. If needed, the data is broken into multiple messages to satisfy
+ * the `MAX_WRITE_CHUNK_BYTES` limit. Only the last message has the `finalize`
+ * attribute. This function also waits for the response message and returns
+ * the object metadata (or an error).
+ *
+ * The `Flush()` member function uploads some data and sets the `flush`
+ * attribute. As with the other functions the data may need to be broken into
+ * multiple messages. Only the last message will have the `flush` attribute set.
  *
  * This interface can be used to mock the behavior of these bidirectional
  * streaming RPCs. Applications may use these mocks in their own tests.
@@ -67,10 +79,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * If using this class directly keep in mind the following restrictions:
  *
  * - Never destroy an `AsyncWriterConnection` object while any
- *   calls to `Write()` or `Finalize()` are pending.
- * - Have at most one call to `Write()` pending.
- * - Do not issue any `Finalize()` calls while a `Write()` call is pending.
+ *   calls to `Write()`, `Flush()`, `Query()`, or `Finalize()` are pending.
+ * - Have at most one call to `Write()` or `Flush()` pending.
+ * - Do not issue a `Write()` call while a `Flush()` call is pending or
+ *   vice-versa.
+ * - Do not issue any `Finalize()` calls while a `Write()`, `Flush()`, or
+ *   `Query()` call is pending.
  * - Only issue one `Finalize()` call.
+ * - Issue exactly one `Query()` call after a `Flush()` call completes.
  * @endparblock
  */
 class AsyncWriterConnection {
@@ -84,7 +100,7 @@ class AsyncWriterConnection {
   virtual std::string UploadId() const = 0;
 
   /// Returns the last known state of the upload. Updated during initialization
-  /// and by a successful `Finalize()` request.
+  /// and by successful `Query()` or `Finalize()` requests.
   virtual absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState()
       const = 0;
 
@@ -93,6 +109,12 @@ class AsyncWriterConnection {
 
   /// Finalizes an upload.
   virtual future<StatusOr<storage::ObjectMetadata>> Finalize(WritePayload) = 0;
+
+  /// Uploads some data to the service and flushes the value.
+  virtual future<Status> Flush(WritePayload payload) = 0;
+
+  /// Wait for the result of a `Flush()` call.
+  virtual future<StatusOr<std::int64_t>> Query() = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

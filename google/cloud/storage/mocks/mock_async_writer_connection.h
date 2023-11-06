@@ -35,6 +35,9 @@ class MockAsyncWriterConnection
               (override));
   MOCK_METHOD(future<StatusOr<storage::ObjectMetadata>>, Finalize,
               (storage_experimental::WritePayload), (override));
+  MOCK_METHOD(future<Status>, Flush, (storage_experimental::WritePayload),
+              (override));
+  MOCK_METHOD(future<StatusOr<std::int64_t>>, Query, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

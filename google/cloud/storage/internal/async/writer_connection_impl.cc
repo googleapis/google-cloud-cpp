@@ -73,8 +73,8 @@ AsyncWriterConnectionImpl::~AsyncWriterConnectionImpl() {
   impl_->Cancel();
   // It is safe to call Finish() because:
   // (1) this is a no-op if it was already called.
-  // (2) calls to `Write()` and `Finalize()` must have completed by the time the
-  //     destructor is called.
+  // (2) calls to `Write()`, `Finalize()`, and `Query()` must have completed
+  //     by the time the destructor is called
   Finish();
   // When `impl_->Finish()` is satisfied then `finished_` is satisfied too.
   // This extends the lifetime of `impl_` until it is safe to delete.
@@ -118,6 +118,24 @@ future<StatusOr<storage::ObjectMetadata>> AsyncWriterConnectionImpl::Finalize(
     coro.reset();  // breaks the cycle between the completion queue and coro
     return OnFinalUpload(size, f.get());
   });
+}
+
+future<Status> AsyncWriterConnectionImpl::Flush(
+    storage_experimental::WritePayload payload) {
+  auto write = MakeRequest();
+  auto p = WritePayloadImpl::GetImpl(payload);
+  auto size = p.size();
+  auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
+                                  std::move(p), PartialUpload::kFlush);
+
+  return coro->Start().then([coro, size, this](auto f) mutable {
+    coro.reset();  // breaks the cycle between the completion queue and coro
+    return OnPartialUpload(size, f.get());
+  });
+}
+
+future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::Query() {
+  return impl_->Read().then([this](auto f) { return OnQuery(f.get()); });
 }
 
 google::storage::v2::BidiWriteObjectRequest

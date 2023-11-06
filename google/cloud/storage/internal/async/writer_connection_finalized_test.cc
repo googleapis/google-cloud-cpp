@@ -52,6 +52,9 @@ TEST(AsyncWriterConnectionFinalized, Basic) {
               StatusIs(StatusCode::kFailedPrecondition));
   EXPECT_THAT(tested.Finalize({}).get(),
               StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(tested.Flush({}).get(),
+              StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(tested.Query().get(), StatusIs(StatusCode::kFailedPrecondition));
 }
 
 }  // namespace
