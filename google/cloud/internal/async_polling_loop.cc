@@ -32,11 +32,13 @@ class AsyncPollingLoopImpl
     : public std::enable_shared_from_this<AsyncPollingLoopImpl> {
  public:
   AsyncPollingLoopImpl(google::cloud::CompletionQueue cq,
+                       ImmutableOptions options,
                        AsyncPollLongRunningOperation poll,
                        AsyncCancelLongRunningOperation cancel,
                        std::unique_ptr<PollingPolicy> polling_policy,
                        std::string location)
       : cq_(std::move(cq)),
+        options_(std::move(options)),
         poll_(std::move(poll)),
         cancel_(std::move(cancel)),
         polling_policy_(std::move(polling_policy)),
@@ -76,10 +78,11 @@ class AsyncPollingLoopImpl
     // Cancels are best effort, so we use weak pointers.
     auto w = WeakFromThis();
     auto context = std::make_shared<grpc::ClientContext>();
-    ConfigurePollContext(*context, CurrentOptions());
-    cancel_(cq_, std::move(context), request).then([w](future<Status> f) {
-      if (auto self = w.lock()) self->OnCancel(f.get());
-    });
+    ConfigurePollContext(*context, *options_);
+    cancel_(cq_, std::move(context), *options_, request)
+        .then([w](future<Status> f) {
+          if (auto self = w.lock()) self->OnCancel(f.get());
+        });
   }
 
   void OnCancel(Status const& status) {
@@ -88,7 +91,7 @@ class AsyncPollingLoopImpl
 
   void OnStart(StatusOr<Operation> op) {
     if (!op) return promise_.set_value(std::move(op));
-    AddSpanAttribute(CurrentOptions(), "gl-cpp.LRO_name", op->name());
+    AddSpanAttribute(*options_, "gl-cpp.LRO_name", op->name());
     if (op->done()) return promise_.set_value(std::move(op));
     GCP_LOG(DEBUG) << location_ << "() polling loop starting for "
                    << op->name();
@@ -107,8 +110,9 @@ class AsyncPollingLoopImpl
     GCP_LOG(DEBUG) << location_ << "() polling loop waiting "
                    << duration.count() << "ms";
     auto self = shared_from_this();
-    TracedAsyncBackoff(cq_, CurrentOptions(), duration)
-        .then([self](TimerResult f) { self->OnTimer(std::move(f)); });
+    TracedAsyncBackoff(cq_, *options_, duration).then([self](TimerResult f) {
+      self->OnTimer(std::move(f));
+    });
   }
 
   void OnTimer(TimerResult f) {
@@ -122,8 +126,8 @@ class AsyncPollingLoopImpl
     }
     auto self = shared_from_this();
     auto context = std::make_shared<grpc::ClientContext>();
-    ConfigurePollContext(*context, CurrentOptions());
-    poll_(cq_, std::move(context), request)
+    ConfigurePollContext(*context, *options_);
+    poll_(cq_, std::move(context), *options_, request)
         .then([self](future<StatusOr<Operation>> g) {
           self->OnPoll(std::move(g));
         });
@@ -158,6 +162,7 @@ class AsyncPollingLoopImpl
   // `Start()`, and then only used from the `On*()` callbacks, which are
   // serialized, so they need no external synchronization.
   google::cloud::CompletionQueue cq_;
+  ImmutableOptions options_;
   AsyncPollLongRunningOperation poll_;
   AsyncCancelLongRunningOperation cancel_;
   std::unique_ptr<PollingPolicy> polling_policy_;
@@ -172,13 +177,39 @@ class AsyncPollingLoopImpl
 };
 
 future<StatusOr<Operation>> AsyncPollingLoop(
-    google::cloud::CompletionQueue cq, future<StatusOr<Operation>> op,
-    AsyncPollLongRunningOperation poll, AsyncCancelLongRunningOperation cancel,
+    google::cloud::CompletionQueue cq, ImmutableOptions options,
+    future<StatusOr<Operation>> op, AsyncPollLongRunningOperation poll,
+    AsyncCancelLongRunningOperation cancel,
     std::unique_ptr<PollingPolicy> polling_policy, std::string location) {
   auto loop = std::make_shared<AsyncPollingLoopImpl>(
-      std::move(cq), std::move(poll), std::move(cancel),
+      std::move(cq), std::move(options), std::move(poll), std::move(cancel),
       std::move(polling_policy), std::move(location));
   return loop->Start(std::move(op));
+}
+
+future<StatusOr<google::longrunning::Operation>> AsyncPollingLoop(
+    google::cloud::CompletionQueue cq, future<StatusOr<Operation>> op,
+    AsyncPollLongRunningOperationImplicitOptions poll,
+    AsyncCancelLongRunningOperationImplicitOptions cancel,
+    std::unique_ptr<PollingPolicy> polling_policy, std::string location) {
+  auto poll_wrapper =
+      [poll = std::move(poll)](
+          CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+          Options const&,
+          google::longrunning::GetOperationRequest const& request) {
+        return poll(cq, std::move(context), request);
+      };
+  auto cancel_wrapper =
+      [cancel = std::move(cancel)](
+          CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+          Options const&,
+          google::longrunning::CancelOperationRequest const& request) {
+        return cancel(cq, std::move(context), request);
+      };
+  return AsyncPollingLoop(std::move(cq), internal::SaveCurrentOptions(),
+                          std::move(op), std::move(poll_wrapper),
+                          std::move(cancel_wrapper), std::move(polling_policy),
+                          std::move(location));
 }
 
 }  // namespace internal

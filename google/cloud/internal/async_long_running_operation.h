@@ -118,8 +118,8 @@ template <typename ReturnType, typename RequestType, typename StartFunctor,
           typename RetryPolicyType>
 future<StatusOr<ReturnType>> AsyncLongRunningOperation(
     google::cloud::CompletionQueue cq, RequestType&& request,
-    StartFunctor&& start, AsyncPollLongRunningOperation poll,
-    AsyncCancelLongRunningOperation cancel,
+    StartFunctor&& start, AsyncPollLongRunningOperationImplicitOptions poll,
+    AsyncCancelLongRunningOperationImplicitOptions cancel,
     LongRunningOperationValueExtractor<ReturnType> value_extractor,
     std::unique_ptr<RetryPolicyType> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, Idempotency idempotent,
