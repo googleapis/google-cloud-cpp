@@ -57,7 +57,7 @@ class RateLimiter {
   using Clock = ::google::cloud::internal::SteadyClock;
 
   explicit RateLimiter(std::shared_ptr<Clock> clock, double rate,
-                       int max_stored_permits = 0)
+                       std::int64_t max_stored_permits = 0)
       : clock_(std::move(clock)),
         next_(clock_->Now()),
         stored_permits_(max_stored_permits),
@@ -70,7 +70,7 @@ class RateLimiter {
    * Returns how long the caller should wait before sending the query associated
    * with this call.
    */
-  Clock::duration acquire(int permits);
+  Clock::duration acquire(std::int64_t permits);
 
   /**
    * Set the rate (Hz).
