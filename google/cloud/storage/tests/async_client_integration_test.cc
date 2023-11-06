@@ -269,7 +269,10 @@ TEST_F(AsyncClientIntegrationTest, StreamingWriteResume) {
   std::tie(writer, token) = *std::move(w);
   ASSERT_EQ(writer.UploadId(), upload_id);
   auto const persisted = writer.PersistedState();
+  // We don't expect this to be larger that the total size of the object.
+  // Incidentally, this shows the value fits into an `int`.
   ASSERT_THAT(persisted, VariantWith<std::int64_t>(Le(kDesiredSize)));
+  // Cast to `int` because otherwise we need to write multiple casts below.
   auto offset = static_cast<int>(absl::get<std::int64_t>(persisted));
   if (offset % kBlockSize != 0) {
     auto s = block.substr(offset % kBlockSize);
