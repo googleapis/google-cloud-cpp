@@ -32,7 +32,9 @@ namespace gcs = ::google::cloud::storage;
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsEmpty;
+using ::testing::Le;
 using ::testing::Not;
+using ::testing::VariantWith;
 
 class AsyncClientIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -176,6 +178,164 @@ TEST_F(AsyncClientIntegrationTest, StreamingRead) {
     view.remove_prefix(expected.size());
   }
   EXPECT_EQ(view, absl::string_view{});
+}
+
+TEST_F(AsyncClientIntegrationTest, StreamingWriteEmpty) {
+  if (UsingEmulator()) GTEST_SKIP();
+  auto object_name = MakeRandomObjectName();
+
+  auto client = AsyncClient();
+  auto w =
+      client.WriteObject(bucket_name(), object_name, gcs::IfGenerationMatch(0))
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->name(), object_name);
+  EXPECT_EQ(metadata->size(), 0);
+}
+
+TEST_F(AsyncClientIntegrationTest, StreamingWriteMultiple) {
+  if (UsingEmulator()) GTEST_SKIP();
+  auto object_name = MakeRandomObjectName();
+  // Create a small block to send over and over.
+  auto constexpr kBlockSize = 256 * 1024;
+  auto constexpr kBlockCount = 16;
+  auto const block = MakeRandomData(kBlockSize);
+
+  auto client = AsyncClient();
+  auto w =
+      client.WriteObject(bucket_name(), object_name, gcs::IfGenerationMatch(0))
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+  for (int i = 0; i != kBlockCount; ++i) {
+    auto p = writer.Write(std::move(token), WritePayload(block)).get();
+    ASSERT_STATUS_OK(p);
+    token = *std::move(p);
+  }
+
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->name(), object_name);
+  EXPECT_EQ(metadata->size(), kBlockCount * kBlockSize);
+}
+
+TEST_F(AsyncClientIntegrationTest, StreamingWriteResume) {
+  if (UsingEmulator()) GTEST_SKIP();
+  auto object_name = MakeRandomObjectName();
+  // Create a small block to send over and over.
+  auto constexpr kBlockSize = 256 * 1024;
+  auto constexpr kInitialBlockCount = 4;
+  auto constexpr kTotalBlockCount = 4 + kInitialBlockCount;
+  auto constexpr kDesiredSize = kBlockSize * kTotalBlockCount;
+  auto const block = MakeRandomData(kBlockSize);
+
+  auto client = AsyncClient();
+  auto w =
+      client.WriteObject(bucket_name(), object_name, gcs::IfGenerationMatch(0))
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+
+  auto const upload_id = writer.UploadId();
+  for (int i = 0; i != kInitialBlockCount - 1; ++i) {
+    auto p = writer.Write(std::move(token), WritePayload(block)).get();
+    ASSERT_STATUS_OK(p);
+    token = *std::move(p);
+  }
+
+  // Reset the existing writer and resume the upload.
+  writer = AsyncWriter();
+  w = client
+          .WriteObject(bucket_name(), object_name,
+                       gcs::UseResumableUploadSession(upload_id))
+          .get();
+  ASSERT_STATUS_OK(w);
+  std::tie(writer, token) = *std::move(w);
+  ASSERT_EQ(writer.UploadId(), upload_id);
+  auto const persisted = writer.PersistedState();
+  // We don't expect this to be larger that the total size of the object.
+  // Incidentally, this shows the value fits into an `int`.
+  ASSERT_THAT(persisted, VariantWith<std::int64_t>(Le(kDesiredSize)));
+  // Cast to `int` because otherwise we need to write multiple casts below.
+  auto offset = static_cast<int>(absl::get<std::int64_t>(persisted));
+  if (offset % kBlockSize != 0) {
+    auto s = block.substr(offset % kBlockSize);
+    auto const size = s.size();
+    auto p = writer.Write(std::move(token), WritePayload(std::move(s))).get();
+    ASSERT_STATUS_OK(p);
+    offset += static_cast<int>(size);
+    token = *std::move(p);
+  }
+  while (offset < kDesiredSize) {
+    auto const n = std::min(kBlockSize, kDesiredSize - offset);
+    auto p =
+        writer.Write(std::move(token), WritePayload(block.substr(0, n))).get();
+    ASSERT_STATUS_OK(p);
+    offset += n;
+    token = *std::move(p);
+  }
+
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->name(), object_name);
+  EXPECT_EQ(metadata->size(), kDesiredSize);
+}
+
+TEST_F(AsyncClientIntegrationTest, StreamingWriteResumeFinalized) {
+  if (UsingEmulator()) GTEST_SKIP();
+  auto object_name = MakeRandomObjectName();
+  // Create a small block to send over and over.
+  auto constexpr kBlockSize = static_cast<std::int64_t>(256 * 1024);
+  auto const block = MakeRandomData(kBlockSize);
+
+  auto client = AsyncClient();
+  auto w =
+      client.WriteObject(bucket_name(), object_name, gcs::IfGenerationMatch(0))
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+
+  auto const upload_id = writer.UploadId();
+  auto metadata = writer.Finalize(std::move(token), WritePayload(block)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->name(), object_name);
+  EXPECT_EQ(metadata->size(), kBlockSize);
+
+  w = client
+          .WriteObject(bucket_name(), object_name,
+                       gcs::UseResumableUploadSession(upload_id))
+          .get();
+  ASSERT_STATUS_OK(w);
+  std::tie(writer, token) = *std::move(w);
+  EXPECT_FALSE(token.valid());
+  ASSERT_TRUE(absl::holds_alternative<storage::ObjectMetadata>(
+      writer.PersistedState()));
+  auto finalized = absl::get<storage::ObjectMetadata>(writer.PersistedState());
+  EXPECT_EQ(*metadata, finalized);
 }
 
 }  // namespace
