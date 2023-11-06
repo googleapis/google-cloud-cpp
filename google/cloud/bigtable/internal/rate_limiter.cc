@@ -31,14 +31,14 @@ using Clock = RateLimiter::Clock;
  * This function handles rounding, while getting the maximum precision out of
  * the clock.
  */
-Clock::duration TimeNeeded(int permits, double rate) {
-  return std::chrono::duration_cast<Clock::duration>(
-      absl::ToChronoNanoseconds(absl::Seconds(permits / rate)));
+Clock::duration TimeNeeded(std::int64_t permits, double rate) {
+  return std::chrono::duration_cast<Clock::duration>(absl::ToChronoNanoseconds(
+      absl::Seconds(static_cast<double>(permits) / rate)));
 }
 
 }  // namespace
 
-RateLimiter::Clock::duration RateLimiter::acquire(int permits) {
+RateLimiter::Clock::duration RateLimiter::acquire(std::int64_t permits) {
   auto const now = clock_->Now();
   std::lock_guard<std::mutex> lk(mu_);
   // The request can go through immediately. But first, we need to update the
