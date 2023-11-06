@@ -9,8 +9,8 @@ We have 4 actions that run our builds on Windows and MacOS.
 - `windows-bazel.yml`
 - `windows-cmake.yml`
 
-To test changes to one of those GHA, you need to push it to a branch on the upstream
-repo (googleapis/google-cloud-cpp) with the prefix `ci-gha`
+To test changes to one of those GHA, you need to push it to a branch on the
+upstream repo (googleapis/google-cloud-cpp) with the prefix `ci-gha`
 
 ```shell
 git checkout -b ci-gha-XXX
