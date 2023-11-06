@@ -70,6 +70,8 @@ jobs:
       with:
         python-version: '3.11'
     - uses: google-github-actions/setup-gcloud@v1
+      env:
+        CLOUDSDK_PYTHON: ${{ steps.py311.outputs.python-path }}
     - name: Dynamic Configuration
       id: dynamic
       shell: bash
