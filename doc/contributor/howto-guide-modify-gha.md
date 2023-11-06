@@ -14,3 +14,8 @@ To test changes to one of those GHA, you need to push it to a branch on the main
 git checkout -b ci-gha-XXX
 git push -u upstream
 ```
+
+Then delete the branch on the upstream repo when you're done
+```shell
+git push upstream --delete <branch>
+```
