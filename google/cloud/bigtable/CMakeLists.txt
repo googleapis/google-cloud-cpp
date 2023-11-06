@@ -195,6 +195,8 @@ add_library(
     internal/logging_data_client.h
     internal/prefix_range_end.cc
     internal/prefix_range_end.h
+    internal/rate_limiter.cc
+    internal/rate_limiter.h
     internal/readrowsparser.cc
     internal/readrowsparser.h
     internal/retry_traits.h
@@ -385,6 +387,7 @@ if (BUILD_TESTING)
         internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
         internal/prefix_range_end_test.cc
+        internal/rate_limiter_test.cc
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
         legacy_table_test.cc
