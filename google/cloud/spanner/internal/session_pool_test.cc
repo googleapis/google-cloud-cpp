@@ -13,16 +13,16 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/session_pool.h"
-#include "google/cloud/spanner/internal/clock.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/options.h"
-#include "google/cloud/spanner/testing/fake_clock.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/spanner/testing/status_utils.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/clock.h"
 #include "google/cloud/status.h"
+#include "google/cloud/testing_util/fake_clock.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -44,8 +44,8 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::spanner_testing::FakeSteadyClock;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
+using ::google::cloud::testing_util::FakeSteadyClock;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;

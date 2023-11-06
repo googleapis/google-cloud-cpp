@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_FAKE_CLOCK_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_FAKE_CLOCK_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_CLOCK_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_CLOCK_H
 
-#include "google/cloud/spanner/internal/clock.h"
-#include "google/cloud/spanner/version.h"
+#include "google/cloud/internal/clock.h"
+#include "google/cloud/version.h"
 #include <mutex>
 
 namespace google {
 namespace cloud {
-namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace testing_util {
 
 /**
  * A fake clock intended for use in tests.
@@ -60,13 +60,13 @@ class FakeClock : public RealClock {
   time_point now_;
 };
 
-using FakeSteadyClock = FakeClock<google::cloud::spanner_internal::SteadyClock>;
+using FakeSteadyClock = FakeClock<google::cloud::internal::SteadyClock>;
 
-using FakeSystemClock = FakeClock<google::cloud::spanner_internal::SystemClock>;
+using FakeSystemClock = FakeClock<google::cloud::internal::SystemClock>;
 
+}  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_FAKE_CLOCK_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_CLOCK_H

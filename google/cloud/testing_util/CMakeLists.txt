@@ -31,6 +31,7 @@ add_library(
     example_driver.h
     expect_exception.h
     expect_future_error.h
+    fake_clock.h
     integration_test.cc
     integration_test.h
     mock_async_streaming_read_rpc.h

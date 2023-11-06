@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_CLOCK_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_CLOCK_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CLOCK_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CLOCK_H
 
-#include "google/cloud/spanner/version.h"
+#include "google/cloud/version.h"
 #include <chrono>
 
 namespace google {
 namespace cloud {
-namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
 
 /**
  * A simple `Clock` class that can be overridden for testing.
@@ -45,19 +45,17 @@ class Clock {
  * `SteadyClock` is a monotonic clock where time points cannot decrease as
  * physical time moves forward. It is not related to wall clock time.
  */
-using SteadyClock =
-    ::google::cloud::spanner_internal::Clock<std::chrono::steady_clock>;
+using SteadyClock = ::google::cloud::internal::Clock<std::chrono::steady_clock>;
 
 /**
  * `SystemClock` represents the system-wide real time wall clock.
  * It may not be monotonic.
  */
-using SystemClock =
-    ::google::cloud::spanner_internal::Clock<std::chrono::system_clock>;
+using SystemClock = ::google::cloud::internal::Clock<std::chrono::system_clock>;
 
+}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_CLOCK_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CLOCK_H

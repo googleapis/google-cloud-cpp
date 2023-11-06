@@ -30,6 +30,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/base64_transforms_test.cc",
     "internal/big_endian_test.cc",
     "internal/call_context_test.cc",
+    "internal/clock_test.cc",
     "internal/compiler_info_test.cc",
     "internal/compute_engine_util_test.cc",
     "internal/credentials_impl_test.cc",

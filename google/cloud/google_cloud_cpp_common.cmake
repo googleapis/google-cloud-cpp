@@ -56,6 +56,7 @@ add_library(
     internal/big_endian.h
     internal/build_info.h
     internal/call_context.h
+    internal/clock.h
     internal/compiler_info.cc
     internal/compiler_info.h
     internal/compute_engine_util.cc
@@ -334,6 +335,7 @@ if (BUILD_TESTING)
         internal/base64_transforms_test.cc
         internal/big_endian_test.cc
         internal/call_context_test.cc
+        internal/clock_test.cc
         internal/compiler_info_test.cc
         internal/compute_engine_util_test.cc
         internal/credentials_impl_test.cc
