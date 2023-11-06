@@ -114,10 +114,11 @@ template <typename ReturnType, typename RequestType, typename StartFunctor,
           typename RetryPolicyType, typename CompletionQueue>
 future<StatusOr<ReturnType>> AsyncRestLongRunningOperation(
     CompletionQueue cq, RequestType&& request, StartFunctor&& start,
-    AsyncRestPollLongRunningOperation<google::longrunning::Operation,
-                                      google::longrunning::GetOperationRequest>
+    AsyncRestPollLongRunningOperationImplicitOptions<
+        google::longrunning::Operation,
+        google::longrunning::GetOperationRequest>
         poll,
-    AsyncRestCancelLongRunningOperation<
+    AsyncRestCancelLongRunningOperationImplicitOptions<
         google::longrunning::CancelOperationRequest>
         cancel,
     LongRunningOperationValueExtractor<ReturnType,
@@ -148,9 +149,12 @@ template <typename ReturnType, typename OperationType,
           typename CompletionQueue>
 future<StatusOr<ReturnType>> AsyncRestLongRunningOperation(
     CompletionQueue cq, RequestType&& request, StartFunctor&& start,
-    AsyncRestPollLongRunningOperation<OperationType, GetOperationRequestType>
+    AsyncRestPollLongRunningOperationImplicitOptions<OperationType,
+                                                     GetOperationRequestType>
         poll,
-    AsyncRestCancelLongRunningOperation<CancelOperationRequestType> cancel,
+    AsyncRestCancelLongRunningOperationImplicitOptions<
+        CancelOperationRequestType>
+        cancel,
     LongRunningOperationValueExtractor<ReturnType, OperationType>
         value_extractor,
     std::unique_ptr<RetryPolicyType> retry_policy,

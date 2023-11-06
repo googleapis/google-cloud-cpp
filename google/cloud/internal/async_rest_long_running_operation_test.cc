@@ -96,8 +96,8 @@ StartOperation MakeStart(std::shared_ptr<MockRestStub> const& m) {
   };
 }
 
-AsyncRestPollLongRunningOperation<google::longrunning::Operation,
-                                  google::longrunning::GetOperationRequest>
+AsyncRestPollLongRunningOperationImplicitOptions<
+    google::longrunning::Operation, google::longrunning::GetOperationRequest>
 MakePoll(std::shared_ptr<MockRestStub> const& m) {
   return [m](CompletionQueue& cq, std::unique_ptr<RestContext> context,
              google::longrunning::GetOperationRequest const& request) {
@@ -105,7 +105,8 @@ MakePoll(std::shared_ptr<MockRestStub> const& m) {
   };
 }
 
-AsyncRestCancelLongRunningOperation<google::longrunning::CancelOperationRequest>
+AsyncRestCancelLongRunningOperationImplicitOptions<
+    google::longrunning::CancelOperationRequest>
 MakeCancel(std::shared_ptr<MockRestStub> const& m) {
   return [m](CompletionQueue& cq, std::unique_ptr<RestContext> context,
              google::longrunning::CancelOperationRequest const& request) {
@@ -363,8 +364,8 @@ StartBespokeOperation MakeBespokeStart(
   };
 }
 
-AsyncRestPollLongRunningOperation<BespokeOperationType,
-                                  BespokeGetOperationRequestType>
+AsyncRestPollLongRunningOperationImplicitOptions<BespokeOperationType,
+                                                 BespokeGetOperationRequestType>
 MakeBespokePoll(std::shared_ptr<MockBespokeOperationStub> const& mock) {
   return [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
                 BespokeGetOperationRequestType const& request) {
@@ -372,7 +373,8 @@ MakeBespokePoll(std::shared_ptr<MockBespokeOperationStub> const& mock) {
   };
 }
 
-AsyncRestCancelLongRunningOperation<BespokeCancelOperationRequestType>
+AsyncRestCancelLongRunningOperationImplicitOptions<
+    BespokeCancelOperationRequestType>
 MakeBespokeCancel(std::shared_ptr<MockBespokeOperationStub> const& mock) {
   return [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
                 BespokeCancelOperationRequestType const& request) {
