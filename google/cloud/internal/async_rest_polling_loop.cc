@@ -30,7 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using ::google::longrunning::Operation;
 
 future<StatusOr<Operation>> AsyncRestPollingLoopAip151(
-    google::cloud::CompletionQueue cq, future<StatusOr<Operation>> op,
+    google::cloud::CompletionQueue cq, internal::ImmutableOptions options,
+    future<StatusOr<Operation>> op,
     AsyncRestPollLongRunningOperation<google::longrunning::Operation,
                                       google::longrunning::GetOperationRequest>
         poll,
@@ -41,9 +42,40 @@ future<StatusOr<Operation>> AsyncRestPollingLoopAip151(
   auto loop = std::make_shared<AsyncRestPollingLoopImpl<
       google::longrunning::Operation, google::longrunning::GetOperationRequest,
       google::longrunning::CancelOperationRequest>>(
-      std::move(cq), std::move(poll), std::move(cancel),
+      std::move(cq), std::move(options), std::move(poll), std::move(cancel),
       std::move(polling_policy), std::move(location));
   return loop->Start(std::move(op));
+}
+
+// TODO(#12359) - remove once it is no longer used.
+future<StatusOr<Operation>> AsyncRestPollingLoopAip151(
+    google::cloud::CompletionQueue cq, future<StatusOr<Operation>> op,
+    AsyncRestPollLongRunningOperationImplicitOptions<
+        google::longrunning::Operation,
+        google::longrunning::GetOperationRequest>
+        poll,
+    AsyncRestCancelLongRunningOperationImplicitOptions<
+        google::longrunning::CancelOperationRequest>
+        cancel,
+    std::unique_ptr<PollingPolicy> polling_policy, std::string location) {
+  auto poll_wrapper =
+      [poll = std::move(poll)](
+          google::cloud::CompletionQueue& cq,
+          std::unique_ptr<RestContext> context, Options const&,
+          google::longrunning::GetOperationRequest const& request) {
+        return poll(cq, std::move(context), request);
+      };
+  auto cancel_wrapper =
+      [cancel = std::move(cancel)](
+          google::cloud::CompletionQueue& cq,
+          std::unique_ptr<RestContext> context, Options const&,
+          google::longrunning::CancelOperationRequest const& request) {
+        return cancel(cq, std::move(context), request);
+      };
+  return AsyncRestPollingLoopAip151(
+      std::move(cq), internal::SaveCurrentOptions(), std::move(op),
+      std::move(poll_wrapper), std::move(cancel_wrapper),
+      std::move(polling_policy), std::move(location));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
