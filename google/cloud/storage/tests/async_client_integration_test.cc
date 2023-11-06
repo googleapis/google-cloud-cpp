@@ -276,7 +276,7 @@ TEST_F(AsyncClientIntegrationTest, StreamingWriteResume) {
     auto const size = s.size();
     auto p = writer.Write(std::move(token), WritePayload(std::move(s))).get();
     ASSERT_STATUS_OK(p);
-    offset += size;
+    offset += static_cast<int>(size);
     token = *std::move(p);
   }
   while (offset < kDesiredSize) {
