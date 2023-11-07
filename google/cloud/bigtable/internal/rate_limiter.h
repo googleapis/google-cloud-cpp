@@ -1,10 +1,10 @@
-// Copyright 2023 Google Inc.
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     https://www.apache.org/licenses/LICENSE-2.0
+//      https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,8 +30,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * A threadsafe interface for rate limiting.
  *
- * The caller tells the `RateLimiter` how many permits it wants to acquire. The
- * `RateLimiter` tells the caller when those permits will be available.
+ * The caller needs to acquire a "token" to perform the operation under rate
+ * limits. This class limits the number of tokens issued per period of time,
+ * effectively limiting the operation rate.
+ *
+ * The caller may acquire more than one token at a time, if it needs to perform
+ * a burst of the operation under rate limits. More tokens become available as
+ * time passes, with some maximum to limit the size of bursts.
+ *
+ * The allocation of resources must be a "prior reservation". That is, the
+ * caller must tell the `RateLimiter` how many tokens it wants to acquire
+ * *before* performing the operation. The `RateLimiter` will tell the caller
+ * when to perform the operation.
  *
  * The `RateLimiter` does not sleep. It is the responsibility of the caller to
  * sleep. For example:
@@ -47,14 +57,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * }
  * @endcode
  *
- * To allow for some smoothing, this class can bank permits. For example, if the
- * limiter is set to 2 permits/s, and goes unused for 10 seconds, it can bank up
- * to 20 permits. The maximum stored permits is configurable.
+ * Rate limiting does not start until after the first call to `acquire()`.
+ * Consider a caller asking for 100 tokens at 1 token/s. We do not want to wait
+ * 100s for this initial request. Instead, it goes through immediately, and the
+ * next request is scheduled for 100s from now.
  *
- * Throttling does not start until after the first call to `acquire()`. Consider
- * a caller asking for 100 permits at 1 permit/s. We do not want to wait 100s
- * for this initial request. Instead, it goes through immediately, and the next
- * request is scheduled for 100s from now.
+ * @see https://en.wikipedia.org/wiki/Flow_control_(data)#Open-loop_flow_control
  */
 class RateLimiter {
  public:
@@ -65,49 +73,47 @@ class RateLimiter {
   template <typename Rep, typename Period>
   explicit RateLimiter(std::shared_ptr<Clock> clock,
                        std::chrono::duration<Rep, Period> period,
-                       std::int64_t max_stored_permits = 0)
+                       std::int64_t max_stored_tokens = 0)
       : clock_(std::move(clock)),
-        period_(std::chrono::duration_cast<Clock::duration>(period)),
-        next_(clock_->Now()),
-        stored_permits_(max_stored_permits),
-        max_stored_permits_(max_stored_permits) {
-    if (period_ < Clock::duration::zero()) {
-      GCP_LOG(FATAL) << "RateLimiter period must be > 0.";
-    }
-  }
+        // Note that std::chrono::abs() is not available until C++17.
+        period_(std::chrono::duration_cast<Clock::duration>(
+            period >= Clock::duration::zero() ? period : -period)),
+        // Start with a full set of tokens.
+        next_(clock_->Now() - max_stored_tokens * period_),
+        max_stored_tokens_(max_stored_tokens) {}
 
   /**
    * Returns the time to wait before performing the operation associated with
    * this call.
    *
-   * The caller can ask for multiple @p permits, as a way to "weight" the
-   * operation. For example, instead of acquiring one permit per request, you
-   * might choose to acquire one permit per repeated field in a request.
+   * The caller can ask for multiple @p tokens, as a way to "weight" the
+   * operation. For example, instead of acquiring one token per request, you
+   * might choose to acquire one token per repeated field in a request.
    */
-  Clock::duration acquire(std::int64_t permits);
+  Clock::duration acquire(std::int64_t tokens);
 
   /**
    * Set the period.
    *
-   * Note that the current next_ has already been calculated. This new rate will
-   * not apply to it. The new rate will apply to every `acquire()` after next.
+   * Note that the current next_ has already been calculated. This new period
+   * will not apply to it. The new period will apply to every `acquire()` after
+   * next.
    */
-  void set_period(Clock::duration period) {
-    if (period < Clock::duration::zero()) {
-      GCP_LOG(FATAL) << "RateLimiter period must be >= 0.";
-    }
+  template <typename Rep, typename Period>
+  void set_period(std::chrono::duration<Rep, Period> period) {
+    // Note that std::chrono::abs() is not available until C++17.
+    if (period < Clock::duration::zero()) period = -period;
     std::lock_guard<std::mutex> lk(mu_);
-    period_ = period;
+    period_ = std::chrono::duration_cast<Clock::duration>(period);
   }
   Clock::duration period() const { return period_; }
 
  private:
   std::mutex mu_;
   std::shared_ptr<Clock> clock_;
-  Clock::duration period_;           // ABSL_GUARDED_BY(mu_)
-  Clock::time_point next_;           // ABSL_GUARDED_BY(mu_)
-  std::int64_t stored_permits_ = 0;  // ABSL_GUARDED_BY(mu_)
-  std::int64_t max_stored_permits_ = 0;
+  Clock::duration period_;  // ABSL_GUARDED_BY(mu_)
+  Clock::time_point next_;  // ABSL_GUARDED_BY(mu_)
+  std::int64_t max_stored_tokens_ = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
