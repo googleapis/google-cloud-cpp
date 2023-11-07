@@ -34,8 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * limits. This class limits the number of tokens issued per period of time,
  * effectively limiting the operation rate.
  *
- * The caller may acquire more than one token at a time, if it needs to perform
- * a burst of the operation under rate limits. More tokens become available as
+ * The caller may acquire more than one token at a time if it needs to perform a
+ * burst of the operation under rate limits. More tokens become available as
  * time passes, with some maximum to limit the size of bursts.
  *
  * The allocation of resources must be a "prior reservation". That is, the
@@ -70,17 +70,24 @@ class RateLimiter {
   // increase with time.
   using Clock = ::google::cloud::internal::SteadyClock;
 
-  template <typename Rep, typename Period>
+  template <typename Rep1, typename Period1>
   explicit RateLimiter(std::shared_ptr<Clock> clock,
-                       std::chrono::duration<Rep, Period> period,
-                       std::int64_t max_stored_tokens = 0)
+                       std::chrono::duration<Rep1, Period1> period)
+      : RateLimiter(clock, period, Clock::duration::zero()) {}
+
+  template <typename Rep1, typename Period1, typename Rep2, typename Period2>
+  explicit RateLimiter(std::shared_ptr<Clock> clock,
+                       std::chrono::duration<Rep1, Period1> period,
+                       std::chrono::duration<Rep2, Period2> smoothing_interval)
       : clock_(std::move(clock)),
         // Note that std::chrono::abs() is not available until C++17.
+        smoothing_interval_(std::chrono::duration_cast<Clock::duration>(
+            smoothing_interval >= Clock::duration::zero()
+                ? smoothing_interval
+                : -smoothing_interval)),
         period_(std::chrono::duration_cast<Clock::duration>(
             period >= Clock::duration::zero() ? period : -period)),
-        // Start with a full set of tokens.
-        next_(clock_->Now() - max_stored_tokens * period_),
-        max_stored_tokens_(max_stored_tokens) {}
+        next_(clock_->Now()) {}
 
   /**
    * Returns the time to wait before performing the operation associated with
@@ -111,9 +118,10 @@ class RateLimiter {
  private:
   std::mutex mu_;
   std::shared_ptr<Clock> clock_;
+  // Over any `smoothing_interval_`, we must average <= 1 token per `period_`.
+  Clock::duration smoothing_interval_;
   Clock::duration period_;  // ABSL_GUARDED_BY(mu_)
   Clock::time_point next_;  // ABSL_GUARDED_BY(mu_)
-  std::int64_t max_stored_tokens_ = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

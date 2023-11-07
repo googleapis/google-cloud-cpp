@@ -27,7 +27,7 @@ using ::google::cloud::testing_util::FakeSteadyClock;
 
 TEST(RateLimiter, NoWaitForInitialAcquire) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, std::chrono::seconds(1), 0);
+  RateLimiter limiter(clock, std::chrono::seconds(1));
 
   auto wait = limiter.acquire(100);
   EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
@@ -35,7 +35,7 @@ TEST(RateLimiter, NoWaitForInitialAcquire) {
 
 TEST(RateLimiter, Basic) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, std::chrono::seconds(1), 0);
+  RateLimiter limiter(clock, std::chrono::seconds(1));
 
   for (auto i = 0; i != 10; ++i) {
     auto wait = limiter.acquire(1);
@@ -50,9 +50,9 @@ TEST(RateLimiter, Basic) {
   }
 }
 
-TEST(RateLimiter, WaitsForEachPermit) {
+TEST(RateLimiter, WaitsForEachToken) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, std::chrono::seconds(1), 0);
+  RateLimiter limiter(clock, std::chrono::seconds(1));
 
   (void)limiter.acquire(10);
 
@@ -60,63 +60,40 @@ TEST(RateLimiter, WaitsForEachPermit) {
   EXPECT_EQ(absl::FromChrono(wait), absl::Seconds(10));
 }
 
-TEST(RateLimiter, SpendsStorage) {
+TEST(RateLimiter, StoresTokens) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, std::chrono::seconds(1), 10);
+  RateLimiter limiter(clock, std::chrono::milliseconds(500),
+                      std::chrono::seconds(5));
 
-  // We start with 10 stored permits. We spend 6 of them. We have 4 remaining.
-  auto wait = limiter.acquire(6);
-  EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
-
-  // We are asked for 6 permits. We spend our 4 stored permits. We still have 2
-  // permits to deal with. Schedule the *next* call to `acquire()` for 2 seconds
-  // from now.
-  wait = limiter.acquire(6);
-  EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
-
-  wait = limiter.acquire(1);
-  EXPECT_EQ(absl::FromChrono(wait), absl::Seconds(2));
-}
-
-TEST(RateLimiter, StoresPermits) {
-  auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, std::chrono::milliseconds(500), 10);
-
-  // We start with 10 stored permits. Spend them immediately.
+  // After 2 seconds, we should have 4 tokens banked.
+  clock->AdvanceTime(std::chrono::seconds(2));
   auto wait = limiter.acquire(10);
   EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
 
-  // After 2 seconds, we should have 4 permits banked.
-  clock->AdvanceTime(std::chrono::seconds(2));
-  wait = limiter.acquire(10);
-  EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
-
-  // We requested 10 permits, with 4 permits banked. We should have to wait 3
-  // seconds to give out the remaining 6 permits at a rate of 2 permits per
+  // We requested 10 tokens, with 4 tokens banked. We should have to wait 3
+  // seconds to give out the remaining 6 tokens at a rate of 2 tokens per
   // second.
   wait = limiter.acquire(1);
   EXPECT_EQ(absl::FromChrono(wait), absl::Seconds(3));
 }
 
-TEST(RateLimiter, AddsAsMuchAsItCanStore) {
+TEST(RateLimiter, StoresTokensUpToLimit) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, std::chrono::seconds(1), 10);
+  RateLimiter limiter(clock, std::chrono::seconds(1), std::chrono::seconds(10));
 
-  // Spend 5 stored permits.
-  (void)limiter.acquire(5);
-
-  // Wait for 100 seconds. We should be capped at the max stored permits, 10.
+  // Wait for 100 seconds. We should be able to use 10 tokens from the last 10
+  // seconds of this interval.
   clock->AdvanceTime(std::chrono::seconds(100));
   (void)limiter.acquire(30);
 
-  // We should have to wait for 30 - 10 = 20 permits.
+  // We should have to wait for 30 - 10 = 20 tokens.
   auto wait = limiter.acquire(1);
   EXPECT_EQ(absl::FromChrono(wait), absl::Seconds(20));
 }
 
-TEST(RateLimiter, Rate) {
+TEST(RateLimiter, Period) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, std::chrono::milliseconds(100), 0);
+  RateLimiter limiter(clock, std::chrono::milliseconds(100));
 
   auto wait = limiter.acquire(1);
   EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
@@ -125,9 +102,9 @@ TEST(RateLimiter, Rate) {
   EXPECT_EQ(absl::FromChrono(wait), absl::Milliseconds(100));
 }
 
-TEST(RateLimiter, RateLessThanOne) {
+TEST(RateLimiter, PeriodLessThanOne) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, std::chrono::seconds(10), 0);
+  RateLimiter limiter(clock, std::chrono::seconds(10));
 
   auto wait = limiter.acquire(1);
   EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
@@ -136,9 +113,9 @@ TEST(RateLimiter, RateLessThanOne) {
   EXPECT_EQ(absl::FromChrono(wait), absl::Seconds(10));
 }
 
-TEST(RateLimiter, SetRateEventuallyTakesAffect) {
+TEST(RateLimiter, SetPeriodEventuallyTakesAffect) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, std::chrono::milliseconds(100), 0);
+  RateLimiter limiter(clock, std::chrono::milliseconds(100));
 
   auto wait = limiter.acquire(1);
   EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
@@ -161,7 +138,7 @@ TEST(RateLimiter, SetRateEventuallyTakesAffect) {
 
 TEST(RateLimiter, AbsoluteValueOfPeriod) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, -std::chrono::seconds(10), 0);
+  RateLimiter limiter(clock, -std::chrono::seconds(10));
 
   auto wait = limiter.acquire(1);
   EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
@@ -185,7 +162,7 @@ TEST(RateLimiter, ThreadSafety) {
   auto constexpr kAcquiresPerThread = 1000;
 
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, std::chrono::seconds(1), 0);
+  RateLimiter limiter(clock, std::chrono::seconds(1));
 
   auto work = [&limiter](int acquires) {
     for (auto i = 0; i != acquires; ++i) (void)limiter.acquire(1);

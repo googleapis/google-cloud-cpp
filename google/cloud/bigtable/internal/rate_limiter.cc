@@ -21,12 +21,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RateLimiter::Clock::duration RateLimiter::acquire(std::int64_t tokens) {
   auto const now = clock_->Now();
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> lk(mu_);
   auto const wait = (std::max)(next_ - now, Clock::duration::zero());
-  // We can only keep up to M stored tokens.
-  next_ = (std::max)(next_, now - max_stored_tokens_ * period_);
+  // We can potentially give out tokens from the last `smoothing_interval_`.
+  next_ = (std::max)(next_, now - smoothing_interval_);
   next_ += tokens * period_;
-  lk.unlock();
   return wait;
 }
 
