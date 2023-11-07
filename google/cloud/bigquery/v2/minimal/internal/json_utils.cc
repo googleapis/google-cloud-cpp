@@ -109,9 +109,6 @@ nlohmann::json RemoveJsonKeysAndEmptyFields(
         if (event == nlohmann::json::parse_event_t::object_end) {
           return parsed != nullptr && !parsed.empty();
         }
-        if (event == nlohmann::json::parse_event_t::array_end) {
-          return !parsed.empty();
-        }
         return true;
       };
   return nlohmann::json::parse(json_payload, remove_empty_call_back, false);
