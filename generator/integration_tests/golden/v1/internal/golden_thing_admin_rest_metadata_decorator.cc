@@ -45,41 +45,41 @@ GoldenThingAdminRestMetadata::GoldenThingAdminRestMetadata(
 StatusOr<google::test::admin::database::v1::ListDatabasesResponse>
 GoldenThingAdminRestMetadata::ListDatabases(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::ListDatabasesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListDatabases(rest_context, request);
+    Options const& options, google::test::admin::database::v1::ListDatabasesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ListDatabases(rest_context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestMetadata::AsyncCreateDatabase(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::test::admin::database::v1::CreateDatabaseRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCreateDatabase(cq, std::move(rest_context), request);
+      Options const& options, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCreateDatabase(cq, std::move(rest_context), options, request);
 }
 
 StatusOr<google::test::admin::database::v1::Database>
 GoldenThingAdminRestMetadata::GetDatabase(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetDatabase(rest_context, request);
+    Options const& options, google::test::admin::database::v1::GetDatabaseRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetDatabase(rest_context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestMetadata::AsyncUpdateDatabaseDdl(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncUpdateDatabaseDdl(cq, std::move(rest_context), request);
+      Options const& options, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+  SetMetadata(*rest_context, options);
+  return child_->AsyncUpdateDatabaseDdl(cq, std::move(rest_context), options, request);
 }
 
 Status
 GoldenThingAdminRestMetadata::DropDatabase(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::DropDatabaseRequest const& request) {
+    Options const& options, google::test::admin::database::v1::DropDatabaseRequest const& request) {
   std::vector<std::string> params;
   params.reserve(3);
 
@@ -116,123 +116,123 @@ GoldenThingAdminRestMetadata::DropDatabase(
   }();
   database_matcher->AppendParam(request, params);
 
-  SetMetadata(rest_context, params);
+  SetMetadata(rest_context, options, params);
 
-  return child_->DropDatabase(rest_context, request);
+  return child_->DropDatabase(rest_context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
 GoldenThingAdminRestMetadata::GetDatabaseDdl(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetDatabaseDdl(rest_context, request);
+    Options const& options, google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetDatabaseDdl(rest_context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy>
 GoldenThingAdminRestMetadata::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->SetIamPolicy(rest_context, request);
+    Options const& options, google::iam::v1::SetIamPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy>
 GoldenThingAdminRestMetadata::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetIamPolicy(rest_context, request);
+    Options const& options, google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 GoldenThingAdminRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->TestIamPermissions(rest_context, request);
+    Options const& options, google::iam::v1::TestIamPermissionsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestMetadata::AsyncCreateBackup(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::test::admin::database::v1::CreateBackupRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCreateBackup(cq, std::move(rest_context), request);
+      Options const& options, google::test::admin::database::v1::CreateBackupRequest const& request) {
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCreateBackup(cq, std::move(rest_context), options, request);
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminRestMetadata::GetBackup(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::GetBackupRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetBackup(rest_context, request);
+    Options const& options, google::test::admin::database::v1::GetBackupRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetBackup(rest_context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminRestMetadata::UpdateBackup(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::UpdateBackupRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->UpdateBackup(rest_context, request);
+    Options const& options, google::test::admin::database::v1::UpdateBackupRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateBackup(rest_context, options, request);
 }
 
 Status
 GoldenThingAdminRestMetadata::DeleteBackup(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::DeleteBackupRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->DeleteBackup(rest_context, request);
+    Options const& options, google::test::admin::database::v1::DeleteBackupRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteBackup(rest_context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupsResponse>
 GoldenThingAdminRestMetadata::ListBackups(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::ListBackupsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListBackups(rest_context, request);
+    Options const& options, google::test::admin::database::v1::ListBackupsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ListBackups(rest_context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestMetadata::AsyncRestoreDatabase(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncRestoreDatabase(cq, std::move(rest_context), request);
+      Options const& options, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  SetMetadata(*rest_context, options);
+  return child_->AsyncRestoreDatabase(cq, std::move(rest_context), options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 GoldenThingAdminRestMetadata::ListDatabaseOperations(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListDatabaseOperations(rest_context, request);
+    Options const& options, google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ListDatabaseOperations(rest_context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>
 GoldenThingAdminRestMetadata::ListBackupOperations(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListBackupOperations(rest_context, request);
+    Options const& options, google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ListBackupOperations(rest_context, options, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminRestMetadata::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetDatabase(cq, std::move(rest_context), request);
+    Options const& options, google::test::admin::database::v1::GetDatabaseRequest const& request) {
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetDatabase(cq, std::move(rest_context), options, request);
 }
 
 future<Status>
 GoldenThingAdminRestMetadata::AsyncDropDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::test::admin::database::v1::DropDatabaseRequest const& request) {
+    Options const& options, google::test::admin::database::v1::DropDatabaseRequest const& request) {
   std::vector<std::string> params;
   params.reserve(3);
 
@@ -269,37 +269,38 @@ GoldenThingAdminRestMetadata::AsyncDropDatabase(
   }();
   database_matcher->AppendParam(request, params);
 
-  SetMetadata(*rest_context, params);
+  SetMetadata(*rest_context, options, params);
 
-  return child_->AsyncDropDatabase(cq, std::move(rest_context), request);
+  return child_->AsyncDropDatabase(cq, std::move(rest_context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options, request);
 }
 
 future<Status>
 GoldenThingAdminRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options, request);
 }
 
 void GoldenThingAdminRestMetadata::SetMetadata(
       rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+      Options const& options, std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader(
         "x-goog-user-project", options.get<UserProjectOption>());

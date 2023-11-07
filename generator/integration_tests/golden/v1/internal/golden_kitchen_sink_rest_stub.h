@@ -39,35 +39,35 @@ class GoldenKitchenSinkRestStub {
 
   virtual StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::GenerateAccessTokenRequest const& request) = 0;
+      Options const& options, google::test::admin::database::v1::GenerateAccessTokenRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::GenerateIdTokenRequest const& request) = 0;
+      Options const& options, google::test::admin::database::v1::GenerateIdTokenRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::WriteLogEntriesRequest const& request) = 0;
+      Options const& options, google::test::admin::database::v1::WriteLogEntriesRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListLogsResponse> ListLogs(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::ListLogsRequest const& request) = 0;
+      Options const& options, google::test::admin::database::v1::ListLogsRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
+      Options const& options, google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
 
   virtual Status DoNothing(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::protobuf::Empty const& request) = 0;
+      Options const& options, google::protobuf::Empty const& request) = 0;
 
   virtual Status ExplicitRouting1(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::ExplicitRoutingRequest const& request) = 0;
+      Options const& options, google::test::admin::database::v1::ExplicitRoutingRequest const& request) = 0;
 
   virtual Status ExplicitRouting2(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::ExplicitRoutingRequest const& request) = 0;
+      Options const& options, google::test::admin::database::v1::ExplicitRoutingRequest const& request) = 0;
 };
 
 class DefaultGoldenKitchenSinkRestStub : public GoldenKitchenSinkRestStub {
@@ -81,35 +81,35 @@ class DefaultGoldenKitchenSinkRestStub : public GoldenKitchenSinkRestStub {
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListLogsResponse> ListLogs(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::ListLogsRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::ListLogsRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
 
   Status DoNothing(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::protobuf::Empty const& request) override;
+      Options const& options, google::protobuf::Empty const& request) override;
 
   Status ExplicitRouting1(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
   Status ExplicitRouting2(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

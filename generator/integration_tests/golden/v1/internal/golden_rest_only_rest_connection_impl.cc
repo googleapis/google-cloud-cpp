@@ -45,10 +45,10 @@ GoldenRestOnlyRestConnectionImpl::Noop(google::protobuf::Empty const& request) {
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Noop(request),
       [this](rest_internal::RestContext& rest_context,
-             google::protobuf::Empty const& request) {
-        return stub_->Noop(rest_context, request);
+             Options const& options, google::protobuf::Empty const& request) {
+        return stub_->Noop(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

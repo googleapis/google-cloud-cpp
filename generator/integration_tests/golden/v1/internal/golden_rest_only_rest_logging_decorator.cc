@@ -36,13 +36,15 @@ GoldenRestOnlyRestLogging::GoldenRestOnlyRestLogging(
 Status
 GoldenRestOnlyRestLogging::Noop(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::protobuf::Empty const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::protobuf::Empty const& request) {
-        return child_->Noop(rest_context, request);
+        return child_->Noop(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

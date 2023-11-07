@@ -36,269 +36,310 @@ GoldenThingAdminRestLogging::GoldenThingAdminRestLogging(
 StatusOr<google::test::admin::database::v1::ListDatabasesResponse>
 GoldenThingAdminRestLogging::ListDatabases(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::ListDatabasesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::ListDatabasesRequest const& request) {
-        return child_->ListDatabases(rest_context, request);
+        return child_->ListDatabases(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestLogging::AsyncCreateDatabase(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
+      Options const& options,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
+             Options const& options,
              google::test::admin::database::v1::CreateDatabaseRequest const& request) {
-        return child_->AsyncCreateDatabase(cq, std::move(rest_context), request);
+        return child_->AsyncCreateDatabase(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::Database>
 GoldenThingAdminRestLogging::GetDatabase(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::GetDatabaseRequest const& request) {
-        return child_->GetDatabase(rest_context, request);
+        return child_->GetDatabase(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestLogging::AsyncUpdateDatabaseDdl(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
+      Options const& options,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
+             Options const& options,
              google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
-        return child_->AsyncUpdateDatabaseDdl(cq, std::move(rest_context), request);
+        return child_->AsyncUpdateDatabaseDdl(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 
 Status
 GoldenThingAdminRestLogging::DropDatabase(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::DropDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::DropDatabaseRequest const& request) {
-        return child_->DropDatabase(rest_context, request);
+        return child_->DropDatabase(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
 GoldenThingAdminRestLogging::GetDatabaseDdl(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
-        return child_->GetDatabaseDdl(rest_context, request);
+        return child_->GetDatabaseDdl(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy>
 GoldenThingAdminRestLogging::SetIamPolicy(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return child_->SetIamPolicy(rest_context, request);
+        return child_->SetIamPolicy(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy>
 GoldenThingAdminRestLogging::GetIamPolicy(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return child_->GetIamPolicy(rest_context, request);
+        return child_->GetIamPolicy(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 GoldenThingAdminRestLogging::TestIamPermissions(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return child_->TestIamPermissions(rest_context, request);
+        return child_->TestIamPermissions(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestLogging::AsyncCreateBackup(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
+      Options const& options,
       google::test::admin::database::v1::CreateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
+             Options const& options,
              google::test::admin::database::v1::CreateBackupRequest const& request) {
-        return child_->AsyncCreateBackup(cq, std::move(rest_context), request);
+        return child_->AsyncCreateBackup(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminRestLogging::GetBackup(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::GetBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::GetBackupRequest const& request) {
-        return child_->GetBackup(rest_context, request);
+        return child_->GetBackup(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminRestLogging::UpdateBackup(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::UpdateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::UpdateBackupRequest const& request) {
-        return child_->UpdateBackup(rest_context, request);
+        return child_->UpdateBackup(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 Status
 GoldenThingAdminRestLogging::DeleteBackup(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::DeleteBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::DeleteBackupRequest const& request) {
-        return child_->DeleteBackup(rest_context, request);
+        return child_->DeleteBackup(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupsResponse>
 GoldenThingAdminRestLogging::ListBackups(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::ListBackupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::ListBackupsRequest const& request) {
-        return child_->ListBackups(rest_context, request);
+        return child_->ListBackups(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestLogging::AsyncRestoreDatabase(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
+      Options const& options,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
+             Options const& options,
              google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
-        return child_->AsyncRestoreDatabase(cq, std::move(rest_context), request);
+        return child_->AsyncRestoreDatabase(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 GoldenThingAdminRestLogging::ListDatabaseOperations(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
-        return child_->ListDatabaseOperations(rest_context, request);
+        return child_->ListDatabaseOperations(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>
 GoldenThingAdminRestLogging::ListBackupOperations(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
-        return child_->ListBackupOperations(rest_context, request);
+        return child_->ListBackupOperations(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminRestLogging::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::test::admin::database::v1::GetDatabaseRequest const& request) {
-        return child_->AsyncGetDatabase(cq, std::move(rest_context), request);
+             Options const& options, google::test::admin::database::v1::GetDatabaseRequest const& request) {
+        return child_->AsyncGetDatabase(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 
 future<Status>
 GoldenThingAdminRestLogging::AsyncDropDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
+      Options const& options,
       google::test::admin::database::v1::DropDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
+             Options const& options,
              google::test::admin::database::v1::DropDatabaseRequest const& request) {
-        return child_->AsyncDropDatabase(cq, std::move(rest_context), request);
+        return child_->AsyncDropDatabase(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+        return child_->AsyncGetOperation(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 
 future<Status>
 GoldenThingAdminRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+        return child_->AsyncCancelOperation(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

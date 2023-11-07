@@ -41,10 +41,11 @@ class GoldenRestOnlyRestMetadata : public GoldenRestOnlyRestStub {
 
   Status Noop(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::protobuf::Empty const& request) override;
+      Options const& options, google::protobuf::Empty const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<GoldenRestOnlyRestStub> child_;

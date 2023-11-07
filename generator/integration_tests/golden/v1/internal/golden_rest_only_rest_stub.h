@@ -38,7 +38,7 @@ class GoldenRestOnlyRestStub {
 
   virtual Status Noop(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::protobuf::Empty const& request) = 0;
+      Options const& options, google::protobuf::Empty const& request) = 0;
 };
 
 class DefaultGoldenRestOnlyRestStub : public GoldenRestOnlyRestStub {
@@ -52,7 +52,7 @@ class DefaultGoldenRestOnlyRestStub : public GoldenRestOnlyRestStub {
 
   Status Noop(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::protobuf::Empty const& request) override;
+      Options const& options, google::protobuf::Empty const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;
