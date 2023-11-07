@@ -46,16 +46,19 @@ class MachineImagesRestLogging : public MachineImagesRestStub {
   AsyncDeleteMachineImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::machine_images::v1::
           DeleteMachineImageRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImage(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::machine_images::v1::
           GetMachineImageRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::machine_images::v1::
           GetIamPolicyRequest const& request) override;
 
@@ -63,21 +66,25 @@ class MachineImagesRestLogging : public MachineImagesRestStub {
   AsyncInsertMachineImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::machine_images::v1::
           InsertMachineImageRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineImageList> ListMachineImages(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::machine_images::v1::
           ListMachineImagesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::machine_images::v1::
           SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::machine_images::v1::
                          TestIamPermissionsRequest const& request) override;
 
@@ -85,12 +92,14 @@ class MachineImagesRestLogging : public MachineImagesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

@@ -54,23 +54,25 @@ AcceleratorTypesRestConnectionImpl::AggregatedListAcceleratorTypes(
   return google::cloud::internal::MakePaginationRange<StreamRange<
       std::pair<std::string,
                 google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            compute_accelerator_types_v1::AcceleratorTypesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::accelerator_types::v1::
               AggregatedListAcceleratorTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::accelerator_types::v1::
                        AggregatedListAcceleratorTypesRequest const& request) {
-              return stub->AggregatedListAcceleratorTypes(rest_context,
+              return stub->AggregatedListAcceleratorTypes(rest_context, options,
                                                           request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList r) {
         std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -90,12 +92,12 @@ AcceleratorTypesRestConnectionImpl::GetAcceleratorType(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAcceleratorType(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::accelerator_types::v1::
                  GetAcceleratorTypeRequest const& request) {
-        return stub_->GetAcceleratorType(rest_context, request);
+        return stub_->GetAcceleratorType(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
@@ -109,22 +111,24 @@ AcceleratorTypesRestConnectionImpl::ListAcceleratorTypes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            compute_accelerator_types_v1::AcceleratorTypesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::accelerator_types::v1::
               ListAcceleratorTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::accelerator_types::v1::
                        ListAcceleratorTypesRequest const& request) {
-              return stub->ListAcceleratorTypes(rest_context, request);
+              return stub->ListAcceleratorTypes(rest_context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::AcceleratorTypeList r) {
         std::vector<google::cloud::cpp::compute::v1::AcceleratorType> result(

@@ -35,44 +35,45 @@ MachineTypesRestLogging::MachineTypesRestLogging(
 
 StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
 MachineTypesRestLogging::AggregatedListMachineTypes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::machine_types::v1::
         AggregatedListMachineTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::machine_types::v1::
                  AggregatedListMachineTypesRequest const& request) {
-        return child_->AggregatedListMachineTypes(rest_context, request);
+        return child_->AggregatedListMachineTypes(rest_context, options,
+                                                  request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
 MachineTypesRestLogging::GetMachineType(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::machine_types::v1::
                  GetMachineTypeRequest const& request) {
-        return child_->GetMachineType(rest_context, request);
+        return child_->GetMachineType(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineTypeList>
 MachineTypesRestLogging::ListMachineTypes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::machine_types::v1::
         ListMachineTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::machine_types::v1::
                  ListMachineTypesRequest const& request) {
-        return child_->ListMachineTypes(rest_context, request);
+        return child_->ListMachineTypes(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

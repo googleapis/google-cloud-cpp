@@ -43,11 +43,13 @@ class RegionDiskTypesRestLogging : public RegionDiskTypesRestStub {
 
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_disk_types::v1::
           GetDiskTypeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList>
   ListRegionDiskTypes(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
                       google::cloud::cpp::compute::region_disk_types::v1::
                           ListRegionDiskTypesRequest const& request) override;
 

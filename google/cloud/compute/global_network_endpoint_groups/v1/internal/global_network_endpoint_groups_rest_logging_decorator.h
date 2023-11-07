@@ -48,6 +48,7 @@ class GlobalNetworkEndpointGroupsRestLogging
   AsyncAttachNetworkEndpoints(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
           AttachNetworkEndpointsRequest const& request) override;
 
@@ -55,6 +56,7 @@ class GlobalNetworkEndpointGroupsRestLogging
   AsyncDeleteNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request) override;
 
@@ -62,12 +64,14 @@ class GlobalNetworkEndpointGroupsRestLogging
   AsyncDetachNetworkEndpoints(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
           DetachNetworkEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   GetNetworkEndpointGroup(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
           GetNetworkEndpointGroupRequest const& request) override;
 
@@ -75,12 +79,14 @@ class GlobalNetworkEndpointGroupsRestLogging
   AsyncInsertNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
           InsertNetworkEndpointGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>
   ListGlobalNetworkEndpointGroups(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
           ListGlobalNetworkEndpointGroupsRequest const& request) override;
 
@@ -88,6 +94,7 @@ class GlobalNetworkEndpointGroupsRestLogging
                NetworkEndpointGroupsListNetworkEndpoints>
   ListNetworkEndpoints(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
           ListNetworkEndpointsRequest const& request) override;
 
@@ -95,12 +102,14 @@ class GlobalNetworkEndpointGroupsRestLogging
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

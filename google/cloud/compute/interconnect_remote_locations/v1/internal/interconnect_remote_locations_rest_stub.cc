@@ -44,14 +44,14 @@ DefaultInterconnectRemoteLocationsRestStub::
 StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
 DefaultInterconnectRemoteLocationsRestStub::GetInterconnectRemoteLocation(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
         GetInterconnectRemoteLocationRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectRemoteLocation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "interconnectRemoteLocations", "/",
                    request.interconnect_remote_location()));
@@ -60,14 +60,14 @@ DefaultInterconnectRemoteLocationsRestStub::GetInterconnectRemoteLocation(
 StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocationList>
 DefaultInterconnectRemoteLocationsRestStub::ListInterconnectRemoteLocations(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
         ListInterconnectRemoteLocationsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectRemoteLocationList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "interconnectRemoteLocations"),
       rest_internal::TrimEmptyQueryParameters(

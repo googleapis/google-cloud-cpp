@@ -44,119 +44,134 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestMetadata::AsyncDeleteTargetSslProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         DeleteTargetSslProxyRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteTargetSslProxy(cq, std::move(rest_context),
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteTargetSslProxy(cq, std::move(rest_context), options,
                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
 TargetSslProxiesRestMetadata::GetTargetSslProxy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         GetTargetSslProxyRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetTargetSslProxy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetTargetSslProxy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestMetadata::AsyncInsertTargetSslProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         InsertTargetSslProxyRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncInsertTargetSslProxy(cq, std::move(rest_context),
+  SetMetadata(*rest_context, options);
+  return child_->AsyncInsertTargetSslProxy(cq, std::move(rest_context), options,
                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList>
 TargetSslProxiesRestMetadata::ListTargetSslProxies(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         ListTargetSslProxiesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListTargetSslProxies(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListTargetSslProxies(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestMetadata::AsyncSetBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         SetBackendServiceRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetBackendService(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetBackendService(cq, std::move(rest_context), options,
+                                        request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestMetadata::AsyncSetCertificateMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         SetCertificateMapRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetCertificateMap(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetCertificateMap(cq, std::move(rest_context), options,
+                                        request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestMetadata::AsyncSetProxyHeader(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         SetProxyHeaderRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetProxyHeader(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetProxyHeader(cq, std::move(rest_context), options,
+                                     request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestMetadata::AsyncSetSslCertificates(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         SetSslCertificatesRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetSslCertificates(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetSslCertificates(cq, std::move(rest_context), options,
+                                         request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestMetadata::AsyncSetSslPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         SetSslPolicyRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetSslPolicy(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetSslPolicy(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> TargetSslProxiesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void TargetSslProxiesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

@@ -41,24 +41,29 @@ class SqlBackupRunsServiceRestMetadata : public SqlBackupRunsServiceRestStub {
 
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request)
       override;
 
   StatusOr<google::cloud::sql::v1::BackupRun> Get(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request)
       override;
 
   StatusOr<google::cloud::sql::v1::BackupRunsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlBackupRunsListRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<SqlBackupRunsServiceRestStub> child_;

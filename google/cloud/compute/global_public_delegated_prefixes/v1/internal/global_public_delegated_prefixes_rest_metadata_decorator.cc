@@ -46,80 +46,87 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalPublicDelegatedPrefixesRestMetadata::AsyncDeletePublicDelegatedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
         DeletePublicDelegatedPrefixRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncDeletePublicDelegatedPrefix(cq, std::move(rest_context),
-                                                  request);
+                                                  options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
 GlobalPublicDelegatedPrefixesRestMetadata::GetPublicDelegatedPrefix(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
         GetPublicDelegatedPrefixRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetPublicDelegatedPrefix(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetPublicDelegatedPrefix(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalPublicDelegatedPrefixesRestMetadata::AsyncInsertPublicDelegatedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
         InsertPublicDelegatedPrefixRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncInsertPublicDelegatedPrefix(cq, std::move(rest_context),
-                                                  request);
+                                                  options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>
 GlobalPublicDelegatedPrefixesRestMetadata::ListGlobalPublicDelegatedPrefixes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
         ListGlobalPublicDelegatedPrefixesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListGlobalPublicDelegatedPrefixes(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListGlobalPublicDelegatedPrefixes(rest_context, options,
+                                                   request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalPublicDelegatedPrefixesRestMetadata::AsyncPatchPublicDelegatedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
         PatchPublicDelegatedPrefixRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncPatchPublicDelegatedPrefix(cq, std::move(rest_context),
-                                                 request);
+                                                 options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalPublicDelegatedPrefixesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> GlobalPublicDelegatedPrefixesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void GlobalPublicDelegatedPrefixesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

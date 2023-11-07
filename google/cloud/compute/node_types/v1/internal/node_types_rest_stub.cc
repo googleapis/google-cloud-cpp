@@ -41,14 +41,14 @@ DefaultNodeTypesRestStub::DefaultNodeTypesRestStub(
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
 DefaultNodeTypesRestStub::AggregatedListNodeTypes(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::node_types::v1::
         AggregatedListNodeTypesRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NodeTypeAggregatedList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "nodeTypes"),
       rest_internal::TrimEmptyQueryParameters(
@@ -67,13 +67,13 @@ DefaultNodeTypesRestStub::AggregatedListNodeTypes(
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
 DefaultNodeTypesRestStub::GetNodeType(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeTypes", "/", request.node_type()));
 }
@@ -81,13 +81,13 @@ DefaultNodeTypesRestStub::GetNodeType(
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeList>
 DefaultNodeTypesRestStub::ListNodeTypes(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTypeList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeTypes"),
       rest_internal::TrimEmptyQueryParameters(

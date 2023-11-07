@@ -42,11 +42,11 @@ DefaultSqlBackupRunsServiceRestStub::DefaultSqlBackupRunsServiceRestStub(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlBackupRunsServiceRestStub::Delete(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "backupRuns", "/", request.id()));
 }
@@ -54,11 +54,11 @@ DefaultSqlBackupRunsServiceRestStub::Delete(
 StatusOr<google::cloud::sql::v1::BackupRun>
 DefaultSqlBackupRunsServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::BackupRun>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "backupRuns", "/", request.id()));
 }
@@ -66,11 +66,11 @@ DefaultSqlBackupRunsServiceRestStub::Get(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlBackupRunsServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "backupRuns"));
 }
@@ -78,11 +78,11 @@ DefaultSqlBackupRunsServiceRestStub::Insert(
 StatusOr<google::cloud::sql::v1::BackupRunsListResponse>
 DefaultSqlBackupRunsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlBackupRunsListRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::BackupRunsListResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "backupRuns"),
       rest_internal::TrimEmptyQueryParameters(

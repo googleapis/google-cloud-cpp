@@ -43,18 +43,22 @@ class SqlSslCertsServiceRestLogging : public SqlSslCertsServiceRestStub {
 
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::SslCert> Get(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlSslCertsGetRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::SslCertsInsertResponse> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::SslCertsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlSslCertsListRequest const& request) override;
 
  private:

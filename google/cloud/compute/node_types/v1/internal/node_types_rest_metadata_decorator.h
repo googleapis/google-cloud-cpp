@@ -41,21 +41,25 @@ class NodeTypesRestMetadata : public NodeTypesRestStub {
   StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
   AggregatedListNodeTypes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_types::v1::
           AggregatedListNodeTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeTypeList> ListNodeTypes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const&
           request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<NodeTypesRestStub> child_;

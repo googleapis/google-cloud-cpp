@@ -38,18 +38,22 @@ class SqlBackupRunsServiceRestStub {
 
   virtual StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::sql::v1::BackupRun> Get(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::sql::v1::BackupRunsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlBackupRunsListRequest const& request) = 0;
 };
 
@@ -64,20 +68,24 @@ class DefaultSqlBackupRunsServiceRestStub
 
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request)
       override;
 
   StatusOr<google::cloud::sql::v1::BackupRun> Get(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request)
       override;
 
   StatusOr<google::cloud::sql::v1::BackupRunsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlBackupRunsListRequest const& request) override;
 
  private:

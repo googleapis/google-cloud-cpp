@@ -46,12 +46,14 @@ class InterconnectRemoteLocationsRestLogging
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
   GetInterconnectRemoteLocation(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_remote_locations::v1::
           GetInterconnectRemoteLocationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocationList>
   ListInterconnectRemoteLocations(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_remote_locations::v1::
           ListInterconnectRemoteLocationsRequest const& request) override;
 

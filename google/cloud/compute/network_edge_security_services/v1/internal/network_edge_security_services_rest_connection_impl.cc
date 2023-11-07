@@ -61,25 +61,27 @@ NetworkEdgeSecurityServicesRestConnectionImpl::
   return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
       std::string,
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityServicesScopedList>>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<compute_network_edge_security_services_v1::
                                    NetworkEdgeSecurityServicesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::network_edge_security_services::v1::
               AggregatedListNetworkEdgeSecurityServicesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
                 rest_internal::RestContext& rest_context,
+                Options const& options,
                 google::cloud::cpp::compute::network_edge_security_services::
                     v1::AggregatedListNetworkEdgeSecurityServicesRequest const&
                         request) {
               return stub->AggregatedListNetworkEdgeSecurityServices(
-                  rest_context, request);
+                  rest_context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::
              NetworkEdgeSecurityServiceAggregatedList r) {
@@ -104,26 +106,31 @@ NetworkEdgeSecurityServicesRestConnectionImpl::DeleteNetworkEdgeSecurityService(
       google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::network_edge_security_services::v1::
               DeleteNetworkEdgeSecurityServiceRequest const& request) {
         return stub->AsyncDeleteNetworkEdgeSecurityService(
-            cq, std::move(context), request);
+            cq, std::move(context), options, request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -157,12 +164,13 @@ NetworkEdgeSecurityServicesRestConnectionImpl::GetNetworkEdgeSecurityService(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNetworkEdgeSecurityService(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::network_edge_security_services::v1::
                  GetNetworkEdgeSecurityServiceRequest const& request) {
-        return stub_->GetNetworkEdgeSecurityService(rest_context, request);
+        return stub_->GetNetworkEdgeSecurityService(rest_context, options,
+                                                    request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -176,26 +184,31 @@ NetworkEdgeSecurityServicesRestConnectionImpl::InsertNetworkEdgeSecurityService(
       google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::network_edge_security_services::v1::
               InsertNetworkEdgeSecurityServiceRequest const& request) {
         return stub->AsyncInsertNetworkEdgeSecurityService(
-            cq, std::move(context), request);
+            cq, std::move(context), options, request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -232,26 +245,31 @@ NetworkEdgeSecurityServicesRestConnectionImpl::PatchNetworkEdgeSecurityService(
       google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::network_edge_security_services::v1::
               PatchNetworkEdgeSecurityServiceRequest const& request) {
         return stub->AsyncPatchNetworkEdgeSecurityService(
-            cq, std::move(context), request);
+            cq, std::move(context), options, request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },

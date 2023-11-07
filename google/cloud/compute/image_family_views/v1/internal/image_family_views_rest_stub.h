@@ -38,6 +38,7 @@ class ImageFamilyViewsRestStub {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
   GetImageFamilyView(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::image_family_views::v1::
                          GetImageFamilyViewRequest const& request) = 0;
 };
@@ -52,6 +53,7 @@ class DefaultImageFamilyViewsRestStub : public ImageFamilyViewsRestStub {
 
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::image_family_views::v1::
           GetImageFamilyViewRequest const& request) override;
 

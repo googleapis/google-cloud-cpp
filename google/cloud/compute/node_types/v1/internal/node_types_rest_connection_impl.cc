@@ -51,21 +51,23 @@ NodeTypesRestConnectionImpl::AggregatedListNodeTypes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<compute_node_types_v1::NodeTypesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::cpp::compute::node_types::v1::
-              AggregatedListNodeTypesRequest const& r) {
+          Options const& options, google::cloud::cpp::compute::node_types::v1::
+                                      AggregatedListNodeTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::node_types::v1::
                        AggregatedListNodeTypesRequest const& request) {
-              return stub->AggregatedListNodeTypes(rest_context, request);
+              return stub->AggregatedListNodeTypes(rest_context, options,
+                                                   request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::NodeTypeAggregatedList r) {
         std::vector<std::pair<
@@ -86,10 +88,12 @@ NodeTypesRestConnectionImpl::GetNodeType(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNodeType(request),
       [this](
-          rest_internal::RestContext& rest_context,
+          rest_internal::RestContext& rest_context, Options const& options,
           google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
-              request) { return stub_->GetNodeType(rest_context, request); },
-      request, __func__);
+              request) {
+        return stub_->GetNodeType(rest_context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeType>
@@ -101,21 +105,22 @@ NodeTypesRestConnectionImpl::ListNodeTypes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::NodeType>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<compute_node_types_v1::NodeTypesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::cpp::compute::node_types::v1::
-              ListNodeTypesRequest const& r) {
+          Options const& options, google::cloud::cpp::compute::node_types::v1::
+                                      ListNodeTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::node_types::v1::
                        ListNodeTypesRequest const& request) {
-              return stub->ListNodeTypes(rest_context, request);
+              return stub->ListNodeTypes(rest_context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::NodeTypeList r) {
         std::vector<google::cloud::cpp::compute::v1::NodeType> result(

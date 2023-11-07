@@ -40,6 +40,7 @@ class AddressesRestStub {
   virtual StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
   AggregatedListAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::
           AggregatedListAddressesRequest const& request) = 0;
 
@@ -47,11 +48,13 @@ class AddressesRestStub {
   AsyncDeleteAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
           request) = 0;
 
@@ -59,11 +62,13 @@ class AddressesRestStub {
   AsyncInsertAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::AddressList> ListAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const&
           request) = 0;
 
@@ -71,6 +76,7 @@ class AddressesRestStub {
   AsyncMove(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::MoveRequest const&
           request) = 0;
 
@@ -78,6 +84,7 @@ class AddressesRestStub {
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
           request) = 0;
 
@@ -85,12 +92,14 @@ class AddressesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -107,6 +116,7 @@ class DefaultAddressesRestStub : public AddressesRestStub {
   StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
   AggregatedListAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::
           AggregatedListAddressesRequest const& request) override;
 
@@ -114,11 +124,13 @@ class DefaultAddressesRestStub : public AddressesRestStub {
   AsyncDeleteAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
           request) override;
 
@@ -126,23 +138,27 @@ class DefaultAddressesRestStub : public AddressesRestStub {
   AsyncInsertAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AddressList> ListAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncMove(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::MoveRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
           request) override;
 
@@ -150,12 +166,14 @@ class DefaultAddressesRestStub : public AddressesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

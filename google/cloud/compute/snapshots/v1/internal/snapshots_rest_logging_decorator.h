@@ -46,16 +46,19 @@ class SnapshotsRestLogging : public SnapshotsRestStub {
   AsyncDeleteSnapshot(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
           request) override;
 
@@ -63,27 +66,32 @@ class SnapshotsRestLogging : public SnapshotsRestStub {
   AsyncInsertSnapshot(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SnapshotList> ListSnapshots(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::snapshots::v1::
                          TestIamPermissionsRequest const& request) override;
 
@@ -91,12 +99,14 @@ class SnapshotsRestLogging : public SnapshotsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

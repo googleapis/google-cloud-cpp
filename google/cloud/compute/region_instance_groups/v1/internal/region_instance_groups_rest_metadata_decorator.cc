@@ -43,68 +43,73 @@ RegionInstanceGroupsRestMetadata::RegionInstanceGroupsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
 RegionInstanceGroupsRestMetadata::GetInstanceGroup(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_instance_groups::v1::
         GetInstanceGroupRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetInstanceGroup(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetInstanceGroup(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionInstanceGroupList>
 RegionInstanceGroupsRestMetadata::ListRegionInstanceGroups(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_instance_groups::v1::
         ListRegionInstanceGroupsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListRegionInstanceGroups(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListRegionInstanceGroups(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionInstanceGroupsListInstances>
 RegionInstanceGroupsRestMetadata::ListInstances(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_instance_groups::v1::
         ListInstancesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListInstances(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListInstances(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupsRestMetadata::AsyncSetNamedPorts(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_instance_groups::v1::
         SetNamedPortsRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetNamedPorts(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetNamedPorts(cq, std::move(rest_context), options,
+                                    request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> RegionInstanceGroupsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void RegionInstanceGroupsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

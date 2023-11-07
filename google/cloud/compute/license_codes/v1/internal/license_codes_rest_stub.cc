@@ -41,13 +41,13 @@ DefaultLicenseCodesRestStub::DefaultLicenseCodesRestStub(
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
 DefaultLicenseCodesRestStub::GetLicenseCode(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::LicenseCode>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "licenseCodes", "/", request.license_code()));
 }
@@ -55,17 +55,18 @@ DefaultLicenseCodesRestStub::GetLicenseCode(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultLicenseCodesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::license_codes::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
       false,
-      absl::StrCat(
-          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
-          "/", "projects", "/", request.project(), "/", "global", "/",
-          "licenseCodes", "/", request.resource(), "/", "testIamPermissions"));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "licenseCodes", "/", request.resource(), "/",
+                   "testIamPermissions"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

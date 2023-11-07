@@ -45,100 +45,109 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesRestMetadata::AsyncDeleteTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
         DeleteTargetHttpsProxyRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncDeleteTargetHttpsProxy(cq, std::move(rest_context),
-                                             request);
+                                             options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
 RegionTargetHttpsProxiesRestMetadata::GetTargetHttpsProxy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
         GetTargetHttpsProxyRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetTargetHttpsProxy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetTargetHttpsProxy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesRestMetadata::AsyncInsertTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
         InsertTargetHttpsProxyRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncInsertTargetHttpsProxy(cq, std::move(rest_context),
-                                             request);
+                                             options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxyList>
 RegionTargetHttpsProxiesRestMetadata::ListRegionTargetHttpsProxies(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
         ListRegionTargetHttpsProxiesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListRegionTargetHttpsProxies(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListRegionTargetHttpsProxies(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesRestMetadata::AsyncPatchTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
         PatchTargetHttpsProxyRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncPatchTargetHttpsProxy(cq, std::move(rest_context),
-                                            request);
+                                            options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesRestMetadata::AsyncSetSslCertificates(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
         SetSslCertificatesRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetSslCertificates(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetSslCertificates(cq, std::move(rest_context), options,
+                                         request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesRestMetadata::AsyncSetUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
         SetUrlMapRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetUrlMap(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetUrlMap(cq, std::move(rest_context), options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> RegionTargetHttpsProxiesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void RegionTargetHttpsProxiesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

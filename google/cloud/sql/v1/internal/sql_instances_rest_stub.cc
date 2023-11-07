@@ -42,11 +42,11 @@ DefaultSqlInstancesServiceRestStub::DefaultSqlInstancesServiceRestStub(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::AddServerCa(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "addServerCa"));
 }
@@ -54,11 +54,11 @@ DefaultSqlInstancesServiceRestStub::AddServerCa(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::Clone(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesCloneRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "clone"));
 }
@@ -66,11 +66,11 @@ DefaultSqlInstancesServiceRestStub::Clone(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::Delete(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesDeleteRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance()));
 }
@@ -78,11 +78,11 @@ DefaultSqlInstancesServiceRestStub::Delete(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::DemoteMaster(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "demoteMaster"));
 }
@@ -90,11 +90,11 @@ DefaultSqlInstancesServiceRestStub::DemoteMaster(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::Export(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesExportRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "export"));
 }
@@ -102,11 +102,11 @@ DefaultSqlInstancesServiceRestStub::Export(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::Failover(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesFailoverRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "failover"));
 }
@@ -114,11 +114,11 @@ DefaultSqlInstancesServiceRestStub::Failover(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::Reencrypt(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "reencrypt"));
 }
@@ -126,11 +126,11 @@ DefaultSqlInstancesServiceRestStub::Reencrypt(
 StatusOr<google::cloud::sql::v1::DatabaseInstance>
 DefaultSqlInstancesServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesGetRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::DatabaseInstance>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance()));
 }
@@ -138,11 +138,11 @@ DefaultSqlInstancesServiceRestStub::Get(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::Import(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesImportRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "import"));
 }
@@ -150,22 +150,22 @@ DefaultSqlInstancesServiceRestStub::Import(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesInsertRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances"));
 }
 
 StatusOr<google::cloud::sql::v1::InstancesListResponse>
 DefaultSqlInstancesServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesListRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::InstancesListResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
@@ -176,12 +176,12 @@ DefaultSqlInstancesServiceRestStub::List(
 StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
 DefaultSqlInstancesServiceRestStub::ListServerCas(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::sql::v1::InstancesListServerCasResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "listServerCas"));
 }
@@ -189,11 +189,11 @@ DefaultSqlInstancesServiceRestStub::ListServerCas(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::Patch(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesPatchRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Patch<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance()));
 }
@@ -201,11 +201,11 @@ DefaultSqlInstancesServiceRestStub::Patch(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::PromoteReplica(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "promoteReplica"));
 }
@@ -213,11 +213,11 @@ DefaultSqlInstancesServiceRestStub::PromoteReplica(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::ResetSslConfig(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "resetSslConfig"));
 }
@@ -225,11 +225,11 @@ DefaultSqlInstancesServiceRestStub::ResetSslConfig(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::Restart(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesRestartRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "restart"));
 }
@@ -237,11 +237,11 @@ DefaultSqlInstancesServiceRestStub::Restart(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::RestoreBackup(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "restoreBackup"));
 }
@@ -249,11 +249,11 @@ DefaultSqlInstancesServiceRestStub::RestoreBackup(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::RotateServerCa(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "rotateServerCa"));
 }
@@ -261,11 +261,11 @@ DefaultSqlInstancesServiceRestStub::RotateServerCa(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::StartReplica(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "startReplica"));
 }
@@ -273,11 +273,11 @@ DefaultSqlInstancesServiceRestStub::StartReplica(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::StopReplica(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "stopReplica"));
 }
@@ -285,11 +285,11 @@ DefaultSqlInstancesServiceRestStub::StopReplica(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::TruncateLog(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "truncateLog"));
 }
@@ -297,11 +297,11 @@ DefaultSqlInstancesServiceRestStub::TruncateLog(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::Update(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesUpdateRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance()));
 }
@@ -309,12 +309,12 @@ DefaultSqlInstancesServiceRestStub::Update(
 StatusOr<google::cloud::sql::v1::SslCert>
 DefaultSqlInstancesServiceRestStub::CreateEphemeral(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::SslCert>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "createEphemeral"));
 }
@@ -322,12 +322,12 @@ DefaultSqlInstancesServiceRestStub::CreateEphemeral(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::RescheduleMaintenance(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "rescheduleMaintenance"));
 }
@@ -335,13 +335,13 @@ DefaultSqlInstancesServiceRestStub::RescheduleMaintenance(
 StatusOr<google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>
 DefaultSqlInstancesServiceRestStub::VerifyExternalSyncSettings(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "verifyExternalSyncSettings"),
       rest_internal::TrimEmptyQueryParameters(
@@ -355,12 +355,12 @@ DefaultSqlInstancesServiceRestStub::VerifyExternalSyncSettings(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::StartExternalSync(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "startExternalSync"),
       rest_internal::TrimEmptyQueryParameters(
@@ -374,12 +374,12 @@ DefaultSqlInstancesServiceRestStub::StartExternalSync(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::PerformDiskShrink(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "performDiskShrink"));
 }
@@ -387,13 +387,13 @@ DefaultSqlInstancesServiceRestStub::PerformDiskShrink(
 StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
 DefaultSqlInstancesServiceRestStub::GetDiskShrinkConfig(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "getDiskShrinkConfig"));
 }
@@ -401,12 +401,12 @@ DefaultSqlInstancesServiceRestStub::GetDiskShrinkConfig(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlInstancesServiceRestStub::ResetReplicaSize(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "resetReplicaSize"));
 }
@@ -414,13 +414,13 @@ DefaultSqlInstancesServiceRestStub::ResetReplicaSize(
 StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
 DefaultSqlInstancesServiceRestStub::GetLatestRecoveryTime(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "getLatestRecoveryTime"));
 }

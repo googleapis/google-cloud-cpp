@@ -39,17 +39,20 @@ class GlobalOrganizationOperationsRestStub {
 
   virtual Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_organization_operations::v1::
           DeleteOperationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_organization_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::OperationList>
   ListGlobalOrganizationOperations(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_organization_operations::v1::
           ListGlobalOrganizationOperationsRequest const& request) = 0;
 };
@@ -65,17 +68,20 @@ class DefaultGlobalOrganizationOperationsRestStub
 
   Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_organization_operations::v1::
           DeleteOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_organization_operations::v1::
           GetOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList>
   ListGlobalOrganizationOperations(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_organization_operations::v1::
           ListGlobalOrganizationOperationsRequest const& request) override;
 

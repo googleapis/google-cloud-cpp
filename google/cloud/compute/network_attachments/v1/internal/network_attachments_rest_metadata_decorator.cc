@@ -42,118 +42,125 @@ NetworkAttachmentsRestMetadata::NetworkAttachmentsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
 NetworkAttachmentsRestMetadata::AggregatedListNetworkAttachments(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         AggregatedListNetworkAttachmentsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListNetworkAttachments(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListNetworkAttachments(rest_context, options,
+                                                  request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsRestMetadata::AsyncDeleteNetworkAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         DeleteNetworkAttachmentRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncDeleteNetworkAttachment(cq, std::move(rest_context),
-                                              request);
+                                              options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
 NetworkAttachmentsRestMetadata::GetNetworkAttachment(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         GetNetworkAttachmentRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetNetworkAttachment(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetNetworkAttachment(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NetworkAttachmentsRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         GetIamPolicyRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetIamPolicy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsRestMetadata::AsyncInsertNetworkAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         InsertNetworkAttachmentRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncInsertNetworkAttachment(cq, std::move(rest_context),
-                                              request);
+                                              options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList>
 NetworkAttachmentsRestMetadata::ListNetworkAttachments(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         ListNetworkAttachmentsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListNetworkAttachments(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListNetworkAttachments(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsRestMetadata::AsyncPatchNetworkAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         PatchNetworkAttachmentRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncPatchNetworkAttachment(cq, std::move(rest_context),
-                                             request);
+                                             options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NetworkAttachmentsRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         SetIamPolicyRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->SetIamPolicy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->SetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NetworkAttachmentsRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         TestIamPermissionsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->TestIamPermissions(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> NetworkAttachmentsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void NetworkAttachmentsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

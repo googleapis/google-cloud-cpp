@@ -41,6 +41,7 @@ class TargetVpnGatewaysRestStub {
       google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
   AggregatedListTargetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           AggregatedListTargetVpnGatewaysRequest const& request) = 0;
 
@@ -48,11 +49,13 @@ class TargetVpnGatewaysRestStub {
   AsyncDeleteTargetVpnGateway(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           DeleteTargetVpnGatewayRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
   GetTargetVpnGateway(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
                       google::cloud::cpp::compute::target_vpn_gateways::v1::
                           GetTargetVpnGatewayRequest const& request) = 0;
 
@@ -60,11 +63,13 @@ class TargetVpnGatewaysRestStub {
   AsyncInsertTargetVpnGateway(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           InsertTargetVpnGatewayRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayList>
   ListTargetVpnGateways(google::cloud::rest_internal::RestContext& rest_context,
+                        Options const& options,
                         google::cloud::cpp::compute::target_vpn_gateways::v1::
                             ListTargetVpnGatewaysRequest const& request) = 0;
 
@@ -72,6 +77,7 @@ class TargetVpnGatewaysRestStub {
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           SetLabelsRequest const& request) = 0;
 
@@ -79,12 +85,14 @@ class TargetVpnGatewaysRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -101,6 +109,7 @@ class DefaultTargetVpnGatewaysRestStub : public TargetVpnGatewaysRestStub {
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
   AggregatedListTargetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           AggregatedListTargetVpnGatewaysRequest const& request) override;
 
@@ -108,11 +117,13 @@ class DefaultTargetVpnGatewaysRestStub : public TargetVpnGatewaysRestStub {
   AsyncDeleteTargetVpnGateway(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           DeleteTargetVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
   GetTargetVpnGateway(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
                       google::cloud::cpp::compute::target_vpn_gateways::v1::
                           GetTargetVpnGatewayRequest const& request) override;
 
@@ -120,18 +131,21 @@ class DefaultTargetVpnGatewaysRestStub : public TargetVpnGatewaysRestStub {
   AsyncInsertTargetVpnGateway(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           InsertTargetVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayList>
   ListTargetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           ListTargetVpnGatewaysRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           SetLabelsRequest const& request) override;
 
@@ -139,12 +153,14 @@ class DefaultTargetVpnGatewaysRestStub : public TargetVpnGatewaysRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

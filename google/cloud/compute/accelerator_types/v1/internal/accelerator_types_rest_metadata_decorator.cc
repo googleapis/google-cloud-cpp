@@ -42,39 +42,38 @@ AcceleratorTypesRestMetadata::AcceleratorTypesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
 AcceleratorTypesRestMetadata::AggregatedListAcceleratorTypes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::accelerator_types::v1::
         AggregatedListAcceleratorTypesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListAcceleratorTypes(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListAcceleratorTypes(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
 AcceleratorTypesRestMetadata::GetAcceleratorType(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::accelerator_types::v1::
         GetAcceleratorTypeRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetAcceleratorType(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetAcceleratorType(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
 AcceleratorTypesRestMetadata::ListAcceleratorTypes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::accelerator_types::v1::
         ListAcceleratorTypesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListAcceleratorTypes(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListAcceleratorTypes(rest_context, options, request);
 }
 
 void AcceleratorTypesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

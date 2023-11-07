@@ -43,11 +43,13 @@ class RegionsRestLogging : public RegionsRestStub {
 
   StatusOr<google::cloud::cpp::compute::v1::Region> GetRegion(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::RegionList> ListRegions(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
           request) override;
 

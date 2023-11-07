@@ -35,16 +35,16 @@ ImageFamilyViewsRestLogging::ImageFamilyViewsRestLogging(
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
 ImageFamilyViewsRestLogging::GetImageFamilyView(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::image_family_views::v1::
         GetImageFamilyViewRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::image_family_views::v1::
                  GetImageFamilyViewRequest const& request) {
-        return child_->GetImageFamilyView(rest_context, request);
+        return child_->GetImageFamilyView(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

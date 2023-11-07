@@ -40,23 +40,27 @@ class DatabaseAdminRestStub {
   virtual StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
   ListDatabases(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::ListDatabasesRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) = 0;
 
   virtual StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::GetDatabaseRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
           request) = 0;
 
@@ -64,68 +68,81 @@ class DatabaseAdminRestStub {
   AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request) = 0;
 
   virtual Status DropDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::DropDatabaseRequest const&
           request) = 0;
 
   virtual StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
           request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::CreateBackupRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCopyBackup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::CopyBackupRequest const&
           request) = 0;
 
   virtual StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::GetBackupRequest const&
           request) = 0;
 
   virtual StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::UpdateBackupRequest const&
           request) = 0;
 
   virtual Status DeleteBackup(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::DeleteBackupRequest const&
           request) = 0;
 
   virtual StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
   ListBackups(google::cloud::rest_internal::RestContext& rest_context,
+              Options const& options,
               google::spanner::admin::database::v1::ListBackupsRequest const&
                   request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request) = 0;
 
@@ -133,6 +150,7 @@ class DatabaseAdminRestStub {
       google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
   ListDatabaseOperations(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
           request) = 0;
 
@@ -140,6 +158,7 @@ class DatabaseAdminRestStub {
       google::spanner::admin::database::v1::ListBackupOperationsResponse>
   ListBackupOperations(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::ListBackupOperationsRequest const&
           request) = 0;
 
@@ -147,17 +166,20 @@ class DatabaseAdminRestStub {
       google::spanner::admin::database::v1::ListDatabaseRolesResponse>
   ListDatabaseRoles(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -173,119 +195,141 @@ class DefaultDatabaseAdminRestStub : public DatabaseAdminRestStub {
   StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
   ListDatabases(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::ListDatabasesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) override;
 
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::GetDatabaseRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request) override;
 
   Status DropDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::DropDatabaseRequest const& request)
       override;
 
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
           request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::CreateBackupRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCopyBackup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::CopyBackupRequest const& request)
       override;
 
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::GetBackupRequest const& request)
       override;
 
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::UpdateBackupRequest const& request)
       override;
 
   Status DeleteBackup(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::DeleteBackupRequest const& request)
       override;
 
   StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
   ListBackups(google::cloud::rest_internal::RestContext& rest_context,
+              Options const& options,
               google::spanner::admin::database::v1::ListBackupsRequest const&
                   request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request) override;
 
   StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
   ListDatabaseOperations(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
           request) override;
 
   StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
   ListBackupOperations(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::ListBackupOperationsRequest const&
           request) override;
 
   StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
   ListDatabaseRoles(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

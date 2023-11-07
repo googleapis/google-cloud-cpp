@@ -46,6 +46,7 @@ class BackendBucketsRestLogging : public BackendBucketsRestStub {
   AsyncAddSignedUrlKey(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_buckets::v1::
           AddSignedUrlKeyRequest const& request) override;
 
@@ -53,6 +54,7 @@ class BackendBucketsRestLogging : public BackendBucketsRestStub {
   AsyncDeleteBackendBucket(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_buckets::v1::
           DeleteBackendBucketRequest const& request) override;
 
@@ -60,16 +62,19 @@ class BackendBucketsRestLogging : public BackendBucketsRestStub {
   AsyncDeleteSignedUrlKey(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_buckets::v1::
           DeleteSignedUrlKeyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBucket(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_buckets::v1::
           GetBackendBucketRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_buckets::v1::
           GetIamPolicyRequest const& request) override;
 
@@ -77,11 +82,13 @@ class BackendBucketsRestLogging : public BackendBucketsRestStub {
   AsyncInsertBackendBucket(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_buckets::v1::
           InsertBackendBucketRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendBucketList>
   ListBackendBuckets(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::backend_buckets::v1::
                          ListBackendBucketsRequest const& request) override;
 
@@ -89,6 +96,7 @@ class BackendBucketsRestLogging : public BackendBucketsRestStub {
   AsyncPatchBackendBucket(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_buckets::v1::
           PatchBackendBucketRequest const& request) override;
 
@@ -96,16 +104,19 @@ class BackendBucketsRestLogging : public BackendBucketsRestStub {
   AsyncSetEdgeSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_buckets::v1::
           SetEdgeSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_buckets::v1::
           SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::backend_buckets::v1::
                          TestIamPermissionsRequest const& request) override;
 
@@ -113,6 +124,7 @@ class BackendBucketsRestLogging : public BackendBucketsRestStub {
   AsyncUpdateBackendBucket(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_buckets::v1::
           UpdateBackendBucketRequest const& request) override;
 
@@ -120,12 +132,14 @@ class BackendBucketsRestLogging : public BackendBucketsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

@@ -36,30 +36,32 @@ InterconnectRemoteLocationsRestLogging::InterconnectRemoteLocationsRestLogging(
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
 InterconnectRemoteLocationsRestLogging::GetInterconnectRemoteLocation(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
         GetInterconnectRemoteLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::interconnect_remote_locations::v1::
                  GetInterconnectRemoteLocationRequest const& request) {
-        return child_->GetInterconnectRemoteLocation(rest_context, request);
+        return child_->GetInterconnectRemoteLocation(rest_context, options,
+                                                     request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocationList>
 InterconnectRemoteLocationsRestLogging::ListInterconnectRemoteLocations(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
         ListInterconnectRemoteLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::interconnect_remote_locations::v1::
                  ListInterconnectRemoteLocationsRequest const& request) {
-        return child_->ListInterconnectRemoteLocations(rest_context, request);
+        return child_->ListInterconnectRemoteLocations(rest_context, options,
+                                                       request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -40,27 +40,27 @@ ZonesRestMetadata::ZonesRestMetadata(std::shared_ptr<ZonesRestStub> child,
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesRestMetadata::GetZone(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetZone(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetZone(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ZoneList>
 ZonesRestMetadata::ListZones(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListZones(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListZones(rest_context, options, request);
 }
 
 void ZonesRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                    Options const& options,
                                     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

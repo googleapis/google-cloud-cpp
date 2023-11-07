@@ -41,98 +41,109 @@ AutoscalersRestMetadata::AutoscalersRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
 AutoscalersRestMetadata::AggregatedListAutoscalers(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::autoscalers::v1::
         AggregatedListAutoscalersRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListAutoscalers(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListAutoscalers(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersRestMetadata::AsyncDeleteAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteAutoscaler(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteAutoscaler(cq, std::move(rest_context), options,
+                                       request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
 AutoscalersRestMetadata::GetAutoscaler(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetAutoscaler(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetAutoscaler(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersRestMetadata::AsyncInsertAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncInsertAutoscaler(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncInsertAutoscaler(cq, std::move(rest_context), options,
+                                       request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AutoscalerList>
 AutoscalersRestMetadata::ListAutoscalers(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListAutoscalers(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListAutoscalers(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersRestMetadata::AsyncPatchAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncPatchAutoscaler(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncPatchAutoscaler(cq, std::move(rest_context), options,
+                                      request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersRestMetadata::AsyncUpdateAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncUpdateAutoscaler(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncUpdateAutoscaler(cq, std::move(rest_context), options,
+                                       request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> AutoscalersRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::zone_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void AutoscalersRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

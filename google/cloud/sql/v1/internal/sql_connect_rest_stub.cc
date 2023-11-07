@@ -42,11 +42,11 @@ DefaultSqlConnectServiceRestStub::DefaultSqlConnectServiceRestStub(
 StatusOr<google::cloud::sql::v1::ConnectSettings>
 DefaultSqlConnectServiceRestStub::GetConnectSettings(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::ConnectSettings>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "connectSettings"));
 }
@@ -54,12 +54,12 @@ DefaultSqlConnectServiceRestStub::GetConnectSettings(
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
 DefaultSqlConnectServiceRestStub::GenerateEphemeralCert(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::sql::v1::GenerateEphemeralCertResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), ":generateEphemeralCert"),
       rest_internal::TrimEmptyQueryParameters(

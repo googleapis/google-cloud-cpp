@@ -42,56 +42,55 @@ GlobalOperationsRestMetadata::GlobalOperationsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
 GlobalOperationsRestMetadata::AggregatedListGlobalOperations(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         AggregatedListGlobalOperationsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListGlobalOperations(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListGlobalOperations(rest_context, options, request);
 }
 
 Status GlobalOperationsRestMetadata::DeleteOperation(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->DeleteOperation(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->DeleteOperation(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalOperationsRestMetadata::GetOperation(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetOperation(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetOperation(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
 GlobalOperationsRestMetadata::ListGlobalOperations(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         ListGlobalOperationsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListGlobalOperations(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListGlobalOperations(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalOperationsRestMetadata::Wait(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->Wait(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->Wait(rest_context, options, request);
 }
 
 void GlobalOperationsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

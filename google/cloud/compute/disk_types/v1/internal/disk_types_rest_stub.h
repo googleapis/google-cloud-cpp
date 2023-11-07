@@ -39,16 +39,19 @@ class DiskTypesRestStub {
   virtual StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
   AggregatedListDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::disk_types::v1::
           AggregatedListDiskTypesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::DiskTypeList> ListDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest const&
           request) = 0;
 };
@@ -64,16 +67,19 @@ class DefaultDiskTypesRestStub : public DiskTypesRestStub {
   StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
   AggregatedListDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::disk_types::v1::
           AggregatedListDiskTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskTypeList> ListDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest const&
           request) override;
 

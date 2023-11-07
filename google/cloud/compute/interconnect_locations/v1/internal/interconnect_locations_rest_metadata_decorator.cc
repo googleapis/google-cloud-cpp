@@ -43,30 +43,29 @@ InterconnectLocationsRestMetadata::InterconnectLocationsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
 InterconnectLocationsRestMetadata::GetInterconnectLocation(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::interconnect_locations::v1::
         GetInterconnectLocationRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetInterconnectLocation(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetInterconnectLocation(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectLocationList>
 InterconnectLocationsRestMetadata::ListInterconnectLocations(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::interconnect_locations::v1::
         ListInterconnectLocationsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListInterconnectLocations(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListInterconnectLocations(rest_context, options, request);
 }
 
 void InterconnectLocationsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

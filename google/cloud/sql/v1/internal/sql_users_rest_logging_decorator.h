@@ -43,22 +43,27 @@ class SqlUsersServiceRestLogging : public SqlUsersServiceRestStub {
 
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlUsersDeleteRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::User> Get(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlUsersGetRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlUsersInsertRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::UsersListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlUsersListRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Update(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlUsersUpdateRequest const& request) override;
 
  private:

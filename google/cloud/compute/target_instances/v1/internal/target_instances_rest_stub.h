@@ -41,6 +41,7 @@ class TargetInstancesRestStub {
       google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
   AggregatedListTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_instances::v1::
           AggregatedListTargetInstancesRequest const& request) = 0;
 
@@ -48,11 +49,13 @@ class TargetInstancesRestStub {
   AsyncDeleteTargetInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_instances::v1::
           DeleteTargetInstanceRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
   GetTargetInstance(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
                     google::cloud::cpp::compute::target_instances::v1::
                         GetTargetInstanceRequest const& request) = 0;
 
@@ -60,11 +63,13 @@ class TargetInstancesRestStub {
   AsyncInsertTargetInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_instances::v1::
           InsertTargetInstanceRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
   ListTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
                       google::cloud::cpp::compute::target_instances::v1::
                           ListTargetInstancesRequest const& request) = 0;
 
@@ -72,6 +77,7 @@ class TargetInstancesRestStub {
   AsyncSetSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_instances::v1::
           SetSecurityPolicyRequest const& request) = 0;
 
@@ -79,12 +85,14 @@ class TargetInstancesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zone_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -101,6 +109,7 @@ class DefaultTargetInstancesRestStub : public TargetInstancesRestStub {
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
   AggregatedListTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_instances::v1::
           AggregatedListTargetInstancesRequest const& request) override;
 
@@ -108,11 +117,13 @@ class DefaultTargetInstancesRestStub : public TargetInstancesRestStub {
   AsyncDeleteTargetInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_instances::v1::
           DeleteTargetInstanceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_instances::v1::
           GetTargetInstanceRequest const& request) override;
 
@@ -120,11 +131,13 @@ class DefaultTargetInstancesRestStub : public TargetInstancesRestStub {
   AsyncInsertTargetInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_instances::v1::
           InsertTargetInstanceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
   ListTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
                       google::cloud::cpp::compute::target_instances::v1::
                           ListTargetInstancesRequest const& request) override;
 
@@ -132,6 +145,7 @@ class DefaultTargetInstancesRestStub : public TargetInstancesRestStub {
   AsyncSetSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_instances::v1::
           SetSecurityPolicyRequest const& request) override;
 
@@ -139,12 +153,14 @@ class DefaultTargetInstancesRestStub : public TargetInstancesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zone_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteOperationRequest const& request) override;
 

@@ -36,44 +36,45 @@ GlobalOrganizationOperationsRestLogging::
       components_(std::move(components)) {}
 
 Status GlobalOrganizationOperationsRestLogging::DeleteOperation(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::global_organization_operations::v1::
                  DeleteOperationRequest const& request) {
-        return child_->DeleteOperation(rest_context, request);
+        return child_->DeleteOperation(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalOrganizationOperationsRestLogging::GetOperation(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::global_organization_operations::v1::
                  GetOperationRequest const& request) {
-        return child_->GetOperation(rest_context, request);
+        return child_->GetOperation(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
 GlobalOrganizationOperationsRestLogging::ListGlobalOrganizationOperations(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         ListGlobalOrganizationOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::global_organization_operations::v1::
                  ListGlobalOrganizationOperationsRequest const& request) {
-        return child_->ListGlobalOrganizationOperations(rest_context, request);
+        return child_->ListGlobalOrganizationOperations(rest_context, options,
+                                                        request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

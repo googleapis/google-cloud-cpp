@@ -41,12 +41,14 @@ class InstanceAdminRestStub {
       google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
   ListInstanceConfigs(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
           request) = 0;
 
   virtual StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
   GetInstanceConfig(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
           request) = 0;
 
@@ -54,6 +56,7 @@ class InstanceAdminRestStub {
   AsyncCreateInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request) = 0;
 
@@ -61,11 +64,13 @@ class InstanceAdminRestStub {
   AsyncUpdateInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request) = 0;
 
   virtual Status DeleteInstanceConfig(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
           request) = 0;
 
@@ -73,58 +78,69 @@ class InstanceAdminRestStub {
                        ListInstanceConfigOperationsResponse>
   ListInstanceConfigOperations(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::
           ListInstanceConfigOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
   ListInstances(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::ListInstancesRequest const&
           request) = 0;
 
   virtual StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::GetInstanceRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request) = 0;
 
   virtual Status DeleteInstance(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::DeleteInstanceRequest const&
           request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -140,29 +156,34 @@ class DefaultInstanceAdminRestStub : public InstanceAdminRestStub {
   StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
   ListInstanceConfigs(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
           request) override;
 
   StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
   GetInstanceConfig(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request) override;
 
   Status DeleteInstanceConfig(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
           request) override;
 
@@ -170,57 +191,68 @@ class DefaultInstanceAdminRestStub : public InstanceAdminRestStub {
                ListInstanceConfigOperationsResponse>
   ListInstanceConfigOperations(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::
           ListInstanceConfigOperationsRequest const& request) override;
 
   StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
   ListInstances(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::GetInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request) override;
 
   Status DeleteInstance(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::DeleteInstanceRequest const&
           request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

@@ -43,13 +43,16 @@ class SqlOperationsServiceRestLogging : public SqlOperationsServiceRestStub {
 
   StatusOr<google::cloud::sql::v1::Operation> Get(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlOperationsGetRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::OperationsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlOperationsListRequest const& request) override;
 
   Status Cancel(google::cloud::rest_internal::RestContext& rest_context,
+                Options const& options,
                 google::cloud::sql::v1::SqlOperationsCancelRequest const&
                     request) override;
 

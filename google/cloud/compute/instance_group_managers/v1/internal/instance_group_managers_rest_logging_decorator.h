@@ -47,12 +47,14 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncAbandonInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           AbandonInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>
   AggregatedListInstanceGroupManagers(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           AggregatedListInstanceGroupManagersRequest const& request) override;
 
@@ -60,6 +62,7 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncApplyUpdatesToInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           ApplyUpdatesToInstancesRequest const& request) override;
 
@@ -67,6 +70,7 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncCreateInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           CreateInstancesRequest const& request) override;
 
@@ -74,6 +78,7 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncDeleteInstanceGroupManager(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           DeleteInstanceGroupManagerRequest const& request) override;
 
@@ -81,6 +86,7 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncDeleteInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           DeleteInstancesRequest const& request) override;
 
@@ -88,12 +94,14 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncDeletePerInstanceConfigs(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           DeletePerInstanceConfigsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
   GetInstanceGroupManager(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           GetInstanceGroupManagerRequest const& request) override;
 
@@ -101,18 +109,21 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncInsertInstanceGroupManager(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           InsertInstanceGroupManagerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerList>
   ListInstanceGroupManagers(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           ListInstanceGroupManagersRequest const& request) override;
 
   StatusOr<
       google::cloud::cpp::compute::v1::InstanceGroupManagersListErrorsResponse>
   ListErrors(google::cloud::rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::cpp::compute::instance_group_managers::v1::
                  ListErrorsRequest const& request) override;
 
@@ -120,6 +131,7 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
                InstanceGroupManagersListManagedInstancesResponse>
   ListManagedInstances(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           ListManagedInstancesRequest const& request) override;
 
@@ -127,6 +139,7 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
                InstanceGroupManagersListPerInstanceConfigsResp>
   ListPerInstanceConfigs(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           ListPerInstanceConfigsRequest const& request) override;
 
@@ -134,6 +147,7 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncPatchInstanceGroupManager(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           PatchInstanceGroupManagerRequest const& request) override;
 
@@ -141,6 +155,7 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncPatchPerInstanceConfigs(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           PatchPerInstanceConfigsRequest const& request) override;
 
@@ -148,12 +163,14 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncRecreateInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           RecreateInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncResize(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           ResizeRequest const& request) override;
 
@@ -161,6 +178,7 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncSetInstanceTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           SetInstanceTemplateRequest const& request) override;
 
@@ -168,6 +186,7 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncSetTargetPools(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           SetTargetPoolsRequest const& request) override;
 
@@ -175,6 +194,7 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncUpdatePerInstanceConfigs(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           UpdatePerInstanceConfigsRequest const& request) override;
 
@@ -182,12 +202,14 @@ class InstanceGroupManagersRestLogging : public InstanceGroupManagersRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zone_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteOperationRequest const& request) override;
 

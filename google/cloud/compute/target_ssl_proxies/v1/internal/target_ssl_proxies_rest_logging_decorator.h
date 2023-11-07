@@ -46,11 +46,13 @@ class TargetSslProxiesRestLogging : public TargetSslProxiesRestStub {
   AsyncDeleteTargetSslProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           DeleteTargetSslProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           GetTargetSslProxyRequest const& request) override;
 
@@ -58,11 +60,13 @@ class TargetSslProxiesRestLogging : public TargetSslProxiesRestStub {
   AsyncInsertTargetSslProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           InsertTargetSslProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList>
   ListTargetSslProxies(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
                        google::cloud::cpp::compute::target_ssl_proxies::v1::
                            ListTargetSslProxiesRequest const& request) override;
 
@@ -70,6 +74,7 @@ class TargetSslProxiesRestLogging : public TargetSslProxiesRestStub {
   AsyncSetBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetBackendServiceRequest const& request) override;
 
@@ -77,6 +82,7 @@ class TargetSslProxiesRestLogging : public TargetSslProxiesRestStub {
   AsyncSetCertificateMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetCertificateMapRequest const& request) override;
 
@@ -84,6 +90,7 @@ class TargetSslProxiesRestLogging : public TargetSslProxiesRestStub {
   AsyncSetProxyHeader(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetProxyHeaderRequest const& request) override;
 
@@ -91,6 +98,7 @@ class TargetSslProxiesRestLogging : public TargetSslProxiesRestStub {
   AsyncSetSslCertificates(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetSslCertificatesRequest const& request) override;
 
@@ -98,6 +106,7 @@ class TargetSslProxiesRestLogging : public TargetSslProxiesRestStub {
   AsyncSetSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetSslPolicyRequest const& request) override;
 
@@ -105,12 +114,14 @@ class TargetSslProxiesRestLogging : public TargetSslProxiesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

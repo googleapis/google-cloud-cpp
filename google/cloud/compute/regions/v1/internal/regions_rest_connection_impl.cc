@@ -46,10 +46,12 @@ RegionsRestConnectionImpl::GetRegion(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRegion(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::regions::v1::GetRegionRequest const&
-                 request) { return stub_->GetRegion(rest_context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetRegion(rest_context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Region>
@@ -61,21 +63,23 @@ RegionsRestConnectionImpl::ListRegions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Region>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<compute_regions_v1::RegionsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
               r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::regions::v1::
                        ListRegionsRequest const& request) {
-              return stub->ListRegions(rest_context, request);
+              return stub->ListRegions(rest_context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::RegionList r) {
         std::vector<google::cloud::cpp::compute::v1::Region> result(

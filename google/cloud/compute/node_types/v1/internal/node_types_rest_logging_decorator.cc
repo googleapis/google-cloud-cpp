@@ -35,43 +35,45 @@ NodeTypesRestLogging::NodeTypesRestLogging(
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
 NodeTypesRestLogging::AggregatedListNodeTypes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_types::v1::
         AggregatedListNodeTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::node_types::v1::
                  AggregatedListNodeTypesRequest const& request) {
-        return child_->AggregatedListNodeTypes(rest_context, request);
+        return child_->AggregatedListNodeTypes(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
 NodeTypesRestLogging::GetNodeType(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          rest_internal::RestContext& rest_context,
+          rest_internal::RestContext& rest_context, Options const& options,
           google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
-              request) { return child_->GetNodeType(rest_context, request); },
-      rest_context, request, __func__, tracing_options_);
+              request) {
+        return child_->GetNodeType(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeList>
 NodeTypesRestLogging::ListNodeTypes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::node_types::v1::
                  ListNodeTypesRequest const& request) {
-        return child_->ListNodeTypes(rest_context, request);
+        return child_->ListNodeTypes(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

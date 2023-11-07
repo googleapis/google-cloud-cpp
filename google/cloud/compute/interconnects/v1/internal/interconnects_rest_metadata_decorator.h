@@ -44,22 +44,26 @@ class InterconnectsRestMetadata : public InterconnectsRestStub {
   AsyncDeleteInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnects::v1::
           DeleteInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnect(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnects::v1::
           GetInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
   GetDiagnostics(google::cloud::rest_internal::RestContext& rest_context,
+                 Options const& options,
                  google::cloud::cpp::compute::interconnects::v1::
                      GetDiagnosticsRequest const& request) override;
 
   StatusOr<
       google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
   GetMacsecConfig(google::cloud::rest_internal::RestContext& rest_context,
+                  Options const& options,
                   google::cloud::cpp::compute::interconnects::v1::
                       GetMacsecConfigRequest const& request) override;
 
@@ -67,11 +71,13 @@ class InterconnectsRestMetadata : public InterconnectsRestStub {
   AsyncInsertInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnects::v1::
           InsertInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectList> ListInterconnects(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnects::v1::
           ListInterconnectsRequest const& request) override;
 
@@ -79,6 +85,7 @@ class InterconnectsRestMetadata : public InterconnectsRestStub {
   AsyncPatchInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnects::v1::
           PatchInterconnectRequest const& request) override;
 
@@ -86,6 +93,7 @@ class InterconnectsRestMetadata : public InterconnectsRestStub {
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
           request) override;
 
@@ -93,17 +101,20 @@ class InterconnectsRestMetadata : public InterconnectsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<InterconnectsRestStub> child_;

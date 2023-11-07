@@ -46,83 +46,89 @@ StatusOr<
     google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>
 NetworkEdgeSecurityServicesRestMetadata::
     AggregatedListNetworkEdgeSecurityServices(
-        rest_internal::RestContext& rest_context,
+        rest_internal::RestContext& rest_context, Options const& options,
         google::cloud::cpp::compute::network_edge_security_services::v1::
             AggregatedListNetworkEdgeSecurityServicesRequest const& request) {
-  SetMetadata(rest_context);
+  SetMetadata(rest_context, options);
   return child_->AggregatedListNetworkEdgeSecurityServices(rest_context,
-                                                           request);
+                                                           options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesRestMetadata::AsyncDeleteNetworkEdgeSecurityService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         DeleteNetworkEdgeSecurityServiceRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncDeleteNetworkEdgeSecurityService(
-      cq, std::move(rest_context), request);
+      cq, std::move(rest_context), options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
 NetworkEdgeSecurityServicesRestMetadata::GetNetworkEdgeSecurityService(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         GetNetworkEdgeSecurityServiceRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetNetworkEdgeSecurityService(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetNetworkEdgeSecurityService(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesRestMetadata::AsyncInsertNetworkEdgeSecurityService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         InsertNetworkEdgeSecurityServiceRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncInsertNetworkEdgeSecurityService(
-      cq, std::move(rest_context), request);
+      cq, std::move(rest_context), options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesRestMetadata::AsyncPatchNetworkEdgeSecurityService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         PatchNetworkEdgeSecurityServiceRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncPatchNetworkEdgeSecurityService(
-      cq, std::move(rest_context), request);
+      cq, std::move(rest_context), options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> NetworkEdgeSecurityServicesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void NetworkEdgeSecurityServicesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

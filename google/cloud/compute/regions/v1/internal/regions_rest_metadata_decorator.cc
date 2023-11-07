@@ -41,28 +41,28 @@ RegionsRestMetadata::RegionsRestMetadata(std::shared_ptr<RegionsRestStub> child,
 
 StatusOr<google::cloud::cpp::compute::v1::Region>
 RegionsRestMetadata::GetRegion(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetRegion(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetRegion(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionList>
 RegionsRestMetadata::ListRegions(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListRegions(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListRegions(rest_context, options, request);
 }
 
 void RegionsRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                      Options const& options,
                                       std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

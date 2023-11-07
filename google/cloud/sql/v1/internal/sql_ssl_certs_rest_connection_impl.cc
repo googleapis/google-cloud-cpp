@@ -45,11 +45,11 @@ SqlSslCertsServiceRestConnectionImpl::Delete(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Delete(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
-        return stub_->Delete(rest_context, request);
+        return stub_->Delete(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::sql::v1::SslCert>
@@ -59,11 +59,11 @@ SqlSslCertsServiceRestConnectionImpl::Get(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Get(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
-        return stub_->Get(rest_context, request);
+        return stub_->Get(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
@@ -73,11 +73,11 @@ SqlSslCertsServiceRestConnectionImpl::Insert(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Insert(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
-        return stub_->Insert(rest_context, request);
+        return stub_->Insert(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsListResponse>
@@ -87,11 +87,11 @@ SqlSslCertsServiceRestConnectionImpl::List(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->List(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
-        return stub_->List(rest_context, request);
+        return stub_->List(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

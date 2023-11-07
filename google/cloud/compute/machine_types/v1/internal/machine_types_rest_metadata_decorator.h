@@ -41,21 +41,25 @@ class MachineTypesRestMetadata : public MachineTypesRestStub {
   StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
   AggregatedListMachineTypes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::machine_types::v1::
           AggregatedListMachineTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::machine_types::v1::
           GetMachineTypeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineTypeList> ListMachineTypes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::machine_types::v1::
           ListMachineTypesRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<MachineTypesRestStub> child_;

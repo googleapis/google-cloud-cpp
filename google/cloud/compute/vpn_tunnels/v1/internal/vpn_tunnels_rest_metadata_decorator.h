@@ -42,6 +42,7 @@ class VpnTunnelsRestMetadata : public VpnTunnelsRestStub {
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
   AggregatedListVpnTunnels(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::vpn_tunnels::v1::
           AggregatedListVpnTunnelsRequest const& request) override;
 
@@ -49,11 +50,13 @@ class VpnTunnelsRestMetadata : public VpnTunnelsRestStub {
   AsyncDeleteVpnTunnel(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::vpn_tunnels::v1::
           DeleteVpnTunnelRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
           request) override;
 
@@ -61,11 +64,13 @@ class VpnTunnelsRestMetadata : public VpnTunnelsRestStub {
   AsyncInsertVpnTunnel(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::vpn_tunnels::v1::
           InsertVpnTunnelRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnelList> ListVpnTunnels(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest const&
           request) override;
 
@@ -73,6 +78,7 @@ class VpnTunnelsRestMetadata : public VpnTunnelsRestStub {
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
           request) override;
 
@@ -80,17 +86,20 @@ class VpnTunnelsRestMetadata : public VpnTunnelsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<VpnTunnelsRestStub> child_;

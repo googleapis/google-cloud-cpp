@@ -46,10 +46,12 @@ ZonesRestConnectionImpl::GetZone(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetZone(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::zones::v1::GetZoneRequest const&
-                 request) { return stub_->GetZone(rest_context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetZone(rest_context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Zone>
@@ -61,19 +63,23 @@ ZonesRestConnectionImpl::ListZones(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Zone>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<compute_zones_v1::ZonesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::zones::v1::ListZonesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
                 rest_internal::RestContext& rest_context,
+                Options const& options,
                 google::cloud::cpp::compute::zones::v1::ListZonesRequest const&
-                    request) { return stub->ListZones(rest_context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListZones(rest_context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::ZoneList r) {
         std::vector<google::cloud::cpp::compute::v1::Zone> result(
