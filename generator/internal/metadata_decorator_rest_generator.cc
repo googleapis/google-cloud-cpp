@@ -39,7 +39,7 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
 
   auto info = ParseExplicitRoutingHeader(method);
   if (info.empty()) {
-    return absl::StrFormat("  SetMetadata(%s);", context);
+    return absl::StrFormat("  SetMetadata(%s, options);", context);
   }
 
   // clang-format off
@@ -83,7 +83,7 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
     text += "  " + kv.first + "_matcher->AppendParam(request, params);\n\n";
   }
 
-    text += "  SetMetadata(" + context + ", params);\n";
+    text += "  SetMetadata(" + context + ", options, params);\n";
   return text;
   // clang-format on
 }
@@ -143,20 +143,20 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
   google::cloud::future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      $request_type$ const& request) override;
+      Options const& options, $request_type$ const& request) override;
 )""");
     } else {
       if (IsResponseTypeEmpty(method)) {
         HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   Status $method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
-      $request_type$ const& request) override;
+      Options const& options, $request_type$ const& request) override;
 )""");
       } else {
         HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   StatusOr<$response_type$> $method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
-      $request_type$ const& request) override;
+      Options const& options, $request_type$ const& request) override;
 )""");
       }
     }
@@ -170,14 +170,14 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
   google::cloud::future<Status> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      $request_type$ const& request) override;
+      Options const& options, $request_type$ const& request) override;
 )""");
     } else {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   google::cloud::future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      $request_type$ const& request) override;
+      Options const& options, $request_type$ const& request) override;
 )""");
     }
   }
@@ -188,11 +188,13 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
   google::cloud::future<StatusOr<$longrunning_response_type$>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       $longrunning_get_operation_request_type$ const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       $longrunning_cancel_operation_request_type$ const& request) override;
 )""");
   }
@@ -200,6 +202,7 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
   HeaderPrint(R"""(
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<$stub_rest_class_name$> child_;
@@ -259,12 +262,12 @@ future<StatusOr<$response_type$>>
 $metadata_rest_class_name$::Async$method_name$(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-      $request_type$ const& request) {
+      Options const& options, $request_type$ const& request) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
                     SetMetadataText(method, kPointer));
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->Async$method_name$(cq, std::move(rest_context), request);
+  return child_->Async$method_name$(cq, std::move(rest_context), options, request);
 }
 )""");
     } else {
@@ -273,12 +276,12 @@ $metadata_rest_class_name$::Async$method_name$(
 Status
 $metadata_rest_class_name$::$method_name$(
     rest_internal::RestContext& rest_context,
-    $request_type$ const& request) {
+    Options const& options, $request_type$ const& request) {
 )""");
         CcPrintMethod(method, __FILE__, __LINE__,
                       SetMetadataText(method, kReference));
         CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->$method_name$(rest_context, request);
+  return child_->$method_name$(rest_context, options, request);
 }
 )""");
       } else {
@@ -286,12 +289,12 @@ $metadata_rest_class_name$::$method_name$(
 StatusOr<$response_type$>
 $metadata_rest_class_name$::$method_name$(
     rest_internal::RestContext& rest_context,
-    $request_type$ const& request) {
+    Options const& options, $request_type$ const& request) {
 )""");
         CcPrintMethod(method, __FILE__, __LINE__,
                       SetMetadataText(method, kReference));
         CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->$method_name$(rest_context, request);
+  return child_->$method_name$(rest_context, options, request);
 }
 )""");
       }
@@ -307,12 +310,12 @@ future<Status>
 $metadata_rest_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-    $request_type$ const& request) {
+    Options const& options, $request_type$ const& request) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
                     SetMetadataText(method, kPointer));
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->Async$method_name$(cq, std::move(rest_context), request);
+  return child_->Async$method_name$(cq, std::move(rest_context), options, request);
 }
 )""");
     } else {
@@ -321,12 +324,12 @@ future<StatusOr<$response_type$>>
 $metadata_rest_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-    $request_type$ const& request) {
+    Options const& options, $request_type$ const& request) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
                     SetMetadataText(method, kPointer));
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->Async$method_name$(cq, std::move(rest_context), request);
+  return child_->Async$method_name$(cq, std::move(rest_context), options, request);
 }
 )""");
     }
@@ -339,18 +342,20 @@ future<StatusOr<$longrunning_response_type$>>
 $metadata_rest_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     $longrunning_get_operation_request_type$ const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options, request);
 }
 
 future<Status>
 $metadata_rest_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     $longrunning_cancel_operation_request_type$ const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options, request);
 }
 )""");
   }
@@ -362,12 +367,11 @@ $metadata_rest_class_name$::AsyncCancelOperation(
   CcPrint(R"""(
 void $metadata_rest_class_name$::SetMetadata(
       rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+      Options const& options, std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader(
         "x-goog-user-project", options.get<UserProjectOption>());

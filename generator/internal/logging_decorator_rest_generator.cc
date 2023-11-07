@@ -78,20 +78,20 @@ class $logging_rest_class_name$ : public $stub_rest_class_name$ {
   future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      $request_type$ const& request) override;
+      Options const& options, $request_type$ const& request) override;
 )""");
     } else {
       if (IsResponseTypeEmpty(method)) {
         HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   Status $method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
-      $request_type$ const& request) override;
+      Options const& options, $request_type$ const& request) override;
 )""");
       } else {
         HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   StatusOr<$response_type$> $method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
-      $request_type$ const& request) override;
+      Options const& options, $request_type$ const& request) override;
 )""");
       }
     }
@@ -105,14 +105,14 @@ class $logging_rest_class_name$ : public $stub_rest_class_name$ {
   future<Status> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      $request_type$ const& request) override;
+      Options const& options, $request_type$ const& request) override;
 )""");
     } else {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      $request_type$ const& request) override;
+      Options const& options, $request_type$ const& request) override;
 )""");
     }
   }
@@ -123,11 +123,13 @@ class $logging_rest_class_name$ : public $stub_rest_class_name$ {
   future<StatusOr<$longrunning_response_type$>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       $longrunning_get_operation_request_type$ const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       $longrunning_cancel_operation_request_type$ const& request) override;
 )""");
   }
@@ -183,14 +185,16 @@ future<StatusOr<$response_type$>>
 $logging_rest_class_name$::Async$method_name$(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
+      Options const& options,
       $request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
+             Options const& options,
              $request_type$ const& request) {
-        return child_->Async$method_name$(cq, std::move(rest_context), request);
+        return child_->Async$method_name$(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 )""");
     } else {
@@ -199,13 +203,15 @@ $logging_rest_class_name$::Async$method_name$(
 Status
 $logging_rest_class_name$::$method_name$(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     $request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              $request_type$ const& request) {
-        return child_->$method_name$(rest_context, request);
+        return child_->$method_name$(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 )""");
       } else {
@@ -213,13 +219,15 @@ $logging_rest_class_name$::$method_name$(
 StatusOr<$response_type$>
 $logging_rest_class_name$::$method_name$(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     $request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              $request_type$ const& request) {
-        return child_->$method_name$(rest_context, request);
+        return child_->$method_name$(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 )""");
       }
@@ -235,14 +243,16 @@ future<Status>
 $logging_rest_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
+      Options const& options,
       $request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
+             Options const& options,
              $request_type$ const& request) {
-        return child_->Async$method_name$(cq, std::move(rest_context), request);
+        return child_->Async$method_name$(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 )""");
     } else {
@@ -251,14 +261,15 @@ future<StatusOr<$response_type$>>
 $logging_rest_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     $request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             $request_type$ const& request) {
-        return child_->Async$method_name$(cq, std::move(rest_context), request);
+             Options const& options, $request_type$ const& request) {
+        return child_->Async$method_name$(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 )""");
     }
@@ -271,28 +282,32 @@ future<StatusOr<$longrunning_response_type$>>
 $logging_rest_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     $longrunning_get_operation_request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
+             Options const& options,
              $longrunning_get_operation_request_type$ const& request) {
-        return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+        return child_->AsyncGetOperation(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 
 future<Status>
 $logging_rest_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     $longrunning_cancel_operation_request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
+             Options const& options,
              $longrunning_cancel_operation_request_type$ const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+        return child_->AsyncCancelOperation(cq, std::move(rest_context), options, request);
       },
-      cq, std::move(rest_context), request, __func__, tracing_options_);
+      cq, std::move(rest_context), options, request, __func__, tracing_options_);
 }
 )""");
   }

@@ -173,9 +173,9 @@ void SetLongrunningOperationServiceVars(
       service_vars["longrunning_cancel_operation_path"] =
           R"""(absl::StrCat("/v1/", request.name(), ":cancel"))""";
       service_vars["longrunning_get_operation_path_rest"] =
-          R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts) ,"/", request.name()))""";
+          R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options) ,"/", request.name()))""";
       service_vars["longrunning_cancel_operation_path_rest"] =
-          R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts) ,"/", request.name(), ":cancel"))""";
+          R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options) ,"/", request.name(), ":cancel"))""";
       return;
     }
     if (!method->options()
@@ -209,8 +209,9 @@ void SetLongrunningOperationServiceVars(
         auto global_lro_path = absl::StrCat(
             R"""(absl::StrCat("/compute/",
                              )""",
-            absl::StrFormat("rest_internal::DetermineApiVersion(\"%s\", opts)",
-                            *api_version),
+            absl::StrFormat(
+                "rest_internal::DetermineApiVersion(\"%s\", options)",
+                *api_version),
             R"""(,
                              "/projects/", request.project(),
                              "/global/operations/", request.operation()))""");
@@ -234,8 +235,9 @@ void SetLongrunningOperationServiceVars(
         auto global_org_lro_path = absl::StrCat(
             R"""(absl::StrCat("/compute/",
                              )""",
-            absl::StrFormat("rest_internal::DetermineApiVersion(\"%s\", opts)",
-                            *api_version),
+            absl::StrFormat(
+                "rest_internal::DetermineApiVersion(\"%s\", options)",
+                *api_version),
             R"""(,
                              "/locations/global/operations/", request.operation()))""");
         service_vars["longrunning_get_operation_path_rest"] =
@@ -259,8 +261,9 @@ void SetLongrunningOperationServiceVars(
         auto region_lro_path = absl::StrCat(
             R"""(absl::StrCat("/compute/",
                              )""",
-            absl::StrFormat("rest_internal::DetermineApiVersion(\"%s\", opts)",
-                            *api_version),
+            absl::StrFormat(
+                "rest_internal::DetermineApiVersion(\"%s\", options)",
+                *api_version),
             R"""(,
                              "/projects/", request.project(),
                              "/regions/", request.region(),
@@ -285,8 +288,9 @@ void SetLongrunningOperationServiceVars(
         auto zone_lro_path = absl::StrCat(
             R"""(absl::StrCat("/compute/",
                              )""",
-            absl::StrFormat("rest_internal::DetermineApiVersion(\"%s\", opts)",
-                            *api_version),
+            absl::StrFormat(
+                "rest_internal::DetermineApiVersion(\"%s\", options)",
+                *api_version),
             R"""(,
                              "/projects/", request.project(),
                              "/zones/", request.zone(),

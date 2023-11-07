@@ -1296,7 +1296,7 @@ INSTANTIATE_TEST_SUITE_P(
                              "kNonIdempotent"),
         MethodVarsTestValues(
             "my.service.v1.Service.Method5", "method_rest_path",
-            R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.parent(), "/", "databases"))"""),
+            R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "databases"))"""),
         // Method6
         MethodVarsTestValues("my.service.v1.Service.Method6",
                              "method_request_params",
@@ -1343,7 +1343,7 @@ INSTANTIATE_TEST_SUITE_P(
                              "request_resource", "request.namespace_()"),
         MethodVarsTestValues(
             "my.service.v1.Service.Method8", "method_rest_path",
-            R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.namespace_().name()))"""),
+            R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.namespace_().name()))"""),
         // Method9
         MethodVarsTestValues("my.service.v1.Service.Method9",
                              "method_http_query_parameters",
