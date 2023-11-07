@@ -160,8 +160,6 @@ google_cloud_cpp_pubsub_srcs = [
     "admin/internal/topic_admin_stub_factory.cc",
     "admin/internal/topic_admin_tracing_connection.cc",
     "admin/internal/topic_admin_tracing_stub.cc",
-    "admin/samples/subscription_admin_client_samples.cc",
-    "admin/samples/topic_admin_client_samples.cc",
     "admin/subscription_admin_client.cc",
     "admin/subscription_admin_connection.cc",
     "admin/subscription_admin_connection_idempotency_policy.cc",

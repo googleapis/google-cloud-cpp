@@ -79,8 +79,6 @@ add_library(
     admin/internal/topic_admin_tracing_connection.h
     admin/internal/topic_admin_tracing_stub.cc
     admin/internal/topic_admin_tracing_stub.h
-    admin/samples/subscription_admin_client_samples.cc
-    admin/samples/topic_admin_client_samples.cc
     admin/subscription_admin_client.cc
     admin/subscription_admin_client.h
     admin/subscription_admin_connection.cc
