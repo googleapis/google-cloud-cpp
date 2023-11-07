@@ -162,6 +162,7 @@ cc_library(
         ":google_cloud_cpp_storage",
         ":google_cloud_cpp_storage_grpc",
         "//:common",
+        "//google/cloud:google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
         "@boringssl//:crypto",
