@@ -1,10 +1,10 @@
-// Copyright 2023 Google Inc.
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     https://www.apache.org/licenses/LICENSE-2.0
+//      https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -157,6 +157,21 @@ TEST(RateLimiter, SetRateEventuallyTakesAffect) {
 
   wait = limiter.acquire(1);
   EXPECT_EQ(absl::FromChrono(wait), absl::Milliseconds(500));
+}
+
+TEST(RateLimiter, AbsoluteValueOfPeriod) {
+  auto clock = std::make_shared<FakeSteadyClock>();
+  RateLimiter limiter(clock, -std::chrono::seconds(10), 0);
+
+  auto wait = limiter.acquire(1);
+  EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
+
+  limiter.set_period(-std::chrono::seconds(5));
+  wait = limiter.acquire(1);
+  EXPECT_EQ(absl::FromChrono(wait), absl::Seconds(10));
+
+  wait = limiter.acquire(1);
+  EXPECT_EQ(absl::FromChrono(wait), absl::Seconds(15));
 }
 
 TEST(RateLimiter, ThreadSafety) {
