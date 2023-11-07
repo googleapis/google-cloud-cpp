@@ -27,7 +27,7 @@ using ::google::cloud::testing_util::FakeSteadyClock;
 
 TEST(RateLimiter, NoWaitForInitialAcquire) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, 1, 0);
+  RateLimiter limiter(clock, std::chrono::seconds(1), 0);
 
   auto wait = limiter.acquire(100);
   EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
@@ -35,7 +35,7 @@ TEST(RateLimiter, NoWaitForInitialAcquire) {
 
 TEST(RateLimiter, Basic) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, 1, 0);
+  RateLimiter limiter(clock, std::chrono::seconds(1), 0);
 
   for (auto i = 0; i != 10; ++i) {
     auto wait = limiter.acquire(1);
@@ -52,7 +52,7 @@ TEST(RateLimiter, Basic) {
 
 TEST(RateLimiter, WaitsForEachPermit) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, 1, 0);
+  RateLimiter limiter(clock, std::chrono::seconds(1), 0);
 
   (void)limiter.acquire(10);
 
@@ -62,7 +62,7 @@ TEST(RateLimiter, WaitsForEachPermit) {
 
 TEST(RateLimiter, SpendsStorage) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, 1, 10);
+  RateLimiter limiter(clock, std::chrono::seconds(1), 10);
 
   // We start with 10 stored permits. We spend 6 of them. We have 4 remaining.
   auto wait = limiter.acquire(6);
@@ -80,7 +80,7 @@ TEST(RateLimiter, SpendsStorage) {
 
 TEST(RateLimiter, StoresPermits) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, 2, 10);
+  RateLimiter limiter(clock, std::chrono::milliseconds(500), 10);
 
   // We start with 10 stored permits. Spend them immediately.
   auto wait = limiter.acquire(10);
@@ -100,7 +100,7 @@ TEST(RateLimiter, StoresPermits) {
 
 TEST(RateLimiter, AddsAsMuchAsItCanStore) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, 1, 10);
+  RateLimiter limiter(clock, std::chrono::seconds(1), 10);
 
   // Spend 5 stored permits.
   (void)limiter.acquire(5);
@@ -116,7 +116,7 @@ TEST(RateLimiter, AddsAsMuchAsItCanStore) {
 
 TEST(RateLimiter, Rate) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, 10, 0);
+  RateLimiter limiter(clock, std::chrono::milliseconds(100), 0);
 
   auto wait = limiter.acquire(1);
   EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
@@ -127,7 +127,7 @@ TEST(RateLimiter, Rate) {
 
 TEST(RateLimiter, RateLessThanOne) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, .1, 0);
+  RateLimiter limiter(clock, std::chrono::seconds(10), 0);
 
   auto wait = limiter.acquire(1);
   EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
@@ -138,16 +138,16 @@ TEST(RateLimiter, RateLessThanOne) {
 
 TEST(RateLimiter, SetRateEventuallyTakesAffect) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, 10, 0);
+  RateLimiter limiter(clock, std::chrono::milliseconds(100), 0);
 
   auto wait = limiter.acquire(1);
   EXPECT_EQ(absl::FromChrono(wait), absl::ZeroDuration());
 
-  limiter.set_rate(5);
-  EXPECT_EQ(5, limiter.rate());
+  limiter.set_period(std::chrono::milliseconds(200));
+  EXPECT_EQ(absl::FromChrono(limiter.period()), absl::Milliseconds(200));
 
-  // The return of this call to acquire has already been determined at the 10
-  // QPS rate.
+  // The return of this call to `acquire()` has already been determined at the
+  // 10 QPS rate.
   wait = limiter.acquire(1);
   EXPECT_EQ(absl::FromChrono(wait), absl::Milliseconds(100));
 
@@ -160,7 +160,7 @@ TEST(RateLimiter, SetRateEventuallyTakesAffect) {
 }
 
 TEST(RateLimiter, ThreadSafety) {
-  // - Set 1 QPS
+  // - Set rate to 1 QPS
   // - Spin off N threads
   // - In each thread do M acquires at time now
   //
@@ -170,7 +170,7 @@ TEST(RateLimiter, ThreadSafety) {
   auto constexpr kAcquiresPerThread = 1000;
 
   auto clock = std::make_shared<FakeSteadyClock>();
-  RateLimiter limiter(clock, 1, 0);
+  RateLimiter limiter(clock, std::chrono::seconds(1), 0);
 
   auto work = [&limiter](int acquires) {
     for (auto i = 0; i != acquires; ++i) (void)limiter.acquire(1);

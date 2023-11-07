@@ -19,59 +19,38 @@ namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
-
-using Clock = RateLimiter::Clock;
-
-/**
- * Returns the duration it takes to give out @p permits at the given @p rate.
- *
- * Essentially, we are returning `permits / rate`.
- *
- * This function handles rounding, while getting the maximum precision out of
- * the clock.
- */
-Clock::duration TimeNeeded(std::int64_t permits, double rate) {
-  return std::chrono::duration_cast<Clock::duration>(absl::ToChronoNanoseconds(
-      absl::Seconds(static_cast<double>(permits) / rate)));
-}
-
-}  // namespace
 
 RateLimiter::Clock::duration RateLimiter::acquire(std::int64_t permits) {
   auto const now = clock_->Now();
   std::lock_guard<std::mutex> lk(mu_);
-  // The request can go through immediately. But first, we need to update the
-  // time the next permit can be given out.
   if (next_ <= now) {
-    // Update the stored permits
-    absl::Duration d = absl::FromChrono(now - next_) * rate_;
-    auto can_add = absl::ToInt64Seconds(d);
-    stored_permits_ = std::min(max_stored_permits_, stored_permits_ + can_add);
+    // The request can go through immediately. But first, we need to update the
+    // time the next permit can be given out.
 
-    // Try to spend the stored permits
-    if (permits < stored_permits_) {
-      stored_permits_ -= permits;
-      next_ = now;
-      return Clock::duration::zero();
+    // Update the stored permits
+    if (period_ == Clock::duration::zero()) {
+      stored_permits_ = max_stored_permits_;
+    } else {
+      auto can_add = (now - next_) / period_;
+      stored_permits_ =
+          std::min(max_stored_permits_, stored_permits_ + can_add);
     }
 
-    // Drain the stored permits
-    permits -= stored_permits_;
-    stored_permits_ = 0;
-    next_ = now + TimeNeeded(permits, rate_);
+    // Spend the stored permits
+    if (permits < stored_permits_) {
+      stored_permits_ -= permits;
+      permits = 0;
+    } else {
+      permits -= stored_permits_;
+      stored_permits_ = 0;
+    }
+    next_ = now + permits * period_;
     return Clock::duration::zero();
   }
 
-  // The request cannot go through immediately. We must add to the wait time.
-  if (stored_permits_ != 0) {
-    GCP_LOG(FATAL)
-        << "RateLimiter stored permits should be 0. Clock may not be monotonic."
-        << std::endl;
-  }
-  auto current = next_;
-  next_ += TimeNeeded(permits, rate_);
-  return current - now;
+  auto wait = next_ - now;
+  next_ += permits * period_;
+  return wait;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
