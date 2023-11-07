@@ -92,7 +92,7 @@ auto MakeChild(
 }
 
 Spans MakeBatchSinkSpans(Spans message_spans) {
-  size_t max_otel_links =
+  auto const max_otel_links =
       internal::CurrentOptions().get<pubsub::MaxOtelLinkCountOption>();
   Spans batch_sink_spans;
   // If the batch size is less than the max size, add the links to a single
