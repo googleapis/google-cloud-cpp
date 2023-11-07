@@ -178,7 +178,7 @@ TEST(ListDatasetsResponseTest, EmptyDatasetList) {
   auto const response =
       ListDatasetsResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
-  EXPECT_FALSE(response->http_response.payload.empty());
+  EXPECT_THAT(response->http_response.payload, Not(IsEmpty()));
   EXPECT_EQ(response->kind, "dkind");
   EXPECT_EQ(response->etag, "dtag");
   EXPECT_THAT(response->datasets, IsEmpty());
