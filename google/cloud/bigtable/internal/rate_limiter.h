@@ -30,12 +30,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * A threadsafe interface for rate limiting.
  *
- * This class does not sleep. It is the responsibility of the caller to sleep.
- * For example:
+ * The caller tells the `RateLimiter` how many permits it wants to acquire. The
+ * `RateLimiter` tells the caller when those permits will be available.
+ *
+ * The `RateLimiter` does not sleep. It is the responsibility of the caller to
+ * sleep. For example:
  *
  * @code
  * auto clock = std::make_shared<internal::SteadyClock>();
- * RateLimiter limiter(clock, rate);
+ * auto initial_period = std::chrono::milliseconds(100);
+ * RateLimiter limiter(clock, initial_period);
  * while (MoreThingsToDo()) {
  *   auto wait = limiter.acquire(1);
  *   std::this_thread_sleep_for(wait);
@@ -44,11 +48,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @endcode
  *
  * To allow for some smoothing, this class can bank permits. For example, if the
- * limiter is set to 2 QPS, and goes unused for 10 seconds, it can bank up to 20
- * permits.
+ * limiter is set to 2 permits/s, and goes unused for 10 seconds, it can bank up
+ * to 20 permits. The maximum stored permits is configurable.
  *
- * Throttling does not start until after the first call to `acquire()`. The
- * `RateLimiter` internally stores when the *next* permit can be given out.
+ * Throttling does not start until after the first call to `acquire()`. Consider
+ * a caller asking for 100 permits at 1 permit/s. We do not want to wait 100s
+ * for this initial request. Instead, it goes through immediately, and the next
+ * request is scheduled for 100s from now.
  */
 class RateLimiter {
  public:
@@ -56,41 +62,51 @@ class RateLimiter {
   // increase with time.
   using Clock = ::google::cloud::internal::SteadyClock;
 
-  explicit RateLimiter(std::shared_ptr<Clock> clock, double rate,
+  template <typename Rep, typename Period>
+  explicit RateLimiter(std::shared_ptr<Clock> clock,
+                       std::chrono::duration<Rep, Period> period,
                        std::int64_t max_stored_permits = 0)
       : clock_(std::move(clock)),
+        period_(std::chrono::duration_cast<Clock::duration>(period)),
         next_(clock_->Now()),
         stored_permits_(max_stored_permits),
-        rate_(rate),
         max_stored_permits_(max_stored_permits) {
-    if (rate <= 0) GCP_LOG(FATAL) << "RateLimiter rate must be > 0.";
+    if (period_ < Clock::duration::zero()) {
+      GCP_LOG(FATAL) << "RateLimiter period must be > 0.";
+    }
   }
 
   /**
-   * Returns how long the caller should wait before sending the query associated
-   * with this call.
+   * Returns the time to wait before performing the operation associated with
+   * this call.
+   *
+   * The caller can ask for multiple @p permits, as a way to "weight" the
+   * operation. For example, instead of acquiring one permit per request, you
+   * might choose to acquire one permit per repeated field in a request.
    */
   Clock::duration acquire(std::int64_t permits);
 
   /**
-   * Set the rate (Hz).
+   * Set the period.
    *
    * Note that the current next_ has already been calculated. This new rate will
    * not apply to it. The new rate will apply to every `acquire()` after next.
    */
-  void set_rate(double rate) {
-    if (rate <= 0) GCP_LOG(FATAL) << "RateLimiter rate must be > 0.";
+  void set_period(Clock::duration period) {
+    if (period < Clock::duration::zero()) {
+      GCP_LOG(FATAL) << "RateLimiter period must be >= 0.";
+    }
     std::lock_guard<std::mutex> lk(mu_);
-    rate_ = rate;
+    period_ = period;
   }
-  double rate() const { return rate_; }
+  Clock::duration period() const { return period_; }
 
  private:
   std::mutex mu_;
   std::shared_ptr<Clock> clock_;
-  Clock::time_point next_;
-  std::int64_t stored_permits_ = 0;
-  double rate_ = 10.0;  // queries per second
+  Clock::duration period_;           // ABSL_GUARDED_BY(mu_)
+  Clock::time_point next_;           // ABSL_GUARDED_BY(mu_)
+  std::int64_t stored_permits_ = 0;  // ABSL_GUARDED_BY(mu_)
   std::int64_t max_stored_permits_ = 0;
 };
 
