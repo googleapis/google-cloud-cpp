@@ -47,14 +47,14 @@ DefaultVpnTunnelsRestStub::DefaultVpnTunnelsRestStub(
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
 DefaultVpnTunnelsRestStub::AggregatedListVpnTunnels(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::vpn_tunnels::v1::
         AggregatedListVpnTunnelsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "vpnTunnels"),
       rest_internal::TrimEmptyQueryParameters(
@@ -74,18 +74,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultVpnTunnelsRestStub::AsyncDeleteVpnTunnel(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "vpnTunnels", "/", request.vpn_tunnel()),
@@ -96,7 +97,7 @@ DefaultVpnTunnelsRestStub::AsyncDeleteVpnTunnel(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -106,33 +107,35 @@ DefaultVpnTunnelsRestStub::AsyncDeleteVpnTunnel(
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
 DefaultVpnTunnelsRestStub::GetVpnTunnel(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnel>(
       *service_, rest_context, request, false,
-      absl::StrCat(
-          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
-          "/", "projects", "/", request.project(), "/", "regions", "/",
-          request.region(), "/", "vpnTunnels", "/", request.vpn_tunnel()));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "vpnTunnels", "/",
+                   request.vpn_tunnel()));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultVpnTunnelsRestStub::AsyncInsertVpnTunnel(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.vpn_tunnel_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "vpnTunnels"),
@@ -143,7 +146,7 @@ DefaultVpnTunnelsRestStub::AsyncInsertVpnTunnel(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -153,13 +156,13 @@ DefaultVpnTunnelsRestStub::AsyncInsertVpnTunnel(
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnelList>
 DefaultVpnTunnelsRestStub::ListVpnTunnels(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnelList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "vpnTunnels"),
       rest_internal::TrimEmptyQueryParameters(
@@ -175,19 +178,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultVpnTunnelsRestStub::AsyncSetLabels(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.region_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "vpnTunnels", "/", request.resource(), "/",
@@ -199,7 +203,7 @@ DefaultVpnTunnelsRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -210,26 +214,29 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultVpnTunnelsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
-                absl::StrCat(
-                    "/compute/", rest_internal::DetermineApiVersion("v1", opts),
-                    "/projects/", request.project(), "/regions/",
-                    request.region(), "/operations/", request.operation())));
+                absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", options),
+                             "/projects/", request.project(), "/regions/",
+                             request.region(), "/operations/",
+                             request.operation())));
       },
       std::move(p),
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -239,16 +246,18 @@ DefaultVpnTunnelsRestStub::AsyncGetOperation(
 future<Status> DefaultVpnTunnelsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", opts),
+                "/compute/", rest_internal::DetermineApiVersion("v1", options),
                 "/projects/", request.project(), "/regions/", request.region(),
                 "/operations/", request.operation())));
       },
@@ -256,7 +265,7 @@ future<Status> DefaultVpnTunnelsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

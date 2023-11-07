@@ -41,199 +41,213 @@ DatabaseAdminRestMetadata::DatabaseAdminRestMetadata(
 
 StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
 DatabaseAdminRestMetadata::ListDatabases(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListDatabases(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListDatabases(rest_context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestMetadata::AsyncCreateDatabase(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCreateDatabase(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCreateDatabase(cq, std::move(rest_context), options,
+                                     request);
 }
 
 StatusOr<google::spanner::admin::database::v1::Database>
 DatabaseAdminRestMetadata::GetDatabase(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetDatabase(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetDatabase(rest_context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestMetadata::AsyncUpdateDatabase(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::spanner::admin::database::v1::UpdateDatabaseRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncUpdateDatabase(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncUpdateDatabase(cq, std::move(rest_context), options,
+                                     request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestMetadata::AsyncUpdateDatabaseDdl(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncUpdateDatabaseDdl(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncUpdateDatabaseDdl(cq, std::move(rest_context), options,
+                                        request);
 }
 
 Status DatabaseAdminRestMetadata::DropDatabase(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->DropDatabase(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->DropDatabase(rest_context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
 DatabaseAdminRestMetadata::GetDatabaseDdl(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetDatabaseDdl(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetDatabaseDdl(rest_context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->SetIamPolicy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->SetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetIamPolicy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DatabaseAdminRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->TestIamPermissions(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestMetadata::AsyncCreateBackup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCreateBackup(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCreateBackup(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestMetadata::AsyncCopyBackup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCopyBackup(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCopyBackup(cq, std::move(rest_context), options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminRestMetadata::GetBackup(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetBackup(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetBackup(rest_context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminRestMetadata::UpdateBackup(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->UpdateBackup(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->UpdateBackup(rest_context, options, request);
 }
 
 Status DatabaseAdminRestMetadata::DeleteBackup(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->DeleteBackup(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->DeleteBackup(rest_context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
 DatabaseAdminRestMetadata::ListBackups(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::ListBackupsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListBackups(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListBackups(rest_context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestMetadata::AsyncRestoreDatabase(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncRestoreDatabase(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncRestoreDatabase(cq, std::move(rest_context), options,
+                                      request);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
 DatabaseAdminRestMetadata::ListDatabaseOperations(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListDatabaseOperations(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListDatabaseOperations(rest_context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
 DatabaseAdminRestMetadata::ListBackupOperations(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::ListBackupOperationsRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListBackupOperations(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListBackupOperations(rest_context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
 DatabaseAdminRestMetadata::ListDatabaseRoles(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListDatabaseRoles(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListDatabaseRoles(rest_context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> DatabaseAdminRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void DatabaseAdminRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

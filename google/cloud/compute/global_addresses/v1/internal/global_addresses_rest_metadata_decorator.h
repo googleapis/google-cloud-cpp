@@ -44,11 +44,13 @@ class GlobalAddressesRestMetadata : public GlobalAddressesRestStub {
   AsyncDeleteAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_addresses::v1::
           DeleteAddressRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_addresses::v1::
           GetAddressRequest const& request) override;
 
@@ -56,11 +58,13 @@ class GlobalAddressesRestMetadata : public GlobalAddressesRestStub {
   AsyncInsertAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_addresses::v1::
           InsertAddressRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AddressList> ListGlobalAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_addresses::v1::
           ListGlobalAddressesRequest const& request) override;
 
@@ -68,6 +72,7 @@ class GlobalAddressesRestMetadata : public GlobalAddressesRestStub {
   AsyncMove(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
           request) override;
 
@@ -75,6 +80,7 @@ class GlobalAddressesRestMetadata : public GlobalAddressesRestStub {
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
           request) override;
 
@@ -82,17 +88,20 @@ class GlobalAddressesRestMetadata : public GlobalAddressesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<GlobalAddressesRestStub> child_;

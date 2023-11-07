@@ -49,18 +49,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultHttpHealthChecksRestStub::AsyncDeleteHttpHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::http_health_checks::v1::
         DeleteHttpHealthCheckRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "httpHealthChecks", "/",
                              request.http_health_check()),
@@ -71,7 +72,7 @@ DefaultHttpHealthChecksRestStub::AsyncDeleteHttpHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -81,13 +82,13 @@ DefaultHttpHealthChecksRestStub::AsyncDeleteHttpHealthCheck(
 StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
 DefaultHttpHealthChecksRestStub::GetHttpHealthCheck(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::http_health_checks::v1::
         GetHttpHealthCheckRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::HttpHealthCheck>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "httpHealthChecks", "/", request.http_health_check()));
 }
@@ -96,19 +97,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultHttpHealthChecksRestStub::AsyncInsertHttpHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::http_health_checks::v1::
         InsertHttpHealthCheckRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.http_health_check_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "httpHealthChecks"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -118,7 +120,7 @@ DefaultHttpHealthChecksRestStub::AsyncInsertHttpHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -128,14 +130,14 @@ DefaultHttpHealthChecksRestStub::AsyncInsertHttpHealthCheck(
 StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheckList>
 DefaultHttpHealthChecksRestStub::ListHttpHealthChecks(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::http_health_checks::v1::
         ListHttpHealthChecksRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HttpHealthCheckList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "httpHealthChecks"),
       rest_internal::TrimEmptyQueryParameters(
@@ -151,19 +153,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultHttpHealthChecksRestStub::AsyncPatchHttpHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::http_health_checks::v1::
         PatchHttpHealthCheckRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.http_health_check_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "httpHealthChecks", "/",
                              request.http_health_check()),
@@ -174,7 +177,7 @@ DefaultHttpHealthChecksRestStub::AsyncPatchHttpHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -185,19 +188,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultHttpHealthChecksRestStub::AsyncUpdateHttpHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::http_health_checks::v1::
         UpdateHttpHealthCheckRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.http_health_check_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "httpHealthChecks", "/",
                              request.http_health_check()),
@@ -208,7 +212,7 @@ DefaultHttpHealthChecksRestStub::AsyncUpdateHttpHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -219,18 +223,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultHttpHealthChecksRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
                 absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -238,7 +244,7 @@ DefaultHttpHealthChecksRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -248,16 +254,18 @@ DefaultHttpHealthChecksRestStub::AsyncGetOperation(
 future<Status> DefaultHttpHealthChecksRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", opts),
+                         rest_internal::DetermineApiVersion("v1", options),
                          "/projects/", request.project(), "/global/operations/",
                          request.operation())));
       },
@@ -265,7 +273,7 @@ future<Status> DefaultHttpHealthChecksRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

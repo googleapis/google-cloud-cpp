@@ -48,18 +48,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultLicensesRestStub::AsyncDeleteLicense(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "licenses", "/", request.license()),
                 rest_internal::TrimEmptyQueryParameters(
@@ -69,7 +70,7 @@ DefaultLicensesRestStub::AsyncDeleteLicense(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -79,13 +80,13 @@ DefaultLicensesRestStub::AsyncDeleteLicense(
 StatusOr<google::cloud::cpp::compute::v1::License>
 DefaultLicensesRestStub::GetLicense(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::License>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "licenses", "/", request.license()));
 }
@@ -93,13 +94,13 @@ DefaultLicensesRestStub::GetLicense(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultLicensesRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "licenses", "/", request.resource(), "/", "getIamPolicy"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair(
@@ -111,18 +112,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultLicensesRestStub::AsyncInsertLicense(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.license_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "licenses"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -132,7 +134,7 @@ DefaultLicensesRestStub::AsyncInsertLicense(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -142,14 +144,14 @@ DefaultLicensesRestStub::AsyncInsertLicense(
 StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse>
 DefaultLicensesRestStub::ListLicenses(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::LicensesListResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "licenses"),
       rest_internal::TrimEmptyQueryParameters(
@@ -164,14 +166,14 @@ DefaultLicensesRestStub::ListLicenses(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultLicensesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "licenses", "/", request.resource(), "/", "setIamPolicy"));
 }
@@ -179,35 +181,38 @@ DefaultLicensesRestStub::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultLicensesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
       false,
-      absl::StrCat(
-          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
-          "/", "projects", "/", request.project(), "/", "global", "/",
-          "licenses", "/", request.resource(), "/", "testIamPermissions"));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "licenses", "/", request.resource(), "/",
+                   "testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultLicensesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
                 absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -215,7 +220,7 @@ DefaultLicensesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -225,16 +230,18 @@ DefaultLicensesRestStub::AsyncGetOperation(
 future<Status> DefaultLicensesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", opts),
+                         rest_internal::DetermineApiVersion("v1", options),
                          "/projects/", request.project(), "/global/operations/",
                          request.operation())));
       },
@@ -242,7 +249,7 @@ future<Status> DefaultLicensesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

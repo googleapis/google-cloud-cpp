@@ -41,11 +41,13 @@ class TargetSslProxiesRestStub {
   AsyncDeleteTargetSslProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           DeleteTargetSslProxyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
   GetTargetSslProxy(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
                     google::cloud::cpp::compute::target_ssl_proxies::v1::
                         GetTargetSslProxyRequest const& request) = 0;
 
@@ -53,11 +55,13 @@ class TargetSslProxiesRestStub {
   AsyncInsertTargetSslProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           InsertTargetSslProxyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList>
   ListTargetSslProxies(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
                        google::cloud::cpp::compute::target_ssl_proxies::v1::
                            ListTargetSslProxiesRequest const& request) = 0;
 
@@ -65,6 +69,7 @@ class TargetSslProxiesRestStub {
   AsyncSetBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetBackendServiceRequest const& request) = 0;
 
@@ -72,6 +77,7 @@ class TargetSslProxiesRestStub {
   AsyncSetCertificateMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetCertificateMapRequest const& request) = 0;
 
@@ -79,6 +85,7 @@ class TargetSslProxiesRestStub {
   AsyncSetProxyHeader(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetProxyHeaderRequest const& request) = 0;
 
@@ -86,6 +93,7 @@ class TargetSslProxiesRestStub {
   AsyncSetSslCertificates(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetSslCertificatesRequest const& request) = 0;
 
@@ -93,6 +101,7 @@ class TargetSslProxiesRestStub {
   AsyncSetSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetSslPolicyRequest const& request) = 0;
 
@@ -100,12 +109,14 @@ class TargetSslProxiesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -123,11 +134,13 @@ class DefaultTargetSslProxiesRestStub : public TargetSslProxiesRestStub {
   AsyncDeleteTargetSslProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           DeleteTargetSslProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           GetTargetSslProxyRequest const& request) override;
 
@@ -135,11 +148,13 @@ class DefaultTargetSslProxiesRestStub : public TargetSslProxiesRestStub {
   AsyncInsertTargetSslProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           InsertTargetSslProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList>
   ListTargetSslProxies(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
                        google::cloud::cpp::compute::target_ssl_proxies::v1::
                            ListTargetSslProxiesRequest const& request) override;
 
@@ -147,6 +162,7 @@ class DefaultTargetSslProxiesRestStub : public TargetSslProxiesRestStub {
   AsyncSetBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetBackendServiceRequest const& request) override;
 
@@ -154,6 +170,7 @@ class DefaultTargetSslProxiesRestStub : public TargetSslProxiesRestStub {
   AsyncSetCertificateMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetCertificateMapRequest const& request) override;
 
@@ -161,6 +178,7 @@ class DefaultTargetSslProxiesRestStub : public TargetSslProxiesRestStub {
   AsyncSetProxyHeader(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetProxyHeaderRequest const& request) override;
 
@@ -168,6 +186,7 @@ class DefaultTargetSslProxiesRestStub : public TargetSslProxiesRestStub {
   AsyncSetSslCertificates(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetSslCertificatesRequest const& request) override;
 
@@ -175,6 +194,7 @@ class DefaultTargetSslProxiesRestStub : public TargetSslProxiesRestStub {
   AsyncSetSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetSslPolicyRequest const& request) override;
 
@@ -182,12 +202,14 @@ class DefaultTargetSslProxiesRestStub : public TargetSslProxiesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

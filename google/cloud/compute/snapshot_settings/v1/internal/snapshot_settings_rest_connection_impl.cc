@@ -50,12 +50,12 @@ SnapshotSettingsRestConnectionImpl::GetSnapshotSettings(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSnapshotSettings(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::snapshot_settings::v1::
                  GetSnapshotSettingsRequest const& request) {
-        return stub_->GetSnapshotSettings(rest_context, request);
+        return stub_->GetSnapshotSettings(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -69,25 +69,30 @@ SnapshotSettingsRestConnectionImpl::PatchSnapshotSettings(
       google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::snapshot_settings::v1::
                          PatchSnapshotSettingsRequest const& request) {
-        return stub->AsyncPatchSnapshotSettings(cq, std::move(context),
+        return stub->AsyncPatchSnapshotSettings(cq, std::move(context), options,
                                                 request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },

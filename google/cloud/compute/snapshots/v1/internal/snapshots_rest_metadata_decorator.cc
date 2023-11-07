@@ -43,104 +43,112 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsRestMetadata::AsyncDeleteSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteSnapshot(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteSnapshot(cq, std::move(rest_context), options,
+                                     request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
 SnapshotsRestMetadata::GetSnapshot(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetSnapshot(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetSnapshot(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 SnapshotsRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetIamPolicy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsRestMetadata::AsyncInsertSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncInsertSnapshot(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncInsertSnapshot(cq, std::move(rest_context), options,
+                                     request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SnapshotList>
 SnapshotsRestMetadata::ListSnapshots(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListSnapshots(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListSnapshots(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 SnapshotsRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->SetIamPolicy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->SetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsRestMetadata::AsyncSetLabels(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetLabels(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetLabels(cq, std::move(rest_context), options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 SnapshotsRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->TestIamPermissions(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> SnapshotsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void SnapshotsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

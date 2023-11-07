@@ -46,6 +46,7 @@ class NetworkEndpointGroupsRestLogging : public NetworkEndpointGroupsRestStub {
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupAggregatedList>
   AggregatedListNetworkEndpointGroups(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           AggregatedListNetworkEndpointGroupsRequest const& request) override;
 
@@ -53,6 +54,7 @@ class NetworkEndpointGroupsRestLogging : public NetworkEndpointGroupsRestStub {
   AsyncAttachNetworkEndpoints(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           AttachNetworkEndpointsRequest const& request) override;
 
@@ -60,6 +62,7 @@ class NetworkEndpointGroupsRestLogging : public NetworkEndpointGroupsRestStub {
   AsyncDeleteNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request) override;
 
@@ -67,12 +70,14 @@ class NetworkEndpointGroupsRestLogging : public NetworkEndpointGroupsRestStub {
   AsyncDetachNetworkEndpoints(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           DetachNetworkEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   GetNetworkEndpointGroup(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           GetNetworkEndpointGroupRequest const& request) override;
 
@@ -80,12 +85,14 @@ class NetworkEndpointGroupsRestLogging : public NetworkEndpointGroupsRestStub {
   AsyncInsertNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           InsertNetworkEndpointGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>
   ListNetworkEndpointGroups(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           ListNetworkEndpointGroupsRequest const& request) override;
 
@@ -93,11 +100,13 @@ class NetworkEndpointGroupsRestLogging : public NetworkEndpointGroupsRestStub {
                NetworkEndpointGroupsListNetworkEndpoints>
   ListNetworkEndpoints(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           ListNetworkEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::network_endpoint_groups::v1::
                          TestIamPermissionsRequest const& request) override;
 
@@ -105,12 +114,14 @@ class NetworkEndpointGroupsRestLogging : public NetworkEndpointGroupsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zone_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteOperationRequest const& request) override;
 

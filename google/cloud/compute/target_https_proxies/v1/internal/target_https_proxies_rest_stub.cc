@@ -49,14 +49,14 @@ DefaultTargetHttpsProxiesRestStub::DefaultTargetHttpsProxiesRestStub(
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxyAggregatedList>
 DefaultTargetHttpsProxiesRestStub::AggregatedListTargetHttpsProxies(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_https_proxies::v1::
         AggregatedListTargetHttpsProxiesRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetHttpsProxyAggregatedList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "targetHttpsProxies"),
       rest_internal::TrimEmptyQueryParameters(
@@ -76,18 +76,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetHttpsProxiesRestStub::AsyncDeleteTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_https_proxies::v1::
         DeleteTargetHttpsProxyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "targetHttpsProxies", "/",
                              request.target_https_proxy()),
@@ -98,7 +99,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncDeleteTargetHttpsProxy(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,13 +109,13 @@ DefaultTargetHttpsProxiesRestStub::AsyncDeleteTargetHttpsProxy(
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
 DefaultTargetHttpsProxiesRestStub::GetTargetHttpsProxy(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_https_proxies::v1::
         GetTargetHttpsProxyRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetHttpsProxy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "targetHttpsProxies", "/", request.target_https_proxy()));
 }
@@ -123,19 +124,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetHttpsProxiesRestStub::AsyncInsertTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_https_proxies::v1::
         InsertTargetHttpsProxyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_https_proxy_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "targetHttpsProxies"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -145,7 +147,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncInsertTargetHttpsProxy(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -155,14 +157,14 @@ DefaultTargetHttpsProxiesRestStub::AsyncInsertTargetHttpsProxy(
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxyList>
 DefaultTargetHttpsProxiesRestStub::ListTargetHttpsProxies(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_https_proxies::v1::
         ListTargetHttpsProxiesRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetHttpsProxyList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "targetHttpsProxies"),
       rest_internal::TrimEmptyQueryParameters(
@@ -178,19 +180,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetHttpsProxiesRestStub::AsyncPatchTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_https_proxies::v1::
         PatchTargetHttpsProxyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_https_proxy_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "targetHttpsProxies", "/",
                              request.target_https_proxy()),
@@ -201,7 +204,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncPatchTargetHttpsProxy(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -212,20 +215,21 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetHttpsProxiesRestStub::AsyncSetCertificateMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_https_proxies::v1::
         SetCertificateMapRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
             request.target_https_proxies_set_certificate_map_request_resource(),
             false,
             absl::StrCat("/", "compute", "/",
-                         rest_internal::DetermineApiVersion("v1", opts), "/",
+                         rest_internal::DetermineApiVersion("v1", options), "/",
                          "projects", "/", request.project(), "/", "global", "/",
                          "targetHttpsProxies", "/",
                          request.target_https_proxy(), "/",
@@ -237,7 +241,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetCertificateMap(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -248,13 +252,14 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetHttpsProxiesRestStub::AsyncSetQuicOverride(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_https_proxies::v1::
         SetQuicOverrideRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -262,7 +267,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetQuicOverride(
                     .target_https_proxies_set_quic_override_request_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "targetHttpsProxies", "/",
                              request.target_https_proxy(), "/",
@@ -274,7 +279,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetQuicOverride(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -285,13 +290,14 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetHttpsProxiesRestStub::AsyncSetSslCertificates(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_https_proxies::v1::
         SetSslCertificatesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -300,9 +306,9 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetSslCertificates(
             false,
             absl::StrCat(
                 "/", "compute", "/",
-                rest_internal::DetermineApiVersion("v1", opts), "/", "projects",
-                "/", request.project(), "/", "targetHttpsProxies", "/",
-                request.target_https_proxy(), "/", "setSslCertificates"),
+                rest_internal::DetermineApiVersion("v1", options), "/",
+                "projects", "/", request.project(), "/", "targetHttpsProxies",
+                "/", request.target_https_proxy(), "/", "setSslCertificates"),
             rest_internal::TrimEmptyQueryParameters(
                 {std::make_pair("request_id", request.request_id())})));
       },
@@ -310,7 +316,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetSslCertificates(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -321,19 +327,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetHttpsProxiesRestStub::AsyncSetSslPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_https_proxies::v1::
         SetSslPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.ssl_policy_reference_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "targetHttpsProxies", "/",
                              request.target_https_proxy(), "/", "setSslPolicy"),
@@ -344,7 +351,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetSslPolicy(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -355,19 +362,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetHttpsProxiesRestStub::AsyncSetUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_https_proxies::v1::
         SetUrlMapRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_reference_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "targetHttpsProxies", "/",
                              request.target_https_proxy(), "/", "setUrlMap"),
@@ -378,7 +386,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetUrlMap(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -389,18 +397,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetHttpsProxiesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
                 absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -408,7 +418,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -418,16 +428,18 @@ DefaultTargetHttpsProxiesRestStub::AsyncGetOperation(
 future<Status> DefaultTargetHttpsProxiesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", opts),
+                         rest_internal::DetermineApiVersion("v1", options),
                          "/projects/", request.project(), "/global/operations/",
                          request.operation())));
       },
@@ -435,7 +447,7 @@ future<Status> DefaultTargetHttpsProxiesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

@@ -42,35 +42,34 @@ SqlOperationsServiceRestMetadata::SqlOperationsServiceRestMetadata(
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlOperationsServiceRestMetadata::Get(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->Get(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->Get(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::OperationsListResponse>
 SqlOperationsServiceRestMetadata::List(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlOperationsListRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->List(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->List(rest_context, options, request);
 }
 
 Status SqlOperationsServiceRestMetadata::Cancel(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->Cancel(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->Cancel(rest_context, options, request);
 }
 
 void SqlOperationsServiceRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

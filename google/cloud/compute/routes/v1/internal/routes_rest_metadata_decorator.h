@@ -43,11 +43,13 @@ class RoutesRestMetadata : public RoutesRestStub {
   AsyncDeleteRoute(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request)
       override;
 
@@ -55,11 +57,13 @@ class RoutesRestMetadata : public RoutesRestStub {
   AsyncInsertRoute(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouteList> ListRoutes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& request)
       override;
 
@@ -67,17 +71,20 @@ class RoutesRestMetadata : public RoutesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<RoutesRestStub> child_;

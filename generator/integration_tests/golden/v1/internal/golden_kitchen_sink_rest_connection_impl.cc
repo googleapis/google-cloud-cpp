@@ -47,10 +47,10 @@ GoldenKitchenSinkRestConnectionImpl::GenerateAccessToken(google::test::admin::da
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateAccessToken(request),
       [this](rest_internal::RestContext& rest_context,
-             google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-        return stub_->GenerateAccessToken(rest_context, request);
+             Options const& options, google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+        return stub_->GenerateAccessToken(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
@@ -60,10 +60,10 @@ GoldenKitchenSinkRestConnectionImpl::GenerateIdToken(google::test::admin::databa
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateIdToken(request),
       [this](rest_internal::RestContext& rest_context,
-             google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
-        return stub_->GenerateIdToken(rest_context, request);
+             Options const& options, google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
+        return stub_->GenerateIdToken(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
@@ -73,10 +73,10 @@ GoldenKitchenSinkRestConnectionImpl::WriteLogEntries(google::test::admin::databa
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->WriteLogEntries(request),
       [this](rest_internal::RestContext& rest_context,
-             google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
-        return stub_->WriteLogEntries(rest_context, request);
+             Options const& options, google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+        return stub_->WriteLogEntries(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<std::string>
@@ -86,17 +86,19 @@ GoldenKitchenSinkRestConnectionImpl::ListLogs(google::test::admin::database::v1:
   auto idempotency = idempotency_policy(*current)->ListLogs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<golden_v1::GoldenKitchenSinkRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::test::admin::database::v1::ListLogsRequest const& r) {
+          Options const& options, google::test::admin::database::v1::ListLogsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::test::admin::database::v1::ListLogsRequest const& request) {
-              return stub->ListLogs(rest_context, request);
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::test::admin::database::v1::ListLogsRequest const& request) {
+              return stub->ListLogs(rest_context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::test::admin::database::v1::ListLogsResponse r) {
         std::vector<std::string> result(r.log_names().size());
@@ -113,10 +115,10 @@ GoldenKitchenSinkRestConnectionImpl::ListServiceAccountKeys(google::test::admin:
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListServiceAccountKeys(request),
       [this](rest_internal::RestContext& rest_context,
-             google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-        return stub_->ListServiceAccountKeys(rest_context, request);
+             Options const& options, google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+        return stub_->ListServiceAccountKeys(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status
@@ -126,10 +128,10 @@ GoldenKitchenSinkRestConnectionImpl::DoNothing(google::protobuf::Empty const& re
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DoNothing(request),
       [this](rest_internal::RestContext& rest_context,
-             google::protobuf::Empty const& request) {
-        return stub_->DoNothing(rest_context, request);
+             Options const& options, google::protobuf::Empty const& request) {
+        return stub_->DoNothing(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status
@@ -139,10 +141,10 @@ GoldenKitchenSinkRestConnectionImpl::ExplicitRouting1(google::test::admin::datab
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ExplicitRouting1(request),
       [this](rest_internal::RestContext& rest_context,
-             google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-        return stub_->ExplicitRouting1(rest_context, request);
+             Options const& options, google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+        return stub_->ExplicitRouting1(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status
@@ -152,10 +154,10 @@ GoldenKitchenSinkRestConnectionImpl::ExplicitRouting2(google::test::admin::datab
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ExplicitRouting2(request),
       [this](rest_internal::RestContext& rest_context,
-             google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-        return stub_->ExplicitRouting2(rest_context, request);
+             Options const& options, google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+        return stub_->ExplicitRouting2(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

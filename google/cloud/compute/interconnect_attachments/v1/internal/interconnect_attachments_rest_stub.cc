@@ -49,14 +49,14 @@ DefaultInterconnectAttachmentsRestStub::DefaultInterconnectAttachmentsRestStub(
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>
 DefaultInterconnectAttachmentsRestStub::AggregatedListInterconnectAttachments(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         AggregatedListInterconnectAttachmentsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "interconnectAttachments"),
       rest_internal::TrimEmptyQueryParameters(
@@ -76,18 +76,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInterconnectAttachmentsRestStub::AsyncDeleteInterconnectAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         DeleteInterconnectAttachmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "interconnectAttachments", "/",
@@ -99,7 +100,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncDeleteInterconnectAttachment(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -109,14 +110,14 @@ DefaultInterconnectAttachmentsRestStub::AsyncDeleteInterconnectAttachment(
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
 DefaultInterconnectAttachmentsRestStub::GetInterconnectAttachment(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         GetInterconnectAttachmentRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachment>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "interconnectAttachments", "/",
                    request.interconnect_attachment()));
@@ -126,19 +127,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInterconnectAttachmentsRestStub::AsyncInsertInterconnectAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         InsertInterconnectAttachmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.interconnect_attachment_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "interconnectAttachments"),
@@ -151,7 +153,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncInsertInterconnectAttachment(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -161,14 +163,14 @@ DefaultInterconnectAttachmentsRestStub::AsyncInsertInterconnectAttachment(
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentList>
 DefaultInterconnectAttachmentsRestStub::ListInterconnectAttachments(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         ListInterconnectAttachmentsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachmentList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "interconnectAttachments"),
       rest_internal::TrimEmptyQueryParameters(
@@ -184,19 +186,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInterconnectAttachmentsRestStub::AsyncPatchInterconnectAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         PatchInterconnectAttachmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.interconnect_attachment_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "interconnectAttachments", "/",
@@ -208,7 +211,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncPatchInterconnectAttachment(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -219,19 +222,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInterconnectAttachmentsRestStub::AsyncSetLabels(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         SetLabelsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.region_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "interconnectAttachments", "/", request.resource(),
@@ -243,7 +247,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -254,26 +258,29 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInterconnectAttachmentsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
-                absl::StrCat(
-                    "/compute/", rest_internal::DetermineApiVersion("v1", opts),
-                    "/projects/", request.project(), "/regions/",
-                    request.region(), "/operations/", request.operation())));
+                absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", options),
+                             "/projects/", request.project(), "/regions/",
+                             request.region(), "/operations/",
+                             request.operation())));
       },
       std::move(p),
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -283,16 +290,18 @@ DefaultInterconnectAttachmentsRestStub::AsyncGetOperation(
 future<Status> DefaultInterconnectAttachmentsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", opts),
+                "/compute/", rest_internal::DetermineApiVersion("v1", options),
                 "/projects/", request.project(), "/regions/", request.region(),
                 "/operations/", request.operation())));
       },
@@ -300,7 +309,7 @@ future<Status> DefaultInterconnectAttachmentsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

@@ -41,14 +41,14 @@ DefaultDiskTypesRestStub::DefaultDiskTypesRestStub(
 StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
 DefaultDiskTypesRestStub::AggregatedListDiskTypes(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::disk_types::v1::
         AggregatedListDiskTypesRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::DiskTypeAggregatedList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "diskTypes"),
       rest_internal::TrimEmptyQueryParameters(
@@ -67,13 +67,13 @@ DefaultDiskTypesRestStub::AggregatedListDiskTypes(
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
 DefaultDiskTypesRestStub::GetDiskType(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "diskTypes", "/", request.disk_type()));
 }
@@ -81,13 +81,13 @@ DefaultDiskTypesRestStub::GetDiskType(
 StatusOr<google::cloud::cpp::compute::v1::DiskTypeList>
 DefaultDiskTypesRestStub::ListDiskTypes(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskTypeList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "diskTypes"),
       rest_internal::TrimEmptyQueryParameters(

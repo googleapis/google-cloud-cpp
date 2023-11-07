@@ -41,48 +41,47 @@ RegionOperationsRestMetadata::RegionOperationsRestMetadata(
               : std::move(api_client_header)) {}
 
 Status RegionOperationsRestMetadata::DeleteOperation(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->DeleteOperation(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->DeleteOperation(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionOperationsRestMetadata::GetOperation(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetOperation(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetOperation(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
 RegionOperationsRestMetadata::ListRegionOperations(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         ListRegionOperationsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListRegionOperations(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListRegionOperations(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionOperationsRestMetadata::Wait(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->Wait(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->Wait(rest_context, options, request);
 }
 
 void RegionOperationsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

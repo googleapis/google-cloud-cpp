@@ -57,25 +57,30 @@ RegionHealthCheckServicesRestConnectionImpl::DeleteHealthCheckService(
       google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_health_check_services::
                          v1::DeleteHealthCheckServiceRequest const& request) {
         return stub->AsyncDeleteHealthCheckService(cq, std::move(context),
-                                                   request);
+                                                   options, request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -109,12 +114,12 @@ RegionHealthCheckServicesRestConnectionImpl::GetHealthCheckService(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetHealthCheckService(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::region_health_check_services::v1::
                  GetHealthCheckServiceRequest const& request) {
-        return stub_->GetHealthCheckService(rest_context, request);
+        return stub_->GetHealthCheckService(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -128,25 +133,30 @@ RegionHealthCheckServicesRestConnectionImpl::InsertHealthCheckService(
       google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_health_check_services::
                          v1::InsertHealthCheckServiceRequest const& request) {
         return stub->AsyncInsertHealthCheckService(cq, std::move(context),
-                                                   request);
+                                                   options, request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -183,23 +193,26 @@ RegionHealthCheckServicesRestConnectionImpl::ListRegionHealthCheckServices(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::HealthCheckService>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<compute_region_health_check_services_v1::
                                    RegionHealthCheckServicesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::region_health_check_services::v1::
               ListRegionHealthCheckServicesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
                 rest_internal::RestContext& rest_context,
+                Options const& options,
                 google::cloud::cpp::compute::region_health_check_services::v1::
                     ListRegionHealthCheckServicesRequest const& request) {
-              return stub->ListRegionHealthCheckServices(rest_context, request);
+              return stub->ListRegionHealthCheckServices(rest_context, options,
+                                                         request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::HealthCheckServicesList r) {
         std::vector<google::cloud::cpp::compute::v1::HealthCheckService> result(
@@ -221,25 +234,30 @@ RegionHealthCheckServicesRestConnectionImpl::PatchHealthCheckService(
       google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_health_check_services::
                          v1::PatchHealthCheckServiceRequest const& request) {
         return stub->AsyncPatchHealthCheckService(cq, std::move(context),
-                                                  request);
+                                                  options, request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },

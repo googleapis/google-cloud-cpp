@@ -40,6 +40,7 @@ class SslPoliciesRestStub {
   virtual StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
   AggregatedListSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           AggregatedListSslPoliciesRequest const& request) = 0;
 
@@ -47,11 +48,13 @@ class SslPoliciesRestStub {
   AsyncDeleteSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           DeleteSslPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
           request) = 0;
 
@@ -59,17 +62,20 @@ class SslPoliciesRestStub {
   AsyncInsertSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           InsertSslPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
   ListSslPolicies(google::cloud::rest_internal::RestContext& rest_context,
+                  Options const& options,
                   google::cloud::cpp::compute::ssl_policies::v1::
                       ListSslPoliciesRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
   ListAvailableFeatures(google::cloud::rest_internal::RestContext& rest_context,
+                        Options const& options,
                         google::cloud::cpp::compute::ssl_policies::v1::
                             ListAvailableFeaturesRequest const& request) = 0;
 
@@ -77,6 +83,7 @@ class SslPoliciesRestStub {
   AsyncPatchSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           PatchSslPolicyRequest const& request) = 0;
 
@@ -84,12 +91,14 @@ class SslPoliciesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -106,6 +115,7 @@ class DefaultSslPoliciesRestStub : public SslPoliciesRestStub {
   StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
   AggregatedListSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           AggregatedListSslPoliciesRequest const& request) override;
 
@@ -113,11 +123,13 @@ class DefaultSslPoliciesRestStub : public SslPoliciesRestStub {
   AsyncDeleteSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           DeleteSslPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
           request) override;
 
@@ -125,11 +137,13 @@ class DefaultSslPoliciesRestStub : public SslPoliciesRestStub {
   AsyncInsertSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           InsertSslPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList> ListSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           ListSslPoliciesRequest const& request) override;
 
@@ -137,6 +151,7 @@ class DefaultSslPoliciesRestStub : public SslPoliciesRestStub {
       google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
   ListAvailableFeatures(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           ListAvailableFeaturesRequest const& request) override;
 
@@ -144,6 +159,7 @@ class DefaultSslPoliciesRestStub : public SslPoliciesRestStub {
   AsyncPatchSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           PatchSslPolicyRequest const& request) override;
 
@@ -151,12 +167,14 @@ class DefaultSslPoliciesRestStub : public SslPoliciesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

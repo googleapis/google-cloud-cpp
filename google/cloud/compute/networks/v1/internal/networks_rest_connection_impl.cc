@@ -52,25 +52,30 @@ NetworksRestConnectionImpl::AddPeering(
       google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
               request) {
-        return stub->AsyncAddPeering(cq, std::move(context), request);
+        return stub->AsyncAddPeering(cq, std::move(context), options, request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -105,25 +110,31 @@ NetworksRestConnectionImpl::DeleteNetwork(
       google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
               request) {
-        return stub->AsyncDeleteNetwork(cq, std::move(context), request);
+        return stub->AsyncDeleteNetwork(cq, std::move(context), options,
+                                        request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -155,10 +166,12 @@ NetworksRestConnectionImpl::GetNetwork(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNetwork(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
-                 request) { return stub_->GetNetwork(rest_context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetNetwork(rest_context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
@@ -169,12 +182,12 @@ NetworksRestConnectionImpl::GetEffectiveFirewalls(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEffectiveFirewalls(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::networks::v1::
                  GetEffectiveFirewallsRequest const& request) {
-        return stub_->GetEffectiveFirewalls(rest_context, request);
+        return stub_->GetEffectiveFirewalls(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -188,25 +201,31 @@ NetworksRestConnectionImpl::InsertNetwork(
       google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
               request) {
-        return stub->AsyncInsertNetwork(cq, std::move(context), request);
+        return stub->AsyncInsertNetwork(cq, std::move(context), options,
+                                        request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -239,21 +258,23 @@ NetworksRestConnectionImpl::ListNetworks(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Network>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<compute_networks_v1::NetworksRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::networks::v1::ListNetworksRequest const&
               r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::networks::v1::
                        ListNetworksRequest const& request) {
-              return stub->ListNetworks(rest_context, request);
+              return stub->ListNetworks(rest_context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::NetworkList r) {
         std::vector<google::cloud::cpp::compute::v1::Network> result(
@@ -274,21 +295,22 @@ NetworksRestConnectionImpl::ListPeeringRoutes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<compute_networks_v1::NetworksRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::cpp::compute::networks::v1::
-              ListPeeringRoutesRequest const& r) {
+          Options const& options, google::cloud::cpp::compute::networks::v1::
+                                      ListPeeringRoutesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::networks::v1::
                        ListPeeringRoutesRequest const& request) {
-              return stub->ListPeeringRoutes(rest_context, request);
+              return stub->ListPeeringRoutes(rest_context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList r) {
         std::vector<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
@@ -310,25 +332,31 @@ NetworksRestConnectionImpl::PatchNetwork(
       google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
               request) {
-        return stub->AsyncPatchNetwork(cq, std::move(context), request);
+        return stub->AsyncPatchNetwork(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -363,25 +391,31 @@ NetworksRestConnectionImpl::RemovePeering(
       google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
               request) {
-        return stub->AsyncRemovePeering(cq, std::move(context), request);
+        return stub->AsyncRemovePeering(cq, std::move(context), options,
+                                        request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -416,24 +450,30 @@ NetworksRestConnectionImpl::SwitchToCustomMode(
       google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::networks::v1::
                          SwitchToCustomModeRequest const& request) {
-        return stub->AsyncSwitchToCustomMode(cq, std::move(context), request);
+        return stub->AsyncSwitchToCustomMode(cq, std::move(context), options,
+                                             request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -468,25 +508,31 @@ NetworksRestConnectionImpl::UpdatePeering(
       google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
               request) {
-        return stub->AsyncUpdatePeering(cq, std::move(context), request);
+        return stub->AsyncUpdatePeering(cq, std::move(context), options,
+                                        request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::global_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },

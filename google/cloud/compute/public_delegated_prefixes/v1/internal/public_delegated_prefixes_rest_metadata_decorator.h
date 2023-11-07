@@ -45,6 +45,7 @@ class PublicDelegatedPrefixesRestMetadata
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>
   AggregatedListPublicDelegatedPrefixes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           AggregatedListPublicDelegatedPrefixesRequest const& request) override;
 
@@ -52,6 +53,7 @@ class PublicDelegatedPrefixesRestMetadata
   AsyncAnnounce(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           AnnounceRequest const& request) override;
 
@@ -59,12 +61,14 @@ class PublicDelegatedPrefixesRestMetadata
   AsyncDeletePublicDelegatedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           DeletePublicDelegatedPrefixRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
   GetPublicDelegatedPrefix(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           GetPublicDelegatedPrefixRequest const& request) override;
 
@@ -72,12 +76,14 @@ class PublicDelegatedPrefixesRestMetadata
   AsyncInsertPublicDelegatedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           InsertPublicDelegatedPrefixRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>
   ListPublicDelegatedPrefixes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           ListPublicDelegatedPrefixesRequest const& request) override;
 
@@ -85,6 +91,7 @@ class PublicDelegatedPrefixesRestMetadata
   AsyncPatchPublicDelegatedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           PatchPublicDelegatedPrefixRequest const& request) override;
 
@@ -92,6 +99,7 @@ class PublicDelegatedPrefixesRestMetadata
   AsyncWithdraw(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           WithdrawRequest const& request) override;
 
@@ -99,17 +107,20 @@ class PublicDelegatedPrefixesRestMetadata
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<PublicDelegatedPrefixesRestStub> child_;

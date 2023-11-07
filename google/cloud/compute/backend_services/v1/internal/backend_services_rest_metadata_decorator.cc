@@ -44,29 +44,32 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestMetadata::AsyncAddSignedUrlKey(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         AddSignedUrlKeyRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncAddSignedUrlKey(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncAddSignedUrlKey(cq, std::move(rest_context), options,
+                                      request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
 BackendServicesRestMetadata::AggregatedListBackendServices(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         AggregatedListBackendServicesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListBackendServices(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListBackendServices(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestMetadata::AsyncDeleteBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         DeleteBackendServiceRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteBackendService(cq, std::move(rest_context),
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteBackendService(cq, std::move(rest_context), options,
                                            request);
 }
 
@@ -74,125 +77,134 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestMetadata::AsyncDeleteSignedUrlKey(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         DeleteSignedUrlKeyRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteSignedUrlKey(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteSignedUrlKey(cq, std::move(rest_context), options,
+                                         request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
 BackendServicesRestMetadata::GetBackendService(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         GetBackendServiceRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetBackendService(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetBackendService(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 BackendServicesRestMetadata::GetHealth(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetHealth(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetHealth(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 BackendServicesRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         GetIamPolicyRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetIamPolicy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestMetadata::AsyncInsertBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         InsertBackendServiceRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncInsertBackendService(cq, std::move(rest_context),
+  SetMetadata(*rest_context, options);
+  return child_->AsyncInsertBackendService(cq, std::move(rest_context), options,
                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceList>
 BackendServicesRestMetadata::ListBackendServices(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         ListBackendServicesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListBackendServices(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListBackendServices(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceListUsable>
 BackendServicesRestMetadata::ListUsable(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::backend_services::v1::ListUsableRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListUsable(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListUsable(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestMetadata::AsyncPatchBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         PatchBackendServiceRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncPatchBackendService(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncPatchBackendService(cq, std::move(rest_context), options,
+                                          request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestMetadata::AsyncSetEdgeSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         SetEdgeSecurityPolicyRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncSetEdgeSecurityPolicy(cq, std::move(rest_context),
-                                            request);
+                                            options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 BackendServicesRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         SetIamPolicyRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->SetIamPolicy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->SetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestMetadata::AsyncSetSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         SetSecurityPolicyRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context), options,
+                                        request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 BackendServicesRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         TestIamPermissionsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->TestIamPermissions(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestMetadata::AsyncUpdateBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         UpdateBackendServiceRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncUpdateBackendService(cq, std::move(rest_context),
+  SetMetadata(*rest_context, options);
+  return child_->AsyncUpdateBackendService(cq, std::move(rest_context), options,
                                            request);
 }
 
@@ -200,29 +212,32 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> BackendServicesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void BackendServicesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

@@ -42,43 +42,42 @@ SqlSslCertsServiceRestMetadata::SqlSslCertsServiceRestMetadata(
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlSslCertsServiceRestMetadata::Delete(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->Delete(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->Delete(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::SslCert> SqlSslCertsServiceRestMetadata::Get(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->Get(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->Get(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
 SqlSslCertsServiceRestMetadata::Insert(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->Insert(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->Insert(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsListResponse>
 SqlSslCertsServiceRestMetadata::List(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->List(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->List(rest_context, options, request);
 }
 
 void SqlSslCertsServiceRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

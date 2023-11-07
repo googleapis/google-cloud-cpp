@@ -41,106 +41,114 @@ VpnGatewaysRestMetadata::VpnGatewaysRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
 VpnGatewaysRestMetadata::AggregatedListVpnGateways(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::vpn_gateways::v1::
         AggregatedListVpnGatewaysRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListVpnGateways(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListVpnGateways(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnGatewaysRestMetadata::AsyncDeleteVpnGateway(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::vpn_gateways::v1::
         DeleteVpnGatewayRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteVpnGateway(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteVpnGateway(cq, std::move(rest_context), options,
+                                       request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGateway>
 VpnGatewaysRestMetadata::GetVpnGateway(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetVpnGateway(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetVpnGateway(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>
 VpnGatewaysRestMetadata::GetStatus(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetStatus(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetStatus(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnGatewaysRestMetadata::AsyncInsertVpnGateway(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::vpn_gateways::v1::
         InsertVpnGatewayRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncInsertVpnGateway(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncInsertVpnGateway(cq, std::move(rest_context), options,
+                                       request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewayList>
 VpnGatewaysRestMetadata::ListVpnGateways(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListVpnGateways(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListVpnGateways(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnGatewaysRestMetadata::AsyncSetLabels(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetLabels(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetLabels(cq, std::move(rest_context), options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 VpnGatewaysRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::vpn_gateways::v1::
         TestIamPermissionsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->TestIamPermissions(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnGatewaysRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> VpnGatewaysRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void VpnGatewaysRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

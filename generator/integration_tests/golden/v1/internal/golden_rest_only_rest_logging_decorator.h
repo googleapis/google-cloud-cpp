@@ -43,7 +43,7 @@ class GoldenRestOnlyRestLogging : public GoldenRestOnlyRestStub {
 
   Status Noop(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::protobuf::Empty const& request) override;
+      Options const& options, google::protobuf::Empty const& request) override;
 
  private:
   std::shared_ptr<GoldenRestOnlyRestStub> child_;

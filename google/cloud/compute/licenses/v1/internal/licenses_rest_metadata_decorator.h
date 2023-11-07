@@ -43,16 +43,19 @@ class LicensesRestMetadata : public LicensesRestStub {
   AsyncDeleteLicense(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
           request) override;
 
@@ -60,21 +63,25 @@ class LicensesRestMetadata : public LicensesRestStub {
   AsyncInsertLicense(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse> ListLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::licenses::v1::
                          TestIamPermissionsRequest const& request) override;
 
@@ -82,17 +89,20 @@ class LicensesRestMetadata : public LicensesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<LicensesRestStub> child_;

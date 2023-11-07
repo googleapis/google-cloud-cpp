@@ -48,11 +48,13 @@ class RegionTargetHttpProxiesRestLogging
   AsyncDeleteTargetHttpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_http_proxies::v1::
           DeleteTargetHttpProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_http_proxies::v1::
           GetTargetHttpProxyRequest const& request) override;
 
@@ -60,18 +62,21 @@ class RegionTargetHttpProxiesRestLogging
   AsyncInsertTargetHttpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_http_proxies::v1::
           InsertTargetHttpProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
   ListRegionTargetHttpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_http_proxies::v1::
           ListRegionTargetHttpProxiesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_http_proxies::v1::
           SetUrlMapRequest const& request) override;
 
@@ -79,12 +84,14 @@ class RegionTargetHttpProxiesRestLogging
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

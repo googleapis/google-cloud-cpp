@@ -47,14 +47,14 @@ DefaultUrlMapsRestStub::DefaultUrlMapsRestStub(
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
 DefaultUrlMapsRestStub::AggregatedListUrlMaps(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::url_maps::v1::
         AggregatedListUrlMapsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::UrlMapsAggregatedList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "urlMaps"),
       rest_internal::TrimEmptyQueryParameters(
@@ -74,18 +74,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultUrlMapsRestStub::AsyncDeleteUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "urlMaps", "/", request.url_map()),
                 rest_internal::TrimEmptyQueryParameters(
@@ -95,7 +96,7 @@ DefaultUrlMapsRestStub::AsyncDeleteUrlMap(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -105,13 +106,13 @@ DefaultUrlMapsRestStub::AsyncDeleteUrlMap(
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 DefaultUrlMapsRestStub::GetUrlMap(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "urlMaps", "/", request.url_map()));
 }
@@ -120,18 +121,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultUrlMapsRestStub::AsyncInsertUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "urlMaps"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -141,7 +143,7 @@ DefaultUrlMapsRestStub::AsyncInsertUrlMap(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -152,19 +154,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultUrlMapsRestStub::AsyncInvalidateCache(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.cache_invalidation_rule_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "urlMaps", "/", request.url_map(),
                              "/", "invalidateCache"),
@@ -175,7 +178,7 @@ DefaultUrlMapsRestStub::AsyncInvalidateCache(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -185,13 +188,13 @@ DefaultUrlMapsRestStub::AsyncInvalidateCache(
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
 DefaultUrlMapsRestStub::ListUrlMaps(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMapList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "urlMaps"),
       rest_internal::TrimEmptyQueryParameters(
@@ -207,18 +210,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultUrlMapsRestStub::AsyncPatchUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "urlMaps", "/", request.url_map()),
                 rest_internal::TrimEmptyQueryParameters(
@@ -228,7 +232,7 @@ DefaultUrlMapsRestStub::AsyncPatchUrlMap(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -239,18 +243,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultUrlMapsRestStub::AsyncUpdateUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "urlMaps", "/", request.url_map()),
                 rest_internal::TrimEmptyQueryParameters(
@@ -260,7 +265,7 @@ DefaultUrlMapsRestStub::AsyncUpdateUrlMap(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -270,14 +275,14 @@ DefaultUrlMapsRestStub::AsyncUpdateUrlMap(
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
 DefaultUrlMapsRestStub::Validate(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::url_maps::v1::ValidateRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
       *service_, rest_context, request.url_maps_validate_request_resource(),
       false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "urlMaps", "/", request.url_map(), "/", "validate"));
 }
@@ -286,18 +291,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultUrlMapsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
                 absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -305,7 +312,7 @@ DefaultUrlMapsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -315,16 +322,18 @@ DefaultUrlMapsRestStub::AsyncGetOperation(
 future<Status> DefaultUrlMapsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", opts),
+                         rest_internal::DetermineApiVersion("v1", options),
                          "/projects/", request.project(), "/global/operations/",
                          request.operation())));
       },
@@ -332,7 +341,7 @@ future<Status> DefaultUrlMapsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

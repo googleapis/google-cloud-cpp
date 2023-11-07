@@ -45,55 +45,55 @@ GoldenKitchenSinkRestMetadata::GoldenKitchenSinkRestMetadata(
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkRestMetadata::GenerateAccessToken(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GenerateAccessToken(rest_context, request);
+    Options const& options, google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GenerateAccessToken(rest_context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 GoldenKitchenSinkRestMetadata::GenerateIdToken(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GenerateIdToken(rest_context, request);
+    Options const& options, google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GenerateIdToken(rest_context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 GoldenKitchenSinkRestMetadata::WriteLogEntries(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->WriteLogEntries(rest_context, request);
+    Options const& options, google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->WriteLogEntries(rest_context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse>
 GoldenKitchenSinkRestMetadata::ListLogs(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::ListLogsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListLogs(rest_context, request);
+    Options const& options, google::test::admin::database::v1::ListLogsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ListLogs(rest_context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkRestMetadata::ListServiceAccountKeys(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListServiceAccountKeys(rest_context, request);
+    Options const& options, google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ListServiceAccountKeys(rest_context, options, request);
 }
 
 Status
 GoldenKitchenSinkRestMetadata::DoNothing(
     rest_internal::RestContext& rest_context,
-    google::protobuf::Empty const& request) {
-  SetMetadata(rest_context);
-  return child_->DoNothing(rest_context, request);
+    Options const& options, google::protobuf::Empty const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DoNothing(rest_context, options, request);
 }
 
 Status
 GoldenKitchenSinkRestMetadata::ExplicitRouting1(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+    Options const& options, google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -131,15 +131,15 @@ GoldenKitchenSinkRestMetadata::ExplicitRouting1(
   }();
   routing_id_matcher->AppendParam(request, params);
 
-  SetMetadata(rest_context, params);
+  SetMetadata(rest_context, options, params);
 
-  return child_->ExplicitRouting1(rest_context, request);
+  return child_->ExplicitRouting1(rest_context, options, request);
 }
 
 Status
 GoldenKitchenSinkRestMetadata::ExplicitRouting2(
     rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+    Options const& options, google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -155,19 +155,18 @@ GoldenKitchenSinkRestMetadata::ExplicitRouting2(
     params.push_back(absl::StrCat("routing_id=", internal::UrlEncode(request.nested1().nested2().value())));
   }
 
-  SetMetadata(rest_context, params);
+  SetMetadata(rest_context, options, params);
 
-  return child_->ExplicitRouting2(rest_context, request);
+  return child_->ExplicitRouting2(rest_context, options, request);
 }
 
 void GoldenKitchenSinkRestMetadata::SetMetadata(
       rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+      Options const& options, std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader(
         "x-goog-user-project", options.get<UserProjectOption>());

@@ -41,11 +41,11 @@ DefaultSqlUsersServiceRestStub::DefaultSqlUsersServiceRestStub(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlUsersServiceRestStub::Delete(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "users"),
       rest_internal::TrimEmptyQueryParameters(
@@ -55,11 +55,11 @@ DefaultSqlUsersServiceRestStub::Delete(
 
 StatusOr<google::cloud::sql::v1::User> DefaultSqlUsersServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlUsersGetRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::User>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "users", "/", request.name()),
       rest_internal::TrimEmptyQueryParameters(
@@ -69,11 +69,11 @@ StatusOr<google::cloud::sql::v1::User> DefaultSqlUsersServiceRestStub::Get(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlUsersServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "users"));
 }
@@ -81,11 +81,11 @@ DefaultSqlUsersServiceRestStub::Insert(
 StatusOr<google::cloud::sql::v1::UsersListResponse>
 DefaultSqlUsersServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlUsersListRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::UsersListResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "users"));
 }
@@ -93,11 +93,11 @@ DefaultSqlUsersServiceRestStub::List(
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlUsersServiceRestStub::Update(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "users"),
       rest_internal::TrimEmptyQueryParameters(

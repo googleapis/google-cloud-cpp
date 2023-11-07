@@ -43,163 +43,178 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncAddNodes(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncAddNodes(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncAddNodes(cq, std::move(rest_context), options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
 NodeGroupsRestMetadata::AggregatedListNodeGroups(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_groups::v1::
         AggregatedListNodeGroupsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListNodeGroups(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListNodeGroups(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncDeleteNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteNodeGroup(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteNodeGroup(cq, std::move(rest_context), options,
+                                      request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncDeleteNodes(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteNodes(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteNodes(cq, std::move(rest_context), options,
+                                  request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
 NodeGroupsRestMetadata::GetNodeGroup(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetNodeGroup(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetNodeGroup(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeGroupsRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetIamPolicy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncInsertNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncInsertNodeGroup(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncInsertNodeGroup(cq, std::move(rest_context), options,
+                                      request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupList>
 NodeGroupsRestMetadata::ListNodeGroups(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListNodeGroups(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListNodeGroups(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupsListNodes>
 NodeGroupsRestMetadata::ListNodes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListNodes(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListNodes(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncPatchNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncPatchNodeGroup(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncPatchNodeGroup(cq, std::move(rest_context), options,
+                                     request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeGroupsRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->SetIamPolicy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->SetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncSetNodeTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetNodeTemplate(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetNodeTemplate(cq, std::move(rest_context), options,
+                                      request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncSimulateMaintenanceEvent(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::node_groups::v1::
         SimulateMaintenanceEventRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncSimulateMaintenanceEvent(cq, std::move(rest_context),
-                                               request);
+                                               options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NodeGroupsRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_groups::v1::
         TestIamPermissionsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->TestIamPermissions(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> NodeGroupsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::zone_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void NodeGroupsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

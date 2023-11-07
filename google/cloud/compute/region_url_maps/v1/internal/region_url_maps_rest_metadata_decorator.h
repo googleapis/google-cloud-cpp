@@ -44,11 +44,13 @@ class RegionUrlMapsRestMetadata : public RegionUrlMapsRestStub {
   AsyncDeleteUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_url_maps::v1::
           DeleteUrlMapRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
           request) override;
 
@@ -56,11 +58,13 @@ class RegionUrlMapsRestMetadata : public RegionUrlMapsRestStub {
   AsyncInsertUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_url_maps::v1::
           InsertUrlMapRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapList> ListRegionUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_url_maps::v1::
           ListRegionUrlMapsRequest const& request) override;
 
@@ -68,6 +72,7 @@ class RegionUrlMapsRestMetadata : public RegionUrlMapsRestStub {
   AsyncPatchUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_url_maps::v1::
           PatchUrlMapRequest const& request) override;
 
@@ -75,11 +80,13 @@ class RegionUrlMapsRestMetadata : public RegionUrlMapsRestStub {
   AsyncUpdateUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_url_maps::v1::
           UpdateUrlMapRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
           request) override;
 
@@ -87,17 +94,20 @@ class RegionUrlMapsRestMetadata : public RegionUrlMapsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<RegionUrlMapsRestStub> child_;

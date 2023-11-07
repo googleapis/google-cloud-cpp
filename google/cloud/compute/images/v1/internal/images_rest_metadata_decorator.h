@@ -43,6 +43,7 @@ class ImagesRestMetadata : public ImagesRestStub {
   AsyncDeleteImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
           request) override;
 
@@ -50,21 +51,25 @@ class ImagesRestMetadata : public ImagesRestStub {
   AsyncDeprecate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::DeprecateRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Image> GetImage(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::GetImageRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Image> GetFromFamily(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
           request) override;
 
@@ -72,11 +77,13 @@ class ImagesRestMetadata : public ImagesRestStub {
   AsyncInsertImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::InsertImageRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ImageList> ListImages(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::ListImagesRequest const& request)
       override;
 
@@ -84,11 +91,13 @@ class ImagesRestMetadata : public ImagesRestStub {
   AsyncPatchImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::PatchImageRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
           request) override;
 
@@ -96,12 +105,14 @@ class ImagesRestMetadata : public ImagesRestStub {
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&
           request) override;
 
@@ -109,17 +120,20 @@ class ImagesRestMetadata : public ImagesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<ImagesRestStub> child_;

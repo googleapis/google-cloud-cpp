@@ -35,30 +35,30 @@ LicenseCodesRestLogging::LicenseCodesRestLogging(
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
 LicenseCodesRestLogging::GetLicenseCode(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::license_codes::v1::
                  GetLicenseCodeRequest const& request) {
-        return child_->GetLicenseCode(rest_context, request);
+        return child_->GetLicenseCode(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicenseCodesRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::license_codes::v1::
         TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::license_codes::v1::
                  TestIamPermissionsRequest const& request) {
-        return child_->TestIamPermissions(rest_context, request);
+        return child_->TestIamPermissions(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

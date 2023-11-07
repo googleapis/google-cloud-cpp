@@ -41,21 +41,25 @@ class DiskTypesRestMetadata : public DiskTypesRestStub {
   StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
   AggregatedListDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::disk_types::v1::
           AggregatedListDiskTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskTypeList> ListDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest const&
           request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<DiskTypesRestStub> child_;

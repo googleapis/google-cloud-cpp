@@ -35,44 +35,45 @@ AcceleratorTypesRestLogging::AcceleratorTypesRestLogging(
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
 AcceleratorTypesRestLogging::AggregatedListAcceleratorTypes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::accelerator_types::v1::
         AggregatedListAcceleratorTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::accelerator_types::v1::
                  AggregatedListAcceleratorTypesRequest const& request) {
-        return child_->AggregatedListAcceleratorTypes(rest_context, request);
+        return child_->AggregatedListAcceleratorTypes(rest_context, options,
+                                                      request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
 AcceleratorTypesRestLogging::GetAcceleratorType(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::accelerator_types::v1::
         GetAcceleratorTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::accelerator_types::v1::
                  GetAcceleratorTypeRequest const& request) {
-        return child_->GetAcceleratorType(rest_context, request);
+        return child_->GetAcceleratorType(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
 AcceleratorTypesRestLogging::ListAcceleratorTypes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::accelerator_types::v1::
         ListAcceleratorTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::accelerator_types::v1::
                  ListAcceleratorTypesRequest const& request) {
-        return child_->ListAcceleratorTypes(rest_context, request);
+        return child_->ListAcceleratorTypes(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

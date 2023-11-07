@@ -52,22 +52,25 @@ MachineTypesRestConnectionImpl::AggregatedListMachineTypes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<compute_machine_types_v1::MachineTypesRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::machine_types::v1::
               AggregatedListMachineTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::machine_types::v1::
                        AggregatedListMachineTypesRequest const& request) {
-              return stub->AggregatedListMachineTypes(rest_context, request);
+              return stub->AggregatedListMachineTypes(rest_context, options,
+                                                      request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::MachineTypeAggregatedList r) {
         std::vector<
@@ -88,12 +91,12 @@ MachineTypesRestConnectionImpl::GetMachineType(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMachineType(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::machine_types::v1::
                  GetMachineTypeRequest const& request) {
-        return stub_->GetMachineType(rest_context, request);
+        return stub_->GetMachineType(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::MachineType>
@@ -106,22 +109,23 @@ MachineTypesRestConnectionImpl::ListMachineTypes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::MachineType>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<compute_machine_types_v1::MachineTypesRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::cpp::compute::machine_types::v1::
-              ListMachineTypesRequest const& r) {
+          Options const& options, google::cloud::cpp::compute::machine_types::
+                                      v1::ListMachineTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::machine_types::v1::
                        ListMachineTypesRequest const& request) {
-              return stub->ListMachineTypes(rest_context, request);
+              return stub->ListMachineTypes(rest_context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::MachineTypeList r) {
         std::vector<google::cloud::cpp::compute::v1::MachineType> result(

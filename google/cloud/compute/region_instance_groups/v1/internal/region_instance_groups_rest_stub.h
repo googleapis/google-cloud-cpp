@@ -40,18 +40,21 @@ class RegionInstanceGroupsRestStub {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
   GetInstanceGroup(google::cloud::rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::region_instance_groups::v1::
                        GetInstanceGroupRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::RegionInstanceGroupList>
   ListRegionInstanceGroups(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_instance_groups::v1::
           ListRegionInstanceGroupsRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::cpp::compute::v1::RegionInstanceGroupsListInstances>
   ListInstances(google::cloud::rest_internal::RestContext& rest_context,
+                Options const& options,
                 google::cloud::cpp::compute::region_instance_groups::v1::
                     ListInstancesRequest const& request) = 0;
 
@@ -59,6 +62,7 @@ class RegionInstanceGroupsRestStub {
   AsyncSetNamedPorts(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_instance_groups::v1::
           SetNamedPortsRequest const& request) = 0;
 
@@ -66,12 +70,14 @@ class RegionInstanceGroupsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -88,17 +94,20 @@ class DefaultRegionInstanceGroupsRestStub
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_instance_groups::v1::
           GetInstanceGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RegionInstanceGroupList>
   ListRegionInstanceGroups(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_instance_groups::v1::
           ListRegionInstanceGroupsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RegionInstanceGroupsListInstances>
   ListInstances(google::cloud::rest_internal::RestContext& rest_context,
+                Options const& options,
                 google::cloud::cpp::compute::region_instance_groups::v1::
                     ListInstancesRequest const& request) override;
 
@@ -106,6 +115,7 @@ class DefaultRegionInstanceGroupsRestStub
   AsyncSetNamedPorts(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_instance_groups::v1::
           SetNamedPortsRequest const& request) override;
 
@@ -113,12 +123,14 @@ class DefaultRegionInstanceGroupsRestStub
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

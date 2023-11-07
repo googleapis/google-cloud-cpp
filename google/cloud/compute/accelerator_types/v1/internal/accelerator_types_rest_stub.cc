@@ -42,14 +42,14 @@ DefaultAcceleratorTypesRestStub::DefaultAcceleratorTypesRestStub(
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
 DefaultAcceleratorTypesRestStub::AggregatedListAcceleratorTypes(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::accelerator_types::v1::
         AggregatedListAcceleratorTypesRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "acceleratorTypes"),
       rest_internal::TrimEmptyQueryParameters(
@@ -68,13 +68,13 @@ DefaultAcceleratorTypesRestStub::AggregatedListAcceleratorTypes(
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
 DefaultAcceleratorTypesRestStub::GetAcceleratorType(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::accelerator_types::v1::
         GetAcceleratorTypeRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::AcceleratorType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "acceleratorTypes", "/",
                    request.accelerator_type()));
@@ -83,14 +83,14 @@ DefaultAcceleratorTypesRestStub::GetAcceleratorType(
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
 DefaultAcceleratorTypesRestStub::ListAcceleratorTypes(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::accelerator_types::v1::
         ListAcceleratorTypesRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::AcceleratorTypeList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "acceleratorTypes"),
       rest_internal::TrimEmptyQueryParameters(

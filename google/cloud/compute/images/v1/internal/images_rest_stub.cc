@@ -48,18 +48,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultImagesRestStub::AsyncDeleteImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "images", "/", request.image()),
                 rest_internal::TrimEmptyQueryParameters(
@@ -69,7 +70,7 @@ DefaultImagesRestStub::AsyncDeleteImage(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -80,18 +81,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultImagesRestStub::AsyncDeprecate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.deprecation_status_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "images", "/", request.image(), "/",
                              "deprecate"),
@@ -102,7 +104,7 @@ DefaultImagesRestStub::AsyncDeprecate(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -112,12 +114,12 @@ DefaultImagesRestStub::AsyncDeprecate(
 StatusOr<google::cloud::cpp::compute::v1::Image>
 DefaultImagesRestStub::GetImage(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::images::v1::GetImageRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Image>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "images", "/", request.image()));
 }
@@ -125,13 +127,13 @@ DefaultImagesRestStub::GetImage(
 StatusOr<google::cloud::cpp::compute::v1::Image>
 DefaultImagesRestStub::GetFromFamily(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Image>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "images", "/", "family", "/", request.family()));
 }
@@ -139,13 +141,13 @@ DefaultImagesRestStub::GetFromFamily(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultImagesRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "images", "/", request.resource(), "/", "getIamPolicy"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair(
@@ -157,18 +159,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultImagesRestStub::AsyncInsertImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::images::v1::InsertImageRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.image_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "images"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -180,7 +183,7 @@ DefaultImagesRestStub::AsyncInsertImage(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -190,12 +193,12 @@ DefaultImagesRestStub::AsyncInsertImage(
 StatusOr<google::cloud::cpp::compute::v1::ImageList>
 DefaultImagesRestStub::ListImages(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::images::v1::ListImagesRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::ImageList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "images"),
       rest_internal::TrimEmptyQueryParameters(
@@ -211,17 +214,18 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultImagesRestStub::AsyncPatchImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.image_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "images", "/", request.image()),
                 rest_internal::TrimEmptyQueryParameters(
@@ -231,7 +235,7 @@ DefaultImagesRestStub::AsyncPatchImage(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -241,14 +245,14 @@ DefaultImagesRestStub::AsyncPatchImage(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultImagesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "images", "/", request.resource(), "/", "setIamPolicy"));
 }
@@ -257,18 +261,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultImagesRestStub::AsyncSetLabels(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.global_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "images", "/", request.resource(),
                              "/", "setLabels")));
@@ -277,7 +282,7 @@ DefaultImagesRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -287,35 +292,38 @@ DefaultImagesRestStub::AsyncSetLabels(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultImagesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
       false,
-      absl::StrCat(
-          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
-          "/", "projects", "/", request.project(), "/", "global", "/", "images",
-          "/", request.resource(), "/", "testIamPermissions"));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "images", "/", request.resource(), "/",
+                   "testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultImagesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
                 absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -323,7 +331,7 @@ DefaultImagesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -333,16 +341,18 @@ DefaultImagesRestStub::AsyncGetOperation(
 future<Status> DefaultImagesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", opts),
+                         rest_internal::DetermineApiVersion("v1", options),
                          "/projects/", request.project(), "/global/operations/",
                          request.operation())));
       },
@@ -350,7 +360,7 @@ future<Status> DefaultImagesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

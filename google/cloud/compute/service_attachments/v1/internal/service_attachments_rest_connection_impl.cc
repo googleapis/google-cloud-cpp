@@ -56,23 +56,25 @@ ServiceAttachmentsRestConnectionImpl::AggregatedListServiceAttachments(
   return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
       std::string,
       google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            compute_service_attachments_v1::ServiceAttachmentsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::service_attachments::v1::
               AggregatedListServiceAttachmentsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::service_attachments::v1::
                        AggregatedListServiceAttachmentsRequest const& request) {
               return stub->AggregatedListServiceAttachments(rest_context,
-                                                            request);
+                                                            options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList r) {
         std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -95,25 +97,30 @@ ServiceAttachmentsRestConnectionImpl::DeleteServiceAttachment(
       google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::service_attachments::v1::
                          DeleteServiceAttachmentRequest const& request) {
         return stub->AsyncDeleteServiceAttachment(cq, std::move(context),
-                                                  request);
+                                                  options, request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -147,12 +154,12 @@ ServiceAttachmentsRestConnectionImpl::GetServiceAttachment(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetServiceAttachment(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::service_attachments::v1::
                  GetServiceAttachmentRequest const& request) {
-        return stub_->GetServiceAttachment(rest_context, request);
+        return stub_->GetServiceAttachment(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -163,12 +170,12 @@ ServiceAttachmentsRestConnectionImpl::GetIamPolicy(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::service_attachments::v1::
                  GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(rest_context, request);
+        return stub_->GetIamPolicy(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -182,25 +189,30 @@ ServiceAttachmentsRestConnectionImpl::InsertServiceAttachment(
       google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::service_attachments::v1::
                          InsertServiceAttachmentRequest const& request) {
         return stub->AsyncInsertServiceAttachment(cq, std::move(context),
-                                                  request);
+                                                  options, request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -237,22 +249,25 @@ ServiceAttachmentsRestConnectionImpl::ListServiceAttachments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            compute_service_attachments_v1::ServiceAttachmentsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::service_attachments::v1::
               ListServiceAttachmentsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::service_attachments::v1::
                        ListServiceAttachmentsRequest const& request) {
-              return stub->ListServiceAttachments(rest_context, request);
+              return stub->ListServiceAttachments(rest_context, options,
+                                                  request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::ServiceAttachmentList r) {
         std::vector<google::cloud::cpp::compute::v1::ServiceAttachment> result(
@@ -274,25 +289,30 @@ ServiceAttachmentsRestConnectionImpl::PatchServiceAttachment(
       google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::service_attachments::v1::
                          PatchServiceAttachmentRequest const& request) {
         return stub->AsyncPatchServiceAttachment(cq, std::move(context),
-                                                 request);
+                                                 options, request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -326,12 +346,12 @@ ServiceAttachmentsRestConnectionImpl::SetIamPolicy(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::service_attachments::v1::
                  SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(rest_context, request);
+        return stub_->SetIamPolicy(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -342,12 +362,12 @@ ServiceAttachmentsRestConnectionImpl::TestIamPermissions(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::service_attachments::v1::
                  TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(rest_context, request);
+        return stub_->TestIamPermissions(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

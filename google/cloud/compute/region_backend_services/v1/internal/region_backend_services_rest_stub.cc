@@ -50,18 +50,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionBackendServicesRestStub::AsyncDeleteBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_backend_services::v1::
         DeleteBackendServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "backendServices", "/", request.backend_service()),
@@ -72,7 +73,7 @@ DefaultRegionBackendServicesRestStub::AsyncDeleteBackendService(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -82,13 +83,13 @@ DefaultRegionBackendServicesRestStub::AsyncDeleteBackendService(
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
 DefaultRegionBackendServicesRestStub::GetBackendService(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_backend_services::v1::
         GetBackendServiceRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendService>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "backendServices", "/",
                    request.backend_service()));
@@ -97,15 +98,15 @@ DefaultRegionBackendServicesRestStub::GetBackendService(
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 DefaultRegionBackendServicesRestStub::GetHealth(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_backend_services::v1::
         GetHealthRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::BackendServiceGroupHealth>(
       *service_, rest_context, request.resource_group_reference_resource(),
       false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "backendServices", "/",
                    request.backend_service(), "/", "getHealth"));
@@ -114,13 +115,13 @@ DefaultRegionBackendServicesRestStub::GetHealth(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultRegionBackendServicesRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_backend_services::v1::
         GetIamPolicyRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "backendServices", "/",
                    request.resource(), "/", "getIamPolicy"),
@@ -133,19 +134,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionBackendServicesRestStub::AsyncInsertBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_backend_services::v1::
         InsertBackendServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_service_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "backendServices"),
@@ -156,7 +158,7 @@ DefaultRegionBackendServicesRestStub::AsyncInsertBackendService(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -166,14 +168,14 @@ DefaultRegionBackendServicesRestStub::AsyncInsertBackendService(
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceList>
 DefaultRegionBackendServicesRestStub::ListRegionBackendServices(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_backend_services::v1::
         ListRegionBackendServicesRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::BackendServiceList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "backendServices"),
       rest_internal::TrimEmptyQueryParameters(
@@ -188,14 +190,14 @@ DefaultRegionBackendServicesRestStub::ListRegionBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceListUsable>
 DefaultRegionBackendServicesRestStub::ListUsable(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_backend_services::v1::
         ListUsableRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::BackendServiceListUsable>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "backendServices", "/", "listUsable"),
       rest_internal::TrimEmptyQueryParameters(
@@ -211,19 +213,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionBackendServicesRestStub::AsyncPatchBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_backend_services::v1::
         PatchBackendServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_service_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "backendServices", "/", request.backend_service()),
@@ -234,7 +237,7 @@ DefaultRegionBackendServicesRestStub::AsyncPatchBackendService(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -244,14 +247,14 @@ DefaultRegionBackendServicesRestStub::AsyncPatchBackendService(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultRegionBackendServicesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_backend_services::v1::
         SetIamPolicyRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "backendServices", "/",
                    request.resource(), "/", "setIamPolicy"));
@@ -261,19 +264,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionBackendServicesRestStub::AsyncSetSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_backend_services::v1::
         SetSecurityPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.security_policy_reference_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "backendServices", "/", request.backend_service(),
@@ -285,7 +289,7 @@ DefaultRegionBackendServicesRestStub::AsyncSetSecurityPolicy(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -295,15 +299,15 @@ DefaultRegionBackendServicesRestStub::AsyncSetSecurityPolicy(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultRegionBackendServicesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_backend_services::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
       false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "backendServices", "/",
                    request.resource(), "/", "testIamPermissions"));
@@ -313,19 +317,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionBackendServicesRestStub::AsyncUpdateBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_backend_services::v1::
         UpdateBackendServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_service_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "backendServices", "/", request.backend_service()),
@@ -336,7 +341,7 @@ DefaultRegionBackendServicesRestStub::AsyncUpdateBackendService(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -347,26 +352,29 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionBackendServicesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
-                absl::StrCat(
-                    "/compute/", rest_internal::DetermineApiVersion("v1", opts),
-                    "/projects/", request.project(), "/regions/",
-                    request.region(), "/operations/", request.operation())));
+                absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", options),
+                             "/projects/", request.project(), "/regions/",
+                             request.region(), "/operations/",
+                             request.operation())));
       },
       std::move(p),
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -376,16 +384,18 @@ DefaultRegionBackendServicesRestStub::AsyncGetOperation(
 future<Status> DefaultRegionBackendServicesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", opts),
+                "/compute/", rest_internal::DetermineApiVersion("v1", options),
                 "/projects/", request.project(), "/regions/", request.region(),
                 "/operations/", request.operation())));
       },
@@ -393,7 +403,7 @@ future<Status> DefaultRegionBackendServicesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

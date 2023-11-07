@@ -56,23 +56,25 @@ PacketMirroringsRestConnectionImpl::AggregatedListPacketMirrorings(
   return google::cloud::internal::MakePaginationRange<StreamRange<
       std::pair<std::string,
                 google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            compute_packet_mirrorings_v1::PacketMirroringsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::packet_mirrorings::v1::
               AggregatedListPacketMirroringsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::packet_mirrorings::v1::
                        AggregatedListPacketMirroringsRequest const& request) {
-              return stub->AggregatedListPacketMirrorings(rest_context,
+              return stub->AggregatedListPacketMirrorings(rest_context, options,
                                                           request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::PacketMirroringAggregatedList r) {
         std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -95,25 +97,30 @@ PacketMirroringsRestConnectionImpl::DeletePacketMirroring(
       google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::packet_mirrorings::v1::
                          DeletePacketMirroringRequest const& request) {
-        return stub->AsyncDeletePacketMirroring(cq, std::move(context),
+        return stub->AsyncDeletePacketMirroring(cq, std::move(context), options,
                                                 request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -147,12 +154,12 @@ PacketMirroringsRestConnectionImpl::GetPacketMirroring(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPacketMirroring(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::packet_mirrorings::v1::
                  GetPacketMirroringRequest const& request) {
-        return stub_->GetPacketMirroring(rest_context, request);
+        return stub_->GetPacketMirroring(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -166,25 +173,30 @@ PacketMirroringsRestConnectionImpl::InsertPacketMirroring(
       google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::packet_mirrorings::v1::
                          InsertPacketMirroringRequest const& request) {
-        return stub->AsyncInsertPacketMirroring(cq, std::move(context),
+        return stub->AsyncInsertPacketMirroring(cq, std::move(context), options,
                                                 request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -221,22 +233,24 @@ PacketMirroringsRestConnectionImpl::ListPacketMirrorings(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            compute_packet_mirrorings_v1::PacketMirroringsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::packet_mirrorings::v1::
               ListPacketMirroringsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::packet_mirrorings::v1::
                        ListPacketMirroringsRequest const& request) {
-              return stub->ListPacketMirrorings(rest_context, request);
+              return stub->ListPacketMirrorings(rest_context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::PacketMirroringList r) {
         std::vector<google::cloud::cpp::compute::v1::PacketMirroring> result(
@@ -258,24 +272,30 @@ PacketMirroringsRestConnectionImpl::PatchPacketMirroring(
       google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::packet_mirrorings::v1::
                          PatchPacketMirroringRequest const& request) {
-        return stub->AsyncPatchPacketMirroring(cq, std::move(context), request);
+        return stub->AsyncPatchPacketMirroring(cq, std::move(context), options,
+                                               request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_operations::v1::
                          DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -309,12 +329,12 @@ PacketMirroringsRestConnectionImpl::TestIamPermissions(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::packet_mirrorings::v1::
                  TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(rest_context, request);
+        return stub_->TestIamPermissions(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

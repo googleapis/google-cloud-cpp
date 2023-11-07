@@ -45,11 +45,13 @@ class RegionCommitmentsRestLogging : public RegionCommitmentsRestStub {
   StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
   AggregatedListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_commitments::v1::
           AggregatedListRegionCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Commitment> GetCommitment(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_commitments::v1::
           GetCommitmentRequest const& request) override;
 
@@ -57,12 +59,14 @@ class RegionCommitmentsRestLogging : public RegionCommitmentsRestStub {
   AsyncInsertCommitment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_commitments::v1::
           InsertCommitmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
   ListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_commitments::v1::
           ListRegionCommitmentsRequest const& request) override;
 
@@ -70,6 +74,7 @@ class RegionCommitmentsRestLogging : public RegionCommitmentsRestStub {
   AsyncUpdateCommitment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_commitments::v1::
           UpdateCommitmentRequest const& request) override;
 
@@ -77,12 +82,14 @@ class RegionCommitmentsRestLogging : public RegionCommitmentsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

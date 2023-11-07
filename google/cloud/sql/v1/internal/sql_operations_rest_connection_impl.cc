@@ -46,11 +46,11 @@ SqlOperationsServiceRestConnectionImpl::Get(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Get(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
-        return stub_->Get(rest_context, request);
+        return stub_->Get(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::sql::v1::Operation>
@@ -62,18 +62,22 @@ SqlOperationsServiceRestConnectionImpl::List(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::sql::v1::Operation>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<sql_v1::SqlOperationsServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::sql::v1::SqlOperationsListRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::sql::v1::SqlOperationsListRequest const&
-                       request) { return stub->List(rest_context, request); },
-            r, function_name);
+                       request) {
+              return stub->List(rest_context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::sql::v1::OperationsListResponse r) {
         std::vector<google::cloud::sql::v1::Operation> result(r.items().size());
@@ -90,11 +94,11 @@ Status SqlOperationsServiceRestConnectionImpl::Cancel(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Cancel(request),
       [this](
-          rest_internal::RestContext& rest_context,
+          rest_internal::RestContext& rest_context, Options const& options,
           google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
-        return stub_->Cancel(rest_context, request);
+        return stub_->Cancel(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

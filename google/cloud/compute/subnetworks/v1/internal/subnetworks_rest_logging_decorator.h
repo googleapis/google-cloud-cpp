@@ -45,6 +45,7 @@ class SubnetworksRestLogging : public SubnetworksRestStub {
   StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
   AggregatedListSubnetworks(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::subnetworks::v1::
           AggregatedListSubnetworksRequest const& request) override;
 
@@ -52,6 +53,7 @@ class SubnetworksRestLogging : public SubnetworksRestStub {
   AsyncDeleteSubnetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::subnetworks::v1::
           DeleteSubnetworkRequest const& request) override;
 
@@ -59,16 +61,19 @@ class SubnetworksRestLogging : public SubnetworksRestStub {
   AsyncExpandIpCidrRange(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::subnetworks::v1::
           ExpandIpCidrRangeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetwork(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
           request) override;
 
@@ -76,17 +81,20 @@ class SubnetworksRestLogging : public SubnetworksRestStub {
   AsyncInsertSubnetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::subnetworks::v1::
           InsertSubnetworkRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SubnetworkList> ListSubnetworks(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::subnetworks::v1::
           ListSubnetworksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UsableSubnetworksAggregatedList>
   ListUsable(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const&
           request) override;
 
@@ -94,11 +102,13 @@ class SubnetworksRestLogging : public SubnetworksRestStub {
   AsyncPatchSubnetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::subnetworks::v1::
           PatchSubnetworkRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
           request) override;
 
@@ -106,11 +116,13 @@ class SubnetworksRestLogging : public SubnetworksRestStub {
   AsyncSetPrivateIpGoogleAccess(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::subnetworks::v1::
           SetPrivateIpGoogleAccessRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::subnetworks::v1::
                          TestIamPermissionsRequest const& request) override;
 
@@ -118,12 +130,14 @@ class SubnetworksRestLogging : public SubnetworksRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

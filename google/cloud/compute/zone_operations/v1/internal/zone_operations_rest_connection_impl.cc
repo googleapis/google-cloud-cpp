@@ -47,12 +47,12 @@ Status ZoneOperationsRestConnectionImpl::DeleteOperation(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteOperation(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::zone_operations::v1::
                  DeleteOperationRequest const& request) {
-        return stub_->DeleteOperation(rest_context, request);
+        return stub_->DeleteOperation(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -63,12 +63,12 @@ ZoneOperationsRestConnectionImpl::GetOperation(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetOperation(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::zone_operations::v1::
                  GetOperationRequest const& request) {
-        return stub_->GetOperation(rest_context, request);
+        return stub_->GetOperation(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>
@@ -81,22 +81,23 @@ ZoneOperationsRestConnectionImpl::ListZoneOperations(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Operation>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            compute_zone_operations_v1::ZoneOperationsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::cpp::compute::zone_operations::v1::
-              ListZoneOperationsRequest const& r) {
+          Options const& options, google::cloud::cpp::compute::zone_operations::
+                                      v1::ListZoneOperationsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::zone_operations::v1::
                        ListZoneOperationsRequest const& request) {
-              return stub->ListZoneOperations(rest_context, request);
+              return stub->ListZoneOperations(rest_context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::OperationList r) {
         std::vector<google::cloud::cpp::compute::v1::Operation> result(
@@ -116,10 +117,10 @@ ZoneOperationsRestConnectionImpl::Wait(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Wait(request),
       [this](
-          rest_internal::RestContext& rest_context,
+          rest_internal::RestContext& rest_context, Options const& options,
           google::cloud::cpp::compute::zone_operations::v1::WaitRequest const&
-              request) { return stub_->Wait(rest_context, request); },
-      request, __func__);
+              request) { return stub_->Wait(rest_context, options, request); },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

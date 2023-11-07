@@ -40,16 +40,19 @@ class ZonesRestMetadata : public ZonesRestStub {
 
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListZones(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request)
       override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<ZonesRestStub> child_;

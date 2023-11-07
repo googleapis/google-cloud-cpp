@@ -42,20 +42,19 @@ SqlTiersServiceRestMetadata::SqlTiersServiceRestMetadata(
 
 StatusOr<google::cloud::sql::v1::TiersListResponse>
 SqlTiersServiceRestMetadata::List(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlTiersListRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->List(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->List(rest_context, options, request);
 }
 
 void SqlTiersServiceRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

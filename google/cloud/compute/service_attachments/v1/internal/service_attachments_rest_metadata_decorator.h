@@ -43,6 +43,7 @@ class ServiceAttachmentsRestMetadata : public ServiceAttachmentsRestStub {
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
   AggregatedListServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::service_attachments::v1::
           AggregatedListServiceAttachmentsRequest const& request) override;
 
@@ -50,16 +51,19 @@ class ServiceAttachmentsRestMetadata : public ServiceAttachmentsRestStub {
   AsyncDeleteServiceAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::service_attachments::v1::
           DeleteServiceAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
   GetServiceAttachment(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
                        google::cloud::cpp::compute::service_attachments::v1::
                            GetServiceAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::service_attachments::v1::
           GetIamPolicyRequest const& request) override;
 
@@ -67,12 +71,14 @@ class ServiceAttachmentsRestMetadata : public ServiceAttachmentsRestStub {
   AsyncInsertServiceAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::service_attachments::v1::
           InsertServiceAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
   ListServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::service_attachments::v1::
           ListServiceAttachmentsRequest const& request) override;
 
@@ -80,16 +86,19 @@ class ServiceAttachmentsRestMetadata : public ServiceAttachmentsRestStub {
   AsyncPatchServiceAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::service_attachments::v1::
           PatchServiceAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::service_attachments::v1::
           SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::service_attachments::v1::
                          TestIamPermissionsRequest const& request) override;
 
@@ -97,17 +106,20 @@ class ServiceAttachmentsRestMetadata : public ServiceAttachmentsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<ServiceAttachmentsRestStub> child_;

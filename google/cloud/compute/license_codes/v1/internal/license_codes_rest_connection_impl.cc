@@ -47,12 +47,12 @@ LicenseCodesRestConnectionImpl::GetLicenseCode(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetLicenseCode(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::license_codes::v1::
                  GetLicenseCodeRequest const& request) {
-        return stub_->GetLicenseCode(rest_context, request);
+        return stub_->GetLicenseCode(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -63,12 +63,12 @@ LicenseCodesRestConnectionImpl::TestIamPermissions(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::license_codes::v1::
                  TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(rest_context, request);
+        return stub_->TestIamPermissions(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

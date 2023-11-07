@@ -42,30 +42,29 @@ RegionDiskTypesRestMetadata::RegionDiskTypesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
 RegionDiskTypesRestMetadata::GetDiskType(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_disk_types::v1::
         GetDiskTypeRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetDiskType(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetDiskType(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList>
 RegionDiskTypesRestMetadata::ListRegionDiskTypes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_disk_types::v1::
         ListRegionDiskTypesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListRegionDiskTypes(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListRegionDiskTypes(rest_context, options, request);
 }
 
 void RegionDiskTypesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

@@ -46,11 +46,13 @@ class RegionTargetTcpProxiesRestMetadata
   AsyncDeleteTargetTcpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
           DeleteTargetTcpProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
           GetTargetTcpProxyRequest const& request) override;
 
@@ -58,12 +60,14 @@ class RegionTargetTcpProxiesRestMetadata
   AsyncInsertTargetTcpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
           InsertTargetTcpProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList>
   ListRegionTargetTcpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
           ListRegionTargetTcpProxiesRequest const& request) override;
 
@@ -71,17 +75,20 @@ class RegionTargetTcpProxiesRestMetadata
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<RegionTargetTcpProxiesRestStub> child_;

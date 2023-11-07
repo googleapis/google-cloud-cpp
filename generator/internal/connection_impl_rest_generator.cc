@@ -247,17 +247,19 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ request) {
   auto idempotency = idempotency_policy(*current)->$method_name$(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<$range_output_type$>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<$product_namespace$::$retry_policy_name$>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          $request_type$ const& r) {
+          Options const& options, $request_type$ const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, $request_type$ const& request) {
-              return stub->$method_name$(rest_context, request);
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   $request_type$ const& request) {
+              return stub->$method_name$(rest_context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       []($response_type$ r) {
         std::vector<$range_output_type$> result(r.$range_output_field_name$().size());
@@ -343,21 +345,23 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) 
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<)""",
         lro_template_types(), R"""(>(
-    background_->cq(), request,
+    background_->cq(), current, request,
     [stub = stub_](CompletionQueue& cq,
                    std::unique_ptr<rest_internal::RestContext> context,
-                   $request_type$ const& request) {
-     return stub->Async$method_name$(cq, std::move(context), request);
+                   Options const& options, $request_type$ const& request) {
+     return stub->Async$method_name$(cq, std::move(context), options, request);
     },
     [stub = stub_](CompletionQueue& cq,
                    std::unique_ptr<rest_internal::RestContext> context,
+                   Options const& options,
                    $longrunning_get_operation_request_type$ const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
+     return stub->AsyncGetOperation(cq, std::move(context), options, request);
     },
     [stub = stub_](CompletionQueue& cq,
                    std::unique_ptr<rest_internal::RestContext> context,
+                   Options const& options,
                    $longrunning_cancel_operation_request_type$ const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
+     return stub->AsyncCancelOperation(cq, std::move(context), options, request);
     },)""",
         extractor(),
         R"""(
@@ -392,10 +396,10 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) 
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->$method_name$(request),
       [this](rest_internal::RestContext& rest_context,
-             $request_type$ const& request) {
-        return stub_->$method_name$(rest_context, request);
+             Options const& options, $request_type$ const& request) {
+        return stub_->$method_name$(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 )""");
 }
@@ -415,10 +419,10 @@ $connection_impl_rest_class_name$::Async$method_name$($request_type$ const& requ
       background_->cq(),
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
-                     $request_type$ const& request) {
-        return stub->Async$method_name$(cq, std::move(context), request);
+                     Options const& options, $request_type$ const& request) {
+        return stub->Async$method_name$(cq, std::move(context), options, request);
       },
-      request, __func__);
+      current, request, __func__);
 }
 )""");
 }

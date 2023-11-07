@@ -45,21 +45,21 @@ TEST(ThingAdminRestMetadataDecoratorTest, FormatServerTimeoutMilliseconds) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, GetDatabase)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::GetDatabaseRequest const&) {
             EXPECT_THAT(context.GetHeader("x-server-timeout"),
                         Contains("3.141"));
             return TransientError();
           })
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::GetDatabaseRequest const&) {
             EXPECT_THAT(context.GetHeader("x-server-timeout"),
                         Contains("3600.000"));
             return TransientError();
           })
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::GetDatabaseRequest const&) {
             EXPECT_THAT(context.GetHeader("x-server-timeout"),
                         Contains("0.123"));
@@ -68,27 +68,30 @@ TEST(ThingAdminRestMetadataDecoratorTest, FormatServerTimeoutMilliseconds) {
 
   GoldenThingAdminRestMetadata stub(mock);
   {
-    internal::OptionsSpan span(
-        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3141)));
     rest_internal::RestContext context;
     google::test::admin::database::v1::GetDatabaseRequest request;
-    auto status = stub.GetDatabase(context, request);
+    auto status = stub.GetDatabase(
+        context,
+        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3141)),
+        request);
     EXPECT_EQ(TransientError(), status.status());
   }
   {
-    internal::OptionsSpan span(
-        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3600000)));
     rest_internal::RestContext context;
     google::test::admin::database::v1::GetDatabaseRequest request;
-    auto status = stub.GetDatabase(context, request);
+    auto status = stub.GetDatabase(
+        context,
+        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3600000)),
+        request);
     EXPECT_EQ(TransientError(), status.status());
   }
   {
-    internal::OptionsSpan span(
-        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(123)));
     rest_internal::RestContext context;
     google::test::admin::database::v1::GetDatabaseRequest request;
-    auto status = stub.GetDatabase(context, request);
+    auto status = stub.GetDatabase(
+        context,
+        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(123)),
+        request);
     EXPECT_EQ(TransientError(), status.status());
   }
 }
@@ -99,7 +102,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, ExplicitApiClientHeader) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, GetDatabase)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::GetDatabaseRequest const&) {
             EXPECT_THAT(context.GetHeader("x-goog-api-client"),
                         Contains("test-client-header"));
@@ -111,7 +114,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, ExplicitApiClientHeader) {
   google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.GetDatabase(context, request);
+  auto status = stub.GetDatabase(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
@@ -119,7 +122,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, GetDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, GetDatabase)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::GetDatabaseRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -136,7 +139,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, GetDatabase) {
   google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.GetDatabase(context, request);
+  auto status = stub.GetDatabase(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
@@ -144,7 +147,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListDatabases) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, ListDatabases)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::ListDatabasesRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -157,13 +160,12 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListDatabases) {
             return TransientError();
           });
 
-  internal::OptionsSpan span(
-      Options{}.set<UserProjectOption>("test-user-project"));
   GoldenThingAdminRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.ListDatabases(context, request);
+  auto status = stub.ListDatabases(
+      context, Options{}.set<UserProjectOption>("test-user-project"), request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
@@ -173,6 +175,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateDatabase) {
       .WillOnce(
           [](CompletionQueue&,
              std::unique_ptr<rest_internal::RestContext> context,
+             Options const&,
              google::test::admin::database::v1::CreateDatabaseRequest const&) {
             EXPECT_THAT(
                 context->GetHeader("x-goog-api-client"),
@@ -185,13 +188,14 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateDatabase) {
             return LongrunningTransientError();
           });
 
-  internal::OptionsSpan span(Options{}.set<QuotaUserOption>("test-quota-user"));
   GoldenThingAdminRestMetadata stub(mock);
   CompletionQueue cq;
   auto context = std::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.AsyncCreateDatabase(cq, std::move(context), request);
+  auto status = stub.AsyncCreateDatabase(
+      cq, std::move(context), Options{}.set<QuotaUserOption>("test-quota-user"),
+      request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -200,6 +204,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncUpdateDatabaseDdl) {
   EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
       .WillOnce([](CompletionQueue&,
                    std::unique_ptr<rest_internal::RestContext> context,
+                   Options const&,
                    google::test::admin::database::v1::
                        UpdateDatabaseDdlRequest const&) {
         EXPECT_THAT(
@@ -218,7 +223,8 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncUpdateDatabaseDdl) {
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.AsyncUpdateDatabaseDdl(cq, std::move(context), request);
+  auto status =
+      stub.AsyncUpdateDatabaseDdl(cq, std::move(context), Options{}, request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -226,7 +232,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, DropDatabaseExplicitRoutingMatch) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, DropDatabase)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::DropDatabaseRequest const&)
               -> google::cloud::Status {
             EXPECT_THAT(
@@ -250,7 +256,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, DropDatabaseExplicitRoutingMatch) {
   google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.DropDatabase(context, request);
+  auto status = stub.DropDatabase(context, Options{}, request);
   EXPECT_EQ(TransientError(), status);
 }
 
@@ -258,7 +264,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, DropDatabaseExplicitRoutingNoMatch) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, DropDatabase)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::DropDatabaseRequest const&)
               -> google::cloud::Status {
             EXPECT_THAT(
@@ -275,7 +281,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, DropDatabaseExplicitRoutingNoMatch) {
   rest_internal::RestContext context;
   google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database("no-match");
-  auto status = stub.DropDatabase(context, request);
+  auto status = stub.DropDatabase(context, Options{}, request);
   EXPECT_EQ(TransientError(), status);
 }
 
@@ -283,7 +289,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, GetDatabaseDdl) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, GetDatabaseDdl)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::GetDatabaseDdlRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -300,14 +306,14 @@ TEST(ThingAdminRestMetadataDecoratorTest, GetDatabaseDdl) {
   google::test::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.GetDatabaseDdl(context, request);
+  auto status = stub.GetDatabaseDdl(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST(ThingAdminRestMetadataDecoratorTest, SetIamPolicy) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, SetIamPolicy)
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::iam::v1::SetIamPolicyRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
@@ -324,14 +330,14 @@ TEST(ThingAdminRestMetadataDecoratorTest, SetIamPolicy) {
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.SetIamPolicy(context, request);
+  auto status = stub.SetIamPolicy(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST(ThingAdminRestMetadataDecoratorTest, GetIamPolicy) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, GetIamPolicy)
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::iam::v1::GetIamPolicyRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
@@ -348,14 +354,14 @@ TEST(ThingAdminRestMetadataDecoratorTest, GetIamPolicy) {
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.GetIamPolicy(context, request);
+  auto status = stub.GetIamPolicy(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST(ThingAdminRestMetadataDecoratorTest, TestIamPermissions) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, TestIamPermissions)
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::iam::v1::TestIamPermissionsRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
@@ -372,7 +378,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, TestIamPermissions) {
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.TestIamPermissions(context, request);
+  auto status = stub.TestIamPermissions(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
@@ -382,6 +388,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateBackup) {
       .WillOnce(
           [](CompletionQueue&,
              std::unique_ptr<rest_internal::RestContext> context,
+             Options const&,
              google::test::admin::database::v1::CreateBackupRequest const&) {
             EXPECT_THAT(
                 context->GetHeader("x-goog-api-client"),
@@ -398,14 +405,15 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateBackup) {
   auto context = std::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::CreateBackupRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.AsyncCreateBackup(cq, std::move(context), request);
+  auto status =
+      stub.AsyncCreateBackup(cq, std::move(context), Options{}, request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
 TEST(ThingAdminRestMetadataDecoratorTest, GetBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, GetBackup)
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::test::admin::database::v1::GetBackupRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
@@ -422,7 +430,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, GetBackup) {
   google::test::admin::database::v1::GetBackupRequest request;
   request.set_name(
       "projects/my_project/instances/my_instance/backups/my_backup");
-  auto status = stub.GetBackup(context, request);
+  auto status = stub.GetBackup(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
@@ -430,7 +438,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, UpdateBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, UpdateBackup)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::UpdateBackupRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -447,7 +455,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, UpdateBackup) {
   google::test::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(
       "projects/my_project/instances/my_instance/backups/my_backup");
-  auto status = stub.UpdateBackup(context, request);
+  auto status = stub.UpdateBackup(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
@@ -455,7 +463,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, DeleteBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, DeleteBackup)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::DeleteBackupRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -472,7 +480,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, DeleteBackup) {
   google::test::admin::database::v1::DeleteBackupRequest request;
   request.set_name(
       "projects/my_project/instances/my_instance/backups/my_backup");
-  auto status = stub.DeleteBackup(context, request);
+  auto status = stub.DeleteBackup(context, Options{}, request);
   EXPECT_EQ(TransientError(), status);
 }
 
@@ -480,7 +488,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListBackups) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, ListBackups)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::ListBackupsRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -496,7 +504,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListBackups) {
   rest_internal::RestContext context;
   google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.ListBackups(context, request);
+  auto status = stub.ListBackups(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
@@ -506,6 +514,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncRestoreDatabase) {
       .WillOnce(
           [](CompletionQueue&,
              std::unique_ptr<rest_internal::RestContext> context,
+             Options const&,
              google::test::admin::database::v1::RestoreDatabaseRequest const&) {
             EXPECT_THAT(
                 context->GetHeader("x-goog-api-client"),
@@ -522,14 +531,15 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncRestoreDatabase) {
   auto context = std::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.AsyncRestoreDatabase(cq, std::move(context), request);
+  auto status =
+      stub.AsyncRestoreDatabase(cq, std::move(context), Options{}, request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
 TEST(ThingAdminRestMetadataDecoratorTest, ListDatabaseOperations) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, ListDatabaseOperations)
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::test::admin::database::v1::
                        ListDatabaseOperationsRequest const&) {
         EXPECT_THAT(
@@ -546,14 +556,14 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListDatabaseOperations) {
   rest_internal::RestContext context;
   google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.ListDatabaseOperations(context, request);
+  auto status = stub.ListDatabaseOperations(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST(ThingAdminRestMetadataDecoratorTest, ListBackupOperations) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, ListBackupOperations)
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::test::admin::database::v1::
                        ListBackupOperationsRequest const&) {
         EXPECT_THAT(
@@ -570,7 +580,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListBackupOperations) {
   rest_internal::RestContext context;
   google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.ListBackupOperations(context, request);
+  auto status = stub.ListBackupOperations(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 

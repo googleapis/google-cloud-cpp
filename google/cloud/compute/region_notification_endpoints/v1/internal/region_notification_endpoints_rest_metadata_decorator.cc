@@ -46,69 +46,75 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsRestMetadata::AsyncDeleteNotificationEndpoint(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         DeleteNotificationEndpointRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncDeleteNotificationEndpoint(cq, std::move(rest_context),
-                                                 request);
+                                                 options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
 RegionNotificationEndpointsRestMetadata::GetNotificationEndpoint(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         GetNotificationEndpointRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetNotificationEndpoint(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetNotificationEndpoint(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsRestMetadata::AsyncInsertNotificationEndpoint(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         InsertNotificationEndpointRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncInsertNotificationEndpoint(cq, std::move(rest_context),
-                                                 request);
+                                                 options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointList>
 RegionNotificationEndpointsRestMetadata::ListRegionNotificationEndpoints(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         ListRegionNotificationEndpointsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListRegionNotificationEndpoints(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListRegionNotificationEndpoints(rest_context, options,
+                                                 request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> RegionNotificationEndpointsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void RegionNotificationEndpointsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

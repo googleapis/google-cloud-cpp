@@ -41,105 +41,112 @@ NodeTemplatesRestMetadata::NodeTemplatesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
 NodeTemplatesRestMetadata::AggregatedListNodeTemplates(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_templates::v1::
         AggregatedListNodeTemplatesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListNodeTemplates(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListNodeTemplates(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeTemplatesRestMetadata::AsyncDeleteNodeTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::node_templates::v1::
         DeleteNodeTemplateRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteNodeTemplate(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteNodeTemplate(cq, std::move(rest_context), options,
+                                         request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
 NodeTemplatesRestMetadata::GetNodeTemplate(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_templates::v1::
         GetNodeTemplateRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetNodeTemplate(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetNodeTemplate(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeTemplatesRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetIamPolicy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeTemplatesRestMetadata::AsyncInsertNodeTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::node_templates::v1::
         InsertNodeTemplateRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncInsertNodeTemplate(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncInsertNodeTemplate(cq, std::move(rest_context), options,
+                                         request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateList>
 NodeTemplatesRestMetadata::ListNodeTemplates(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_templates::v1::
         ListNodeTemplatesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListNodeTemplates(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListNodeTemplates(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeTemplatesRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->SetIamPolicy(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->SetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NodeTemplatesRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_templates::v1::
         TestIamPermissionsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->TestIamPermissions(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeTemplatesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> NodeTemplatesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void NodeTemplatesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

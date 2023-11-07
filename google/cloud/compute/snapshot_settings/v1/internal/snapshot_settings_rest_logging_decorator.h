@@ -44,6 +44,7 @@ class SnapshotSettingsRestLogging : public SnapshotSettingsRestStub {
 
   StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
   GetSnapshotSettings(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
                       google::cloud::cpp::compute::snapshot_settings::v1::
                           GetSnapshotSettingsRequest const& request) override;
 
@@ -51,6 +52,7 @@ class SnapshotSettingsRestLogging : public SnapshotSettingsRestStub {
   AsyncPatchSnapshotSettings(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::snapshot_settings::v1::
           PatchSnapshotSettingsRequest const& request) override;
 
@@ -58,12 +60,14 @@ class SnapshotSettingsRestLogging : public SnapshotSettingsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

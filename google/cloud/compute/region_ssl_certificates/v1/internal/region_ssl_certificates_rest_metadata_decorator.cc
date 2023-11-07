@@ -45,69 +45,74 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslCertificatesRestMetadata::AsyncDeleteSslCertificate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         DeleteSslCertificateRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteSslCertificate(cq, std::move(rest_context),
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteSslCertificate(cq, std::move(rest_context), options,
                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
 RegionSslCertificatesRestMetadata::GetSslCertificate(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         GetSslCertificateRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetSslCertificate(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetSslCertificate(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslCertificatesRestMetadata::AsyncInsertSslCertificate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         InsertSslCertificateRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncInsertSslCertificate(cq, std::move(rest_context),
+  SetMetadata(*rest_context, options);
+  return child_->AsyncInsertSslCertificate(cq, std::move(rest_context), options,
                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificateList>
 RegionSslCertificatesRestMetadata::ListRegionSslCertificates(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         ListRegionSslCertificatesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListRegionSslCertificates(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListRegionSslCertificates(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslCertificatesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> RegionSslCertificatesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void RegionSslCertificatesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

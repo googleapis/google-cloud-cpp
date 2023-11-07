@@ -34,57 +34,57 @@ RegionOperationsRestLogging::RegionOperationsRestLogging(
       components_(std::move(components)) {}
 
 Status RegionOperationsRestLogging::DeleteOperation(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::region_operations::v1::
                  DeleteOperationRequest const& request) {
-        return child_->DeleteOperation(rest_context, request);
+        return child_->DeleteOperation(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionOperationsRestLogging::GetOperation(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::region_operations::v1::
                  GetOperationRequest const& request) {
-        return child_->GetOperation(rest_context, request);
+        return child_->GetOperation(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
 RegionOperationsRestLogging::ListRegionOperations(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         ListRegionOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::region_operations::v1::
                  ListRegionOperationsRequest const& request) {
-        return child_->ListRegionOperations(rest_context, request);
+        return child_->ListRegionOperations(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionOperationsRestLogging::Wait(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          rest_internal::RestContext& rest_context,
+          rest_internal::RestContext& rest_context, Options const& options,
           google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
-              request) { return child_->Wait(rest_context, request); },
-      rest_context, request, __func__, tracing_options_);
+              request) { return child_->Wait(rest_context, options, request); },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

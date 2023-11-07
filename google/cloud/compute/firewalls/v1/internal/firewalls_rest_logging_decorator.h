@@ -46,11 +46,13 @@ class FirewallsRestLogging : public FirewallsRestStub {
   AsyncDeleteFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewall(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
           request) override;
 
@@ -58,11 +60,13 @@ class FirewallsRestLogging : public FirewallsRestStub {
   AsyncInsertFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::FirewallList> ListFirewalls(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const&
           request) override;
 
@@ -70,6 +74,7 @@ class FirewallsRestLogging : public FirewallsRestStub {
   AsyncPatchFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
           request) override;
 
@@ -77,6 +82,7 @@ class FirewallsRestLogging : public FirewallsRestStub {
   AsyncUpdateFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
           request) override;
 
@@ -84,12 +90,14 @@ class FirewallsRestLogging : public FirewallsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

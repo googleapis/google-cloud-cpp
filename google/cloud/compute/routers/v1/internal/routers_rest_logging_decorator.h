@@ -45,6 +45,7 @@ class RoutersRestLogging : public RoutersRestStub {
   StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
   AggregatedListRouters(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::
           AggregatedListRoutersRequest const& request) override;
 
@@ -52,28 +53,33 @@ class RoutersRestLogging : public RoutersRestStub {
   AsyncDeleteRouter(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse> GetNatIpInfo(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
   GetNatMappingInfo(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
   GetRouterStatus(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
           request) override;
 
@@ -81,22 +87,26 @@ class RoutersRestLogging : public RoutersRestStub {
   AsyncInsertRouter(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouterList> ListRouters(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchRouter(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::PreviewRequest const& request)
       override;
 
@@ -104,6 +114,7 @@ class RoutersRestLogging : public RoutersRestStub {
   AsyncUpdateRouter(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
           request) override;
 
@@ -111,12 +122,14 @@ class RoutersRestLogging : public RoutersRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

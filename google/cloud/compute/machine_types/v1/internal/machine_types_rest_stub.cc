@@ -41,14 +41,14 @@ DefaultMachineTypesRestStub::DefaultMachineTypesRestStub(
 StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
 DefaultMachineTypesRestStub::AggregatedListMachineTypes(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::machine_types::v1::
         AggregatedListMachineTypesRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::MachineTypeAggregatedList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "machineTypes"),
       rest_internal::TrimEmptyQueryParameters(
@@ -67,27 +67,28 @@ DefaultMachineTypesRestStub::AggregatedListMachineTypes(
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
 DefaultMachineTypesRestStub::GetMachineType(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const&
         request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineType>(
       *service_, rest_context, request, false,
-      absl::StrCat(
-          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
-          "/", "projects", "/", request.project(), "/", "zones", "/",
-          request.zone(), "/", "machineTypes", "/", request.machine_type()));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "machineTypes", "/",
+                   request.machine_type()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineTypeList>
 DefaultMachineTypesRestStub::ListMachineTypes(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::machine_types::v1::
         ListMachineTypesRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineTypeList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "machineTypes"),
       rest_internal::TrimEmptyQueryParameters(

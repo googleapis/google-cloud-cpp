@@ -43,145 +43,163 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncAddHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncAddHealthCheck(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncAddHealthCheck(cq, std::move(rest_context), options,
+                                     request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncAddInstance(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncAddInstance(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncAddInstance(cq, std::move(rest_context), options,
+                                  request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
 TargetPoolsRestMetadata::AggregatedListTargetPools(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::target_pools::v1::
         AggregatedListTargetPoolsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListTargetPools(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListTargetPools(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncDeleteTargetPool(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_pools::v1::
         DeleteTargetPoolRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteTargetPool(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteTargetPool(cq, std::move(rest_context), options,
+                                       request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
 TargetPoolsRestMetadata::GetTargetPool(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetTargetPool(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetTargetPool(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
 TargetPoolsRestMetadata::GetHealth(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetHealth(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetHealth(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncInsertTargetPool(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_pools::v1::
         InsertTargetPoolRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncInsertTargetPool(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncInsertTargetPool(cq, std::move(rest_context), options,
+                                       request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolList>
 TargetPoolsRestMetadata::ListTargetPools(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListTargetPools(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListTargetPools(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncRemoveHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_pools::v1::
         RemoveHealthCheckRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncRemoveHealthCheck(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncRemoveHealthCheck(cq, std::move(rest_context), options,
+                                        request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncRemoveInstance(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncRemoveInstance(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncRemoveInstance(cq, std::move(rest_context), options,
+                                     request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncSetBackup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetBackup(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetBackup(cq, std::move(rest_context), options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncSetSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::target_pools::v1::
         SetSecurityPolicyRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context), options,
+                                        request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> TargetPoolsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void TargetPoolsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

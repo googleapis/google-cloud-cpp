@@ -46,6 +46,7 @@ class NetworkEdgeSecurityServicesRestMetadata
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>
   AggregatedListNetworkEdgeSecurityServices(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           AggregatedListNetworkEdgeSecurityServicesRequest const& request)
       override;
@@ -54,12 +55,14 @@ class NetworkEdgeSecurityServicesRestMetadata
   AsyncDeleteNetworkEdgeSecurityService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           DeleteNetworkEdgeSecurityServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
   GetNetworkEdgeSecurityService(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           GetNetworkEdgeSecurityServiceRequest const& request) override;
 
@@ -67,6 +70,7 @@ class NetworkEdgeSecurityServicesRestMetadata
   AsyncInsertNetworkEdgeSecurityService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           InsertNetworkEdgeSecurityServiceRequest const& request) override;
 
@@ -74,6 +78,7 @@ class NetworkEdgeSecurityServicesRestMetadata
   AsyncPatchNetworkEdgeSecurityService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           PatchNetworkEdgeSecurityServiceRequest const& request) override;
 
@@ -81,17 +86,20 @@ class NetworkEdgeSecurityServicesRestMetadata
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<NetworkEdgeSecurityServicesRestStub> child_;

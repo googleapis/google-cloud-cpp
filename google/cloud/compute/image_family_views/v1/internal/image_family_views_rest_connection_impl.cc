@@ -48,12 +48,12 @@ ImageFamilyViewsRestConnectionImpl::GetImageFamilyView(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetImageFamilyView(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::image_family_views::v1::
                  GetImageFamilyViewRequest const& request) {
-        return stub_->GetImageFamilyView(rest_context, request);
+        return stub_->GetImageFamilyView(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

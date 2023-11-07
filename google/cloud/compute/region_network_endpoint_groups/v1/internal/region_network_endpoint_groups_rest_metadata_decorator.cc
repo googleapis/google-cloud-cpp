@@ -46,101 +46,109 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkEndpointGroupsRestMetadata::AsyncAttachNetworkEndpoints(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         AttachNetworkEndpointsRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncAttachNetworkEndpoints(cq, std::move(rest_context),
-                                             request);
+                                             options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkEndpointGroupsRestMetadata::AsyncDeleteNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         DeleteNetworkEndpointGroupRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncDeleteNetworkEndpointGroup(cq, std::move(rest_context),
-                                                 request);
+                                                 options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkEndpointGroupsRestMetadata::AsyncDetachNetworkEndpoints(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         DetachNetworkEndpointsRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncDetachNetworkEndpoints(cq, std::move(rest_context),
-                                             request);
+                                             options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
 RegionNetworkEndpointGroupsRestMetadata::GetNetworkEndpointGroup(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         GetNetworkEndpointGroupRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetNetworkEndpointGroup(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetNetworkEndpointGroup(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkEndpointGroupsRestMetadata::AsyncInsertNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         InsertNetworkEndpointGroupRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncInsertNetworkEndpointGroup(cq, std::move(rest_context),
-                                                 request);
+                                                 options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>
 RegionNetworkEndpointGroupsRestMetadata::ListRegionNetworkEndpointGroups(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         ListRegionNetworkEndpointGroupsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListRegionNetworkEndpointGroups(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListRegionNetworkEndpointGroups(rest_context, options,
+                                                 request);
 }
 
 StatusOr<
     google::cloud::cpp::compute::v1::NetworkEndpointGroupsListNetworkEndpoints>
 RegionNetworkEndpointGroupsRestMetadata::ListNetworkEndpoints(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         ListNetworkEndpointsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListNetworkEndpoints(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListNetworkEndpoints(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkEndpointGroupsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> RegionNetworkEndpointGroupsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void RegionNetworkEndpointGroupsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

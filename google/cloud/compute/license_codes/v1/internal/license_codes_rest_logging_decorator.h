@@ -43,11 +43,13 @@ class LicenseCodesRestLogging : public LicenseCodesRestStub {
 
   StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::license_codes::v1::
           GetLicenseCodeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::license_codes::v1::
                          TestIamPermissionsRequest const& request) override;
 

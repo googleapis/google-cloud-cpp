@@ -49,14 +49,14 @@ DefaultPublicDelegatedPrefixesRestStub::DefaultPublicDelegatedPrefixesRestStub(
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>
 DefaultPublicDelegatedPrefixesRestStub::AggregatedListPublicDelegatedPrefixes(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         AggregatedListPublicDelegatedPrefixesRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "publicDelegatedPrefixes"),
       rest_internal::TrimEmptyQueryParameters(
@@ -76,19 +76,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultPublicDelegatedPrefixesRestStub::AsyncAnnounce(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         AnnounceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat(
                     "/", "compute", "/",
-                    rest_internal::DetermineApiVersion("v1", opts), "/",
+                    rest_internal::DetermineApiVersion("v1", options), "/",
                     "projects", "/", request.project(), "/", "regions", "/",
                     request.region(), "/", "publicDelegatedPrefixes", "/",
                     request.public_delegated_prefix(), "/", "announce"),
@@ -99,7 +100,7 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncAnnounce(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -110,18 +111,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultPublicDelegatedPrefixesRestStub::AsyncDeletePublicDelegatedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         DeletePublicDelegatedPrefixRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "publicDelegatedPrefixes", "/",
@@ -133,7 +135,7 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncDeletePublicDelegatedPrefix(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -143,14 +145,14 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncDeletePublicDelegatedPrefix(
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
 DefaultPublicDelegatedPrefixesRestStub::GetPublicDelegatedPrefix(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         GetPublicDelegatedPrefixRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefix>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "publicDelegatedPrefixes", "/",
                    request.public_delegated_prefix()));
@@ -160,19 +162,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultPublicDelegatedPrefixesRestStub::AsyncInsertPublicDelegatedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         InsertPublicDelegatedPrefixRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.public_delegated_prefix_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "publicDelegatedPrefixes"),
@@ -183,7 +186,7 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncInsertPublicDelegatedPrefix(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -193,14 +196,14 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncInsertPublicDelegatedPrefix(
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>
 DefaultPublicDelegatedPrefixesRestStub::ListPublicDelegatedPrefixes(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         ListPublicDelegatedPrefixesRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "publicDelegatedPrefixes"),
       rest_internal::TrimEmptyQueryParameters(
@@ -216,19 +219,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultPublicDelegatedPrefixesRestStub::AsyncPatchPublicDelegatedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         PatchPublicDelegatedPrefixRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.public_delegated_prefix_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "publicDelegatedPrefixes", "/",
@@ -240,7 +244,7 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncPatchPublicDelegatedPrefix(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -251,19 +255,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultPublicDelegatedPrefixesRestStub::AsyncWithdraw(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         WithdrawRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat(
                     "/", "compute", "/",
-                    rest_internal::DetermineApiVersion("v1", opts), "/",
+                    rest_internal::DetermineApiVersion("v1", options), "/",
                     "projects", "/", request.project(), "/", "regions", "/",
                     request.region(), "/", "publicDelegatedPrefixes", "/",
                     request.public_delegated_prefix(), "/", "withdraw"),
@@ -274,7 +279,7 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncWithdraw(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -285,26 +290,29 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultPublicDelegatedPrefixesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
-                absl::StrCat(
-                    "/compute/", rest_internal::DetermineApiVersion("v1", opts),
-                    "/projects/", request.project(), "/regions/",
-                    request.region(), "/operations/", request.operation())));
+                absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", options),
+                             "/projects/", request.project(), "/regions/",
+                             request.region(), "/operations/",
+                             request.operation())));
       },
       std::move(p),
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -314,16 +322,18 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncGetOperation(
 future<Status> DefaultPublicDelegatedPrefixesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", opts),
+                "/compute/", rest_internal::DetermineApiVersion("v1", options),
                 "/projects/", request.project(), "/regions/", request.region(),
                 "/operations/", request.operation())));
       },
@@ -331,7 +341,7 @@ future<Status> DefaultPublicDelegatedPrefixesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

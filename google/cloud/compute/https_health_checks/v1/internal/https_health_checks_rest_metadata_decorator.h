@@ -44,11 +44,13 @@ class HttpsHealthChecksRestMetadata : public HttpsHealthChecksRestStub {
   AsyncDeleteHttpsHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::https_health_checks::v1::
           DeleteHttpsHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
   GetHttpsHealthCheck(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
                       google::cloud::cpp::compute::https_health_checks::v1::
                           GetHttpsHealthCheckRequest const& request) override;
 
@@ -56,12 +58,14 @@ class HttpsHealthChecksRestMetadata : public HttpsHealthChecksRestStub {
   AsyncInsertHttpsHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::https_health_checks::v1::
           InsertHttpsHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheckList>
   ListHttpsHealthChecks(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::https_health_checks::v1::
           ListHttpsHealthChecksRequest const& request) override;
 
@@ -69,6 +73,7 @@ class HttpsHealthChecksRestMetadata : public HttpsHealthChecksRestStub {
   AsyncPatchHttpsHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::https_health_checks::v1::
           PatchHttpsHealthCheckRequest const& request) override;
 
@@ -76,6 +81,7 @@ class HttpsHealthChecksRestMetadata : public HttpsHealthChecksRestStub {
   AsyncUpdateHttpsHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::https_health_checks::v1::
           UpdateHttpsHealthCheckRequest const& request) override;
 
@@ -83,17 +89,20 @@ class HttpsHealthChecksRestMetadata : public HttpsHealthChecksRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<HttpsHealthChecksRestStub> child_;

@@ -46,12 +46,14 @@ class RegionHealthCheckServicesRestMetadata
   AsyncDeleteHealthCheckService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_health_check_services::v1::
           DeleteHealthCheckServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
   GetHealthCheckService(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_health_check_services::v1::
           GetHealthCheckServiceRequest const& request) override;
 
@@ -59,12 +61,14 @@ class RegionHealthCheckServicesRestMetadata
   AsyncInsertHealthCheckService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_health_check_services::v1::
           InsertHealthCheckServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HealthCheckServicesList>
   ListRegionHealthCheckServices(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_health_check_services::v1::
           ListRegionHealthCheckServicesRequest const& request) override;
 
@@ -72,6 +76,7 @@ class RegionHealthCheckServicesRestMetadata
   AsyncPatchHealthCheckService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_health_check_services::v1::
           PatchHealthCheckServiceRequest const& request) override;
 
@@ -79,17 +84,20 @@ class RegionHealthCheckServicesRestMetadata
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<RegionHealthCheckServicesRestStub> child_;

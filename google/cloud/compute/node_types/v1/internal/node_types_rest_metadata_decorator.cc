@@ -41,39 +41,38 @@ NodeTypesRestMetadata::NodeTypesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
 NodeTypesRestMetadata::AggregatedListNodeTypes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_types::v1::
         AggregatedListNodeTypesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListNodeTypes(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListNodeTypes(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
 NodeTypesRestMetadata::GetNodeType(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetNodeType(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetNodeType(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeList>
 NodeTypesRestMetadata::ListNodeTypes(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListNodeTypes(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListNodeTypes(rest_context, options, request);
 }
 
 void NodeTypesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

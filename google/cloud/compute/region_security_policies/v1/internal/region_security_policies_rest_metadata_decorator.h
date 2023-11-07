@@ -46,6 +46,7 @@ class RegionSecurityPoliciesRestMetadata
   AsyncAddRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_security_policies::v1::
           AddRuleRequest const& request) override;
 
@@ -53,16 +54,19 @@ class RegionSecurityPoliciesRestMetadata
   AsyncDeleteSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_security_policies::v1::
           DeleteSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_security_policies::v1::
           GetSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_security_policies::v1::
           GetRuleRequest const& request) override;
 
@@ -70,12 +74,14 @@ class RegionSecurityPoliciesRestMetadata
   AsyncInsertSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_security_policies::v1::
           InsertSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
   ListRegionSecurityPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_security_policies::v1::
           ListRegionSecurityPoliciesRequest const& request) override;
 
@@ -83,6 +89,7 @@ class RegionSecurityPoliciesRestMetadata
   AsyncPatchSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_security_policies::v1::
           PatchSecurityPolicyRequest const& request) override;
 
@@ -90,6 +97,7 @@ class RegionSecurityPoliciesRestMetadata
   AsyncPatchRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_security_policies::v1::
           PatchRuleRequest const& request) override;
 
@@ -97,6 +105,7 @@ class RegionSecurityPoliciesRestMetadata
   AsyncRemoveRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_security_policies::v1::
           RemoveRuleRequest const& request) override;
 
@@ -104,17 +113,20 @@ class RegionSecurityPoliciesRestMetadata
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<RegionSecurityPoliciesRestStub> child_;

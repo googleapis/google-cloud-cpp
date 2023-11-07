@@ -41,10 +41,12 @@ class SqlTiersServiceRestMetadata : public SqlTiersServiceRestStub {
 
   StatusOr<google::cloud::sql::v1::TiersListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlTiersListRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<SqlTiersServiceRestStub> child_;

@@ -46,6 +46,7 @@ class InterconnectAttachmentsRestMetadata
       google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>
   AggregatedListInterconnectAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           AggregatedListInterconnectAttachmentsRequest const& request) override;
 
@@ -53,12 +54,14 @@ class InterconnectAttachmentsRestMetadata
   AsyncDeleteInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           DeleteInterconnectAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
   GetInterconnectAttachment(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           GetInterconnectAttachmentRequest const& request) override;
 
@@ -66,12 +69,14 @@ class InterconnectAttachmentsRestMetadata
   AsyncInsertInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           InsertInterconnectAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentList>
   ListInterconnectAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           ListInterconnectAttachmentsRequest const& request) override;
 
@@ -79,6 +84,7 @@ class InterconnectAttachmentsRestMetadata
   AsyncPatchInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           PatchInterconnectAttachmentRequest const& request) override;
 
@@ -86,6 +92,7 @@ class InterconnectAttachmentsRestMetadata
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           SetLabelsRequest const& request) override;
 
@@ -93,17 +100,20 @@ class InterconnectAttachmentsRestMetadata
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<InterconnectAttachmentsRestStub> child_;

@@ -49,14 +49,14 @@ DefaultNetworkEndpointGroupsRestStub::DefaultNetworkEndpointGroupsRestStub(
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupAggregatedList>
 DefaultNetworkEndpointGroupsRestStub::AggregatedListNetworkEndpointGroups(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         AggregatedListNetworkEndpointGroupsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroupAggregatedList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "networkEndpointGroups"),
       rest_internal::TrimEmptyQueryParameters(
@@ -76,20 +76,21 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         AttachNetworkEndpointsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
             request.network_endpoint_groups_attach_endpoints_request_resource(),
             false,
             absl::StrCat("/", "compute", "/",
-                         rest_internal::DetermineApiVersion("v1", opts), "/",
+                         rest_internal::DetermineApiVersion("v1", options), "/",
                          "projects", "/", request.project(), "/", "zones", "/",
                          request.zone(), "/", "networkEndpointGroups", "/",
                          request.network_endpoint_group(), "/",
@@ -101,7 +102,7 @@ DefaultNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -112,18 +113,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkEndpointGroupsRestStub::AsyncDeleteNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         DeleteNetworkEndpointGroupRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/",
                              "networkEndpointGroups", "/",
@@ -135,7 +137,7 @@ DefaultNetworkEndpointGroupsRestStub::AsyncDeleteNetworkEndpointGroup(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -146,20 +148,21 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         DetachNetworkEndpointsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
             request.network_endpoint_groups_detach_endpoints_request_resource(),
             false,
             absl::StrCat("/", "compute", "/",
-                         rest_internal::DetermineApiVersion("v1", opts), "/",
+                         rest_internal::DetermineApiVersion("v1", options), "/",
                          "projects", "/", request.project(), "/", "zones", "/",
                          request.zone(), "/", "networkEndpointGroups", "/",
                          request.network_endpoint_group(), "/",
@@ -171,7 +174,7 @@ DefaultNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -181,14 +184,14 @@ DefaultNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
 DefaultNetworkEndpointGroupsRestStub::GetNetworkEndpointGroup(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         GetNetworkEndpointGroupRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroup>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "networkEndpointGroups", "/",
                    request.network_endpoint_group()));
@@ -198,19 +201,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         InsertNetworkEndpointGroupRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto opts) {
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.network_endpoint_group_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", opts),
+                             rest_internal::DetermineApiVersion("v1", options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/",
                              "networkEndpointGroups"),
@@ -221,7 +225,7 @@ DefaultNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
       service_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -231,14 +235,14 @@ DefaultNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>
 DefaultNetworkEndpointGroupsRestStub::ListNetworkEndpointGroups(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         ListNetworkEndpointGroupsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroupList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "networkEndpointGroups"),
       rest_internal::TrimEmptyQueryParameters(
@@ -254,18 +258,19 @@ StatusOr<
     google::cloud::cpp::compute::v1::NetworkEndpointGroupsListNetworkEndpoints>
 DefaultNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         ListNetworkEndpointsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::
                                  NetworkEndpointGroupsListNetworkEndpoints>(
       *service_, rest_context,
       request.network_endpoint_groups_list_endpoints_request_resource(), false,
-      absl::StrCat(
-          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
-          "/", "projects", "/", request.project(), "/", "zones", "/",
-          request.zone(), "/", "networkEndpointGroups", "/",
-          request.network_endpoint_group(), "/", "listNetworkEndpoints"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "networkEndpointGroups", "/",
+                   request.network_endpoint_group(), "/",
+                   "listNetworkEndpoints"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("max_results", std::to_string(request.max_results())),
@@ -278,15 +283,15 @@ DefaultNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultNetworkEndpointGroupsRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
       false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "networkEndpointGroups", "/",
                    request.resource(), "/", "testIamPermissions"));
@@ -296,26 +301,29 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkEndpointGroupsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
-                absl::StrCat(
-                    "/compute/", rest_internal::DetermineApiVersion("v1", opts),
-                    "/projects/", request.project(), "/zones/", request.zone(),
-                    "/operations/", request.operation())));
+                absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", options),
+                             "/projects/", request.project(), "/zones/",
+                             request.zone(), "/operations/",
+                             request.operation())));
       },
       std::move(p),
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -325,16 +333,18 @@ DefaultNetworkEndpointGroupsRestStub::AsyncGetOperation(
 future<Status> DefaultNetworkEndpointGroupsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::zone_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", opts),
+                         rest_internal::DetermineApiVersion("v1", options),
                          "/projects/", request.project(), "/zones/",
                          request.zone(), "/operations/", request.operation())));
       },
@@ -342,7 +352,7 @@ future<Status> DefaultNetworkEndpointGroupsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      internal::CurrentOptions()};
+      options};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

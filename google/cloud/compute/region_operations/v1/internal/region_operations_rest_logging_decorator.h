@@ -43,21 +43,25 @@ class RegionOperationsRestLogging : public RegionOperationsRestStub {
 
   Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           ListRegionOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
           request) override;
 

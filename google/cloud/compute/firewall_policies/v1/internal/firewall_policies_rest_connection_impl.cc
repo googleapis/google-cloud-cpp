@@ -55,26 +55,32 @@ FirewallPoliciesRestConnectionImpl::AddAssociation(
           GetOperationRequest,
       google::cloud::cpp::compute::global_organization_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::firewall_policies::v1::
                          AddAssociationRequest const& request) {
-        return stub->AsyncAddAssociation(cq, std::move(context), request);
+        return stub->AsyncAddAssociation(cq, std::move(context), options,
+                                         request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -104,26 +110,31 @@ FirewallPoliciesRestConnectionImpl::AddRule(
           GetOperationRequest,
       google::cloud::cpp::compute::global_organization_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::firewall_policies::v1::
                          AddRuleRequest const& request) {
-        return stub->AsyncAddRule(cq, std::move(context), request);
+        return stub->AsyncAddRule(cq, std::move(context), options, request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -153,26 +164,31 @@ FirewallPoliciesRestConnectionImpl::CloneRules(
           GetOperationRequest,
       google::cloud::cpp::compute::global_organization_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::firewall_policies::v1::
                          CloneRulesRequest const& request) {
-        return stub->AsyncCloneRules(cq, std::move(context), request);
+        return stub->AsyncCloneRules(cq, std::move(context), options, request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -202,26 +218,32 @@ FirewallPoliciesRestConnectionImpl::DeleteFirewallPolicy(
           GetOperationRequest,
       google::cloud::cpp::compute::global_organization_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::firewall_policies::v1::
                          DeleteFirewallPolicyRequest const& request) {
-        return stub->AsyncDeleteFirewallPolicy(cq, std::move(context), request);
+        return stub->AsyncDeleteFirewallPolicy(cq, std::move(context), options,
+                                               request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -247,12 +269,12 @@ FirewallPoliciesRestConnectionImpl::GetFirewallPolicy(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetFirewallPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::firewall_policies::v1::
                  GetFirewallPolicyRequest const& request) {
-        return stub_->GetFirewallPolicy(rest_context, request);
+        return stub_->GetFirewallPolicy(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
@@ -263,12 +285,12 @@ FirewallPoliciesRestConnectionImpl::GetAssociation(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAssociation(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::firewall_policies::v1::
                  GetAssociationRequest const& request) {
-        return stub_->GetAssociation(rest_context, request);
+        return stub_->GetAssociation(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -279,12 +301,12 @@ FirewallPoliciesRestConnectionImpl::GetIamPolicy(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::firewall_policies::v1::
                  GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(rest_context, request);
+        return stub_->GetIamPolicy(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
@@ -295,12 +317,12 @@ FirewallPoliciesRestConnectionImpl::GetRule(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRule(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::firewall_policies::v1::
                  GetRuleRequest const& request) {
-        return stub_->GetRule(rest_context, request);
+        return stub_->GetRule(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -315,26 +337,32 @@ FirewallPoliciesRestConnectionImpl::InsertFirewallPolicy(
           GetOperationRequest,
       google::cloud::cpp::compute::global_organization_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::firewall_policies::v1::
                          InsertFirewallPolicyRequest const& request) {
-        return stub->AsyncInsertFirewallPolicy(cq, std::move(context), request);
+        return stub->AsyncInsertFirewallPolicy(cq, std::move(context), options,
+                                               request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -363,22 +391,24 @@ FirewallPoliciesRestConnectionImpl::ListFirewallPolicies(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            compute_firewall_policies_v1::FirewallPoliciesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::cpp::compute::firewall_policies::v1::
               ListFirewallPoliciesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
                    google::cloud::cpp::compute::firewall_policies::v1::
                        ListFirewallPoliciesRequest const& request) {
-              return stub->ListFirewallPolicies(rest_context, request);
+              return stub->ListFirewallPolicies(rest_context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::FirewallPolicyList r) {
         std::vector<google::cloud::cpp::compute::v1::FirewallPolicy> result(
@@ -398,12 +428,12 @@ FirewallPoliciesRestConnectionImpl::ListAssociations(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListAssociations(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::firewall_policies::v1::
                  ListAssociationsRequest const& request) {
-        return stub_->ListAssociations(rest_context, request);
+        return stub_->ListAssociations(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -418,27 +448,32 @@ FirewallPoliciesRestConnectionImpl::Move(
           GetOperationRequest,
       google::cloud::cpp::compute::global_organization_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
               request) {
-        return stub->AsyncMove(cq, std::move(context), request);
+        return stub->AsyncMove(cq, std::move(context), options, request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -468,26 +503,32 @@ FirewallPoliciesRestConnectionImpl::PatchFirewallPolicy(
           GetOperationRequest,
       google::cloud::cpp::compute::global_organization_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::firewall_policies::v1::
                          PatchFirewallPolicyRequest const& request) {
-        return stub->AsyncPatchFirewallPolicy(cq, std::move(context), request);
+        return stub->AsyncPatchFirewallPolicy(cq, std::move(context), options,
+                                              request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -517,26 +558,31 @@ FirewallPoliciesRestConnectionImpl::PatchRule(
           GetOperationRequest,
       google::cloud::cpp::compute::global_organization_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::firewall_policies::v1::
                          PatchRuleRequest const& request) {
-        return stub->AsyncPatchRule(cq, std::move(context), request);
+        return stub->AsyncPatchRule(cq, std::move(context), options, request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -566,26 +612,32 @@ FirewallPoliciesRestConnectionImpl::RemoveAssociation(
           GetOperationRequest,
       google::cloud::cpp::compute::global_organization_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::firewall_policies::v1::
                          RemoveAssociationRequest const& request) {
-        return stub->AsyncRemoveAssociation(cq, std::move(context), request);
+        return stub->AsyncRemoveAssociation(cq, std::move(context), options,
+                                            request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -615,26 +667,31 @@ FirewallPoliciesRestConnectionImpl::RemoveRule(
           GetOperationRequest,
       google::cloud::cpp::compute::global_organization_operations::v1::
           DeleteOperationRequest>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
+                     Options const& options,
                      google::cloud::cpp::compute::firewall_policies::v1::
                          RemoveRuleRequest const& request) {
-        return stub->AsyncRemoveRule(cq, std::move(context), request);
+        return stub->AsyncRemoveRule(cq, std::move(context), options, request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
+          Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::
               DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
@@ -660,12 +717,12 @@ FirewallPoliciesRestConnectionImpl::SetIamPolicy(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::firewall_policies::v1::
                  SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(rest_context, request);
+        return stub_->SetIamPolicy(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -676,12 +733,12 @@ FirewallPoliciesRestConnectionImpl::TestIamPermissions(
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::firewall_policies::v1::
                  TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(rest_context, request);
+        return stub_->TestIamPermissions(rest_context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

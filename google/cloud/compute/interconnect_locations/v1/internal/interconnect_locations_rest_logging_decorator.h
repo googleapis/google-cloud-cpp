@@ -45,12 +45,14 @@ class InterconnectLocationsRestLogging : public InterconnectLocationsRestStub {
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
   GetInterconnectLocation(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_locations::v1::
           GetInterconnectLocationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocationList>
   ListInterconnectLocations(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_locations::v1::
           ListInterconnectLocationsRequest const& request) override;
 

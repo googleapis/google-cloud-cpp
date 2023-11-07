@@ -36,30 +36,31 @@ InterconnectLocationsRestLogging::InterconnectLocationsRestLogging(
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
 InterconnectLocationsRestLogging::GetInterconnectLocation(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::interconnect_locations::v1::
         GetInterconnectLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::interconnect_locations::v1::
                  GetInterconnectLocationRequest const& request) {
-        return child_->GetInterconnectLocation(rest_context, request);
+        return child_->GetInterconnectLocation(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectLocationList>
 InterconnectLocationsRestLogging::ListInterconnectLocations(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::interconnect_locations::v1::
         ListInterconnectLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::interconnect_locations::v1::
                  ListInterconnectLocationsRequest const& request) {
-        return child_->ListInterconnectLocations(rest_context, request);
+        return child_->ListInterconnectLocations(rest_context, options,
+                                                 request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

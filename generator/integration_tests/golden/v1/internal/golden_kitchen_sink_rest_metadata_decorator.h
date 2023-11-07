@@ -41,38 +41,39 @@ class GoldenKitchenSinkRestMetadata : public GoldenKitchenSinkRestStub {
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListLogsResponse> ListLogs(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::ListLogsRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::ListLogsRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
 
   Status DoNothing(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::protobuf::Empty const& request) override;
+      Options const& options, google::protobuf::Empty const& request) override;
 
   Status ExplicitRouting1(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
   Status ExplicitRouting2(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
+      Options const& options, google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<GoldenKitchenSinkRestStub> child_;

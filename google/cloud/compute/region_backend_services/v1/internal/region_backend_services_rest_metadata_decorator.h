@@ -45,21 +45,25 @@ class RegionBackendServicesRestMetadata : public RegionBackendServicesRestStub {
   AsyncDeleteBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_backend_services::v1::
           DeleteBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_backend_services::v1::
           GetBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(google::cloud::rest_internal::RestContext& rest_context,
+            Options const& options,
             google::cloud::cpp::compute::region_backend_services::v1::
                 GetHealthRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_backend_services::v1::
           GetIamPolicyRequest const& request) override;
 
@@ -67,17 +71,20 @@ class RegionBackendServicesRestMetadata : public RegionBackendServicesRestStub {
   AsyncInsertBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_backend_services::v1::
           InsertBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceList>
   ListRegionBackendServices(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_backend_services::v1::
           ListRegionBackendServicesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceListUsable>
   ListUsable(google::cloud::rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::cpp::compute::region_backend_services::v1::
                  ListUsableRequest const& request) override;
 
@@ -85,11 +92,13 @@ class RegionBackendServicesRestMetadata : public RegionBackendServicesRestStub {
   AsyncPatchBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_backend_services::v1::
           PatchBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_backend_services::v1::
           SetIamPolicyRequest const& request) override;
 
@@ -97,11 +106,13 @@ class RegionBackendServicesRestMetadata : public RegionBackendServicesRestStub {
   AsyncSetSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_backend_services::v1::
           SetSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::region_backend_services::v1::
                          TestIamPermissionsRequest const& request) override;
 
@@ -109,6 +120,7 @@ class RegionBackendServicesRestMetadata : public RegionBackendServicesRestStub {
   AsyncUpdateBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_backend_services::v1::
           UpdateBackendServiceRequest const& request) override;
 
@@ -116,17 +128,20 @@ class RegionBackendServicesRestMetadata : public RegionBackendServicesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<RegionBackendServicesRestStub> child_;

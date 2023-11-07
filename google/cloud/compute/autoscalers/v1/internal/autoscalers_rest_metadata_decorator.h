@@ -42,6 +42,7 @@ class AutoscalersRestMetadata : public AutoscalersRestStub {
   StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
   AggregatedListAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::autoscalers::v1::
           AggregatedListAutoscalersRequest const& request) override;
 
@@ -49,11 +50,13 @@ class AutoscalersRestMetadata : public AutoscalersRestStub {
   AsyncDeleteAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::autoscalers::v1::
           DeleteAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
           request) override;
 
@@ -61,11 +64,13 @@ class AutoscalersRestMetadata : public AutoscalersRestStub {
   AsyncInsertAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::autoscalers::v1::
           InsertAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AutoscalerList> ListAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::autoscalers::v1::
           ListAutoscalersRequest const& request) override;
 
@@ -73,6 +78,7 @@ class AutoscalersRestMetadata : public AutoscalersRestStub {
   AsyncPatchAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::autoscalers::v1::
           PatchAutoscalerRequest const& request) override;
 
@@ -80,6 +86,7 @@ class AutoscalersRestMetadata : public AutoscalersRestStub {
   AsyncUpdateAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::autoscalers::v1::
           UpdateAutoscalerRequest const& request) override;
 
@@ -87,17 +94,20 @@ class AutoscalersRestMetadata : public AutoscalersRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zone_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<AutoscalersRestStub> child_;

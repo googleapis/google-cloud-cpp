@@ -68,7 +68,7 @@ struct RestPathVisitor {
                           google::protobuf::MethodDescriptor const&) {
       if (piece == api) {
         return absl::StrFormat(
-            "rest_internal::DetermineApiVersion(\"%s\", opts)", api);
+            "rest_internal::DetermineApiVersion(\"%s\", options)", api);
       }
       return absl::StrFormat("\"%s\"", piece);
     });
@@ -151,7 +151,7 @@ void SetHttpDerivedMethodVars(
         method_vars["method_rest_path"] = absl::StrCat(
             "absl::StrCat(\"", info.url_path.substr(0, start), "/\", ",
             absl::StrFormat(
-                R"""(rest_internal::DetermineApiVersion("%s", opts), "/)""",
+                R"""(rest_internal::DetermineApiVersion("%s", options), "/)""",
                 info.api_version),
             info.url_path.substr(start + needle.length()), "\")");
       } else {

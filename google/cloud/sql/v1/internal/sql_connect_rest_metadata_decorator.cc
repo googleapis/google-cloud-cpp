@@ -42,28 +42,27 @@ SqlConnectServiceRestMetadata::SqlConnectServiceRestMetadata(
 
 StatusOr<google::cloud::sql::v1::ConnectSettings>
 SqlConnectServiceRestMetadata::GetConnectSettings(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetConnectSettings(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetConnectSettings(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
 SqlConnectServiceRestMetadata::GenerateEphemeralCert(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GenerateEphemeralCert(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GenerateEphemeralCert(rest_context, options, request);
 }
 
 void SqlConnectServiceRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

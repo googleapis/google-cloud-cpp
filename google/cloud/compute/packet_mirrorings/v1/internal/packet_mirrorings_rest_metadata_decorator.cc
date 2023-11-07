@@ -42,100 +42,106 @@ PacketMirroringsRestMetadata::PacketMirroringsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
 PacketMirroringsRestMetadata::AggregatedListPacketMirrorings(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         AggregatedListPacketMirroringsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListPacketMirrorings(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListPacketMirrorings(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsRestMetadata::AsyncDeletePacketMirroring(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         DeletePacketMirroringRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncDeletePacketMirroring(cq, std::move(rest_context),
-                                            request);
+                                            options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
 PacketMirroringsRestMetadata::GetPacketMirroring(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         GetPacketMirroringRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetPacketMirroring(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetPacketMirroring(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsRestMetadata::AsyncInsertPacketMirroring(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         InsertPacketMirroringRequest const& request) {
-  SetMetadata(*rest_context);
+  SetMetadata(*rest_context, options);
   return child_->AsyncInsertPacketMirroring(cq, std::move(rest_context),
-                                            request);
+                                            options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringList>
 PacketMirroringsRestMetadata::ListPacketMirrorings(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         ListPacketMirroringsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListPacketMirrorings(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListPacketMirrorings(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsRestMetadata::AsyncPatchPacketMirroring(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         PatchPacketMirroringRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncPatchPacketMirroring(cq, std::move(rest_context),
+  SetMetadata(*rest_context, options);
+  return child_->AsyncPatchPacketMirroring(cq, std::move(rest_context), options,
                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 PacketMirroringsRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         TestIamPermissionsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->TestIamPermissions(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> PacketMirroringsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void PacketMirroringsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

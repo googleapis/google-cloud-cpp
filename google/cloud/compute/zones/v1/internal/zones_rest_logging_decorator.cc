@@ -34,23 +34,27 @@ ZonesRestLogging::ZonesRestLogging(std::shared_ptr<ZonesRestStub> child,
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesRestLogging::GetZone(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::zones::v1::GetZoneRequest const&
-                 request) { return child_->GetZone(rest_context, request); },
-      rest_context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetZone(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ZoneList> ZonesRestLogging::ListZones(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::cpp::compute::zones::v1::ListZonesRequest const&
-                 request) { return child_->ListZones(rest_context, request); },
-      rest_context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListZones(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

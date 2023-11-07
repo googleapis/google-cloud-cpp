@@ -38,6 +38,7 @@ class SqlTiersServiceRestStub {
 
   virtual StatusOr<google::cloud::sql::v1::TiersListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlTiersListRequest const& request) = 0;
 };
 
@@ -51,6 +52,7 @@ class DefaultSqlTiersServiceRestStub : public SqlTiersServiceRestStub {
 
   StatusOr<google::cloud::sql::v1::TiersListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlTiersListRequest const& request) override;
 
  private:

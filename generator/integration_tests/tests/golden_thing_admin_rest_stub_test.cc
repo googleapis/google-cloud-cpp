@@ -104,10 +104,10 @@ TEST(GoldenThingAdminRestStubTest, ListDatabases) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto failure = stub.ListDatabases(rest_context, proto_request);
+  auto failure = stub.ListDatabases(rest_context, Options{}, proto_request);
   EXPECT_EQ(failure.status(),
             Status(StatusCode::kUnavailable, kServiceUnavailable));
-  auto success = stub.ListDatabases(rest_context, proto_request);
+  auto success = stub.ListDatabases(rest_context, Options{}, proto_request);
   ASSERT_THAT(success, IsOk());
   std::vector<std::string> database_names;
   for (auto const& d : success->databases()) {
@@ -145,7 +145,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncCreateDatabase) {
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   StatusOr<google::longrunning::Operation> success =
-      stub.AsyncCreateDatabase(cq, std::move(rest_context), proto_request)
+      stub.AsyncCreateDatabase(cq, std::move(rest_context), Options{},
+                               proto_request)
           .get();
   cq.Shutdown();
   t.join();
@@ -176,7 +177,7 @@ TEST(GoldenThingAdminRestStubTest, GetDatabase) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.GetDatabase(rest_context, proto_request);
+  auto success = stub.GetDatabase(rest_context, Options{}, proto_request);
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(
       success->name(),
@@ -211,9 +212,9 @@ TEST(GoldenThingAdminRestStubTest, AsyncUpdateDatabaseDdl) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success =
-      stub.AsyncUpdateDatabaseDdl(cq, std::move(rest_context), proto_request)
-          .get();
+  auto success = stub.AsyncUpdateDatabaseDdl(cq, std::move(rest_context),
+                                             Options{}, proto_request)
+                     .get();
   cq.Shutdown();
   t.join();
 
@@ -242,7 +243,7 @@ TEST(GoldenThingAdminRestStubTest, DropDatabase) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.DropDatabase(rest_context, proto_request);
+  auto success = stub.DropDatabase(rest_context, Options{}, proto_request);
   EXPECT_THAT(success, IsOk());
 }
 
@@ -268,7 +269,7 @@ TEST(GoldenThingAdminRestStubTest, GetDatabaseDdl) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.GetDatabaseDdl(rest_context, proto_request);
+  auto success = stub.GetDatabaseDdl(rest_context, Options{}, proto_request);
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(success->statements(),
               ElementsAre("create table foo", "create table bar"));
@@ -336,13 +337,15 @@ TEST(GoldenThingAdminRestStubTest, SetIamPolicy) {
 
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto database_success = stub.SetIamPolicy(rest_context, proto_request);
+  auto database_success =
+      stub.SetIamPolicy(rest_context, Options{}, proto_request);
   ASSERT_THAT(database_success, IsOk());
   EXPECT_THAT(database_success->bindings(0).role(),
               Eq("roles/resourcemanager.organizationAdmin"));
   proto_request.set_resource(
       "projects/my_project/instances/my_instance/backups/my_backup");
-  auto backup_success = stub.SetIamPolicy(rest_context, proto_request);
+  auto backup_success =
+      stub.SetIamPolicy(rest_context, Options{}, proto_request);
   ASSERT_THAT(backup_success, IsOk());
   EXPECT_THAT(backup_success->version(), Eq(3));
 }
@@ -381,13 +384,15 @@ TEST(GoldenThingAdminRestStubTest, GetIamPolicy) {
 
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto database_success = stub.GetIamPolicy(rest_context, proto_request);
+  auto database_success =
+      stub.GetIamPolicy(rest_context, Options{}, proto_request);
   ASSERT_THAT(database_success, IsOk());
   EXPECT_THAT(database_success->bindings(1).role(),
               Eq("roles/resourcemanager.organizationViewer"));
   proto_request.set_resource(
       "projects/my_project/instances/my_instance/backups/my_backup");
-  auto backup_success = stub.GetIamPolicy(rest_context, proto_request);
+  auto backup_success =
+      stub.GetIamPolicy(rest_context, Options{}, proto_request);
   ASSERT_THAT(backup_success, IsOk());
   EXPECT_THAT(database_success->bindings(1).condition().title(),
               Eq("expirable access"));
@@ -428,12 +433,14 @@ TEST(GoldenThingAdminRestStubTest, TestIamPermissions) {
 
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto database_success = stub.TestIamPermissions(rest_context, proto_request);
+  auto database_success =
+      stub.TestIamPermissions(rest_context, Options{}, proto_request);
   ASSERT_THAT(database_success, IsOk());
   EXPECT_THAT(database_success->permissions(), ElementsAre("p1", "p2", "p3"));
   proto_request.set_resource(
       "projects/my_project/instances/my_instance/backups/my_backup");
-  auto backup_success = stub.TestIamPermissions(rest_context, proto_request);
+  auto backup_success =
+      stub.TestIamPermissions(rest_context, Options{}, proto_request);
   ASSERT_THAT(backup_success, IsOk());
   EXPECT_THAT(backup_success->permissions(), ElementsAre("p1", "p2", "p3"));
 }
@@ -464,8 +471,9 @@ TEST(GoldenThingAdminRestStubTest, AsyncCreateBackup) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success =
-      stub.AsyncCreateBackup(cq, std::move(rest_context), proto_request).get();
+  auto success = stub.AsyncCreateBackup(cq, std::move(rest_context), Options{},
+                                        proto_request)
+                     .get();
   cq.Shutdown();
   t.join();
 
@@ -495,7 +503,7 @@ TEST(GoldenThingAdminRestStubTest, GetBackup) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.GetBackup(rest_context, proto_request);
+  auto success = stub.GetBackup(rest_context, Options{}, proto_request);
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(
       success->name(),
@@ -526,7 +534,7 @@ TEST(GoldenThingAdminRestStubTest, UpdateBackup) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.UpdateBackup(rest_context, proto_request);
+  auto success = stub.UpdateBackup(rest_context, Options{}, proto_request);
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(
       success->name(),
@@ -555,7 +563,7 @@ TEST(GoldenThingAdminRestStubTest, DeleteBackup) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.DeleteBackup(rest_context, proto_request);
+  auto success = stub.DeleteBackup(rest_context, Options{}, proto_request);
   EXPECT_THAT(success, IsOk());
 }
 
@@ -595,7 +603,7 @@ TEST(GoldenThingAdminRestStubTest, ListBackups) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.ListBackups(rest_context, proto_request);
+  auto success = stub.ListBackups(rest_context, Options{}, proto_request);
   ASSERT_THAT(success, IsOk());
   std::vector<std::string> backup_names;
   for (auto const& d : success->backups()) {
@@ -630,9 +638,9 @@ TEST(GoldenThingAdminRestStubTest, AsyncRestoreDatabase) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success =
-      stub.AsyncRestoreDatabase(cq, std::move(rest_context), proto_request)
-          .get();
+  auto success = stub.AsyncRestoreDatabase(cq, std::move(rest_context),
+                                           Options{}, proto_request)
+                     .get();
   cq.Shutdown();
   t.join();
 
@@ -671,7 +679,8 @@ TEST(GoldenThingAdminRestStubTest, ListDatabaseOperations) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.ListDatabaseOperations(rest_context, proto_request);
+  auto success =
+      stub.ListDatabaseOperations(rest_context, Options{}, proto_request);
   ASSERT_THAT(success, IsOk());
   std::vector<std::string> op_names;
   for (auto const& o : success->operations()) {
@@ -710,7 +719,8 @@ TEST(GoldenThingAdminRestStubTest, ListBackupOperations) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.ListBackupOperations(rest_context, proto_request);
+  auto success =
+      stub.ListBackupOperations(rest_context, Options{}, proto_request);
   ASSERT_THAT(success, IsOk());
   std::vector<std::string> op_names;
   for (auto const& o : success->operations()) {
@@ -744,8 +754,9 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetDatabase) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success =
-      stub.AsyncGetDatabase(cq, std::move(rest_context), proto_request).get();
+  auto success = stub.AsyncGetDatabase(cq, std::move(rest_context), Options{},
+                                       proto_request)
+                     .get();
   cq.Shutdown();
   t.join();
 
@@ -780,8 +791,9 @@ TEST(GoldenThingAdminRestStubTest, AsyncDropDatabase) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success =
-      stub.AsyncDropDatabase(cq, std::move(rest_context), proto_request).get();
+  auto success = stub.AsyncDropDatabase(cq, std::move(rest_context), Options{},
+                                        proto_request)
+                     .get();
   cq.Shutdown();
   t.join();
 
@@ -810,8 +822,9 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetOperation) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success =
-      stub.AsyncGetOperation(cq, std::move(rest_context), proto_request).get();
+  auto success = stub.AsyncGetOperation(cq, std::move(rest_context), Options{},
+                                        proto_request)
+                     .get();
   cq.Shutdown();
   t.join();
 
@@ -843,9 +856,9 @@ TEST(GoldenThingAdminRestStubTest, AsyncCancelOperation) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success =
-      stub.AsyncCancelOperation(cq, std::move(rest_context), proto_request)
-          .get();
+  auto success = stub.AsyncCancelOperation(cq, std::move(rest_context),
+                                           Options{}, proto_request)
+                     .get();
   cq.Shutdown();
   t.join();
 

@@ -41,10 +41,12 @@ class SqlFlagsServiceRestMetadata : public SqlFlagsServiceRestStub {
 
   StatusOr<google::cloud::sql::v1::FlagsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::sql::v1::SqlFlagsListRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<SqlFlagsServiceRestStub> child_;

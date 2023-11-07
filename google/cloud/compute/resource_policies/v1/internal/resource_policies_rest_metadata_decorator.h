@@ -43,6 +43,7 @@ class ResourcePoliciesRestMetadata : public ResourcePoliciesRestStub {
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
   AggregatedListResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::resource_policies::v1::
           AggregatedListResourcePoliciesRequest const& request) override;
 
@@ -50,16 +51,19 @@ class ResourcePoliciesRestMetadata : public ResourcePoliciesRestStub {
   AsyncDeleteResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::resource_policies::v1::
           DeleteResourcePolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::resource_policies::v1::
           GetResourcePolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::resource_policies::v1::
           GetIamPolicyRequest const& request) override;
 
@@ -67,11 +71,13 @@ class ResourcePoliciesRestMetadata : public ResourcePoliciesRestStub {
   AsyncInsertResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::resource_policies::v1::
           InsertResourcePolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList>
   ListResourcePolicies(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
                        google::cloud::cpp::compute::resource_policies::v1::
                            ListResourcePoliciesRequest const& request) override;
 
@@ -79,16 +85,19 @@ class ResourcePoliciesRestMetadata : public ResourcePoliciesRestStub {
   AsyncPatchResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::resource_policies::v1::
           PatchResourcePolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::resource_policies::v1::
           SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::resource_policies::v1::
                          TestIamPermissionsRequest const& request) override;
 
@@ -96,17 +105,20 @@ class ResourcePoliciesRestMetadata : public ResourcePoliciesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<ResourcePoliciesRestStub> child_;

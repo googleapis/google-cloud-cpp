@@ -43,13 +43,13 @@ DefaultGlobalOrganizationOperationsRestStub::
 
 Status DefaultGlobalOrganizationOperationsRestStub::DeleteOperation(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         DeleteOperationRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Delete(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "operations", "/",
                    request.operation()),
       rest_internal::TrimEmptyQueryParameters(
@@ -59,13 +59,13 @@ Status DefaultGlobalOrganizationOperationsRestStub::DeleteOperation(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultGlobalOrganizationOperationsRestStub::GetOperation(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         GetOperationRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "operations", "/",
                    request.operation()),
       rest_internal::TrimEmptyQueryParameters(
@@ -75,12 +75,13 @@ DefaultGlobalOrganizationOperationsRestStub::GetOperation(
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
 DefaultGlobalOrganizationOperationsRestStub::ListGlobalOrganizationOperations(
     google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         ListGlobalOrganizationOperationsRequest const& request) {
-  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/compute/", rest_internal::DetermineApiVersion("v1", opts),
+      absl::StrCat("/compute/",
+                   rest_internal::DetermineApiVersion("v1", options),
                    "/locations/global/operations"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),

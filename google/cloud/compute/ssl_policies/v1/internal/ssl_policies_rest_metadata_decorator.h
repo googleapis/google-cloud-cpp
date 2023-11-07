@@ -42,6 +42,7 @@ class SslPoliciesRestMetadata : public SslPoliciesRestStub {
   StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
   AggregatedListSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           AggregatedListSslPoliciesRequest const& request) override;
 
@@ -49,11 +50,13 @@ class SslPoliciesRestMetadata : public SslPoliciesRestStub {
   AsyncDeleteSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           DeleteSslPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
           request) override;
 
@@ -61,11 +64,13 @@ class SslPoliciesRestMetadata : public SslPoliciesRestStub {
   AsyncInsertSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           InsertSslPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList> ListSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           ListSslPoliciesRequest const& request) override;
 
@@ -73,6 +78,7 @@ class SslPoliciesRestMetadata : public SslPoliciesRestStub {
       google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
   ListAvailableFeatures(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           ListAvailableFeaturesRequest const& request) override;
 
@@ -80,6 +86,7 @@ class SslPoliciesRestMetadata : public SslPoliciesRestStub {
   AsyncPatchSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           PatchSslPolicyRequest const& request) override;
 
@@ -87,17 +94,20 @@ class SslPoliciesRestMetadata : public SslPoliciesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<SslPoliciesRestStub> child_;

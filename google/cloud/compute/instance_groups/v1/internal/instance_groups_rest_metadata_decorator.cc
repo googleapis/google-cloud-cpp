@@ -44,115 +44,128 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestMetadata::AsyncAddInstances(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncAddInstances(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncAddInstances(cq, std::move(rest_context), options,
+                                   request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
 InstanceGroupsRestMetadata::AggregatedListInstanceGroups(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::instance_groups::v1::
         AggregatedListInstanceGroupsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListInstanceGroups(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListInstanceGroups(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestMetadata::AsyncDeleteInstanceGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::instance_groups::v1::
         DeleteInstanceGroupRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteInstanceGroup(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteInstanceGroup(cq, std::move(rest_context), options,
+                                          request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
 InstanceGroupsRestMetadata::GetInstanceGroup(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::instance_groups::v1::
         GetInstanceGroupRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetInstanceGroup(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetInstanceGroup(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestMetadata::AsyncInsertInstanceGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::instance_groups::v1::
         InsertInstanceGroupRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncInsertInstanceGroup(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncInsertInstanceGroup(cq, std::move(rest_context), options,
+                                          request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList>
 InstanceGroupsRestMetadata::ListInstanceGroups(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::instance_groups::v1::
         ListInstanceGroupsRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListInstanceGroups(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListInstanceGroups(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupsListInstances>
 InstanceGroupsRestMetadata::ListInstances(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::instance_groups::v1::
         ListInstancesRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->ListInstances(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListInstances(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestMetadata::AsyncRemoveInstances(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::instance_groups::v1::
         RemoveInstancesRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncRemoveInstances(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncRemoveInstances(cq, std::move(rest_context), options,
+                                      request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestMetadata::AsyncSetNamedPorts(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::instance_groups::v1::
         SetNamedPortsRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncSetNamedPorts(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncSetNamedPorts(cq, std::move(rest_context), options,
+                                    request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> InstanceGroupsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::zone_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void InstanceGroupsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());

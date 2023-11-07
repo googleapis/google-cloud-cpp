@@ -48,12 +48,14 @@ class RegionNotificationEndpointsRestLogging
   AsyncDeleteNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           DeleteNotificationEndpointRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
   GetNotificationEndpoint(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           GetNotificationEndpointRequest const& request) override;
 
@@ -61,12 +63,14 @@ class RegionNotificationEndpointsRestLogging
   AsyncInsertNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           InsertNotificationEndpointRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointList>
   ListRegionNotificationEndpoints(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           ListRegionNotificationEndpointsRequest const& request) override;
 
@@ -74,12 +78,14 @@ class RegionNotificationEndpointsRestLogging
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

@@ -43,12 +43,14 @@ class NodeGroupsRestMetadata : public NodeGroupsRestStub {
   AsyncAddNodes(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
   AggregatedListNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::
           AggregatedListNodeGroupsRequest const& request) override;
 
@@ -56,6 +58,7 @@ class NodeGroupsRestMetadata : public NodeGroupsRestStub {
   AsyncDeleteNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::
           DeleteNodeGroupRequest const& request) override;
 
@@ -63,16 +66,19 @@ class NodeGroupsRestMetadata : public NodeGroupsRestStub {
   AsyncDeleteNodes(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroup(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
           request) override;
 
@@ -80,16 +86,19 @@ class NodeGroupsRestMetadata : public NodeGroupsRestStub {
   AsyncInsertNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::
           InsertNodeGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupList> ListNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupsListNodes> ListNodes(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const&
           request) override;
 
@@ -97,11 +106,13 @@ class NodeGroupsRestMetadata : public NodeGroupsRestStub {
   AsyncPatchNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
           request) override;
 
@@ -109,6 +120,7 @@ class NodeGroupsRestMetadata : public NodeGroupsRestStub {
   AsyncSetNodeTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::
           SetNodeTemplateRequest const& request) override;
 
@@ -116,11 +128,13 @@ class NodeGroupsRestMetadata : public NodeGroupsRestStub {
   AsyncSimulateMaintenanceEvent(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::
           SimulateMaintenanceEventRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
                      google::cloud::cpp::compute::node_groups::v1::
                          TestIamPermissionsRequest const& request) override;
 
@@ -128,17 +142,20 @@ class NodeGroupsRestMetadata : public NodeGroupsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zone_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
                    std::vector<std::string> const& params = {});
 
   std::shared_ptr<NodeGroupsRestStub> child_;

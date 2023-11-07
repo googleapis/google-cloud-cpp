@@ -36,97 +36,113 @@ GoldenKitchenSinkRestLogging::GoldenKitchenSinkRestLogging(
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkRestLogging::GenerateAccessToken(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-        return child_->GenerateAccessToken(rest_context, request);
+        return child_->GenerateAccessToken(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 GoldenKitchenSinkRestLogging::GenerateIdToken(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
-        return child_->GenerateIdToken(rest_context, request);
+        return child_->GenerateIdToken(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 GoldenKitchenSinkRestLogging::WriteLogEntries(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
-        return child_->WriteLogEntries(rest_context, request);
+        return child_->WriteLogEntries(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse>
 GoldenKitchenSinkRestLogging::ListLogs(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::ListLogsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::ListLogsRequest const& request) {
-        return child_->ListLogs(rest_context, request);
+        return child_->ListLogs(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkRestLogging::ListServiceAccountKeys(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-        return child_->ListServiceAccountKeys(rest_context, request);
+        return child_->ListServiceAccountKeys(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 Status
 GoldenKitchenSinkRestLogging::DoNothing(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::protobuf::Empty const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::protobuf::Empty const& request) {
-        return child_->DoNothing(rest_context, request);
+        return child_->DoNothing(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 Status
 GoldenKitchenSinkRestLogging::ExplicitRouting1(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-        return child_->ExplicitRouting1(rest_context, request);
+        return child_->ExplicitRouting1(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 Status
 GoldenKitchenSinkRestLogging::ExplicitRouting2(
     rest_internal::RestContext& rest_context,
+    Options const& options,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-        return child_->ExplicitRouting2(rest_context, request);
+        return child_->ExplicitRouting2(rest_context, options, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

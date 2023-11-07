@@ -41,131 +41,143 @@ RoutersRestMetadata::RoutersRestMetadata(std::shared_ptr<RoutersRestStub> child,
 
 StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
 RoutersRestMetadata::AggregatedListRouters(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::routers::v1::
         AggregatedListRoutersRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AggregatedListRouters(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListRouters(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersRestMetadata::AsyncDeleteRouter(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncDeleteRouter(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncDeleteRouter(cq, std::move(rest_context), options,
+                                   request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Router>
 RoutersRestMetadata::GetRouter(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->GetRouter(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetRouter(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
 RoutersRestMetadata::GetNatIpInfo(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetNatIpInfo(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetNatIpInfo(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
 RoutersRestMetadata::GetNatMappingInfo(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetNatMappingInfo(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetNatMappingInfo(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
 RoutersRestMetadata::GetRouterStatus(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->GetRouterStatus(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->GetRouterStatus(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersRestMetadata::AsyncInsertRouter(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncInsertRouter(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncInsertRouter(cq, std::move(rest_context), options,
+                                   request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterList>
 RoutersRestMetadata::ListRouters(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
         request) {
-  SetMetadata(rest_context);
-  return child_->ListRouters(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->ListRouters(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersRestMetadata::AsyncPatchRouter(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncPatchRouter(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncPatchRouter(cq, std::move(rest_context), options,
+                                  request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
 RoutersRestMetadata::Preview(
-    rest_internal::RestContext& rest_context,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->Preview(rest_context, request);
+  SetMetadata(rest_context, options);
+  return child_->Preview(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersRestMetadata::AsyncUpdateRouter(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
         request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncUpdateRouter(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncUpdateRouter(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
+                                   request);
 }
 
 future<Status> RoutersRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+  SetMetadata(*rest_context, options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
+                                      request);
 }
 
 void RoutersRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                      Options const& options,
                                       std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());
