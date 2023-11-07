@@ -429,7 +429,7 @@ future<StatusOr<$longrunning_response_type$>>
 Default$stub_rest_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options, 
+    Options const& options,
     $longrunning_get_operation_request_type$ const& request) {
   promise<StatusOr<$longrunning_response_type$>> p;
   future<StatusOr<$longrunning_response_type$>> f = p.get_future();
