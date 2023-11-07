@@ -311,7 +311,7 @@ export_list_to_bazel("google_cloud_cpp_pubsub_mocks.bzl"
 set(cmake_google_cloud_cpp_pubsub_mocks_hdrs)
 foreach (fname ${google_cloud_cpp_pubsub_mocks_hdrs})
     list(APPEND cmake_google_cloud_cpp_pubsub_mocks_hdrs
-         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${fname}>")
+         "${CMAKE_CURRENT_SOURCE_DIR}/${fname}")
 endforeach ()
 target_sources(google_cloud_cpp_pubsub_mocks
                INTERFACE ${cmake_google_cloud_cpp_pubsub_mocks_hdrs})
