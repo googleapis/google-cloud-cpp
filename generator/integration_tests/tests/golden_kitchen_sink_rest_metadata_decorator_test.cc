@@ -38,20 +38,20 @@ Status TransientError() {
 TEST(KitchenSinkRestMetadataDecoratorTest, FormatServerTimeoutMilliseconds) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, GenerateAccessToken)
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::test::admin::database::v1::
                        GenerateAccessTokenRequest const&) {
         EXPECT_THAT(context.GetHeader("x-server-timeout"), Contains("3.141"));
         return TransientError();
       })
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::test::admin::database::v1::
                        GenerateAccessTokenRequest const&) {
         EXPECT_THAT(context.GetHeader("x-server-timeout"),
                     Contains("3600.000"));
         return TransientError();
       })
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::test::admin::database::v1::
                        GenerateAccessTokenRequest const&) {
         EXPECT_THAT(context.GetHeader("x-server-timeout"), Contains("0.123"));
@@ -60,27 +60,30 @@ TEST(KitchenSinkRestMetadataDecoratorTest, FormatServerTimeoutMilliseconds) {
 
   GoldenKitchenSinkRestMetadata stub(mock);
   {
-    internal::OptionsSpan span(
-        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3141)));
     rest_internal::RestContext context;
     google::test::admin::database::v1::GenerateAccessTokenRequest request;
-    auto status = stub.GenerateAccessToken(context, request);
+    auto status = stub.GenerateAccessToken(
+        context,
+        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3141)),
+        request);
     EXPECT_EQ(TransientError(), status.status());
   }
   {
-    internal::OptionsSpan span(
-        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3600000)));
     rest_internal::RestContext context;
     google::test::admin::database::v1::GenerateAccessTokenRequest request;
-    auto status = stub.GenerateAccessToken(context, request);
+    auto status = stub.GenerateAccessToken(
+        context,
+        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3600000)),
+        request);
     EXPECT_EQ(TransientError(), status.status());
   }
   {
-    internal::OptionsSpan span(
-        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(123)));
     rest_internal::RestContext context;
     google::test::admin::database::v1::GenerateAccessTokenRequest request;
-    auto status = stub.GenerateAccessToken(context, request);
+    auto status = stub.GenerateAccessToken(
+        context,
+        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(123)),
+        request);
     EXPECT_EQ(TransientError(), status.status());
   }
 }
@@ -88,7 +91,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, FormatServerTimeoutMilliseconds) {
 TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitApiClientHeader) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, GenerateAccessToken)
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::test::admin::database::v1::
                        GenerateAccessTokenRequest const&) {
         EXPECT_THAT(context.GetHeader("x-goog-api-client"),
@@ -96,18 +99,17 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitApiClientHeader) {
         return TransientError();
       });
 
-  internal::OptionsSpan span(Options{});
   GoldenKitchenSinkRestMetadata stub(mock, "test-client-header");
   rest_internal::RestContext context;
   google::test::admin::database::v1::GenerateAccessTokenRequest request;
-  auto status = stub.GenerateAccessToken(context, request);
+  auto status = stub.GenerateAccessToken(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST(KitchenSinkRestMetadataDecoratorTest, GenerateAccessToken) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, GenerateAccessToken)
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::test::admin::database::v1::
                        GenerateAccessTokenRequest const&) {
         EXPECT_THAT(
@@ -120,11 +122,10 @@ TEST(KitchenSinkRestMetadataDecoratorTest, GenerateAccessToken) {
         return TransientError();
       });
 
-  internal::OptionsSpan span(Options{});
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::GenerateAccessTokenRequest request;
-  auto status = stub.GenerateAccessToken(context, request);
+  auto status = stub.GenerateAccessToken(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
@@ -132,7 +133,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, GenerateIdToken) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, GenerateIdToken)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::GenerateIdTokenRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -145,12 +146,11 @@ TEST(KitchenSinkRestMetadataDecoratorTest, GenerateIdToken) {
             return TransientError();
           });
 
-  internal::OptionsSpan span(
-      Options{}.set<UserProjectOption>("test-user-project"));
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::GenerateIdTokenRequest request;
-  auto status = stub.GenerateIdToken(context, request);
+  auto status = stub.GenerateIdToken(
+      context, Options{}.set<UserProjectOption>("test-user-project"), request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
@@ -158,7 +158,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, WriteLogEntries) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, WriteLogEntries)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::WriteLogEntriesRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -171,18 +171,18 @@ TEST(KitchenSinkRestMetadataDecoratorTest, WriteLogEntries) {
             return TransientError();
           });
 
-  internal::OptionsSpan span(Options{}.set<QuotaUserOption>("test-quota-user"));
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::WriteLogEntriesRequest request;
-  auto status = stub.WriteLogEntries(context, request);
+  auto status = stub.WriteLogEntries(
+      context, Options{}.set<QuotaUserOption>("test-quota-user"), request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST(KitchenSinkRestMetadataDecoratorTest, ListLogs) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, ListLogs)
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::test::admin::database::v1::ListLogsRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
@@ -197,14 +197,14 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ListLogs) {
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::ListLogsRequest request;
-  auto status = stub.ListLogs(context, request);
+  auto status = stub.ListLogs(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST(KitchenSinkRestMetadataDecoratorTest, ListServiceAccountKeys) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, ListServiceAccountKeys)
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::test::admin::database::v1::
                        ListServiceAccountKeysRequest const&) {
         EXPECT_THAT(
@@ -219,20 +219,22 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ListServiceAccountKeys) {
         return TransientError();
       });
 
-  internal::OptionsSpan span(Options{}
-                                 .set<QuotaUserOption>("test-quota-user")
-                                 .set<UserProjectOption>("test-user-project"));
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::ListServiceAccountKeysRequest request;
-  auto status = stub.ListServiceAccountKeys(context, request);
+  auto status = stub.ListServiceAccountKeys(
+      context,
+      Options{}
+          .set<QuotaUserOption>("test-quota-user")
+          .set<UserProjectOption>("test-user-project"),
+      request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST(KitchenSinkRestMetadataDecoratorTest, DoNothing) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, DoNothing)
-      .WillOnce([](rest_internal::RestContext& context,
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::protobuf::Empty const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
@@ -244,11 +246,10 @@ TEST(KitchenSinkRestMetadataDecoratorTest, DoNothing) {
         return TransientError();
       });
 
-  internal::OptionsSpan span(Options{});
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::protobuf::Empty request;
-  auto status = stub.DoNothing(context, request);
+  auto status = stub.DoNothing(context, Options{}, request);
   EXPECT_EQ(TransientError(), status);
 }
 
@@ -256,7 +257,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRouting) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, ExplicitRouting1)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::ExplicitRoutingRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -272,7 +273,6 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRouting) {
             return TransientError();
           });
 
-  internal::OptionsSpan span(Options{});
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::ExplicitRoutingRequest request;
@@ -280,7 +280,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRouting) {
       "projects/proj_foo/instances/instance_bar/tables/table_baz");
   request.set_app_profile_id("profiles/prof_qux");
 
-  auto status = stub.ExplicitRouting1(context, request);
+  auto status = stub.ExplicitRouting1(context, Options{}, request);
   EXPECT_EQ(TransientError(), status);
 }
 
@@ -289,7 +289,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest,
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, ExplicitRouting1)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::ExplicitRoutingRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -301,13 +301,12 @@ TEST(KitchenSinkRestMetadataDecoratorTest,
             return TransientError();
           });
 
-  internal::OptionsSpan span(Options{});
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::ExplicitRoutingRequest request;
   request.set_table_name("does-not-match");
 
-  auto status = stub.ExplicitRouting1(context, request);
+  auto status = stub.ExplicitRouting1(context, Options{}, request);
   EXPECT_EQ(TransientError(), status);
 }
 
@@ -315,7 +314,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRoutingNoRegexNeeded) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, ExplicitRouting2)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::ExplicitRoutingRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -328,13 +327,12 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRoutingNoRegexNeeded) {
             return TransientError();
           });
 
-  internal::OptionsSpan span(Options{});
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::ExplicitRoutingRequest request;
   request.set_table_name("used");
   request.set_no_regex_needed("ignored");
-  auto status = stub.ExplicitRouting2(context, request);
+  auto status = stub.ExplicitRouting2(context, Options{}, request);
   EXPECT_EQ(TransientError(), status);
 }
 
@@ -342,7 +340,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRoutingNestedField) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, ExplicitRouting2)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::ExplicitRoutingRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -355,12 +353,11 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRoutingNestedField) {
             return TransientError();
           });
 
-  internal::OptionsSpan span(Options{});
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::ExplicitRoutingRequest request;
   request.mutable_nested1()->mutable_nested2()->set_value("value");
-  auto status = stub.ExplicitRouting2(context, request);
+  auto status = stub.ExplicitRouting2(context, Options{}, request);
   EXPECT_EQ(TransientError(), status);
 }
 
@@ -368,7 +365,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, UrlEncodeRoutingParam) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, ExplicitRouting2)
       .WillOnce(
-          [](rest_internal::RestContext& context,
+          [](rest_internal::RestContext& context, Options const&,
              google::test::admin::database::v1::ExplicitRoutingRequest const&) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-api-client"),
@@ -381,13 +378,12 @@ TEST(KitchenSinkRestMetadataDecoratorTest, UrlEncodeRoutingParam) {
             return TransientError();
           });
 
-  internal::OptionsSpan span(Options{});
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::ExplicitRoutingRequest request;
   request.set_table_name("/used");
   request.set_no_regex_needed("ignored");
-  auto status = stub.ExplicitRouting2(context, request);
+  auto status = stub.ExplicitRouting2(context, Options{}, request);
   EXPECT_EQ(TransientError(), status);
 }
 

@@ -31,47 +31,47 @@ class MockGoldenKitchenSinkRestStub : public GoldenKitchenSinkRestStub {
       StatusOr<
           ::google::test::admin::database::v1::GenerateAccessTokenResponse>,
       GenerateAccessToken,
-      (google::cloud::rest_internal::RestContext&,
+      (google::cloud::rest_internal::RestContext&, Options const&,
        ::google::test::admin::database::v1::GenerateAccessTokenRequest const&),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>,
       GenerateIdToken,
-      (google::cloud::rest_internal::RestContext&,
+      (google::cloud::rest_internal::RestContext&, Options const&,
        ::google::test::admin::database::v1::GenerateIdTokenRequest const&),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
       WriteLogEntries,
-      (google::cloud::rest_internal::RestContext&,
+      (google::cloud::rest_internal::RestContext&, Options const&,
        ::google::test::admin::database::v1::WriteLogEntriesRequest const&),
       (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::ListLogsResponse>,
               ListLogs,
-              (google::cloud::rest_internal::RestContext&,
+              (google::cloud::rest_internal::RestContext&, Options const&,
                ::google::test::admin::database::v1::ListLogsRequest const&),
               (override));
   MOCK_METHOD(
       StatusOr<
           ::google::test::admin::database::v1::ListServiceAccountKeysResponse>,
       ListServiceAccountKeys,
-      (google::cloud::rest_internal::RestContext&,
+      (google::cloud::rest_internal::RestContext&, Options const&,
        ::google::test::admin::database::v1::
            ListServiceAccountKeysRequest const&),
       (override));
   MOCK_METHOD(Status, DoNothing,
-              (google::cloud::rest_internal::RestContext&,
+              (google::cloud::rest_internal::RestContext&, Options const&,
                ::google::protobuf::Empty const&),
               (override));
   MOCK_METHOD(
       Status, ExplicitRouting1,
-      (google::cloud::rest_internal::RestContext&,
+      (google::cloud::rest_internal::RestContext&, Options const&,
        ::google::test::admin::database::v1::ExplicitRoutingRequest const&),
       (override));
 
   MOCK_METHOD(
       Status, ExplicitRouting2,
-      (google::cloud::rest_internal::RestContext&,
+      (google::cloud::rest_internal::RestContext&, Options const&,
        ::google::test::admin::database::v1::ExplicitRoutingRequest const&),
       (override));
 };

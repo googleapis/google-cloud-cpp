@@ -67,7 +67,7 @@ std::shared_ptr<GoldenKitchenSinkConnection> CreateTestingConnection(
 TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenSuccess) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, GenerateAccessToken)
-      .WillOnce([](rest_internal::RestContext&,
+      .WillOnce([](rest_internal::RestContext&, Options const&,
                    ::google::test::admin::database::v1::
                        GenerateAccessTokenRequest const&) {
         ::google::test::admin::database::v1::GenerateAccessTokenResponse
@@ -111,7 +111,7 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenTooManyTransients) {
 TEST(GoldenKitchenSinkConnectionTest, GenerateIdTokenSuccess) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, GenerateIdToken)
-      .WillOnce([](rest_internal::RestContext&,
+      .WillOnce([](rest_internal::RestContext&, Options const&,
                    ::google::test::admin::database::v1::
                        GenerateIdTokenRequest const&) {
         ::google::test::admin::database::v1::GenerateIdTokenResponse response;
@@ -154,7 +154,7 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateIdTokenTooManyTransients) {
 TEST(GoldenKitchenSinkConnectionTest, WriteLogEntriesSuccess) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, WriteLogEntries)
-      .WillOnce([](rest_internal::RestContext&,
+      .WillOnce([](rest_internal::RestContext&, Options const&,
                    ::google::test::admin::database::v1::
                        WriteLogEntriesRequest const&) {
         ::google::test::admin::database::v1::WriteLogEntriesResponse response;
@@ -199,7 +199,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsSuccess) {
   std::string const expected_parent = "projects/my-project";
   EXPECT_CALL(*mock, ListLogs)
       .WillOnce([&expected_parent](
-                    rest_internal::RestContext&,
+                    rest_internal::RestContext&, Options const&,
                     ::google::test::admin::database::v1::ListLogsRequest const&
                         request) {
         EXPECT_EQ(expected_parent, request.parent());
@@ -210,7 +210,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsSuccess) {
         return make_status_or(page);
       })
       .WillOnce([&expected_parent](
-                    rest_internal::RestContext&,
+                    rest_internal::RestContext&, Options const&,
                     ::google::test::admin::database::v1::ListLogsRequest const&
                         request) {
         EXPECT_EQ(expected_parent, request.parent());
@@ -221,7 +221,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsSuccess) {
         return make_status_or(page);
       })
       .WillOnce([&expected_parent](
-                    rest_internal::RestContext&,
+                    rest_internal::RestContext&, Options const&,
                     ::google::test::admin::database::v1::ListLogsRequest const&
                         request) {
         EXPECT_EQ(expected_parent, request.parent());
@@ -278,7 +278,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysSuccess) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, ListServiceAccountKeys)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([](rest_internal::RestContext&,
+      .WillOnce([](rest_internal::RestContext&, Options const&,
                    ::google::test::admin::database::v1::
                        ListServiceAccountKeysRequest const&) {
         ::google::test::admin::database::v1::ListServiceAccountKeysResponse

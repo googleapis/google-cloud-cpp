@@ -103,10 +103,12 @@ TEST(GoldenKitchenSinkRestStubTest, GenerateAccessToken) {
             mock_200_response.release());
       });
   DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
-  auto failure = stub.GenerateAccessToken(rest_context, proto_request);
+  auto failure =
+      stub.GenerateAccessToken(rest_context, Options{}, proto_request);
   EXPECT_EQ(failure.status(),
             Status(StatusCode::kUnavailable, kServiceUnavailable));
-  auto success = stub.GenerateAccessToken(rest_context, proto_request);
+  auto success =
+      stub.GenerateAccessToken(rest_context, Options{}, proto_request);
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(success->access_token(), Eq("my_token"));
 }
@@ -128,7 +130,7 @@ TEST(GoldenKitchenSinkRestStubTest, GenerateIdToken) {
             mock_200_response.release());
       });
   DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
-  auto success = stub.GenerateIdToken(rest_context, proto_request);
+  auto success = stub.GenerateIdToken(rest_context, Options{}, proto_request);
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(success->token(), Eq("my_token"));
 }
@@ -150,7 +152,7 @@ TEST(GoldenKitchenSinkRestStubTest, WriteLogEntries) {
             mock_200_response.release());
       });
   DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
-  auto success = stub.WriteLogEntries(rest_context, proto_request);
+  auto success = stub.WriteLogEntries(rest_context, Options{}, proto_request);
   EXPECT_THAT(success, IsOk());
 }
 
@@ -174,7 +176,7 @@ TEST(GoldenKitchenSinkRestStubTest, ListLogs) {
             mock_200_response.release());
       });
   DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
-  auto success = stub.ListLogs(rest_context, proto_request);
+  auto success = stub.ListLogs(rest_context, Options{}, proto_request);
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(success->log_names(), ElementsAre("foo", "bar"));
   EXPECT_THAT(success->next_page_token(), Eq("my_next_page_token"));
@@ -198,7 +200,8 @@ TEST(GoldenKitchenSinkRestStubTest, ListServiceAccountKeys) {
             mock_200_response.release());
       });
   DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
-  auto success = stub.ListServiceAccountKeys(rest_context, proto_request);
+  auto success =
+      stub.ListServiceAccountKeys(rest_context, Options{}, proto_request);
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(success->keys(), ElementsAre("foo", "bar"));
 }
@@ -220,7 +223,7 @@ TEST(GoldenKitchenSinkRestStubTest, DoNothing) {
             mock_200_response.release());
       });
   DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
-  auto success = stub.DoNothing(rest_context, proto_request);
+  auto success = stub.DoNothing(rest_context, Options{}, proto_request);
   EXPECT_THAT(success, IsOk());
 }
 
@@ -242,7 +245,7 @@ TEST(GoldenKitchenSinkRestStubTest, ExplicitRouting1) {
             mock_200_response.release());
       });
   DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
-  auto success = stub.ExplicitRouting1(rest_context, proto_request);
+  auto success = stub.ExplicitRouting1(rest_context, Options{}, proto_request);
   EXPECT_THAT(success, IsOk());
 }
 
@@ -264,7 +267,7 @@ TEST(GoldenKitchenSinkRestStubTest, ExplicitRouting2) {
             mock_200_response.release());
       });
   DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
-  auto success = stub.ExplicitRouting2(rest_context, proto_request);
+  auto success = stub.ExplicitRouting2(rest_context, Options{}, proto_request);
   EXPECT_THAT(success, IsOk());
 }
 
