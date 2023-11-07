@@ -31,7 +31,7 @@ RateLimiter::Clock::duration RateLimiter::acquire(std::int64_t permits) {
     if (period_ == Clock::duration::zero()) {
       stored_permits_ = max_stored_permits_;
     } else {
-      auto can_add = (now - next_) / period_;
+      std::int64_t can_add = (now - next_) / period_;
       stored_permits_ =
           std::min(max_stored_permits_, stored_permits_ + can_add);
     }
