@@ -308,11 +308,12 @@ set(google_cloud_cpp_pubsub_mocks_hdrs
     mocks/mock_subscription_admin_connection.h
     mocks/mock_topic_admin_connection.h)
 export_list_to_bazel("google_cloud_cpp_pubsub_mocks.bzl"
-    "google_cloud_cpp_pubsub_mocks_hdrs" YEAR "2020")
+                     "google_cloud_cpp_pubsub_mocks_hdrs" YEAR "2020")
 # Add the prefix to each file name for cmake
 set(cmake_google_cloud_cpp_pubsub_mocks_hdrs)
 foreach (fname ${google_cloud_cpp_pubsub_mocks_hdrs})
-    list(APPEND cmake_google_cloud_cpp_pubsub_mocks_hdrs "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${fname}>")
+    list(APPEND cmake_google_cloud_cpp_pubsub_mocks_hdrs
+         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${fname}>")
 endforeach ()
 target_sources(google_cloud_cpp_pubsub_mocks
                INTERFACE ${cmake_google_cloud_cpp_pubsub_mocks_hdrs})
@@ -493,10 +494,6 @@ install(
 
 google_cloud_cpp_install_headers("google_cloud_cpp_pubsub"
                                  "include/google/cloud/pubsub")
-
-google_cloud_cpp_install_headers("google_cloud_cpp_pubsub_mocks"
-                                 "include/google/cloud/pubsub")
-
 # Export the CMake targets to make it easy to create configuration files.
 install(
     EXPORT pubsub_mocks-targets
@@ -506,9 +503,14 @@ install(
     TARGETS google_cloud_cpp_pubsub_mocks
     EXPORT pubsub_mocks-targets
     COMPONENT google_cloud_cpp_development)
-#  install( FILES
-# ${cmake_google_cloud_cpp_pubsub_mocks_hdrs} DESTINATION
-# "include/google/cloud/pubsub/mocks" COMPONENT google_cloud_cpp_development)
+install(
+    FILES ${google_cloud_cpp_pubsub_mocks_hdrs}
+    DESTINATION "include/google/cloud/pubsub/mocks"
+    COMPONENT google_cloud_cpp_development)
+install(
+    FILES ${google_cloud_cpp_pubsub_mocks_hdrs}
+    DESTINATION "include/google/cloud/pubsub/admin/mocks"
+    COMPONENT google_cloud_cpp_development)
 
 google_cloud_cpp_add_pkgconfig(
     pubsub
@@ -542,11 +544,12 @@ google_cloud_cpp_add_pkgconfig(
     "google_cloud_cpp_pubsub" " gmock_main")
 
 # Create and install the CMake configuration files.
-# configure_file("mocks-config.cmake.in"
-# "google_cloud_cpp_pubsub_mocks-config.cmake" @ONLY)
-# write_basic_package_version_file(
-# "google_cloud_cpp_pubsub_mocks-config-version.cmake" VERSION
-# ${PROJECT_VERSION} COMPATIBILITY ExactVersion)
+configure_file("mocks-config.cmake.in"
+               "google_cloud_cpp_pubsub_mocks-config.cmake" @ONLY)
+write_basic_package_version_file(
+    "google_cloud_cpp_pubsub_mocks-config-version.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY ExactVersion)
 
 install(
     FILES
