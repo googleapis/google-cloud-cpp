@@ -193,6 +193,8 @@ add_library(
     internal/legacy_row_reader.h
     internal/logging_data_client.cc
     internal/logging_data_client.h
+    internal/mutate_rows_limiter.cc
+    internal/mutate_rows_limiter.h
     internal/prefix_range_end.cc
     internal/prefix_range_end.h
     internal/rate_limiter.cc
@@ -386,6 +388,7 @@ if (BUILD_TESTING)
         internal/legacy_bulk_mutator_test.cc
         internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
+        internal/mutate_rows_limiter_test.cc
         internal/prefix_range_end_test.cc
         internal/rate_limiter_test.cc
         internal/retry_traits_test.cc

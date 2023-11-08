@@ -59,6 +59,7 @@ bigtable_client_unit_tests = [
     "internal/legacy_bulk_mutator_test.cc",
     "internal/legacy_row_reader_test.cc",
     "internal/logging_data_client_test.cc",
+    "internal/mutate_rows_limiter_test.cc",
     "internal/prefix_range_end_test.cc",
     "internal/rate_limiter_test.cc",
     "internal/retry_traits_test.cc",
