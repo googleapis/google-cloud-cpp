@@ -191,7 +191,7 @@ std::shared_ptr<MessageBatch> MakeTracingMessageBatch(
 #else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<MessageBatch> MakeTracingMessageBatch(
-    std::shared_ptr<MessageBatch> message_batch, Options opts) {
+    std::shared_ptr<MessageBatch> message_batch, Options) {
   return message_batch;
 }
 
