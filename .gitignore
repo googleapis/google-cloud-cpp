@@ -31,3 +31,6 @@ cmake-build-*/
 # `google-cloud-cpp` developers use this file to configure the development
 # workflow build.
 .cloudcxxrc
+
+# Ignore any generated credentials files
+gha-creds-*.json
