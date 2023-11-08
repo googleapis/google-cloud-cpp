@@ -35,7 +35,7 @@ bool valid_list_format_dataset(nlohmann::json const& j) {
 }
 
 bool valid_datasets_list(nlohmann::json const& j) {
-  return (j.contains("kind") && j.contains("etag") && j.contains("datasets"));
+  return (j.contains("kind") && j.contains("etag"));
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {
@@ -85,15 +85,17 @@ StatusOr<ListDatasetsResponse> ListDatasetsResponse::BuildFromHttpResponse(
   result.etag = json->value("etag", "");
   result.next_page_token = json->value("nextPageToken", "");
 
-  for (auto const& kv : json->at("datasets").items()) {
-    auto const& json_list_format_dataset_obj = kv.value();
-    if (!valid_list_format_dataset(json_list_format_dataset_obj)) {
-      return internal::InternalError(
-          "Not a valid Json ListFormatDataset object", GCP_ERROR_INFO());
+  if (json->contains("datasets")) {
+    for (auto const& kv : json->at("datasets").items()) {
+      auto const& json_list_format_dataset_obj = kv.value();
+      if (!valid_list_format_dataset(json_list_format_dataset_obj)) {
+        return internal::InternalError(
+            "Not a valid Json ListFormatDataset object", GCP_ERROR_INFO());
+      }
+      auto const& list_format_dataset =
+          json_list_format_dataset_obj.get<ListFormatDataset>();
+      result.datasets.push_back(list_format_dataset);
     }
-    auto const& list_format_dataset =
-        json_list_format_dataset_obj.get<ListFormatDataset>();
-    result.datasets.push_back(list_format_dataset);
   }
 
   return result;

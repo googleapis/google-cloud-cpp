@@ -170,16 +170,18 @@ TEST(ListDatasetsResponseTest, InvalidJson) {
                        HasSubstr("Error parsing Json from response payload")));
 }
 
-TEST(ListDatasetsResponseTest, InvalidDatasetList) {
+TEST(ListDatasetsResponseTest, EmptyDatasetList) {
   BigQueryHttpResponse http_response;
   http_response.payload =
       R"({"kind": "dkind",
           "etag": "dtag"})";
   auto const response =
       ListDatasetsResponse::BuildFromHttpResponse(http_response);
-  EXPECT_THAT(response,
-              StatusIs(StatusCode::kInternal,
-                       HasSubstr("Not a valid Json DatasetList object")));
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(response->http_response.payload, Not(IsEmpty()));
+  EXPECT_EQ(response->kind, "dkind");
+  EXPECT_EQ(response->etag, "dtag");
+  EXPECT_THAT(response->datasets, IsEmpty());
 }
 
 TEST(ListDatasetsResponseTest, InvalidListFormatDataset) {
