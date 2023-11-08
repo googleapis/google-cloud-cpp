@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_TOPIC_ADMIN_METADATA_DECORATOR_H
 
 #include "google/cloud/pubsub/admin/internal/topic_admin_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -72,9 +73,9 @@ class TopicAdminMetadata : public TopicAdminStub {
       google::pubsub::v1::DetachSubscriptionRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<TopicAdminStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;
