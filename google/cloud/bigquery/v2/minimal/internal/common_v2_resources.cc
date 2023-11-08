@@ -590,13 +590,14 @@ void from_json(nlohmann::json const& j, EncryptionConfiguration& ec) {
 }
 
 void to_json(nlohmann::json& j, ScriptOptions const& s) {
-  j = nlohmann::json{{"statementByteBudget", s.statement_byte_budget},
-                     {"keyResultStatement", s.key_result_statement.value}};
+  j = nlohmann::json{
+      {"statementByteBudget", std::to_string(s.statement_byte_budget)},
+      {"keyResultStatement", s.key_result_statement.value}};
 
   ToJson(s.statement_timeout, j, "statementTimeoutMs");
 }
 void from_json(nlohmann::json const& j, ScriptOptions& s) {
-  SafeGetTo(s.statement_byte_budget, j, "statementByteBudget");
+  s.statement_byte_budget = GetNumberFromJson(j, "statementByteBudget");
   SafeGetTo(s.key_result_statement.value, j, "keyResultStatement");
 
   FromJson(s.statement_timeout, j, "statementTimeoutMs");
