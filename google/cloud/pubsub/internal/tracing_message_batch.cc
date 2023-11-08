@@ -74,9 +74,14 @@ auto MakeParent(Links const& links, Spans const& message_spans) {
   auto trace_id = internal::ToString(context.trace_id());
   auto span_id = internal::ToString(context.span_id());
   for (auto const& message_span : message_spans) {
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+    message_span->AddEvent("gl-cpp.batch_flushed");
+    message_span->AddLink(context, {{}});
+#else
     message_span->AddEvent("gl-cpp.batch_flushed",
                            Attributes{{"pubsub.batch_sink.trace_id", trace_id},
                                       {"pubsub.batch_sink.span_id", span_id}});
+#endif
   }
   return batch_sink_parent;
 }
