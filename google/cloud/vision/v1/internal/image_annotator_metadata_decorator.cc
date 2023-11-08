@@ -46,7 +46,7 @@ StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorMetadata::BatchAnnotateImages(
     grpc::ClientContext& context,
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->BatchAnnotateImages(context, request);
 }
 
@@ -54,7 +54,7 @@ StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 ImageAnnotatorMetadata::BatchAnnotateFiles(
     grpc::ClientContext& context,
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->BatchAnnotateFiles(context, request);
 }
 
@@ -63,7 +63,7 @@ ImageAnnotatorMetadata::AsyncAsyncBatchAnnotateImages(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->AsyncAsyncBatchAnnotateImages(cq, std::move(context), request);
 }
 
@@ -72,7 +72,7 @@ ImageAnnotatorMetadata::AsyncAsyncBatchAnnotateFiles(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->AsyncAsyncBatchAnnotateFiles(cq, std::move(context), request);
 }
 
@@ -81,7 +81,7 @@ ImageAnnotatorMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -90,23 +90,24 @@ future<Status> ImageAnnotatorMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void ImageAnnotatorMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ImageAnnotatorMetadata::SetMetadata(grpc::ClientContext& context) {
+void ImageAnnotatorMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

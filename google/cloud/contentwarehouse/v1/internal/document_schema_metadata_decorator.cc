@@ -47,7 +47,7 @@ DocumentSchemaServiceMetadata::CreateDocumentSchema(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDocumentSchema(context, request);
 }
@@ -57,7 +57,7 @@ DocumentSchemaServiceMetadata::UpdateDocumentSchema(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateDocumentSchema(context, request);
 }
@@ -67,7 +67,7 @@ DocumentSchemaServiceMetadata::GetDocumentSchema(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDocumentSchema(context, request);
 }
@@ -76,7 +76,7 @@ Status DocumentSchemaServiceMetadata::DeleteDocumentSchema(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDocumentSchema(context, request);
 }
@@ -86,23 +86,24 @@ DocumentSchemaServiceMetadata::ListDocumentSchemas(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDocumentSchemas(context, request);
 }
 
 void DocumentSchemaServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void DocumentSchemaServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void DocumentSchemaServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                                Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

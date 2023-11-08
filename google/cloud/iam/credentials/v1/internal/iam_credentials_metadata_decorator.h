@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_CREDENTIALS_V1_INTERNAL_IAM_CREDENTIALS_METADATA_DECORATOR_H
 
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -57,9 +58,9 @@ class IAMCredentialsMetadata : public IAMCredentialsStub {
       google::iam::credentials::v1::SignJwtRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<IAMCredentialsStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

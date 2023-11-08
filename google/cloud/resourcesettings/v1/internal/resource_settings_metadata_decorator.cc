@@ -46,7 +46,7 @@ StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
 ResourceSettingsServiceMetadata::ListSettings(
     grpc::ClientContext& context,
     google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSettings(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceMetadata::GetSetting(
     grpc::ClientContext& context,
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSetting(context, request);
 }
@@ -64,25 +64,25 @@ StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceMetadata::UpdateSetting(
     grpc::ClientContext& context,
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("setting.name=",
                            internal::UrlEncode(request.setting().name())));
   return child_->UpdateSetting(context, request);
 }
 
 void ResourceSettingsServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ResourceSettingsServiceMetadata::SetMetadata(
-    grpc::ClientContext& context) {
+void ResourceSettingsServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                                  Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

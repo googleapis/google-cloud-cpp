@@ -46,7 +46,7 @@ StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::CreateRuleSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRuleSet(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::GetRuleSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRuleSet(context, request);
 }
@@ -64,7 +64,7 @@ StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::UpdateRuleSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateRuleSet(context, request);
 }
@@ -72,7 +72,7 @@ RuleSetServiceMetadata::UpdateRuleSet(
 Status RuleSetServiceMetadata::DeleteRuleSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRuleSet(context, request);
 }
@@ -81,23 +81,24 @@ StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
 RuleSetServiceMetadata::ListRuleSets(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRuleSets(context, request);
 }
 
 void RuleSetServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void RuleSetServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void RuleSetServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

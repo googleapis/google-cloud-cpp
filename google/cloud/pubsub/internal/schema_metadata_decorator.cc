@@ -45,7 +45,7 @@ SchemaServiceMetadata::SchemaServiceMetadata(
 StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::CreateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::CreateSchemaRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSchema(context, request);
 }
@@ -53,7 +53,7 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::CreateSchema(
 StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::GetSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::GetSchemaRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSchema(context, request);
 }
@@ -62,7 +62,7 @@ StatusOr<google::pubsub::v1::ListSchemasResponse>
 SchemaServiceMetadata::ListSchemas(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSchemasRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSchemas(context, request);
 }
@@ -71,7 +71,7 @@ StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
 SchemaServiceMetadata::ListSchemaRevisions(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListSchemaRevisions(context, request);
 }
@@ -79,7 +79,7 @@ SchemaServiceMetadata::ListSchemaRevisions(
 StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::CommitSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::CommitSchemaRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CommitSchema(context, request);
 }
@@ -87,7 +87,7 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::CommitSchema(
 StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::RollbackSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::RollbackSchemaRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RollbackSchema(context, request);
 }
@@ -96,7 +96,7 @@ StatusOr<google::pubsub::v1::Schema>
 SchemaServiceMetadata::DeleteSchemaRevision(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSchemaRevision(context, request);
 }
@@ -104,7 +104,7 @@ SchemaServiceMetadata::DeleteSchemaRevision(
 Status SchemaServiceMetadata::DeleteSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSchemaRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSchema(context, request);
 }
@@ -113,7 +113,7 @@ StatusOr<google::pubsub::v1::ValidateSchemaResponse>
 SchemaServiceMetadata::ValidateSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::ValidateSchemaRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ValidateSchema(context, request);
 }
@@ -122,23 +122,24 @@ StatusOr<google::pubsub::v1::ValidateMessageResponse>
 SchemaServiceMetadata::ValidateMessage(
     grpc::ClientContext& context,
     google::pubsub::v1::ValidateMessageRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ValidateMessage(context, request);
 }
 
 void SchemaServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void SchemaServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void SchemaServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -45,7 +45,7 @@ SnoozeServiceMetadata::SnoozeServiceMetadata(
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::CreateSnooze(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateSnoozeRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSnooze(context, request);
 }
@@ -54,7 +54,7 @@ StatusOr<google::monitoring::v3::ListSnoozesResponse>
 SnoozeServiceMetadata::ListSnoozes(
     grpc::ClientContext& context,
     google::monitoring::v3::ListSnoozesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSnoozes(context, request);
 }
@@ -62,7 +62,7 @@ SnoozeServiceMetadata::ListSnoozes(
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::GetSnooze(
     grpc::ClientContext& context,
     google::monitoring::v3::GetSnoozeRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSnooze(context, request);
 }
@@ -70,24 +70,25 @@ StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::GetSnooze(
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::UpdateSnooze(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateSnoozeRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("snooze.name=",
                            internal::UrlEncode(request.snooze().name())));
   return child_->UpdateSnooze(context, request);
 }
 
 void SnoozeServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void SnoozeServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void SnoozeServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

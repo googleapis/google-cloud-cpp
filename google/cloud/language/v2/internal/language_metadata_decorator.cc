@@ -46,7 +46,7 @@ StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
 LanguageServiceMetadata::AnalyzeSentiment(
     grpc::ClientContext& context,
     google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->AnalyzeSentiment(context, request);
 }
 
@@ -54,7 +54,7 @@ StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
 LanguageServiceMetadata::AnalyzeEntities(
     grpc::ClientContext& context,
     google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->AnalyzeEntities(context, request);
 }
 
@@ -62,7 +62,7 @@ StatusOr<google::cloud::language::v2::ClassifyTextResponse>
 LanguageServiceMetadata::ClassifyText(
     grpc::ClientContext& context,
     google::cloud::language::v2::ClassifyTextRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ClassifyText(context, request);
 }
 
@@ -70,7 +70,7 @@ StatusOr<google::cloud::language::v2::ModerateTextResponse>
 LanguageServiceMetadata::ModerateText(
     grpc::ClientContext& context,
     google::cloud::language::v2::ModerateTextRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ModerateText(context, request);
 }
 
@@ -78,22 +78,23 @@ StatusOr<google::cloud::language::v2::AnnotateTextResponse>
 LanguageServiceMetadata::AnnotateText(
     grpc::ClientContext& context,
     google::cloud::language::v2::AnnotateTextRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->AnnotateText(context, request);
 }
 
 void LanguageServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                          Options const& options,
                                           std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void LanguageServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void LanguageServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                          Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

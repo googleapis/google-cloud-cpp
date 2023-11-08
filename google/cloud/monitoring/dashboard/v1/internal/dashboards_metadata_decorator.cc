@@ -46,7 +46,7 @@ StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceMetadata::CreateDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDashboard(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
 DashboardsServiceMetadata::ListDashboards(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::ListDashboardsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDashboards(context, request);
 }
@@ -64,7 +64,7 @@ StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceMetadata::GetDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDashboard(context, request);
 }
@@ -72,7 +72,7 @@ DashboardsServiceMetadata::GetDashboard(
 Status DashboardsServiceMetadata::DeleteDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDashboard(context, request);
 }
@@ -81,24 +81,25 @@ StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceMetadata::UpdateDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("dashboard.name=",
                            internal::UrlEncode(request.dashboard().name())));
   return child_->UpdateDashboard(context, request);
 }
 
 void DashboardsServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options,
                                             std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void DashboardsServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void DashboardsServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

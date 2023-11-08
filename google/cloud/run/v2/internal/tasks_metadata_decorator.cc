@@ -45,7 +45,7 @@ TasksMetadata::TasksMetadata(
 StatusOr<google::cloud::run::v2::Task> TasksMetadata::GetTask(
     grpc::ClientContext& context,
     google::cloud::run::v2::GetTaskRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTask(context, request);
 }
@@ -53,23 +53,24 @@ StatusOr<google::cloud::run::v2::Task> TasksMetadata::GetTask(
 StatusOr<google::cloud::run::v2::ListTasksResponse> TasksMetadata::ListTasks(
     grpc::ClientContext& context,
     google::cloud::run::v2::ListTasksRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTasks(context, request);
 }
 
 void TasksMetadata::SetMetadata(grpc::ClientContext& context,
+                                Options const& options,
                                 std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void TasksMetadata::SetMetadata(grpc::ClientContext& context) {
+void TasksMetadata::SetMetadata(grpc::ClientContext& context,
+                                Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

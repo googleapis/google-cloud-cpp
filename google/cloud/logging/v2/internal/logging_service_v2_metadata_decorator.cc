@@ -45,8 +45,9 @@ LoggingServiceV2Metadata::LoggingServiceV2Metadata(
 Status LoggingServiceV2Metadata::DeleteLog(
     grpc::ClientContext& context,
     google::logging::v2::DeleteLogRequest const& request) {
-  SetMetadata(context, absl::StrCat("log_name=",
-                                    internal::UrlEncode(request.log_name())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("log_name=", internal::UrlEncode(request.log_name())));
   return child_->DeleteLog(context, request);
 }
 
@@ -54,7 +55,7 @@ StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Metadata::WriteLogEntries(
     grpc::ClientContext& context,
     google::logging::v2::WriteLogEntriesRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->WriteLogEntries(context, request);
 }
 
@@ -62,7 +63,7 @@ StatusOr<google::logging::v2::ListLogEntriesResponse>
 LoggingServiceV2Metadata::ListLogEntries(
     grpc::ClientContext& context,
     google::logging::v2::ListLogEntriesRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ListLogEntries(context, request);
 }
 
@@ -71,7 +72,7 @@ LoggingServiceV2Metadata::ListMonitoredResourceDescriptors(
     grpc::ClientContext& context,
     google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
         request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ListMonitoredResourceDescriptors(context, request);
 }
 
@@ -79,7 +80,7 @@ StatusOr<google::logging::v2::ListLogsResponse>
 LoggingServiceV2Metadata::ListLogs(
     grpc::ClientContext& context,
     google::logging::v2::ListLogsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLogs(context, request);
 }
@@ -90,7 +91,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 LoggingServiceV2Metadata::AsyncTailLogEntries(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->AsyncTailLogEntries(cq, std::move(context));
 }
 
@@ -99,22 +100,23 @@ LoggingServiceV2Metadata::AsyncWriteLogEntries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::logging::v2::WriteLogEntriesRequest const& request) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->AsyncWriteLogEntries(cq, std::move(context), request);
 }
 
 void LoggingServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
+                                           Options const& options,
                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void LoggingServiceV2Metadata::SetMetadata(grpc::ClientContext& context) {
+void LoggingServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
+                                           Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

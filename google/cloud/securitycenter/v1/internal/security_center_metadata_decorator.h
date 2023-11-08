@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_INTERNAL_SECURITY_CENTER_METADATA_DECORATOR_H
 
 #include "google/cloud/securitycenter/v1/internal/security_center_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -310,9 +311,9 @@ class SecurityCenterMetadata : public SecurityCenterStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<SecurityCenterStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

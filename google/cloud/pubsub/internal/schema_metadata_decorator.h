@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_METADATA_DECORATOR_H
 
 #include "google/cloud/pubsub/internal/schema_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -78,9 +79,9 @@ class SchemaServiceMetadata : public SchemaServiceStub {
       google::pubsub::v1::ValidateMessageRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<SchemaServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

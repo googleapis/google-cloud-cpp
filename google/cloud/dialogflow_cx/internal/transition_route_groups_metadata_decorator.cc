@@ -47,7 +47,7 @@ TransitionRouteGroupsMetadata::ListTransitionRouteGroups(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTransitionRouteGroups(context, request);
 }
@@ -57,7 +57,7 @@ TransitionRouteGroupsMetadata::GetTransitionRouteGroup(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTransitionRouteGroup(context, request);
 }
@@ -67,7 +67,7 @@ TransitionRouteGroupsMetadata::CreateTransitionRouteGroup(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTransitionRouteGroup(context, request);
 }
@@ -77,7 +77,7 @@ TransitionRouteGroupsMetadata::UpdateTransitionRouteGroup(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("transition_route_group.name=",
                            internal::UrlEncode(
                                request.transition_route_group().name())));
@@ -88,23 +88,24 @@ Status TransitionRouteGroupsMetadata::DeleteTransitionRouteGroup(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTransitionRouteGroup(context, request);
 }
 
 void TransitionRouteGroupsMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void TransitionRouteGroupsMetadata::SetMetadata(grpc::ClientContext& context) {
+void TransitionRouteGroupsMetadata::SetMetadata(grpc::ClientContext& context,
+                                                Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

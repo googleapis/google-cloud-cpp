@@ -46,7 +46,7 @@ StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceMetadata::CreateProfile(
     grpc::ClientContext& context,
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateProfile(context, request);
 }
@@ -56,7 +56,7 @@ ProfilerServiceMetadata::CreateOfflineProfile(
     grpc::ClientContext& context,
     google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateOfflineProfile(context, request);
 }
@@ -65,24 +65,25 @@ StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceMetadata::UpdateProfile(
     grpc::ClientContext& context,
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("profile.name=",
                            internal::UrlEncode(request.profile().name())));
   return child_->UpdateProfile(context, request);
 }
 
 void ProfilerServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                          Options const& options,
                                           std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ProfilerServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void ProfilerServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                          Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -45,7 +45,7 @@ TenantServiceMetadata::TenantServiceMetadata(
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceMetadata::CreateTenant(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CreateTenantRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTenant(context, request);
 }
@@ -53,7 +53,7 @@ StatusOr<google::cloud::talent::v4::Tenant> TenantServiceMetadata::CreateTenant(
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceMetadata::GetTenant(
     grpc::ClientContext& context,
     google::cloud::talent::v4::GetTenantRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTenant(context, request);
 }
@@ -61,7 +61,7 @@ StatusOr<google::cloud::talent::v4::Tenant> TenantServiceMetadata::GetTenant(
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceMetadata::UpdateTenant(
     grpc::ClientContext& context,
     google::cloud::talent::v4::UpdateTenantRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("tenant.name=",
                            internal::UrlEncode(request.tenant().name())));
   return child_->UpdateTenant(context, request);
@@ -70,7 +70,7 @@ StatusOr<google::cloud::talent::v4::Tenant> TenantServiceMetadata::UpdateTenant(
 Status TenantServiceMetadata::DeleteTenant(
     grpc::ClientContext& context,
     google::cloud::talent::v4::DeleteTenantRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTenant(context, request);
 }
@@ -79,23 +79,24 @@ StatusOr<google::cloud::talent::v4::ListTenantsResponse>
 TenantServiceMetadata::ListTenants(
     grpc::ClientContext& context,
     google::cloud::talent::v4::ListTenantsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTenants(context, request);
 }
 
 void TenantServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void TenantServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void TenantServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

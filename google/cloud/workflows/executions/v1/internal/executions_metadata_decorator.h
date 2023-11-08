@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_INTERNAL_EXECUTIONS_METADATA_DECORATOR_H
 
 #include "google/cloud/workflows/executions/v1/internal/executions_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -59,9 +60,9 @@ class ExecutionsMetadata : public ExecutionsStub {
           request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<ExecutionsStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

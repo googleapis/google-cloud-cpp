@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_INTERNAL_CONFIDENTIAL_COMPUTING_METADATA_DECORATOR_H
 
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -50,9 +51,9 @@ class ConfidentialComputingMetadata : public ConfidentialComputingStub {
           request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<ConfidentialComputingStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

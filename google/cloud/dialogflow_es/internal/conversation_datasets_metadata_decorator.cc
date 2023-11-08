@@ -48,7 +48,7 @@ ConversationDatasetsMetadata::AsyncCreateConversationDataset(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateConversationDataset(cq, std::move(context),
                                                 request);
@@ -59,7 +59,7 @@ ConversationDatasetsMetadata::GetConversationDataset(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConversationDataset(context, request);
 }
@@ -69,7 +69,7 @@ ConversationDatasetsMetadata::ListConversationDatasets(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConversationDatasets(context, request);
 }
@@ -80,7 +80,7 @@ ConversationDatasetsMetadata::AsyncDeleteConversationDataset(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteConversationDataset(cq, std::move(context),
                                                 request);
@@ -92,7 +92,7 @@ ConversationDatasetsMetadata::AsyncImportConversationData(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncImportConversationData(cq, std::move(context), request);
 }
@@ -102,7 +102,7 @@ ConversationDatasetsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -111,23 +111,24 @@ future<Status> ConversationDatasetsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void ConversationDatasetsMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ConversationDatasetsMetadata::SetMetadata(grpc::ClientContext& context) {
+void ConversationDatasetsMetadata::SetMetadata(grpc::ClientContext& context,
+                                               Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -48,7 +48,7 @@ FeaturestoreOnlineServingServiceMetadata::ReadFeatureValues(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
   return child_->ReadFeatureValues(context, request);
 }
@@ -60,7 +60,7 @@ FeaturestoreOnlineServingServiceMetadata::StreamingReadFeatureValues(
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
         request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
   return child_->StreamingReadFeatureValues(std::move(context), request);
 }
@@ -70,24 +70,24 @@ FeaturestoreOnlineServingServiceMetadata::WriteFeatureValues(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
   return child_->WriteFeatureValues(context, request);
 }
 
 void FeaturestoreOnlineServingServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
 void FeaturestoreOnlineServingServiceMetadata::SetMetadata(
-    grpc::ClientContext& context) {
+    grpc::ClientContext& context, Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

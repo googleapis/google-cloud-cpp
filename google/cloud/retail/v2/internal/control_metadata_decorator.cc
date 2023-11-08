@@ -46,7 +46,7 @@ StatusOr<google::cloud::retail::v2::Control>
 ControlServiceMetadata::CreateControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::CreateControlRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateControl(context, request);
 }
@@ -54,7 +54,7 @@ ControlServiceMetadata::CreateControl(
 Status ControlServiceMetadata::DeleteControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::DeleteControlRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteControl(context, request);
 }
@@ -63,7 +63,7 @@ StatusOr<google::cloud::retail::v2::Control>
 ControlServiceMetadata::UpdateControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateControlRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("control.name=",
                            internal::UrlEncode(request.control().name())));
   return child_->UpdateControl(context, request);
@@ -72,7 +72,7 @@ ControlServiceMetadata::UpdateControl(
 StatusOr<google::cloud::retail::v2::Control> ControlServiceMetadata::GetControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetControlRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetControl(context, request);
 }
@@ -81,23 +81,24 @@ StatusOr<google::cloud::retail::v2::ListControlsResponse>
 ControlServiceMetadata::ListControls(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ListControlsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListControls(context, request);
 }
 
 void ControlServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ControlServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void ControlServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

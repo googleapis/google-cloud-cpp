@@ -46,24 +46,25 @@ StatusOr<google::cloud::discoveryengine::v1::SearchResponse>
 SearchServiceMetadata::Search(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::SearchRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("serving_config=",
                            internal::UrlEncode(request.serving_config())));
   return child_->Search(context, request);
 }
 
 void SearchServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void SearchServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void SearchServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

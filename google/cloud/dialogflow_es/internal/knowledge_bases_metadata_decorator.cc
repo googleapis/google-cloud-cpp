@@ -46,7 +46,7 @@ StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
 KnowledgeBasesMetadata::ListKnowledgeBases(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListKnowledgeBases(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesMetadata::GetKnowledgeBase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetKnowledgeBase(context, request);
 }
@@ -64,7 +64,7 @@ StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesMetadata::CreateKnowledgeBase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateKnowledgeBase(context, request);
 }
@@ -72,7 +72,7 @@ KnowledgeBasesMetadata::CreateKnowledgeBase(
 Status KnowledgeBasesMetadata::DeleteKnowledgeBase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteKnowledgeBase(context, request);
 }
@@ -82,24 +82,25 @@ KnowledgeBasesMetadata::UpdateKnowledgeBase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("knowledge_base.name=",
                    internal::UrlEncode(request.knowledge_base().name())));
   return child_->UpdateKnowledgeBase(context, request);
 }
 
 void KnowledgeBasesMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void KnowledgeBasesMetadata::SetMetadata(grpc::ClientContext& context) {
+void KnowledgeBasesMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

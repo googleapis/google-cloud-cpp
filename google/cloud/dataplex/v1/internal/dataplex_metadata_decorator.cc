@@ -47,7 +47,7 @@ DataplexServiceMetadata::AsyncCreateLake(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateLakeRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateLake(cq, std::move(context), request);
 }
@@ -58,7 +58,7 @@ DataplexServiceMetadata::AsyncUpdateLake(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("lake.name=", internal::UrlEncode(request.lake().name())));
   return child_->AsyncUpdateLake(cq, std::move(context), request);
 }
@@ -68,7 +68,7 @@ DataplexServiceMetadata::AsyncDeleteLake(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteLake(cq, std::move(context), request);
 }
@@ -77,7 +77,7 @@ StatusOr<google::cloud::dataplex::v1::ListLakesResponse>
 DataplexServiceMetadata::ListLakes(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListLakesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLakes(context, request);
 }
@@ -85,7 +85,7 @@ DataplexServiceMetadata::ListLakes(
 StatusOr<google::cloud::dataplex::v1::Lake> DataplexServiceMetadata::GetLake(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetLakeRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLake(context, request);
 }
@@ -94,7 +94,7 @@ StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DataplexServiceMetadata::ListLakeActions(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListLakeActionsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLakeActions(context, request);
 }
@@ -104,7 +104,7 @@ DataplexServiceMetadata::AsyncCreateZone(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateZoneRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateZone(cq, std::move(context), request);
 }
@@ -115,7 +115,7 @@ DataplexServiceMetadata::AsyncUpdateZone(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("zone.name=", internal::UrlEncode(request.zone().name())));
   return child_->AsyncUpdateZone(cq, std::move(context), request);
 }
@@ -125,7 +125,7 @@ DataplexServiceMetadata::AsyncDeleteZone(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteZone(cq, std::move(context), request);
 }
@@ -134,7 +134,7 @@ StatusOr<google::cloud::dataplex::v1::ListZonesResponse>
 DataplexServiceMetadata::ListZones(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListZonesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListZones(context, request);
 }
@@ -142,7 +142,7 @@ DataplexServiceMetadata::ListZones(
 StatusOr<google::cloud::dataplex::v1::Zone> DataplexServiceMetadata::GetZone(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetZoneRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetZone(context, request);
 }
@@ -151,7 +151,7 @@ StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DataplexServiceMetadata::ListZoneActions(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListZoneActionsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListZoneActions(context, request);
 }
@@ -161,7 +161,7 @@ DataplexServiceMetadata::AsyncCreateAsset(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateAssetRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateAsset(cq, std::move(context), request);
 }
@@ -172,7 +172,7 @@ DataplexServiceMetadata::AsyncUpdateAsset(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("asset.name=", internal::UrlEncode(request.asset().name())));
   return child_->AsyncUpdateAsset(cq, std::move(context), request);
 }
@@ -182,7 +182,7 @@ DataplexServiceMetadata::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAsset(cq, std::move(context), request);
 }
@@ -191,7 +191,7 @@ StatusOr<google::cloud::dataplex::v1::ListAssetsResponse>
 DataplexServiceMetadata::ListAssets(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListAssetsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAssets(context, request);
 }
@@ -199,7 +199,7 @@ DataplexServiceMetadata::ListAssets(
 StatusOr<google::cloud::dataplex::v1::Asset> DataplexServiceMetadata::GetAsset(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetAssetRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAsset(context, request);
 }
@@ -208,7 +208,7 @@ StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DataplexServiceMetadata::ListAssetActions(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListAssetActionsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAssetActions(context, request);
 }
@@ -218,7 +218,7 @@ DataplexServiceMetadata::AsyncCreateTask(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateTaskRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateTask(cq, std::move(context), request);
 }
@@ -229,7 +229,7 @@ DataplexServiceMetadata::AsyncUpdateTask(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("task.name=", internal::UrlEncode(request.task().name())));
   return child_->AsyncUpdateTask(cq, std::move(context), request);
 }
@@ -239,7 +239,7 @@ DataplexServiceMetadata::AsyncDeleteTask(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTask(cq, std::move(context), request);
 }
@@ -248,7 +248,7 @@ StatusOr<google::cloud::dataplex::v1::ListTasksResponse>
 DataplexServiceMetadata::ListTasks(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListTasksRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTasks(context, request);
 }
@@ -256,7 +256,7 @@ DataplexServiceMetadata::ListTasks(
 StatusOr<google::cloud::dataplex::v1::Task> DataplexServiceMetadata::GetTask(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetTaskRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTask(context, request);
 }
@@ -265,7 +265,7 @@ StatusOr<google::cloud::dataplex::v1::ListJobsResponse>
 DataplexServiceMetadata::ListJobs(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListJobsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListJobs(context, request);
 }
@@ -274,7 +274,7 @@ StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
 DataplexServiceMetadata::RunTask(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::RunTaskRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RunTask(context, request);
 }
@@ -282,7 +282,7 @@ DataplexServiceMetadata::RunTask(
 StatusOr<google::cloud::dataplex::v1::Job> DataplexServiceMetadata::GetJob(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetJob(context, request);
 }
@@ -290,7 +290,7 @@ StatusOr<google::cloud::dataplex::v1::Job> DataplexServiceMetadata::GetJob(
 Status DataplexServiceMetadata::CancelJob(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::CancelJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelJob(context, request);
 }
@@ -300,7 +300,7 @@ DataplexServiceMetadata::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateEnvironment(cq, std::move(context), request);
 }
@@ -310,7 +310,7 @@ DataplexServiceMetadata::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("environment.name=",
                            internal::UrlEncode(request.environment().name())));
   return child_->AsyncUpdateEnvironment(cq, std::move(context), request);
@@ -321,7 +321,7 @@ DataplexServiceMetadata::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteEnvironment(cq, std::move(context), request);
 }
@@ -330,7 +330,7 @@ StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
 DataplexServiceMetadata::ListEnvironments(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListEnvironmentsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEnvironments(context, request);
 }
@@ -339,7 +339,7 @@ StatusOr<google::cloud::dataplex::v1::Environment>
 DataplexServiceMetadata::GetEnvironment(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEnvironment(context, request);
 }
@@ -348,7 +348,7 @@ StatusOr<google::cloud::dataplex::v1::ListSessionsResponse>
 DataplexServiceMetadata::ListSessions(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListSessionsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSessions(context, request);
 }
@@ -358,7 +358,7 @@ DataplexServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -367,23 +367,24 @@ future<Status> DataplexServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void DataplexServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                          Options const& options,
                                           std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void DataplexServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void DataplexServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                          Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

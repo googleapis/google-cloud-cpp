@@ -46,7 +46,7 @@ StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>
 ApiGatewayServiceMetadata::ListGateways(
     grpc::ClientContext& context,
     google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListGateways(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::apigateway::v1::Gateway>
 ApiGatewayServiceMetadata::GetGateway(
     grpc::ClientContext& context,
     google::cloud::apigateway::v1::GetGatewayRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetGateway(context, request);
 }
@@ -65,7 +65,7 @@ ApiGatewayServiceMetadata::AsyncCreateGateway(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateGateway(cq, std::move(context), request);
 }
@@ -75,7 +75,7 @@ ApiGatewayServiceMetadata::AsyncUpdateGateway(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("gateway.name=",
                            internal::UrlEncode(request.gateway().name())));
   return child_->AsyncUpdateGateway(cq, std::move(context), request);
@@ -86,7 +86,7 @@ ApiGatewayServiceMetadata::AsyncDeleteGateway(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteGateway(cq, std::move(context), request);
 }
@@ -95,7 +95,7 @@ StatusOr<google::cloud::apigateway::v1::ListApisResponse>
 ApiGatewayServiceMetadata::ListApis(
     grpc::ClientContext& context,
     google::cloud::apigateway::v1::ListApisRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListApis(context, request);
 }
@@ -103,7 +103,7 @@ ApiGatewayServiceMetadata::ListApis(
 StatusOr<google::cloud::apigateway::v1::Api> ApiGatewayServiceMetadata::GetApi(
     grpc::ClientContext& context,
     google::cloud::apigateway::v1::GetApiRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetApi(context, request);
 }
@@ -113,7 +113,7 @@ ApiGatewayServiceMetadata::AsyncCreateApi(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::CreateApiRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateApi(cq, std::move(context), request);
 }
@@ -124,7 +124,7 @@ ApiGatewayServiceMetadata::AsyncUpdateApi(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::UpdateApiRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("api.name=", internal::UrlEncode(request.api().name())));
   return child_->AsyncUpdateApi(cq, std::move(context), request);
 }
@@ -134,7 +134,7 @@ ApiGatewayServiceMetadata::AsyncDeleteApi(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::DeleteApiRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteApi(cq, std::move(context), request);
 }
@@ -143,7 +143,7 @@ StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
 ApiGatewayServiceMetadata::ListApiConfigs(
     grpc::ClientContext& context,
     google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListApiConfigs(context, request);
 }
@@ -152,7 +152,7 @@ StatusOr<google::cloud::apigateway::v1::ApiConfig>
 ApiGatewayServiceMetadata::GetApiConfig(
     grpc::ClientContext& context,
     google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetApiConfig(context, request);
 }
@@ -162,7 +162,7 @@ ApiGatewayServiceMetadata::AsyncCreateApiConfig(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateApiConfig(cq, std::move(context), request);
 }
@@ -172,7 +172,7 @@ ApiGatewayServiceMetadata::AsyncUpdateApiConfig(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("api_config.name=",
                            internal::UrlEncode(request.api_config().name())));
   return child_->AsyncUpdateApiConfig(cq, std::move(context), request);
@@ -183,7 +183,7 @@ ApiGatewayServiceMetadata::AsyncDeleteApiConfig(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteApiConfig(cq, std::move(context), request);
 }
@@ -193,7 +193,7 @@ ApiGatewayServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -202,23 +202,24 @@ future<Status> ApiGatewayServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void ApiGatewayServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options,
                                             std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ApiGatewayServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void ApiGatewayServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

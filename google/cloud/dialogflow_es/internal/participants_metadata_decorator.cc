@@ -46,7 +46,7 @@ StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsMetadata::CreateParticipant(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateParticipantRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateParticipant(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsMetadata::GetParticipant(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetParticipant(context, request);
 }
@@ -64,7 +64,7 @@ StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse>
 ParticipantsMetadata::ListParticipants(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListParticipantsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListParticipants(context, request);
 }
@@ -73,7 +73,7 @@ StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsMetadata::UpdateParticipant(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("participant.name=",
                            internal::UrlEncode(request.participant().name())));
   return child_->UpdateParticipant(context, request);
@@ -84,7 +84,7 @@ ParticipantsMetadata::AnalyzeContent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("participant=", internal::UrlEncode(request.participant())));
   return child_->AnalyzeContent(context, request);
 }
@@ -95,7 +95,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 ParticipantsMetadata::AsyncStreamingAnalyzeContent(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->AsyncStreamingAnalyzeContent(cq, std::move(context));
 }
 
@@ -103,7 +103,7 @@ StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsMetadata::SuggestArticles(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SuggestArticles(context, request);
 }
@@ -112,7 +112,7 @@ StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
 ParticipantsMetadata::SuggestFaqAnswers(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SuggestFaqAnswers(context, request);
 }
@@ -121,23 +121,24 @@ StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
 ParticipantsMetadata::SuggestSmartReplies(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SuggestSmartReplies(context, request);
 }
 
 void ParticipantsMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options,
                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ParticipantsMetadata::SetMetadata(grpc::ClientContext& context) {
+void ParticipantsMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

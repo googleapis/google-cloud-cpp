@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGLAKE_V1_INTERNAL_METASTORE_METADATA_DECORATOR_H
 
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -115,9 +116,9 @@ class MetastoreServiceMetadata : public MetastoreServiceStub {
       override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<MetastoreServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

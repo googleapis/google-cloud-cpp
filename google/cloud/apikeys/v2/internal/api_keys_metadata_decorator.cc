@@ -47,7 +47,7 @@ ApiKeysMetadata::AsyncCreateKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::CreateKeyRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateKey(cq, std::move(context), request);
 }
@@ -55,7 +55,7 @@ ApiKeysMetadata::AsyncCreateKey(
 StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysMetadata::ListKeys(
     grpc::ClientContext& context,
     google::api::apikeys::v2::ListKeysRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListKeys(context, request);
 }
@@ -63,7 +63,7 @@ StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysMetadata::ListKeys(
 StatusOr<google::api::apikeys::v2::Key> ApiKeysMetadata::GetKey(
     grpc::ClientContext& context,
     google::api::apikeys::v2::GetKeyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetKey(context, request);
 }
@@ -72,7 +72,7 @@ StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 ApiKeysMetadata::GetKeyString(
     grpc::ClientContext& context,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetKeyString(context, request);
 }
@@ -83,7 +83,7 @@ ApiKeysMetadata::AsyncUpdateKey(
     std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("key.name=", internal::UrlEncode(request.key().name())));
   return child_->AsyncUpdateKey(cq, std::move(context), request);
 }
@@ -93,7 +93,7 @@ ApiKeysMetadata::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteKey(cq, std::move(context), request);
 }
@@ -103,7 +103,7 @@ ApiKeysMetadata::AsyncUndeleteKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUndeleteKey(cq, std::move(context), request);
 }
@@ -112,7 +112,7 @@ StatusOr<google::api::apikeys::v2::LookupKeyResponse>
 ApiKeysMetadata::LookupKey(
     grpc::ClientContext& context,
     google::api::apikeys::v2::LookupKeyRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->LookupKey(context, request);
 }
 
@@ -121,7 +121,7 @@ ApiKeysMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -130,23 +130,24 @@ future<Status> ApiKeysMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void ApiKeysMetadata::SetMetadata(grpc::ClientContext& context,
+                                  Options const& options,
                                   std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ApiKeysMetadata::SetMetadata(grpc::ClientContext& context) {
+void ApiKeysMetadata::SetMetadata(grpc::ClientContext& context,
+                                  Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

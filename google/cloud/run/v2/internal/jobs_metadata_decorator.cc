@@ -65,9 +65,10 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncCreateJob(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncCreateJob(cq, std::move(context), request);
 }
@@ -92,9 +93,10 @@ StatusOr<google::cloud::run::v2::Job> JobsMetadata::GetJob(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->GetJob(context, request);
 }
@@ -119,9 +121,10 @@ StatusOr<google::cloud::run::v2::ListJobsResponse> JobsMetadata::ListJobs(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->ListJobs(context, request);
 }
@@ -147,9 +150,10 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncUpdateJob(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncUpdateJob(cq, std::move(context), request);
 }
@@ -175,9 +179,10 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncDeleteJob(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncDeleteJob(cq, std::move(context), request);
 }
@@ -203,9 +208,10 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncRunJob(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncRunJob(cq, std::move(context), request);
 }
@@ -213,16 +219,18 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncRunJob(
 StatusOr<google::iam::v1::Policy> JobsMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> JobsMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -230,8 +238,9 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 JobsMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -240,7 +249,7 @@ JobsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -249,23 +258,24 @@ future<Status> JobsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void JobsMetadata::SetMetadata(grpc::ClientContext& context,
+                               Options const& options,
                                std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void JobsMetadata::SetMetadata(grpc::ClientContext& context) {
+void JobsMetadata::SetMetadata(grpc::ClientContext& context,
+                               Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -47,7 +47,7 @@ SynonymSetServiceMetadata::CreateSynonymSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSynonymSet(context, request);
 }
@@ -56,7 +56,7 @@ StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceMetadata::GetSynonymSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSynonymSet(context, request);
 }
@@ -66,7 +66,7 @@ SynonymSetServiceMetadata::UpdateSynonymSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateSynonymSet(context, request);
 }
@@ -75,7 +75,7 @@ Status SynonymSetServiceMetadata::DeleteSynonymSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSynonymSet(context, request);
 }
@@ -85,23 +85,24 @@ SynonymSetServiceMetadata::ListSynonymSets(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSynonymSets(context, request);
 }
 
 void SynonymSetServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options,
                                             std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void SynonymSetServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void SynonymSetServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

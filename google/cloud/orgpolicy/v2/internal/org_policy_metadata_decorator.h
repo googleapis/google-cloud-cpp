@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_INTERNAL_ORG_POLICY_METADATA_DECORATOR_H
 
 #include "google/cloud/orgpolicy/v2/internal/org_policy_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -71,9 +72,9 @@ class OrgPolicyMetadata : public OrgPolicyStub {
                           request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<OrgPolicyStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_TENANT_METADATA_DECORATOR_H
 
 #include "google/cloud/talent/v4/internal/tenant_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -58,9 +59,9 @@ class TenantServiceMetadata : public TenantServiceStub {
       google::cloud::talent::v4::ListTenantsRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<TenantServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

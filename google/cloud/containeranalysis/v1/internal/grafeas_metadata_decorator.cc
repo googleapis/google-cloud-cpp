@@ -45,7 +45,7 @@ GrafeasMetadata::GrafeasMetadata(
 StatusOr<grafeas::v1::Occurrence> GrafeasMetadata::GetOccurrence(
     grpc::ClientContext& context,
     grafeas::v1::GetOccurrenceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOccurrence(context, request);
 }
@@ -53,7 +53,7 @@ StatusOr<grafeas::v1::Occurrence> GrafeasMetadata::GetOccurrence(
 StatusOr<grafeas::v1::ListOccurrencesResponse> GrafeasMetadata::ListOccurrences(
     grpc::ClientContext& context,
     grafeas::v1::ListOccurrencesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListOccurrences(context, request);
 }
@@ -61,7 +61,7 @@ StatusOr<grafeas::v1::ListOccurrencesResponse> GrafeasMetadata::ListOccurrences(
 Status GrafeasMetadata::DeleteOccurrence(
     grpc::ClientContext& context,
     grafeas::v1::DeleteOccurrenceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOccurrence(context, request);
 }
@@ -69,7 +69,7 @@ Status GrafeasMetadata::DeleteOccurrence(
 StatusOr<grafeas::v1::Occurrence> GrafeasMetadata::CreateOccurrence(
     grpc::ClientContext& context,
     grafeas::v1::CreateOccurrenceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateOccurrence(context, request);
 }
@@ -78,7 +78,7 @@ StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
 GrafeasMetadata::BatchCreateOccurrences(
     grpc::ClientContext& context,
     grafeas::v1::BatchCreateOccurrencesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchCreateOccurrences(context, request);
 }
@@ -86,7 +86,7 @@ GrafeasMetadata::BatchCreateOccurrences(
 StatusOr<grafeas::v1::Occurrence> GrafeasMetadata::UpdateOccurrence(
     grpc::ClientContext& context,
     grafeas::v1::UpdateOccurrenceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateOccurrence(context, request);
 }
@@ -94,14 +94,14 @@ StatusOr<grafeas::v1::Occurrence> GrafeasMetadata::UpdateOccurrence(
 StatusOr<grafeas::v1::Note> GrafeasMetadata::GetOccurrenceNote(
     grpc::ClientContext& context,
     grafeas::v1::GetOccurrenceNoteRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOccurrenceNote(context, request);
 }
 
 StatusOr<grafeas::v1::Note> GrafeasMetadata::GetNote(
     grpc::ClientContext& context, grafeas::v1::GetNoteRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNote(context, request);
 }
@@ -109,7 +109,7 @@ StatusOr<grafeas::v1::Note> GrafeasMetadata::GetNote(
 StatusOr<grafeas::v1::ListNotesResponse> GrafeasMetadata::ListNotes(
     grpc::ClientContext& context,
     grafeas::v1::ListNotesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNotes(context, request);
 }
@@ -117,7 +117,7 @@ StatusOr<grafeas::v1::ListNotesResponse> GrafeasMetadata::ListNotes(
 Status GrafeasMetadata::DeleteNote(
     grpc::ClientContext& context,
     grafeas::v1::DeleteNoteRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteNote(context, request);
 }
@@ -125,7 +125,7 @@ Status GrafeasMetadata::DeleteNote(
 StatusOr<grafeas::v1::Note> GrafeasMetadata::CreateNote(
     grpc::ClientContext& context,
     grafeas::v1::CreateNoteRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateNote(context, request);
 }
@@ -134,7 +134,7 @@ StatusOr<grafeas::v1::BatchCreateNotesResponse>
 GrafeasMetadata::BatchCreateNotes(
     grpc::ClientContext& context,
     grafeas::v1::BatchCreateNotesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchCreateNotes(context, request);
 }
@@ -142,7 +142,7 @@ GrafeasMetadata::BatchCreateNotes(
 StatusOr<grafeas::v1::Note> GrafeasMetadata::UpdateNote(
     grpc::ClientContext& context,
     grafeas::v1::UpdateNoteRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateNote(context, request);
 }
@@ -151,23 +151,24 @@ StatusOr<grafeas::v1::ListNoteOccurrencesResponse>
 GrafeasMetadata::ListNoteOccurrences(
     grpc::ClientContext& context,
     grafeas::v1::ListNoteOccurrencesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListNoteOccurrences(context, request);
 }
 
 void GrafeasMetadata::SetMetadata(grpc::ClientContext& context,
+                                  Options const& options,
                                   std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void GrafeasMetadata::SetMetadata(grpc::ClientContext& context) {
+void GrafeasMetadata::SetMetadata(grpc::ClientContext& context,
+                                  Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_METRICS_SERVICE_V2_METADATA_DECORATOR_H
 
 #include "google/cloud/logging/v2/internal/metrics_service_v2_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -59,9 +60,9 @@ class MetricsServiceV2Metadata : public MetricsServiceV2Stub {
       google::logging::v2::DeleteLogMetricRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<MetricsServiceV2Stub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

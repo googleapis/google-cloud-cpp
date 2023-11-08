@@ -46,7 +46,7 @@ StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
 VmwareEngineMetadata::ListPrivateClouds(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::ListPrivateCloudsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPrivateClouds(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>
 VmwareEngineMetadata::GetPrivateCloud(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPrivateCloud(context, request);
 }
@@ -65,7 +65,7 @@ VmwareEngineMetadata::AsyncCreatePrivateCloud(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreatePrivateCloud(cq, std::move(context), request);
 }
@@ -76,7 +76,7 @@ VmwareEngineMetadata::AsyncUpdatePrivateCloud(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("private_cloud.name=",
                    internal::UrlEncode(request.private_cloud().name())));
   return child_->AsyncUpdatePrivateCloud(cq, std::move(context), request);
@@ -87,7 +87,7 @@ VmwareEngineMetadata::AsyncDeletePrivateCloud(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeletePrivateCloud(cq, std::move(context), request);
 }
@@ -98,7 +98,7 @@ VmwareEngineMetadata::AsyncUndeletePrivateCloud(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUndeletePrivateCloud(cq, std::move(context), request);
 }
@@ -107,7 +107,7 @@ StatusOr<google::cloud::vmwareengine::v1::ListClustersResponse>
 VmwareEngineMetadata::ListClusters(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::ListClustersRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListClusters(context, request);
 }
@@ -116,7 +116,7 @@ StatusOr<google::cloud::vmwareengine::v1::Cluster>
 VmwareEngineMetadata::GetCluster(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::GetClusterRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCluster(context, request);
 }
@@ -126,7 +126,7 @@ VmwareEngineMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateCluster(cq, std::move(context), request);
 }
@@ -136,7 +136,7 @@ VmwareEngineMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("cluster.name=",
                            internal::UrlEncode(request.cluster().name())));
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
@@ -147,7 +147,7 @@ VmwareEngineMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteCluster(cq, std::move(context), request);
 }
@@ -156,7 +156,7 @@ StatusOr<google::cloud::vmwareengine::v1::ListSubnetsResponse>
 VmwareEngineMetadata::ListSubnets(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::ListSubnetsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSubnets(context, request);
 }
@@ -165,7 +165,7 @@ StatusOr<google::cloud::vmwareengine::v1::Subnet>
 VmwareEngineMetadata::GetSubnet(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::GetSubnetRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSubnet(context, request);
 }
@@ -175,7 +175,7 @@ VmwareEngineMetadata::AsyncUpdateSubnet(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("subnet.name=",
                            internal::UrlEncode(request.subnet().name())));
   return child_->AsyncUpdateSubnet(cq, std::move(context), request);
@@ -185,7 +185,7 @@ StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
 VmwareEngineMetadata::ListNodeTypes(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::ListNodeTypesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNodeTypes(context, request);
 }
@@ -194,7 +194,7 @@ StatusOr<google::cloud::vmwareengine::v1::NodeType>
 VmwareEngineMetadata::GetNodeType(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNodeType(context, request);
 }
@@ -203,7 +203,7 @@ StatusOr<google::cloud::vmwareengine::v1::Credentials>
 VmwareEngineMetadata::ShowNsxCredentials(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("private_cloud=",
                            internal::UrlEncode(request.private_cloud())));
   return child_->ShowNsxCredentials(context, request);
@@ -214,7 +214,7 @@ VmwareEngineMetadata::ShowVcenterCredentials(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("private_cloud=",
                            internal::UrlEncode(request.private_cloud())));
   return child_->ShowVcenterCredentials(context, request);
@@ -226,7 +226,7 @@ VmwareEngineMetadata::AsyncResetNsxCredentials(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("private_cloud=",
                            internal::UrlEncode(request.private_cloud())));
   return child_->AsyncResetNsxCredentials(cq, std::move(context), request);
@@ -238,7 +238,7 @@ VmwareEngineMetadata::AsyncResetVcenterCredentials(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("private_cloud=",
                            internal::UrlEncode(request.private_cloud())));
   return child_->AsyncResetVcenterCredentials(cq, std::move(context), request);
@@ -250,7 +250,7 @@ VmwareEngineMetadata::AsyncCreateHcxActivationKey(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateHcxActivationKey(cq, std::move(context), request);
 }
@@ -260,7 +260,7 @@ VmwareEngineMetadata::ListHcxActivationKeys(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListHcxActivationKeys(context, request);
 }
@@ -270,7 +270,7 @@ VmwareEngineMetadata::GetHcxActivationKey(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetHcxActivationKey(context, request);
 }
@@ -279,7 +279,7 @@ StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>
 VmwareEngineMetadata::GetNetworkPolicy(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNetworkPolicy(context, request);
 }
@@ -289,7 +289,7 @@ VmwareEngineMetadata::ListNetworkPolicies(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNetworkPolicies(context, request);
 }
@@ -300,7 +300,7 @@ VmwareEngineMetadata::AsyncCreateNetworkPolicy(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateNetworkPolicy(cq, std::move(context), request);
 }
@@ -312,7 +312,7 @@ VmwareEngineMetadata::AsyncUpdateNetworkPolicy(
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
         request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("network_policy.name=",
                    internal::UrlEncode(request.network_policy().name())));
   return child_->AsyncUpdateNetworkPolicy(cq, std::move(context), request);
@@ -324,7 +324,7 @@ VmwareEngineMetadata::AsyncDeleteNetworkPolicy(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteNetworkPolicy(cq, std::move(context), request);
 }
@@ -335,7 +335,7 @@ VmwareEngineMetadata::AsyncCreateVmwareEngineNetwork(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateVmwareEngineNetwork(cq, std::move(context),
                                                 request);
@@ -347,7 +347,7 @@ VmwareEngineMetadata::AsyncUpdateVmwareEngineNetwork(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat(
                   "vmware_engine_network.name=",
                   internal::UrlEncode(request.vmware_engine_network().name())));
@@ -361,7 +361,7 @@ VmwareEngineMetadata::AsyncDeleteVmwareEngineNetwork(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteVmwareEngineNetwork(cq, std::move(context),
                                                 request);
@@ -372,7 +372,7 @@ VmwareEngineMetadata::GetVmwareEngineNetwork(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetVmwareEngineNetwork(context, request);
 }
@@ -382,7 +382,7 @@ VmwareEngineMetadata::ListVmwareEngineNetworks(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListVmwareEngineNetworks(context, request);
 }
@@ -393,7 +393,7 @@ VmwareEngineMetadata::AsyncCreatePrivateConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreatePrivateConnection(cq, std::move(context), request);
 }
@@ -403,7 +403,7 @@ VmwareEngineMetadata::GetPrivateConnection(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPrivateConnection(context, request);
 }
@@ -413,7 +413,7 @@ VmwareEngineMetadata::ListPrivateConnections(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPrivateConnections(context, request);
 }
@@ -425,7 +425,7 @@ VmwareEngineMetadata::AsyncUpdatePrivateConnection(
     google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
         request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("private_connection.name=",
                    internal::UrlEncode(request.private_connection().name())));
   return child_->AsyncUpdatePrivateConnection(cq, std::move(context), request);
@@ -437,7 +437,7 @@ VmwareEngineMetadata::AsyncDeletePrivateConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeletePrivateConnection(cq, std::move(context), request);
 }
@@ -448,7 +448,7 @@ VmwareEngineMetadata::ListPrivateConnectionPeeringRoutes(
     grpc::ClientContext& context,
     google::cloud::vmwareengine::v1::
         ListPrivateConnectionPeeringRoutesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPrivateConnectionPeeringRoutes(context, request);
 }
@@ -458,7 +458,7 @@ VmwareEngineMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -467,23 +467,24 @@ future<Status> VmwareEngineMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void VmwareEngineMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options,
                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void VmwareEngineMetadata::SetMetadata(grpc::ClientContext& context) {
+void VmwareEngineMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

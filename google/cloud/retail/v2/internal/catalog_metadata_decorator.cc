@@ -46,7 +46,7 @@ StatusOr<google::cloud::retail::v2::ListCatalogsResponse>
 CatalogServiceMetadata::ListCatalogs(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ListCatalogsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCatalogs(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::retail::v2::Catalog>
 CatalogServiceMetadata::UpdateCatalog(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateCatalogRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("catalog.name=",
                            internal::UrlEncode(request.catalog().name())));
   return child_->UpdateCatalog(context, request);
@@ -64,7 +64,7 @@ CatalogServiceMetadata::UpdateCatalog(
 Status CatalogServiceMetadata::SetDefaultBranch(
     grpc::ClientContext& context,
     google::cloud::retail::v2::SetDefaultBranchRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("catalog=", internal::UrlEncode(request.catalog())));
   return child_->SetDefaultBranch(context, request);
 }
@@ -73,7 +73,7 @@ StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
 CatalogServiceMetadata::GetDefaultBranch(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetDefaultBranchRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("catalog=", internal::UrlEncode(request.catalog())));
   return child_->GetDefaultBranch(context, request);
 }
@@ -82,7 +82,7 @@ StatusOr<google::cloud::retail::v2::CompletionConfig>
 CatalogServiceMetadata::GetCompletionConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetCompletionConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCompletionConfig(context, request);
 }
@@ -92,7 +92,7 @@ CatalogServiceMetadata::UpdateCompletionConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("completion_config.name=",
                    internal::UrlEncode(request.completion_config().name())));
   return child_->UpdateCompletionConfig(context, request);
@@ -102,7 +102,7 @@ StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceMetadata::GetAttributesConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetAttributesConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAttributesConfig(context, request);
 }
@@ -112,7 +112,7 @@ CatalogServiceMetadata::UpdateAttributesConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("attributes_config.name=",
                    internal::UrlEncode(request.attributes_config().name())));
   return child_->UpdateAttributesConfig(context, request);
@@ -122,7 +122,7 @@ StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceMetadata::AddCatalogAttribute(
     grpc::ClientContext& context,
     google::cloud::retail::v2::AddCatalogAttributeRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("attributes_config=",
                            internal::UrlEncode(request.attributes_config())));
   return child_->AddCatalogAttribute(context, request);
@@ -132,7 +132,7 @@ StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceMetadata::RemoveCatalogAttribute(
     grpc::ClientContext& context,
     google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("attributes_config=",
                            internal::UrlEncode(request.attributes_config())));
   return child_->RemoveCatalogAttribute(context, request);
@@ -142,24 +142,25 @@ StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceMetadata::ReplaceCatalogAttribute(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("attributes_config=",
                            internal::UrlEncode(request.attributes_config())));
   return child_->ReplaceCatalogAttribute(context, request);
 }
 
 void CatalogServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void CatalogServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void CatalogServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

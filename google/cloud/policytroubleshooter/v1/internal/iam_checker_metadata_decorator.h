@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_INTERNAL_IAM_CHECKER_METADATA_DECORATOR_H
 
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -45,9 +46,9 @@ class IamCheckerMetadata : public IamCheckerStub {
           TroubleshootIamPolicyRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<IamCheckerStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

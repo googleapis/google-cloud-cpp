@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_REGISTRATION_METADATA_DECORATOR_H
 
 #include "google/cloud/servicedirectory/v1/internal/registration_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -127,9 +128,9 @@ class RegistrationServiceMetadata : public RegistrationServiceStub {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<RegistrationServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

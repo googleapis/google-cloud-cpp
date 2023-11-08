@@ -46,7 +46,7 @@ StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse>
 DataMigrationServiceMetadata::ListMigrationJobs(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::ListMigrationJobsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMigrationJobs(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::clouddms::v1::MigrationJob>
 DataMigrationServiceMetadata::GetMigrationJob(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::GetMigrationJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMigrationJob(context, request);
 }
@@ -65,7 +65,7 @@ DataMigrationServiceMetadata::AsyncCreateMigrationJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateMigrationJob(cq, std::move(context), request);
 }
@@ -76,7 +76,7 @@ DataMigrationServiceMetadata::AsyncUpdateMigrationJob(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("migration_job.name=",
                    internal::UrlEncode(request.migration_job().name())));
   return child_->AsyncUpdateMigrationJob(cq, std::move(context), request);
@@ -87,7 +87,7 @@ DataMigrationServiceMetadata::AsyncDeleteMigrationJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteMigrationJob(cq, std::move(context), request);
 }
@@ -97,7 +97,7 @@ DataMigrationServiceMetadata::AsyncStartMigrationJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStartMigrationJob(cq, std::move(context), request);
 }
@@ -107,7 +107,7 @@ DataMigrationServiceMetadata::AsyncStopMigrationJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStopMigrationJob(cq, std::move(context), request);
 }
@@ -117,7 +117,7 @@ DataMigrationServiceMetadata::AsyncResumeMigrationJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncResumeMigrationJob(cq, std::move(context), request);
 }
@@ -127,7 +127,7 @@ DataMigrationServiceMetadata::AsyncPromoteMigrationJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncPromoteMigrationJob(cq, std::move(context), request);
 }
@@ -137,7 +137,7 @@ DataMigrationServiceMetadata::AsyncVerifyMigrationJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncVerifyMigrationJob(cq, std::move(context), request);
 }
@@ -147,7 +147,7 @@ DataMigrationServiceMetadata::AsyncRestartMigrationJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRestartMigrationJob(cq, std::move(context), request);
 }
@@ -156,7 +156,7 @@ StatusOr<google::cloud::clouddms::v1::SshScript>
 DataMigrationServiceMetadata::GenerateSshScript(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::GenerateSshScriptRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("migration_job=",
                            internal::UrlEncode(request.migration_job())));
   return child_->GenerateSshScript(context, request);
@@ -166,7 +166,7 @@ StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
 DataMigrationServiceMetadata::GenerateTcpProxyScript(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("migration_job=",
                            internal::UrlEncode(request.migration_job())));
   return child_->GenerateTcpProxyScript(context, request);
@@ -176,7 +176,7 @@ StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
 DataMigrationServiceMetadata::ListConnectionProfiles(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::ListConnectionProfilesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnectionProfiles(context, request);
 }
@@ -185,7 +185,7 @@ StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
 DataMigrationServiceMetadata::GetConnectionProfile(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::GetConnectionProfileRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConnectionProfile(context, request);
 }
@@ -196,7 +196,7 @@ DataMigrationServiceMetadata::AsyncCreateConnectionProfile(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateConnectionProfile(cq, std::move(context), request);
 }
@@ -208,7 +208,7 @@ DataMigrationServiceMetadata::AsyncUpdateConnectionProfile(
     google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
         request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("connection_profile.name=",
                    internal::UrlEncode(request.connection_profile().name())));
   return child_->AsyncUpdateConnectionProfile(cq, std::move(context), request);
@@ -220,7 +220,7 @@ DataMigrationServiceMetadata::AsyncDeleteConnectionProfile(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteConnectionProfile(cq, std::move(context), request);
 }
@@ -231,7 +231,7 @@ DataMigrationServiceMetadata::AsyncCreatePrivateConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreatePrivateConnection(cq, std::move(context), request);
 }
@@ -240,7 +240,7 @@ StatusOr<google::cloud::clouddms::v1::PrivateConnection>
 DataMigrationServiceMetadata::GetPrivateConnection(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPrivateConnection(context, request);
 }
@@ -249,7 +249,7 @@ StatusOr<google::cloud::clouddms::v1::ListPrivateConnectionsResponse>
 DataMigrationServiceMetadata::ListPrivateConnections(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPrivateConnections(context, request);
 }
@@ -260,7 +260,7 @@ DataMigrationServiceMetadata::AsyncDeletePrivateConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeletePrivateConnection(cq, std::move(context), request);
 }
@@ -269,7 +269,7 @@ StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
 DataMigrationServiceMetadata::GetConversionWorkspace(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConversionWorkspace(context, request);
 }
@@ -279,7 +279,7 @@ DataMigrationServiceMetadata::ListConversionWorkspaces(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::ListConversionWorkspacesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConversionWorkspaces(context, request);
 }
@@ -290,7 +290,7 @@ DataMigrationServiceMetadata::AsyncCreateConversionWorkspace(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateConversionWorkspace(cq, std::move(context),
                                                 request);
@@ -303,7 +303,7 @@ DataMigrationServiceMetadata::AsyncUpdateConversionWorkspace(
     google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
         request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("conversion_workspace.name=",
                    internal::UrlEncode(request.conversion_workspace().name())));
   return child_->AsyncUpdateConversionWorkspace(cq, std::move(context),
@@ -316,7 +316,7 @@ DataMigrationServiceMetadata::AsyncDeleteConversionWorkspace(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteConversionWorkspace(cq, std::move(context),
                                                 request);
@@ -326,7 +326,7 @@ StatusOr<google::cloud::clouddms::v1::MappingRule>
 DataMigrationServiceMetadata::CreateMappingRule(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateMappingRule(context, request);
 }
@@ -334,7 +334,7 @@ DataMigrationServiceMetadata::CreateMappingRule(
 Status DataMigrationServiceMetadata::DeleteMappingRule(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteMappingRule(context, request);
 }
@@ -343,7 +343,7 @@ StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse>
 DataMigrationServiceMetadata::ListMappingRules(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::ListMappingRulesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMappingRules(context, request);
 }
@@ -352,7 +352,7 @@ StatusOr<google::cloud::clouddms::v1::MappingRule>
 DataMigrationServiceMetadata::GetMappingRule(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMappingRule(context, request);
 }
@@ -363,7 +363,7 @@ DataMigrationServiceMetadata::AsyncSeedConversionWorkspace(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncSeedConversionWorkspace(cq, std::move(context), request);
 }
@@ -373,7 +373,7 @@ DataMigrationServiceMetadata::AsyncImportMappingRules(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportMappingRules(cq, std::move(context), request);
 }
@@ -384,7 +384,7 @@ DataMigrationServiceMetadata::AsyncConvertConversionWorkspace(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncConvertConversionWorkspace(cq, std::move(context),
                                                  request);
@@ -396,7 +396,7 @@ DataMigrationServiceMetadata::AsyncCommitConversionWorkspace(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCommitConversionWorkspace(cq, std::move(context),
                                                 request);
@@ -408,7 +408,7 @@ DataMigrationServiceMetadata::AsyncRollbackConversionWorkspace(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRollbackConversionWorkspace(cq, std::move(context),
                                                   request);
@@ -420,7 +420,7 @@ DataMigrationServiceMetadata::AsyncApplyConversionWorkspace(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncApplyConversionWorkspace(cq, std::move(context), request);
 }
@@ -431,7 +431,7 @@ DataMigrationServiceMetadata::DescribeDatabaseEntities(
     google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const&
         request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("conversion_workspace=",
                    internal::UrlEncode(request.conversion_workspace())));
   return child_->DescribeDatabaseEntities(context, request);
@@ -442,7 +442,7 @@ DataMigrationServiceMetadata::SearchBackgroundJobs(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("conversion_workspace=",
                    internal::UrlEncode(request.conversion_workspace())));
   return child_->SearchBackgroundJobs(context, request);
@@ -455,7 +455,7 @@ DataMigrationServiceMetadata::DescribeConversionWorkspaceRevisions(
     google::cloud::clouddms::v1::
         DescribeConversionWorkspaceRevisionsRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("conversion_workspace=",
                    internal::UrlEncode(request.conversion_workspace())));
   return child_->DescribeConversionWorkspaceRevisions(context, request);
@@ -465,7 +465,7 @@ StatusOr<google::cloud::clouddms::v1::FetchStaticIpsResponse>
 DataMigrationServiceMetadata::FetchStaticIps(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::FetchStaticIpsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->FetchStaticIps(context, request);
 }
@@ -475,7 +475,7 @@ DataMigrationServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -484,23 +484,24 @@ future<Status> DataMigrationServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void DataMigrationServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void DataMigrationServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void DataMigrationServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                               Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -46,7 +46,7 @@ StatusOr<google::cloud::aiplatform::v1::CustomJob>
 JobServiceMetadata::CreateCustomJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCustomJob(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::aiplatform::v1::CustomJob>
 JobServiceMetadata::GetCustomJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCustomJob(context, request);
 }
@@ -64,7 +64,7 @@ StatusOr<google::cloud::aiplatform::v1::ListCustomJobsResponse>
 JobServiceMetadata::ListCustomJobs(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListCustomJobsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCustomJobs(context, request);
 }
@@ -74,7 +74,7 @@ JobServiceMetadata::AsyncDeleteCustomJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteCustomJob(cq, std::move(context), request);
 }
@@ -82,7 +82,7 @@ JobServiceMetadata::AsyncDeleteCustomJob(
 Status JobServiceMetadata::CancelCustomJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelCustomJob(context, request);
 }
@@ -92,7 +92,7 @@ JobServiceMetadata::CreateDataLabelingJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDataLabelingJob(context, request);
 }
@@ -101,7 +101,7 @@ StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 JobServiceMetadata::GetDataLabelingJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataLabelingJob(context, request);
 }
@@ -110,7 +110,7 @@ StatusOr<google::cloud::aiplatform::v1::ListDataLabelingJobsResponse>
 JobServiceMetadata::ListDataLabelingJobs(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataLabelingJobs(context, request);
 }
@@ -121,7 +121,7 @@ JobServiceMetadata::AsyncDeleteDataLabelingJob(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteDataLabelingJob(cq, std::move(context), request);
 }
@@ -130,7 +130,7 @@ Status JobServiceMetadata::CancelDataLabelingJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelDataLabelingJob(context, request);
 }
@@ -140,7 +140,7 @@ JobServiceMetadata::CreateHyperparameterTuningJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateHyperparameterTuningJob(context, request);
 }
@@ -150,7 +150,7 @@ JobServiceMetadata::GetHyperparameterTuningJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetHyperparameterTuningJob(context, request);
 }
@@ -160,7 +160,7 @@ JobServiceMetadata::ListHyperparameterTuningJobs(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListHyperparameterTuningJobs(context, request);
 }
@@ -171,7 +171,7 @@ JobServiceMetadata::AsyncDeleteHyperparameterTuningJob(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteHyperparameterTuningJob(cq, std::move(context),
                                                     request);
@@ -181,7 +181,7 @@ Status JobServiceMetadata::CancelHyperparameterTuningJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelHyperparameterTuningJob(context, request);
 }
@@ -190,7 +190,7 @@ StatusOr<google::cloud::aiplatform::v1::NasJob>
 JobServiceMetadata::CreateNasJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateNasJob(context, request);
 }
@@ -198,7 +198,7 @@ JobServiceMetadata::CreateNasJob(
 StatusOr<google::cloud::aiplatform::v1::NasJob> JobServiceMetadata::GetNasJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNasJob(context, request);
 }
@@ -207,7 +207,7 @@ StatusOr<google::cloud::aiplatform::v1::ListNasJobsResponse>
 JobServiceMetadata::ListNasJobs(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListNasJobsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNasJobs(context, request);
 }
@@ -217,7 +217,7 @@ JobServiceMetadata::AsyncDeleteNasJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteNasJob(cq, std::move(context), request);
 }
@@ -225,7 +225,7 @@ JobServiceMetadata::AsyncDeleteNasJob(
 Status JobServiceMetadata::CancelNasJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelNasJob(context, request);
 }
@@ -234,7 +234,7 @@ StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
 JobServiceMetadata::GetNasTrialDetail(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNasTrialDetail(context, request);
 }
@@ -243,7 +243,7 @@ StatusOr<google::cloud::aiplatform::v1::ListNasTrialDetailsResponse>
 JobServiceMetadata::ListNasTrialDetails(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNasTrialDetails(context, request);
 }
@@ -253,7 +253,7 @@ JobServiceMetadata::CreateBatchPredictionJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateBatchPredictionJob(context, request);
 }
@@ -263,7 +263,7 @@ JobServiceMetadata::GetBatchPredictionJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBatchPredictionJob(context, request);
 }
@@ -273,7 +273,7 @@ JobServiceMetadata::ListBatchPredictionJobs(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBatchPredictionJobs(context, request);
 }
@@ -284,7 +284,7 @@ JobServiceMetadata::AsyncDeleteBatchPredictionJob(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteBatchPredictionJob(cq, std::move(context), request);
 }
@@ -293,7 +293,7 @@ Status JobServiceMetadata::CancelBatchPredictionJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelBatchPredictionJob(context, request);
 }
@@ -303,7 +303,7 @@ JobServiceMetadata::CreateModelDeploymentMonitoringJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         CreateModelDeploymentMonitoringJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateModelDeploymentMonitoringJob(context, request);
 }
@@ -314,7 +314,7 @@ JobServiceMetadata::SearchModelDeploymentMonitoringStatsAnomalies(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         SearchModelDeploymentMonitoringStatsAnomaliesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("model_deployment_monitoring_job=",
                            internal::UrlEncode(
                                request.model_deployment_monitoring_job())));
@@ -327,7 +327,7 @@ JobServiceMetadata::GetModelDeploymentMonitoringJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetModelDeploymentMonitoringJob(context, request);
 }
@@ -338,7 +338,7 @@ JobServiceMetadata::ListModelDeploymentMonitoringJobs(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         ListModelDeploymentMonitoringJobsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListModelDeploymentMonitoringJobs(context, request);
 }
@@ -350,7 +350,7 @@ JobServiceMetadata::AsyncUpdateModelDeploymentMonitoringJob(
     google::cloud::aiplatform::v1::
         UpdateModelDeploymentMonitoringJobRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("model_deployment_monitoring_job.name=",
                    internal::UrlEncode(
                        request.model_deployment_monitoring_job().name())));
@@ -364,7 +364,7 @@ JobServiceMetadata::AsyncDeleteModelDeploymentMonitoringJob(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::
         DeleteModelDeploymentMonitoringJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteModelDeploymentMonitoringJob(cq, std::move(context),
                                                          request);
@@ -374,7 +374,7 @@ Status JobServiceMetadata::PauseModelDeploymentMonitoringJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         PauseModelDeploymentMonitoringJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->PauseModelDeploymentMonitoringJob(context, request);
 }
@@ -383,7 +383,7 @@ Status JobServiceMetadata::ResumeModelDeploymentMonitoringJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         ResumeModelDeploymentMonitoringJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ResumeModelDeploymentMonitoringJob(context, request);
 }
@@ -393,7 +393,7 @@ JobServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -402,23 +402,24 @@ future<Status> JobServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void JobServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                     Options const& options,
                                      std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void JobServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void JobServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                     Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

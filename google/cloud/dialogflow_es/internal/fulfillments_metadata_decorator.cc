@@ -46,7 +46,7 @@ StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsMetadata::GetFulfillment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFulfillment(context, request);
 }
@@ -55,24 +55,25 @@ StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsMetadata::UpdateFulfillment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("fulfillment.name=",
                            internal::UrlEncode(request.fulfillment().name())));
   return child_->UpdateFulfillment(context, request);
 }
 
 void FulfillmentsMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options,
                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void FulfillmentsMetadata::SetMetadata(grpc::ClientContext& context) {
+void FulfillmentsMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

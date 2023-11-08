@@ -47,7 +47,7 @@ MigrationServiceMetadata::CreateMigrationWorkflow(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::
         CreateMigrationWorkflowRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateMigrationWorkflow(context, request);
 }
@@ -57,7 +57,7 @@ MigrationServiceMetadata::GetMigrationWorkflow(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMigrationWorkflow(context, request);
 }
@@ -67,7 +67,7 @@ MigrationServiceMetadata::ListMigrationWorkflows(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMigrationWorkflows(context, request);
 }
@@ -76,7 +76,7 @@ Status MigrationServiceMetadata::DeleteMigrationWorkflow(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::
         DeleteMigrationWorkflowRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteMigrationWorkflow(context, request);
 }
@@ -85,7 +85,7 @@ Status MigrationServiceMetadata::StartMigrationWorkflow(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->StartMigrationWorkflow(context, request);
 }
@@ -95,7 +95,7 @@ MigrationServiceMetadata::GetMigrationSubtask(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMigrationSubtask(context, request);
 }
@@ -105,23 +105,24 @@ MigrationServiceMetadata::ListMigrationSubtasks(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMigrationSubtasks(context, request);
 }
 
 void MigrationServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                           Options const& options,
                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void MigrationServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void MigrationServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                           Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

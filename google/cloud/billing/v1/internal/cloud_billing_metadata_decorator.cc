@@ -46,7 +46,7 @@ StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingMetadata::GetBillingAccount(
     grpc::ClientContext& context,
     google::cloud::billing::v1::GetBillingAccountRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBillingAccount(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::billing::v1::ListBillingAccountsResponse>
 CloudBillingMetadata::ListBillingAccounts(
     grpc::ClientContext& context,
     google::cloud::billing::v1::ListBillingAccountsRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ListBillingAccounts(context, request);
 }
 
@@ -63,7 +63,7 @@ StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingMetadata::UpdateBillingAccount(
     grpc::ClientContext& context,
     google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateBillingAccount(context, request);
 }
@@ -72,7 +72,7 @@ StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingMetadata::CreateBillingAccount(
     grpc::ClientContext& context,
     google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->CreateBillingAccount(context, request);
 }
 
@@ -80,7 +80,7 @@ StatusOr<google::cloud::billing::v1::ListProjectBillingInfoResponse>
 CloudBillingMetadata::ListProjectBillingInfo(
     grpc::ClientContext& context,
     google::cloud::billing::v1::ListProjectBillingInfoRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListProjectBillingInfo(context, request);
 }
@@ -89,7 +89,7 @@ StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
 CloudBillingMetadata::GetProjectBillingInfo(
     grpc::ClientContext& context,
     google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetProjectBillingInfo(context, request);
 }
@@ -99,7 +99,7 @@ CloudBillingMetadata::UpdateProjectBillingInfo(
     grpc::ClientContext& context,
     google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateProjectBillingInfo(context, request);
 }
@@ -107,16 +107,18 @@ CloudBillingMetadata::UpdateProjectBillingInfo(
 StatusOr<google::iam::v1::Policy> CloudBillingMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudBillingMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -124,23 +126,25 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudBillingMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
 void CloudBillingMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options,
                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void CloudBillingMetadata::SetMetadata(grpc::ClientContext& context) {
+void CloudBillingMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

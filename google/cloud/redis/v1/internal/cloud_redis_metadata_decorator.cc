@@ -46,7 +46,7 @@ StatusOr<google::cloud::redis::v1::ListInstancesResponse>
 CloudRedisMetadata::ListInstances(
     grpc::ClientContext& context,
     google::cloud::redis::v1::ListInstancesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstances(context, request);
 }
@@ -54,7 +54,7 @@ CloudRedisMetadata::ListInstances(
 StatusOr<google::cloud::redis::v1::Instance> CloudRedisMetadata::GetInstance(
     grpc::ClientContext& context,
     google::cloud::redis::v1::GetInstanceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstance(context, request);
 }
@@ -63,7 +63,7 @@ StatusOr<google::cloud::redis::v1::InstanceAuthString>
 CloudRedisMetadata::GetInstanceAuthString(
     grpc::ClientContext& context,
     google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstanceAuthString(context, request);
 }
@@ -73,7 +73,7 @@ CloudRedisMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::CreateInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
@@ -83,7 +83,7 @@ CloudRedisMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::UpdateInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("instance.name=",
                            internal::UrlEncode(request.instance().name())));
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
@@ -94,7 +94,7 @@ CloudRedisMetadata::AsyncUpgradeInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUpgradeInstance(cq, std::move(context), request);
 }
@@ -104,7 +104,7 @@ CloudRedisMetadata::AsyncImportInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::ImportInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncImportInstance(cq, std::move(context), request);
 }
@@ -114,7 +114,7 @@ CloudRedisMetadata::AsyncExportInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::ExportInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncExportInstance(cq, std::move(context), request);
 }
@@ -124,7 +124,7 @@ CloudRedisMetadata::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::FailoverInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncFailoverInstance(cq, std::move(context), request);
 }
@@ -134,7 +134,7 @@ CloudRedisMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
@@ -144,7 +144,7 @@ CloudRedisMetadata::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRescheduleMaintenance(cq, std::move(context), request);
 }
@@ -154,7 +154,7 @@ CloudRedisMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -163,23 +163,24 @@ future<Status> CloudRedisMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void CloudRedisMetadata::SetMetadata(grpc::ClientContext& context,
+                                     Options const& options,
                                      std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void CloudRedisMetadata::SetMetadata(grpc::ClientContext& context) {
+void CloudRedisMetadata::SetMetadata(grpc::ClientContext& context,
+                                     Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

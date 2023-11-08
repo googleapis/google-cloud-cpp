@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_INTERNAL_RULE_SET_METADATA_DECORATOR_H
 
 #include "google/cloud/contentwarehouse/v1/internal/rule_set_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -63,9 +64,9 @@ class RuleSetServiceMetadata : public RuleSetServiceStub {
                    request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<RuleSetServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

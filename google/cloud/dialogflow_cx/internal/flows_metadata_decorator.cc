@@ -45,7 +45,7 @@ FlowsMetadata::FlowsMetadata(
 StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsMetadata::CreateFlow(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateFlow(context, request);
 }
@@ -53,7 +53,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsMetadata::CreateFlow(
 Status FlowsMetadata::DeleteFlow(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteFlow(context, request);
 }
@@ -62,7 +62,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListFlowsResponse>
 FlowsMetadata::ListFlows(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListFlowsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFlows(context, request);
 }
@@ -70,7 +70,7 @@ FlowsMetadata::ListFlows(
 StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsMetadata::GetFlow(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetFlowRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFlow(context, request);
 }
@@ -79,7 +79,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsMetadata::UpdateFlow(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("flow.name=", internal::UrlEncode(request.flow().name())));
   return child_->UpdateFlow(context, request);
 }
@@ -88,7 +88,7 @@ future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncTrainFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncTrainFlow(cq, std::move(context), request);
 }
@@ -97,7 +97,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsMetadata::ValidateFlow(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ValidateFlow(context, request);
 }
@@ -107,7 +107,7 @@ FlowsMetadata::GetFlowValidationResult(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFlowValidationResult(context, request);
 }
@@ -116,7 +116,7 @@ future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncImportFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportFlow(cq, std::move(context), request);
 }
@@ -125,7 +125,7 @@ future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncExportFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncExportFlow(cq, std::move(context), request);
 }
@@ -135,7 +135,7 @@ FlowsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -144,23 +144,24 @@ future<Status> FlowsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void FlowsMetadata::SetMetadata(grpc::ClientContext& context,
+                                Options const& options,
                                 std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void FlowsMetadata::SetMetadata(grpc::ClientContext& context) {
+void FlowsMetadata::SetMetadata(grpc::ClientContext& context,
+                                Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

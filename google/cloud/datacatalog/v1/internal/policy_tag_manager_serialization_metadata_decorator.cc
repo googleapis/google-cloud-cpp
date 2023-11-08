@@ -46,7 +46,7 @@ StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerSerializationMetadata::ReplaceTaxonomy(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ReplaceTaxonomy(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
 PolicyTagManagerSerializationMetadata::ImportTaxonomies(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportTaxonomies(context, request);
 }
@@ -64,24 +64,24 @@ StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
 PolicyTagManagerSerializationMetadata::ExportTaxonomies(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ExportTaxonomies(context, request);
 }
 
 void PolicyTagManagerSerializationMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
 void PolicyTagManagerSerializationMetadata::SetMetadata(
-    grpc::ClientContext& context) {
+    grpc::ClientContext& context, Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

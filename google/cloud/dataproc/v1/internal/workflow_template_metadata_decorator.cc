@@ -46,7 +46,7 @@ StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceMetadata::CreateWorkflowTemplate(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateWorkflowTemplate(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceMetadata::GetWorkflowTemplate(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetWorkflowTemplate(context, request);
 }
@@ -66,7 +66,7 @@ WorkflowTemplateServiceMetadata::AsyncInstantiateWorkflowTemplate(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncInstantiateWorkflowTemplate(cq, std::move(context),
                                                   request);
@@ -78,7 +78,7 @@ WorkflowTemplateServiceMetadata::AsyncInstantiateInlineWorkflowTemplate(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncInstantiateInlineWorkflowTemplate(cq, std::move(context),
                                                         request);
@@ -88,7 +88,7 @@ StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceMetadata::UpdateWorkflowTemplate(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("template.name=",
                            internal::UrlEncode(request.template_().name())));
   return child_->UpdateWorkflowTemplate(context, request);
@@ -98,7 +98,7 @@ StatusOr<google::cloud::dataproc::v1::ListWorkflowTemplatesResponse>
 WorkflowTemplateServiceMetadata::ListWorkflowTemplates(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListWorkflowTemplates(context, request);
 }
@@ -106,7 +106,7 @@ WorkflowTemplateServiceMetadata::ListWorkflowTemplates(
 Status WorkflowTemplateServiceMetadata::DeleteWorkflowTemplate(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteWorkflowTemplate(context, request);
 }
@@ -116,7 +116,7 @@ WorkflowTemplateServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -125,24 +125,24 @@ future<Status> WorkflowTemplateServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void WorkflowTemplateServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void WorkflowTemplateServiceMetadata::SetMetadata(
-    grpc::ClientContext& context) {
+void WorkflowTemplateServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                                  Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

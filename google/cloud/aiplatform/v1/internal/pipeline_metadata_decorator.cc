@@ -47,7 +47,7 @@ PipelineServiceMetadata::CreateTrainingPipeline(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTrainingPipeline(context, request);
 }
@@ -56,7 +56,7 @@ StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 PipelineServiceMetadata::GetTrainingPipeline(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTrainingPipeline(context, request);
 }
@@ -66,7 +66,7 @@ PipelineServiceMetadata::ListTrainingPipelines(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListTrainingPipelinesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTrainingPipelines(context, request);
 }
@@ -77,7 +77,7 @@ PipelineServiceMetadata::AsyncDeleteTrainingPipeline(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTrainingPipeline(cq, std::move(context), request);
 }
@@ -86,7 +86,7 @@ Status PipelineServiceMetadata::CancelTrainingPipeline(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelTrainingPipeline(context, request);
 }
@@ -95,7 +95,7 @@ StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceMetadata::CreatePipelineJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreatePipelineJob(context, request);
 }
@@ -104,7 +104,7 @@ StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceMetadata::GetPipelineJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPipelineJob(context, request);
 }
@@ -113,7 +113,7 @@ StatusOr<google::cloud::aiplatform::v1::ListPipelineJobsResponse>
 PipelineServiceMetadata::ListPipelineJobs(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListPipelineJobsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPipelineJobs(context, request);
 }
@@ -123,7 +123,7 @@ PipelineServiceMetadata::AsyncDeletePipelineJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeletePipelineJob(cq, std::move(context), request);
 }
@@ -131,7 +131,7 @@ PipelineServiceMetadata::AsyncDeletePipelineJob(
 Status PipelineServiceMetadata::CancelPipelineJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelPipelineJob(context, request);
 }
@@ -141,7 +141,7 @@ PipelineServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -150,23 +150,24 @@ future<Status> PipelineServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void PipelineServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                          Options const& options,
                                           std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void PipelineServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void PipelineServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                          Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -47,7 +47,7 @@ BigQueryWriteMetadata::CreateWriteStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateWriteStream(context, request);
 }
@@ -58,7 +58,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 BigQueryWriteMetadata::AsyncAppendRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->AsyncAppendRows(cq, std::move(context));
 }
 
@@ -67,7 +67,7 @@ BigQueryWriteMetadata::GetWriteStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetWriteStream(context, request);
 }
@@ -77,7 +77,7 @@ BigQueryWriteMetadata::FinalizeWriteStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->FinalizeWriteStream(context, request);
 }
@@ -87,7 +87,7 @@ BigQueryWriteMetadata::BatchCommitWriteStreams(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchCommitWriteStreams(context, request);
 }
@@ -96,24 +96,25 @@ StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
 BigQueryWriteMetadata::FlushRows(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("write_stream=",
                            internal::UrlEncode(request.write_stream())));
   return child_->FlushRows(context, request);
 }
 
 void BigQueryWriteMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void BigQueryWriteMetadata::SetMetadata(grpc::ClientContext& context) {
+void BigQueryWriteMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

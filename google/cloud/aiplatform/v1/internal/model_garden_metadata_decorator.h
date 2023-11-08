@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_MODEL_GARDEN_METADATA_DECORATOR_H
 
 #include "google/cloud/aiplatform/v1/internal/model_garden_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -44,9 +45,9 @@ class ModelGardenServiceMetadata : public ModelGardenServiceStub {
       override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<ModelGardenServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

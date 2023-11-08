@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PUBLISHER_METADATA_DECORATOR_H
 
 #include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -81,9 +82,9 @@ class PublisherMetadata : public PublisherStub {
       google::pubsub::v1::PublishRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<PublisherStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

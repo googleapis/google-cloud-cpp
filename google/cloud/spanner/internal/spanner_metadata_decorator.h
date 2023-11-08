@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_METADATA_DECORATOR_H
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -110,9 +111,9 @@ class SpannerMetadata : public SpannerStub {
       google::spanner::v1::ExecuteSqlRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<SpannerStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

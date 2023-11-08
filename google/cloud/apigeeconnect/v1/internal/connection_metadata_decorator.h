@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_V1_INTERNAL_CONNECTION_METADATA_DECORATOR_H
 
 #include "google/cloud/apigeeconnect/v1/internal/connection_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -45,9 +46,9 @@ class ConnectionServiceMetadata : public ConnectionServiceStub {
       override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<ConnectionServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

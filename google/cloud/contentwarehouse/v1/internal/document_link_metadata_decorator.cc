@@ -47,7 +47,7 @@ DocumentLinkServiceMetadata::ListLinkedTargets(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLinkedTargets(context, request);
 }
@@ -57,7 +57,7 @@ DocumentLinkServiceMetadata::ListLinkedSources(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLinkedSources(context, request);
 }
@@ -67,7 +67,7 @@ DocumentLinkServiceMetadata::CreateDocumentLink(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDocumentLink(context, request);
 }
@@ -76,23 +76,24 @@ Status DocumentLinkServiceMetadata::DeleteDocumentLink(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDocumentLink(context, request);
 }
 
 void DocumentLinkServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void DocumentLinkServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void DocumentLinkServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                              Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

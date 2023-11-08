@@ -47,7 +47,7 @@ AssuredWorkloadsServiceMetadata::AsyncCreateWorkload(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateWorkload(cq, std::move(context), request);
 }
@@ -56,7 +56,7 @@ StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceMetadata::UpdateWorkload(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("workload.name=",
                            internal::UrlEncode(request.workload().name())));
   return child_->UpdateWorkload(context, request);
@@ -67,7 +67,7 @@ AssuredWorkloadsServiceMetadata::RestrictAllowedResources(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RestrictAllowedResources(context, request);
 }
@@ -75,7 +75,7 @@ AssuredWorkloadsServiceMetadata::RestrictAllowedResources(
 Status AssuredWorkloadsServiceMetadata::DeleteWorkload(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteWorkload(context, request);
 }
@@ -84,7 +84,7 @@ StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceMetadata::GetWorkload(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetWorkload(context, request);
 }
@@ -93,7 +93,7 @@ StatusOr<google::cloud::assuredworkloads::v1::ListWorkloadsResponse>
 AssuredWorkloadsServiceMetadata::ListWorkloads(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListWorkloads(context, request);
 }
@@ -102,7 +102,7 @@ StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
 AssuredWorkloadsServiceMetadata::ListViolations(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ListViolations(context, request);
 }
 
@@ -110,7 +110,7 @@ StatusOr<google::cloud::assuredworkloads::v1::Violation>
 AssuredWorkloadsServiceMetadata::GetViolation(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->GetViolation(context, request);
 }
 
@@ -119,7 +119,7 @@ AssuredWorkloadsServiceMetadata::AcknowledgeViolation(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
         request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->AcknowledgeViolation(context, request);
 }
 
@@ -128,7 +128,7 @@ AssuredWorkloadsServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -137,24 +137,24 @@ future<Status> AssuredWorkloadsServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void AssuredWorkloadsServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void AssuredWorkloadsServiceMetadata::SetMetadata(
-    grpc::ClientContext& context) {
+void AssuredWorkloadsServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                                  Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

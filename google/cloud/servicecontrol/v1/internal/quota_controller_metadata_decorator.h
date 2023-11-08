@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_INTERNAL_QUOTA_CONTROLLER_METADATA_DECORATOR_H
 
 #include "google/cloud/servicecontrol/v1/internal/quota_controller_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -44,9 +45,9 @@ class QuotaControllerMetadata : public QuotaControllerStub {
                     request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<QuotaControllerStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

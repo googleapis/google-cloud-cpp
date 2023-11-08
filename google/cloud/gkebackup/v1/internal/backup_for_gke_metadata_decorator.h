@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEBACKUP_V1_INTERNAL_BACKUP_FOR_GKE_METADATA_DECORATOR_H
 
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -180,9 +181,9 @@ class BackupForGKEMetadata : public BackupForGKEStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<BackupForGKEStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

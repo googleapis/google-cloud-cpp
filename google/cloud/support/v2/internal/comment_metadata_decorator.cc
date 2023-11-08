@@ -46,7 +46,7 @@ StatusOr<google::cloud::support::v2::ListCommentsResponse>
 CommentServiceMetadata::ListComments(
     grpc::ClientContext& context,
     google::cloud::support::v2::ListCommentsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListComments(context, request);
 }
@@ -55,23 +55,24 @@ StatusOr<google::cloud::support::v2::Comment>
 CommentServiceMetadata::CreateComment(
     grpc::ClientContext& context,
     google::cloud::support::v2::CreateCommentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateComment(context, request);
 }
 
 void CommentServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void CommentServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void CommentServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

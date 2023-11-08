@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_METADATA_DECORATOR_H
 
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -44,9 +45,9 @@ class KeyDashboardServiceMetadata : public KeyDashboardServiceStub {
                      request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<KeyDashboardServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

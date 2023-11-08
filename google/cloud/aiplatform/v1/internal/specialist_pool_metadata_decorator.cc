@@ -47,7 +47,7 @@ SpecialistPoolServiceMetadata::AsyncCreateSpecialistPool(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateSpecialistPool(cq, std::move(context), request);
 }
@@ -56,7 +56,7 @@ StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 SpecialistPoolServiceMetadata::GetSpecialistPool(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSpecialistPool(context, request);
 }
@@ -65,7 +65,7 @@ StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
 SpecialistPoolServiceMetadata::ListSpecialistPools(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSpecialistPools(context, request);
 }
@@ -75,7 +75,7 @@ SpecialistPoolServiceMetadata::AsyncDeleteSpecialistPool(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSpecialistPool(cq, std::move(context), request);
 }
@@ -86,7 +86,7 @@ SpecialistPoolServiceMetadata::AsyncUpdateSpecialistPool(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("specialist_pool.name=",
                    internal::UrlEncode(request.specialist_pool().name())));
   return child_->AsyncUpdateSpecialistPool(cq, std::move(context), request);
@@ -97,7 +97,7 @@ SpecialistPoolServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -106,23 +106,24 @@ future<Status> SpecialistPoolServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void SpecialistPoolServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void SpecialistPoolServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void SpecialistPoolServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                                Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

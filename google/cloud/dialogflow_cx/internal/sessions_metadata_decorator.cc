@@ -46,7 +46,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 SessionsMetadata::DetectIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("session=", internal::UrlEncode(request.session())));
   return child_->DetectIntent(context, request);
 }
@@ -57,7 +57,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 SessionsMetadata::AsyncStreamingDetectIntent(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->AsyncStreamingDetectIntent(cq, std::move(context));
 }
 
@@ -65,7 +65,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 SessionsMetadata::MatchIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("session=", internal::UrlEncode(request.session())));
   return child_->MatchIntent(context, request);
 }
@@ -74,7 +74,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
 SessionsMetadata::FulfillIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("match_intent_request.session=",
                            internal::UrlEncode(
                                request.match_intent_request().session())));
@@ -82,17 +82,18 @@ SessionsMetadata::FulfillIntent(
 }
 
 void SessionsMetadata::SetMetadata(grpc::ClientContext& context,
+                                   Options const& options,
                                    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void SessionsMetadata::SetMetadata(grpc::ClientContext& context) {
+void SessionsMetadata::SetMetadata(grpc::ClientContext& context,
+                                   Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

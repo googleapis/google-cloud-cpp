@@ -46,7 +46,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
 DeploymentsMetadata::ListDeployments(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDeployments(context, request);
 }
@@ -55,23 +55,24 @@ StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
 DeploymentsMetadata::GetDeployment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDeployment(context, request);
 }
 
 void DeploymentsMetadata::SetMetadata(grpc::ClientContext& context,
+                                      Options const& options,
                                       std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void DeploymentsMetadata::SetMetadata(grpc::ClientContext& context) {
+void DeploymentsMetadata::SetMetadata(grpc::ClientContext& context,
+                                      Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -47,7 +47,7 @@ AwsClustersMetadata::AsyncCreateAwsCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateAwsCluster(cq, std::move(context), request);
 }
@@ -57,7 +57,7 @@ AwsClustersMetadata::AsyncUpdateAwsCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("aws_cluster.name=",
                            internal::UrlEncode(request.aws_cluster().name())));
   return child_->AsyncUpdateAwsCluster(cq, std::move(context), request);
@@ -67,7 +67,7 @@ StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
 AwsClustersMetadata::GetAwsCluster(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAwsCluster(context, request);
 }
@@ -76,7 +76,7 @@ StatusOr<google::cloud::gkemulticloud::v1::ListAwsClustersResponse>
 AwsClustersMetadata::ListAwsClusters(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAwsClustersRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAwsClusters(context, request);
 }
@@ -86,7 +86,7 @@ AwsClustersMetadata::AsyncDeleteAwsCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAwsCluster(cq, std::move(context), request);
 }
@@ -97,7 +97,7 @@ AwsClustersMetadata::GenerateAwsAccessToken(
     google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
         request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("aws_cluster=", internal::UrlEncode(request.aws_cluster())));
   return child_->GenerateAwsAccessToken(context, request);
 }
@@ -107,7 +107,7 @@ AwsClustersMetadata::AsyncCreateAwsNodePool(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateAwsNodePool(cq, std::move(context), request);
 }
@@ -118,7 +118,7 @@ AwsClustersMetadata::AsyncUpdateAwsNodePool(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("aws_node_pool.name=",
                    internal::UrlEncode(request.aws_node_pool().name())));
   return child_->AsyncUpdateAwsNodePool(cq, std::move(context), request);
@@ -128,7 +128,7 @@ StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
 AwsClustersMetadata::GetAwsNodePool(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAwsNodePool(context, request);
 }
@@ -137,7 +137,7 @@ StatusOr<google::cloud::gkemulticloud::v1::ListAwsNodePoolsResponse>
 AwsClustersMetadata::ListAwsNodePools(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAwsNodePools(context, request);
 }
@@ -147,7 +147,7 @@ AwsClustersMetadata::AsyncDeleteAwsNodePool(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAwsNodePool(cq, std::move(context), request);
 }
@@ -157,7 +157,7 @@ AwsClustersMetadata::GetAwsServerConfig(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAwsServerConfig(context, request);
 }
@@ -167,7 +167,7 @@ AwsClustersMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -176,23 +176,24 @@ future<Status> AwsClustersMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void AwsClustersMetadata::SetMetadata(grpc::ClientContext& context,
+                                      Options const& options,
                                       std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void AwsClustersMetadata::SetMetadata(grpc::ClientContext& context) {
+void AwsClustersMetadata::SetMetadata(grpc::ClientContext& context,
+                                      Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -46,8 +46,9 @@ StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
 TraceServiceMetadata::ListTraces(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
-  SetMetadata(context, absl::StrCat("project_id=",
-                                    internal::UrlEncode(request.project_id())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   return child_->ListTraces(context, request);
 }
 
@@ -56,7 +57,7 @@ TraceServiceMetadata::GetTrace(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "trace_id=", internal::UrlEncode(request.trace_id())));
   return child_->GetTrace(context, request);
@@ -65,23 +66,25 @@ TraceServiceMetadata::GetTrace(
 Status TraceServiceMetadata::PatchTraces(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
-  SetMetadata(context, absl::StrCat("project_id=",
-                                    internal::UrlEncode(request.project_id())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   return child_->PatchTraces(context, request);
 }
 
 void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options,
                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

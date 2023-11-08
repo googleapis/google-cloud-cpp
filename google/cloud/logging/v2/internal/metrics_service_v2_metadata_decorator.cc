@@ -46,7 +46,7 @@ StatusOr<google::logging::v2::ListLogMetricsResponse>
 MetricsServiceV2Metadata::ListLogMetrics(
     grpc::ClientContext& context,
     google::logging::v2::ListLogMetricsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLogMetrics(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Metadata::GetLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::GetLogMetricRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("metric_name=", internal::UrlEncode(request.metric_name())));
   return child_->GetLogMetric(context, request);
 }
@@ -64,7 +64,7 @@ StatusOr<google::logging::v2::LogMetric>
 MetricsServiceV2Metadata::CreateLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::CreateLogMetricRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateLogMetric(context, request);
 }
@@ -74,7 +74,7 @@ MetricsServiceV2Metadata::UpdateLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::UpdateLogMetricRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("metric_name=", internal::UrlEncode(request.metric_name())));
   return child_->UpdateLogMetric(context, request);
 }
@@ -83,23 +83,24 @@ Status MetricsServiceV2Metadata::DeleteLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::DeleteLogMetricRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("metric_name=", internal::UrlEncode(request.metric_name())));
   return child_->DeleteLogMetric(context, request);
 }
 
 void MetricsServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
+                                           Options const& options,
                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void MetricsServiceV2Metadata::SetMetadata(grpc::ClientContext& context) {
+void MetricsServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
+                                           Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

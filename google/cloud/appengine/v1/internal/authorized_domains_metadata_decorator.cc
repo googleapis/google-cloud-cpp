@@ -46,23 +46,24 @@ StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
 AuthorizedDomainsMetadata::ListAuthorizedDomains(
     grpc::ClientContext& context,
     google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAuthorizedDomains(context, request);
 }
 
 void AuthorizedDomainsMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options,
                                             std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void AuthorizedDomainsMetadata::SetMetadata(grpc::ClientContext& context) {
+void AuthorizedDomainsMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

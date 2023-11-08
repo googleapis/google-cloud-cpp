@@ -46,7 +46,7 @@ StatusOr<google::cloud::dialogflow::v2::ListContextsResponse>
 ContextsMetadata::ListContexts(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListContextsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListContexts(context, request);
 }
@@ -54,7 +54,7 @@ ContextsMetadata::ListContexts(
 StatusOr<google::cloud::dialogflow::v2::Context> ContextsMetadata::GetContext(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetContextRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetContext(context, request);
 }
@@ -63,7 +63,7 @@ StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsMetadata::CreateContext(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateContextRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateContext(context, request);
 }
@@ -72,7 +72,7 @@ StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsMetadata::UpdateContext(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateContextRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("context.name=",
                            internal::UrlEncode(request.context().name())));
   return child_->UpdateContext(context, request);
@@ -81,7 +81,7 @@ ContextsMetadata::UpdateContext(
 Status ContextsMetadata::DeleteContext(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteContextRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteContext(context, request);
 }
@@ -89,23 +89,24 @@ Status ContextsMetadata::DeleteContext(
 Status ContextsMetadata::DeleteAllContexts(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->DeleteAllContexts(context, request);
 }
 
 void ContextsMetadata::SetMetadata(grpc::ClientContext& context,
+                                   Options const& options,
                                    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ContextsMetadata::SetMetadata(grpc::ClientContext& context) {
+void ContextsMetadata::SetMetadata(grpc::ClientContext& context,
+                                   Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

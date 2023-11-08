@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_QUERY_METADATA_DECORATOR_H
 
 #include "google/cloud/monitoring/v3/internal/query_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -42,9 +43,9 @@ class QueryServiceMetadata : public QueryServiceStub {
       google::monitoring::v3::QueryTimeSeriesRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<QueryServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

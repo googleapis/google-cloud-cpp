@@ -46,7 +46,7 @@ StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
 TimeseriesInsightsControllerMetadata::ListDataSets(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::ListDataSetsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataSets(context, request);
 }
@@ -56,7 +56,7 @@ TimeseriesInsightsControllerMetadata::CreateDataSet(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDataSet(context, request);
 }
@@ -65,7 +65,7 @@ Status TimeseriesInsightsControllerMetadata::DeleteDataSet(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDataSet(context, request);
 }
@@ -74,7 +74,7 @@ StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
 TimeseriesInsightsControllerMetadata::AppendEvents(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("dataset=", internal::UrlEncode(request.dataset())));
   return child_->AppendEvents(context, request);
 }
@@ -83,7 +83,7 @@ StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
 TimeseriesInsightsControllerMetadata::QueryDataSet(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->QueryDataSet(context, request);
 }
@@ -93,7 +93,7 @@ TimeseriesInsightsControllerMetadata::EvaluateSlice(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("dataset=", internal::UrlEncode(request.dataset())));
   return child_->EvaluateSlice(context, request);
 }
@@ -103,24 +103,24 @@ TimeseriesInsightsControllerMetadata::EvaluateTimeseries(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->EvaluateTimeseries(context, request);
 }
 
 void TimeseriesInsightsControllerMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
 void TimeseriesInsightsControllerMetadata::SetMetadata(
-    grpc::ClientContext& context) {
+    grpc::ClientContext& context, Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
