@@ -207,6 +207,10 @@ class CloudDeployConnection {
   virtual StreamRange<google::cloud::deploy::v1::Target> ListTargets(
       google::cloud::deploy::v1::ListTargetsRequest request);
 
+  virtual StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
+  RollbackTarget(
+      google::cloud::deploy::v1::RollbackTargetRequest const& request);
+
   virtual StatusOr<google::cloud::deploy::v1::Target> GetTarget(
       google::cloud::deploy::v1::GetTargetRequest const& request);
 
@@ -270,6 +274,35 @@ class CloudDeployConnection {
 
   virtual StatusOr<google::cloud::deploy::v1::Config> GetConfig(
       google::cloud::deploy::v1::GetConfigRequest const& request);
+
+  virtual future<StatusOr<google::cloud::deploy::v1::Automation>>
+  CreateAutomation(
+      google::cloud::deploy::v1::CreateAutomationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::deploy::v1::Automation>>
+  UpdateAutomation(
+      google::cloud::deploy::v1::UpdateAutomationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+  DeleteAutomation(
+      google::cloud::deploy::v1::DeleteAutomationRequest const& request);
+
+  virtual StatusOr<google::cloud::deploy::v1::Automation> GetAutomation(
+      google::cloud::deploy::v1::GetAutomationRequest const& request);
+
+  virtual StreamRange<google::cloud::deploy::v1::Automation> ListAutomations(
+      google::cloud::deploy::v1::ListAutomationsRequest request);
+
+  virtual StatusOr<google::cloud::deploy::v1::AutomationRun> GetAutomationRun(
+      google::cloud::deploy::v1::GetAutomationRunRequest const& request);
+
+  virtual StreamRange<google::cloud::deploy::v1::AutomationRun>
+  ListAutomationRuns(
+      google::cloud::deploy::v1::ListAutomationRunsRequest request);
+
+  virtual StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
+  CancelAutomationRun(
+      google::cloud::deploy::v1::CancelAutomationRunRequest const& request);
 };
 
 /**

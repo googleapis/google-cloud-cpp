@@ -37,6 +37,13 @@ class LineageTracingStub : public LineageStub {
 
   explicit LineageTracingStub(std::shared_ptr<LineageStub> child);
 
+  StatusOr<google::cloud::datacatalog::lineage::v1::
+               ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request) override;
+
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
       grpc::ClientContext& context,
       google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&

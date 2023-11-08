@@ -36,6 +36,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LineageConnection::~LineageConnection() = default;
 
+StatusOr<
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+LineageConnection::ProcessOpenLineageRunEvent(
+    google::cloud::datacatalog::lineage::v1::
+        ProcessOpenLineageRunEventRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageConnection::CreateProcess(
     google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&) {

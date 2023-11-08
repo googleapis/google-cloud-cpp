@@ -36,6 +36,13 @@ class LineageStub {
  public:
   virtual ~LineageStub() = 0;
 
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::
+                       ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process>
   CreateProcess(
       grpc::ClientContext& context,
@@ -148,6 +155,13 @@ class DefaultLineageStub : public LineageStub {
       std::unique_ptr<google::longrunning::Operations::StubInterface>
           operations)
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+
+  StatusOr<google::cloud::datacatalog::lineage::v1::
+               ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(
+      grpc::ClientContext& client_context,
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
       grpc::ClientContext& client_context,

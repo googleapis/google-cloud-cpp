@@ -196,6 +196,25 @@ DefaultContactCenterInsightsStub::AsyncBulkAnalyzeConversations(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultContactCenterInsightsStub::AsyncBulkDeleteConversations(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::contactcenterinsights::v1::
+                 BulkDeleteConversationsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncBulkDeleteConversations(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncIngestConversations(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

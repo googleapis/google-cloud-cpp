@@ -170,6 +170,27 @@ ContactCenterInsightsAuth::AsyncBulkAnalyzeConversations(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsAuth::AsyncBulkDeleteConversations(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncBulkDeleteConversations(cq, *std::move(context),
+                                                   request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncIngestConversations(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

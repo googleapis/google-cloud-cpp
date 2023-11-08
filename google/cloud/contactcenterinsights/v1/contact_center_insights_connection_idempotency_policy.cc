@@ -102,6 +102,13 @@ ContactCenterInsightsConnectionIdempotencyPolicy::BulkAnalyzeConversations(
 }
 
 Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::BulkDeleteConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
 ContactCenterInsightsConnectionIdempotencyPolicy::IngestConversations(
     google::cloud::contactcenterinsights::v1::
         IngestConversationsRequest const&) {

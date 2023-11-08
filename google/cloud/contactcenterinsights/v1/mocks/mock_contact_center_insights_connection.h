@@ -118,6 +118,13 @@ class MockContactCenterInsightsConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  BulkDeleteConversationsResponse>>,
+              BulkDeleteConversations,
+              (google::cloud::contactcenterinsights::v1::
+                   BulkDeleteConversationsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   IngestConversationsResponse>>,
               IngestConversations,
               (google::cloud::contactcenterinsights::v1::

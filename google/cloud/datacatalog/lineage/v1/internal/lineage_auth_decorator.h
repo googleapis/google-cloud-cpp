@@ -39,6 +39,13 @@ class LineageAuth : public LineageStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<LineageStub> child);
 
+  StatusOr<google::cloud::datacatalog::lineage::v1::
+               ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request) override;
+
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
       grpc::ClientContext& context,
       google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&

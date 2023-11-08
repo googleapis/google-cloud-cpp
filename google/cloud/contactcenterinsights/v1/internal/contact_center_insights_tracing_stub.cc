@@ -186,6 +186,21 @@ ContactCenterInsightsTracingStub::AsyncBulkAnalyzeConversations(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsTracingStub::AsyncBulkDeleteConversations(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contactcenterinsights.v1.ContactCenterInsights",
+      "BulkDeleteConversations");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncBulkDeleteConversations(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsTracingStub::AsyncIngestConversations(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

@@ -40,6 +40,12 @@ class LineageTracingConnection
 
   Options options() override { return child_->options(); }
 
+  StatusOr<google::cloud::datacatalog::lineage::v1::
+               ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request) override;
+
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
       google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
           request) override;
