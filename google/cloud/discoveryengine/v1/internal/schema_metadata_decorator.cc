@@ -46,7 +46,7 @@ StatusOr<google::cloud::discoveryengine::v1::Schema>
 SchemaServiceMetadata::GetSchema(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSchema(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
 SchemaServiceMetadata::ListSchemas(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSchemas(context, request);
 }
@@ -65,7 +65,7 @@ SchemaServiceMetadata::AsyncCreateSchema(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateSchema(cq, std::move(context), request);
 }
@@ -75,7 +75,7 @@ SchemaServiceMetadata::AsyncUpdateSchema(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("schema.name=",
                            internal::UrlEncode(request.schema().name())));
   return child_->AsyncUpdateSchema(cq, std::move(context), request);
@@ -86,7 +86,7 @@ SchemaServiceMetadata::AsyncDeleteSchema(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSchema(cq, std::move(context), request);
 }
@@ -96,7 +96,7 @@ SchemaServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -105,23 +105,24 @@ future<Status> SchemaServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void SchemaServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void SchemaServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void SchemaServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

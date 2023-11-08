@@ -46,7 +46,7 @@ StatusOr<google::cloud::translation::v3::TranslateTextResponse>
 TranslationServiceMetadata::TranslateText(
     grpc::ClientContext& context,
     google::cloud::translation::v3::TranslateTextRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->TranslateText(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
 TranslationServiceMetadata::DetectLanguage(
     grpc::ClientContext& context,
     google::cloud::translation::v3::DetectLanguageRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->DetectLanguage(context, request);
 }
@@ -65,7 +65,7 @@ TranslationServiceMetadata::GetSupportedLanguages(
     grpc::ClientContext& context,
     google::cloud::translation::v3::GetSupportedLanguagesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->GetSupportedLanguages(context, request);
 }
@@ -74,7 +74,7 @@ StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
 TranslationServiceMetadata::TranslateDocument(
     grpc::ClientContext& context,
     google::cloud::translation::v3::TranslateDocumentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->TranslateDocument(context, request);
 }
@@ -84,7 +84,7 @@ TranslationServiceMetadata::AsyncBatchTranslateText(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchTranslateText(cq, std::move(context), request);
 }
@@ -95,7 +95,7 @@ TranslationServiceMetadata::AsyncBatchTranslateDocument(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchTranslateDocument(cq, std::move(context), request);
 }
@@ -105,7 +105,7 @@ TranslationServiceMetadata::AsyncCreateGlossary(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateGlossary(cq, std::move(context), request);
 }
@@ -114,7 +114,7 @@ StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
 TranslationServiceMetadata::ListGlossaries(
     grpc::ClientContext& context,
     google::cloud::translation::v3::ListGlossariesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListGlossaries(context, request);
 }
@@ -123,7 +123,7 @@ StatusOr<google::cloud::translation::v3::Glossary>
 TranslationServiceMetadata::GetGlossary(
     grpc::ClientContext& context,
     google::cloud::translation::v3::GetGlossaryRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetGlossary(context, request);
 }
@@ -133,7 +133,7 @@ TranslationServiceMetadata::AsyncDeleteGlossary(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteGlossary(cq, std::move(context), request);
 }
@@ -143,7 +143,7 @@ TranslationServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -152,23 +152,24 @@ future<Status> TranslationServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void TranslationServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void TranslationServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void TranslationServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                             Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

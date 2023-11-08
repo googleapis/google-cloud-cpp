@@ -46,7 +46,7 @@ StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
 MatchServiceMetadata::FindNeighbors(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("index_endpoint=",
                            internal::UrlEncode(request.index_endpoint())));
   return child_->FindNeighbors(context, request);
@@ -56,24 +56,25 @@ StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
 MatchServiceMetadata::ReadIndexDatapoints(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("index_endpoint=",
                            internal::UrlEncode(request.index_endpoint())));
   return child_->ReadIndexDatapoints(context, request);
 }
 
 void MatchServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options,
                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void MatchServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void MatchServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

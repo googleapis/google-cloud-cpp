@@ -48,7 +48,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 CursorServiceMetadata::AsyncStreamingCommitCursor(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->AsyncStreamingCommitCursor(cq, std::move(context));
 }
 
@@ -56,7 +56,7 @@ StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
 CursorServiceMetadata::CommitCursor(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::CommitCursorRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("subscription=",
                            internal::UrlEncode(request.subscription())));
   return child_->CommitCursor(context, request);
@@ -66,23 +66,24 @@ StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
 CursorServiceMetadata::ListPartitionCursors(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPartitionCursors(context, request);
 }
 
 void CursorServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void CursorServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void CursorServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

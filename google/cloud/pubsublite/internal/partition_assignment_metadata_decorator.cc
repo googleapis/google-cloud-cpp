@@ -48,23 +48,23 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 PartitionAssignmentServiceMetadata::AsyncAssignPartitions(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->AsyncAssignPartitions(cq, std::move(context));
 }
 
 void PartitionAssignmentServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
 void PartitionAssignmentServiceMetadata::SetMetadata(
-    grpc::ClientContext& context) {
+    grpc::ClientContext& context, Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

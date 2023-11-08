@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_INTERNAL_IDENTITY_AWARE_PROXY_O_AUTH_METADATA_DECORATOR_H
 
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -81,9 +82,9 @@ class IdentityAwareProxyOAuthServiceMetadata
           request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

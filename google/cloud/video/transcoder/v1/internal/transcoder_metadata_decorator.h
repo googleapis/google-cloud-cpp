@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_V1_INTERNAL_TRANSCODER_METADATA_DECORATOR_H
 
 #include "google/cloud/video/transcoder/v1/internal/transcoder_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -79,9 +80,9 @@ class TranscoderServiceMetadata : public TranscoderServiceStub {
           request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<TranscoderServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

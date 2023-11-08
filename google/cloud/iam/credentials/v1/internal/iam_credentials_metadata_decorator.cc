@@ -46,7 +46,7 @@ StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsMetadata::GenerateAccessToken(
     grpc::ClientContext& context,
     google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GenerateAccessToken(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsMetadata::GenerateIdToken(
     grpc::ClientContext& context,
     google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GenerateIdToken(context, request);
 }
@@ -64,7 +64,7 @@ StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsMetadata::SignBlob(
     grpc::ClientContext& context,
     google::iam::credentials::v1::SignBlobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SignBlob(context, request);
 }
@@ -73,23 +73,24 @@ StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsMetadata::SignJwt(
     grpc::ClientContext& context,
     google::iam::credentials::v1::SignJwtRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SignJwt(context, request);
 }
 
 void IAMCredentialsMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void IAMCredentialsMetadata::SetMetadata(grpc::ClientContext& context) {
+void IAMCredentialsMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -46,7 +46,7 @@ StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
 GkeHubMetadata::ListMemberships(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::ListMembershipsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMemberships(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
 GkeHubMetadata::ListFeatures(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::ListFeaturesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFeatures(context, request);
 }
@@ -63,7 +63,7 @@ GkeHubMetadata::ListFeatures(
 StatusOr<google::cloud::gkehub::v1::Membership> GkeHubMetadata::GetMembership(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::GetMembershipRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMembership(context, request);
 }
@@ -71,7 +71,7 @@ StatusOr<google::cloud::gkehub::v1::Membership> GkeHubMetadata::GetMembership(
 StatusOr<google::cloud::gkehub::v1::Feature> GkeHubMetadata::GetFeature(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::GetFeatureRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFeature(context, request);
 }
@@ -81,7 +81,7 @@ GkeHubMetadata::AsyncCreateMembership(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateMembership(cq, std::move(context), request);
 }
@@ -91,7 +91,7 @@ GkeHubMetadata::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateFeature(cq, std::move(context), request);
 }
@@ -101,7 +101,7 @@ GkeHubMetadata::AsyncDeleteMembership(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteMembership(cq, std::move(context), request);
 }
@@ -111,7 +111,7 @@ GkeHubMetadata::AsyncDeleteFeature(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteFeature(cq, std::move(context), request);
 }
@@ -121,7 +121,7 @@ GkeHubMetadata::AsyncUpdateMembership(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUpdateMembership(cq, std::move(context), request);
 }
@@ -131,7 +131,7 @@ GkeHubMetadata::AsyncUpdateFeature(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUpdateFeature(cq, std::move(context), request);
 }
@@ -140,7 +140,7 @@ StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
 GkeHubMetadata::GenerateConnectManifest(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GenerateConnectManifest(context, request);
 }
@@ -150,7 +150,7 @@ GkeHubMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -159,23 +159,24 @@ future<Status> GkeHubMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void GkeHubMetadata::SetMetadata(grpc::ClientContext& context,
+                                 Options const& options,
                                  std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void GkeHubMetadata::SetMetadata(grpc::ClientContext& context) {
+void GkeHubMetadata::SetMetadata(grpc::ClientContext& context,
+                                 Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

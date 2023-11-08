@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_INTERNAL_OS_LOGIN_METADATA_DECORATOR_H
 
 #include "google/cloud/oslogin/v1/internal/os_login_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -74,9 +75,9 @@ class OsLoginServiceMetadata : public OsLoginServiceStub {
       override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<OsLoginServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

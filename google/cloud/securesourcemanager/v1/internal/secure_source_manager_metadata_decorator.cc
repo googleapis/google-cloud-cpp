@@ -47,7 +47,7 @@ SecureSourceManagerMetadata::ListInstances(
     grpc::ClientContext& context,
     google::cloud::securesourcemanager::v1::ListInstancesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstances(context, request);
 }
@@ -56,7 +56,7 @@ StatusOr<google::cloud::securesourcemanager::v1::Instance>
 SecureSourceManagerMetadata::GetInstance(
     grpc::ClientContext& context,
     google::cloud::securesourcemanager::v1::GetInstanceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstance(context, request);
 }
@@ -67,7 +67,7 @@ SecureSourceManagerMetadata::AsyncCreateInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
@@ -78,7 +78,7 @@ SecureSourceManagerMetadata::AsyncDeleteInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
@@ -88,7 +88,7 @@ SecureSourceManagerMetadata::ListRepositories(
     grpc::ClientContext& context,
     google::cloud::securesourcemanager::v1::ListRepositoriesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRepositories(context, request);
 }
@@ -98,7 +98,7 @@ SecureSourceManagerMetadata::GetRepository(
     grpc::ClientContext& context,
     google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRepository(context, request);
 }
@@ -109,7 +109,7 @@ SecureSourceManagerMetadata::AsyncCreateRepository(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateRepository(cq, std::move(context), request);
 }
@@ -120,7 +120,7 @@ SecureSourceManagerMetadata::AsyncDeleteRepository(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteRepository(cq, std::move(context), request);
 }
@@ -128,16 +128,18 @@ SecureSourceManagerMetadata::AsyncDeleteRepository(
 StatusOr<google::iam::v1::Policy> SecureSourceManagerMetadata::GetIamPolicyRepo(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicyRepo(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> SecureSourceManagerMetadata::SetIamPolicyRepo(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicyRepo(context, request);
 }
 
@@ -145,8 +147,9 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecureSourceManagerMetadata::TestIamPermissionsRepo(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissionsRepo(context, request);
 }
 
@@ -155,7 +158,7 @@ SecureSourceManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -164,23 +167,24 @@ future<Status> SecureSourceManagerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void SecureSourceManagerMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void SecureSourceManagerMetadata::SetMetadata(grpc::ClientContext& context) {
+void SecureSourceManagerMetadata::SetMetadata(grpc::ClientContext& context,
+                                              Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

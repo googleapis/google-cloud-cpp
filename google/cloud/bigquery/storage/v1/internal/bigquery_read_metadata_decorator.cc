@@ -48,7 +48,7 @@ BigQueryReadMetadata::CreateReadSession(
     google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
         request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("read_session.table=",
                    internal::UrlEncode(request.read_session().table())));
   return child_->CreateReadSession(context, request);
@@ -60,7 +60,7 @@ BigQueryReadMetadata::ReadRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("read_stream=", internal::UrlEncode(request.read_stream())));
   return child_->ReadRows(std::move(context), request);
 }
@@ -70,23 +70,24 @@ BigQueryReadMetadata::SplitReadStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SplitReadStream(context, request);
 }
 
 void BigQueryReadMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options,
                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void BigQueryReadMetadata::SetMetadata(grpc::ClientContext& context) {
+void BigQueryReadMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

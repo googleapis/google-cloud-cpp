@@ -46,23 +46,25 @@ StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
 CompletionServiceMetadata::CompleteQuery(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::CompleteQueryRequest const& request) {
-  SetMetadata(context, absl::StrCat("data_store=",
-                                    internal::UrlEncode(request.data_store())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("data_store=", internal::UrlEncode(request.data_store())));
   return child_->CompleteQuery(context, request);
 }
 
 void CompletionServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options,
                                             std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void CompletionServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void CompletionServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

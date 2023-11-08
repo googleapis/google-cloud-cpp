@@ -46,7 +46,7 @@ StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::SubmitJob(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region())));
   return child_->SubmitJob(context, request);
@@ -58,7 +58,7 @@ JobControllerMetadata::AsyncSubmitJobAsOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region())));
   return child_->AsyncSubmitJobAsOperation(cq, std::move(context), request);
@@ -68,7 +68,7 @@ StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::GetJob(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetJobRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region()), "&",
                    "job_id=", internal::UrlEncode(request.job_id())));
@@ -80,7 +80,7 @@ JobControllerMetadata::ListJobs(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListJobsRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region())));
   return child_->ListJobs(context, request);
@@ -90,7 +90,7 @@ StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::UpdateJob(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::UpdateJobRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region()), "&",
                    "job_id=", internal::UrlEncode(request.job_id())));
@@ -101,7 +101,7 @@ StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::CancelJob(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::CancelJobRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region()), "&",
                    "job_id=", internal::UrlEncode(request.job_id())));
@@ -112,7 +112,7 @@ Status JobControllerMetadata::DeleteJob(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::DeleteJobRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region()), "&",
                    "job_id=", internal::UrlEncode(request.job_id())));
@@ -124,7 +124,7 @@ JobControllerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -133,23 +133,24 @@ future<Status> JobControllerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void JobControllerMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void JobControllerMetadata::SetMetadata(grpc::ClientContext& context) {
+void JobControllerMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

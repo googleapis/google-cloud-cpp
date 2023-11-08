@@ -47,7 +47,7 @@ AnalyticsHubServiceMetadata::ListDataExchanges(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataExchanges(context, request);
 }
@@ -58,7 +58,7 @@ AnalyticsHubServiceMetadata::ListOrgDataExchanges(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::
         ListOrgDataExchangesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("organization=",
                            internal::UrlEncode(request.organization())));
   return child_->ListOrgDataExchanges(context, request);
@@ -69,7 +69,7 @@ AnalyticsHubServiceMetadata::GetDataExchange(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataExchange(context, request);
 }
@@ -79,7 +79,7 @@ AnalyticsHubServiceMetadata::CreateDataExchange(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDataExchange(context, request);
 }
@@ -90,7 +90,7 @@ AnalyticsHubServiceMetadata::UpdateDataExchange(
     google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const&
         request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("data_exchange.name=",
                    internal::UrlEncode(request.data_exchange().name())));
   return child_->UpdateDataExchange(context, request);
@@ -100,7 +100,7 @@ Status AnalyticsHubServiceMetadata::DeleteDataExchange(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDataExchange(context, request);
 }
@@ -110,7 +110,7 @@ AnalyticsHubServiceMetadata::ListListings(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::ListListingsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListListings(context, request);
 }
@@ -120,7 +120,7 @@ AnalyticsHubServiceMetadata::GetListing(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetListing(context, request);
 }
@@ -130,7 +130,7 @@ AnalyticsHubServiceMetadata::CreateListing(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateListing(context, request);
 }
@@ -140,7 +140,7 @@ AnalyticsHubServiceMetadata::UpdateListing(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("listing.name=",
                            internal::UrlEncode(request.listing().name())));
   return child_->UpdateListing(context, request);
@@ -150,7 +150,7 @@ Status AnalyticsHubServiceMetadata::DeleteListing(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteListing(context, request);
 }
@@ -160,7 +160,7 @@ AnalyticsHubServiceMetadata::SubscribeListing(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SubscribeListing(context, request);
 }
@@ -171,7 +171,7 @@ AnalyticsHubServiceMetadata::AsyncSubscribeDataExchange(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::bigquery::analyticshub::v1::
         SubscribeDataExchangeRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncSubscribeDataExchange(cq, std::move(context), request);
 }
@@ -182,7 +182,7 @@ AnalyticsHubServiceMetadata::AsyncRefreshSubscription(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRefreshSubscription(cq, std::move(context), request);
 }
@@ -192,7 +192,7 @@ AnalyticsHubServiceMetadata::GetSubscription(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSubscription(context, request);
 }
@@ -202,7 +202,7 @@ AnalyticsHubServiceMetadata::ListSubscriptions(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSubscriptions(context, request);
 }
@@ -213,8 +213,9 @@ AnalyticsHubServiceMetadata::ListSharedResourceSubscriptions(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::
         ListSharedResourceSubscriptionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->ListSharedResourceSubscriptions(context, request);
 }
 
@@ -223,7 +224,7 @@ AnalyticsHubServiceMetadata::RevokeSubscription(
     grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RevokeSubscription(context, request);
 }
@@ -234,7 +235,7 @@ AnalyticsHubServiceMetadata::AsyncDeleteSubscription(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSubscription(cq, std::move(context), request);
 }
@@ -242,16 +243,18 @@ AnalyticsHubServiceMetadata::AsyncDeleteSubscription(
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -259,8 +262,9 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 AnalyticsHubServiceMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -269,7 +273,7 @@ AnalyticsHubServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -278,23 +282,24 @@ future<Status> AnalyticsHubServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void AnalyticsHubServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void AnalyticsHubServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void AnalyticsHubServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                              Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

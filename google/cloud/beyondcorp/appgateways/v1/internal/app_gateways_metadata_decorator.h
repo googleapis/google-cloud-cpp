@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPGATEWAYS_V1_INTERNAL_APP_GATEWAYS_METADATA_DECORATOR_H
 
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -74,9 +75,9 @@ class AppGatewaysServiceMetadata : public AppGatewaysServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<AppGatewaysServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

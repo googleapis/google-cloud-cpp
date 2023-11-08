@@ -46,7 +46,7 @@ StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechMetadata::ListVoices(
     grpc::ClientContext& context,
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ListVoices(context, request);
 }
 
@@ -54,22 +54,23 @@ StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 TextToSpeechMetadata::SynthesizeSpeech(
     grpc::ClientContext& context,
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->SynthesizeSpeech(context, request);
 }
 
 void TextToSpeechMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options,
                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void TextToSpeechMetadata::SetMetadata(grpc::ClientContext& context) {
+void TextToSpeechMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

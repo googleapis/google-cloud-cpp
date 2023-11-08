@@ -47,7 +47,7 @@ NetworkSecurityMetadata::ListAuthorizationPolicies(
     grpc::ClientContext& context,
     google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAuthorizationPolicies(context, request);
 }
@@ -57,7 +57,7 @@ NetworkSecurityMetadata::GetAuthorizationPolicy(
     grpc::ClientContext& context,
     google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAuthorizationPolicy(context, request);
 }
@@ -68,7 +68,7 @@ NetworkSecurityMetadata::AsyncCreateAuthorizationPolicy(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateAuthorizationPolicy(cq, std::move(context),
                                                 request);
@@ -81,7 +81,7 @@ NetworkSecurityMetadata::AsyncUpdateAuthorizationPolicy(
     google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const&
         request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("authorization_policy.name=",
                    internal::UrlEncode(request.authorization_policy().name())));
   return child_->AsyncUpdateAuthorizationPolicy(cq, std::move(context),
@@ -94,7 +94,7 @@ NetworkSecurityMetadata::AsyncDeleteAuthorizationPolicy(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAuthorizationPolicy(cq, std::move(context),
                                                 request);
@@ -105,7 +105,7 @@ NetworkSecurityMetadata::ListServerTlsPolicies(
     grpc::ClientContext& context,
     google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListServerTlsPolicies(context, request);
 }
@@ -115,7 +115,7 @@ NetworkSecurityMetadata::GetServerTlsPolicy(
     grpc::ClientContext& context,
     google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetServerTlsPolicy(context, request);
 }
@@ -126,7 +126,7 @@ NetworkSecurityMetadata::AsyncCreateServerTlsPolicy(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateServerTlsPolicy(cq, std::move(context), request);
 }
@@ -138,7 +138,7 @@ NetworkSecurityMetadata::AsyncUpdateServerTlsPolicy(
     google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
         request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("server_tls_policy.name=",
                    internal::UrlEncode(request.server_tls_policy().name())));
   return child_->AsyncUpdateServerTlsPolicy(cq, std::move(context), request);
@@ -150,7 +150,7 @@ NetworkSecurityMetadata::AsyncDeleteServerTlsPolicy(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteServerTlsPolicy(cq, std::move(context), request);
 }
@@ -160,7 +160,7 @@ NetworkSecurityMetadata::ListClientTlsPolicies(
     grpc::ClientContext& context,
     google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListClientTlsPolicies(context, request);
 }
@@ -170,7 +170,7 @@ NetworkSecurityMetadata::GetClientTlsPolicy(
     grpc::ClientContext& context,
     google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetClientTlsPolicy(context, request);
 }
@@ -181,7 +181,7 @@ NetworkSecurityMetadata::AsyncCreateClientTlsPolicy(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateClientTlsPolicy(cq, std::move(context), request);
 }
@@ -193,7 +193,7 @@ NetworkSecurityMetadata::AsyncUpdateClientTlsPolicy(
     google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
         request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("client_tls_policy.name=",
                    internal::UrlEncode(request.client_tls_policy().name())));
   return child_->AsyncUpdateClientTlsPolicy(cq, std::move(context), request);
@@ -205,7 +205,7 @@ NetworkSecurityMetadata::AsyncDeleteClientTlsPolicy(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteClientTlsPolicy(cq, std::move(context), request);
 }
@@ -215,7 +215,7 @@ NetworkSecurityMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -224,23 +224,24 @@ future<Status> NetworkSecurityMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void NetworkSecurityMetadata::SetMetadata(grpc::ClientContext& context,
+                                          Options const& options,
                                           std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void NetworkSecurityMetadata::SetMetadata(grpc::ClientContext& context) {
+void NetworkSecurityMetadata::SetMetadata(grpc::ClientContext& context,
+                                          Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

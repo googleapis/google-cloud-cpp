@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_INTERNAL_CLOUD_CATALOG_METADATA_DECORATOR_H
 
 #include "google/cloud/billing/v1/internal/cloud_catalog_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -46,9 +47,9 @@ class CloudCatalogMetadata : public CloudCatalogStub {
       google::cloud::billing::v1::ListSkusRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<CloudCatalogStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

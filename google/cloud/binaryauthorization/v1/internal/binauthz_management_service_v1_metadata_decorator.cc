@@ -46,7 +46,7 @@ StatusOr<google::cloud::binaryauthorization::v1::Policy>
 BinauthzManagementServiceV1Metadata::GetPolicy(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPolicy(context, request);
 }
@@ -56,7 +56,7 @@ BinauthzManagementServiceV1Metadata::UpdatePolicy(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("policy.name=",
                            internal::UrlEncode(request.policy().name())));
   return child_->UpdatePolicy(context, request);
@@ -67,7 +67,7 @@ BinauthzManagementServiceV1Metadata::CreateAttestor(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAttestor(context, request);
 }
@@ -76,7 +76,7 @@ StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1Metadata::GetAttestor(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAttestor(context, request);
 }
@@ -86,7 +86,7 @@ BinauthzManagementServiceV1Metadata::UpdateAttestor(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("attestor.name=",
                            internal::UrlEncode(request.attestor().name())));
   return child_->UpdateAttestor(context, request);
@@ -97,7 +97,7 @@ BinauthzManagementServiceV1Metadata::ListAttestors(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::ListAttestorsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAttestors(context, request);
 }
@@ -106,24 +106,24 @@ Status BinauthzManagementServiceV1Metadata::DeleteAttestor(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAttestor(context, request);
 }
 
 void BinauthzManagementServiceV1Metadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
 void BinauthzManagementServiceV1Metadata::SetMetadata(
-    grpc::ClientContext& context) {
+    grpc::ClientContext& context, Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

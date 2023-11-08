@@ -46,7 +46,7 @@ StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceMetadata::CreateContact(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateContact(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceMetadata::UpdateContact(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("contact.name=",
                            internal::UrlEncode(request.contact().name())));
   return child_->UpdateContact(context, request);
@@ -65,7 +65,7 @@ StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
 EssentialContactsServiceMetadata::ListContacts(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::ListContactsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListContacts(context, request);
 }
@@ -74,7 +74,7 @@ StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceMetadata::GetContact(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetContact(context, request);
 }
@@ -82,7 +82,7 @@ EssentialContactsServiceMetadata::GetContact(
 Status EssentialContactsServiceMetadata::DeleteContact(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteContact(context, request);
 }
@@ -92,7 +92,7 @@ EssentialContactsServiceMetadata::ComputeContacts(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ComputeContacts(context, request);
 }
@@ -101,24 +101,25 @@ Status EssentialContactsServiceMetadata::SendTestMessage(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SendTestMessage(context, request);
 }
 
 void EssentialContactsServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void EssentialContactsServiceMetadata::SetMetadata(
-    grpc::ClientContext& context) {
+void EssentialContactsServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                                   Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

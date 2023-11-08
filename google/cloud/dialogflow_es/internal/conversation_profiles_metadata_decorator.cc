@@ -47,7 +47,7 @@ ConversationProfilesMetadata::ListConversationProfiles(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListConversationProfilesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConversationProfiles(context, request);
 }
@@ -57,7 +57,7 @@ ConversationProfilesMetadata::GetConversationProfile(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationProfileRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConversationProfile(context, request);
 }
@@ -67,7 +67,7 @@ ConversationProfilesMetadata::CreateConversationProfile(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateConversationProfile(context, request);
 }
@@ -78,7 +78,7 @@ ConversationProfilesMetadata::UpdateConversationProfile(
     google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
         request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("conversation_profile.name=",
                    internal::UrlEncode(request.conversation_profile().name())));
   return child_->UpdateConversationProfile(context, request);
@@ -88,7 +88,7 @@ Status ConversationProfilesMetadata::DeleteConversationProfile(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteConversationProfile(context, request);
 }
@@ -100,7 +100,7 @@ ConversationProfilesMetadata::AsyncSetSuggestionFeatureConfig(
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
         request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("conversation_profile=",
                    internal::UrlEncode(request.conversation_profile())));
   return child_->AsyncSetSuggestionFeatureConfig(cq, std::move(context),
@@ -114,7 +114,7 @@ ConversationProfilesMetadata::AsyncClearSuggestionFeatureConfig(
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
         request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("conversation_profile=",
                    internal::UrlEncode(request.conversation_profile())));
   return child_->AsyncClearSuggestionFeatureConfig(cq, std::move(context),
@@ -126,7 +126,7 @@ ConversationProfilesMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -135,23 +135,24 @@ future<Status> ConversationProfilesMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void ConversationProfilesMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ConversationProfilesMetadata::SetMetadata(grpc::ClientContext& context) {
+void ConversationProfilesMetadata::SetMetadata(grpc::ClientContext& context,
+                                               Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

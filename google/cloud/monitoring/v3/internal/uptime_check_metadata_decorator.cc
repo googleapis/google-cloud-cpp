@@ -46,7 +46,7 @@ StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
 UptimeCheckServiceMetadata::ListUptimeCheckConfigs(
     grpc::ClientContext& context,
     google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListUptimeCheckConfigs(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceMetadata::GetUptimeCheckConfig(
     grpc::ClientContext& context,
     google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetUptimeCheckConfig(context, request);
 }
@@ -64,7 +64,7 @@ StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceMetadata::CreateUptimeCheckConfig(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateUptimeCheckConfig(context, request);
 }
@@ -74,7 +74,7 @@ UptimeCheckServiceMetadata::UpdateUptimeCheckConfig(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("uptime_check_config.name=",
                    internal::UrlEncode(request.uptime_check_config().name())));
   return child_->UpdateUptimeCheckConfig(context, request);
@@ -83,7 +83,7 @@ UptimeCheckServiceMetadata::UpdateUptimeCheckConfig(
 Status UptimeCheckServiceMetadata::DeleteUptimeCheckConfig(
     grpc::ClientContext& context,
     google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteUptimeCheckConfig(context, request);
 }
@@ -92,22 +92,23 @@ StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
 UptimeCheckServiceMetadata::ListUptimeCheckIps(
     grpc::ClientContext& context,
     google::monitoring::v3::ListUptimeCheckIpsRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ListUptimeCheckIps(context, request);
 }
 
 void UptimeCheckServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void UptimeCheckServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void UptimeCheckServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                             Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

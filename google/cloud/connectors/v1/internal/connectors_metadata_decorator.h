@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_METADATA_DECORATOR_H
 
 #include "google/cloud/connectors/v1/internal/connectors_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -143,9 +144,9 @@ class ConnectorsMetadata : public ConnectorsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<ConnectorsStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

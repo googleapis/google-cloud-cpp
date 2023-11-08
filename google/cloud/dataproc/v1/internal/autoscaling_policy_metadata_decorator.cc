@@ -47,7 +47,7 @@ AutoscalingPolicyServiceMetadata::CreateAutoscalingPolicy(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAutoscalingPolicy(context, request);
 }
@@ -57,7 +57,7 @@ AutoscalingPolicyServiceMetadata::UpdateAutoscalingPolicy(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("policy.name=",
                            internal::UrlEncode(request.policy().name())));
   return child_->UpdateAutoscalingPolicy(context, request);
@@ -67,7 +67,7 @@ StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceMetadata::GetAutoscalingPolicy(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAutoscalingPolicy(context, request);
 }
@@ -77,7 +77,7 @@ AutoscalingPolicyServiceMetadata::ListAutoscalingPolicies(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAutoscalingPolicies(context, request);
 }
@@ -86,24 +86,24 @@ Status AutoscalingPolicyServiceMetadata::DeleteAutoscalingPolicy(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAutoscalingPolicy(context, request);
 }
 
 void AutoscalingPolicyServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void AutoscalingPolicyServiceMetadata::SetMetadata(
-    grpc::ClientContext& context) {
+void AutoscalingPolicyServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                                   Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

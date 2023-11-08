@@ -47,7 +47,7 @@ SessionEntityTypesMetadata::ListSessionEntityTypes(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSessionEntityTypes(context, request);
 }
@@ -57,7 +57,7 @@ SessionEntityTypesMetadata::GetSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSessionEntityType(context, request);
 }
@@ -67,7 +67,7 @@ SessionEntityTypesMetadata::CreateSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSessionEntityType(context, request);
 }
@@ -78,7 +78,7 @@ SessionEntityTypesMetadata::UpdateSessionEntityType(
     google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
         request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("session_entity_type.name=",
                    internal::UrlEncode(request.session_entity_type().name())));
   return child_->UpdateSessionEntityType(context, request);
@@ -88,23 +88,24 @@ Status SessionEntityTypesMetadata::DeleteSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSessionEntityType(context, request);
 }
 
 void SessionEntityTypesMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void SessionEntityTypesMetadata::SetMetadata(grpc::ClientContext& context) {
+void SessionEntityTypesMetadata::SetMetadata(grpc::ClientContext& context,
+                                             Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

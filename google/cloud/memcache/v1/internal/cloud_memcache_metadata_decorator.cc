@@ -46,7 +46,7 @@ StatusOr<google::cloud::memcache::v1::ListInstancesResponse>
 CloudMemcacheMetadata::ListInstances(
     grpc::ClientContext& context,
     google::cloud::memcache::v1::ListInstancesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstances(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::memcache::v1::Instance>
 CloudMemcacheMetadata::GetInstance(
     grpc::ClientContext& context,
     google::cloud::memcache::v1::GetInstanceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstance(context, request);
 }
@@ -65,7 +65,7 @@ CloudMemcacheMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
@@ -75,7 +75,7 @@ CloudMemcacheMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("instance.name=",
                            internal::UrlEncode(request.instance().name())));
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
@@ -86,7 +86,7 @@ CloudMemcacheMetadata::AsyncUpdateParameters(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUpdateParameters(cq, std::move(context), request);
 }
@@ -96,7 +96,7 @@ CloudMemcacheMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
@@ -106,7 +106,7 @@ CloudMemcacheMetadata::AsyncApplyParameters(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncApplyParameters(cq, std::move(context), request);
 }
@@ -116,8 +116,9 @@ CloudMemcacheMetadata::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("instance=",
-                                     internal::UrlEncode(request.instance())));
+  SetMetadata(
+      *context, internal::CurrentOptions(),
+      absl::StrCat("instance=", internal::UrlEncode(request.instance())));
   return child_->AsyncRescheduleMaintenance(cq, std::move(context), request);
 }
 
@@ -126,7 +127,7 @@ CloudMemcacheMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -135,23 +136,24 @@ future<Status> CloudMemcacheMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void CloudMemcacheMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void CloudMemcacheMetadata::SetMetadata(grpc::ClientContext& context) {
+void CloudMemcacheMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

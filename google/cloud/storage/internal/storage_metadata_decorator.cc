@@ -56,9 +56,10 @@ Status StorageMetadata::DeleteBucket(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->DeleteBucket(context, request);
 }
@@ -75,9 +76,10 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::GetBucket(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->GetBucket(context, request);
 }
@@ -97,9 +99,10 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::CreateBucket(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->CreateBucket(context, request);
 }
@@ -116,9 +119,10 @@ StatusOr<google::storage::v2::ListBucketsResponse> StorageMetadata::ListBuckets(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->ListBuckets(context, request);
 }
@@ -136,9 +140,10 @@ StorageMetadata::LockBucketRetentionPolicy(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->LockBucketRetentionPolicy(context, request);
 }
@@ -166,9 +171,10 @@ StatusOr<google::iam::v1::Policy> StorageMetadata::GetIamPolicy(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->GetIamPolicy(context, request);
 }
@@ -196,9 +202,10 @@ StatusOr<google::iam::v1::Policy> StorageMetadata::SetIamPolicy(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->SetIamPolicy(context, request);
 }
@@ -227,9 +234,10 @@ StorageMetadata::TestIamPermissions(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->TestIamPermissions(context, request);
 }
@@ -246,9 +254,10 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::UpdateBucket(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->UpdateBucket(context, request);
 }
@@ -273,9 +282,10 @@ Status StorageMetadata::DeleteNotificationConfig(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->DeleteNotificationConfig(context, request);
 }
@@ -301,9 +311,10 @@ StorageMetadata::GetNotificationConfig(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->GetNotificationConfig(context, request);
 }
@@ -321,9 +332,10 @@ StorageMetadata::CreateNotificationConfig(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->CreateNotificationConfig(context, request);
 }
@@ -341,9 +353,10 @@ StorageMetadata::ListNotificationConfigs(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->ListNotificationConfigs(context, request);
 }
@@ -360,9 +373,10 @@ StatusOr<google::storage::v2::Object> StorageMetadata::ComposeObject(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->ComposeObject(context, request);
 }
@@ -379,9 +393,10 @@ Status StorageMetadata::DeleteObject(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->DeleteObject(context, request);
 }
@@ -398,9 +413,10 @@ StatusOr<google::storage::v2::Object> StorageMetadata::RestoreObject(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->RestoreObject(context, request);
 }
@@ -426,9 +442,10 @@ StorageMetadata::CancelResumableWrite(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->CancelResumableWrite(context, request);
 }
@@ -445,9 +462,10 @@ StatusOr<google::storage::v2::Object> StorageMetadata::GetObject(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->GetObject(context, request);
 }
@@ -466,9 +484,10 @@ StorageMetadata::ReadObject(
   }
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->ReadObject(std::move(context), request);
 }
@@ -485,9 +504,10 @@ StatusOr<google::storage::v2::Object> StorageMetadata::UpdateObject(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->UpdateObject(context, request);
 }
@@ -496,7 +516,7 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
 StorageMetadata::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->WriteObject(std::move(context));
 }
 
@@ -506,7 +526,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 StorageMetadata::AsyncBidiWriteObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->AsyncBidiWriteObject(cq, std::move(context));
 }
 
@@ -522,9 +542,10 @@ StatusOr<google::storage::v2::ListObjectsResponse> StorageMetadata::ListObjects(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->ListObjects(context, request);
 }
@@ -546,9 +567,10 @@ StatusOr<google::storage::v2::RewriteResponse> StorageMetadata::RewriteObject(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->RewriteObject(context, request);
 }
@@ -567,9 +589,10 @@ StorageMetadata::StartResumableWrite(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->StartResumableWrite(context, request);
 }
@@ -595,9 +618,10 @@ StorageMetadata::QueryWriteStatus(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->QueryWriteStatus(context, request);
 }
@@ -615,9 +639,10 @@ StorageMetadata::GetServiceAccount(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->GetServiceAccount(context, request);
 }
@@ -635,9 +660,10 @@ StorageMetadata::CreateHmacKey(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->CreateHmacKey(context, request);
 }
@@ -654,9 +680,10 @@ Status StorageMetadata::DeleteHmacKey(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->DeleteHmacKey(context, request);
 }
@@ -673,9 +700,10 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::GetHmacKey(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->GetHmacKey(context, request);
 }
@@ -693,9 +721,10 @@ StorageMetadata::ListHmacKeys(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->ListHmacKeys(context, request);
 }
@@ -712,9 +741,10 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::UpdateHmacKey(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->UpdateHmacKey(context, request);
 }
@@ -733,9 +763,10 @@ StorageMetadata::AsyncComposeObject(
   }
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncComposeObject(cq, std::move(context), request);
 }
@@ -753,9 +784,10 @@ future<Status> StorageMetadata::AsyncDeleteObject(
   }
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncDeleteObject(cq, std::move(context), request);
 }
@@ -775,9 +807,10 @@ StorageMetadata::AsyncReadObject(
   }
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncReadObject(cq, std::move(context), request);
 }
@@ -788,7 +821,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
 StorageMetadata::AsyncWriteObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->AsyncWriteObject(cq, std::move(context));
 }
 
@@ -807,9 +840,10 @@ StorageMetadata::AsyncStartResumableWrite(
   }
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncStartResumableWrite(cq, std::move(context), request);
 }
@@ -836,25 +870,27 @@ StorageMetadata::AsyncQueryWriteStatus(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncQueryWriteStatus(cq, std::move(context), request);
 }
 
 void StorageMetadata::SetMetadata(grpc::ClientContext& context,
+                                  Options const& options,
                                   std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void StorageMetadata::SetMetadata(grpc::ClientContext& context) {
+void StorageMetadata::SetMetadata(grpc::ClientContext& context,
+                                  Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

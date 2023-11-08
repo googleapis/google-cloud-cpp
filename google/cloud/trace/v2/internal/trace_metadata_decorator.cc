@@ -45,7 +45,7 @@ TraceServiceMetadata::TraceServiceMetadata(
 Status TraceServiceMetadata::BatchWriteSpans(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->BatchWriteSpans(context, request);
 }
@@ -54,23 +54,24 @@ StatusOr<google::devtools::cloudtrace::v2::Span>
 TraceServiceMetadata::CreateSpan(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v2::Span const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateSpan(context, request);
 }
 
 void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options,
                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

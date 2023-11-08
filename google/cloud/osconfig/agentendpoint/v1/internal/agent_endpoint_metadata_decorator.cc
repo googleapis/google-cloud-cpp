@@ -49,7 +49,7 @@ AgentEndpointServiceMetadata::ReceiveTaskNotification(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationRequest const& request) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->ReceiveTaskNotification(std::move(context), request);
 }
 
@@ -58,7 +58,7 @@ AgentEndpointServiceMetadata::StartNextTask(
     grpc::ClientContext& context,
     google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
         request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->StartNextTask(context, request);
 }
 
@@ -67,7 +67,7 @@ AgentEndpointServiceMetadata::ReportTaskProgress(
     grpc::ClientContext& context,
     google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
         request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ReportTaskProgress(context, request);
 }
 
@@ -76,7 +76,7 @@ AgentEndpointServiceMetadata::ReportTaskComplete(
     grpc::ClientContext& context,
     google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
         request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ReportTaskComplete(context, request);
 }
 
@@ -85,7 +85,7 @@ AgentEndpointServiceMetadata::RegisterAgent(
     grpc::ClientContext& context,
     google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
         request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->RegisterAgent(context, request);
 }
 
@@ -94,22 +94,23 @@ AgentEndpointServiceMetadata::ReportInventory(
     grpc::ClientContext& context,
     google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
         request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ReportInventory(context, request);
 }
 
 void AgentEndpointServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void AgentEndpointServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void AgentEndpointServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                               Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

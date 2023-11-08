@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_STORAGE_V1_INTERNAL_BIGQUERY_WRITE_METADATA_DECORATOR_H
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -72,9 +73,9 @@ class BigQueryWriteMetadata : public BigQueryWriteStub {
       override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<BigQueryWriteStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

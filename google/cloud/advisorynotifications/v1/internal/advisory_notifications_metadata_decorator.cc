@@ -47,7 +47,7 @@ AdvisoryNotificationsServiceMetadata::ListNotifications(
     grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNotifications(context, request);
 }
@@ -57,7 +57,7 @@ AdvisoryNotificationsServiceMetadata::GetNotification(
     grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::GetNotificationRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNotification(context, request);
 }
@@ -67,7 +67,7 @@ AdvisoryNotificationsServiceMetadata::GetSettings(
     grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::GetSettingsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSettings(context, request);
 }
@@ -77,25 +77,25 @@ AdvisoryNotificationsServiceMetadata::UpdateSettings(
     grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("settings.name=",
                            internal::UrlEncode(request.settings().name())));
   return child_->UpdateSettings(context, request);
 }
 
 void AdvisoryNotificationsServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
 void AdvisoryNotificationsServiceMetadata::SetMetadata(
-    grpc::ClientContext& context) {
+    grpc::ClientContext& context, Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECAPTCHAENTERPRISE_V1_INTERNAL_RECAPTCHA_ENTERPRISE_METADATA_DECORATOR_H
 
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -143,9 +144,9 @@ class RecaptchaEnterpriseServiceMetadata
           SearchRelatedAccountGroupMembershipsRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<RecaptchaEnterpriseServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

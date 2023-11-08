@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_ADMIN_V1_INTERNAL_IAM_METADATA_DECORATOR_H
 
 #include "google/cloud/iam/admin/v1/internal/iam_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -171,9 +172,9 @@ class IAMMetadata : public IAMStub {
       google::iam::admin::v1::LintPolicyRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<IAMStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

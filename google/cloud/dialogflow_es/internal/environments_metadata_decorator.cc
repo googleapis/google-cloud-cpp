@@ -46,7 +46,7 @@ StatusOr<google::cloud::dialogflow::v2::ListEnvironmentsResponse>
 EnvironmentsMetadata::ListEnvironments(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListEnvironmentsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEnvironments(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsMetadata::GetEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEnvironment(context, request);
 }
@@ -64,7 +64,7 @@ StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsMetadata::CreateEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEnvironment(context, request);
 }
@@ -73,7 +73,7 @@ StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsMetadata::UpdateEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("environment.name=",
                            internal::UrlEncode(request.environment().name())));
   return child_->UpdateEnvironment(context, request);
@@ -82,7 +82,7 @@ EnvironmentsMetadata::UpdateEnvironment(
 Status EnvironmentsMetadata::DeleteEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEnvironment(context, request);
 }
@@ -92,23 +92,24 @@ EnvironmentsMetadata::GetEnvironmentHistory(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->GetEnvironmentHistory(context, request);
 }
 
 void EnvironmentsMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options,
                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void EnvironmentsMetadata::SetMetadata(grpc::ClientContext& context) {
+void EnvironmentsMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

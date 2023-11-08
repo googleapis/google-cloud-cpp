@@ -47,7 +47,7 @@ TagHoldsMetadata::AsyncCreateTagHold(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateTagHold(cq, std::move(context), request);
 }
@@ -57,7 +57,7 @@ TagHoldsMetadata::AsyncDeleteTagHold(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTagHold(cq, std::move(context), request);
 }
@@ -66,7 +66,7 @@ StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
 TagHoldsMetadata::ListTagHolds(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::ListTagHoldsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTagHolds(context, request);
 }
@@ -76,7 +76,7 @@ TagHoldsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -85,23 +85,24 @@ future<Status> TagHoldsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void TagHoldsMetadata::SetMetadata(grpc::ClientContext& context,
+                                   Options const& options,
                                    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void TagHoldsMetadata::SetMetadata(grpc::ClientContext& context) {
+void TagHoldsMetadata::SetMetadata(grpc::ClientContext& context,
+                                   Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

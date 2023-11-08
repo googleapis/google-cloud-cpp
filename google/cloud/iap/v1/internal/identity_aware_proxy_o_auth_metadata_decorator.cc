@@ -46,7 +46,7 @@ StatusOr<google::cloud::iap::v1::ListBrandsResponse>
 IdentityAwareProxyOAuthServiceMetadata::ListBrands(
     grpc::ClientContext& context,
     google::cloud::iap::v1::ListBrandsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBrands(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::iap::v1::Brand>
 IdentityAwareProxyOAuthServiceMetadata::CreateBrand(
     grpc::ClientContext& context,
     google::cloud::iap::v1::CreateBrandRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateBrand(context, request);
 }
@@ -64,7 +64,7 @@ StatusOr<google::cloud::iap::v1::Brand>
 IdentityAwareProxyOAuthServiceMetadata::GetBrand(
     grpc::ClientContext& context,
     google::cloud::iap::v1::GetBrandRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBrand(context, request);
 }
@@ -74,7 +74,7 @@ IdentityAwareProxyOAuthServiceMetadata::CreateIdentityAwareProxyClient(
     grpc::ClientContext& context,
     google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateIdentityAwareProxyClient(context, request);
 }
@@ -84,7 +84,7 @@ IdentityAwareProxyOAuthServiceMetadata::ListIdentityAwareProxyClients(
     grpc::ClientContext& context,
     google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListIdentityAwareProxyClients(context, request);
 }
@@ -93,7 +93,7 @@ StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
 IdentityAwareProxyOAuthServiceMetadata::GetIdentityAwareProxyClient(
     grpc::ClientContext& context,
     google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetIdentityAwareProxyClient(context, request);
 }
@@ -103,7 +103,7 @@ IdentityAwareProxyOAuthServiceMetadata::ResetIdentityAwareProxyClientSecret(
     grpc::ClientContext& context,
     google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ResetIdentityAwareProxyClientSecret(context, request);
 }
@@ -112,24 +112,24 @@ Status IdentityAwareProxyOAuthServiceMetadata::DeleteIdentityAwareProxyClient(
     grpc::ClientContext& context,
     google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteIdentityAwareProxyClient(context, request);
 }
 
 void IdentityAwareProxyOAuthServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
 void IdentityAwareProxyOAuthServiceMetadata::SetMetadata(
-    grpc::ClientContext& context) {
+    grpc::ClientContext& context, Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

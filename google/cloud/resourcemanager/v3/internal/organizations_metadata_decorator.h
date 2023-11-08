@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_ORGANIZATIONS_METADATA_DECORATOR_H
 
 #include "google/cloud/resourcemanager/v3/internal/organizations_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -61,9 +62,9 @@ class OrganizationsMetadata : public OrganizationsStub {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<OrganizationsStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

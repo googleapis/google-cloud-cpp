@@ -45,16 +45,18 @@ ContainerAnalysisMetadata::ContainerAnalysisMetadata(
 StatusOr<google::iam::v1::Policy> ContainerAnalysisMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
@@ -62,8 +64,9 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ContainerAnalysisMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -73,23 +76,24 @@ ContainerAnalysisMetadata::GetVulnerabilityOccurrencesSummary(
     grpc::ClientContext& context,
     google::devtools::containeranalysis::v1::
         GetVulnerabilityOccurrencesSummaryRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->GetVulnerabilityOccurrencesSummary(context, request);
 }
 
 void ContainerAnalysisMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options,
                                             std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ContainerAnalysisMetadata::SetMetadata(grpc::ClientContext& context) {
+void ContainerAnalysisMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

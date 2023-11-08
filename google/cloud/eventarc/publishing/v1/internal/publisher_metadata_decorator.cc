@@ -48,7 +48,7 @@ PublisherMetadata::PublishChannelConnectionEvents(
     grpc::ClientContext& context,
     google::cloud::eventarc::publishing::v1::
         PublishChannelConnectionEventsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("channel_connection=",
                            internal::UrlEncode(request.channel_connection())));
   return child_->PublishChannelConnectionEvents(context, request);
@@ -59,23 +59,24 @@ PublisherMetadata::PublishEvents(
     grpc::ClientContext& context,
     google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("channel=", internal::UrlEncode(request.channel())));
   return child_->PublishEvents(context, request);
 }
 
 void PublisherMetadata::SetMetadata(grpc::ClientContext& context,
+                                    Options const& options,
                                     std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void PublisherMetadata::SetMetadata(grpc::ClientContext& context) {
+void PublisherMetadata::SetMetadata(grpc::ClientContext& context,
+                                    Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

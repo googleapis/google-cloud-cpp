@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_METADATA_DECORATOR_H
 
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -300,9 +301,9 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<BareMetalSolutionStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

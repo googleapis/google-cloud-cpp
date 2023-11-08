@@ -46,7 +46,7 @@ StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 TopicStatsServiceMetadata::ComputeMessageStats(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ComputeMessageStats(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
 TopicStatsServiceMetadata::ComputeHeadCursor(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ComputeHeadCursor(context, request);
 }
@@ -64,23 +64,24 @@ StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
 TopicStatsServiceMetadata::ComputeTimeCursor(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ComputeTimeCursor(context, request);
 }
 
 void TopicStatsServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options,
                                             std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void TopicStatsServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void TopicStatsServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

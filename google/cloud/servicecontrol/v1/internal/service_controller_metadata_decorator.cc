@@ -46,7 +46,7 @@ StatusOr<google::api::servicecontrol::v1::CheckResponse>
 ServiceControllerMetadata::Check(
     grpc::ClientContext& context,
     google::api::servicecontrol::v1::CheckRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("service_name=",
                            internal::UrlEncode(request.service_name())));
   return child_->Check(context, request);
@@ -56,24 +56,25 @@ StatusOr<google::api::servicecontrol::v1::ReportResponse>
 ServiceControllerMetadata::Report(
     grpc::ClientContext& context,
     google::api::servicecontrol::v1::ReportRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("service_name=",
                            internal::UrlEncode(request.service_name())));
   return child_->Report(context, request);
 }
 
 void ServiceControllerMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options,
                                             std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ServiceControllerMetadata::SetMetadata(grpc::ClientContext& context) {
+void ServiceControllerMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

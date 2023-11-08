@@ -47,7 +47,7 @@ SecurityCenterMetadata::AsyncBulkMuteFindings(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBulkMuteFindings(cq, std::move(context), request);
 }
@@ -57,7 +57,7 @@ SecurityCenterMetadata::CreateSecurityHealthAnalyticsCustomModule(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSecurityHealthAnalyticsCustomModule(context, request);
 }
@@ -66,7 +66,7 @@ StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterMetadata::CreateSource(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::CreateSourceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSource(context, request);
 }
@@ -75,7 +75,7 @@ StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterMetadata::CreateFinding(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::CreateFindingRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateFinding(context, request);
 }
@@ -84,7 +84,7 @@ StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterMetadata::CreateMuteConfig(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateMuteConfig(context, request);
 }
@@ -94,7 +94,7 @@ SecurityCenterMetadata::CreateNotificationConfig(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateNotificationConfig(context, request);
 }
@@ -102,7 +102,7 @@ SecurityCenterMetadata::CreateNotificationConfig(
 Status SecurityCenterMetadata::DeleteMuteConfig(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteMuteConfig(context, request);
 }
@@ -111,7 +111,7 @@ Status SecurityCenterMetadata::DeleteNotificationConfig(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteNotificationConfig(context, request);
 }
@@ -120,7 +120,7 @@ Status SecurityCenterMetadata::DeleteSecurityHealthAnalyticsCustomModule(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSecurityHealthAnalyticsCustomModule(context, request);
 }
@@ -130,7 +130,7 @@ SecurityCenterMetadata::GetBigQueryExport(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBigQueryExport(context, request);
 }
@@ -138,8 +138,9 @@ SecurityCenterMetadata::GetBigQueryExport(
 StatusOr<google::iam::v1::Policy> SecurityCenterMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
@@ -147,7 +148,7 @@ StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterMetadata::GetMuteConfig(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GetMuteConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMuteConfig(context, request);
 }
@@ -157,7 +158,7 @@ SecurityCenterMetadata::GetNotificationConfig(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GetNotificationConfigRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNotificationConfig(context, request);
 }
@@ -167,7 +168,7 @@ SecurityCenterMetadata::GetOrganizationSettings(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOrganizationSettings(context, request);
 }
@@ -178,7 +179,7 @@ SecurityCenterMetadata::GetEffectiveSecurityHealthAnalyticsCustomModule(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(context,
                                                                  request);
@@ -189,7 +190,7 @@ SecurityCenterMetadata::GetSecurityHealthAnalyticsCustomModule(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSecurityHealthAnalyticsCustomModule(context, request);
 }
@@ -198,7 +199,7 @@ StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterMetadata::GetSource(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GetSourceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSource(context, request);
 }
@@ -207,7 +208,7 @@ StatusOr<google::cloud::securitycenter::v1::GroupAssetsResponse>
 SecurityCenterMetadata::GroupAssets(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GroupAssetsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->GroupAssets(context, request);
 }
@@ -216,7 +217,7 @@ StatusOr<google::cloud::securitycenter::v1::GroupFindingsResponse>
 SecurityCenterMetadata::GroupFindings(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GroupFindingsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->GroupFindings(context, request);
 }
@@ -225,7 +226,7 @@ StatusOr<google::cloud::securitycenter::v1::ListAssetsResponse>
 SecurityCenterMetadata::ListAssets(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::ListAssetsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAssets(context, request);
 }
@@ -237,7 +238,7 @@ SecurityCenterMetadata::ListDescendantSecurityHealthAnalyticsCustomModules(
     google::cloud::securitycenter::v1::
         ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
             request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDescendantSecurityHealthAnalyticsCustomModules(context,
                                                                     request);
@@ -247,7 +248,7 @@ StatusOr<google::cloud::securitycenter::v1::ListFindingsResponse>
 SecurityCenterMetadata::ListFindings(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::ListFindingsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFindings(context, request);
 }
@@ -256,7 +257,7 @@ StatusOr<google::cloud::securitycenter::v1::ListMuteConfigsResponse>
 SecurityCenterMetadata::ListMuteConfigs(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::ListMuteConfigsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMuteConfigs(context, request);
 }
@@ -266,7 +267,7 @@ SecurityCenterMetadata::ListNotificationConfigs(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::ListNotificationConfigsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNotificationConfigs(context, request);
 }
@@ -278,7 +279,7 @@ SecurityCenterMetadata::ListEffectiveSecurityHealthAnalyticsCustomModules(
     google::cloud::securitycenter::v1::
         ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
             request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEffectiveSecurityHealthAnalyticsCustomModules(context,
                                                                    request);
@@ -290,7 +291,7 @@ SecurityCenterMetadata::ListSecurityHealthAnalyticsCustomModules(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSecurityHealthAnalyticsCustomModules(context, request);
 }
@@ -299,7 +300,7 @@ StatusOr<google::cloud::securitycenter::v1::ListSourcesResponse>
 SecurityCenterMetadata::ListSources(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::ListSourcesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSources(context, request);
 }
@@ -310,7 +311,7 @@ SecurityCenterMetadata::AsyncRunAssetDiscovery(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncRunAssetDiscovery(cq, std::move(context), request);
 }
@@ -319,7 +320,7 @@ StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterMetadata::SetFindingState(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::SetFindingStateRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SetFindingState(context, request);
 }
@@ -328,7 +329,7 @@ StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterMetadata::SetMute(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::SetMuteRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SetMute(context, request);
 }
@@ -336,8 +337,9 @@ SecurityCenterMetadata::SetMute(
 StatusOr<google::iam::v1::Policy> SecurityCenterMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -345,8 +347,9 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecurityCenterMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -356,7 +359,7 @@ SecurityCenterMetadata::SimulateSecurityHealthAnalyticsCustomModule(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SimulateSecurityHealthAnalyticsCustomModule(context, request);
 }
@@ -367,7 +370,7 @@ SecurityCenterMetadata::UpdateExternalSystem(
     google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
         request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("external_system.name=",
                    internal::UrlEncode(request.external_system().name())));
   return child_->UpdateExternalSystem(context, request);
@@ -377,7 +380,7 @@ StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterMetadata::UpdateFinding(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::UpdateFindingRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("finding.name=",
                            internal::UrlEncode(request.finding().name())));
   return child_->UpdateFinding(context, request);
@@ -387,7 +390,7 @@ StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterMetadata::UpdateMuteConfig(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("mute_config.name=",
                            internal::UrlEncode(request.mute_config().name())));
   return child_->UpdateMuteConfig(context, request);
@@ -399,7 +402,7 @@ SecurityCenterMetadata::UpdateNotificationConfig(
     google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&
         request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("notification_config.name=",
                    internal::UrlEncode(request.notification_config().name())));
   return child_->UpdateNotificationConfig(context, request);
@@ -410,7 +413,7 @@ SecurityCenterMetadata::UpdateOrganizationSettings(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat(
                   "organization_settings.name=",
                   internal::UrlEncode(request.organization_settings().name())));
@@ -423,7 +426,7 @@ SecurityCenterMetadata::UpdateSecurityHealthAnalyticsCustomModule(
     google::cloud::securitycenter::v1::
         UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat(
           "security_health_analytics_custom_module.name=",
           internal::UrlEncode(
@@ -435,7 +438,7 @@ StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterMetadata::UpdateSource(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::UpdateSourceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("source.name=",
                            internal::UrlEncode(request.source().name())));
   return child_->UpdateSource(context, request);
@@ -447,7 +450,7 @@ SecurityCenterMetadata::UpdateSecurityMarks(
     google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
         request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("security_marks.name=",
                    internal::UrlEncode(request.security_marks().name())));
   return child_->UpdateSecurityMarks(context, request);
@@ -458,7 +461,7 @@ SecurityCenterMetadata::CreateBigQueryExport(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateBigQueryExport(context, request);
 }
@@ -467,7 +470,7 @@ Status SecurityCenterMetadata::DeleteBigQueryExport(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteBigQueryExport(context, request);
 }
@@ -478,7 +481,7 @@ SecurityCenterMetadata::UpdateBigQueryExport(
     google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
         request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("big_query_export.name=",
                    internal::UrlEncode(request.big_query_export().name())));
   return child_->UpdateBigQueryExport(context, request);
@@ -489,7 +492,7 @@ SecurityCenterMetadata::ListBigQueryExports(
     grpc::ClientContext& context,
     google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBigQueryExports(context, request);
 }
@@ -499,7 +502,7 @@ SecurityCenterMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -508,23 +511,24 @@ future<Status> SecurityCenterMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void SecurityCenterMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void SecurityCenterMetadata::SetMetadata(grpc::ClientContext& context) {
+void SecurityCenterMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

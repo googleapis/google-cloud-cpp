@@ -46,23 +46,24 @@ StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
 ConnectionServiceMetadata::ListConnections(
     grpc::ClientContext& context,
     google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnections(context, request);
 }
 
 void ConnectionServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options,
                                             std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ConnectionServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void ConnectionServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

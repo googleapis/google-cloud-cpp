@@ -46,7 +46,7 @@ StatusOr<google::cloud::redis::cluster::v1::ListClustersResponse>
 CloudRedisClusterMetadata::ListClusters(
     grpc::ClientContext& context,
     google::cloud::redis::cluster::v1::ListClustersRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListClusters(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::redis::cluster::v1::Cluster>
 CloudRedisClusterMetadata::GetCluster(
     grpc::ClientContext& context,
     google::cloud::redis::cluster::v1::GetClusterRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCluster(context, request);
 }
@@ -65,7 +65,7 @@ CloudRedisClusterMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("cluster.name=",
                            internal::UrlEncode(request.cluster().name())));
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
@@ -76,7 +76,7 @@ CloudRedisClusterMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteCluster(cq, std::move(context), request);
 }
@@ -86,7 +86,7 @@ CloudRedisClusterMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateCluster(cq, std::move(context), request);
 }
@@ -96,7 +96,7 @@ CloudRedisClusterMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -105,23 +105,24 @@ future<Status> CloudRedisClusterMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void CloudRedisClusterMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options,
                                             std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void CloudRedisClusterMetadata::SetMetadata(grpc::ClientContext& context) {
+void CloudRedisClusterMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

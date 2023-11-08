@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_COMPLETION_METADATA_DECORATOR_H
 
 #include "google/cloud/talent/v4/internal/completion_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -42,9 +43,9 @@ class CompletionMetadata : public CompletionStub {
       google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<CompletionStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

@@ -46,7 +46,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse>
 PagesMetadata::ListPages(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListPagesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPages(context, request);
 }
@@ -54,7 +54,7 @@ PagesMetadata::ListPages(
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesMetadata::GetPage(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPage(context, request);
 }
@@ -62,7 +62,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesMetadata::GetPage(
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesMetadata::CreatePage(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreatePage(context, request);
 }
@@ -71,7 +71,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesMetadata::UpdatePage(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("page.name=", internal::UrlEncode(request.page().name())));
   return child_->UpdatePage(context, request);
 }
@@ -79,23 +79,24 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesMetadata::UpdatePage(
 Status PagesMetadata::DeletePage(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeletePage(context, request);
 }
 
 void PagesMetadata::SetMetadata(grpc::ClientContext& context,
+                                Options const& options,
                                 std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void PagesMetadata::SetMetadata(grpc::ClientContext& context) {
+void PagesMetadata::SetMetadata(grpc::ClientContext& context,
+                                Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

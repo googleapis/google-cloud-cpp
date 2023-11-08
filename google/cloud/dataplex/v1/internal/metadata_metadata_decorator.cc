@@ -46,7 +46,7 @@ StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceMetadata::CreateEntity(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::CreateEntityRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEntity(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceMetadata::UpdateEntity(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("entity.name=",
                            internal::UrlEncode(request.entity().name())));
   return child_->UpdateEntity(context, request);
@@ -64,7 +64,7 @@ MetadataServiceMetadata::UpdateEntity(
 Status MetadataServiceMetadata::DeleteEntity(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEntity(context, request);
 }
@@ -73,7 +73,7 @@ StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceMetadata::GetEntity(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetEntityRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEntity(context, request);
 }
@@ -82,7 +82,7 @@ StatusOr<google::cloud::dataplex::v1::ListEntitiesResponse>
 MetadataServiceMetadata::ListEntities(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListEntitiesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEntities(context, request);
 }
@@ -91,7 +91,7 @@ StatusOr<google::cloud::dataplex::v1::Partition>
 MetadataServiceMetadata::CreatePartition(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreatePartition(context, request);
 }
@@ -99,7 +99,7 @@ MetadataServiceMetadata::CreatePartition(
 Status MetadataServiceMetadata::DeletePartition(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeletePartition(context, request);
 }
@@ -108,7 +108,7 @@ StatusOr<google::cloud::dataplex::v1::Partition>
 MetadataServiceMetadata::GetPartition(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetPartitionRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPartition(context, request);
 }
@@ -117,23 +117,24 @@ StatusOr<google::cloud::dataplex::v1::ListPartitionsResponse>
 MetadataServiceMetadata::ListPartitions(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListPartitionsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPartitions(context, request);
 }
 
 void MetadataServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                          Options const& options,
                                           std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void MetadataServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void MetadataServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                          Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

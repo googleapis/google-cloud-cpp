@@ -47,7 +47,7 @@ MigrationServiceMetadata::SearchMigratableResources(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SearchMigratableResources(context, request);
 }
@@ -58,7 +58,7 @@ MigrationServiceMetadata::AsyncBatchMigrateResources(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchMigrateResources(cq, std::move(context), request);
 }
@@ -68,7 +68,7 @@ MigrationServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -77,23 +77,24 @@ future<Status> MigrationServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void MigrationServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                           Options const& options,
                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void MigrationServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void MigrationServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                           Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

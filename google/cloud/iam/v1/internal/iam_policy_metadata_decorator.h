@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V1_INTERNAL_IAM_POLICY_METADATA_DECORATOR_H
 
 #include "google/cloud/iam/v1/internal/iam_policy_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -50,9 +51,9 @@ class IAMPolicyMetadata : public IAMPolicyStub {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<IAMPolicyStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

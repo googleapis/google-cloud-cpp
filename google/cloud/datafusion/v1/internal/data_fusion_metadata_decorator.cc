@@ -47,7 +47,7 @@ DataFusionMetadata::ListAvailableVersions(
     grpc::ClientContext& context,
     google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAvailableVersions(context, request);
 }
@@ -56,7 +56,7 @@ StatusOr<google::cloud::datafusion::v1::ListInstancesResponse>
 DataFusionMetadata::ListInstances(
     grpc::ClientContext& context,
     google::cloud::datafusion::v1::ListInstancesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstances(context, request);
 }
@@ -65,7 +65,7 @@ StatusOr<google::cloud::datafusion::v1::Instance>
 DataFusionMetadata::GetInstance(
     grpc::ClientContext& context,
     google::cloud::datafusion::v1::GetInstanceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstance(context, request);
 }
@@ -75,7 +75,7 @@ DataFusionMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
@@ -85,7 +85,7 @@ DataFusionMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
@@ -95,7 +95,7 @@ DataFusionMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("instance.name=",
                            internal::UrlEncode(request.instance().name())));
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
@@ -106,7 +106,7 @@ DataFusionMetadata::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRestartInstance(cq, std::move(context), request);
 }
@@ -116,7 +116,7 @@ DataFusionMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -125,23 +125,24 @@ future<Status> DataFusionMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void DataFusionMetadata::SetMetadata(grpc::ClientContext& context,
+                                     Options const& options,
                                      std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void DataFusionMetadata::SetMetadata(grpc::ClientContext& context) {
+void DataFusionMetadata::SetMetadata(grpc::ClientContext& context,
+                                     Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

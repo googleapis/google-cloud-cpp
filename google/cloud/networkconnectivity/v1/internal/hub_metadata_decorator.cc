@@ -46,7 +46,7 @@ StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse>
 HubServiceMetadata::ListHubs(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::ListHubsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListHubs(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::networkconnectivity::v1::Hub>
 HubServiceMetadata::GetHub(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::GetHubRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetHub(context, request);
 }
@@ -65,7 +65,7 @@ HubServiceMetadata::AsyncCreateHub(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateHub(cq, std::move(context), request);
 }
@@ -76,7 +76,7 @@ HubServiceMetadata::AsyncUpdateHub(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("hub.name=", internal::UrlEncode(request.hub().name())));
   return child_->AsyncUpdateHub(cq, std::move(context), request);
 }
@@ -86,7 +86,7 @@ HubServiceMetadata::AsyncDeleteHub(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteHub(cq, std::move(context), request);
 }
@@ -96,7 +96,7 @@ HubServiceMetadata::ListHubSpokes(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListHubSpokes(context, request);
 }
@@ -105,7 +105,7 @@ StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
 HubServiceMetadata::ListSpokes(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::ListSpokesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSpokes(context, request);
 }
@@ -114,7 +114,7 @@ StatusOr<google::cloud::networkconnectivity::v1::Spoke>
 HubServiceMetadata::GetSpoke(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::GetSpokeRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSpoke(context, request);
 }
@@ -124,7 +124,7 @@ HubServiceMetadata::AsyncCreateSpoke(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateSpoke(cq, std::move(context), request);
 }
@@ -135,7 +135,7 @@ HubServiceMetadata::AsyncUpdateSpoke(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("spoke.name=", internal::UrlEncode(request.spoke().name())));
   return child_->AsyncUpdateSpoke(cq, std::move(context), request);
 }
@@ -146,7 +146,7 @@ HubServiceMetadata::AsyncRejectHubSpoke(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRejectHubSpoke(cq, std::move(context), request);
 }
@@ -157,7 +157,7 @@ HubServiceMetadata::AsyncAcceptHubSpoke(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncAcceptHubSpoke(cq, std::move(context), request);
 }
@@ -167,7 +167,7 @@ HubServiceMetadata::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSpoke(cq, std::move(context), request);
 }
@@ -177,7 +177,7 @@ HubServiceMetadata::GetRouteTable(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRouteTable(context, request);
 }
@@ -186,7 +186,7 @@ StatusOr<google::cloud::networkconnectivity::v1::Route>
 HubServiceMetadata::GetRoute(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::GetRouteRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRoute(context, request);
 }
@@ -195,7 +195,7 @@ StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse>
 HubServiceMetadata::ListRoutes(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::ListRoutesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRoutes(context, request);
 }
@@ -205,7 +205,7 @@ HubServiceMetadata::ListRouteTables(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRouteTables(context, request);
 }
@@ -214,7 +214,7 @@ StatusOr<google::cloud::networkconnectivity::v1::Group>
 HubServiceMetadata::GetGroup(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::GetGroupRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetGroup(context, request);
 }
@@ -223,7 +223,7 @@ StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse>
 HubServiceMetadata::ListGroups(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::ListGroupsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListGroups(context, request);
 }
@@ -233,7 +233,7 @@ HubServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -242,23 +242,24 @@ future<Status> HubServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void HubServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                     Options const& options,
                                      std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void HubServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void HubServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                     Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

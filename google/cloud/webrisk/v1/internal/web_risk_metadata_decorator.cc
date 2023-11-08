@@ -46,7 +46,7 @@ StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
 WebRiskServiceMetadata::ComputeThreatListDiff(
     grpc::ClientContext& context,
     google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ComputeThreatListDiff(context, request);
 }
 
@@ -54,7 +54,7 @@ StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
 WebRiskServiceMetadata::SearchUris(
     grpc::ClientContext& context,
     google::cloud::webrisk::v1::SearchUrisRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->SearchUris(context, request);
 }
 
@@ -62,7 +62,7 @@ StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
 WebRiskServiceMetadata::SearchHashes(
     grpc::ClientContext& context,
     google::cloud::webrisk::v1::SearchHashesRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->SearchHashes(context, request);
 }
 
@@ -70,7 +70,7 @@ StatusOr<google::cloud::webrisk::v1::Submission>
 WebRiskServiceMetadata::CreateSubmission(
     grpc::ClientContext& context,
     google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSubmission(context, request);
 }
@@ -80,7 +80,7 @@ WebRiskServiceMetadata::AsyncSubmitUri(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::webrisk::v1::SubmitUriRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncSubmitUri(cq, std::move(context), request);
 }
@@ -90,7 +90,7 @@ WebRiskServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -99,23 +99,24 @@ future<Status> WebRiskServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void WebRiskServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void WebRiskServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void WebRiskServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

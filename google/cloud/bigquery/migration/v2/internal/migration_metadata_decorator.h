@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_V2_INTERNAL_MIGRATION_METADATA_DECORATOR_H
 
 #include "google/cloud/bigquery/migration/v2/internal/migration_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -81,9 +82,9 @@ class MigrationServiceMetadata : public MigrationServiceStub {
           ListMigrationSubtasksRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<MigrationServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_SYSTEM_POLICY_V1_METADATA_DECORATOR_H
 
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -43,9 +44,9 @@ class SystemPolicyV1Metadata : public SystemPolicyV1Stub {
           request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<SystemPolicyV1Stub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

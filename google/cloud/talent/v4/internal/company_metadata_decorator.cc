@@ -46,7 +46,7 @@ StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceMetadata::CreateCompany(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CreateCompanyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCompany(context, request);
 }
@@ -54,7 +54,7 @@ CompanyServiceMetadata::CreateCompany(
 StatusOr<google::cloud::talent::v4::Company> CompanyServiceMetadata::GetCompany(
     grpc::ClientContext& context,
     google::cloud::talent::v4::GetCompanyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCompany(context, request);
 }
@@ -63,7 +63,7 @@ StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceMetadata::UpdateCompany(
     grpc::ClientContext& context,
     google::cloud::talent::v4::UpdateCompanyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("company.name=",
                            internal::UrlEncode(request.company().name())));
   return child_->UpdateCompany(context, request);
@@ -72,7 +72,7 @@ CompanyServiceMetadata::UpdateCompany(
 Status CompanyServiceMetadata::DeleteCompany(
     grpc::ClientContext& context,
     google::cloud::talent::v4::DeleteCompanyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteCompany(context, request);
 }
@@ -81,23 +81,24 @@ StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
 CompanyServiceMetadata::ListCompanies(
     grpc::ClientContext& context,
     google::cloud::talent::v4::ListCompaniesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCompanies(context, request);
 }
 
 void CompanyServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void CompanyServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void CompanyServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

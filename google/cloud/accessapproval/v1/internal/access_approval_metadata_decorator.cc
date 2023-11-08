@@ -47,7 +47,7 @@ AccessApprovalMetadata::ListApprovalRequests(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::ListApprovalRequestsMessage const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListApprovalRequests(context, request);
 }
@@ -57,7 +57,7 @@ AccessApprovalMetadata::GetApprovalRequest(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetApprovalRequest(context, request);
 }
@@ -67,7 +67,7 @@ AccessApprovalMetadata::ApproveApprovalRequest(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ApproveApprovalRequest(context, request);
 }
@@ -77,7 +77,7 @@ AccessApprovalMetadata::DismissApprovalRequest(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DismissApprovalRequest(context, request);
 }
@@ -87,7 +87,7 @@ AccessApprovalMetadata::InvalidateApprovalRequest(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->InvalidateApprovalRequest(context, request);
 }
@@ -97,7 +97,7 @@ AccessApprovalMetadata::GetAccessApprovalSettings(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAccessApprovalSettings(context, request);
 }
@@ -107,7 +107,7 @@ AccessApprovalMetadata::UpdateAccessApprovalSettings(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::
         UpdateAccessApprovalSettingsMessage const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("settings.name=",
                            internal::UrlEncode(request.settings().name())));
   return child_->UpdateAccessApprovalSettings(context, request);
@@ -117,7 +117,7 @@ Status AccessApprovalMetadata::DeleteAccessApprovalSettings(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::
         DeleteAccessApprovalSettingsMessage const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAccessApprovalSettings(context, request);
 }
@@ -127,23 +127,24 @@ AccessApprovalMetadata::GetAccessApprovalServiceAccount(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::
         GetAccessApprovalServiceAccountMessage const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAccessApprovalServiceAccount(context, request);
 }
 
 void AccessApprovalMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void AccessApprovalMetadata::SetMetadata(grpc::ClientContext& context) {
+void AccessApprovalMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

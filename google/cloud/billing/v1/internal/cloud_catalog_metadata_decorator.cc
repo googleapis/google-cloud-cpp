@@ -46,7 +46,7 @@ StatusOr<google::cloud::billing::v1::ListServicesResponse>
 CloudCatalogMetadata::ListServices(
     grpc::ClientContext& context,
     google::cloud::billing::v1::ListServicesRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ListServices(context, request);
 }
 
@@ -54,23 +54,24 @@ StatusOr<google::cloud::billing::v1::ListSkusResponse>
 CloudCatalogMetadata::ListSkus(
     grpc::ClientContext& context,
     google::cloud::billing::v1::ListSkusRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSkus(context, request);
 }
 
 void CloudCatalogMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options,
                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void CloudCatalogMetadata::SetMetadata(grpc::ClientContext& context) {
+void CloudCatalogMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -61,9 +61,10 @@ StatusOr<google::datastore::v1::LookupResponse> DatastoreMetadata::Lookup(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->Lookup(context, request);
 }
@@ -85,9 +86,10 @@ StatusOr<google::datastore::v1::RunQueryResponse> DatastoreMetadata::RunQuery(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->RunQuery(context, request);
 }
@@ -110,9 +112,10 @@ DatastoreMetadata::RunAggregationQuery(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->RunAggregationQuery(context, request);
 }
@@ -135,9 +138,10 @@ DatastoreMetadata::BeginTransaction(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->BeginTransaction(context, request);
 }
@@ -159,9 +163,10 @@ StatusOr<google::datastore::v1::CommitResponse> DatastoreMetadata::Commit(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->Commit(context, request);
 }
@@ -183,9 +188,10 @@ StatusOr<google::datastore::v1::RollbackResponse> DatastoreMetadata::Rollback(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->Rollback(context, request);
 }
@@ -208,9 +214,10 @@ DatastoreMetadata::AllocateIds(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AllocateIds(context, request);
 }
@@ -233,25 +240,27 @@ DatastoreMetadata::ReserveIds(
   }
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->ReserveIds(context, request);
 }
 
 void DatastoreMetadata::SetMetadata(grpc::ClientContext& context,
+                                    Options const& options,
                                     std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void DatastoreMetadata::SetMetadata(grpc::ClientContext& context) {
+void DatastoreMetadata::SetMetadata(grpc::ClientContext& context,
+                                    Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

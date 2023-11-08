@@ -46,7 +46,7 @@ StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>
 AlertPolicyServiceMetadata::ListAlertPolicies(
     grpc::ClientContext& context,
     google::monitoring::v3::ListAlertPoliciesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListAlertPolicies(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceMetadata::GetAlertPolicy(
     grpc::ClientContext& context,
     google::monitoring::v3::GetAlertPolicyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAlertPolicy(context, request);
 }
@@ -64,7 +64,7 @@ StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceMetadata::CreateAlertPolicy(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateAlertPolicyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateAlertPolicy(context, request);
 }
@@ -72,7 +72,7 @@ AlertPolicyServiceMetadata::CreateAlertPolicy(
 Status AlertPolicyServiceMetadata::DeleteAlertPolicy(
     grpc::ClientContext& context,
     google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAlertPolicy(context, request);
 }
@@ -81,24 +81,25 @@ StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceMetadata::UpdateAlertPolicy(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("alert_policy.name=",
                            internal::UrlEncode(request.alert_policy().name())));
   return child_->UpdateAlertPolicy(context, request);
 }
 
 void AlertPolicyServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void AlertPolicyServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void AlertPolicyServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                             Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

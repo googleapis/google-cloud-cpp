@@ -46,7 +46,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
 WebhooksMetadata::ListWebhooks(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListWebhooks(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksMetadata::GetWebhook(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetWebhook(context, request);
 }
@@ -64,7 +64,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksMetadata::CreateWebhook(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateWebhook(context, request);
 }
@@ -73,7 +73,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksMetadata::UpdateWebhook(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("webhook.name=",
                            internal::UrlEncode(request.webhook().name())));
   return child_->UpdateWebhook(context, request);
@@ -82,23 +82,24 @@ WebhooksMetadata::UpdateWebhook(
 Status WebhooksMetadata::DeleteWebhook(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteWebhook(context, request);
 }
 
 void WebhooksMetadata::SetMetadata(grpc::ClientContext& context,
+                                   Options const& options,
                                    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void WebhooksMetadata::SetMetadata(grpc::ClientContext& context) {
+void WebhooksMetadata::SetMetadata(grpc::ClientContext& context,
+                                   Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

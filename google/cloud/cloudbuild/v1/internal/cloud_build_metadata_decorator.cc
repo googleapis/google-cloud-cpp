@@ -66,9 +66,10 @@ CloudBuildMetadata::AsyncCreateBuild(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncCreateBuild(cq, std::move(context), request);
 }
@@ -93,9 +94,10 @@ StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildMetadata::GetBuild(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->GetBuild(context, request);
 }
@@ -121,9 +123,10 @@ CloudBuildMetadata::ListBuilds(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->ListBuilds(context, request);
 }
@@ -149,9 +152,10 @@ CloudBuildMetadata::CancelBuild(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->CancelBuild(context, request);
 }
@@ -178,9 +182,10 @@ CloudBuildMetadata::AsyncRetryBuild(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncRetryBuild(cq, std::move(context), request);
 }
@@ -207,9 +212,10 @@ CloudBuildMetadata::AsyncApproveBuild(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncApproveBuild(cq, std::move(context), request);
 }
@@ -237,9 +243,10 @@ CloudBuildMetadata::CreateBuildTrigger(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->CreateBuildTrigger(context, request);
 }
@@ -265,9 +272,10 @@ CloudBuildMetadata::GetBuildTrigger(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->GetBuildTrigger(context, request);
 }
@@ -294,9 +302,10 @@ CloudBuildMetadata::ListBuildTriggers(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->ListBuildTriggers(context, request);
 }
@@ -323,9 +332,10 @@ Status CloudBuildMetadata::DeleteBuildTrigger(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->DeleteBuildTrigger(context, request);
 }
@@ -355,9 +365,10 @@ CloudBuildMetadata::UpdateBuildTrigger(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->UpdateBuildTrigger(context, request);
 }
@@ -384,9 +395,10 @@ CloudBuildMetadata::AsyncRunBuildTrigger(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncRunBuildTrigger(cq, std::move(context), request);
 }
@@ -397,7 +409,7 @@ CloudBuildMetadata::ReceiveTriggerWebhook(
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
         request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "trigger=", internal::UrlEncode(request.trigger())));
   return child_->ReceiveTriggerWebhook(context, request);
@@ -425,9 +437,10 @@ CloudBuildMetadata::AsyncCreateWorkerPool(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncCreateWorkerPool(cq, std::move(context), request);
 }
@@ -453,9 +466,10 @@ CloudBuildMetadata::GetWorkerPool(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->GetWorkerPool(context, request);
 }
@@ -482,9 +496,10 @@ CloudBuildMetadata::AsyncDeleteWorkerPool(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncDeleteWorkerPool(cq, std::move(context), request);
 }
@@ -513,9 +528,10 @@ CloudBuildMetadata::AsyncUpdateWorkerPool(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context);
+    SetMetadata(*context, internal::CurrentOptions());
   } else {
-    SetMetadata(*context, absl::StrJoin(params, "&"));
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->AsyncUpdateWorkerPool(cq, std::move(context), request);
 }
@@ -541,9 +557,10 @@ CloudBuildMetadata::ListWorkerPools(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context);
+    SetMetadata(context, internal::CurrentOptions());
   } else {
-    SetMetadata(context, absl::StrJoin(params, "&"));
+    SetMetadata(context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
   }
   return child_->ListWorkerPools(context, request);
 }
@@ -553,7 +570,7 @@ CloudBuildMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -562,23 +579,24 @@ future<Status> CloudBuildMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void CloudBuildMetadata::SetMetadata(grpc::ClientContext& context,
+                                     Options const& options,
                                      std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void CloudBuildMetadata::SetMetadata(grpc::ClientContext& context) {
+void CloudBuildMetadata::SetMetadata(grpc::ClientContext& context,
+                                     Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGETS_V1_INTERNAL_BUDGET_METADATA_DECORATOR_H
 
 #include "google/cloud/billing/budgets/v1/internal/budget_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -63,9 +64,9 @@ class BudgetServiceMetadata : public BudgetServiceStub {
       override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<BudgetServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

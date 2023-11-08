@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RAPIDMIGRATIONASSESSMENT_V1_INTERNAL_RAPID_MIGRATION_ASSESSMENT_METADATA_DECORATOR_H
 
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -110,9 +111,9 @@ class RapidMigrationAssessmentMetadata : public RapidMigrationAssessmentStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<RapidMigrationAssessmentStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

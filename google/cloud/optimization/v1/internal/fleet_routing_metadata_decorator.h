@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_INTERNAL_FLEET_ROUTING_METADATA_DECORATOR_H
 
 #include "google/cloud/optimization/v1/internal/fleet_routing_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -60,9 +61,9 @@ class FleetRoutingMetadata : public FleetRoutingStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<FleetRoutingStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

@@ -46,7 +46,7 @@ StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceMetadata::CreateContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::CreateContentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateContent(context, request);
 }
@@ -55,7 +55,7 @@ StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceMetadata::UpdateContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::UpdateContentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("content.name=",
                            internal::UrlEncode(request.content().name())));
   return child_->UpdateContent(context, request);
@@ -64,7 +64,7 @@ ContentServiceMetadata::UpdateContent(
 Status ContentServiceMetadata::DeleteContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::DeleteContentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteContent(context, request);
 }
@@ -73,7 +73,7 @@ StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceMetadata::GetContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetContentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetContent(context, request);
 }
@@ -81,16 +81,18 @@ ContentServiceMetadata::GetContent(
 StatusOr<google::iam::v1::Policy> ContentServiceMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> ContentServiceMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -98,8 +100,9 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ContentServiceMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",
-                                    internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -107,23 +110,24 @@ StatusOr<google::cloud::dataplex::v1::ListContentResponse>
 ContentServiceMetadata::ListContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListContentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListContent(context, request);
 }
 
 void ContentServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ContentServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void ContentServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                         Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

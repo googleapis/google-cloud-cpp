@@ -46,7 +46,7 @@ StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::CreateServingConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::CreateServingConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateServingConfig(context, request);
 }
@@ -54,7 +54,7 @@ ServingConfigServiceMetadata::CreateServingConfig(
 Status ServingConfigServiceMetadata::DeleteServingConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteServingConfig(context, request);
 }
@@ -64,7 +64,7 @@ ServingConfigServiceMetadata::UpdateServingConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("serving_config.name=",
                    internal::UrlEncode(request.serving_config().name())));
   return child_->UpdateServingConfig(context, request);
@@ -74,7 +74,7 @@ StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::GetServingConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetServingConfigRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetServingConfig(context, request);
 }
@@ -83,7 +83,7 @@ StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
 ServingConfigServiceMetadata::ListServingConfigs(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ListServingConfigsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListServingConfigs(context, request);
 }
@@ -92,7 +92,7 @@ StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::AddControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::AddControlRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("serving_config=",
                            internal::UrlEncode(request.serving_config())));
   return child_->AddControl(context, request);
@@ -102,24 +102,25 @@ StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::RemoveControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::RemoveControlRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("serving_config=",
                            internal::UrlEncode(request.serving_config())));
   return child_->RemoveControl(context, request);
 }
 
 void ServingConfigServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ServingConfigServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void ServingConfigServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                               Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

@@ -46,7 +46,7 @@ StatusOr<google::cloud::config::v1::ListDeploymentsResponse>
 ConfigMetadata::ListDeployments(
     grpc::ClientContext& context,
     google::cloud::config::v1::ListDeploymentsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDeployments(context, request);
 }
@@ -54,7 +54,7 @@ ConfigMetadata::ListDeployments(
 StatusOr<google::cloud::config::v1::Deployment> ConfigMetadata::GetDeployment(
     grpc::ClientContext& context,
     google::cloud::config::v1::GetDeploymentRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDeployment(context, request);
 }
@@ -64,7 +64,7 @@ ConfigMetadata::AsyncCreateDeployment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::config::v1::CreateDeploymentRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateDeployment(cq, std::move(context), request);
 }
@@ -74,7 +74,7 @@ ConfigMetadata::AsyncUpdateDeployment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::config::v1::UpdateDeploymentRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("deployment.name=",
                            internal::UrlEncode(request.deployment().name())));
   return child_->AsyncUpdateDeployment(cq, std::move(context), request);
@@ -85,7 +85,7 @@ ConfigMetadata::AsyncDeleteDeployment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::config::v1::DeleteDeploymentRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteDeployment(cq, std::move(context), request);
 }
@@ -94,7 +94,7 @@ StatusOr<google::cloud::config::v1::ListRevisionsResponse>
 ConfigMetadata::ListRevisions(
     grpc::ClientContext& context,
     google::cloud::config::v1::ListRevisionsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRevisions(context, request);
 }
@@ -102,7 +102,7 @@ ConfigMetadata::ListRevisions(
 StatusOr<google::cloud::config::v1::Revision> ConfigMetadata::GetRevision(
     grpc::ClientContext& context,
     google::cloud::config::v1::GetRevisionRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRevision(context, request);
 }
@@ -110,7 +110,7 @@ StatusOr<google::cloud::config::v1::Revision> ConfigMetadata::GetRevision(
 StatusOr<google::cloud::config::v1::Resource> ConfigMetadata::GetResource(
     grpc::ClientContext& context,
     google::cloud::config::v1::GetResourceRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetResource(context, request);
 }
@@ -119,7 +119,7 @@ StatusOr<google::cloud::config::v1::ListResourcesResponse>
 ConfigMetadata::ListResources(
     grpc::ClientContext& context,
     google::cloud::config::v1::ListResourcesRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListResources(context, request);
 }
@@ -129,7 +129,7 @@ ConfigMetadata::ExportDeploymentStatefile(
     grpc::ClientContext& context,
     google::cloud::config::v1::ExportDeploymentStatefileRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ExportDeploymentStatefile(context, request);
 }
@@ -138,7 +138,7 @@ StatusOr<google::cloud::config::v1::Statefile>
 ConfigMetadata::ExportRevisionStatefile(
     grpc::ClientContext& context,
     google::cloud::config::v1::ExportRevisionStatefileRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ExportRevisionStatefile(context, request);
 }
@@ -146,7 +146,7 @@ ConfigMetadata::ExportRevisionStatefile(
 StatusOr<google::cloud::config::v1::Statefile> ConfigMetadata::ImportStatefile(
     grpc::ClientContext& context,
     google::cloud::config::v1::ImportStatefileRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportStatefile(context, request);
 }
@@ -154,7 +154,7 @@ StatusOr<google::cloud::config::v1::Statefile> ConfigMetadata::ImportStatefile(
 Status ConfigMetadata::DeleteStatefile(
     grpc::ClientContext& context,
     google::cloud::config::v1::DeleteStatefileRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteStatefile(context, request);
 }
@@ -164,7 +164,7 @@ ConfigMetadata::AsyncLockDeployment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::config::v1::LockDeploymentRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncLockDeployment(cq, std::move(context), request);
 }
@@ -174,7 +174,7 @@ ConfigMetadata::AsyncUnlockDeployment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::config::v1::UnlockDeploymentRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUnlockDeployment(cq, std::move(context), request);
 }
@@ -182,7 +182,7 @@ ConfigMetadata::AsyncUnlockDeployment(
 StatusOr<google::cloud::config::v1::LockInfo> ConfigMetadata::ExportLockInfo(
     grpc::ClientContext& context,
     google::cloud::config::v1::ExportLockInfoRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ExportLockInfo(context, request);
 }
@@ -192,7 +192,7 @@ ConfigMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -201,23 +201,24 @@ future<Status> ConfigMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void ConfigMetadata::SetMetadata(grpc::ClientContext& context,
+                                 Options const& options,
                                  std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void ConfigMetadata::SetMetadata(grpc::ClientContext& context) {
+void ConfigMetadata::SetMetadata(grpc::ClientContext& context,
+                                 Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

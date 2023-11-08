@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_V2_INTERNAL_NOTEBOOK_METADATA_DECORATOR_H
 
 #include "google/cloud/notebooks/v2/internal/notebook_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -119,9 +120,9 @@ class NotebookServiceMetadata : public NotebookServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<NotebookServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

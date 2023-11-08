@@ -46,7 +46,7 @@ StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
 AnswerRecordsMetadata::ListAnswerRecords(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAnswerRecords(context, request);
 }
@@ -56,24 +56,25 @@ AnswerRecordsMetadata::UpdateAnswerRecord(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
   SetMetadata(
-      context,
+      context, internal::CurrentOptions(),
       absl::StrCat("answer_record.name=",
                    internal::UrlEncode(request.answer_record().name())));
   return child_->UpdateAnswerRecord(context, request);
 }
 
 void AnswerRecordsMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void AnswerRecordsMetadata::SetMetadata(grpc::ClientContext& context) {
+void AnswerRecordsMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

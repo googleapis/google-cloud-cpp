@@ -47,7 +47,7 @@ LivestreamServiceMetadata::AsyncCreateChannel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateChannel(cq, std::move(context), request);
 }
@@ -56,7 +56,7 @@ StatusOr<google::cloud::video::livestream::v1::ListChannelsResponse>
 LivestreamServiceMetadata::ListChannels(
     grpc::ClientContext& context,
     google::cloud::video::livestream::v1::ListChannelsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListChannels(context, request);
 }
@@ -65,7 +65,7 @@ StatusOr<google::cloud::video::livestream::v1::Channel>
 LivestreamServiceMetadata::GetChannel(
     grpc::ClientContext& context,
     google::cloud::video::livestream::v1::GetChannelRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetChannel(context, request);
 }
@@ -75,7 +75,7 @@ LivestreamServiceMetadata::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteChannel(cq, std::move(context), request);
 }
@@ -85,7 +85,7 @@ LivestreamServiceMetadata::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("channel.name=",
                            internal::UrlEncode(request.channel().name())));
   return child_->AsyncUpdateChannel(cq, std::move(context), request);
@@ -96,7 +96,7 @@ LivestreamServiceMetadata::AsyncStartChannel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::StartChannelRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStartChannel(cq, std::move(context), request);
 }
@@ -106,7 +106,7 @@ LivestreamServiceMetadata::AsyncStopChannel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::StopChannelRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStopChannel(cq, std::move(context), request);
 }
@@ -116,7 +116,7 @@ LivestreamServiceMetadata::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::CreateInputRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateInput(cq, std::move(context), request);
 }
@@ -125,7 +125,7 @@ StatusOr<google::cloud::video::livestream::v1::ListInputsResponse>
 LivestreamServiceMetadata::ListInputs(
     grpc::ClientContext& context,
     google::cloud::video::livestream::v1::ListInputsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInputs(context, request);
 }
@@ -134,7 +134,7 @@ StatusOr<google::cloud::video::livestream::v1::Input>
 LivestreamServiceMetadata::GetInput(
     grpc::ClientContext& context,
     google::cloud::video::livestream::v1::GetInputRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInput(context, request);
 }
@@ -144,7 +144,7 @@ LivestreamServiceMetadata::AsyncDeleteInput(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteInput(cq, std::move(context), request);
 }
@@ -155,7 +155,7 @@ LivestreamServiceMetadata::AsyncUpdateInput(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("input.name=", internal::UrlEncode(request.input().name())));
   return child_->AsyncUpdateInput(cq, std::move(context), request);
 }
@@ -164,7 +164,7 @@ StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceMetadata::CreateEvent(
     grpc::ClientContext& context,
     google::cloud::video::livestream::v1::CreateEventRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEvent(context, request);
 }
@@ -173,7 +173,7 @@ StatusOr<google::cloud::video::livestream::v1::ListEventsResponse>
 LivestreamServiceMetadata::ListEvents(
     grpc::ClientContext& context,
     google::cloud::video::livestream::v1::ListEventsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEvents(context, request);
 }
@@ -182,7 +182,7 @@ StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceMetadata::GetEvent(
     grpc::ClientContext& context,
     google::cloud::video::livestream::v1::GetEventRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEvent(context, request);
 }
@@ -190,7 +190,7 @@ LivestreamServiceMetadata::GetEvent(
 Status LivestreamServiceMetadata::DeleteEvent(
     grpc::ClientContext& context,
     google::cloud::video::livestream::v1::DeleteEventRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEvent(context, request);
 }
@@ -200,7 +200,7 @@ LivestreamServiceMetadata::AsyncCreateAsset(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateAsset(cq, std::move(context), request);
 }
@@ -210,7 +210,7 @@ LivestreamServiceMetadata::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAsset(cq, std::move(context), request);
 }
@@ -219,7 +219,7 @@ StatusOr<google::cloud::video::livestream::v1::Asset>
 LivestreamServiceMetadata::GetAsset(
     grpc::ClientContext& context,
     google::cloud::video::livestream::v1::GetAssetRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAsset(context, request);
 }
@@ -228,7 +228,7 @@ StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
 LivestreamServiceMetadata::ListAssets(
     grpc::ClientContext& context,
     google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAssets(context, request);
 }
@@ -237,7 +237,7 @@ StatusOr<google::cloud::video::livestream::v1::Pool>
 LivestreamServiceMetadata::GetPool(
     grpc::ClientContext& context,
     google::cloud::video::livestream::v1::GetPoolRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPool(context, request);
 }
@@ -248,7 +248,7 @@ LivestreamServiceMetadata::AsyncUpdatePool(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
   SetMetadata(
-      *context,
+      *context, internal::CurrentOptions(),
       absl::StrCat("pool.name=", internal::UrlEncode(request.pool().name())));
   return child_->AsyncUpdatePool(cq, std::move(context), request);
 }
@@ -258,7 +258,7 @@ LivestreamServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -267,23 +267,24 @@ future<Status> LivestreamServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void LivestreamServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options,
                                             std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void LivestreamServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void LivestreamServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                            Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

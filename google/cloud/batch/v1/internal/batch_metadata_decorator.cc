@@ -45,7 +45,7 @@ BatchServiceMetadata::BatchServiceMetadata(
 StatusOr<google::cloud::batch::v1::Job> BatchServiceMetadata::CreateJob(
     grpc::ClientContext& context,
     google::cloud::batch::v1::CreateJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateJob(context, request);
 }
@@ -53,7 +53,7 @@ StatusOr<google::cloud::batch::v1::Job> BatchServiceMetadata::CreateJob(
 StatusOr<google::cloud::batch::v1::Job> BatchServiceMetadata::GetJob(
     grpc::ClientContext& context,
     google::cloud::batch::v1::GetJobRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetJob(context, request);
 }
@@ -63,7 +63,7 @@ BatchServiceMetadata::AsyncDeleteJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::batch::v1::DeleteJobRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteJob(cq, std::move(context), request);
 }
@@ -72,7 +72,7 @@ StatusOr<google::cloud::batch::v1::ListJobsResponse>
 BatchServiceMetadata::ListJobs(
     grpc::ClientContext& context,
     google::cloud::batch::v1::ListJobsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListJobs(context, request);
 }
@@ -80,7 +80,7 @@ BatchServiceMetadata::ListJobs(
 StatusOr<google::cloud::batch::v1::Task> BatchServiceMetadata::GetTask(
     grpc::ClientContext& context,
     google::cloud::batch::v1::GetTaskRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTask(context, request);
 }
@@ -89,7 +89,7 @@ StatusOr<google::cloud::batch::v1::ListTasksResponse>
 BatchServiceMetadata::ListTasks(
     grpc::ClientContext& context,
     google::cloud::batch::v1::ListTasksRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTasks(context, request);
 }
@@ -99,7 +99,7 @@ BatchServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -108,23 +108,24 @@ future<Status> BatchServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void BatchServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options,
                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void BatchServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void BatchServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                       Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

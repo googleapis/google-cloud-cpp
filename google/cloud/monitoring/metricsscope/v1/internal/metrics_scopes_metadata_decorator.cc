@@ -47,7 +47,7 @@ MetricsScopesMetadata::GetMetricsScope(
     grpc::ClientContext& context,
     google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMetricsScope(context, request);
 }
@@ -58,7 +58,7 @@ MetricsScopesMetadata::ListMetricsScopesByMonitoredProject(
     grpc::ClientContext& context,
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, internal::CurrentOptions());
   return child_->ListMetricsScopesByMonitoredProject(context, request);
 }
 
@@ -68,7 +68,7 @@ MetricsScopesMetadata::AsyncCreateMonitoredProject(
     std::shared_ptr<grpc::ClientContext> context,
     google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateMonitoredProject(cq, std::move(context), request);
 }
@@ -79,7 +79,7 @@ MetricsScopesMetadata::AsyncDeleteMonitoredProject(
     std::shared_ptr<grpc::ClientContext> context,
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
         request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteMonitoredProject(cq, std::move(context), request);
 }
@@ -89,7 +89,7 @@ MetricsScopesMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -98,23 +98,24 @@ future<Status> MetricsScopesMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void MetricsScopesMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void MetricsScopesMetadata::SetMetadata(grpc::ClientContext& context) {
+void MetricsScopesMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

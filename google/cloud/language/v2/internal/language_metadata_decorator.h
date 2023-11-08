@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V2_INTERNAL_LANGUAGE_METADATA_DECORATOR_H
 
 #include "google/cloud/language/v2/internal/language_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -61,9 +62,9 @@ class LanguageServiceMetadata : public LanguageServiceStub {
       google::cloud::language::v2::AnnotateTextRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<LanguageServiceStub> child_;
   std::multimap<std::string, std::string> fixed_metadata_;

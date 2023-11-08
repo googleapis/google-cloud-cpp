@@ -47,7 +47,7 @@ KeyTrackingServiceMetadata::GetProtectedResourcesSummary(
     grpc::ClientContext& context,
     google::cloud::kms::inventory::v1::
         GetProtectedResourcesSummaryRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetProtectedResourcesSummary(context, request);
 }
@@ -57,23 +57,24 @@ KeyTrackingServiceMetadata::SearchProtectedResources(
     grpc::ClientContext& context,
     google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
         request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("scope=", internal::UrlEncode(request.scope())));
   return child_->SearchProtectedResources(context, request);
 }
 
 void KeyTrackingServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void KeyTrackingServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+void KeyTrackingServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                             Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());

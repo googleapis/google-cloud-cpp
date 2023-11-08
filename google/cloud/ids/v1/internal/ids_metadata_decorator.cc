@@ -45,7 +45,7 @@ StatusOr<google::cloud::ids::v1::ListEndpointsResponse>
 IDSMetadata::ListEndpoints(
     grpc::ClientContext& context,
     google::cloud::ids::v1::ListEndpointsRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEndpoints(context, request);
 }
@@ -53,7 +53,7 @@ IDSMetadata::ListEndpoints(
 StatusOr<google::cloud::ids::v1::Endpoint> IDSMetadata::GetEndpoint(
     grpc::ClientContext& context,
     google::cloud::ids::v1::GetEndpointRequest const& request) {
-  SetMetadata(context,
+  SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEndpoint(context, request);
 }
@@ -63,7 +63,7 @@ IDSMetadata::AsyncCreateEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateEndpoint(cq, std::move(context), request);
 }
@@ -73,7 +73,7 @@ IDSMetadata::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteEndpoint(cq, std::move(context), request);
 }
@@ -82,7 +82,7 @@ future<StatusOr<google::longrunning::Operation>> IDSMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
@@ -91,23 +91,24 @@ future<Status> IDSMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context,
+  SetMetadata(*context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void IDSMetadata::SetMetadata(grpc::ClientContext& context,
+                              Options const& options,
                               std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void IDSMetadata::SetMetadata(grpc::ClientContext& context) {
+void IDSMetadata::SetMetadata(grpc::ClientContext& context,
+                              Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
