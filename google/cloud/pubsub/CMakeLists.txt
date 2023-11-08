@@ -18,10 +18,12 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Pub/Sub C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Pub/Sub")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
-                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "pubsub_internal" "pubsub_testing"
-                            "examples" "samples")
+set(DOXYGEN_EXAMPLE_PATH
+    ${CMAKE_CURRENT_SOURCE_DIR}/samples ${CMAKE_CURRENT_SOURCE_DIR}/quickstart,
+    ${CMAKE_CURRENT_SOURCE_DIR}/admin/samples)
+set(DOXYGEN_EXCLUDE_SYMBOLS
+    "internal" "pubsub_admin_internal" "pubsub_internal" "pubsub_testing"
+    "examples" "samples")
 
 include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("pubsub" DEPENDS cloud-docs
@@ -39,6 +41,58 @@ add_library(
     google_cloud_cpp_pubsub # cmake-format: sort
     ack_handler.cc
     ack_handler.h
+    admin/internal/subscription_admin_auth_decorator.cc
+    admin/internal/subscription_admin_auth_decorator.h
+    admin/internal/subscription_admin_connection_impl.cc
+    admin/internal/subscription_admin_connection_impl.h
+    admin/internal/subscription_admin_logging_decorator.cc
+    admin/internal/subscription_admin_logging_decorator.h
+    admin/internal/subscription_admin_metadata_decorator.cc
+    admin/internal/subscription_admin_metadata_decorator.h
+    admin/internal/subscription_admin_option_defaults.cc
+    admin/internal/subscription_admin_option_defaults.h
+    admin/internal/subscription_admin_retry_traits.h
+    admin/internal/subscription_admin_stub.cc
+    admin/internal/subscription_admin_stub.h
+    admin/internal/subscription_admin_stub_factory.cc
+    admin/internal/subscription_admin_stub_factory.h
+    admin/internal/subscription_admin_tracing_connection.cc
+    admin/internal/subscription_admin_tracing_connection.h
+    admin/internal/subscription_admin_tracing_stub.cc
+    admin/internal/subscription_admin_tracing_stub.h
+    admin/internal/topic_admin_auth_decorator.cc
+    admin/internal/topic_admin_auth_decorator.h
+    admin/internal/topic_admin_connection_impl.cc
+    admin/internal/topic_admin_connection_impl.h
+    admin/internal/topic_admin_logging_decorator.cc
+    admin/internal/topic_admin_logging_decorator.h
+    admin/internal/topic_admin_metadata_decorator.cc
+    admin/internal/topic_admin_metadata_decorator.h
+    admin/internal/topic_admin_option_defaults.cc
+    admin/internal/topic_admin_option_defaults.h
+    admin/internal/topic_admin_retry_traits.h
+    admin/internal/topic_admin_stub.cc
+    admin/internal/topic_admin_stub.h
+    admin/internal/topic_admin_stub_factory.cc
+    admin/internal/topic_admin_stub_factory.h
+    admin/internal/topic_admin_tracing_connection.cc
+    admin/internal/topic_admin_tracing_connection.h
+    admin/internal/topic_admin_tracing_stub.cc
+    admin/internal/topic_admin_tracing_stub.h
+    admin/subscription_admin_client.cc
+    admin/subscription_admin_client.h
+    admin/subscription_admin_connection.cc
+    admin/subscription_admin_connection.h
+    admin/subscription_admin_connection_idempotency_policy.cc
+    admin/subscription_admin_connection_idempotency_policy.h
+    admin/subscription_admin_options.h
+    admin/topic_admin_client.cc
+    admin/topic_admin_client.h
+    admin/topic_admin_connection.cc
+    admin/topic_admin_connection.h
+    admin/topic_admin_connection_idempotency_policy.cc
+    admin/topic_admin_connection_idempotency_policy.h
+    admin/topic_admin_options.h
     application_callback.h
     backoff_policy.h
     blocking_publisher.cc
@@ -240,6 +294,8 @@ create_bazel_config(google_cloud_cpp_pubsub YEAR "2020")
 add_library(google_cloud_cpp_pubsub_mocks INTERFACE)
 set(google_cloud_cpp_pubsub_mocks_hdrs
     # cmake-format: sort
+    admin/mocks/mock_subscription_admin_connection.h
+    admin/mocks/mock_topic_admin_connection.h
     mocks/mock_ack_handler.h
     mocks/mock_blocking_publisher_connection.h
     mocks/mock_exactly_once_ack_handler.h
@@ -251,6 +307,14 @@ set(google_cloud_cpp_pubsub_mocks_hdrs
     mocks/mock_topic_admin_connection.h)
 export_list_to_bazel("google_cloud_cpp_pubsub_mocks.bzl"
                      "google_cloud_cpp_pubsub_mocks_hdrs" YEAR "2020")
+# Add the prefix to each file name for cmake
+set(cmake_google_cloud_cpp_pubsub_mocks_hdrs)
+foreach (fname ${google_cloud_cpp_pubsub_mocks_hdrs})
+    list(APPEND cmake_google_cloud_cpp_pubsub_mocks_hdrs
+         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${fname}>")
+endforeach ()
+target_sources(google_cloud_cpp_pubsub_mocks
+               INTERFACE ${cmake_google_cloud_cpp_pubsub_mocks_hdrs})
 target_link_libraries(
     google_cloud_cpp_pubsub_mocks
     INTERFACE google-cloud-cpp::pubsub GTest::gmock_main GTest::gmock
@@ -384,6 +448,7 @@ endfunction ()
 if (BUILD_TESTING)
     google_cloud_cpp_pubsub_client_define_tests()
     add_subdirectory(benchmarks)
+    add_subdirectory(admin/samples)
     add_subdirectory(integration_tests)
 endif (BUILD_TESTING)
 
@@ -427,13 +492,11 @@ install(
 
 google_cloud_cpp_install_headers("google_cloud_cpp_pubsub"
                                  "include/google/cloud/pubsub")
-
 # Export the CMake targets to make it easy to create configuration files.
 install(
     EXPORT pubsub_mocks-targets
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsub_mocks"
     COMPONENT google_cloud_cpp_development)
-
 install(
     TARGETS google_cloud_cpp_pubsub_mocks
     EXPORT pubsub_mocks-targets
@@ -441,6 +504,10 @@ install(
 install(
     FILES ${google_cloud_cpp_pubsub_mocks_hdrs}
     DESTINATION "include/google/cloud/pubsub/mocks"
+    COMPONENT google_cloud_cpp_development)
+install(
+    FILES ${google_cloud_cpp_pubsub_mocks_hdrs}
+    DESTINATION "include/google/cloud/pubsub/admin/mocks"
     COMPONENT google_cloud_cpp_development)
 
 google_cloud_cpp_add_pkgconfig(
