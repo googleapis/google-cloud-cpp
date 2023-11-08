@@ -353,8 +353,6 @@ using ::testing::IsEmpty;
 using ::testing::UnorderedElementsAre;
 
 TEST(MakePublisherConnectionTest, TracingEnabled) {
-  internal::OptionsSpan options(
-      Options{}.set<pubsub::MaxOtelLinkCountOption>(128));
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
