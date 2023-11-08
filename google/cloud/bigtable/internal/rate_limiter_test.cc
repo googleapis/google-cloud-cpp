@@ -91,7 +91,7 @@ TEST(RateLimiter, StoresTokensUpToLimit) {
   EXPECT_EQ(absl::FromChrono(wait), absl::Seconds(20));
 }
 
-TEST(RateLimiter, Period) {
+TEST(RateLimiter, PeriodLessThanOneSecond) {
   auto clock = std::make_shared<FakeSteadyClock>();
   RateLimiter limiter(clock, std::chrono::milliseconds(100));
 
@@ -102,7 +102,7 @@ TEST(RateLimiter, Period) {
   EXPECT_EQ(absl::FromChrono(wait), absl::Milliseconds(100));
 }
 
-TEST(RateLimiter, PeriodLessThanOne) {
+TEST(RateLimiter, PeriodGreaterThanOneSecond) {
   auto clock = std::make_shared<FakeSteadyClock>();
   RateLimiter limiter(clock, std::chrono::seconds(10));
 

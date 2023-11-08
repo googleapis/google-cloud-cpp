@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/rate_limiter.h"
+#include <algorithm>
 
 namespace google {
 namespace cloud {

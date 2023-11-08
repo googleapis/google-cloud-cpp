@@ -80,13 +80,8 @@ class RateLimiter {
                        std::chrono::duration<Rep1, Period1> period,
                        std::chrono::duration<Rep2, Period2> smoothing_interval)
       : clock_(std::move(clock)),
-        // Note that std::chrono::abs() is not available until C++17.
-        smoothing_interval_(std::chrono::duration_cast<Clock::duration>(
-            smoothing_interval >= Clock::duration::zero()
-                ? smoothing_interval
-                : -smoothing_interval)),
-        period_(std::chrono::duration_cast<Clock::duration>(
-            period >= Clock::duration::zero() ? period : -period)),
+        smoothing_interval_(abs(smoothing_interval)),
+        period_(abs(period)),
         next_(clock_->Now()) {}
 
   /**
@@ -108,14 +103,19 @@ class RateLimiter {
    */
   template <typename Rep, typename Period>
   void set_period(std::chrono::duration<Rep, Period> period) {
-    // Note that std::chrono::abs() is not available until C++17.
-    if (period < Clock::duration::zero()) period = -period;
     std::lock_guard<std::mutex> lk(mu_);
-    period_ = std::chrono::duration_cast<Clock::duration>(period);
+    period_ = abs(period);
   }
   Clock::duration period() const { return period_; }
 
  private:
+  // Note that std::chrono::abs() is not available until C++17.
+  template <typename Rep, typename Period>
+  static Clock::duration abs(std::chrono::duration<Rep, Period> d) {
+    return std::chrono::duration_cast<Clock::duration>(
+        d >= std::chrono::duration<Rep, Period>::zero() ? d : -d);
+  }
+
   std::mutex mu_;
   std::shared_ptr<Clock> clock_;
   // Over any `smoothing_interval_`, we must average <= 1 token per `period_`.
