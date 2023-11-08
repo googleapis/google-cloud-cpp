@@ -92,8 +92,7 @@ auto MakeChild(
 }
 
 Spans MakeBatchSinkSpans(Spans message_spans, Options options) {
-  auto const max_otel_links =
-      options.get<pubsub::MaxOtelLinkCountOption>();
+  auto const max_otel_links = options.get<pubsub::MaxOtelLinkCountOption>();
   Spans batch_sink_spans;
   // If the batch size is less than the max size, add the links to a single
   // span. If the batch size is greater than the max size, create a parent
@@ -130,7 +129,8 @@ Spans MakeBatchSinkSpans(Spans message_spans, Options options) {
  */
 class TracingMessageBatch : public MessageBatch {
  public:
-  explicit TracingMessageBatch(std::shared_ptr<MessageBatch> child,  Options opts)
+  explicit TracingMessageBatch(std::shared_ptr<MessageBatch> child,
+                               Options opts)
       : child_(std::move(child)), options_(std::move(opts)) {}
 
   ~TracingMessageBatch() override = default;
@@ -153,7 +153,8 @@ class TracingMessageBatch : public MessageBatch {
       message_spans.swap(message_spans_);
     }
 
-    auto batch_sink_spans = MakeBatchSinkSpans(std::move(message_spans), std::move(options_));
+    auto batch_sink_spans =
+        MakeBatchSinkSpans(std::move(message_spans), std::move(options_));
 
     // The first span in `batch_sink_spans` is the parent to the other spans in
     // the vector.
@@ -182,14 +183,15 @@ class TracingMessageBatch : public MessageBatch {
 };
 
 std::shared_ptr<MessageBatch> MakeTracingMessageBatch(
-    std::shared_ptr<MessageBatch> message_batch,  Options opts) {
-  return std::make_shared<TracingMessageBatch>(std::move(message_batch), std::move(opts));
+    std::shared_ptr<MessageBatch> message_batch, Options opts) {
+  return std::make_shared<TracingMessageBatch>(std::move(message_batch),
+                                               std::move(opts));
 }
 
 #else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<MessageBatch> MakeTracingMessageBatch(
-    std::shared_ptr<MessageBatch> message_batch,  Options opts) {
+    std::shared_ptr<MessageBatch> message_batch, Options opts) {
   return message_batch;
 }
 

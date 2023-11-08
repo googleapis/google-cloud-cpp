@@ -33,7 +33,7 @@ Options MakeTestOptions(Options opts) {
             std::chrono::microseconds(1), std::chrono::microseconds(1), 2.0));
   }
   if (!opts.has<pubsub::MaxOtelLinkCountOption>()) {
- opts.set<pubsub::MaxOtelLinkCountOption>(128);
+    opts.set<pubsub::MaxOtelLinkCountOption>(128);
   }
   return opts;
 }

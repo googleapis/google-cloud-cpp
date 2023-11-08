@@ -186,7 +186,8 @@ TEST(TracingMessageBatch, FlushOnlyIncludeSampledLink) {
 
 TEST(TracingMessageBatch, FlushSmallBatch) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
-  auto span_catcher = InstallSpanCatcher();  auto message_span1 = MakeSpan("test span 1");
+  auto span_catcher = InstallSpanCatcher();
+  auto message_span1 = MakeSpan("test span 1");
   auto message_span2 = MakeSpan("test span 2");
   auto mock = std::make_shared<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, SaveMessage(_)).Times(2);
