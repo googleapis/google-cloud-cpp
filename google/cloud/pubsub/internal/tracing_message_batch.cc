@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/internal/tracing_message_batch.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "opentelemetry/context/runtime_context.h"
@@ -90,13 +91,13 @@ auto MakeChild(
                             /*links=*/links, options);
 }
 
-Spans MakeBatchSinkSpans(Spans message_spans) {
-  int64_t max_otel_links = 128;
+Spans MakeBatchSinkSpans(Spans message_spans, Options const& options) {
+  auto const max_otel_links = options.get<pubsub::MaxOtelLinkCountOption>();
   Spans batch_sink_spans;
   // If the batch size is less than the max size, add the links to a single
   // span. If the batch size is greater than the max size, create a parent
   // span with no links and each child spans will contain links.
-  if (static_cast<int64_t>(message_spans.size()) <= max_otel_links) {
+  if (message_spans.size() <= max_otel_links) {
     batch_sink_spans.push_back(MakeParent(
         MakeLinks(message_spans.begin(), message_spans.end()), message_spans));
     return batch_sink_spans;
@@ -128,8 +129,9 @@ Spans MakeBatchSinkSpans(Spans message_spans) {
  */
 class TracingMessageBatch : public MessageBatch {
  public:
-  explicit TracingMessageBatch(std::shared_ptr<MessageBatch> child)
-      : child_(std::move(child)) {}
+  explicit TracingMessageBatch(std::shared_ptr<MessageBatch> child,
+                               Options opts)
+      : child_(std::move(child)), options_(std::move(opts)) {}
 
   ~TracingMessageBatch() override = default;
 
@@ -151,7 +153,8 @@ class TracingMessageBatch : public MessageBatch {
       message_spans.swap(message_spans_);
     }
 
-    auto batch_sink_spans = MakeBatchSinkSpans(std::move(message_spans));
+    auto batch_sink_spans =
+        MakeBatchSinkSpans(std::move(message_spans), options_);
 
     // The first span in `batch_sink_spans` is the parent to the other spans in
     // the vector.
@@ -176,17 +179,19 @@ class TracingMessageBatch : public MessageBatch {
   std::mutex mu_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       message_spans_;  // ABSL_GUARDED_BY(mu_)
+  Options options_;
 };
 
 std::shared_ptr<MessageBatch> MakeTracingMessageBatch(
-    std::shared_ptr<MessageBatch> message_batch) {
-  return std::make_shared<TracingMessageBatch>(std::move(message_batch));
+    std::shared_ptr<MessageBatch> message_batch, Options opts) {
+  return std::make_shared<TracingMessageBatch>(std::move(message_batch),
+                                               std::move(opts));
 }
 
 #else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<MessageBatch> MakeTracingMessageBatch(
-    std::shared_ptr<MessageBatch> message_batch) {
+    std::shared_ptr<MessageBatch> message_batch, Options) {
   return message_batch;
 }
 

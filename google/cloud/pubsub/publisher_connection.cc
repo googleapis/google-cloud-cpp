@@ -52,7 +52,7 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
     std::shared_ptr<pubsub_internal::BatchSink> sink =
         pubsub_internal::DefaultBatchSink::Create(stub, cq, opts);
     if (google::cloud::internal::TracingEnabled(opts)) {
-      message_batch = MakeTracingMessageBatch(std::move(message_batch));
+      message_batch = MakeTracingMessageBatch(std::move(message_batch), opts);
     }
     if (opts.get<pubsub::MessageOrderingOption>()) {
       auto factory = [topic, opts, sink, cq,
