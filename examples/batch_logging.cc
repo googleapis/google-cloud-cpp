@@ -117,7 +117,7 @@ google::cloud::batch::v1::Job CreateTestJob(
 }
 
 void WaitForJob(google::cloud::batch_v1::BatchServiceClient client,
-                std::string job_name) {
+                std::string const& job_name) {
   std::cout << "\nWaiting for " << job_name << std::flush;
   // It takes about 60 seconds to finish a job, so waiting for about 5 minutes
   // seems enough.
