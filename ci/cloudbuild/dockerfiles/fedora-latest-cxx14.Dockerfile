@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:38
+FROM fedora:39
 ARG NCPU=4
 ARG ARCH=amd64
 
@@ -180,21 +180,23 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12
     cmake --build cmake-out && cmake --install cmake-out && \
     ldconfig && cd /var/tmp && rm -fr build
 
-# Install the Cloud SDK and some of the emulators. We use the emulators to run
-# integration tests for the client libraries.
-COPY . /var/tmp/ci
-WORKDIR /var/tmp/downloads
-ENV CLOUDSDK_PYTHON=python3
-RUN /var/tmp/ci/install-cloud-sdk.sh
-ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
-ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
-
 WORKDIR /var/tmp/sccache
 RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
     tar -zxf - --strip-components=1 && \
     mkdir -p /usr/local/bin && \
     mv sccache /usr/local/bin/sccache && \
     chmod +x /usr/local/bin/sccache
+
+# Install the Cloud SDK and some of the emulators. We use the emulators to run
+# integration tests for the client libraries.
+COPY . /var/tmp/ci
+WORKDIR /var/tmp/downloads
+# The Google Cloud CLI requires Python <= 3.10, Fedora defaults to 3.12.
+RUN dnf makecache && dnf install -y python3.10
+ENV CLOUDSDK_PYTHON=python3.10
+RUN /var/tmp/ci/install-cloud-sdk.sh
+ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
+ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*
