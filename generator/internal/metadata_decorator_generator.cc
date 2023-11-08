@@ -22,6 +22,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/url_encode.h"
 #include "absl/strings/str_split.h"
+#include "absl/strings/string_view.h"
 #include <google/protobuf/descriptor.h>
 #include <algorithm>
 
@@ -33,7 +34,8 @@ namespace {
 enum ContextType { kPointer, kReference };
 
 std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
-                            ContextType context_type) {
+                            ContextType context_type,
+                            absl::string_view options) {
   std::string const context = context_type == kPointer ? "*context" : "context";
 
   auto info = ParseExplicitRoutingHeader(method);
@@ -41,12 +43,12 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
   // defined by the google.api.http annotation
   if (info.empty()) {
     if (HasHttpRoutingHeader(method)) {
-      return "  SetMetadata(" + context +
-             ", absl::StrCat($method_request_params$));";
+      return absl::StrCat("  SetMetadata(", context, ", ", options,
+                          ", absl::StrCat($method_request_params$));");
     }
     // If the method does not have a `google.api.routing` or `google.api.http`
     // annotation, we do not send the "x-goog-request-params" header.
-    return "  SetMetadata(" + context + ");";
+    return absl::StrCat("  SetMetadata(", context, ", ", options, ");");
   }
 
   // clang-format off
@@ -90,9 +92,9 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
     text += "  " + kv.first + "_matcher->AppendParam(request, params);\n\n";
   }
   text += "  if (params.empty()) {\n";
-  text += "    SetMetadata(" + context + ");\n";
+  text += absl::StrCat("    SetMetadata(", context, ", ", options, ");\n");
   text += "  } else {\n";
-  text += "    SetMetadata(" + context + ", absl::StrJoin(params, \"&\"));\n";
+  text += absl::StrCat("    SetMetadata(", context, ", ", options, ", absl::StrJoin(params, \"&\"));\n");
   text += "  }";
   return text;
   // clang-format on
@@ -123,7 +125,8 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
-  HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/version.h"});
+  HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/options.h",
+                       "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
        "map", "memory", "string"});
@@ -147,8 +150,9 @@ class $metadata_class_name$ : public $stub_class_name$ {
   HeaderPrint(R"""(
  private:
   void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  void SetMetadata(grpc::ClientContext& context, Options const& options);
 
   std::shared_ptr<$stub_class_name$> child_;
   std::multimap<std::string, std::string> fixed_metadata_;
@@ -213,7 +217,7 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     $response_type$>>
 $metadata_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->$method_name$(std::move(context));
 }
 )""");
@@ -232,7 +236,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->Async$method_name$(cq, std::move(context));
 }
 )""");
@@ -249,25 +253,26 @@ $metadata_class_name$::Async$method_name$(
    {"$metadata_class_name$::$method_name$(\n"
     "    grpc::ClientContext& context,\n"
     "    $request_type$ const& request) {\n"},
-    {SetMetadataText(method, kReference)},
+    {SetMetadataText(method, kReference, "internal::CurrentOptions()")},
    {"\n  return child_->$method_name$(context, request);\n"
     "}\n",}
                  // clang-format on
              },
              And(IsNonStreaming, Not(IsLongrunningOperation))),
-         MethodPattern({{R"""(
+         MethodPattern(
+             {{R"""(
 future<StatusOr<google::longrunning::Operation>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
 )"""},
-                        {SetMetadataText(method, kPointer)},
-                        {R"""(
+              {SetMetadataText(method, kPointer, "internal::CurrentOptions()")},
+              {R"""(
   return child_->Async$method_name$(cq, std::move(context), request);
 }
 )"""}},
-                       IsLongrunningOperation),
+             IsLongrunningOperation),
          MethodPattern(
              {
                  // clang-format off
@@ -276,7 +281,7 @@ $metadata_class_name$::Async$method_name$(
     "$metadata_class_name$::$method_name$(\n"
     "    std::shared_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) {\n"},
-   {SetMetadataText(method, kPointer)},
+   {SetMetadataText(method, kPointer, "internal::CurrentOptions()")},
    {"\n  return child_->$method_name$(std::move(context), request);\n"
     "}\n",}
                  // clang-format on
@@ -296,7 +301,7 @@ $metadata_class_name$::Async$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
 )""",
-          SetMetadataText(method, kPointer),
+          SetMetadataText(method, kPointer, "internal::CurrentOptions()"),
           R"""(
   return child_->Async$method_name$(cq, std::move(context), request);
 }
@@ -316,7 +321,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context);
+  SetMetadata(*context, internal::CurrentOptions());
   return child_->Async$method_name$(cq, std::move(context));
 }
 )""");
@@ -335,7 +340,7 @@ $metadata_class_name$::Async$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
 )"""},
-   {SetMetadataText(method, kPointer)}, {R"""(
+   {SetMetadataText(method, kPointer, "internal::CurrentOptions()")}, {R"""(
   return child_->Async$method_name$(cq, std::move(context), request);
 }
 )"""}},
@@ -352,7 +357,8 @@ $metadata_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(*context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -360,7 +366,8 @@ future<Status> $metadata_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-   SetMetadata(*context, absl::StrCat("name=", internal::UrlEncode(request.name())));
+   SetMetadata(*context, internal::CurrentOptions(),
+               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 )""");
@@ -368,17 +375,18 @@ future<Status> $metadata_class_name$::AsyncCancelOperation(
 
   CcPrint(R"""(
 void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
+  SetMetadata(context, options);
 }
 
-void $metadata_class_name$::SetMetadata(grpc::ClientContext& context) {
+void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
   context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata(
         "x-goog-user-project", options.get<UserProjectOption>());
