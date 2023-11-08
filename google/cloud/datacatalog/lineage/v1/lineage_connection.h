@@ -182,6 +182,12 @@ class LineageConnection {
 
   virtual Options options() { return Options{}; }
 
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::
+                       ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request);
+
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process>
   CreateProcess(
       google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&

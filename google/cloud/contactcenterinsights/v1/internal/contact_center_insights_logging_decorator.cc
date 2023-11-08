@@ -191,6 +191,23 @@ ContactCenterInsightsLogging::AsyncBulkAnalyzeConversations(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsLogging::AsyncBulkDeleteConversations(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::contactcenterinsights::v1::
+                 BulkDeleteConversationsRequest const& request) {
+        return child_->AsyncBulkDeleteConversations(cq, std::move(context),
+                                                    request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncIngestConversations(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

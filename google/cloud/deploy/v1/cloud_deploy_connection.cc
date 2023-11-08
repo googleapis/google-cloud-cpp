@@ -82,6 +82,12 @@ CloudDeployConnection::ListTargets(
       StreamRange<google::cloud::deploy::v1::Target>>();
 }
 
+StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
+CloudDeployConnection::RollbackTarget(
+    google::cloud::deploy::v1::RollbackTargetRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::deploy::v1::Target> CloudDeployConnection::GetTarget(
     google::cloud::deploy::v1::GetTargetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -210,6 +216,64 @@ CloudDeployConnection::TerminateJobRun(
 
 StatusOr<google::cloud::deploy::v1::Config> CloudDeployConnection::GetConfig(
     google::cloud::deploy::v1::GetConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::deploy::v1::Automation>>
+CloudDeployConnection::CreateAutomation(
+    google::cloud::deploy::v1::CreateAutomationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::deploy::v1::Automation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::deploy::v1::Automation>>
+CloudDeployConnection::UpdateAutomation(
+    google::cloud::deploy::v1::UpdateAutomationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::deploy::v1::Automation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployConnection::DeleteAutomation(
+    google::cloud::deploy::v1::DeleteAutomationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::deploy::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::deploy::v1::Automation>
+CloudDeployConnection::GetAutomation(
+    google::cloud::deploy::v1::GetAutomationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::deploy::v1::Automation>
+CloudDeployConnection::ListAutomations(
+    google::cloud::deploy::v1::
+        ListAutomationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::deploy::v1::Automation>>();
+}
+
+StatusOr<google::cloud::deploy::v1::AutomationRun>
+CloudDeployConnection::GetAutomationRun(
+    google::cloud::deploy::v1::GetAutomationRunRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::deploy::v1::AutomationRun>
+CloudDeployConnection::ListAutomationRuns(
+    google::cloud::deploy::v1::
+        ListAutomationRunsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::deploy::v1::AutomationRun>>();
+}
+
+StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
+CloudDeployConnection::CancelAutomationRun(
+    google::cloud::deploy::v1::CancelAutomationRunRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

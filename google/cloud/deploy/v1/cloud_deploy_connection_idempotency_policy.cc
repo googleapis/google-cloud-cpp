@@ -64,6 +64,11 @@ Idempotency CloudDeployConnectionIdempotencyPolicy::ListTargets(
   return Idempotency::kIdempotent;
 }
 
+Idempotency CloudDeployConnectionIdempotencyPolicy::RollbackTarget(
+    google::cloud::deploy::v1::RollbackTargetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency CloudDeployConnectionIdempotencyPolicy::GetTarget(
     google::cloud::deploy::v1::GetTargetRequest const&) {
   return Idempotency::kIdempotent;
@@ -162,6 +167,46 @@ Idempotency CloudDeployConnectionIdempotencyPolicy::TerminateJobRun(
 Idempotency CloudDeployConnectionIdempotencyPolicy::GetConfig(
     google::cloud::deploy::v1::GetConfigRequest const&) {
   return Idempotency::kIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::CreateAutomation(
+    google::cloud::deploy::v1::CreateAutomationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateAutomation(
+    google::cloud::deploy::v1::UpdateAutomationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteAutomation(
+    google::cloud::deploy::v1::DeleteAutomationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetAutomation(
+    google::cloud::deploy::v1::GetAutomationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListAutomations(
+    google::cloud::deploy::v1::ListAutomationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetAutomationRun(
+    google::cloud::deploy::v1::GetAutomationRunRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListAutomationRuns(
+    google::cloud::deploy::v1::ListAutomationRunsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::CancelAutomationRun(
+    google::cloud::deploy::v1::CancelAutomationRunRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CloudDeployConnectionIdempotencyPolicy>

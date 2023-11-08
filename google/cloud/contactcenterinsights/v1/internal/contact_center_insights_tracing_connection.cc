@@ -160,6 +160,19 @@ ContactCenterInsightsTracingConnection::BulkAnalyzeConversations(
 }
 
 future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
+ContactCenterInsightsTracingConnection::BulkDeleteConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "BulkDeleteConversations");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BulkDeleteConversations(request));
+}
+
+future<StatusOr<
     google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
 ContactCenterInsightsTracingConnection::IngestConversations(
     google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&

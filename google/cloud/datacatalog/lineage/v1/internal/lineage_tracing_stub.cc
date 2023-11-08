@@ -29,6 +29,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LineageTracingStub::LineageTracingStub(std::shared_ptr<LineageStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
+StatusOr<
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+LineageTracingStub::ProcessOpenLineageRunEvent(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::lineage::v1::
+        ProcessOpenLineageRunEventRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.datacatalog.lineage.v1.Lineage",
+                             "ProcessOpenLineageRunEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ProcessOpenLineageRunEvent(context, request));
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageTracingStub::CreateProcess(
     grpc::ClientContext& context,

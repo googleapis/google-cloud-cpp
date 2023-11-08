@@ -36,6 +36,10 @@ class LineageConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<LineageConnectionIdempotencyPolicy> clone() const;
 
+  virtual google::cloud::Idempotency ProcessOpenLineageRunEvent(
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request);
+
   virtual google::cloud::Idempotency CreateProcess(
       google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
           request);

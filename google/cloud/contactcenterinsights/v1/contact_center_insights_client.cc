@@ -230,6 +230,29 @@ ContactCenterInsightsClient::BulkAnalyzeConversations(
 }
 
 future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
+ContactCenterInsightsClient::BulkDeleteConversations(std::string const& parent,
+                                                     std::string const& filter,
+                                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest
+      request;
+  request.set_parent(parent);
+  request.set_filter(filter);
+  return connection_->BulkDeleteConversations(request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
+ContactCenterInsightsClient::BulkDeleteConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkDeleteConversations(request);
+}
+
+future<StatusOr<
     google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
 ContactCenterInsightsClient::IngestConversations(std::string const& parent,
                                                  Options opts) {

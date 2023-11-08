@@ -103,6 +103,12 @@ class ContactCenterInsightsLogging : public ContactCenterInsightsStub {
       google::cloud::contactcenterinsights::v1::
           BulkAnalyzeConversationsRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncBulkDeleteConversations(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::contactcenterinsights::v1::
+          BulkDeleteConversationsRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncIngestConversations(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
