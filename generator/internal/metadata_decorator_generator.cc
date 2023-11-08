@@ -242,6 +242,23 @@ $metadata_class_name$::Async$method_name$(
 )""");
       continue;
     }
+    if (IsLongrunningOperation(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+future<StatusOr<google::longrunning::Operation>>
+$metadata_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
+    $request_type$ const& request) {
+)""");
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    SetMetadataText(method, kPointer, "options"));
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+  return child_->Async$method_name$(cq, std::move(context), options, request);
+}
+)""");
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(
@@ -259,20 +276,6 @@ $metadata_class_name$::Async$method_name$(
                  // clang-format on
              },
              And(IsNonStreaming, Not(IsLongrunningOperation))),
-         MethodPattern(
-             {{R"""(
-future<StatusOr<google::longrunning::Operation>>
-$metadata_class_name$::Async$method_name$(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    $request_type$ const& request) {
-)"""},
-              {SetMetadataText(method, kPointer, "internal::CurrentOptions()")},
-              {R"""(
-  return child_->Async$method_name$(cq, std::move(context), request);
-}
-)"""}},
-             IsLongrunningOperation),
          MethodPattern(
              {
                  // clang-format off
@@ -356,19 +359,21 @@ future<StatusOr<google::longrunning::Operation>>
 $metadata_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> $metadata_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-   SetMetadata(*context, internal::CurrentOptions(),
+   SetMetadata(*context, options,
                absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 )""");
   }
