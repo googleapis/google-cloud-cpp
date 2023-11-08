@@ -154,7 +154,7 @@ class TracingMessageBatch : public MessageBatch {
     }
 
     auto batch_sink_spans =
-        MakeBatchSinkSpans(std::move(message_spans), std::move(options_));
+        MakeBatchSinkSpans(std::move(message_spans), options_);
 
     // The first span in `batch_sink_spans` is the parent to the other spans in
     // the vector.
