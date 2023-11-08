@@ -91,7 +91,7 @@ auto MakeChild(
                             /*links=*/links, options);
 }
 
-Spans MakeBatchSinkSpans(Spans message_spans, Options options) {
+Spans MakeBatchSinkSpans(Spans message_spans, Options const& options) {
   auto const max_otel_links = options.get<pubsub::MaxOtelLinkCountOption>();
   Spans batch_sink_spans;
   // If the batch size is less than the max size, add the links to a single
