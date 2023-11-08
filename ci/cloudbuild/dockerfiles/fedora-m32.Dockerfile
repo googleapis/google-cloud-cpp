@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:38
+FROM fedora:39
 ARG NCPU=4
 
 # Install the minimal development tools:
@@ -20,8 +20,8 @@ RUN dnf makecache && \
     dnf install -y cmake curl diffutils findutils gcc-c++ git make \
         ninja-build patch tar unzip wget which zip
 
-# Fedora 38 includes packages, with recent enough versions, for most of the
-# direct dependencies of `google-cloud-cpp`. We will install those directly.
+# Fedora 39 includes packages, with recent enough versions, for most of the
+# direct dependencies of `google-cloud-cpp`. We will install those.
 
 # First install the "host" (64-bit) version of the protobuf compiler and gRPC
 # code generator.
@@ -121,21 +121,23 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.13
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 
-# Install the Cloud SDK and some of the emulators. We use the emulators to run
-# integration tests for the client libraries.
-COPY . /var/tmp/ci
-WORKDIR /var/tmp/downloads
-ENV CLOUDSDK_PYTHON=python3
-RUN /var/tmp/ci/install-cloud-sdk.sh
-ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
-ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
-
 WORKDIR /var/tmp/sccache
 RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.7.4/sccache-v0.7.4-x86_64-unknown-linux-musl.tar.gz | \
     tar -zxf - --strip-components=1 && \
     mkdir -p /usr/local/bin && \
     mv sccache /usr/local/bin/sccache && \
     chmod +x /usr/local/bin/sccache
+
+# Install the Cloud SDK and some of the emulators. We use the emulators to run
+# integration tests for the client libraries.
+COPY . /var/tmp/ci
+WORKDIR /var/tmp/downloads
+# The Google Cloud CLI requires Python <= 3.10, Fedora defaults to 3.12.
+RUN dnf makecache && dnf install -y python3.10
+ENV CLOUDSDK_PYTHON=python3.10
+RUN /var/tmp/ci/install-cloud-sdk.sh
+ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
+ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*
