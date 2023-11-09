@@ -441,7 +441,7 @@ TEST(ClientOptionsTest, SetSslTargetNameOverride) {
 
 TEST(ClientOptionsTest, UserAgentPrefix) {
   std::string const actual = ClientOptions::UserAgentPrefix();
-  EXPECT_THAT(actual, HasSubstr("gcloud-cpp/"));
+  EXPECT_THAT(actual, HasSubstr("gl-cpp/"));
 }
 
 TEST(ClientOptionsTest, RefreshPeriod) {

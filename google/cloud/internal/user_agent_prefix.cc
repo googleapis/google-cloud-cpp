@@ -23,7 +23,7 @@ namespace internal {
 
 std::string UserAgentPrefix() {
   static auto const* const kUserAgentPrefix = new auto(
-      absl::StrCat("gcloud-cpp/", version_string(), " (", CompilerId(), "-",
+      absl::StrCat("gl-cpp/", version_string(), " (", CompilerId(), "-",
                    CompilerVersion(), "; ", CompilerFeatures(), ")"));
   return *kUserAgentPrefix;
 }

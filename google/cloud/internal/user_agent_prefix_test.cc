@@ -28,7 +28,7 @@ using ::testing::StartsWith;
 
 TEST(UserAgentPrefix, Format) {
   auto const actual = UserAgentPrefix();
-  EXPECT_THAT(actual, StartsWith("gcloud-cpp/"));
+  EXPECT_THAT(actual, StartsWith("gl-cpp/"));
   EXPECT_THAT(actual, HasSubstr(::google::cloud::version_string()));
   EXPECT_THAT(actual, HasSubstr(::google::cloud::internal::CompilerId()));
 }
