@@ -56,7 +56,7 @@ class ObjectReadStream : public std::basic_istream<char> {
     return *this;
   }
 
-  void swap(ObjectReadStream& rhs) {
+  void swap(ObjectReadStream& rhs) noexcept {
     std::basic_istream<char>::swap(rhs);
     std::swap(buf_, rhs.buf_);
     rhs.set_rdbuf(rhs.buf_.get());

@@ -156,7 +156,7 @@ class ObjectWriteStream : public std::basic_ostream<char> {
     return *this;
   }
 
-  void swap(ObjectWriteStream& rhs) {
+  void swap(ObjectWriteStream& rhs) noexcept {
     basic_ostream<char>::swap(rhs);
     std::swap(buf_, rhs.buf_);
     rhs.set_rdbuf(rhs.buf_.get());

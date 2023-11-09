@@ -325,6 +325,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   }
 
   // cors()
+  // NOLINTNEXTLINE(modernize-use-emplace) - brace initialization
   desired_state.mutable_cors().push_back(CorsEntry{86400, {"GET"}, {}, {}});
 
   // default_acl()

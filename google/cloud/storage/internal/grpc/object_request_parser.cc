@@ -60,11 +60,11 @@ struct GetPredefinedAcl {
 
 template <
     typename GrpcRequest, typename StorageRequest,
-    typename std::enable_if<
+    std::enable_if_t<
         std::is_same<std::string const&,
                      google::cloud::internal::invoke_result_t<
                          GetPredefinedAcl<GrpcRequest>, GrpcRequest>>::value,
-        int>::type = 0>
+        int> = 0>
 void SetPredefinedAcl(GrpcRequest& request, StorageRequest const& req) {
   if (req.template HasOption<storage::PredefinedAcl>()) {
     request.set_predefined_acl(

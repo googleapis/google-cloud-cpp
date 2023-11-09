@@ -49,8 +49,7 @@ absl::Cord MakeCord(std::string p);
 absl::Cord MakeCord(std::vector<std::string> p);
 
 /// Creates an `absl::Cord`, without copying the data in @p p.
-template <typename T,
-          typename std::enable_if<IsPayloadType<T>::value, int>::type = 0>
+template <typename T, std::enable_if_t<IsPayloadType<T>::value, int> = 0>
 absl::Cord MakeCord(std::vector<T> p) {
   static_assert(IsPayloadType<T>::value, "unexpected value type");
   auto holder = std::make_shared<std::vector<T>>(std::move(p));
@@ -61,8 +60,7 @@ absl::Cord MakeCord(std::vector<T> p) {
 }
 
 /// Creates an `absl::Cord`, without copying the data in @p p.
-template <typename T,
-          typename std::enable_if<IsPayloadType<T>::value, int>::type = 0>
+template <typename T, std::enable_if_t<IsPayloadType<T>::value, int> = 0>
 absl::Cord MakeCord(std::vector<std::vector<T>> p) {
   return std::accumulate(std::make_move_iterator(p.begin()),
                          std::make_move_iterator(p.end()), absl::Cord(),

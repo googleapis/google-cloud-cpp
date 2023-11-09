@@ -52,6 +52,7 @@ TEST_F(ObjectComposeManyIntegrationTest, ComposeMany) {
     StatusOr<ObjectMetadata> insert_meta = client->InsertObject(
         bucket_name_, object_name, std::move(content), IfGenerationMatch(0));
     ASSERT_STATUS_OK(insert_meta);
+    // NOLINTNEXTLINE(modernize-use-emplace) - brace initialization
     source_objs.emplace_back(ComposeSourceObject{
         std::move(object_name), insert_meta->generation(), {}});
   }
