@@ -3127,7 +3127,6 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
     if (i == 0) {
       *response.mutable_metadata()->mutable_transaction() =
           MakeTestTransaction("ABCDEF01");
-
     } else if (i == 1) {
       *response.mutable_metadata()->mutable_transaction() =
           MakeTestTransaction("ABCDEF02");
