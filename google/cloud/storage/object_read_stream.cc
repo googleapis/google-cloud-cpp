@@ -45,7 +45,7 @@ ObjectReadStream::ObjectReadStream(ObjectReadStream&& rhs) noexcept
       // In fact, as that page indicates, the base classes are designed such
       // that derived classes can define their own move constructor and move
       // assignment.
-      buf_(std::move(rhs.buf_)) {
+      buf_(std::move(rhs.buf_)) {  // NOLINT(bugprone-use-after-move)
   auto buf = MakeErrorStreambuf();
   rhs.set_rdbuf(buf.get());  // NOLINT(bugprone-use-after-move)
   rhs.buf_ = std::move(buf);

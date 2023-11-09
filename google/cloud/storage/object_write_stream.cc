@@ -53,10 +53,10 @@ ObjectWriteStream::ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
       // In fact, as that page indicates, the base classes are designed such
       // that derived classes can define their own move constructor and move
       // assignment.
-      buf_(std::move(rhs.buf_)),
-      metadata_(std::move(rhs.metadata_)),
-      headers_(std::move(rhs.headers_)),
-      payload_(std::move(rhs.payload_)) {
+      buf_(std::move(rhs.buf_)),            // NOLINT(bugprone-use-after-move)
+      metadata_(std::move(rhs.metadata_)),  // NOLINT(bugprone-use-after-move)
+      headers_(std::move(rhs.headers_)),    // NOLINT(bugprone-use-after-move)
+      payload_(std::move(rhs.payload_)) {   // NOLINT(bugprone-use-after-move)
   auto buf = MakeErrorStreambuf();
   rhs.set_rdbuf(buf.get());  // NOLINT(bugprone-use-after-move)
   rhs.buf_ = std::move(buf);

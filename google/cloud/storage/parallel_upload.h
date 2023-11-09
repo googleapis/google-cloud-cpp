@@ -85,9 +85,8 @@ struct ExtractFirstOccurrenceOfTypeImpl {
 template <typename T, typename... Options>
 struct ExtractFirstOccurrenceOfTypeImpl<
     T, std::tuple<Options...>,
-    typename std::enable_if<
-        Among<typename std::decay<Options>::type...>::template TPred<
-            typename std::decay<T>::type>::value>::type> {
+    std::enable_if_t<Among<std::decay_t<Options>...>::template TPred<
+        std::decay_t<T>>::value>> {
   absl::optional<T> operator()(std::tuple<Options...> const& tuple) {
     return std::get<0>(StaticTupleFilter<Among<T>::template TPred>(tuple));
   }
@@ -602,10 +601,10 @@ class ResumableParallelUploadState {
  * on the first request that fails.
  */
 template <typename... Options,
-          typename std::enable_if<
-              NotAmong<typename std::decay<Options>::type...>::template TPred<
-                  UseResumableUploadSession>::value,
-              int>::type EnableIfNotResumable = 0>
+          std::enable_if_t<NotAmong<std::decay_t<Options>...>::template TPred<
+                               UseResumableUploadSession>::value,
+                           int>
+              EnableIfNotResumable = 0>
 StatusOr<NonResumableParallelUploadState> PrepareParallelUpload(
     Client client, std::string const& bucket_name,
     std::string const& object_name, std::size_t num_shards,
@@ -617,10 +616,10 @@ StatusOr<NonResumableParallelUploadState> PrepareParallelUpload(
 }
 
 template <typename... Options,
-          typename std::enable_if<
-              Among<typename std::decay<Options>::type...>::template TPred<
-                  UseResumableUploadSession>::value,
-              int>::type EnableIfResumable = 0>
+          std::enable_if_t<Among<std::decay_t<Options>...>::template TPred<
+                               UseResumableUploadSession>::value,
+                           int>
+              EnableIfResumable = 0>
 StatusOr<ResumableParallelUploadState> PrepareParallelUpload(
     Client client, std::string const& bucket_name,
     std::string const& object_name, std::size_t num_shards,
@@ -990,10 +989,10 @@ StatusOr<std::vector<std::uintmax_t>> ParallelFileUploadSplitPointsFromString(
 struct PrepareParallelUploadApplyHelper {
   // Some gcc versions crash on using decltype for return type here.
   template <typename... Options>
-  StatusOr<typename std::conditional<
-      Among<typename std::decay<Options>::type...>::template TPred<
-          UseResumableUploadSession>::value,
-      ResumableParallelUploadState, NonResumableParallelUploadState>::type>
+  StatusOr<std::conditional_t<Among<std::decay_t<Options>...>::template TPred<
+                                  UseResumableUploadSession>::value,
+                              ResumableParallelUploadState,
+                              NonResumableParallelUploadState>>
   operator()(Options&&... options) {
     return PrepareParallelUpload(std::move(client), bucket_name, object_name,
                                  num_shards, prefix,

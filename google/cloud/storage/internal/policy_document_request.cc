@@ -130,6 +130,9 @@ StatusOr<std::string> Escape1(absl::string_view s, std::size_t pos) {
       return std::string("\\t");
     case '\v':
       return std::string("\\v");
+    default:
+      // Having a default case makes clang-tidy happy.
+      break;
   }
   return std::string(s.substr(pos, 1));
 }

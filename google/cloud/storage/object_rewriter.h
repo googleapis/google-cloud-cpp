@@ -98,11 +98,10 @@ class ObjectRewriter {
    *
    * @return the object metadata once the copy completes.
    */
-  template <
-      typename Functor,
-      typename std::enable_if<google::cloud::internal::is_invocable<
-                                  Functor, StatusOr<RewriteProgress>>::value,
-                              int>::type = 0>
+  template <typename Functor,
+            std::enable_if_t<google::cloud::internal::is_invocable<
+                                 Functor, StatusOr<RewriteProgress>>::value,
+                             int> = 0>
   StatusOr<ObjectMetadata> ResultWithProgressCallback(Functor cb) {
     while (!progress_.done) {
       cb(Iterate());

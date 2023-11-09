@@ -1064,8 +1064,10 @@ TEST(BucketMetadataPatchBuilder, ResetBilling) {
 TEST(BucketMetadataPatchBuilder, SetCors) {
   BucketMetadataPatchBuilder builder;
   std::vector<CorsEntry> v;
-  v.emplace_back(CorsEntry{{}, {"method1", "method2"}, {}, {"header1"}});
-  v.emplace_back(CorsEntry{86400, {}, {"origin1"}, {}});
+  // NOLINTNEXTLINE(modernize-use-emplace) - brace initialization
+  v.push_back(CorsEntry{{}, {"method1", "method2"}, {}, {"header1"}});
+  // NOLINTNEXTLINE(modernize-use-emplace) - brace initialization
+  v.push_back(CorsEntry{86400, {}, {"origin1"}, {}});
   builder.SetCors(v);
 
   auto actual = builder.BuildPatch();

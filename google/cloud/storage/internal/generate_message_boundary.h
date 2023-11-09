@@ -60,9 +60,9 @@ std::string GenerateMessageBoundaryCandidate(
  * @deprecated use another `GenerateMessageBoundary()` overload.
  */
 template <typename RandomStringGenerator,
-          typename std::enable_if<google::cloud::internal::is_invocable<
-                                      RandomStringGenerator, int>::value,
-                                  int>::type = 0>
+          std::enable_if_t<google::cloud::internal::is_invocable<
+                               RandomStringGenerator, int>::value,
+                           int> = 0>
 GOOGLE_CLOUD_CPP_DEPRECATED(
     "deprecated, using the GenerateMessageBoundary(std::string const&, "
     "absl::FunctionRef<std::string()>) overload")

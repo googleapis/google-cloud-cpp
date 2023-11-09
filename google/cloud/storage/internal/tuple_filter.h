@@ -92,13 +92,12 @@ struct FilteredTupleReturnType {};
  */
 template <template <class> class TPred, typename Head, typename... Tail>
 struct FilteredTupleReturnType<TPred, std::tuple<Head, Tail...>> {
-  using Result = typename std::conditional<
+  using Result = std::conditional_t<
       TPred<Head>::value,
       typename TupleTypePrepend<
           typename FilteredTupleReturnType<TPred, std::tuple<Tail...>>::Result,
           Head>::Result,
-      typename FilteredTupleReturnType<TPred,
-                                       std::tuple<Tail...>>::Result>::type;
+      typename FilteredTupleReturnType<TPred, std::tuple<Tail...>>::Result>;
 };
 
 /**
@@ -134,11 +133,10 @@ struct StaticTupleFilterImpl {
  * @param tuple the tuple to filter elements from
  */
 template <template <class> class TPred, class Tuple>
-typename FilteredTupleReturnType<TPred,
-                                 typename std::decay<Tuple>::type>::Result
+typename FilteredTupleReturnType<TPred, std::decay_t<Tuple>>::Result
 StaticTupleFilter(Tuple&& t) {
   return std::tuple_cat(google::cloud::internal::apply(
-      StaticTupleFilterImpl<TPred, typename std::decay<Tuple>::type>(),
+      StaticTupleFilterImpl<TPred, std::decay_t<Tuple>>(),
       std::forward<Tuple>(t)));
 }
 
@@ -150,8 +148,7 @@ StaticTupleFilter(Tuple&& t) {
 template <typename... Types>
 struct Among {
   template <typename T>
-  using TPred =
-      absl::disjunction<std::is_same<typename std::decay<T>::type, Types>...>;
+  using TPred = absl::disjunction<std::is_same<std::decay_t<T>, Types>...>;
 };
 
 /**
@@ -163,8 +160,7 @@ template <typename... Types>
 struct NotAmong {
   template <typename T>
   using TPred = std::integral_constant<
-      bool, !absl::disjunction<
-                std::is_same<typename std::decay<T>::type, Types>...>::value>;
+      bool, !absl::disjunction<std::is_same<std::decay_t<T>, Types>...>::value>;
 };
 
 }  // namespace internal

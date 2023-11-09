@@ -82,9 +82,9 @@ class RestRequestBuilder {
   }
 
   /// Adds one of the well-known headers to the request.
-  template <typename P, typename V,
-            typename Enabled = typename std::enable_if<
-                std::is_arithmetic<V>::value, void>::type>
+  template <
+      typename P, typename V,
+      typename Enabled = std::enable_if_t<std::is_arithmetic<V>::value, void>>
   RestRequestBuilder& AddOption(WellKnownHeader<P, V> const& p) {
     if (p.has_value()) {
       request_.AddHeader(p.header_name(), std::to_string(p.value()));

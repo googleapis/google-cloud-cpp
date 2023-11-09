@@ -105,8 +105,8 @@ class GenericRequestBase<Derived, Option> {
     return false;
   }
 
-  template <typename O, typename std::enable_if<std::is_same<O, Option>::value,
-                                                int>::type = 0>
+  template <typename O,
+            std::enable_if_t<std::is_same<O, Option>::value, int> = 0>
   O GetOption() const {
     return option_;
   }
@@ -146,9 +146,9 @@ class GenericRequestBase<Derived, OverrideDefaultProject> {
     return false;
   }
 
-  template <typename O,
-            typename std::enable_if<
-                std::is_same<O, OverrideDefaultProject>::value, int>::type = 0>
+  template <
+      typename O,
+      std::enable_if_t<std::is_same<O, OverrideDefaultProject>::value, int> = 0>
   OverrideDefaultProject GetOption() const {
     return OverrideDefaultProject{};
   }
@@ -199,14 +199,14 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
     return GenericRequestBase<Derived, Options...>::template HasOption<O>();
   }
 
-  template <typename O, typename std::enable_if<std::is_same<O, Option>::value,
-                                                int>::type = 0>
+  template <typename O,
+            std::enable_if_t<std::is_same<O, Option>::value, int> = 0>
   O GetOption() const {
     return option_;
   }
 
-  template <typename O, typename std::enable_if<!std::is_same<O, Option>::value,
-                                                int>::type = 0>
+  template <typename O,
+            std::enable_if_t<!std::is_same<O, Option>::value, int> = 0>
   O GetOption() const {
     return GenericRequestBase<Derived, Options...>::template GetOption<O>();
   }
@@ -257,16 +257,16 @@ class GenericRequestBase<Derived, OverrideDefaultProject, Options...>
     return GenericRequestBase<Derived, Options...>::template HasOption<O>();
   }
 
-  template <typename O,
-            typename std::enable_if<
-                std::is_same<O, OverrideDefaultProject>::value, int>::type = 0>
+  template <
+      typename O,
+      std::enable_if_t<std::is_same<O, OverrideDefaultProject>::value, int> = 0>
   OverrideDefaultProject GetOption() const {
     return OverrideDefaultProject{};
   }
 
   template <typename O,
-            typename std::enable_if<
-                !std::is_same<O, OverrideDefaultProject>::value, int>::type = 0>
+            std::enable_if_t<!std::is_same<O, OverrideDefaultProject>::value,
+                             int> = 0>
   O GetOption() const {
     return GenericRequestBase<Derived, Options...>::template GetOption<O>();
   }

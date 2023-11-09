@@ -97,6 +97,7 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
   auto idx = streams_.size();
   ++num_unfinished_streams_;
   streams_.emplace_back(
+      // NOLINTNEXTLINE(modernize-use-emplace) - brace initialization
       StreamInfo{request.object_name(), create->upload_id, {}, false});
   assert(idx < streams_.size());
   lk.unlock();
