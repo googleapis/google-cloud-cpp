@@ -299,7 +299,7 @@ void SetLongrunningOperationServiceVars(
         service_vars["longrunning_cancel_operation_path_rest"] = zone_lro_path;
       } else {
         std::cerr << __func__ << " Unknown operation_service_extension="
-                  << operation_service_extension << std::endl;
+                  << operation_service_extension << "\n";
         std::exit(1);
       }
 
