@@ -6,6 +6,11 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.19.0 - TBD
 
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Distributed Cloud Edge Network API](/google/cloud/edgenetwork/README.md)
+
 ## v2.18.0 - 2023-11
 
 ### New Libraries

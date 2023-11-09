@@ -9,6 +9,11 @@ environment variables are convenient when troubleshooting problems.
 @section edgenetwork-env-endpoint Endpoint Overrides
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_EDGE_NETWORK_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "edgenetwork.googleapis.com")
+  used by `MakeEdgeNetworkConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption

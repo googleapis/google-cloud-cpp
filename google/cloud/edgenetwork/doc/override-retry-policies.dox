@@ -67,6 +67,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section edgenetwork-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `edgenetwork_v1::EdgeNetworkClient`:
+
+@snippet edge_network_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet edge_network_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section edgenetwork-override-retry-more-information More Information
@@ -80,4 +89,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
+
+/*! @page edgenetwork_v1::EdgeNetworkClient-retry-snippet Override edgenetwork_v1::EdgeNetworkClient Retry Policies
+
+This shows how to override the retry policies for edgenetwork_v1::EdgeNetworkClient:
+
+@snippet google/cloud/edgenetwork/v1/samples/edge_network_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/edgenetwork/v1/samples/edge_network_client_samples.cc custom-idempotency-policy
+
+*/
 // <!-- inject-retry-pages-end -->

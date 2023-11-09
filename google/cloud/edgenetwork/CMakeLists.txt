@@ -16,7 +16,7 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "v1/")
+set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
 
 google_cloud_cpp_add_ga_grpc_library(edgenetwork
                                      "Distributed Cloud Edge Network API")
@@ -31,8 +31,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:edgenetwork_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
-    )
+            GOOGLE_CLOUD_CPP_TEST_REGION)
     set_tests_properties(edgenetwork_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
