@@ -1,0 +1,46 @@
+/*!
+
+@mainpage Distributed Cloud Edge Network API C++ Client Library
+
+An idiomatic C++ client library for the [Distributed Cloud Edge Network API][cloud-service-docs], a service
+to Network management API for Distributed Cloud Edge.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/edgenetwork/quickstart/` directory,
+which should give you a taste of the Distributed Cloud Edge Network API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`edgenetwork_v1::EdgeNetworkClient`](@ref google::cloud::edgenetwork_v1::EdgeNetworkClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`edgenetwork_v1::EdgeNetworkClient`](@ref google::cloud::edgenetwork_v1::EdgeNetworkClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref edgenetwork-override-endpoint - describes how to override the default
+  endpoint.
+- @ref edgenetwork-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref edgenetwork-override-retry - describes how to change the default retry
+  policies.
+- @ref edgenetwork-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/distributed-cloud/edge/latest/docs
+
+*/

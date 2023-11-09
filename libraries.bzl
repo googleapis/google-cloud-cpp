@@ -149,6 +149,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "documentai",
     "domains",
     "edgecontainer",
+    "edgenetwork",
     "essentialcontacts",
     "eventarc",
     "filestore",
