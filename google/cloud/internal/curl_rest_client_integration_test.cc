@@ -105,7 +105,7 @@ class RestClientIntegrationTest : public ::testing::Test {
         parsed_response,
         ResultOf(ExtractHeaders,
                  AllOf(Contains(Pair("Content-Type", "application/json")),
-                       Contains(Pair("User-Agent", HasSubstr("gcloud-cpp/"))),
+                       Contains(Pair("User-Agent", HasSubstr("gl-cpp/"))),
                        // The metadata decorator adds this header, the
                        // `CurlRestClient` should not duplicate it.
                        Not(Contains(Pair("X-Goog-Api-Client", _))))));
@@ -307,11 +307,10 @@ TEST_F(RestClientIntegrationTest, AnythingGetVerifyHeaders) {
   ASSERT_FALSE(http_method == parsed_response.end());
   EXPECT_THAT(http_method.value(), Eq("GET"));
 
-  EXPECT_THAT(
-      parsed_response,
-      ResultOf("sent headers are", ExtractHeaders,
-               AllOf(Contains(Pair("User-Agent", HasSubstr("gcloud-cpp"))),
-                     Not(Contains(Pair("X-Goog-Api-Client", _))))));
+  EXPECT_THAT(parsed_response,
+              ResultOf("sent headers are", ExtractHeaders,
+                       AllOf(Contains(Pair("User-Agent", HasSubstr("gl-cpp/"))),
+                             Not(Contains(Pair("X-Goog-Api-Client", _))))));
 }
 
 TEST_F(RestClientIntegrationTest, AnythingGetVerifyHeadersAsIfDecorated) {
@@ -340,7 +339,7 @@ TEST_F(RestClientIntegrationTest, AnythingGetVerifyHeadersAsIfDecorated) {
       parsed_response,
       ResultOf(
           "sent headers are", ExtractHeaders,
-          AllOf(Contains(Pair("User-Agent", HasSubstr("gcloud-cpp"))),
+          AllOf(Contains(Pair("User-Agent", HasSubstr("gl-cpp/"))),
                 Contains(Pair("X-Goog-Api-Client",
                               AllOf(HasSubstr("gl-cpp/"), HasSubstr("gapic/"),
                                     Not(HasSubstr("gccl/"))))))));
@@ -623,7 +622,7 @@ TEST_F(RestClientIntegrationTest, PerRequestOptions) {
   auto const products = std::vector<std::string>(
       absl::StrSplit(headers->value("User-Agent", ""), ' '));
   EXPECT_THAT(products, AllOf(Contains(p1), Contains(p2),
-                              Contains(StartsWith("gcloud-cpp/"))));
+                              Contains(StartsWith("gl-cpp/"))));
 }
 
 }  // namespace

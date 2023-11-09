@@ -36,7 +36,7 @@ using ::testing::StartsWith;
 // Returns a matcher that will match our user-agent string. This is a lambda so
 // we don't have to spell the exact gMock matcher type being returned.
 auto gcloud_user_agent_matcher = [] {
-  return AllOf(StartsWith("gcloud-cpp/" + VersionString()),
+  return AllOf(StartsWith("gl-cpp/" + VersionString()),
                HasSubstr(google::cloud::internal::CompilerId()),
                HasSubstr(google::cloud::internal::CompilerVersion()),
                HasSubstr(google::cloud::internal::CompilerFeatures()));
