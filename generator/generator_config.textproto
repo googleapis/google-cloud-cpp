@@ -2034,6 +2034,15 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Edge network
+service {
+  service_proto_path: "google/cloud/edgenetwork/v1/service.proto"
+  product_path: "google/cloud/edgenetwork/v1"
+  forwarding_product_path: "google/cloud/edgenetwork"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Essential Contacts
 service {
   service_proto_path: "google/cloud/essentialcontacts/v1/service.proto"
