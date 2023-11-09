@@ -909,7 +909,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteAppProfile() example [2]" << std::endl;
   try {
     DeleteAppProfile({project_id, instance_id, "profile-p2", "invalid"});
-  } catch (Usage const&) {
+  } catch (Usage const&) {  // NOLINT(bugprone-empty-catch)
   }
 
   try {

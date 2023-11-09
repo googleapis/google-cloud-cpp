@@ -45,7 +45,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * compile both inside and outside Google, this alias may be convenient.
  */
 using RowKeyType =
-    std::decay<decltype(std::declval<google::bigtable::v2::Row>().key())>::type;
+    std::decay_t<decltype(std::declval<google::bigtable::v2::Row>().key())>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

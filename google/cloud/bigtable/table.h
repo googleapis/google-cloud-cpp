@@ -611,7 +611,7 @@ class Table {
     static_assert(
         absl::conjunction<absl::disjunction<
             std::is_convertible<Args, bigtable::ReadModifyWriteRule>,
-            std::is_same<typename std::decay<Args>::type, Options>>...>::value,
+            std::is_same<std::decay_t<Args>, Options>>...>::value,
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule, or of type "
         "google::cloud::Options");
@@ -665,7 +665,7 @@ class Table {
     static_assert(
         absl::conjunction<absl::disjunction<
             std::is_convertible<Args, bigtable::ReadModifyWriteRule>,
-            std::is_same<typename std::decay<Args>::type, Options>>...>::value,
+            std::is_same<std::decay_t<Args>, Options>>...>::value,
         "The arguments passed to AsyncReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule, or of type "
         "google::cloud::Options");
@@ -925,12 +925,11 @@ class Table {
    *     to communicate with the Bigtable Data API. To migrate existing code,
    *     see @ref migrating-from-dataclient "Migrating from DataClient".
    */
-  template <
-      typename... Policies,
-      /// @cond implementation_details
-      typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0
-      /// @endcond
-      >
+  template <typename... Policies,
+            /// @cond implementation_details
+            std::enable_if_t<ValidPolicies<Policies...>::value, int> = 0
+            /// @endcond
+            >
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         Policies&&... policies)
       : Table(std::move(client), table_id) {
@@ -989,12 +988,11 @@ class Table {
    *     to communicate with the Bigtable Data API. To migrate existing code,
    *     see @ref migrating-from-dataclient "Migrating from DataClient".
    */
-  template <
-      typename... Policies,
-      /// @cond implementation_details
-      typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0
-      /// @endcond
-      >
+  template <typename... Policies,
+            /// @cond implementation_details
+            std::enable_if_t<ValidPolicies<Policies...>::value, int> = 0
+            /// @endcond
+            >
   Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
         std::string const& table_id, Policies&&... policies)
       : Table(std::move(client), std::move(app_profile_id), table_id) {

@@ -298,8 +298,8 @@ class SingleRowMutation {
   /// Create an empty mutation.
   template <typename RowKey,
             /// @cond implementation_details
-            typename std::enable_if<
-                std::is_constructible<RowKeyType, RowKey>::value, int>::type = 0
+            std::enable_if_t<std::is_constructible<RowKeyType, RowKey>::value,
+                             int> = 0
             /// @endcond
             >
   // NOLINTNEXTLINE(bugprone-forwarding-reference-overload)
@@ -319,8 +319,8 @@ class SingleRowMutation {
   /// Create a single-row multiple-cell mutation from a variadic list.
   template <typename RowKey, typename... M,
             /// @cond implementation_details
-            typename std::enable_if<
-                std::is_constructible<RowKeyType, RowKey>::value, int>::type = 0
+            std::enable_if_t<std::is_constructible<RowKeyType, RowKey>::value,
+                             int> = 0
             /// @endcond
             >
   explicit SingleRowMutation(RowKey&& row_key, M&&... m) {
@@ -523,9 +523,9 @@ class BulkMutation {
   /// Create a multi-row mutation from a variadic list.
   template <typename... M,
             /// @cond implementation_details
-            typename std::enable_if<absl::conjunction<std::is_convertible<
-                                        M, SingleRowMutation>...>::value,
-                                    int>::type = 0
+            std::enable_if_t<absl::conjunction<std::is_convertible<
+                                 M, SingleRowMutation>...>::value,
+                             int> = 0
             /// @endcond
             >
   // NOLINTNEXTLINE(google-explicit-constructor)

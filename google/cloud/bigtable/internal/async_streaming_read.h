@@ -95,8 +95,8 @@ class AsyncStreamingReadImpl
   }
 
   std::unique_ptr<internal::AsyncStreamingReadRpc<Response>> stream_;
-  typename std::decay<OnReadHandler>::type on_read_;
-  typename std::decay<OnFinishHandler>::type on_finish_;
+  std::decay_t<OnReadHandler> on_read_;
+  std::decay_t<OnFinishHandler> on_finish_;
 };
 
 /**
