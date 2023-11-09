@@ -33,6 +33,9 @@
 #      meaningless). It would also warn if `F` accepts by `const&`, which is
 #      another detail that the caller need not care about.
 #
+#  -performance-avoid-endl: we would like to turn this on, but there are too
+#      many legitimate uses in our samples.
+#
 #  -readability-redundant-declaration: A friend declaration inside a class
 #      counts as a declaration, so if we also declare that friend outside the
 #      class in order to document it as part of the public API, that will
@@ -55,6 +58,10 @@
 #     Despite what the documentation says, this warning appears after
 #     `ASSERT_TRUE(variable)` or `ASSERT_TRUE(variable.has_value())`.
 #
+#  -misc-include-cleaner: too many *true* positives. We need to clean up the
+#    code, but we should do that over time, maybe per-directory, instead of
+#    blocking the adoption of Clang 17 until it is all fixed.
+#
 Checks: >
   -*,
   abseil-*,
@@ -70,12 +77,14 @@ Checks: >
   -google-runtime-references,
   -misc-non-private-member-variables-in-classes,
   -misc-const-correctness,
+  -misc-include-cleaner,
   -modernize-return-braced-init-list,
   -modernize-use-trailing-return-type,
   -modernize-concat-nested-namespaces,
   -modernize-use-nodiscard,
   -modernize-avoid-c-arrays,
   -performance-move-const-arg,
+  -performance-avoid-endl,
   -readability-braces-around-statements,
   -readability-identifier-length,
   -readability-magic-numbers,
