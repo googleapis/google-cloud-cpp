@@ -32,7 +32,7 @@ T Clamp(T value, T min, T max) {
 
 }  // namespace
 
-void ThrottlingMutateRowsLimiter::acquire() {
+void ThrottlingMutateRowsLimiter::Acquire() {
   auto wait = limiter_.acquire(1);
   throttled_since_last_update_ =
       throttled_since_last_update_ || wait != Clock::duration::zero();

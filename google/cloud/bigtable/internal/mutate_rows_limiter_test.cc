@@ -42,8 +42,8 @@ std::function<void(Clock::duration)> ExpectWait(absl::Duration expected_wait) {
 auto noop = [](auto) {};
 
 void InduceThrottling(MutateRowsLimiter& limiter) {
-  limiter.acquire();
-  limiter.acquire();
+  limiter.Acquire();
+  limiter.Acquire();
 }
 
 template <typename Rep, typename Period>
@@ -68,12 +68,12 @@ TEST(MutateRowsLimiter, BasicRateLimiting) {
   ThrottlingMutateRowsLimiter limiter(clock, mock.AsStdFunction(),
                                       std::chrono::seconds(1), kMinPeriod,
                                       kMaxPeriod, kMinFactor, kMaxFactor);
-  limiter.acquire();
-  limiter.acquire();
-  limiter.acquire();
+  limiter.Acquire();
+  limiter.Acquire();
+  limiter.Acquire();
 
   clock->AdvanceTime(std::chrono::seconds(3));
-  limiter.acquire();
+  limiter.Acquire();
 }
 
 TEST(MutateRowsLimiter, ResponseWithoutRateLimitInfo) {
