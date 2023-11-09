@@ -59,6 +59,7 @@ BulkMutatorState::BulkMutatorState(
                     });
     auto idempotency =
         is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent;
+    // NOLINTNEXTLINE(modernize-use-emplace) - brace initializer
     pending_annotations_.push_back(
         Annotations{index++, idempotency, false, Status()});
   }

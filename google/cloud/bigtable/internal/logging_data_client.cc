@@ -34,8 +34,7 @@ using ::google::cloud::internal::IsUniquePtr;
 template <typename Functor, typename Request, typename Response,
           typename Result = google::cloud::internal::invoke_result_t<
               Functor, grpc::ClientContext*, Request const&, Response*>,
-          typename std::enable_if<std::is_same<Result, grpc::Status>::value,
-                                  int>::type = 0>
+          std::enable_if_t<std::is_same<Result, grpc::Status>::value, int> = 0>
 Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
                   Request const& request, Response* response, char const* where,
                   TracingOptions const& options) {
@@ -54,7 +53,7 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
 template <typename Functor, typename Request,
           typename Result = google::cloud::internal::invoke_result_t<
               Functor, grpc::ClientContext*, Request const&>,
-          typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
+          std::enable_if_t<IsUniquePtr<Result>::value, int> = 0>
 Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
                   Request const& request, char const* where,
                   TracingOptions const& options) {
@@ -69,7 +68,7 @@ template <
     typename Functor, typename Request,
     typename Result = google::cloud::internal::invoke_result_t<
         Functor, grpc::ClientContext*, Request const&, grpc::CompletionQueue*>,
-    typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
+    std::enable_if_t<IsUniquePtr<Result>::value, int> = 0>
 Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
                   Request const& request, grpc::CompletionQueue* cq,
                   char const* where, TracingOptions const& options) {

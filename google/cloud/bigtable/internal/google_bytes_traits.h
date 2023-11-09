@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_GOOGLE_BYTES_TRAITS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_GOOGLE_BYTES_TRAITS_H
 
-#include "google/cloud/bigtable/internal/google_bytes_traits.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/port_platform.h"
