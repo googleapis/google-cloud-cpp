@@ -408,12 +408,11 @@ inline StatusOr<Numeric> MakeNumeric(std::string s) {
 inline StatusOr<Numeric> MakeNumeric(double d) {
   return MakeDecimal<DecimalMode::kGoogleSQL>(d);
 }
-template <
-    typename T,
-    /// @cond implementation_details
-    std::enable_if_t<std::numeric_limits<T>::is_integer, int> = 0
-    /// @endcond
-    >
+template <typename T,
+          /// @cond implementation_details
+          std::enable_if_t<std::numeric_limits<T>::is_integer, int> = 0
+          /// @endcond
+          >
 StatusOr<Numeric> MakeNumeric(T i, int exponent = 0) {
   return MakeDecimal<T, DecimalMode::kGoogleSQL>(i, exponent);
 }
@@ -429,12 +428,11 @@ inline StatusOr<PgNumeric> MakePgNumeric(std::string s) {
 inline StatusOr<PgNumeric> MakePgNumeric(double d) {
   return MakeDecimal<DecimalMode::kPostgreSQL>(d);
 }
-template <
-    typename T,
-    /// @cond implementation_details
- std::enable_if_t<std::numeric_limits<T>::is_integer, int> = 0
-    /// @endcond
-    >
+template <typename T,
+          /// @cond implementation_details
+          std::enable_if_t<std::numeric_limits<T>::is_integer, int> = 0
+          /// @endcond
+          >
 StatusOr<PgNumeric> MakePgNumeric(T i, int exponent = 0) {
   return MakeDecimal<T, DecimalMode::kPostgreSQL>(i, exponent);
 }
