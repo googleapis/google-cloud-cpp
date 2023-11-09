@@ -386,7 +386,8 @@ TEST(TracingMessageBatch, FlushAddsLink) {
 
   EXPECT_THAT(span_catcher->GetSpans(),
               Contains(AllOf(SpanNamed("test span 0"),
-                             SpanHasLinks(AllOf(LinkHasSpanContext(_))))));
+                             SpanHasLinks(AllOf(LinkHasSpanContext(_)),
+                     SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
 }
 #else
 
