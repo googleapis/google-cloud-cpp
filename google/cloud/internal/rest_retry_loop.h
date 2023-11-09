@@ -59,10 +59,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *     `google::cloud::Status` that indicates the final error for this request.
  */
 template <typename Functor, typename Request, typename Sleeper,
-          typename std::enable_if<
+          std::enable_if_t<
               google::cloud::internal::is_invocable<
                   Functor, RestContext&, Options const&, Request const&>::value,
-              int>::type = 0>
+              int> = 0>
 auto RestRetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
                        Idempotency idempotency, Functor&& functor,
                        Options const& options, Request const& request,
@@ -90,10 +90,10 @@ auto RestRetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
 
 /// @copydoc RestRetryLoopImpl
 template <typename Functor, typename Request,
-          typename std::enable_if<
+          std::enable_if_t<
               google::cloud::internal::is_invocable<
                   Functor, RestContext&, Options const&, Request const&>::value,
-              int>::type = 0>
+              int> = 0>
 auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                    std::unique_ptr<BackoffPolicy> backoff_policy,
                    Idempotency idempotency, Functor&& functor,
@@ -111,10 +111,10 @@ auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
 
 /// @copydoc RestRetryLoopImpl
 template <typename Functor, typename Request,
-          typename std::enable_if<
+          std::enable_if_t<
               google::cloud::internal::is_invocable<
                   Functor, RestContext&, Options const&, Request const&>::value,
-              int>::type = 0>
+              int> = 0>
 auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
                    Idempotency idempotency, Functor&& functor,
                    Options const& options, Request const& request,
@@ -131,11 +131,10 @@ auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
 
 // TODO(#12359) - remove the variants not using Options
 /// @copydoc RestRetryLoopImpl
-template <
-    typename Functor, typename Request,
-    typename std::enable_if<google::cloud::internal::is_invocable<
-                                Functor, RestContext&, Request const&>::value,
-                            int>::type = 0>
+template <typename Functor, typename Request,
+          std::enable_if_t<google::cloud::internal::is_invocable<
+                               Functor, RestContext&, Request const&>::value,
+                           int> = 0>
 auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
                    Idempotency idempotency, Functor&& functor,
                    Request const& request, char const* location)
@@ -152,11 +151,10 @@ auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
 
 // TODO(#12359) - remove the variants not using Options
 /// @copydoc RestRetryLoopImpl
-template <
-    typename Functor, typename Request,
-    typename std::enable_if<google::cloud::internal::is_invocable<
-                                Functor, RestContext&, Request const&>::value,
-                            int>::type = 0>
+template <typename Functor, typename Request,
+          std::enable_if_t<google::cloud::internal::is_invocable<
+                               Functor, RestContext&, Request const&>::value,
+                           int> = 0>
 auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                    std::unique_ptr<BackoffPolicy> backoff_policy,
                    Idempotency idempotency, Functor&& functor,

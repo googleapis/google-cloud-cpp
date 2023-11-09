@@ -59,9 +59,9 @@ inline DefaultPRNG MakeDefaultPRNG() {
  */
 std::string Sample(DefaultPRNG& gen, int n, std::string const& population);
 
-template <typename Collection,
-          typename std::enable_if<std::is_same<Collection, std::string>::value,
-                                  int>::type = 0>
+template <
+    typename Collection,
+    std::enable_if_t<std::is_same<Collection, std::string>::value, int> = 0>
 std::string RandomDataToCollection(std::string v) {
   // This is not motivated by a desire to optimize this function (though that is
   // nice). The issue is that I (coryan@) could not figure out how to write a
@@ -70,9 +70,9 @@ std::string RandomDataToCollection(std::string v) {
   return v;
 }
 
-template <typename Collection,
-          typename std::enable_if<!std::is_same<Collection, std::string>::value,
-                                  int>::type = 0>
+template <
+    typename Collection,
+    std::enable_if_t<!std::is_same<Collection, std::string>::value, int> = 0>
 Collection RandomDataToCollection(std::string v) {
   Collection result(v.size());
   std::transform(v.begin(), v.end(), result.begin(), [](auto c) {

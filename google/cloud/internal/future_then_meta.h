@@ -91,9 +91,9 @@ struct unwrap_internal<std::shared_ptr<internal::future_shared_state<U>>> {
  */
 template <
     typename Functor, typename T,
-    typename std::enable_if<
+    std::enable_if_t<
         is_invocable<Functor, std::shared_ptr<future_shared_state<T>>>::value,
-        int>::type = 0>
+        int> = 0>
 struct continuation_helper {  // NOLINT(readability-identifier-naming)
   /// The type returned by calling the functor with the given future type.
   using functor_result_t =
@@ -142,9 +142,9 @@ struct continuation_helper {  // NOLINT(readability-identifier-naming)
  */
 template <
     typename Functor, typename T,
-    typename std::enable_if<
+    std::enable_if_t<
         is_invocable<Functor, std::shared_ptr<future_shared_state<T>>>::value,
-        int>::type = 0>
+        int> = 0>
 // NOLINTNEXTLINE(readability-identifier-naming)
 struct unwrapping_continuation_helper {
   /// The type returned by calling the functor with the given future type.
@@ -182,8 +182,8 @@ struct unwrapping_continuation_helper {
  * @tparam T the type contained in the input future.
  */
 template <typename Functor, typename T,
-          typename std::enable_if<is_invocable<Functor, future<T>>::value,
-                                  int>::type = 0>
+          std::enable_if_t<is_invocable<Functor, future<T>>::value,
+                           int> = 0>
 struct then_helper {  // NOLINT(readability-identifier-naming)
   /// The type returned by the functor
   using functor_result_t = invoke_result_t<Functor, future<T>>;
@@ -206,7 +206,7 @@ struct then_helper {  // NOLINT(readability-identifier-naming)
 
 template <typename T, typename U>
 struct make_ready_helper {  // NOLINT(readability-identifier-naming)
-  using type = typename std::decay<T>::type;
+  using type = std::decay_t<T>;
 };
 
 template <typename T, typename X>
@@ -219,8 +219,7 @@ struct make_ready_helper<T, std::reference_wrapper<X>> {
  */
 template <typename T>
 struct make_ready_return {  // NOLINT(readability-identifier-naming)
-  using type =
-      typename make_ready_helper<T, typename std::decay<T>::type>::type;
+  using type = typename make_ready_helper<T, std::decay_t<T>>::type;
 };
 
 }  // namespace internal

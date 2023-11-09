@@ -74,7 +74,7 @@ class StatusIsMatcher {
 template <typename S>
 class IsOkAndHoldsMatcherImpl : public ::testing::MatcherInterface<S> {
  public:
-  using status_or_type = typename std::remove_reference<S>::type;
+  using status_or_type = std::remove_reference_t<S>;
   using value_type = typename status_or_type::value_type;
 
   template <typename ValueMatcher>
@@ -222,11 +222,10 @@ IsOk() {
  * @endcode
  */
 template <typename ValueMatcher>
-testing_util_internal::IsOkAndHoldsMatcher<
-    typename std::decay<ValueMatcher>::type>
+testing_util_internal::IsOkAndHoldsMatcher<typename std::decay_t<ValueMatcher>>
 IsOkAndHolds(ValueMatcher&& value_matcher) {
   return testing_util_internal::IsOkAndHoldsMatcher<
-      typename std::decay<ValueMatcher>::type>(
+      typename std::decay_t<ValueMatcher>>(
       std::forward<ValueMatcher>(value_matcher));
 }
 

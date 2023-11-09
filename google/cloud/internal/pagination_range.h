@@ -216,10 +216,10 @@ class PagedStreamReader {
  *      MyRequestProto{}, std::move(loader), std::move(extractor));
  * @endcode
  */
-template <typename Range, typename Request, typename Loader, typename Extractor,
-          typename std::enable_if<
-              is_invocable<Loader, Options const&, Request const&>::value,
-              int>::type = 0>
+template <
+    typename Range, typename Request, typename Loader, typename Extractor,
+    std::enable_if_t<
+        is_invocable<Loader, Options const&, Request const&>::value, int> = 0>
 Range MakePaginationRange(ImmutableOptions options, Request request,
                           Loader loader, Extractor extractor) {
   using ValueType = typename Range::value_type::value_type;
@@ -242,9 +242,9 @@ Range MakePaginationRange(ImmutableOptions options, Request request,
                                     });
 }
 
-template <typename Range, typename Request, typename Loader, typename Extractor,
-          typename std::enable_if<is_invocable<Loader, Request const&>::value,
-                                  int>::type = 0>
+template <
+    typename Range, typename Request, typename Loader, typename Extractor,
+    std::enable_if_t<is_invocable<Loader, Request const&>::value, int> = 0>
 Range MakePaginationRange(Request request, Loader&& loader,
                           Extractor&& extractor) {
   auto wrapper = [loader = std::forward<Loader>(loader)](

@@ -345,11 +345,11 @@ class AsyncRetryLoopImpl
  * Create the right AsyncRetryLoopImpl object and start the retry loop on it.
  */
 template <typename Functor, typename Request, typename RetryPolicyType,
-          typename std::enable_if<google::cloud::internal::is_invocable<
-                                      Functor, google::cloud::CompletionQueue&,
-                                      std::shared_ptr<grpc::ClientContext>,
-                                      Options const&, Request const&>::value,
-                                  int>::type = 0>
+          std::enable_if_t<google::cloud::internal::is_invocable<
+                               Functor, google::cloud::CompletionQueue&,
+                               std::shared_ptr<grpc::ClientContext>,
+                               Options const&, Request const&>::value,
+                           int> = 0>
 auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
                     std::unique_ptr<BackoffPolicy> backoff_policy,
                     Idempotency idempotency, google::cloud::CompletionQueue cq,
@@ -371,11 +371,11 @@ auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
  * Create the right AsyncRetryLoopImpl object and start the retry loop on it.
  */
 template <typename Functor, typename Request, typename RetryPolicyType,
-          typename std::enable_if<
+          std::enable_if_t<
               google::cloud::internal::is_invocable<
                   Functor, google::cloud::CompletionQueue&,
                   std::shared_ptr<grpc::ClientContext>, Request const&>::value,
-              int>::type = 0>
+              int> = 0>
 auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
                     std::unique_ptr<BackoffPolicy> backoff_policy,
                     Idempotency idempotency, google::cloud::CompletionQueue cq,

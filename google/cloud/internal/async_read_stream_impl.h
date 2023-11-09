@@ -315,8 +315,8 @@ class AsyncReadStreamImpl
                                OnFinishHandler&& on_finish)
       : on_read_(std::move(on_read)), on_finish_(std::move(on_finish)) {}
 
-  typename std::decay<OnReadHandler>::type on_read_;
-  typename std::decay<OnFinishHandler>::type on_finish_;
+  std::decay_t<OnReadHandler> on_read_;
+  std::decay_t<OnFinishHandler> on_finish_;
   std::shared_ptr<grpc::ClientContext> context_;
   std::shared_ptr<CompletionQueueImpl> cq_;
   std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>> reader_;
@@ -335,16 +335,19 @@ class AsyncReadStreamImpl
  */
 template <
     typename Response, typename OnReadHandler, typename OnFinishHandler,
-    typename std::enable_if<
+    std::enable_if_t<
         google::cloud::internal::is_invocable<OnReadHandler, Response>::value,
-        int>::type OnReadIsInvocableWithResponse = 0,
-    typename std::enable_if<
+        int>
+        OnReadIsInvocableWithResponse = 0,
+    std::enable_if_t<
         std::is_same<future<bool>, google::cloud::internal::invoke_result_t<
                                        OnReadHandler, Response>>::value,
-        int>::type OnReadReturnsFutureBool = 0,
-    typename std::enable_if<
+        int>
+        OnReadReturnsFutureBool = 0,
+    std::enable_if_t<
         google::cloud::internal::is_invocable<OnFinishHandler, Status>::value,
-        int>::type OnFinishIsInvocableWithStatus = 0>
+        int>
+        OnFinishIsInvocableWithStatus = 0>
 inline std::shared_ptr<
     AsyncReadStreamImpl<Response, OnReadHandler, OnFinishHandler>>
 MakeAsyncReadStreamImpl(OnReadHandler&& on_read, OnFinishHandler&& on_finish) {

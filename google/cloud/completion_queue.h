@@ -139,7 +139,7 @@ class CompletionQueue {
       /// @endcond
       typename Response = typename Sig::type,
       /// @cond implementation_details
-      typename std::enable_if<Sig::value, int>::type = 0
+      std::enable_if_t<Sig::value, int> = 0
       /// @endcond
       >
   future<StatusOr<Response>> MakeUnaryRpc(
@@ -206,12 +206,12 @@ class CompletionQueue {
    * @tparam Functor the type of @p functor. It must satisfy
    *     `std::is_invocable<Functor, #CompletionQueue&>`
    */
-  template <typename Functor,
-            /// @cond implementation_details
-            typename std::enable_if<
-                internal::CheckRunAsyncCallback<Functor>::value, int>::type = 0
-            /// @endcond
-            >
+  template <
+      typename Functor,
+      /// @cond implementation_details
+      std::enable_if_t<internal::CheckRunAsyncCallback<Functor>::value, int> = 0
+      /// @endcond
+      >
   void RunAsync(Functor&& functor) {
     class Wrapper : public internal::RunAsyncBase {
      public:
@@ -242,8 +242,7 @@ class CompletionQueue {
    */
   template <typename Functor,
             /// @cond implementation_details
-            typename std::enable_if<internal::is_invocable<Functor>::value,
-                                    int>::type = 0
+            std::enable_if_t<internal::is_invocable<Functor>::value, int> = 0
             /// @endcond
             >
   void RunAsync(Functor&& functor) {

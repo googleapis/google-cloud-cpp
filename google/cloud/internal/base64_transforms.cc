@@ -125,7 +125,7 @@ void Base64Encoder::Flush() {
 }
 
 std::string Base64Encoder::FlushAndPad() && {
-  switch (len_) {
+  switch (len_) {  // NOLINT(bugprone-switch-missing-default-case)
     case 2: {
       unsigned int const v = buf_[0] << 16 | buf_[1] << 8;
       rep_.push_back(kIndexToChar[v >> 18]);

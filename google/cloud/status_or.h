@@ -155,13 +155,12 @@ class StatusOr final {
    * @return a reference to this object.
    * @tparam U a type convertible to @p T.
    */
-  template <typename U = T,
-            /// @cond implementation_details
-            typename std::enable_if<
-                !std::is_same<StatusOr, typename std::decay<U>::type>::value,
-                int>::type = 0
-            /// @endcond
-            >
+  template <
+      typename U = T,
+      /// @cond implementation_details
+      std::enable_if_t<!std::is_same<StatusOr, std::decay_t<U>>::value, int> = 0
+      /// @endcond
+      >
   StatusOr& operator=(U&& rhs) {
     status_ = Status();
     value_ = std::forward<U>(rhs);

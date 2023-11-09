@@ -97,7 +97,7 @@ class ErrorContext {
     return !(lhs == rhs);
   }
 
-  void swap(ErrorContext& rhs) { metadata_.swap(rhs.metadata_); }
+  void swap(ErrorContext& rhs) noexcept { metadata_.swap(rhs.metadata_); }
 
   template <typename... A>
   void emplace_back(A&&... a) {
