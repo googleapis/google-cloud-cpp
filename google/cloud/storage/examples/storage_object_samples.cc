@@ -480,7 +480,8 @@ void ComposeObject(google::cloud::storage::Client client,
   auto destination_object_name = *it++;
   std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
   do {
-    compose_objects.emplace_back(*it++);
+    // NOLINTNEXTLINE(modernize-use-emplace) - brace initialization
+    compose_objects.push_back({*it++, {}, {}});
   } while (it != argv.cend());
 
   //! [compose object] [START storage_compose_file]
@@ -509,7 +510,8 @@ void ComposeObjectFromMany(google::cloud::storage::Client client,
   auto destination_object_name = *it++;
   std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
   do {
-    compose_objects.emplace_back(*it++);
+    // NOLINTNEXTLINE(modernize-use-emplace) - brace initialization
+    compose_objects.push_back({*it++, {}, {}});
   } while (it != argv.cend());
 
   //! [compose object from many] [START storage_compose_file_from_many]

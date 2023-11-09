@@ -119,7 +119,8 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
   auto base64_aes256_key = *it++;
   std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
   do {
-    compose_objects.emplace_back(*it++);
+    // NOLINTNEXTLINE(modernize-use-emplace) - brace initialization
+    compose_objects.push_back({*it++, {}, {}});
   } while (it != argv.cend());
 
   //! [compose object csek]
