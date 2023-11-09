@@ -105,6 +105,18 @@ CloudDeployTracingStub::ListTargets(
                            child_->ListTargets(context, request));
 }
 
+StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
+CloudDeployTracingStub::RollbackTarget(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::RollbackTargetRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "RollbackTarget");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RollbackTarget(context, request));
+}
+
 StatusOr<google::cloud::deploy::v1::Target> CloudDeployTracingStub::GetTarget(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetTargetRequest const& request) {
@@ -338,6 +350,105 @@ StatusOr<google::cloud::deploy::v1::Config> CloudDeployTracingStub::GetConfig(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetConfig(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployTracingStub::AsyncCreateAutomation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::deploy::v1::CreateAutomationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "CreateAutomation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateAutomation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployTracingStub::AsyncUpdateAutomation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "UpdateAutomation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateAutomation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployTracingStub::AsyncDeleteAutomation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "DeleteAutomation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteAutomation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::deploy::v1::Automation>
+CloudDeployTracingStub::GetAutomation(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::GetAutomationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "GetAutomation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAutomation(context, request));
+}
+
+StatusOr<google::cloud::deploy::v1::ListAutomationsResponse>
+CloudDeployTracingStub::ListAutomations(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::ListAutomationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "ListAutomations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListAutomations(context, request));
+}
+
+StatusOr<google::cloud::deploy::v1::AutomationRun>
+CloudDeployTracingStub::GetAutomationRun(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::GetAutomationRunRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "GetAutomationRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAutomationRun(context, request));
+}
+
+StatusOr<google::cloud::deploy::v1::ListAutomationRunsResponse>
+CloudDeployTracingStub::ListAutomationRuns(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::ListAutomationRunsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "ListAutomationRuns");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListAutomationRuns(context, request));
+}
+
+StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
+CloudDeployTracingStub::CancelAutomationRun(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::CancelAutomationRunRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "CancelAutomationRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CancelAutomationRun(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

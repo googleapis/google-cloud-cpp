@@ -101,6 +101,15 @@ CloudDeployMetadata::ListTargets(
   return child_->ListTargets(context, request);
 }
 
+StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
+CloudDeployMetadata::RollbackTarget(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::RollbackTargetRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RollbackTarget(context, request);
+}
+
 StatusOr<google::cloud::deploy::v1::Target> CloudDeployMetadata::GetTarget(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetTargetRequest const& request) {
@@ -280,6 +289,82 @@ StatusOr<google::cloud::deploy::v1::Config> CloudDeployMetadata::GetConfig(
   SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConfig(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployMetadata::AsyncCreateAutomation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::deploy::v1::CreateAutomationRequest const& request) {
+  SetMetadata(*context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAutomation(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployMetadata::AsyncUpdateAutomation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
+  SetMetadata(*context, internal::CurrentOptions(),
+              absl::StrCat("automation.name=",
+                           internal::UrlEncode(request.automation().name())));
+  return child_->AsyncUpdateAutomation(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployMetadata::AsyncDeleteAutomation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
+  SetMetadata(*context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAutomation(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::deploy::v1::Automation>
+CloudDeployMetadata::GetAutomation(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::GetAutomationRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAutomation(context, request);
+}
+
+StatusOr<google::cloud::deploy::v1::ListAutomationsResponse>
+CloudDeployMetadata::ListAutomations(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::ListAutomationsRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAutomations(context, request);
+}
+
+StatusOr<google::cloud::deploy::v1::AutomationRun>
+CloudDeployMetadata::GetAutomationRun(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::GetAutomationRunRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAutomationRun(context, request);
+}
+
+StatusOr<google::cloud::deploy::v1::ListAutomationRunsResponse>
+CloudDeployMetadata::ListAutomationRuns(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::ListAutomationRunsRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAutomationRuns(context, request);
+}
+
+StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
+CloudDeployMetadata::CancelAutomationRun(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::CancelAutomationRunRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelAutomationRun(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

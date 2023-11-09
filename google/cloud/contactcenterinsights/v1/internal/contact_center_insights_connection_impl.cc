@@ -338,6 +338,42 @@ ContactCenterInsightsConnectionImpl::BulkAnalyzeConversations(
 }
 
 future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
+ContactCenterInsightsConnectionImpl::BulkDeleteConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::
+          BulkDeleteConversationsResponse>(
+      background_->cq(), request,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::contactcenterinsights::v1::
+                         BulkDeleteConversationsRequest const& request) {
+        return stub->AsyncBulkDeleteConversations(cq, std::move(context),
+                                                  request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::
+              BulkDeleteConversationsResponse>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BulkDeleteConversations(request),
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<
     google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
 ContactCenterInsightsConnectionImpl::IngestConversations(
     google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&

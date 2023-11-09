@@ -72,6 +72,10 @@ class CloudDeployAuth : public CloudDeployStub {
       grpc::ClientContext& context,
       google::cloud::deploy::v1::ListTargetsRequest const& request) override;
 
+  StatusOr<google::cloud::deploy::v1::RollbackTargetResponse> RollbackTarget(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::RollbackTargetRequest const& request) override;
+
   StatusOr<google::cloud::deploy::v1::Target> GetTarget(
       grpc::ClientContext& context,
       google::cloud::deploy::v1::GetTargetRequest const& request) override;
@@ -157,6 +161,49 @@ class CloudDeployAuth : public CloudDeployStub {
   StatusOr<google::cloud::deploy::v1::Config> GetConfig(
       grpc::ClientContext& context,
       google::cloud::deploy::v1::GetConfigRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateAutomation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::deploy::v1::CreateAutomationRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateAutomation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::deploy::v1::UpdateAutomationRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAutomation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::deploy::v1::DeleteAutomationRequest const& request)
+      override;
+
+  StatusOr<google::cloud::deploy::v1::Automation> GetAutomation(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::GetAutomationRequest const& request) override;
+
+  StatusOr<google::cloud::deploy::v1::ListAutomationsResponse> ListAutomations(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::ListAutomationsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::deploy::v1::AutomationRun> GetAutomationRun(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::GetAutomationRunRequest const& request)
+      override;
+
+  StatusOr<google::cloud::deploy::v1::ListAutomationRunsResponse>
+  ListAutomationRuns(grpc::ClientContext& context,
+                     google::cloud::deploy::v1::ListAutomationRunsRequest const&
+                         request) override;
+
+  StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
+  CancelAutomationRun(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::CancelAutomationRunRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

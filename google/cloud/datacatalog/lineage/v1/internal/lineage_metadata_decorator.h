@@ -39,6 +39,13 @@ class LineageMetadata : public LineageStub {
                   std::multimap<std::string, std::string> fixed_metadata,
                   std::string api_client_header = "");
 
+  StatusOr<google::cloud::datacatalog::lineage::v1::
+               ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request) override;
+
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
       grpc::ClientContext& context,
       google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&

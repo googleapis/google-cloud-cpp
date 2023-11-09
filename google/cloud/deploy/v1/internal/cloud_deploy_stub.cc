@@ -122,6 +122,18 @@ DefaultCloudDeployStub::ListTargets(
   return response;
 }
 
+StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
+DefaultCloudDeployStub::RollbackTarget(
+    grpc::ClientContext& client_context,
+    google::cloud::deploy::v1::RollbackTargetRequest const& request) {
+  google::cloud::deploy::v1::RollbackTargetResponse response;
+  auto status = grpc_stub_->RollbackTarget(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::deploy::v1::Target> DefaultCloudDeployStub::GetTarget(
     grpc::ClientContext& client_context,
     google::cloud::deploy::v1::GetTargetRequest const& request) {
@@ -377,6 +389,121 @@ StatusOr<google::cloud::deploy::v1::Config> DefaultCloudDeployStub::GetConfig(
     google::cloud::deploy::v1::GetConfigRequest const& request) {
   google::cloud::deploy::v1::Config response;
   auto status = grpc_stub_->GetConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudDeployStub::AsyncCreateAutomation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::deploy::v1::CreateAutomationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::deploy::v1::CreateAutomationRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::deploy::v1::CreateAutomationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateAutomation(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudDeployStub::AsyncUpdateAutomation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::deploy::v1::UpdateAutomationRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::deploy::v1::UpdateAutomationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateAutomation(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudDeployStub::AsyncDeleteAutomation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::deploy::v1::DeleteAutomationRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::deploy::v1::DeleteAutomationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteAutomation(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::cloud::deploy::v1::Automation>
+DefaultCloudDeployStub::GetAutomation(
+    grpc::ClientContext& client_context,
+    google::cloud::deploy::v1::GetAutomationRequest const& request) {
+  google::cloud::deploy::v1::Automation response;
+  auto status = grpc_stub_->GetAutomation(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::deploy::v1::ListAutomationsResponse>
+DefaultCloudDeployStub::ListAutomations(
+    grpc::ClientContext& client_context,
+    google::cloud::deploy::v1::ListAutomationsRequest const& request) {
+  google::cloud::deploy::v1::ListAutomationsResponse response;
+  auto status =
+      grpc_stub_->ListAutomations(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::deploy::v1::AutomationRun>
+DefaultCloudDeployStub::GetAutomationRun(
+    grpc::ClientContext& client_context,
+    google::cloud::deploy::v1::GetAutomationRunRequest const& request) {
+  google::cloud::deploy::v1::AutomationRun response;
+  auto status =
+      grpc_stub_->GetAutomationRun(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::deploy::v1::ListAutomationRunsResponse>
+DefaultCloudDeployStub::ListAutomationRuns(
+    grpc::ClientContext& client_context,
+    google::cloud::deploy::v1::ListAutomationRunsRequest const& request) {
+  google::cloud::deploy::v1::ListAutomationRunsResponse response;
+  auto status =
+      grpc_stub_->ListAutomationRuns(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
+DefaultCloudDeployStub::CancelAutomationRun(
+    grpc::ClientContext& client_context,
+    google::cloud::deploy::v1::CancelAutomationRunRequest const& request) {
+  google::cloud::deploy::v1::CancelAutomationRunResponse response;
+  auto status =
+      grpc_stub_->CancelAutomationRun(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

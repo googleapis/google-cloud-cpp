@@ -135,6 +135,26 @@ StreamRange<google::cloud::deploy::v1::Target> CloudDeployClient::ListTargets(
   return connection_->ListTargets(std::move(request));
 }
 
+StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
+CloudDeployClient::RollbackTarget(std::string const& name,
+                                  std::string const& target_id,
+                                  std::string const& rollout_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::RollbackTargetRequest request;
+  request.set_name(name);
+  request.set_target_id(target_id);
+  request.set_rollout_id(rollout_id);
+  return connection_->RollbackTarget(request);
+}
+
+StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
+CloudDeployClient::RollbackTarget(
+    google::cloud::deploy::v1::RollbackTargetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RollbackTarget(request);
+}
+
 StatusOr<google::cloud::deploy::v1::Target> CloudDeployClient::GetTarget(
     std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -462,6 +482,141 @@ StatusOr<google::cloud::deploy::v1::Config> CloudDeployClient::GetConfig(
     google::cloud::deploy::v1::GetConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConfig(request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::Automation>>
+CloudDeployClient::CreateAutomation(
+    std::string const& parent,
+    google::cloud::deploy::v1::Automation const& automation,
+    std::string const& automation_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::CreateAutomationRequest request;
+  request.set_parent(parent);
+  *request.mutable_automation() = automation;
+  request.set_automation_id(automation_id);
+  return connection_->CreateAutomation(request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::Automation>>
+CloudDeployClient::CreateAutomation(
+    google::cloud::deploy::v1::CreateAutomationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAutomation(request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::Automation>>
+CloudDeployClient::UpdateAutomation(
+    google::cloud::deploy::v1::Automation const& automation,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::UpdateAutomationRequest request;
+  *request.mutable_automation() = automation;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAutomation(request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::Automation>>
+CloudDeployClient::UpdateAutomation(
+    google::cloud::deploy::v1::UpdateAutomationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAutomation(request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployClient::DeleteAutomation(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::DeleteAutomationRequest request;
+  request.set_name(name);
+  return connection_->DeleteAutomation(request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployClient::DeleteAutomation(
+    google::cloud::deploy::v1::DeleteAutomationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAutomation(request);
+}
+
+StatusOr<google::cloud::deploy::v1::Automation>
+CloudDeployClient::GetAutomation(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::GetAutomationRequest request;
+  request.set_name(name);
+  return connection_->GetAutomation(request);
+}
+
+StatusOr<google::cloud::deploy::v1::Automation>
+CloudDeployClient::GetAutomation(
+    google::cloud::deploy::v1::GetAutomationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAutomation(request);
+}
+
+StreamRange<google::cloud::deploy::v1::Automation>
+CloudDeployClient::ListAutomations(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::ListAutomationsRequest request;
+  request.set_parent(parent);
+  return connection_->ListAutomations(request);
+}
+
+StreamRange<google::cloud::deploy::v1::Automation>
+CloudDeployClient::ListAutomations(
+    google::cloud::deploy::v1::ListAutomationsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAutomations(std::move(request));
+}
+
+StatusOr<google::cloud::deploy::v1::AutomationRun>
+CloudDeployClient::GetAutomationRun(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::GetAutomationRunRequest request;
+  request.set_name(name);
+  return connection_->GetAutomationRun(request);
+}
+
+StatusOr<google::cloud::deploy::v1::AutomationRun>
+CloudDeployClient::GetAutomationRun(
+    google::cloud::deploy::v1::GetAutomationRunRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAutomationRun(request);
+}
+
+StreamRange<google::cloud::deploy::v1::AutomationRun>
+CloudDeployClient::ListAutomationRuns(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::ListAutomationRunsRequest request;
+  request.set_parent(parent);
+  return connection_->ListAutomationRuns(request);
+}
+
+StreamRange<google::cloud::deploy::v1::AutomationRun>
+CloudDeployClient::ListAutomationRuns(
+    google::cloud::deploy::v1::ListAutomationRunsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAutomationRuns(std::move(request));
+}
+
+StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
+CloudDeployClient::CancelAutomationRun(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::CancelAutomationRunRequest request;
+  request.set_name(name);
+  return connection_->CancelAutomationRun(request);
+}
+
+StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
+CloudDeployClient::CancelAutomationRun(
+    google::cloud::deploy::v1::CancelAutomationRunRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelAutomationRun(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

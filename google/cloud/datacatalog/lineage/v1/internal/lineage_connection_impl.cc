@@ -66,6 +66,23 @@ LineageConnectionImpl::LineageConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       LineageConnection::options())) {}
 
+StatusOr<
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+LineageConnectionImpl::ProcessOpenLineageRunEvent(
+    google::cloud::datacatalog::lineage::v1::
+        ProcessOpenLineageRunEventRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ProcessOpenLineageRunEvent(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::datacatalog::lineage::v1::
+                 ProcessOpenLineageRunEventRequest const& request) {
+        return stub_->ProcessOpenLineageRunEvent(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageConnectionImpl::CreateProcess(
     google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&

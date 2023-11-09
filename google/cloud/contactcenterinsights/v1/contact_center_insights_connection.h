@@ -245,6 +245,11 @@ class ContactCenterInsightsConnection {
   BulkAnalyzeConversations(google::cloud::contactcenterinsights::v1::
                                BulkAnalyzeConversationsRequest const& request);
 
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
+                              BulkDeleteConversationsResponse>>
+  BulkDeleteConversations(google::cloud::contactcenterinsights::v1::
+                              BulkDeleteConversationsRequest const& request);
+
   virtual future<StatusOr<
       google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
   IngestConversations(google::cloud::contactcenterinsights::v1::

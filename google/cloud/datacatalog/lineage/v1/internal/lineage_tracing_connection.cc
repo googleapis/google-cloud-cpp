@@ -32,6 +32,17 @@ LineageTracingConnection::LineageTracingConnection(
     std::shared_ptr<datacatalog_lineage_v1::LineageConnection> child)
     : child_(std::move(child)) {}
 
+StatusOr<
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+LineageTracingConnection::ProcessOpenLineageRunEvent(
+    google::cloud::datacatalog::lineage::v1::
+        ProcessOpenLineageRunEventRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_lineage_v1::LineageConnection::ProcessOpenLineageRunEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ProcessOpenLineageRunEvent(request));
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageTracingConnection::CreateProcess(
     google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&

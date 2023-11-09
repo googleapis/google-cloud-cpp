@@ -30,6 +30,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LineageStub::~LineageStub() = default;
 
+StatusOr<
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+DefaultLineageStub::ProcessOpenLineageRunEvent(
+    grpc::ClientContext& client_context,
+    google::cloud::datacatalog::lineage::v1::
+        ProcessOpenLineageRunEventRequest const& request) {
+  google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse
+      response;
+  auto status = grpc_stub_->ProcessOpenLineageRunEvent(&client_context, request,
+                                                       &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 DefaultLineageStub::CreateProcess(
     grpc::ClientContext& client_context,

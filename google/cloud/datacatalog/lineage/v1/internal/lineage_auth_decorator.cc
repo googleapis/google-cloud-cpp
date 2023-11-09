@@ -30,6 +30,17 @@ LineageAuth::LineageAuth(
     std::shared_ptr<LineageStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
+StatusOr<
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+LineageAuth::ProcessOpenLineageRunEvent(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::lineage::v1::
+        ProcessOpenLineageRunEventRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ProcessOpenLineageRunEvent(context, request);
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageAuth::CreateProcess(
     grpc::ClientContext& context,

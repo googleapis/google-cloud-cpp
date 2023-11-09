@@ -118,6 +118,17 @@ ContactCenterInsightsConnection::BulkAnalyzeConversations(
 }
 
 future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
+ContactCenterInsightsConnection::BulkDeleteConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   BulkDeleteConversationsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
     google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
 ContactCenterInsightsConnection::IngestConversations(
     google::cloud::contactcenterinsights::v1::

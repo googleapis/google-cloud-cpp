@@ -64,7 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.datacatalog.lineage.v1.LineageEvent]:
-/// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+/// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L320}
 ///
 class LineageClient {
  public:
@@ -92,6 +92,77 @@ class LineageClient {
 
   // clang-format off
   ///
+  /// Creates new lineage events together with their parents: process and run.
+  /// Updates the process and run if they already exist.
+  /// Mapped from Open Lineage specification:
+  /// https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.json.
+  ///
+  /// @param parent  Required. The name of the project and its location that should own the
+  ///  process, run, and lineage event.
+  /// @param open_lineage  Required. OpenLineage message following OpenLineage format:
+  ///  https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.json
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.ProcessOpenLineageRunEventResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.ProcessOpenLineageRunEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L425}
+  /// [google.cloud.datacatalog.lineage.v1.ProcessOpenLineageRunEventResponse]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L443}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::datacatalog::lineage::v1::
+               ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(std::string const& parent,
+                             google::protobuf::Struct const& open_lineage,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates new lineage events together with their parents: process and run.
+  /// Updates the process and run if they already exist.
+  /// Mapped from Open Lineage specification:
+  /// https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.json.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.ProcessOpenLineageRunEventRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.ProcessOpenLineageRunEventResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.ProcessOpenLineageRunEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L425}
+  /// [google.cloud.datacatalog.lineage.v1.ProcessOpenLineageRunEventResponse]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L443}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::datacatalog::lineage::v1::
+               ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Creates a new process.
   ///
   /// @param parent  Required. The name of the project and its location that should own the
@@ -110,8 +181,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.CreateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L411}
-  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [google.cloud.datacatalog.lineage.v1.CreateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L467}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
@@ -142,8 +213,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.CreateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L411}
-  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [google.cloud.datacatalog.lineage.v1.CreateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L467}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
@@ -173,8 +244,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
-  /// [google.cloud.datacatalog.lineage.v1.UpdateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L432}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
+  /// [google.cloud.datacatalog.lineage.v1.UpdateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L488}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> UpdateProcess(
@@ -204,8 +275,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
-  /// [google.cloud.datacatalog.lineage.v1.UpdateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L432}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
+  /// [google.cloud.datacatalog.lineage.v1.UpdateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L488}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> UpdateProcess(
@@ -231,8 +302,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.GetProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L448}
-  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [google.cloud.datacatalog.lineage.v1.GetProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L504}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> GetProcess(
@@ -261,8 +332,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.GetProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L448}
-  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [google.cloud.datacatalog.lineage.v1.GetProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L504}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> GetProcess(
@@ -298,8 +369,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.ListProcessesRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L460}
-  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [google.cloud.datacatalog.lineage.v1.ListProcessesRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L516}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::Process> ListProcesses(
@@ -338,8 +409,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.ListProcessesRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L460}
-  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [google.cloud.datacatalog.lineage.v1.ListProcessesRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L516}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::Process> ListProcesses(
@@ -371,8 +442,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.DeleteProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L497}
-  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
+  /// [google.cloud.datacatalog.lineage.v1.DeleteProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L553}
+  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
@@ -408,8 +479,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.DeleteProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L497}
-  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
+  /// [google.cloud.datacatalog.lineage.v1.DeleteProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L553}
+  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
@@ -437,8 +508,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.CreateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L513}
-  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [google.cloud.datacatalog.lineage.v1.CreateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L569}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
@@ -469,8 +540,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.CreateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L513}
-  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [google.cloud.datacatalog.lineage.v1.CreateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L569}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
@@ -502,8 +573,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
-  /// [google.cloud.datacatalog.lineage.v1.UpdateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L533}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
+  /// [google.cloud.datacatalog.lineage.v1.UpdateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L589}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> UpdateRun(
@@ -533,8 +604,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
-  /// [google.cloud.datacatalog.lineage.v1.UpdateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L533}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
+  /// [google.cloud.datacatalog.lineage.v1.UpdateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L589}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> UpdateRun(
@@ -559,8 +630,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.GetRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L549}
-  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [google.cloud.datacatalog.lineage.v1.GetRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L608}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> GetRun(
@@ -589,8 +660,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.GetRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L549}
-  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [google.cloud.datacatalog.lineage.v1.GetRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L608}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> GetRun(
@@ -625,8 +696,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.ListRunsRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L559}
-  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [google.cloud.datacatalog.lineage.v1.ListRunsRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L618}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::Run> ListRuns(
@@ -665,8 +736,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.ListRunsRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L559}
-  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [google.cloud.datacatalog.lineage.v1.ListRunsRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L618}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::Run> ListRuns(
@@ -698,8 +769,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.DeleteRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L595}
-  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
+  /// [google.cloud.datacatalog.lineage.v1.DeleteRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L654}
+  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
@@ -735,8 +806,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.DeleteRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L595}
-  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
+  /// [google.cloud.datacatalog.lineage.v1.DeleteRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L654}
+  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
@@ -763,8 +834,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.CreateLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L609}
-  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// [google.cloud.datacatalog.lineage.v1.CreateLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L668}
+  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L320}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
@@ -797,8 +868,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.CreateLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L609}
-  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// [google.cloud.datacatalog.lineage.v1.CreateLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L668}
+  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L320}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
@@ -825,8 +896,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.GetLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L629}
-  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// [google.cloud.datacatalog.lineage.v1.GetLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L688}
+  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L320}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
@@ -855,8 +926,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.GetLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L629}
-  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// [google.cloud.datacatalog.lineage.v1.GetLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L688}
+  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L320}
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
@@ -894,8 +965,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
-  /// [google.cloud.datacatalog.lineage.v1.ListLineageEventsRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L641}
+  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L320}
+  /// [google.cloud.datacatalog.lineage.v1.ListLineageEventsRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L700}
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>
@@ -934,8 +1005,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
-  /// [google.cloud.datacatalog.lineage.v1.ListLineageEventsRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L641}
+  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L320}
+  /// [google.cloud.datacatalog.lineage.v1.ListLineageEventsRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L700}
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>
@@ -959,7 +1030,7 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.DeleteLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L679}
+  /// [google.cloud.datacatalog.lineage.v1.DeleteLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L738}
   ///
   // clang-format on
   Status DeleteLineageEvent(std::string const& name, Options opts = {});
@@ -985,7 +1056,7 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.DeleteLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L679}
+  /// [google.cloud.datacatalog.lineage.v1.DeleteLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L738}
   ///
   // clang-format on
   Status DeleteLineageEvent(
@@ -1033,8 +1104,8 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.Link]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L748}
-  /// [google.cloud.datacatalog.lineage.v1.SearchLinksRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L695}
+  /// [google.cloud.datacatalog.lineage.v1.Link]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L807}
+  /// [google.cloud.datacatalog.lineage.v1.SearchLinksRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L754}
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::Link> SearchLinks(
@@ -1086,9 +1157,9 @@ class LineageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.lineage.v1.BatchSearchLinkProcessesRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L771}
-  /// [google.cloud.datacatalog.lineage.v1.Lineage.SearchLinks]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L186}
-  /// [google.cloud.datacatalog.lineage.v1.ProcessLinks]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L814}
+  /// [google.cloud.datacatalog.lineage.v1.BatchSearchLinkProcessesRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L830}
+  /// [google.cloud.datacatalog.lineage.v1.Lineage.SearchLinks]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L199}
+  /// [google.cloud.datacatalog.lineage.v1.ProcessLinks]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L873}
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>

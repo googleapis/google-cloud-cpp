@@ -155,6 +155,17 @@ ContactCenterInsightsMetadata::AsyncBulkAnalyzeConversations(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsMetadata::AsyncBulkDeleteConversations(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  SetMetadata(*context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBulkDeleteConversations(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncIngestConversations(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
