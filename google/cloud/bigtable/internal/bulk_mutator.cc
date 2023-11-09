@@ -41,7 +41,7 @@ BulkMutatorState::BulkMutatorState(
   pending_mutations_.set_table_name(table_name);
 
   // As we receive successful responses, we shrink the size of the request (only
-  // those pending are resent).  But if any fails we want to report their index
+  // those pending are present).  But if any fails we want to report their index
   // in the original sequence provided by the user. This vector maps from the
   // index in the current sequence of mutations to the index in the original
   // sequence of mutations.
@@ -203,7 +203,8 @@ grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
   return grpc_status;
 }
 
-Status BulkMutator::MakeOneRequest(BigtableStub& stub) {
+Status BulkMutator::MakeOneRequest(BigtableStub& stub,
+                                   MutateRowsLimiter& limiter) {
   // Send the request to the server.
   auto const& mutations = state_.BeforeStart();
 
@@ -214,7 +215,9 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub) {
 
   struct UnpackVariant {
     BulkMutatorState& state;
+    MutateRowsLimiter& limiter;
     bool operator()(btproto::MutateRowsResponse r) {
+      limiter.Update(r);
       state.OnRead(std::move(r));
       return true;
     }
@@ -224,9 +227,12 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub) {
     }
   };
 
+  // Potentially throttle the request
+  limiter.Acquire();
+
   // Read the stream of responses.
   auto stream = stub.MutateRows(std::move(context), mutations);
-  while (absl::visit(UnpackVariant{state_}, stream->Read())) {
+  while (absl::visit(UnpackVariant{state_, limiter}, stream->Read())) {
   }
   return state_.last_status();
 }
