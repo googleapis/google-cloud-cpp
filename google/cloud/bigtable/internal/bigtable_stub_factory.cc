@@ -51,6 +51,8 @@ std::string FeaturesMetadata() {
     google::bigtable::v2::FeatureFlags proto;
     proto.set_reverse_scans(true);
     proto.set_last_scanned_row_responses(true);
+    proto.set_mutate_rows_rate_limit(true);
+    proto.set_mutate_rows_rate_limit2(true);
     return internal::UrlsafeBase64Encode(proto.SerializeAsString());
   }());
   return *kFeatures;
