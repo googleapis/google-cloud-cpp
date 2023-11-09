@@ -673,7 +673,6 @@
 ./include/google/cloud/edgecontainer/v1/internal
 ./include/google/cloud/edgecontainer/v1/mocks
 ./include/google/cloud/edgenetwork
-./include/google/cloud/edgenetwork/mocks
 ./include/google/cloud/edgenetwork/v1
 ./include/google/cloud/edgenetwork/v1/internal
 ./include/google/cloud/edgenetwork/v1/mocks
