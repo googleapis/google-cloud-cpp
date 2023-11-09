@@ -51,19 +51,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace std {
 namespace chrono {
 
-template <class Rep, class Period,
-          typename = typename std::enable_if<
-              !google::cloud::internal::kIsChronoDurationOstreamable<
-                  Rep, Period>>::type>
+template <
+    class Rep, class Period,
+    typename = std::enable_if_t<
+        !google::cloud::internal::kIsChronoDurationOstreamable<Rep, Period>>>
 std::ostream& operator<<(  //
     std::ostream& str, std::chrono::duration<Rep, Period> const& value) {
   return str << absl::FromChrono(value);
 }
 
 template <class Clock, class Duration,
-          typename = typename std::enable_if<
+          typename = std::enable_if_t<
               !google::cloud::internal::kIsChronoTimePointOstreamable<
-                  Clock, Duration>>::type>
+                  Clock, Duration>>>
 std::ostream& operator<<(
     std::ostream& str, std::chrono::time_point<Clock, Duration> const& value) {
   return str << absl::FromChrono(value);

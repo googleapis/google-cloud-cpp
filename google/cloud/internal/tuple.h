@@ -51,17 +51,16 @@ struct ApplyRes<F, std::tuple<Args...>> {
  * @tparam I indices 0..(sizeof(Tuple)-1)
  */
 template <class F, class Tuple, std::size_t... I>
-typename ApplyRes<F, typename std::decay<Tuple>::type>::type ApplyImpl(
+typename ApplyRes<F, std::decay_t<Tuple>>::type ApplyImpl(
     F&& f, Tuple&& t, index_sequence<I...>) {
   return std::forward<F>(f)(std::get<I>(std::forward<Tuple>(t))...);
 }
 
 // Re-implementation of `std::apply` from C++14
 template <class F, class Tuple>
-typename ApplyRes<F, typename std::decay<Tuple>::type>::type apply(F&& f,
-                                                                   Tuple&& t) {
-  using Indices = make_index_sequence<
-      std::tuple_size<typename std::decay<Tuple>::type>::value>;
+typename ApplyRes<F, std::decay_t<Tuple>>::type apply(F&& f, Tuple&& t) {
+  using Indices =
+      make_index_sequence<std::tuple_size<std::decay_t<Tuple>>::value>;
   return ApplyImpl(std::forward<F>(f), std::forward<Tuple>(t), Indices());
 }
 

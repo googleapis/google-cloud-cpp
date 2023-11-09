@@ -93,7 +93,7 @@ struct invoke_impl<MT B::*> {
    * @return the result of `(t.*f)(a...)`.
    */
   template <class T, class... Args,
-            typename std::enable_if<std::is_function<MT>::value, int>::type = 0>
+            std::enable_if_t<std::is_function<MT>::value, int> = 0>
   static auto call(MT B::*f, T&& t, Args&&... a)
       -> decltype((std::forward<T>(t).*f)(std::forward<Args>(a)...));
 };
@@ -119,7 +119,7 @@ struct invoke_impl<MT B::*> {
  * @see https://en.cppreference.com/w/cpp/types/decay for a discussion of
  *     decaying function types.
  */
-template <class F, class... ArgTypes, class Fd = typename std::decay<F>::type>
+template <class F, class... ArgTypes, class Fd = std::decay_t<F>>
 auto invoker_function(F&& f, ArgTypes&&... a)
     -> decltype(invoke_impl<Fd>::call(std::forward<F>(f),
                                       std::forward<ArgTypes>(a)...));

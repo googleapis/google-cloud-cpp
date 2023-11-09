@@ -64,8 +64,7 @@ struct MakeIndexSequenceImpl {};
  */
 template <typename T, T N, T... I>
 struct MakeIndexSequenceImpl<T, std::integral_constant<T, N>,
-                             typename std::enable_if<(N > 0), void>::type,
-                             I...> {
+                             std::enable_if_t<(N > 0), void>, I...> {
   using result =
       typename MakeIndexSequenceImpl<T, std::integral_constant<T, N - 1>, void,
                                      N - 1, I...>::result;

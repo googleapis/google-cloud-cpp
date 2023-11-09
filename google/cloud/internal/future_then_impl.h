@@ -71,7 +71,7 @@ typename internal::then_helper<F, T>::future_t future<T>::then_impl(
       return functor(future<T>(std::move(state)));
     }
 
-    typename std::decay<F>::type functor;
+    std::decay_t<F> functor;
   };
 
   auto output_shared_state = local_state_type::make_continuation(
@@ -112,7 +112,7 @@ typename internal::then_helper<F, T>::future_t future<T>::then_impl(
       return functor(future<T>(std::move(state))).shared_state_;
     }
 
-    typename std::decay<F>::type functor;
+    std::decay_t<F> functor;
   };
 
   auto output_shared_state = local_state_type::make_continuation(
@@ -154,7 +154,7 @@ typename internal::then_helper<F, void>::future_t future<void>::then_impl(
       return functor(future<void>(std::move(state)));
     }
 
-    typename std::decay<F>::type functor;
+    std::decay_t<F> functor;
   };
 
   auto output_shared_state = shared_state_type::make_continuation(
@@ -194,7 +194,7 @@ typename internal::then_helper<F, void>::future_t future<void>::then_impl(
       return functor(future<void>(std::move(state))).shared_state_;
     }
 
-    typename std::decay<F>::type functor;
+    std::decay_t<F> functor;
   };
 
   auto output_shared_state = local_state_type::make_continuation(

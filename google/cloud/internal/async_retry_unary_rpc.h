@@ -198,15 +198,14 @@ class RetryAsyncUnaryRpc {
  *     retryable error, but the request is non-idempotent, or (d) the
  *     retry policy is expired.
  */
-template <
-    typename RPCBackoffPolicy, typename RPCRetryPolicy, typename AsyncCallType,
-    typename RequestType,
-    typename AsyncCallT = typename std::decay<AsyncCallType>::type,
-    typename RequestT = typename std::decay<RequestType>::type,
-    typename std::enable_if<google::cloud::internal::is_invocable<
-                                AsyncCallT, grpc::ClientContext*,
-                                RequestT const&, grpc::CompletionQueue*>::value,
-                            int>::type = 0>
+template <typename RPCBackoffPolicy, typename RPCRetryPolicy,
+          typename AsyncCallType, typename RequestType,
+          typename AsyncCallT = std::decay_t<AsyncCallType>,
+          typename RequestT = std::decay_t<RequestType>,
+          std::enable_if_t<google::cloud::internal::is_invocable<
+                               AsyncCallT, grpc::ClientContext*,
+                               RequestT const&, grpc::CompletionQueue*>::value,
+                           int> = 0>
 future<StatusOr<typename AsyncCallResponseType<AsyncCallT, RequestT>::type>>
 StartRetryAsyncUnaryRpc(CompletionQueue cq, char const* location,
                         std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,

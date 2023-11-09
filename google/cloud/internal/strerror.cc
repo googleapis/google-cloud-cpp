@@ -30,8 +30,7 @@ namespace {
 //
 // We use overload resolution to handle all cases, and SFINAE to avoid the
 // "unused function" warnings.
-template <typename T,
-          typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+template <typename T, std::enable_if_t<std::is_integral<T>::value, int> = 0>
 std::string handle_strerror_r_error(char const* msg, int errnum, T result) {
   if (result == 0) return msg;
   std::ostringstream os;
@@ -40,8 +39,7 @@ std::string handle_strerror_r_error(char const* msg, int errnum, T result) {
   return std::move(os).str();
 }
 
-template <typename T,
-          typename std::enable_if<std::is_pointer<T>::value, int>::type = 0>
+template <typename T, std::enable_if_t<std::is_pointer<T>::value, int> = 0>
 std::string handle_strerror_r_error(char const*, int errnum, T result) {
   if (result != nullptr) return result;
   std::ostringstream os;
