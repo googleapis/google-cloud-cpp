@@ -2034,7 +2034,7 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
-# Edge network
+# Edge Network
 service {
   service_proto_path: "google/cloud/edgenetwork/v1/service.proto"
   product_path: "google/cloud/edgenetwork/v1"
