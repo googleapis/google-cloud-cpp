@@ -3124,15 +3124,13 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
     ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
     // The first two responses are reads from two different "begin"
     // transactions.
-    switch (i) {
-      case 0:
-        *response.mutable_metadata()->mutable_transaction() =
-            MakeTestTransaction("ABCDEF01");
-        break;
-      case 1:
-        *response.mutable_metadata()->mutable_transaction() =
-            MakeTestTransaction("ABCDEF02");
-        break;
+    if (i == 0) {
+      *response.mutable_metadata()->mutable_transaction() =
+          MakeTestTransaction("ABCDEF01");
+
+    } else if (i == 1) {
+      *response.mutable_metadata()->mutable_transaction() =
+          MakeTestTransaction("ABCDEF02");
     }
     response.add_values()->set_string_value(std::to_string(i));
     readers[i] = MakeReader<PartialResultSet>({std::move(response)});

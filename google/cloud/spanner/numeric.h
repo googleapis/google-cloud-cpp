@@ -255,12 +255,11 @@ StatusOr<Decimal<Mode>> MakeDecimal(double d) {
  *
  * Fails on any (scaled) argument outside the NUMERIC value range.
  */
-template <
-    typename T, DecimalMode Mode,
-    /// @cond implementation_details
-    typename std::enable_if<std::numeric_limits<T>::is_integer, int>::type = 0
-    /// @endcond
-    >
+template <typename T, DecimalMode Mode,
+          /// @cond implementation_details
+          std::enable_if_t<std::numeric_limits<T>::is_integer, int> = 0
+          /// @endcond
+          >
 StatusOr<Decimal<Mode>> MakeDecimal(T i, int exponent = 0) {
   return spanner_internal::MakeDecimal<Mode>(spanner_internal::ToString(i),
                                              exponent);
@@ -297,9 +296,9 @@ double ToDouble(Decimal<Mode> const& d) {
 ///@{
 template <typename T, DecimalMode Mode,
           /// @cond implementation_details
-          typename std::enable_if<std::numeric_limits<T>::is_integer &&
-                                      !std::numeric_limits<T>::is_signed,
-                                  int>::type = 0
+          std::enable_if_t<std::numeric_limits<T>::is_integer &&
+                               !std::numeric_limits<T>::is_signed,
+                           int> = 0
           /// @endcond
           >
 StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
@@ -337,9 +336,9 @@ StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
 }
 template <typename T, DecimalMode Mode,
           /// @cond implementation_details
-          typename std::enable_if<std::numeric_limits<T>::is_integer &&
-                                      std::numeric_limits<T>::is_signed,
-                                  int>::type = 0
+          std::enable_if_t<std::numeric_limits<T>::is_integer &&
+                               std::numeric_limits<T>::is_signed,
+                           int> = 0
           /// @endcond
           >
 StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
@@ -412,7 +411,7 @@ inline StatusOr<Numeric> MakeNumeric(double d) {
 template <
     typename T,
     /// @cond implementation_details
-    typename std::enable_if<std::numeric_limits<T>::is_integer, int>::type = 0
+    std::enable_if_t<std::numeric_limits<T>::is_integer, int> = 0
     /// @endcond
     >
 StatusOr<Numeric> MakeNumeric(T i, int exponent = 0) {
@@ -433,7 +432,7 @@ inline StatusOr<PgNumeric> MakePgNumeric(double d) {
 template <
     typename T,
     /// @cond implementation_details
-    typename std::enable_if<std::numeric_limits<T>::is_integer, int>::type = 0
+ std::enable_if_t<std::numeric_limits<T>::is_integer, int> = 0
     /// @endcond
     >
 StatusOr<PgNumeric> MakePgNumeric(T i, int exponent = 0) {
