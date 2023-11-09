@@ -31,6 +31,7 @@ SequentialBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
     return make_ready_future(StatusOr<PublishResponse>(corked_on_error_));
   }
   if (corked_on_pending_) {
+    // NOLINTNEXTLINE(modernize-use-emplace) - brace initializer
     queue_.push_back({std::move(request), {}});
     return queue_.back().promise.get_future();
   }
