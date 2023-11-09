@@ -126,7 +126,7 @@ declare -A -r LIBRARIES=(
   ["documentai"]="@com_google_googleapis//google/cloud/documentai/v1:documentai_cc_grpc"
   ["domains"]="@com_google_googleapis//google/cloud/domains/v1:domains_cc_grpc"
   ["edgecontainer"]="@com_google_googleapis//google/cloud/edgecontainer/v1:edgecontainer_cc_grpc"
-  ["edgenetwork"]="@com_google_googleapis//google/cloud/edgenetwork/v1:edgenetwork_cc_grpc"  
+  ["edgenetwork"]="@com_google_googleapis//google/cloud/edgenetwork/v1:edgenetwork_cc_grpc"
   ["essentialcontacts"]="@com_google_googleapis//google/cloud/essentialcontacts/v1:essentialcontacts_cc_grpc"
   ["eventarc"]="$(
     printf ",%s" \
