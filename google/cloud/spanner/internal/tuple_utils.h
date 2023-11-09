@@ -38,17 +38,16 @@ struct IsTupleImpl<std::tuple<Ts...>> : std::true_type {};
 //     static_assert(IsTuple<Type>::value, "");
 //
 template <typename T>
-using IsTuple = IsTupleImpl<typename std::decay<T>::type>;
+using IsTuple = IsTupleImpl<std::decay_t<T>>;
 
 // Decays the tuple `T` and returns its size as in the ::value member.
 template <typename T>
-using TupleSize = std::tuple_size<typename std::decay<T>::type>;
+using TupleSize = std::tuple_size<std::decay_t<T>>;
 
 // Base case of `ForEach` that is called at the end of iterating a tuple.
 // See the docs for the next overload to see how to use `ForEach`.
 template <std::size_t I = 0, typename T, typename F, typename... Args>
-typename std::enable_if<I == TupleSize<T>::value, void>::type ForEach(
-    T&&, F&&, Args&&...) {}
+std::enable_if_t<I == TupleSize<T>::value, void> ForEach(T&&, F&&, Args&&...) {}
 
 // This function template iterates the elements of a tuple, calling the given
 // functor with each of the tuple's elements as well as any additional
@@ -72,8 +71,8 @@ typename std::enable_if<I == TupleSize<T>::value, void>::type ForEach(
 //     EXPECT_THAT(v, testing::ElementsAre("1", "42"));
 //
 template <std::size_t I = 0, typename T, typename F, typename... Args>
-typename std::enable_if<(I < TupleSize<T>::value), void>::type ForEach(
-    T&& t, F&& f, Args&&... args) {
+std::enable_if_t<(I < TupleSize<T>::value), void> ForEach(T&& t, F&& f,
+                                                          Args&&... args) {
   auto&& e = std::get<I>(std::forward<T>(t));
   std::forward<F>(f)(std::forward<decltype(e)>(e), std::forward<Args>(args)...);
   ForEach<I + 1>(std::forward<T>(t), std::forward<F>(f),

@@ -252,7 +252,7 @@ class Value {
    */
   template <typename T>
   explicit Value(std::vector<T> v) : Value(PrivateConstructor{}, std::move(v)) {
-    static_assert(!IsVector<typename std::decay<T>::type>::value,
+    static_assert(!IsVector<std::decay_t<T>>::value,
                   "vector of vector not allowed. See value.h documentation.");
   }
 
@@ -462,9 +462,9 @@ class Value {
       auto* field = struct_type.add_fields();
       *field->mutable_type() = MakeTypeProto(t);
     }
-    template <typename S, typename T,
-              typename std::enable_if<
-                  std::is_convertible<S, std::string>::value, int>::type = 0>
+    template <
+        typename S, typename T,
+        std::enable_if_t<std::is_convertible<S, std::string>::value, int> = 0>
     void operator()(std::pair<S, T> const& p,
                     google::spanner::v1::StructType& struct_type) const {
       auto* field = struct_type.add_fields();
@@ -519,9 +519,9 @@ class Value {
     void operator()(T& t, google::protobuf::ListValue& list_value) const {
       *list_value.add_values() = MakeValueProto(std::move(t));
     }
-    template <typename S, typename T,
-              typename std::enable_if<
-                  std::is_convertible<S, std::string>::value, int>::type = 0>
+    template <
+        typename S, typename T,
+        std::enable_if_t<std::is_convertible<S, std::string>::value, int> = 0>
     void operator()(std::pair<S, T> p,
                     google::protobuf::ListValue& list_value) const {
       *list_value.add_values() = MakeValueProto(std::move(p.second));

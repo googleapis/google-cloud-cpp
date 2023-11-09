@@ -193,10 +193,10 @@ class Row {
    * @note columns.size() must equal values.size()
    */
   Row(std::vector<Value> values,
-      std::shared_ptr<const std::vector<std::string>> columns);
+      std::shared_ptr<std::vector<std::string> const> columns);
 
   std::vector<Value> values_;
-  std::shared_ptr<const std::vector<std::string>> columns_;
+  std::shared_ptr<std::vector<std::string> const> columns_;
 };
 
 /**
@@ -464,8 +464,7 @@ TupleStream<Tuple> StreamOf(RowRange&& range) {
  * @snippet samples.cc get-singular-row
  */
 template <typename RowRange>
-auto GetSingularRow(RowRange range) ->
-    typename std::decay<decltype(*range.begin())>::type {
+auto GetSingularRow(RowRange range) -> std::decay_t<decltype(*range.begin())> {
   auto const e = range.end();
   auto it = range.begin();
   if (it == e) return Status(StatusCode::kInvalidArgument, "no rows");
