@@ -59,6 +59,12 @@ build:asan --copt=-Og
 build:asan --copt=-g
 build:asan --copt=-fsanitize=address
 build:asan --copt=-fno-omit-frame-pointer
+# Protobuf enables -Werror by default. We are building with GCC 13. With
+# -Werror and Address Sanitizer the compiler emits warnings in some of the
+# Protobuf code, and that stops the build. It may be a compiler bug, or Protobuf
+# may be assuming that some compiler flags are set when compiling with Address
+# Sanitizier (-DADDRESS_SANITIZER=1 is one possibility).
+build:asan --per_file_copt=com_google_protobuf//@-Wno-error
 build:asan --linkopt=-fsanitize=address
 build:asan --action_env=ASAN_OPTIONS=detect_leaks=1:color=always
 build:asan --action_env=LSAN_OPTIONS=report_objects=1

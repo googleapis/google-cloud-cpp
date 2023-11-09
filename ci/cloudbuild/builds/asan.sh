@@ -21,9 +21,6 @@ source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/cloudbuild/builds/lib/integration.sh
 source module ci/lib/io.sh
 
-export CC=clang
-export CXX=clang++
-
 mapfile -t args < <(bazel::common_args)
 args+=("--config=asan")
 io::run bazel test "${args[@]}" --test_tag_filters=-integration-test ...

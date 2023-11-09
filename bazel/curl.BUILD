@@ -418,6 +418,8 @@ cc_library(
         ],
         "//conditions:default": [
             "CURL_MAX_WRITE_SIZE=65536",
+            # Avoid false positives on builds with Undefined Behavior Sanitizer.
+            "CURL_STRICTER",
         ],
     }),
     includes = ["include"],

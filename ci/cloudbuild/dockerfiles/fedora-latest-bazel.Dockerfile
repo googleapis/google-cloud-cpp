@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:38
+FROM fedora:39
 ARG NCPU=4
 ARG ARCH=amd64
 
@@ -43,7 +43,9 @@ WORKDIR /var/tmp/build
 # integration tests for the client libraries.
 COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
-ENV CLOUDSDK_PYTHON=python3
+# The Google Cloud CLI requires Python <= 3.10, Fedora defaults to 3.12.
+RUN dnf makecache && dnf install -y python3.10
+ENV CLOUDSDK_PYTHON=python3.10
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
