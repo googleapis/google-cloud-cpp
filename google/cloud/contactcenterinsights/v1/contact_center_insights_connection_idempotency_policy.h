@@ -80,6 +80,10 @@ class ContactCenterInsightsConnectionIdempotencyPolicy {
       google::cloud::contactcenterinsights::v1::
           BulkAnalyzeConversationsRequest const& request);
 
+  virtual google::cloud::Idempotency BulkDeleteConversations(
+      google::cloud::contactcenterinsights::v1::
+          BulkDeleteConversationsRequest const& request);
+
   virtual google::cloud::Idempotency IngestConversations(
       google::cloud::contactcenterinsights::v1::
           IngestConversationsRequest const& request);

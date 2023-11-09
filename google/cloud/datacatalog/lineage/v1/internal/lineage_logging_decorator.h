@@ -39,6 +39,13 @@ class LineageLogging : public LineageStub {
                  TracingOptions tracing_options,
                  std::set<std::string> const& components);
 
+  StatusOr<google::cloud::datacatalog::lineage::v1::
+               ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request) override;
+
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
       grpc::ClientContext& context,
       google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&

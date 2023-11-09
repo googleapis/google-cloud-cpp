@@ -46,6 +46,13 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::lineage::v1::
+                           ProcessOpenLineageRunEventResponse>,
+              ProcessOpenLineageRunEvent,
+              (google::cloud::datacatalog::lineage::v1::
+                   ProcessOpenLineageRunEventRequest const& request),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::datacatalog::lineage::v1::Process>, CreateProcess,
       (google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&

@@ -34,6 +34,12 @@ LineageConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<LineageConnectionIdempotencyPolicy>(*this);
 }
 
+Idempotency LineageConnectionIdempotencyPolicy::ProcessOpenLineageRunEvent(
+    google::cloud::datacatalog::lineage::v1::
+        ProcessOpenLineageRunEventRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency LineageConnectionIdempotencyPolicy::CreateProcess(
     google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&) {
   return Idempotency::kNonIdempotent;

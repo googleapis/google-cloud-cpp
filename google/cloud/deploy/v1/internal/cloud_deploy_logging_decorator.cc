@@ -120,6 +120,18 @@ CloudDeployLogging::ListTargets(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
+CloudDeployLogging::RollbackTarget(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::RollbackTargetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::RollbackTargetRequest const& request) {
+        return child_->RollbackTarget(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::deploy::v1::Target> CloudDeployLogging::GetTarget(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetTargetRequest const& request) {
@@ -361,6 +373,114 @@ StatusOr<google::cloud::deploy::v1::Config> CloudDeployLogging::GetConfig(
       [this](grpc::ClientContext& context,
              google::cloud::deploy::v1::GetConfigRequest const& request) {
         return child_->GetConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployLogging::AsyncCreateAutomation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::deploy::v1::CreateAutomationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::deploy::v1::CreateAutomationRequest const& request) {
+        return child_->AsyncCreateAutomation(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployLogging::AsyncUpdateAutomation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
+        return child_->AsyncUpdateAutomation(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployLogging::AsyncDeleteAutomation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
+        return child_->AsyncDeleteAutomation(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::deploy::v1::Automation>
+CloudDeployLogging::GetAutomation(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::GetAutomationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::GetAutomationRequest const& request) {
+        return child_->GetAutomation(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::deploy::v1::ListAutomationsResponse>
+CloudDeployLogging::ListAutomations(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::ListAutomationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::ListAutomationsRequest const& request) {
+        return child_->ListAutomations(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::deploy::v1::AutomationRun>
+CloudDeployLogging::GetAutomationRun(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::GetAutomationRunRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::deploy::v1::GetAutomationRunRequest const& request) {
+        return child_->GetAutomationRun(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::deploy::v1::ListAutomationRunsResponse>
+CloudDeployLogging::ListAutomationRuns(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::ListAutomationRunsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::deploy::v1::ListAutomationRunsRequest const& request) {
+        return child_->ListAutomationRuns(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
+CloudDeployLogging::CancelAutomationRun(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::CancelAutomationRunRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::CancelAutomationRunRequest const&
+                 request) {
+        return child_->CancelAutomationRun(context, request);
       },
       context, request, __func__, tracing_options_);
 }

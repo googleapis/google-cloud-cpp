@@ -105,7 +105,7 @@ class SpeechClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.speech.v1.RecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L78}
-  /// [google.cloud.speech.v1.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L670}
+  /// [google.cloud.speech.v1.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L683}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
@@ -138,7 +138,7 @@ class SpeechClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.speech.v1.RecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L78}
-  /// [google.cloud.speech.v1.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L670}
+  /// [google.cloud.speech.v1.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L683}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
@@ -178,7 +178,7 @@ class SpeechClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.speech.v1.LongRunningRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L89}
-  /// [google.cloud.speech.v1.LongRunningRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L691}
+  /// [google.cloud.speech.v1.LongRunningRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L704}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
@@ -223,7 +223,7 @@ class SpeechClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.speech.v1.LongRunningRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L89}
-  /// [google.cloud.speech.v1.LongRunningRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L691}
+  /// [google.cloud.speech.v1.LongRunningRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L704}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
@@ -254,7 +254,7 @@ class SpeechClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.speech.v1.StreamingRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L117}
-  /// [google.cloud.speech.v1.StreamingRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L781}
+  /// [google.cloud.speech.v1.StreamingRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L794}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

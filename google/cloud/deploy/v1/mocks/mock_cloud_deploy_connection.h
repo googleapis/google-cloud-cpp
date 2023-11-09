@@ -79,6 +79,11 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (google::cloud::deploy::v1::ListTargetsRequest request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>,
+              RollbackTarget,
+              (google::cloud::deploy::v1::RollbackTargetRequest const& request),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::deploy::v1::Target>, GetTarget,
               (google::cloud::deploy::v1::GetTargetRequest const& request),
               (override));
@@ -167,6 +172,47 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   MOCK_METHOD(StatusOr<google::cloud::deploy::v1::Config>, GetConfig,
               (google::cloud::deploy::v1::GetConfigRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::deploy::v1::Automation>>, CreateAutomation,
+      (google::cloud::deploy::v1::CreateAutomationRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::deploy::v1::Automation>>, UpdateAutomation,
+      (google::cloud::deploy::v1::UpdateAutomationRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>,
+      DeleteAutomation,
+      (google::cloud::deploy::v1::DeleteAutomationRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::Automation>, GetAutomation,
+              (google::cloud::deploy::v1::GetAutomationRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::deploy::v1::Automation>),
+              ListAutomations,
+              (google::cloud::deploy::v1::ListAutomationsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::deploy::v1::AutomationRun>, GetAutomationRun,
+      (google::cloud::deploy::v1::GetAutomationRunRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::deploy::v1::AutomationRun>),
+              ListAutomationRuns,
+              (google::cloud::deploy::v1::ListAutomationRunsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>,
+      CancelAutomationRun,
+      (google::cloud::deploy::v1::CancelAutomationRunRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

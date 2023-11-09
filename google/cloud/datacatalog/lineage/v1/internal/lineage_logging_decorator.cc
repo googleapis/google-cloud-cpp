@@ -34,6 +34,21 @@ LineageLogging::LineageLogging(std::shared_ptr<LineageStub> child,
       tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
+StatusOr<
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+LineageLogging::ProcessOpenLineageRunEvent(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::lineage::v1::
+        ProcessOpenLineageRunEventRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::datacatalog::lineage::v1::
+                 ProcessOpenLineageRunEventRequest const& request) {
+        return child_->ProcessOpenLineageRunEvent(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageLogging::CreateProcess(
     grpc::ClientContext& context,

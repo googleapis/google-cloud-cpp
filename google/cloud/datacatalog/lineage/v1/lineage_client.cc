@@ -31,6 +31,29 @@ LineageClient::LineageClient(std::shared_ptr<LineageConnection> connection,
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 LineageClient::~LineageClient() = default;
 
+StatusOr<
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+LineageClient::ProcessOpenLineageRunEvent(
+    std::string const& parent, google::protobuf::Struct const& open_lineage,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_open_lineage() = open_lineage;
+  return connection_->ProcessOpenLineageRunEvent(request);
+}
+
+StatusOr<
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+LineageClient::ProcessOpenLineageRunEvent(
+    google::cloud::datacatalog::lineage::v1::
+        ProcessOpenLineageRunEventRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ProcessOpenLineageRunEvent(request);
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageClient::CreateProcess(
     std::string const& parent,

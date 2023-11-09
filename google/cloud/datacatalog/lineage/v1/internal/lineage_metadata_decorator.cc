@@ -42,6 +42,17 @@ LineageMetadata::LineageMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
+StatusOr<
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+LineageMetadata::ProcessOpenLineageRunEvent(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::lineage::v1::
+        ProcessOpenLineageRunEventRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ProcessOpenLineageRunEvent(context, request);
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageMetadata::CreateProcess(
     grpc::ClientContext& context,

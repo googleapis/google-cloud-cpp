@@ -51,6 +51,12 @@ class LineageConnectionImpl : public datacatalog_lineage_v1::LineageConnection {
 
   Options options() override { return options_; }
 
+  StatusOr<google::cloud::datacatalog::lineage::v1::
+               ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request) override;
+
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
       google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
           request) override;

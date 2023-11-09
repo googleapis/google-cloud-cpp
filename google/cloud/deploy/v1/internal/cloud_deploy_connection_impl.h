@@ -77,6 +77,9 @@ class CloudDeployConnectionImpl : public deploy_v1::CloudDeployConnection {
   StreamRange<google::cloud::deploy::v1::Target> ListTargets(
       google::cloud::deploy::v1::ListTargetsRequest request) override;
 
+  StatusOr<google::cloud::deploy::v1::RollbackTargetResponse> RollbackTarget(
+      google::cloud::deploy::v1::RollbackTargetRequest const& request) override;
+
   StatusOr<google::cloud::deploy::v1::Target> GetTarget(
       google::cloud::deploy::v1::GetTargetRequest const& request) override;
 
@@ -137,6 +140,36 @@ class CloudDeployConnectionImpl : public deploy_v1::CloudDeployConnection {
 
   StatusOr<google::cloud::deploy::v1::Config> GetConfig(
       google::cloud::deploy::v1::GetConfigRequest const& request) override;
+
+  future<StatusOr<google::cloud::deploy::v1::Automation>> CreateAutomation(
+      google::cloud::deploy::v1::CreateAutomationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::deploy::v1::Automation>> UpdateAutomation(
+      google::cloud::deploy::v1::UpdateAutomationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+  DeleteAutomation(google::cloud::deploy::v1::DeleteAutomationRequest const&
+                       request) override;
+
+  StatusOr<google::cloud::deploy::v1::Automation> GetAutomation(
+      google::cloud::deploy::v1::GetAutomationRequest const& request) override;
+
+  StreamRange<google::cloud::deploy::v1::Automation> ListAutomations(
+      google::cloud::deploy::v1::ListAutomationsRequest request) override;
+
+  StatusOr<google::cloud::deploy::v1::AutomationRun> GetAutomationRun(
+      google::cloud::deploy::v1::GetAutomationRunRequest const& request)
+      override;
+
+  StreamRange<google::cloud::deploy::v1::AutomationRun> ListAutomationRuns(
+      google::cloud::deploy::v1::ListAutomationRunsRequest request) override;
+
+  StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
+  CancelAutomationRun(
+      google::cloud::deploy::v1::CancelAutomationRunRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
