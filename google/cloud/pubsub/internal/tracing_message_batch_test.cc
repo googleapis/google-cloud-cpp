@@ -318,35 +318,6 @@ TEST(TracingMessageBatch, FlushBatchWithCustomLimit) {
               Contains(AllOf(SpanNamed("publish #1"), SpanLinksSizeIs(1))));
 }
 
-TEST(TracingMessageBatch, FlushAddsSpanIdAndTraceIdAttribute) {
-  // The span catcher must be installed before the message span is created.
-  auto span_catcher = InstallSpanCatcher();
-  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
-  EXPECT_CALL(*mock, SaveMessage(_));
-  EXPECT_CALL(*mock, Flush).WillOnce([] { return [](auto) {}; });
-  auto message_batch =
-      MakeTracingMessageBatch(std::move(mock), MakeTestOptions());
-
-  auto message_spans = CreateSpans(1);
-  SaveMessages(message_spans, message_batch, /*end_spans=*/false);
-
-  auto end_spans = message_batch->Flush();
-  end_spans(make_ready_future());
-
-  EndSpans(message_spans);
-
-  EXPECT_THAT(
-      span_catcher->GetSpans(),
-      Contains(AllOf(
-          SpanNamed("test span 0"),
-          SpanHasEvents(AllOf(
-              EventNamed("gl-cpp.batch_flushed"),
-              SpanEventAttributesAre(
-                  OTelAttribute<std::string>("pubsub.batch_sink.trace_id", _),
-                  OTelAttribute<std::string>("pubsub.batch_sink.span_id",
-                                             _)))))));
-}
-
 TEST(TracingMessageBatch, FlushSpanAddsEvent) {
   // The span catcher must be installed before the message span is created.
   auto span_catcher = InstallSpanCatcher();
@@ -396,7 +367,7 @@ TEST(TracingMessageBatch, FlushAddsEventForMultipleMessages) {
 }
 
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
-TEST(TracingMessageBatch, FlushAddsSpanIdAndTraceIdAttribute) {
+TEST(TracingMessageBatch, FlushAddsLink) {
   // The span catcher must be installed before the message span is created.
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
@@ -416,6 +387,36 @@ TEST(TracingMessageBatch, FlushAddsSpanIdAndTraceIdAttribute) {
   EXPECT_THAT(span_catcher->GetSpans(),
               Contains(AllOf(SpanNamed("test span 0"),
                              SpanHasLinks(AllOf(LinkHasSpanContext(_))))));
+}
+#else
+
+TEST(TracingMessageBatch, FlushAddsSpanIdAndTraceIdAttribute) {
+  // The span catcher must be installed before the message span is created.
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, SaveMessage(_));
+  EXPECT_CALL(*mock, Flush).WillOnce([] { return [](auto) {}; });
+  auto message_batch =
+      MakeTracingMessageBatch(std::move(mock), MakeTestOptions());
+
+  auto message_spans = CreateSpans(1);
+  SaveMessages(message_spans, message_batch, /*end_spans=*/false);
+
+  auto end_spans = message_batch->Flush();
+  end_spans(make_ready_future());
+
+  EndSpans(message_spans);
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      Contains(AllOf(
+          SpanNamed("test span 0"),
+          SpanHasEvents(AllOf(
+              EventNamed("gl-cpp.batch_flushed"),
+              SpanEventAttributesAre(
+                  OTelAttribute<std::string>("pubsub.batch_sink.trace_id", _),
+                  OTelAttribute<std::string>("pubsub.batch_sink.span_id",
+                                             _)))))));
 }
 #endif
 
