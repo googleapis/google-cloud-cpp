@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], absl::StrCat(argv[2]));
+  auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace edgenetwork = ::google::cloud::edgenetwork_v1;
   auto client =

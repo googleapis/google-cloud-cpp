@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], absl::StrCat(argv[2]));
+  auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace edgenetwork = ::google::cloud::edgenetwork_v1;
   auto client =
@@ -55,6 +55,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/edgenetwork
+[cloud-service-docs]: https://cloud.google.com/distributed-cloud/edge/latest/docs/overview
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/edgenetwork/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/edgenetwork
