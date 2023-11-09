@@ -73,8 +73,8 @@ using ColumnQualifierType = std::decay_t<
  * write `std::string` where this type appears. For Google projects that must
  * compile both inside and outside Google, this alias may be convenient.
  */
-using CellValueType = std::decay_t<
-    decltype(std::declval<google::bigtable::v2::Cell>().value())>;
+using CellValueType =
+    std::decay_t<decltype(std::declval<google::bigtable::v2::Cell>().value())>;
 
 /**
  * The in-memory representation of a Bigtable cell.
