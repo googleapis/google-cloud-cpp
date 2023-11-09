@@ -22,7 +22,10 @@ source module ci/cloudbuild/builds/lib/integration.sh
 source module ci/lib/io.sh
 
 mapfile -t args < <(bazel::common_args)
-args+=("--config=asan")
+args+=(
+    '--config=asan'
+    '--per_file_copt=com_google_protobuf//@-Wno-error'
+)
 io::run bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
 mapfile -t integration_args < <(integration::bazel_args)
