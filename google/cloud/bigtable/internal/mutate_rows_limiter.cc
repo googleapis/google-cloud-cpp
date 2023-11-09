@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
-#include "google/cloud/bigtable/options.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <algorithm>
 #include <thread>
@@ -31,6 +30,8 @@ T Clamp(T value, T min, T max) {
 }
 
 }  // namespace
+
+MutateRowsLimiter::~MutateRowsLimiter() = default;
 
 void ThrottlingMutateRowsLimiter::Acquire() {
   auto wait = limiter_.acquire(1);

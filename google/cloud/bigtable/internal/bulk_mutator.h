@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/status.h"
@@ -125,7 +126,7 @@ class BulkMutator {
                               grpc::ClientContext& client_context);
 
   /// Synchronously send one batch request to the given stub.
-  Status MakeOneRequest(BigtableStub& stub);
+  Status MakeOneRequest(BigtableStub& stub, MutateRowsLimiter& limiter);
 
   /// Give up on any pending mutations, move them to the failures array.
   std::vector<bigtable::FailedMutation> OnRetryDone() &&;

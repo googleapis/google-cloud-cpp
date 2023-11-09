@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
+#include "google/cloud/bigtable/testing/mock_mutate_rows_limiter.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -45,6 +46,7 @@ using ::google::cloud::bigtable::ReverseScanOption;
 using ::google::cloud::bigtable::testing::MockAsyncReadRowsStream;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::bigtable::testing::MockIdempotentMutationPolicy;
+using ::google::cloud::bigtable::testing::MockMutateRowsLimiter;
 using ::google::cloud::bigtable::testing::MockMutateRowsStream;
 using ::google::cloud::bigtable::testing::MockReadRowsStream;
 using ::google::cloud::bigtable::testing::MockSampleRowKeysStream;
@@ -194,10 +196,12 @@ Options CallOptions() {
 }
 
 std::shared_ptr<DataConnectionImpl> TestConnection(
-    std::shared_ptr<BigtableStub> mock) {
+    std::shared_ptr<BigtableStub> stub,
+    std::shared_ptr<MutateRowsLimiter> limiter =
+        std::make_shared<NoopMutateRowsLimiter>()) {
   auto background = internal::MakeBackgroundThreadsFactory()();
-  return std::make_shared<DataConnectionImpl>(std::move(background),
-                                              std::move(mock), Options{});
+  return std::make_shared<DataConnectionImpl>(
+      std::move(background), std::move(stub), std::move(limiter), Options{});
 }
 
 TEST(TransformReadModifyWriteRowResponse, Basic) {
@@ -656,6 +660,29 @@ TEST(DataConnectionTest, BulkApplyRetriesOkStreamWithFailedMutations) {
   auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(
       CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
+  auto actual = conn->BulkApply(kTableName, std::move(mut));
+  CheckFailedMutations(actual, expected);
+}
+
+TEST(DataConnectionTest, BulkApplyThrottling) {
+  std::vector<bigtable::FailedMutation> expected = {{PermanentError(), 0}};
+  bigtable::BulkMutation mut(IdempotentMutation("row"));
+
+  auto mock_limiter = std::make_shared<MockMutateRowsLimiter>();
+  auto mock_stub = std::make_shared<MockBigtableStub>();
+  {
+    ::testing::InSequence seq;
+    EXPECT_CALL(*mock_limiter, Acquire);
+    EXPECT_CALL(*mock_stub, MutateRows)
+        .WillOnce([](auto, google::bigtable::v2::MutateRowsRequest const&) {
+          auto stream = std::make_unique<MockMutateRowsStream>();
+          EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentError()));
+          return stream;
+        });
+  }
+
+  auto conn = TestConnection(std::move(mock_stub), std::move(mock_limiter));
+  internal::OptionsSpan span(CallOptions());
   auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, expected);
 }

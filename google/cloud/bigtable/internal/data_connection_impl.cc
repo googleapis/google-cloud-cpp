@@ -75,9 +75,11 @@ bigtable::Row TransformReadModifyWriteRowResponse(
 
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
-    std::shared_ptr<BigtableStub> stub, Options options)
+    std::shared_ptr<BigtableStub> stub,
+    std::shared_ptr<MutateRowsLimiter> limiter, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
+      limiter_(std::move(limiter)),
       options_(internal::MergeOptions(std::move(options),
                                       DataConnection::options())) {}
 
@@ -153,7 +155,7 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
   while (true) {
-    auto status = mutator.MakeOneRequest(*stub_);
+    auto status = mutator.MakeOneRequest(*stub_, *limiter_);
     if (!mutator.HasPendingMutations()) break;
     if (!retry) retry = retry_policy(*current);
     if (!retry->OnFailure(status)) break;

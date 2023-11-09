@@ -31,6 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// A Bigtable-specific wrapper over the more generic `RateLimiter`
 class MutateRowsLimiter {
  public:
+  virtual ~MutateRowsLimiter() = 0;
   virtual void Acquire() = 0;
   virtual void Update(
       google::bigtable::v2::MutateRowsResponse const& response) = 0;
@@ -38,6 +39,7 @@ class MutateRowsLimiter {
 
 class NoopMutateRowsLimiter : public MutateRowsLimiter {
  public:
+  ~NoopMutateRowsLimiter() override = default;
   void Acquire() override {}
   void Update(google::bigtable::v2::MutateRowsResponse const&) override {}
 };
@@ -45,6 +47,9 @@ class NoopMutateRowsLimiter : public MutateRowsLimiter {
 class ThrottlingMutateRowsLimiter : public MutateRowsLimiter {
  public:
   using Clock = RateLimiter::Clock;
+
+  ~ThrottlingMutateRowsLimiter() override = default;
+
   template <typename Rep1, typename Period1, typename Rep2, typename Period2,
             typename Rep3, typename Period3>
   explicit ThrottlingMutateRowsLimiter(
