@@ -1,3 +1,5 @@
+@com_google_googleapis//google/cloud/deploy/v1:automation_payload.proto
+@com_google_googleapis//google/cloud/deploy/v1:automationrun_payload.proto
 @com_google_googleapis//google/cloud/deploy/v1:cloud_deploy.proto
 @com_google_googleapis//google/cloud/deploy/v1:deliverypipeline_notification_payload.proto
 @com_google_googleapis//google/cloud/deploy/v1:jobrun_notification_payload.proto
@@ -5,4 +7,5 @@
 @com_google_googleapis//google/cloud/deploy/v1:release_notification_payload.proto
 @com_google_googleapis//google/cloud/deploy/v1:release_render_payload.proto
 @com_google_googleapis//google/cloud/deploy/v1:rollout_notification_payload.proto
+@com_google_googleapis//google/cloud/deploy/v1:rollout_update_payload.proto
 @com_google_googleapis//google/cloud/deploy/v1:target_notification_payload.proto
