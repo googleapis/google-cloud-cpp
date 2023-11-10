@@ -33,7 +33,7 @@ class MockHttpPayload : public rest_internal::HttpPayload {
   MOCK_METHOD(StatusOr<std::size_t>, Read, (absl::Span<char> buffer),
               (override));
   MOCK_METHOD((std::multimap<std::string, std::string>), DebugHeaders, (),
-              (const override));
+              (const, override));
 };
 
 template <typename Collection>

@@ -58,14 +58,14 @@ TEST(TerminateHandler, OldHandlerIsReturned) {
 
 TEST(TerminateHandler, TerminateTerminates) {
   auto orig = SetTerminateHandler(&CustomHandler);
-  const std::string expected = std::string(kHandlerMsg) + "details";
+  std::string const expected = std::string(kHandlerMsg) + "details";
   EXPECT_DEATH_IF_SUPPORTED(Terminate("details"), expected);
   SetTerminateHandler(orig);
 }
 
 TEST(TerminateHandler, NoAbortAborts) {
   auto orig = SetTerminateHandler([](char const*) {});
-  const std::string expected =
+  std::string const expected =
       "Aborting because the installed terminate "
       "handler returned. Error details: details";
   EXPECT_DEATH_IF_SUPPORTED(Terminate("details"), expected);
