@@ -22,6 +22,37 @@ namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+struct ValueKindDebugString {
+  absl::string_view name;
+  TracingOptions const& options;
+  int indent;
+
+  auto operator()(double v) const {
+    return internal::DebugFormatter(name, options, indent)
+        .Field("value_kind", v)
+        .Build();
+  }
+  auto operator()(std::string const& v) const {
+    return internal::DebugFormatter(name, options, indent)
+        .StringField("value_kind", v)
+        .Build();
+  }
+  auto operator()(bool v) const {
+    return internal::DebugFormatter(name, options, indent)
+        .Field("value_kind", v)
+        .Build();
+  }
+  template <typename T>
+  auto operator()(T const&) const {
+    return internal::DebugFormatter(name, options, indent)
+        .StringField("value_kind", "")
+        .Build();
+  }
+};
+
+}  // namespace
 
 // Bypass clang-tidy warnings for self-referential and recursive structures.
 
@@ -462,34 +493,7 @@ std::string StandardSqlDataType::DebugString(absl::string_view name,
 std::string Value::DebugString(absl::string_view name,
                                TracingOptions const& options,
                                int indent) const {
-  struct Visitor {
-    absl::string_view name;
-    TracingOptions const& options;
-    int indent;
-
-    auto operator()(double v) const {
-      return internal::DebugFormatter(name, options, indent)
-          .Field("value_kind", v)
-          .Build();
-    }
-    auto operator()(std::string const& v) const {
-      return internal::DebugFormatter(name, options, indent)
-          .StringField("value_kind", v)
-          .Build();
-    }
-    auto operator()(bool v) const {
-      return internal::DebugFormatter(name, options, indent)
-          .Field("value_kind", v)
-          .Build();
-    }
-    template <typename T>
-    auto operator()(T const&) const {
-      return internal::DebugFormatter(name, options, indent)
-          .StringField("value_kind", "")
-          .Build();
-    }
-  };
-  return absl::visit(Visitor{name, options, indent}, value_kind);
+  return absl::visit(ValueKindDebugString{name, options, indent}, value_kind);
 }
 
 std::string SystemVariables::DebugString(absl::string_view name,
