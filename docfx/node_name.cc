@@ -92,7 +92,7 @@ std::string NodeName(pugi::xml_node node) {
     }
     return node.child_value("compoundname");
   }
-  if (element == "memberdef") {
+  if (element == "memberdef" || element == "member") {
     if (IsFunction(node)) return FunctionName(node);
     return node.child_value("name");
   }
