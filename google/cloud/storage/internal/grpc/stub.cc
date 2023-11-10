@@ -44,6 +44,7 @@
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
 #include <cinttypes>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -246,9 +247,7 @@ GrpcStub::GrpcStub(Options opts)
     : options_(std::move(opts)),
       background_(MakeBackgroundThreadsFactory(options_)()),
       iam_stub_(CreateStorageIamStub(background_->cq(), options_)) {
-  auto p = CreateStorageStub(background_->cq(), options_);
-  refresh_ = std::move(p.first);
-  stub_ = std::move(p.second);
+  std::tie(refresh_, stub_) = CreateStorageStub(background_->cq(), options_);
 }
 
 GrpcStub::GrpcStub(
