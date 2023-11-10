@@ -39,7 +39,6 @@ class MutateRowsLimiter {
 
 class NoopMutateRowsLimiter : public MutateRowsLimiter {
  public:
-  ~NoopMutateRowsLimiter() override = default;
   void Acquire() override {}
   void Update(google::bigtable::v2::MutateRowsResponse const&) override {}
 };
@@ -47,9 +46,6 @@ class NoopMutateRowsLimiter : public MutateRowsLimiter {
 class ThrottlingMutateRowsLimiter : public MutateRowsLimiter {
  public:
   using Clock = RateLimiter::Clock;
-
-  ~ThrottlingMutateRowsLimiter() override = default;
-
   template <typename Rep1, typename Period1, typename Rep2, typename Period2,
             typename Rep3, typename Period3>
   explicit ThrottlingMutateRowsLimiter(
