@@ -462,25 +462,23 @@ std::string StandardSqlDataType::DebugString(absl::string_view name,
 std::string Value::DebugString(absl::string_view name,
                                TracingOptions const& options,
                                int indent) const {
-  switch (value_kind.index()) {
-    case 1: {
-      double val = absl::get<double>(value_kind);
-      return internal::DebugFormatter(name, options, indent)
-          .Field("value_kind", val)
-          .Build();
-    }
-    case 2: {
-      std::string val = absl::get<std::string>(value_kind);
-      return internal::DebugFormatter(name, options, indent)
-          .StringField("value_kind", val)
-          .Build();
-    }
-    case 3: {
-      bool val = absl::get<bool>(value_kind);
-      return internal::DebugFormatter(name, options, indent)
-          .Field("value_kind", val)
-          .Build();
-    }
+  if (value_kind.index() == 1) {
+    double val = absl::get<double>(value_kind);
+    return internal::DebugFormatter(name, options, indent)
+        .Field("value_kind", val)
+        .Build();
+  }
+  if (value_kind.index() == 2) {
+    std::string val = absl::get<std::string>(value_kind);
+    return internal::DebugFormatter(name, options, indent)
+        .StringField("value_kind", val)
+        .Build();
+  }
+  if (value_kind.index() == 3) {
+    bool val = absl::get<bool>(value_kind);
+    return internal::DebugFormatter(name, options, indent)
+        .Field("value_kind", val)
+        .Build();
   }
   return internal::DebugFormatter(name, options, indent)
       .StringField("value_kind", "")
