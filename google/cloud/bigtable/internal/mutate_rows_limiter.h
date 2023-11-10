@@ -31,6 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// A Bigtable-specific wrapper over the more generic `RateLimiter`
 class MutateRowsLimiter {
  public:
+  virtual ~MutateRowsLimiter() = default;
   virtual void Acquire() = 0;
   virtual void Update(
       google::bigtable::v2::MutateRowsResponse const& response) = 0;

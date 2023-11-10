@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
-#include "google/cloud/bigtable/options.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <algorithm>
 #include <thread>
