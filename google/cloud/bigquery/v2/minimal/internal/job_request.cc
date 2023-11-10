@@ -163,12 +163,20 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
     request.AddQueryParameter("maxResults", std::to_string(r.max_results()));
   }
   if (r.min_creation_time()) {
-    request.AddQueryParameter("minCreationTime",
-                              internal::FormatRfc3339(*r.min_creation_time()));
+    request.AddQueryParameter(
+        "minCreationTime",
+        std::to_string(std::chrono::time_point_cast<std::chrono::milliseconds>(
+                           r.min_creation_time().value())
+                           .time_since_epoch()
+                           .count()));
   }
   if (r.max_creation_time()) {
-    request.AddQueryParameter("maxCreationTime",
-                              internal::FormatRfc3339(*r.max_creation_time()));
+    request.AddQueryParameter(
+        "maxCreationTime",
+        std::to_string(std::chrono::time_point_cast<std::chrono::milliseconds>(
+                           r.max_creation_time().value())
+                           .time_since_epoch()
+                           .count()));
   }
 
   auto if_not_empty_add = [&](char const* key, auto const& v) {
