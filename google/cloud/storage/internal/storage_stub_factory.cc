@@ -54,11 +54,12 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 
 }  // namespace
 
-std::pair<std::shared_ptr<GrpcChannelRefresh>, std::shared_ptr<StorageStub>>
+std::pair<std::vector<std::shared_ptr<grpc::Channel>>,
+          std::shared_ptr<StorageStub>>
 CreateDecoratedStubs(google::cloud::CompletionQueue cq, Options const& options,
                      BaseStorageStubFactory const& base_factory) {
-  auto auth =
-      google::cloud::internal::CreateAuthenticationStrategy(cq, options);
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      std::move(cq), options);
 
   std::vector<std::shared_ptr<grpc::Channel>> channels(
       (std::max)(1, options.get<GrpcNumChannelsOption>()));
@@ -87,18 +88,19 @@ CreateDecoratedStubs(google::cloud::CompletionQueue cq, Options const& options,
   if (internal::TracingEnabled(options)) {
     stub = MakeStorageTracingStub(std::move(stub));
   }
-  auto refresh = std::make_shared<GrpcChannelRefresh>(std::move(channels));
-  refresh->StartRefreshLoop(std::move(cq));
-  return std::make_pair(std::move(refresh), std::move(stub));
+  return std::make_pair(std::move(channels), std::move(stub));
 }
 
 std::pair<std::shared_ptr<GrpcChannelRefresh>, std::shared_ptr<StorageStub>>
 CreateStorageStub(google::cloud::CompletionQueue cq, Options const& options) {
-  return CreateDecoratedStubs(
-      std::move(cq), options, [](std::shared_ptr<grpc::Channel> c) {
+  auto p =
+      CreateDecoratedStubs(cq, options, [](std::shared_ptr<grpc::Channel> c) {
         return std::make_shared<DefaultStorageStub>(
             google::storage::v2::Storage::NewStub(std::move(c)));
       });
+  auto refresh = std::make_shared<GrpcChannelRefresh>(std::move(p.first));
+  refresh->StartRefreshLoop(std::move(cq));
+  return std::make_pair(std::move(refresh), std::move(p.second));
 }
 
 std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub>

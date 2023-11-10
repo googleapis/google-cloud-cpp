@@ -21,9 +21,11 @@
 #include "google/cloud/internal/minimal_iam_credentials_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <grpcpp/grpcpp.h>
 #include <functional>
 #include <memory>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -34,7 +36,8 @@ using BaseStorageStubFactory =
     std::function<std::shared_ptr<StorageStub>(std::shared_ptr<grpc::Channel>)>;
 
 /// Used in testing to create decorated mocks.
-std::pair<std::shared_ptr<GrpcChannelRefresh>, std::shared_ptr<StorageStub>>
+std::pair<std::vector<std::shared_ptr<grpc::Channel>>,
+          std::shared_ptr<StorageStub>>
 CreateDecoratedStubs(google::cloud::CompletionQueue cq, Options const& options,
                      BaseStorageStubFactory const& base_factory);
 
