@@ -462,27 +462,34 @@ std::string StandardSqlDataType::DebugString(absl::string_view name,
 std::string Value::DebugString(absl::string_view name,
                                TracingOptions const& options,
                                int indent) const {
-  if (value_kind.index() == 1) {
-    double val = absl::get<double>(value_kind);
-    return internal::DebugFormatter(name, options, indent)
-        .Field("value_kind", val)
-        .Build();
-  }
-  if (value_kind.index() == 2) {
-    std::string val = absl::get<std::string>(value_kind);
-    return internal::DebugFormatter(name, options, indent)
-        .StringField("value_kind", val)
-        .Build();
-  }
-  if (value_kind.index() == 3) {
-    bool val = absl::get<bool>(value_kind);
-    return internal::DebugFormatter(name, options, indent)
-        .Field("value_kind", val)
-        .Build();
-  }
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("value_kind", "")
-      .Build();
+  struct Visitor {
+    absl::string_view name;
+    TracingOptions const& options;
+    int indent;
+
+    auto operator()(double v) const {
+      return internal::DebugFormatter(name, options, indent)
+          .Field("value_kind", v)
+          .Build();
+    }
+    auto operator()(std::string const& v) const {
+      return internal::DebugFormatter(name, options, indent)
+          .StringField("value_kind", v)
+          .Build();
+    }
+    auto operator()(bool v) const {
+      return internal::DebugFormatter(name, options, indent)
+          .Field("value_kind", v)
+          .Build();
+    }
+    template <typename T>
+    auto operator()(T const&) const {
+      return internal::DebugFormatter(name, options, indent)
+          .StringField("value_kind", "")
+          .Build();
+    }
+  };
+  return absl::visit(Visitor{name, options, indent}, value_kind);
 }
 
 std::string SystemVariables::DebugString(absl::string_view name,
