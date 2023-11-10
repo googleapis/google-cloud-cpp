@@ -190,7 +190,7 @@ TEST(ProfileQueryResult, ExecutionStats) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &stats));
   EXPECT_CALL(*mock_source, Stats()).WillOnce(Return(stats));
 
-  std::vector<std::pair<const std::string, std::string>> expected;
+  std::vector<std::pair<std::string const, std::string>> expected;
   expected.emplace_back("elapsed_time", "42 secs");
   ProfileQueryResult query_result(std::move(mock_source));
   EXPECT_THAT(*query_result.ExecutionStats(),
@@ -250,7 +250,7 @@ TEST(ProfileDmlResult, ExecutionStats) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &stats));
   EXPECT_CALL(*mock_source, Stats()).WillOnce(Return(stats));
 
-  std::vector<std::pair<const std::string, std::string>> expected;
+  std::vector<std::pair<std::string const, std::string>> expected;
   expected.emplace_back("elapsed_time", "42 secs");
   ProfileDmlResult dml_result(std::move(mock_source));
   EXPECT_THAT(*dml_result.ExecutionStats(), UnorderedPointwise(Eq(), expected));

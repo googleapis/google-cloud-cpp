@@ -48,7 +48,7 @@ Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs) {
 Row::Row() : Row({}, std::make_shared<std::vector<std::string>>()) {}
 
 Row::Row(std::vector<Value> values,
-         std::shared_ptr<const std::vector<std::string>> columns)
+         std::shared_ptr<std::vector<std::string> const> columns)
     : values_(std::move(values)), columns_(std::move(columns)) {
   if (values_.size() != columns_->size()) {
     GCP_LOG(FATAL) << "Row's value and column sizes do not match: "
