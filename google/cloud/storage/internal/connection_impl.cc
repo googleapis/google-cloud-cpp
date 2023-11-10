@@ -594,7 +594,8 @@ StatusOr<QueryResumableUploadResponse> StorageConnectionImpl::UploadChunk(
   auto const& current = google::cloud::internal::CurrentOptions();
   auto sleeper = google::cloud::internal::MakeTracedSleeper(
       current,
-      [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); });
+      [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); },
+      "Backoff");
   auto last_status =
       Status(StatusCode::kDeadlineExceeded,
              "Retry policy exhausted before first attempt was made.");

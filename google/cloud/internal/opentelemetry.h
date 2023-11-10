@@ -221,9 +221,24 @@ std::string ToString(opentelemetry::trace::SpanId const& span_id);
 bool TracingEnabled(Options const& options);
 
 /// Wraps the sleeper in a span, if tracing is enabled.
-std::function<void(std::chrono::milliseconds)> MakeTracedSleeper(
+template <typename Rep, typename Period>
+std::function<void(std::chrono::duration<Rep, Period>)> MakeTracedSleeper(
     Options const& options,
-    std::function<void(std::chrono::milliseconds)> const& sleeper);
+    std::function<void(std::chrono::duration<Rep, Period>)> const& sleeper,
+    std::string const& name) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (TracingEnabled(options)) {
+    return [=](std::chrono::duration<Rep, Period> d) {
+      auto span = MakeSpan(name);
+      sleeper(d);
+      span->End();
+    };
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  (void)options;
+  (void)name;
+  return sleeper;
+}
 
 /// Adds an attribute to the active span, if tracing is enabled.
 void AddSpanAttribute(Options const& options, std::string const& key,

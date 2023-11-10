@@ -103,7 +103,7 @@ auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
         Functor, RestContext&, Options const&, Request const&> {
   std::function<void(std::chrono::milliseconds)> sleeper =
       [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
-  sleeper = internal::MakeTracedSleeper(options, std::move(sleeper));
+  sleeper = internal::MakeTracedSleeper(options, std::move(sleeper), "Backoff");
   return RestRetryLoopImpl(*retry_policy, *backoff_policy, idempotency,
                            std::forward<Functor>(functor), options, request,
                            location, std::move(sleeper));
@@ -123,7 +123,7 @@ auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
         Functor, RestContext&, Options const&, Request const&> {
   std::function<void(std::chrono::milliseconds)> sleeper =
       [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
-  sleeper = internal::MakeTracedSleeper(options, std::move(sleeper));
+  sleeper = internal::MakeTracedSleeper(options, std::move(sleeper), "Backoff");
   return RestRetryLoopImpl(retry_policy, backoff_policy, idempotency,
                            std::forward<Functor>(functor), options, request,
                            location, std::move(sleeper));
