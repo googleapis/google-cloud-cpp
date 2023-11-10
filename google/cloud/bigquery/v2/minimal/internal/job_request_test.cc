@@ -161,10 +161,16 @@ TEST(ListJobsRequestTest, Success) {
   expected.AddQueryParameter("maxResults", "10");
   expected.AddQueryParameter(
       "minCreationTime",
-      internal::FormatRfc3339(request.min_creation_time().value()));
+      std::to_string(std::chrono::time_point_cast<std::chrono::milliseconds>(
+                         request.min_creation_time().value())
+                         .time_since_epoch()
+                         .count()));
   expected.AddQueryParameter(
       "maxCreationTime",
-      internal::FormatRfc3339(request.max_creation_time().value()));
+      std::to_string(std::chrono::time_point_cast<std::chrono::milliseconds>(
+                         request.max_creation_time().value())
+                         .time_since_epoch()
+                         .count()));
   expected.AddQueryParameter("pageToken", "123");
   expected.AddQueryParameter("projection", "FULL");
   expected.AddQueryParameter("stateFilter", "RUNNING");
