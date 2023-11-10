@@ -31,8 +31,6 @@ T Clamp(T value, T min, T max) {
 
 }  // namespace
 
-MutateRowsLimiter::~MutateRowsLimiter() = default;
-
 void ThrottlingMutateRowsLimiter::Acquire() {
   auto wait = limiter_.acquire(1);
   throttled_since_last_update_ =
