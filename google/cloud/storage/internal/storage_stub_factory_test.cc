@@ -75,17 +75,20 @@ static_assert(std::is_same<decltype(MockFactory{}.AsStdFunction()),
               "Mismatched mock factory type");
 
 std::shared_ptr<StorageStub> CreateTestStub(
-    CompletionQueue cq, BaseStorageStubFactory const& factory) {
+    CompletionQueue cq, BaseStorageStubFactory const& factory, Options opts) {
   auto credentials = google::cloud::MakeAccessTokenCredentials(
       "test-only-invalid",
       std::chrono::system_clock::now() + std::chrono::minutes(5));
-  return CreateDecoratedStubs(std::move(cq),
-                              google::cloud::Options{}
-                                  .set<EndpointOption>("localhost:1")
-                                  .set<GrpcNumChannelsOption>(kTestChannels)
-                                  .set<TracingComponentsOption>({"rpc"})
-                                  .set<UnifiedCredentialsOption>(credentials),
-                              factory)
+  return CreateDecoratedStubs(
+             std::move(cq),
+             internal::MergeOptions(
+                 std::move(opts),
+                 Options{}
+                     .set<EndpointOption>("localhost:1")
+                     .set<GrpcNumChannelsOption>(kTestChannels)
+                     .set<TracingComponentsOption>({"rpc"})
+                     .set<UnifiedCredentialsOption>(credentials)),
+             factory)
       .second;
 }
 
@@ -121,7 +124,7 @@ TEST_F(StorageStubFactory, ReadObject) {
 
   ScopedLog log;
   internal::AutomaticallyCreatedBackgroundThreads pool;
-  auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction());
+  auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(), {});
   auto stream = stub->ReadObject(std::make_shared<grpc::ClientContext>(),
                                  google::storage::v2::ReadObjectRequest{});
   EXPECT_THAT(stream->Read(),
@@ -163,7 +166,7 @@ TEST_F(StorageStubFactory, WriteObject) {
 
   ScopedLog log;
   internal::AutomaticallyCreatedBackgroundThreads pool;
-  auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction());
+  auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(), {});
   auto stream = stub->AsyncWriteObject(pool.cq(),
                                        std::make_shared<grpc::ClientContext>());
   EXPECT_TRUE(stream->Start().get());
@@ -202,7 +205,7 @@ TEST_F(StorageStubFactory, StartResumableWrite) {
 
   ScopedLog log;
   internal::AutomaticallyCreatedBackgroundThreads pool;
-  auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction());
+  auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(), {});
   grpc::ClientContext context;
   auto response = stub->StartResumableWrite(
       context, google::storage::v2::StartResumableWriteRequest{});
@@ -239,7 +242,7 @@ TEST_F(StorageStubFactory, QueryWriteStatus) {
 
   ScopedLog log;
   internal::AutomaticallyCreatedBackgroundThreads pool;
-  auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction());
+  auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(), {});
   grpc::ClientContext context;
   auto response = stub->QueryWriteStatus(
       context, google::storage::v2::QueryWriteStatusRequest{});
@@ -272,15 +275,8 @@ TEST_F(StorageStubFactory, TracingEnabled) {
       });
 
   internal::AutomaticallyCreatedBackgroundThreads pool;
-  auto stub =
-      CreateDecoratedStubs(pool.cq(),
-                           EnableTracing(Options{}
-                                             .set<EndpointOption>("localhost:1")
-                                             .set<GrpcNumChannelsOption>(1)
-                                             .set<UnifiedCredentialsOption>(
-                                                 MakeInsecureCredentials())),
-                           factory.AsStdFunction())
-          .second;
+  auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(),
+                             EnableTracing({}).set<GrpcNumChannelsOption>(1));
   grpc::ClientContext context;
   (void)stub->DeleteBucket(context, {});
 
@@ -304,15 +300,8 @@ TEST_F(StorageStubFactory, TracingDisabled) {
       });
 
   internal::AutomaticallyCreatedBackgroundThreads pool;
-  auto stub = CreateDecoratedStubs(
-                  pool.cq(),
-                  DisableTracing(Options{}
-                                     .set<EndpointOption>("localhost:1")
-                                     .set<GrpcNumChannelsOption>(1)
-                                     .set<UnifiedCredentialsOption>(
-                                         MakeInsecureCredentials())),
-                  factory.AsStdFunction())
-                  .second;
+  auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(),
+                             DisableTracing({}).set<GrpcNumChannelsOption>(1));
   grpc::ClientContext context;
   (void)stub->DeleteBucket(context, {});
 
