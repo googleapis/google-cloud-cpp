@@ -606,7 +606,7 @@ TEST_F(GoldenStubTest, AsyncCreateDatabase) {
                                    std::move(longrunning_stub_));
   google::test::admin::database::v1::CreateDatabaseRequest request;
   auto failure = stub.AsyncCreateDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_THAT(failure.get(), StatusIs(StatusCode::kCancelled));
 }
 
@@ -643,7 +643,7 @@ TEST_F(GoldenStubTest, AsyncUpdateDatabaseDdl) {
                                    std::move(longrunning_stub_));
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   auto failure = stub.AsyncUpdateDatabaseDdl(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_THAT(failure.get(), StatusIs(StatusCode::kCancelled));
 }
 
@@ -739,7 +739,7 @@ TEST_F(GoldenStubTest, AsyncCreateBackup) {
                                    std::move(longrunning_stub_));
   google::test::admin::database::v1::CreateBackupRequest request;
   auto failure = stub.AsyncCreateBackup(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_THAT(failure.get(), StatusIs(StatusCode::kCancelled));
 }
 
@@ -821,7 +821,7 @@ TEST_F(GoldenStubTest, AsyncRestoreDatabase) {
                                    std::move(longrunning_stub_));
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   auto failure = stub.AsyncRestoreDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_THAT(failure.get(), StatusIs(StatusCode::kCancelled));
 }
 
@@ -916,7 +916,7 @@ TEST_F(GoldenStubTest, AsyncGetOperation) {
                                    std::move(longrunning_stub_));
   google::longrunning::GetOperationRequest request;
   auto failure = stub.AsyncGetOperation(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_THAT(failure.get(), StatusIs(StatusCode::kCancelled));
 }
 
@@ -938,7 +938,7 @@ TEST_F(GoldenStubTest, AsyncCancelOperation) {
                                    std::move(longrunning_stub_));
   google::longrunning::CancelOperationRequest request;
   auto failure = stub.AsyncCancelOperation(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_THAT(failure.get(), StatusIs(StatusCode::kCancelled));
 }
 

@@ -1101,13 +1101,9 @@ TEST(GoldenThingAdminConnectionTest, RestoreDatabaseSuccess) {
 TEST(GoldenThingAdminConnectionTest, RestoreBackupCancel) {
   auto const op = CreateStartingOperation();
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
-  EXPECT_CALL(*mock, AsyncRestoreDatabase)
-      .WillOnce([&](CompletionQueue&,
-                    std::unique_ptr<rest_internal::RestContext>, Options const&,
-                    ::google::test::admin::database::v1::
-                        RestoreDatabaseRequest const&) {
-        return make_ready_future(make_status_or(op));
-      });
+  EXPECT_CALL(*mock, AsyncRestoreDatabase).WillOnce([&] {
+    return make_ready_future(make_status_or(op));
+  });
 
   AsyncSequencer<StatusOr<google::longrunning::Operation>> get;
   EXPECT_CALL(*mock, AsyncGetOperation)

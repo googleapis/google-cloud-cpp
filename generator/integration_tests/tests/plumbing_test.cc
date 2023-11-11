@@ -103,23 +103,18 @@ TEST(PlumbingTest, PollingLoopUsesPerCallPolicies) {
   });
 
   auto stub = std::make_shared<golden_v1_internal::MockGoldenThingAdminStub>();
-  EXPECT_CALL(*stub, AsyncCreateDatabase)
-      .WillOnce([](CompletionQueue&, auto,
-                   ::google::test::admin::database::v1::
-                       CreateDatabaseRequest const&) {
-        google::longrunning::Operation op;
-        op.set_name("test-operation-name");
-        op.set_done(false);
-        return make_ready_future(make_status_or(op));
-      });
-  EXPECT_CALL(*stub, AsyncGetOperation)
-      .WillOnce([](CompletionQueue&, auto,
-                   google::longrunning::GetOperationRequest const&) {
-        google::longrunning::Operation op;
-        op.set_name("test-operation-name");
-        op.set_done(true);
-        return make_ready_future(make_status_or(op));
-      });
+  EXPECT_CALL(*stub, AsyncCreateDatabase).WillOnce([] {
+    google::longrunning::Operation op;
+    op.set_name("test-operation-name");
+    op.set_done(false);
+    return make_ready_future(make_status_or(op));
+  });
+  EXPECT_CALL(*stub, AsyncGetOperation).WillOnce([] {
+    google::longrunning::Operation op;
+    op.set_name("test-operation-name");
+    op.set_done(true);
+    return make_ready_future(make_status_or(op));
+  });
 
   auto options = golden_v1_internal::GoldenThingAdminDefaultOptions({});
   auto background = internal::MakeBackgroundThreadsFactory(options)();
