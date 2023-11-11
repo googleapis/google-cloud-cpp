@@ -127,23 +127,25 @@ class ProtoBuilder {
 };
 
 // Matchers for mock calls.
-MATCHER_P(HasSession, session, "has expected session name") {
+MATCHER_P(HasCompressionAlgorithm, algorithm, "has compression algorithm") {
+  return arg.compression_algorithm() == algorithm;
+}
+
+MATCHER_P(HasSession, session, "has session name") {
   return arg.session() == session;
 }
 
-MATCHER_P(HasTransactionId, transaction_id, "has expected transaction id") {
+MATCHER_P(HasTransactionId, transaction_id, "has transaction id") {
   return arg.transaction().id() == transaction_id;
 }
 
 // As above, but for Commit and Rollback requests, which don't have a
 // `TransactionSelector` but just store the "naked" ID directly in the proto.
-MATCHER_P(HasNakedTransactionId, transaction_id,
-          "has expected transaction id") {
+MATCHER_P(HasNakedTransactionId, transaction_id, "has transaction id") {
   return arg.transaction_id() == transaction_id;
 }
 
-MATCHER_P(HasReturnStats, return_commit_stats,
-          "has expected return-stats value") {
+MATCHER_P(HasReturnStats, return_commit_stats, "has return-stats value") {
   return arg.return_commit_stats() == return_commit_stats;
 }
 
@@ -151,11 +153,11 @@ MATCHER(HasBeginTransaction, "has begin TransactionSelector set") {
   return arg.transaction().has_begin();
 }
 
-MATCHER_P(HasDatabase, database, "has expected database") {
+MATCHER_P(HasDatabase, database, "has database") {
   return arg.database() == database.FullName();
 }
 
-MATCHER_P(HasCreatorRole, role, "has expected creator role") {
+MATCHER_P(HasCreatorRole, role, "has creator role") {
   return arg.session_template().creator_role() == role;
 }
 
@@ -176,23 +178,23 @@ MATCHER(HasBadSession, "is bound to a session that's marked bad") {
   });
 }
 
-MATCHER_P(HasPriority, priority, "has expected priority") {
+MATCHER_P(HasPriority, priority, "has priority") {
   return arg.request_options().priority() == priority;
 }
 
-MATCHER_P(HasRequestTag, tag, "has expected request tag") {
+MATCHER_P(HasRequestTag, tag, "has request tag") {
   return arg.request_options().request_tag() == tag;
 }
 
-MATCHER_P(HasTransactionTag, tag, "has expected transaction tag") {
+MATCHER_P(HasTransactionTag, tag, "has transaction tag") {
   return arg.request_options().transaction_tag() == tag;
 }
 
-MATCHER_P(HasReplicaLocation, location, "has expected replica location") {
+MATCHER_P(HasReplicaLocation, location, "has replica location") {
   return arg.location() == location;
 }
 
-MATCHER_P(HasReplicaType, type, "has expected replica type") {
+MATCHER_P(HasReplicaType, type, "has replica type") {
   return arg.type() == type;
 }
 
@@ -2458,6 +2460,35 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
   ASSERT_STATUS_OK(commit);
   ASSERT_TRUE(commit->commit_stats.has_value());
   EXPECT_EQ(42, commit->commit_stats->mutation_count);
+}
+
+TEST(ConnectionImplTest, CommitSuccessWithCompression) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  google::spanner::v1::Transaction txn = MakeTestTransaction();
+  EXPECT_CALL(*mock, BeginTransaction).WillOnce(Return(txn));
+  EXPECT_CALL(*mock, Commit(HasCompressionAlgorithm(GRPC_COMPRESS_GZIP),
+                            HasSession("test-session-name")))
+      .WillOnce([](grpc::ClientContext&,
+                   google::spanner::v1::CommitRequest const&) {
+        return MakeCommitResponse(
+            spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+                .value());
+      });
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(
+      MakeLimitedTimeOptions().set<GrpcCompressionAlgorithmOption>(
+          GRPC_COMPRESS_GZIP));
+  auto commit = conn->Commit({spanner::MakeReadWriteTransaction(), {}});
+  EXPECT_THAT(
+      commit,
+      IsOkAndHolds(Field(
+          &spanner::CommitResult::commit_timestamp,
+          Eq(spanner::MakeTimestamp(absl::FromUnixSeconds(123)).value()))));
 }
 
 TEST(ConnectionImplTest, CommitAtLeastOnce) {
