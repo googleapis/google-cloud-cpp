@@ -34,10 +34,10 @@ RUN dnf makecache && \
         openssl-devel \
         protobuf-devel \
         pugixml-devel \
-        yaml-cpp-devel 
+        yaml-cpp-devel
 
 # This is used in the `publish-docs` build
-RUN dnf makecache && dnf install -y libxslt doxygen 
+RUN dnf makecache && dnf install -y libxslt doxygen
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
