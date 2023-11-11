@@ -22,7 +22,7 @@ ARG ARCH=amd64
 RUN dnf makecache && \
     dnf install -y abi-compliance-checker autoconf automake \
         clang clang-analyzer clang-tools-extra \
-        cmake diffutils doxygen findutils gcc-c++ git \
+        cmake diffutils findutils gcc-c++ git \
         libcurl-devel llvm make ninja-build \
         openssl-devel patch python python3 \
         python-pip tar unzip w3m wget which zip zlib-devel
@@ -41,9 +41,6 @@ RUN dnf makecache && dnf debuginfo-install -y libstdc++
 
 # These are used by the docfx tool.
 RUN dnf makecache && dnf install -y pugixml-devel yaml-cpp-devel
-
-# This is used in the `publish-docs` build
-RUN dnf makecache && dnf install -y libxslt
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because

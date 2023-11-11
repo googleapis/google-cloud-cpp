@@ -10,7 +10,7 @@ name: publish-docs-release
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/d8deccfb-08d6-4ab7-b8fe-1d59c2d346ea
 substitutions:
   _BUILD_NAME: publish-docs
-  _DISTRO: fedora-latest-cmake
+  _DISTRO: fedora-latest-publish-docs
   _TRIGGER_TYPE: ci
 tags:
 - release
