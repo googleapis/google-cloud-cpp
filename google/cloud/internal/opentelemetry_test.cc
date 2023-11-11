@@ -381,7 +381,7 @@ TEST(OpenTelemetry, MakeTracedSleeperEnabled) {
   EXPECT_CALL(mock_sleeper, Call(ms(42)));
 
   auto sleeper = mock_sleeper.AsStdFunction();
-  auto result = MakeTracedSleeper(EnableTracing(Options{}), sleeper);
+  auto result = MakeTracedSleeper(EnableTracing(Options{}), sleeper, "Backoff");
   result(ms(42));
 
   // Verify that a span was made.
@@ -396,7 +396,8 @@ TEST(OpenTelemetry, MakeTracedSleeperDisabled) {
   EXPECT_CALL(mock_sleeper, Call(ms(42)));
 
   auto sleeper = mock_sleeper.AsStdFunction();
-  auto result = MakeTracedSleeper(DisableTracing(Options{}), sleeper);
+  auto result =
+      MakeTracedSleeper(DisableTracing(Options{}), sleeper, "Backoff");
   result(ms(42));
 
   // Verify that no spans were made.
@@ -446,7 +447,7 @@ TEST(NoOpenTelemetry, MakeTracedSleeper) {
   EXPECT_CALL(mock_sleeper, Call(ms(42)));
 
   auto sleeper = mock_sleeper.AsStdFunction();
-  auto result = MakeTracedSleeper(Options{}, sleeper);
+  auto result = MakeTracedSleeper(Options{}, sleeper, "Backoff");
   result(ms(42));
 }
 

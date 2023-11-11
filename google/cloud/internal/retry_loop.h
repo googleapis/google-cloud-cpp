@@ -107,7 +107,7 @@ auto RetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
         Functor, grpc::ClientContext&, Options const&, Request const&> {
   std::function<void(std::chrono::milliseconds)> sleeper =
       [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
-  sleeper = MakeTracedSleeper(options, std::move(sleeper));
+  sleeper = MakeTracedSleeper(options, std::move(sleeper), "Backoff");
   return RetryLoopImpl(*retry_policy, *backoff_policy, idempotency,
                        std::forward<Functor>(functor), options, request,
                        location, std::move(sleeper));

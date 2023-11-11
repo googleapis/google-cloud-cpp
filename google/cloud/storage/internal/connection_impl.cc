@@ -17,6 +17,8 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "absl/strings/match.h"
+#include <chrono>
+#include <functional>
 #include <sstream>
 #include <thread>
 #include <utility>
@@ -592,9 +594,10 @@ StatusOr<EmptyResponse> StorageConnectionImpl::DeleteResumableUpload(
 StatusOr<QueryResumableUploadResponse> StorageConnectionImpl::UploadChunk(
     UploadChunkRequest const& request) {
   auto const& current = google::cloud::internal::CurrentOptions();
-  auto sleeper = google::cloud::internal::MakeTracedSleeper(
-      current,
-      [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); });
+  std::function<void(std::chrono::milliseconds)> sleeper =
+      [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); };
+  sleeper = google::cloud::internal::MakeTracedSleeper(
+      current, std::move(sleeper), "Backoff");
   auto last_status =
       Status(StatusCode::kDeadlineExceeded,
              "Retry policy exhausted before first attempt was made.");
