@@ -37,8 +37,9 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRoundRobin::AsyncCreateDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::test::admin::database::v1::CreateDatabaseRequest const& request) {
-  return Child()->AsyncCreateDatabase(cq, std::move(context), request);
+  return Child()->AsyncCreateDatabase(cq, std::move(context), options, request);
 }
 
 StatusOr<google::test::admin::database::v1::Database> GoldenThingAdminRoundRobin::GetDatabase(
@@ -51,8 +52,9 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRoundRobin::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
-  return Child()->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
+  return Child()->AsyncUpdateDatabaseDdl(cq, std::move(context), options, request);
 }
 
 Status GoldenThingAdminRoundRobin::DropDatabase(
@@ -89,8 +91,9 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRoundRobin::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::test::admin::database::v1::CreateBackupRequest const& request) {
-  return Child()->AsyncCreateBackup(cq, std::move(context), request);
+  return Child()->AsyncCreateBackup(cq, std::move(context), options, request);
 }
 
 StatusOr<google::test::admin::database::v1::Backup> GoldenThingAdminRoundRobin::GetBackup(
@@ -121,8 +124,9 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRoundRobin::AsyncRestoreDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
-  return Child()->AsyncRestoreDatabase(cq, std::move(context), request);
+  return Child()->AsyncRestoreDatabase(cq, std::move(context), options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> GoldenThingAdminRoundRobin::ListDatabaseOperations(
@@ -141,8 +145,9 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRoundRobin::AsyncLongRunningWithoutRouting(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
-  return Child()->AsyncLongRunningWithoutRouting(cq, std::move(context), request);
+  return Child()->AsyncLongRunningWithoutRouting(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -165,16 +170,18 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRoundRobin::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  return Child()->AsyncGetOperation(cq, std::move(context), request);
+  return Child()->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status>
 GoldenThingAdminRoundRobin::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  return Child()->AsyncCancelOperation(cq, std::move(context), request);
+  return Child()->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 std::shared_ptr<GoldenThingAdminStub>
