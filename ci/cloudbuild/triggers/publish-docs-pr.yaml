@@ -12,7 +12,7 @@ name: publish-docs-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/7957a267-70de-4e1b-a6b9-99469602a8af
 substitutions:
   _BUILD_NAME: publish-docs
-  _DISTRO: fedora-latest-cmake
+  _DISTRO: fedora-latest-publish-docs
   _LIBRARIES: all_bar_compute
   _TRIGGER_TYPE: pr
 tags:
