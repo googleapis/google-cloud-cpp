@@ -447,7 +447,7 @@ TEST(NoOpenTelemetry, MakeTracedSleeper) {
   EXPECT_CALL(mock_sleeper, Call(ms(42)));
 
   auto sleeper = mock_sleeper.AsStdFunction();
-  auto result = MakeTracedSleeper(Options{}, sleeper);
+  auto result = MakeTracedSleeper(Options{}, sleeper, "Backoff");
   result(ms(42));
 }
 
