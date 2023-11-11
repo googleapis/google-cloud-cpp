@@ -45,14 +45,14 @@ DocumentProcessorServiceTracingStub::ProcessDocument(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncBatchProcessDocuments(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::BatchProcessRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.documentai.v1.DocumentProcessorService",
       "BatchProcessDocuments");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchProcessDocuments(cq, context, request);
+  auto f = child_->AsyncBatchProcessDocuments(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -122,7 +122,7 @@ DocumentProcessorServiceTracingStub::GetProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncTrainProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::TrainProcessorVersionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -130,7 +130,7 @@ DocumentProcessorServiceTracingStub::AsyncTrainProcessorVersion(
       "TrainProcessorVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncTrainProcessorVersion(cq, context, request);
+  auto f = child_->AsyncTrainProcessorVersion(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -164,7 +164,7 @@ DocumentProcessorServiceTracingStub::ListProcessorVersions(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncDeleteProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -172,14 +172,14 @@ DocumentProcessorServiceTracingStub::AsyncDeleteProcessorVersion(
       "DeleteProcessorVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteProcessorVersion(cq, context, request);
+  auto f = child_->AsyncDeleteProcessorVersion(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncDeployProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::DeployProcessorVersionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -187,14 +187,14 @@ DocumentProcessorServiceTracingStub::AsyncDeployProcessorVersion(
       "DeployProcessorVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeployProcessorVersion(cq, context, request);
+  auto f = child_->AsyncDeployProcessorVersion(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncUndeployProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -202,7 +202,7 @@ DocumentProcessorServiceTracingStub::AsyncUndeployProcessorVersion(
       "UndeployProcessorVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUndeployProcessorVersion(cq, context, request);
+  auto f = child_->AsyncUndeployProcessorVersion(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -221,47 +221,47 @@ DocumentProcessorServiceTracingStub::CreateProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncDeleteProcessor(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.documentai.v1.DocumentProcessorService", "DeleteProcessor");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteProcessor(cq, context, request);
+  auto f = child_->AsyncDeleteProcessor(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncEnableProcessor(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::EnableProcessorRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.documentai.v1.DocumentProcessorService", "EnableProcessor");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncEnableProcessor(cq, context, request);
+  auto f = child_->AsyncEnableProcessor(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncDisableProcessor(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::DisableProcessorRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.documentai.v1.DocumentProcessorService",
       "DisableProcessor");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDisableProcessor(cq, context, request);
+  auto f = child_->AsyncDisableProcessor(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncSetDefaultProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -269,27 +269,28 @@ DocumentProcessorServiceTracingStub::AsyncSetDefaultProcessorVersion(
       "SetDefaultProcessorVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncSetDefaultProcessorVersion(cq, context, request);
+  auto f =
+      child_->AsyncSetDefaultProcessorVersion(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncReviewDocument(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.documentai.v1.DocumentProcessorService", "ReviewDocument");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncReviewDocument(cq, context, request);
+  auto f = child_->AsyncReviewDocument(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncEvaluateProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -297,7 +298,7 @@ DocumentProcessorServiceTracingStub::AsyncEvaluateProcessorVersion(
       "EvaluateProcessorVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncEvaluateProcessorVersion(cq, context, request);
+  auto f = child_->AsyncEvaluateProcessorVersion(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -328,25 +329,25 @@ DocumentProcessorServiceTracingStub::ListEvaluations(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> DocumentProcessorServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

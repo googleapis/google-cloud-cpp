@@ -42,13 +42,13 @@ class RapidMigrationAssessmentAuth : public RapidMigrationAssessmentStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCollector(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAnnotation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::
           CreateAnnotationRequest const& request) override;
 
@@ -71,42 +71,42 @@ class RapidMigrationAssessmentAuth : public RapidMigrationAssessmentStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCollector(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCollector(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResumeCollector(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRegisterCollector(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::
           RegisterCollectorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncPauseCollector(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

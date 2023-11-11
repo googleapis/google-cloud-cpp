@@ -70,31 +70,31 @@ TagKeysMetadata::GetNamespacedTagKey(
 future<StatusOr<google::longrunning::Operation>>
 TagKeysMetadata::AsyncCreateTagKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncCreateTagKey(cq, std::move(context), request);
+  SetMetadata(*context, options);
+  return child_->AsyncCreateTagKey(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TagKeysMetadata::AsyncUpdateTagKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("tag_key.name=",
                            internal::UrlEncode(request.tag_key().name())));
-  return child_->AsyncUpdateTagKey(cq, std::move(context), request);
+  return child_->AsyncUpdateTagKey(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TagKeysMetadata::AsyncDeleteTagKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteTagKey(cq, std::move(context), request);
+  return child_->AsyncDeleteTagKey(cq, std::move(context), options, request);
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysMetadata::GetIamPolicy(
@@ -128,20 +128,20 @@ TagKeysMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 TagKeysMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> TagKeysMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void TagKeysMetadata::SetMetadata(grpc::ClientContext& context,

@@ -61,7 +61,7 @@ DefaultNetworkServicesStub::GetEndpointPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncCreateEndpointPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -81,7 +81,7 @@ DefaultNetworkServicesStub::AsyncCreateEndpointPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncUpdateEndpointPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -101,7 +101,7 @@ DefaultNetworkServicesStub::AsyncUpdateEndpointPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncDeleteEndpointPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -145,7 +145,7 @@ DefaultNetworkServicesStub::GetGateway(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncCreateGateway(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::CreateGatewayRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::CreateGatewayRequest,
@@ -163,7 +163,7 @@ DefaultNetworkServicesStub::AsyncCreateGateway(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncUpdateGateway(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::UpdateGatewayRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::UpdateGatewayRequest,
@@ -181,7 +181,7 @@ DefaultNetworkServicesStub::AsyncUpdateGateway(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncDeleteGateway(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::DeleteGatewayRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::DeleteGatewayRequest,
@@ -223,7 +223,7 @@ DefaultNetworkServicesStub::GetGrpcRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncCreateGrpcRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::CreateGrpcRouteRequest,
@@ -241,7 +241,7 @@ DefaultNetworkServicesStub::AsyncCreateGrpcRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncUpdateGrpcRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::UpdateGrpcRouteRequest,
@@ -259,7 +259,7 @@ DefaultNetworkServicesStub::AsyncUpdateGrpcRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncDeleteGrpcRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::DeleteGrpcRouteRequest,
@@ -301,7 +301,7 @@ DefaultNetworkServicesStub::GetHttpRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncCreateHttpRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::CreateHttpRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::CreateHttpRouteRequest,
@@ -319,7 +319,7 @@ DefaultNetworkServicesStub::AsyncCreateHttpRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncUpdateHttpRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::UpdateHttpRouteRequest,
@@ -337,7 +337,7 @@ DefaultNetworkServicesStub::AsyncUpdateHttpRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncDeleteHttpRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::DeleteHttpRouteRequest,
@@ -379,7 +379,7 @@ DefaultNetworkServicesStub::GetTcpRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncCreateTcpRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::CreateTcpRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::CreateTcpRouteRequest,
@@ -397,7 +397,7 @@ DefaultNetworkServicesStub::AsyncCreateTcpRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncUpdateTcpRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::UpdateTcpRouteRequest,
@@ -415,7 +415,7 @@ DefaultNetworkServicesStub::AsyncUpdateTcpRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncDeleteTcpRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::DeleteTcpRouteRequest,
@@ -457,7 +457,7 @@ DefaultNetworkServicesStub::GetTlsRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncCreateTlsRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::CreateTlsRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::CreateTlsRouteRequest,
@@ -475,7 +475,7 @@ DefaultNetworkServicesStub::AsyncCreateTlsRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncUpdateTlsRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::UpdateTlsRouteRequest,
@@ -493,7 +493,7 @@ DefaultNetworkServicesStub::AsyncUpdateTlsRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncDeleteTlsRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::DeleteTlsRouteRequest,
@@ -539,7 +539,7 @@ DefaultNetworkServicesStub::GetServiceBinding(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncCreateServiceBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::CreateServiceBindingRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -559,7 +559,7 @@ DefaultNetworkServicesStub::AsyncCreateServiceBinding(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncDeleteServiceBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -603,7 +603,7 @@ DefaultNetworkServicesStub::GetMesh(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncCreateMesh(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::CreateMeshRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::CreateMeshRequest,
@@ -621,7 +621,7 @@ DefaultNetworkServicesStub::AsyncCreateMesh(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncUpdateMesh(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::UpdateMeshRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::UpdateMeshRequest,
@@ -639,7 +639,7 @@ DefaultNetworkServicesStub::AsyncUpdateMesh(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncDeleteMesh(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkservices::v1::DeleteMeshRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkservices::v1::DeleteMeshRequest,
@@ -657,7 +657,7 @@ DefaultNetworkServicesStub::AsyncDeleteMesh(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -672,7 +672,7 @@ DefaultNetworkServicesStub::AsyncGetOperation(
 
 future<Status> DefaultNetworkServicesStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

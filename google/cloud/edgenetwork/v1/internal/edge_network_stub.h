@@ -65,12 +65,12 @@ class EdgeNetworkStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateNetwork(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteNetwork(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse>
@@ -84,17 +84,17 @@ class EdgeNetworkStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateSubnet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateSubnet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteSubnet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse>
@@ -130,14 +130,14 @@ class EdgeNetworkStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
           request) = 0;
 
@@ -157,27 +157,27 @@ class EdgeNetworkStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateRouter(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::CreateRouterRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateRouter(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteRouter(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -221,13 +221,13 @@ class DefaultEdgeNetworkStub : public EdgeNetworkStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNetwork(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::CreateNetworkRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNetwork(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request)
       override;
 
@@ -242,19 +242,19 @@ class DefaultEdgeNetworkStub : public EdgeNetworkStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSubnet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::CreateSubnetRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSubnet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSubnet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request)
       override;
 
@@ -290,14 +290,14 @@ class DefaultEdgeNetworkStub : public EdgeNetworkStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
           request) override;
 
@@ -317,30 +317,30 @@ class DefaultEdgeNetworkStub : public EdgeNetworkStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRouter(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::CreateRouterRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRouter(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::UpdateRouterRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRouter(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::edgenetwork::v1::DeleteRouterRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

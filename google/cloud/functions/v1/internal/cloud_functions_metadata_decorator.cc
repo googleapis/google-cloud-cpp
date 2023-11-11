@@ -63,33 +63,33 @@ CloudFunctionsServiceMetadata::GetFunction(
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceMetadata::AsyncCreateFunction(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::functions::v1::CreateFunctionRequest const& request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("location=", internal::UrlEncode(request.location())));
-  return child_->AsyncCreateFunction(cq, std::move(context), request);
+  return child_->AsyncCreateFunction(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceMetadata::AsyncUpdateFunction(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("function.name=",
                            internal::UrlEncode(request.function().name())));
-  return child_->AsyncUpdateFunction(cq, std::move(context), request);
+  return child_->AsyncUpdateFunction(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceMetadata::AsyncDeleteFunction(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteFunction(cq, std::move(context), request);
+  return child_->AsyncDeleteFunction(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>
@@ -150,20 +150,20 @@ CloudFunctionsServiceMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> CloudFunctionsServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void CloudFunctionsServiceMetadata::SetMetadata(

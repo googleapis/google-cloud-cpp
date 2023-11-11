@@ -33,7 +33,7 @@ ManagedIdentitiesServiceTracingStub::ManagedIdentitiesServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncCreateMicrosoftAdDomain(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -41,7 +41,7 @@ ManagedIdentitiesServiceTracingStub::AsyncCreateMicrosoftAdDomain(
       "CreateMicrosoftAdDomain");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateMicrosoftAdDomain(cq, context, request);
+  auto f = child_->AsyncCreateMicrosoftAdDomain(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -87,49 +87,49 @@ ManagedIdentitiesServiceTracingStub::GetDomain(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncUpdateDomain(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.managedidentities.v1.ManagedIdentitiesService",
       "UpdateDomain");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateDomain(cq, context, request);
+  auto f = child_->AsyncUpdateDomain(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncDeleteDomain(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.managedidentities.v1.ManagedIdentitiesService",
       "DeleteDomain");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteDomain(cq, context, request);
+  auto f = child_->AsyncDeleteDomain(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncAttachTrust(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.managedidentities.v1.ManagedIdentitiesService",
       "AttachTrust");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncAttachTrust(cq, context, request);
+  auto f = child_->AsyncAttachTrust(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncReconfigureTrust(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -137,60 +137,60 @@ ManagedIdentitiesServiceTracingStub::AsyncReconfigureTrust(
       "ReconfigureTrust");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncReconfigureTrust(cq, context, request);
+  auto f = child_->AsyncReconfigureTrust(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncDetachTrust(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.managedidentities.v1.ManagedIdentitiesService",
       "DetachTrust");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDetachTrust(cq, context, request);
+  auto f = child_->AsyncDetachTrust(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncValidateTrust(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.managedidentities.v1.ManagedIdentitiesService",
       "ValidateTrust");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncValidateTrust(cq, context, request);
+  auto f = child_->AsyncValidateTrust(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> ManagedIdentitiesServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

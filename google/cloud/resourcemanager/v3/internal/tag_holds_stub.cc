@@ -33,7 +33,7 @@ TagHoldsStub::~TagHoldsStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagHoldsStub::AsyncCreateTagHold(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::CreateTagHoldRequest,
@@ -51,7 +51,7 @@ DefaultTagHoldsStub::AsyncCreateTagHold(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagHoldsStub::AsyncDeleteTagHold(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::DeleteTagHoldRequest,
@@ -81,7 +81,7 @@ DefaultTagHoldsStub::ListTagHolds(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagHoldsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -96,7 +96,7 @@ DefaultTagHoldsStub::AsyncGetOperation(
 
 future<Status> DefaultTagHoldsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

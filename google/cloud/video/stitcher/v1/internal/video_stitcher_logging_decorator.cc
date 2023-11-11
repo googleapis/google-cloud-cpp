@@ -37,16 +37,18 @@ VideoStitcherServiceLogging::VideoStitcherServiceLogging(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceLogging::AsyncCreateCdnKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::video::stitcher::v1::CreateCdnKeyRequest const&
                  request) {
-        return child_->AsyncCreateCdnKey(cq, std::move(context), request);
+        return child_->AsyncCreateCdnKey(cq, std::move(context), options,
+                                         request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::ListCdnKeysResponse>
@@ -76,31 +78,35 @@ VideoStitcherServiceLogging::GetCdnKey(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceLogging::AsyncDeleteCdnKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const&
                  request) {
-        return child_->AsyncDeleteCdnKey(cq, std::move(context), request);
+        return child_->AsyncDeleteCdnKey(cq, std::move(context), options,
+                                         request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceLogging::AsyncUpdateCdnKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const&
                  request) {
-        return child_->AsyncUpdateCdnKey(cq, std::move(context), request);
+        return child_->AsyncUpdateCdnKey(cq, std::move(context), options,
+                                         request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
@@ -216,16 +222,18 @@ VideoStitcherServiceLogging::GetLiveAdTagDetail(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceLogging::AsyncCreateSlate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::video::stitcher::v1::CreateSlateRequest const&
                  request) {
-        return child_->AsyncCreateSlate(cq, std::move(context), request);
+        return child_->AsyncCreateSlate(cq, std::move(context), options,
+                                        request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::ListSlatesResponse>
@@ -255,31 +263,35 @@ VideoStitcherServiceLogging::GetSlate(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceLogging::AsyncUpdateSlate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::video::stitcher::v1::UpdateSlateRequest const&
                  request) {
-        return child_->AsyncUpdateSlate(cq, std::move(context), request);
+        return child_->AsyncUpdateSlate(cq, std::move(context), options,
+                                        request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceLogging::AsyncDeleteSlate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::video::stitcher::v1::DeleteSlateRequest const&
                  request) {
-        return child_->AsyncDeleteSlate(cq, std::move(context), request);
+        return child_->AsyncDeleteSlate(cq, std::move(context), options,
+                                        request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
@@ -310,17 +322,19 @@ VideoStitcherServiceLogging::GetLiveSession(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceLogging::AsyncCreateLiveConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
                  request) {
-        return child_->AsyncCreateLiveConfig(cq, std::move(context), request);
+        return child_->AsyncCreateLiveConfig(cq, std::move(context), options,
+                                             request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::ListLiveConfigsResponse>
@@ -348,44 +362,50 @@ VideoStitcherServiceLogging::GetLiveConfig(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceLogging::AsyncDeleteLiveConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
                  request) {
-        return child_->AsyncDeleteLiveConfig(cq, std::move(context), request);
+        return child_->AsyncDeleteLiveConfig(cq, std::move(context), options,
+                                             request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), request);
+        return child_->AsyncGetOperation(cq, std::move(context), options,
+                                         request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<Status> VideoStitcherServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), request);
+        return child_->AsyncCancelOperation(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

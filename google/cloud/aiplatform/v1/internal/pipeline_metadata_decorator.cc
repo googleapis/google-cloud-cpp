@@ -74,12 +74,13 @@ PipelineServiceMetadata::ListTrainingPipelines(
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceMetadata::AsyncDeleteTrainingPipeline(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteTrainingPipeline(cq, std::move(context), request);
+  return child_->AsyncDeleteTrainingPipeline(cq, std::move(context), options,
+                                             request);
 }
 
 Status PipelineServiceMetadata::CancelTrainingPipeline(
@@ -121,11 +122,12 @@ PipelineServiceMetadata::ListPipelineJobs(
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceMetadata::AsyncDeletePipelineJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeletePipelineJob(cq, std::move(context), request);
+  return child_->AsyncDeletePipelineJob(cq, std::move(context), options,
+                                        request);
 }
 
 Status PipelineServiceMetadata::CancelPipelineJob(
@@ -139,20 +141,20 @@ Status PipelineServiceMetadata::CancelPipelineJob(
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> PipelineServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void PipelineServiceMetadata::SetMetadata(grpc::ClientContext& context,

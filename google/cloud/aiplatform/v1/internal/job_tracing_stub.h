@@ -54,7 +54,7 @@ class JobServiceTracingStub : public JobServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCustomJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request)
       override;
 
@@ -82,7 +82,7 @@ class JobServiceTracingStub : public JobServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataLabelingJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
           request) override;
 
@@ -112,7 +112,7 @@ class JobServiceTracingStub : public JobServiceStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteHyperparameterTuningJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
           request) override;
 
@@ -137,7 +137,7 @@ class JobServiceTracingStub : public JobServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNasJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::DeleteNasJobRequest const& request)
       override;
 
@@ -177,7 +177,7 @@ class JobServiceTracingStub : public JobServiceStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteBatchPredictionJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
           request) override;
 
@@ -216,14 +216,14 @@ class JobServiceTracingStub : public JobServiceStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateModelDeploymentMonitoringJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::
           UpdateModelDeploymentMonitoringJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteModelDeploymentMonitoringJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::
           DeleteModelDeploymentMonitoringJobRequest const& request) override;
 
@@ -239,12 +239,12 @@ class JobServiceTracingStub : public JobServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

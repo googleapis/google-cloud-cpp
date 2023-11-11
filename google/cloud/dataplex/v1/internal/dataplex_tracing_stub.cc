@@ -33,39 +33,39 @@ DataplexServiceTracingStub::DataplexServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncCreateLake(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::CreateLakeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "CreateLake");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateLake(cq, context, request);
+  auto f = child_->AsyncCreateLake(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncUpdateLake(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "UpdateLake");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateLake(cq, context, request);
+  auto f = child_->AsyncUpdateLake(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncDeleteLake(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "DeleteLake");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteLake(cq, context, request);
+  auto f = child_->AsyncDeleteLake(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -105,39 +105,39 @@ DataplexServiceTracingStub::ListLakeActions(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncCreateZone(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::CreateZoneRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "CreateZone");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateZone(cq, context, request);
+  auto f = child_->AsyncCreateZone(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncUpdateZone(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "UpdateZone");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateZone(cq, context, request);
+  auto f = child_->AsyncUpdateZone(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncDeleteZone(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "DeleteZone");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteZone(cq, context, request);
+  auto f = child_->AsyncDeleteZone(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -177,39 +177,39 @@ DataplexServiceTracingStub::ListZoneActions(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncCreateAsset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::CreateAssetRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "CreateAsset");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateAsset(cq, context, request);
+  auto f = child_->AsyncCreateAsset(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncUpdateAsset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "UpdateAsset");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateAsset(cq, context, request);
+  auto f = child_->AsyncUpdateAsset(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "DeleteAsset");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteAsset(cq, context, request);
+  auto f = child_->AsyncDeleteAsset(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -251,39 +251,39 @@ DataplexServiceTracingStub::ListAssetActions(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncCreateTask(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::CreateTaskRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "CreateTask");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateTask(cq, context, request);
+  auto f = child_->AsyncCreateTask(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncUpdateTask(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "UpdateTask");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateTask(cq, context, request);
+  auto f = child_->AsyncUpdateTask(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncDeleteTask(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "DeleteTask");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteTask(cq, context, request);
+  auto f = child_->AsyncDeleteTask(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -353,39 +353,39 @@ Status DataplexServiceTracingStub::CancelJob(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "CreateEnvironment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateEnvironment(cq, context, request);
+  auto f = child_->AsyncCreateEnvironment(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "UpdateEnvironment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateEnvironment(cq, context, request);
+  auto f = child_->AsyncUpdateEnvironment(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
                                      "DeleteEnvironment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteEnvironment(cq, context, request);
+  auto f = child_->AsyncDeleteEnvironment(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -428,25 +428,25 @@ DataplexServiceTracingStub::ListSessions(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> DataplexServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

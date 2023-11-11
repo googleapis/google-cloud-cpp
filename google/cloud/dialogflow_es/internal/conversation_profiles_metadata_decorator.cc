@@ -96,48 +96,48 @@ Status ConversationProfilesMetadata::DeleteConversationProfile(
 future<StatusOr<google::longrunning::Operation>>
 ConversationProfilesMetadata::AsyncSetSuggestionFeatureConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
         request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("conversation_profile=",
                    internal::UrlEncode(request.conversation_profile())));
   return child_->AsyncSetSuggestionFeatureConfig(cq, std::move(context),
-                                                 request);
+                                                 options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationProfilesMetadata::AsyncClearSuggestionFeatureConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
         request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("conversation_profile=",
                    internal::UrlEncode(request.conversation_profile())));
   return child_->AsyncClearSuggestionFeatureConfig(cq, std::move(context),
-                                                   request);
+                                                   options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationProfilesMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> ConversationProfilesMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void ConversationProfilesMetadata::SetMetadata(

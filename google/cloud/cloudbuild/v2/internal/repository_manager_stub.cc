@@ -33,7 +33,7 @@ RepositoryManagerStub::~RepositoryManagerStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncCreateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v2::CreateConnectionRequest,
@@ -76,7 +76,7 @@ DefaultRepositoryManagerStub::ListConnections(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v2::UpdateConnectionRequest,
@@ -94,7 +94,7 @@ DefaultRepositoryManagerStub::AsyncUpdateConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v2::DeleteConnectionRequest,
@@ -112,7 +112,7 @@ DefaultRepositoryManagerStub::AsyncDeleteConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncCreateRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v2::CreateRepositoryRequest,
@@ -130,7 +130,7 @@ DefaultRepositoryManagerStub::AsyncCreateRepository(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncBatchCreateRepositories(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -174,7 +174,7 @@ DefaultRepositoryManagerStub::ListRepositories(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest,
@@ -244,7 +244,7 @@ DefaultRepositoryManagerStub::FetchGitRefs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -259,7 +259,7 @@ DefaultRepositoryManagerStub::AsyncGetOperation(
 
 future<Status> DefaultRepositoryManagerStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

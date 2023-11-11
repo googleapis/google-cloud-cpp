@@ -57,39 +57,39 @@ ServiceManagerTracingStub::GetService(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerTracingStub::AsyncCreateService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "CreateService");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateService(cq, context, request);
+  auto f = child_->AsyncCreateService(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerTracingStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "DeleteService");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteService(cq, context, request);
+  auto f = child_->AsyncDeleteService(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerTracingStub::AsyncUndeleteService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "UndeleteService");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUndeleteService(cq, context, request);
+  auto f = child_->AsyncUndeleteService(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -133,14 +133,14 @@ StatusOr<google::api::Service> ServiceManagerTracingStub::CreateServiceConfig(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerTracingStub::AsyncSubmitConfigSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "SubmitConfigSource");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncSubmitConfigSource(cq, context, request);
+  auto f = child_->AsyncSubmitConfigSource(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -173,14 +173,14 @@ ServiceManagerTracingStub::GetServiceRollout(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerTracingStub::AsyncCreateServiceRollout(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "CreateServiceRollout");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateServiceRollout(cq, context, request);
+  auto f = child_->AsyncCreateServiceRollout(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -200,25 +200,25 @@ ServiceManagerTracingStub::GenerateConfigReport(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> ServiceManagerTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

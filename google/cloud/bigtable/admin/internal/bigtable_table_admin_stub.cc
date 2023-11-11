@@ -69,7 +69,7 @@ DefaultBigtableTableAdminStub::GetTable(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableTableAdminStub::AsyncUpdateTable(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::bigtable::admin::v2::UpdateTableRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::admin::v2::UpdateTableRequest,
@@ -97,7 +97,7 @@ Status DefaultBigtableTableAdminStub::DeleteTable(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableTableAdminStub::AsyncUndeleteTable(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::bigtable::admin::v2::UndeleteTableRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::admin::v2::UndeleteTableRequest,
@@ -165,7 +165,7 @@ DefaultBigtableTableAdminStub::CheckConsistency(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableTableAdminStub::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::admin::v2::CreateBackupRequest,
@@ -229,7 +229,7 @@ DefaultBigtableTableAdminStub::ListBackups(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableTableAdminStub::AsyncRestoreTable(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::admin::v2::RestoreTableRequest,
@@ -246,7 +246,7 @@ DefaultBigtableTableAdminStub::AsyncRestoreTable(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableTableAdminStub::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::bigtable::admin::v2::CopyBackupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::admin::v2::CopyBackupRequest,
@@ -316,7 +316,7 @@ DefaultBigtableTableAdminStub::AsyncCheckConsistency(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableTableAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -331,7 +331,7 @@ DefaultBigtableTableAdminStub::AsyncGetOperation(
 
 future<Status> DefaultBigtableTableAdminStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

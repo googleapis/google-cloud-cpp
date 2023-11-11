@@ -45,46 +45,46 @@ DatastoreAdminMetadata::DatastoreAdminMetadata(
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminMetadata::AsyncExportEntities(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::datastore::admin::v1::ExportEntitiesRequest const& request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
-  return child_->AsyncExportEntities(cq, std::move(context), request);
+  return child_->AsyncExportEntities(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminMetadata::AsyncImportEntities(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::datastore::admin::v1::ImportEntitiesRequest const& request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
-  return child_->AsyncImportEntities(cq, std::move(context), request);
+  return child_->AsyncImportEntities(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminMetadata::AsyncCreateIndex(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::datastore::admin::v1::CreateIndexRequest const& request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
-  return child_->AsyncCreateIndex(cq, std::move(context), request);
+  return child_->AsyncCreateIndex(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminMetadata::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::datastore::admin::v1::DeleteIndexRequest const& request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "index_id=", internal::UrlEncode(request.index_id())));
-  return child_->AsyncDeleteIndex(cq, std::move(context), request);
+  return child_->AsyncDeleteIndex(cq, std::move(context), options, request);
 }
 
 StatusOr<google::datastore::admin::v1::Index> DatastoreAdminMetadata::GetIndex(
@@ -110,20 +110,20 @@ DatastoreAdminMetadata::ListIndexes(
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> DatastoreAdminMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void DatastoreAdminMetadata::SetMetadata(grpc::ClientContext& context,

@@ -39,7 +39,7 @@ class CloudChannelReportsServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRunReportJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::channel::v1::RunReportJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
@@ -53,12 +53,12 @@ class CloudChannelReportsServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -75,7 +75,7 @@ class DefaultCloudChannelReportsServiceStub
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunReportJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
@@ -90,12 +90,12 @@ class DefaultCloudChannelReportsServiceStub
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

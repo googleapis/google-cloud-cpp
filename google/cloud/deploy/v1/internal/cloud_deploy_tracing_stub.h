@@ -50,19 +50,19 @@ class CloudDeployTracingStub : public CloudDeployStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDeliveryPipeline(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDeliveryPipeline(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDeliveryPipeline(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request)
       override;
 
@@ -80,17 +80,17 @@ class CloudDeployTracingStub : public CloudDeployStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTarget(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::CreateTargetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTarget(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::UpdateTargetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTarget(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::DeleteTargetRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::ListReleasesResponse> ListReleases(
@@ -103,7 +103,7 @@ class CloudDeployTracingStub : public CloudDeployStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRelease(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::CreateReleaseRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse> AbandonRelease(
@@ -132,7 +132,7 @@ class CloudDeployTracingStub : public CloudDeployStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRollout(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::CreateRolloutRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
@@ -162,19 +162,19 @@ class CloudDeployTracingStub : public CloudDeployStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAutomation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::CreateAutomationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAutomation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::UpdateAutomationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAutomation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::DeleteAutomationRequest const& request)
       override;
 
@@ -205,12 +205,12 @@ class CloudDeployTracingStub : public CloudDeployStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

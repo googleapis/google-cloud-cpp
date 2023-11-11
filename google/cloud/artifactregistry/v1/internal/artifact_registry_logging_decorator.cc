@@ -142,33 +142,37 @@ ArtifactRegistryLogging::GetPythonPackage(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncImportAptArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::devtools::artifactregistry::v1::
                  ImportAptArtifactsRequest const& request) {
-        return child_->AsyncImportAptArtifacts(cq, std::move(context), request);
+        return child_->AsyncImportAptArtifacts(cq, std::move(context), options,
+                                               request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncImportYumArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::devtools::artifactregistry::v1::
                  ImportYumArtifactsRequest const& request) {
-        return child_->AsyncImportYumArtifacts(cq, std::move(context), request);
+        return child_->AsyncImportYumArtifacts(cq, std::move(context), options,
+                                               request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
@@ -199,18 +203,19 @@ ArtifactRegistryLogging::GetRepository(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncCreateRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
               request) {
-        return child_->AsyncCreateRepository(cq, std::move(context), request);
+        return child_->AsyncCreateRepository(cq, std::move(context), options,
+                                             request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
@@ -229,18 +234,19 @@ ArtifactRegistryLogging::UpdateRepository(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
               request) {
-        return child_->AsyncDeleteRepository(cq, std::move(context), request);
+        return child_->AsyncDeleteRepository(cq, std::move(context), options,
+                                             request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
@@ -269,17 +275,19 @@ ArtifactRegistryLogging::GetPackage(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncDeletePackage(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::devtools::artifactregistry::v1::DeletePackageRequest const&
                  request) {
-        return child_->AsyncDeletePackage(cq, std::move(context), request);
+        return child_->AsyncDeletePackage(cq, std::move(context), options,
+                                          request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
@@ -308,34 +316,37 @@ ArtifactRegistryLogging::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::devtools::artifactregistry::v1::DeleteVersionRequest const&
                  request) {
-        return child_->AsyncDeleteVersion(cq, std::move(context), request);
+        return child_->AsyncDeleteVersion(cq, std::move(context), options,
+                                          request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncBatchDeleteVersions(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::devtools::artifactregistry::v1::
                  BatchDeleteVersionsRequest const& request) {
-        return child_->AsyncBatchDeleteVersions(cq, std::move(context),
+        return child_->AsyncBatchDeleteVersions(cq, std::move(context), options,
                                                 request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
@@ -506,28 +517,32 @@ ArtifactRegistryLogging::UpdateVPCSCConfig(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), request);
+        return child_->AsyncGetOperation(cq, std::move(context), options,
+                                         request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<Status> ArtifactRegistryLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), request);
+        return child_->AsyncCancelOperation(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -105,13 +105,13 @@ class AnalyticsHubServiceTracingStub : public AnalyticsHubServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncSubscribeDataExchange(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::bigquery::analyticshub::v1::
           SubscribeDataExchangeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRefreshSubscription(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::bigquery::analyticshub::v1::
           RefreshSubscriptionRequest const& request) override;
 
@@ -142,7 +142,7 @@ class AnalyticsHubServiceTracingStub : public AnalyticsHubServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSubscription(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::bigquery::analyticshub::v1::
           DeleteSubscriptionRequest const& request) override;
 
@@ -160,12 +160,12 @@ class AnalyticsHubServiceTracingStub : public AnalyticsHubServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

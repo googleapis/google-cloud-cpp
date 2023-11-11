@@ -45,14 +45,14 @@ DatabaseAdminTracingStub::ListDatabases(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncCreateDatabase(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.spanner.admin.database.v1.DatabaseAdmin", "CreateDatabase");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateDatabase(cq, context, request);
+  auto f = child_->AsyncCreateDatabase(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -71,28 +71,28 @@ DatabaseAdminTracingStub::GetDatabase(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncUpdateDatabase(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::admin::database::v1::UpdateDatabaseRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.spanner.admin.database.v1.DatabaseAdmin", "UpdateDatabase");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateDatabase(cq, context, request);
+  auto f = child_->AsyncUpdateDatabase(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.spanner.admin.database.v1.DatabaseAdmin", "UpdateDatabaseDdl");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateDatabaseDdl(cq, context, request);
+  auto f = child_->AsyncUpdateDatabaseDdl(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -157,26 +157,26 @@ DatabaseAdminTracingStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.spanner.admin.database.v1.DatabaseAdmin", "CreateBackup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateBackup(cq, context, request);
+  auto f = child_->AsyncCreateBackup(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.spanner.admin.database.v1.DatabaseAdmin", "CopyBackup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCopyBackup(cq, context, request);
+  auto f = child_->AsyncCopyBackup(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -229,14 +229,14 @@ DatabaseAdminTracingStub::ListBackups(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncRestoreDatabase(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.spanner.admin.database.v1.DatabaseAdmin", "RestoreDatabase");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRestoreDatabase(cq, context, request);
+  auto f = child_->AsyncRestoreDatabase(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -283,25 +283,25 @@ DatabaseAdminTracingStub::ListDatabaseRoles(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> DatabaseAdminTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

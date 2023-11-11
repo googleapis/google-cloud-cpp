@@ -33,7 +33,7 @@ LivestreamServiceStub::~LivestreamServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncCreateChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::livestream::v1::CreateChannelRequest,
@@ -75,7 +75,7 @@ DefaultLivestreamServiceStub::GetChannel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::livestream::v1::DeleteChannelRequest,
@@ -93,7 +93,7 @@ DefaultLivestreamServiceStub::AsyncDeleteChannel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::livestream::v1::UpdateChannelRequest,
@@ -111,7 +111,7 @@ DefaultLivestreamServiceStub::AsyncUpdateChannel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncStartChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::livestream::v1::StartChannelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::livestream::v1::StartChannelRequest,
@@ -129,7 +129,7 @@ DefaultLivestreamServiceStub::AsyncStartChannel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncStopChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::livestream::v1::StopChannelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::livestream::v1::StopChannelRequest,
@@ -147,7 +147,7 @@ DefaultLivestreamServiceStub::AsyncStopChannel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::livestream::v1::CreateInputRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::livestream::v1::CreateInputRequest,
@@ -189,7 +189,7 @@ DefaultLivestreamServiceStub::GetInput(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncDeleteInput(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::livestream::v1::DeleteInputRequest,
@@ -207,7 +207,7 @@ DefaultLivestreamServiceStub::AsyncDeleteInput(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncUpdateInput(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::livestream::v1::UpdateInputRequest,
@@ -272,7 +272,7 @@ Status DefaultLivestreamServiceStub::DeleteEvent(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncCreateAsset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::livestream::v1::CreateAssetRequest,
@@ -290,7 +290,7 @@ DefaultLivestreamServiceStub::AsyncCreateAsset(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::livestream::v1::DeleteAssetRequest,
@@ -344,7 +344,7 @@ DefaultLivestreamServiceStub::GetPool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncUpdatePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::livestream::v1::UpdatePoolRequest,
@@ -362,7 +362,7 @@ DefaultLivestreamServiceStub::AsyncUpdatePool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -377,7 +377,7 @@ DefaultLivestreamServiceStub::AsyncGetOperation(
 
 future<Status> DefaultLivestreamServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

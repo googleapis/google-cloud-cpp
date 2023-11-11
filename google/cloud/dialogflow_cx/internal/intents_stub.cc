@@ -92,7 +92,7 @@ Status DefaultIntentsStub::DeleteIntent(
 future<StatusOr<google::longrunning::Operation>>
 DefaultIntentsStub::AsyncImportIntents(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::ImportIntentsRequest,
@@ -110,7 +110,7 @@ DefaultIntentsStub::AsyncImportIntents(
 future<StatusOr<google::longrunning::Operation>>
 DefaultIntentsStub::AsyncExportIntents(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::ExportIntentsRequest,
@@ -128,7 +128,7 @@ DefaultIntentsStub::AsyncExportIntents(
 future<StatusOr<google::longrunning::Operation>>
 DefaultIntentsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -143,7 +143,7 @@ DefaultIntentsStub::AsyncGetOperation(
 
 future<Status> DefaultIntentsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -54,11 +54,12 @@ NetAppMetadata::ListStoragePools(
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncCreateStoragePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateStoragePool(cq, std::move(context), request);
+  return child_->AsyncCreateStoragePool(cq, std::move(context), options,
+                                        request);
 }
 
 StatusOr<google::cloud::netapp::v1::StoragePool> NetAppMetadata::GetStoragePool(
@@ -72,22 +73,24 @@ StatusOr<google::cloud::netapp::v1::StoragePool> NetAppMetadata::GetStoragePool(
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncUpdateStoragePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("storage_pool.name=",
                            internal::UrlEncode(request.storage_pool().name())));
-  return child_->AsyncUpdateStoragePool(cq, std::move(context), request);
+  return child_->AsyncUpdateStoragePool(cq, std::move(context), options,
+                                        request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncDeleteStoragePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteStoragePool(cq, std::move(context), request);
+  return child_->AsyncDeleteStoragePool(cq, std::move(context), options,
+                                        request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
@@ -110,42 +113,42 @@ StatusOr<google::cloud::netapp::v1::Volume> NetAppMetadata::GetVolume(
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncCreateVolume(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::CreateVolumeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateVolume(cq, std::move(context), request);
+  return child_->AsyncCreateVolume(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncUpdateVolume(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("volume.name=",
                            internal::UrlEncode(request.volume().name())));
-  return child_->AsyncUpdateVolume(cq, std::move(context), request);
+  return child_->AsyncUpdateVolume(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncDeleteVolume(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteVolume(cq, std::move(context), request);
+  return child_->AsyncDeleteVolume(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncRevertVolume(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::RevertVolumeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRevertVolume(cq, std::move(context), request);
+  return child_->AsyncRevertVolume(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
@@ -168,32 +171,32 @@ StatusOr<google::cloud::netapp::v1::Snapshot> NetAppMetadata::GetSnapshot(
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncCreateSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateSnapshot(cq, std::move(context), request);
+  return child_->AsyncCreateSnapshot(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncDeleteSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteSnapshot(cq, std::move(context), request);
+  return child_->AsyncDeleteSnapshot(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncUpdateSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("snapshot.name=",
                            internal::UrlEncode(request.snapshot().name())));
-  return child_->AsyncUpdateSnapshot(cq, std::move(context), request);
+  return child_->AsyncUpdateSnapshot(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
@@ -217,33 +220,36 @@ NetAppMetadata::GetActiveDirectory(
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncCreateActiveDirectory(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateActiveDirectory(cq, std::move(context), request);
+  return child_->AsyncCreateActiveDirectory(cq, std::move(context), options,
+                                            request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncUpdateActiveDirectory(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("active_directory.name=",
                    internal::UrlEncode(request.active_directory().name())));
-  return child_->AsyncUpdateActiveDirectory(cq, std::move(context), request);
+  return child_->AsyncUpdateActiveDirectory(cq, std::move(context), options,
+                                            request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncDeleteActiveDirectory(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteActiveDirectory(cq, std::move(context), request);
+  return child_->AsyncDeleteActiveDirectory(cq, std::move(context), options,
+                                            request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse>
@@ -258,11 +264,11 @@ NetAppMetadata::ListKmsConfigs(
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncCreateKmsConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateKmsConfig(cq, std::move(context), request);
+  return child_->AsyncCreateKmsConfig(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::KmsConfig> NetAppMetadata::GetKmsConfig(
@@ -276,22 +282,22 @@ StatusOr<google::cloud::netapp::v1::KmsConfig> NetAppMetadata::GetKmsConfig(
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncUpdateKmsConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("kms_config.name=",
                            internal::UrlEncode(request.kms_config().name())));
-  return child_->AsyncUpdateKmsConfig(cq, std::move(context), request);
+  return child_->AsyncUpdateKmsConfig(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncEncryptVolumes(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncEncryptVolumes(cq, std::move(context), request);
+  return child_->AsyncEncryptVolumes(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
@@ -306,11 +312,11 @@ NetAppMetadata::VerifyKmsConfig(
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncDeleteKmsConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteKmsConfig(cq, std::move(context), request);
+  return child_->AsyncDeleteKmsConfig(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
@@ -333,83 +339,87 @@ StatusOr<google::cloud::netapp::v1::Replication> NetAppMetadata::GetReplication(
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncCreateReplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::CreateReplicationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateReplication(cq, std::move(context), request);
+  return child_->AsyncCreateReplication(cq, std::move(context), options,
+                                        request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncDeleteReplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteReplication(cq, std::move(context), request);
+  return child_->AsyncDeleteReplication(cq, std::move(context), options,
+                                        request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncUpdateReplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("replication.name=",
                            internal::UrlEncode(request.replication().name())));
-  return child_->AsyncUpdateReplication(cq, std::move(context), request);
+  return child_->AsyncUpdateReplication(cq, std::move(context), options,
+                                        request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncStopReplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::StopReplicationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncStopReplication(cq, std::move(context), request);
+  return child_->AsyncStopReplication(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncResumeReplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncResumeReplication(cq, std::move(context), request);
+  return child_->AsyncResumeReplication(cq, std::move(context), options,
+                                        request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncReverseReplicationDirection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncReverseReplicationDirection(cq, std::move(context),
-                                                  request);
+                                                  options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> NetAppMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void NetAppMetadata::SetMetadata(grpc::ClientContext& context,

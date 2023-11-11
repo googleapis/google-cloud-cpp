@@ -63,11 +63,11 @@ VersionsMetadata::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsMetadata::AsyncCreateVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateVersion(cq, std::move(context), request);
+  return child_->AsyncCreateVersion(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
@@ -91,11 +91,11 @@ Status VersionsMetadata::DeleteVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsMetadata::AsyncLoadVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncLoadVersion(cq, std::move(context), request);
+  return child_->AsyncLoadVersion(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
@@ -111,20 +111,20 @@ VersionsMetadata::CompareVersions(
 future<StatusOr<google::longrunning::Operation>>
 VersionsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> VersionsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void VersionsMetadata::SetMetadata(grpc::ClientContext& context,

@@ -33,7 +33,7 @@ EndpointServiceStub::~EndpointServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultEndpointServiceStub::AsyncCreateEndpoint(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::CreateEndpointRequest,
@@ -87,7 +87,7 @@ DefaultEndpointServiceStub::UpdateEndpoint(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEndpointServiceStub::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteEndpointRequest,
@@ -105,7 +105,7 @@ DefaultEndpointServiceStub::AsyncDeleteEndpoint(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEndpointServiceStub::AsyncDeployModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::DeployModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeployModelRequest,
@@ -122,7 +122,7 @@ DefaultEndpointServiceStub::AsyncDeployModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEndpointServiceStub::AsyncUndeployModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::UndeployModelRequest,
@@ -139,7 +139,7 @@ DefaultEndpointServiceStub::AsyncUndeployModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEndpointServiceStub::AsyncMutateDeployedModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::MutateDeployedModelRequest,
@@ -157,7 +157,7 @@ DefaultEndpointServiceStub::AsyncMutateDeployedModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEndpointServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -172,7 +172,7 @@ DefaultEndpointServiceStub::AsyncGetOperation(
 
 future<Status> DefaultEndpointServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

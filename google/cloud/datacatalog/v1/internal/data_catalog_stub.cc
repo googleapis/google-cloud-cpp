@@ -369,7 +369,7 @@ DefaultDataCatalogStub::ListTags(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataCatalogStub::AsyncReconcileTags(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datacatalog::v1::ReconcileTagsRequest,
@@ -446,7 +446,7 @@ DefaultDataCatalogStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataCatalogStub::AsyncImportEntries(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datacatalog::v1::ImportEntriesRequest,
@@ -464,7 +464,7 @@ DefaultDataCatalogStub::AsyncImportEntries(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataCatalogStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -479,7 +479,7 @@ DefaultDataCatalogStub::AsyncGetOperation(
 
 future<Status> DefaultDataCatalogStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

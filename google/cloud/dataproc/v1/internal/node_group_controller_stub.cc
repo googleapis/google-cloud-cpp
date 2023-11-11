@@ -33,7 +33,7 @@ NodeGroupControllerStub::~NodeGroupControllerStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultNodeGroupControllerStub::AsyncCreateNodeGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataproc::v1::CreateNodeGroupRequest,
@@ -50,7 +50,7 @@ DefaultNodeGroupControllerStub::AsyncCreateNodeGroup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNodeGroupControllerStub::AsyncResizeNodeGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataproc::v1::ResizeNodeGroupRequest,
@@ -79,7 +79,7 @@ DefaultNodeGroupControllerStub::GetNodeGroup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNodeGroupControllerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -94,7 +94,7 @@ DefaultNodeGroupControllerStub::AsyncGetOperation(
 
 future<Status> DefaultNodeGroupControllerStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

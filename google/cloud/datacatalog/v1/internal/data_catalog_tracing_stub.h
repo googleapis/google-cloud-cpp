@@ -172,7 +172,7 @@ class DataCatalogTracingStub : public DataCatalogStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncReconcileTags(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::datacatalog::v1::ReconcileTagsRequest const& request)
       override;
 
@@ -199,18 +199,18 @@ class DataCatalogTracingStub : public DataCatalogStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportEntries(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

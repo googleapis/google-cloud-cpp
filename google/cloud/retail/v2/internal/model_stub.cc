@@ -33,7 +33,7 @@ ModelServiceStub::~ModelServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncCreateModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::retail::v2::CreateModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::retail::v2::CreateModelRequest,
@@ -117,7 +117,7 @@ StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::UpdateModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncTuneModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::retail::v2::TuneModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::retail::v2::TuneModelRequest,
                                     google::longrunning::Operation>(
@@ -133,7 +133,7 @@ DefaultModelServiceStub::AsyncTuneModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -148,7 +148,7 @@ DefaultModelServiceStub::AsyncGetOperation(
 
 future<Status> DefaultModelServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

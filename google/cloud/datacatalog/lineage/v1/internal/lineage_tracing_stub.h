@@ -67,7 +67,7 @@ class LineageTracingStub : public LineageStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteProcess(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
           request) override;
 
@@ -93,7 +93,7 @@ class LineageTracingStub : public LineageStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRun(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request)
       override;
 
@@ -134,12 +134,12 @@ class LineageTracingStub : public LineageStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

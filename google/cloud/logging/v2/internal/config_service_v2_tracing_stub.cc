@@ -55,26 +55,26 @@ StatusOr<google::logging::v2::LogBucket> ConfigServiceV2TracingStub::GetBucket(
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2TracingStub::AsyncCreateBucketAsync(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::logging::v2::CreateBucketRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "CreateBucketAsync");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateBucketAsync(cq, context, request);
+  auto f = child_->AsyncCreateBucketAsync(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2TracingStub::AsyncUpdateBucketAsync(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::logging::v2::UpdateBucketRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "UpdateBucketAsync");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateBucketAsync(cq, context, request);
+  auto f = child_->AsyncUpdateBucketAsync(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -235,26 +235,26 @@ Status ConfigServiceV2TracingStub::DeleteSink(
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2TracingStub::AsyncCreateLink(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::logging::v2::CreateLinkRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "CreateLink");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateLink(cq, context, request);
+  auto f = child_->AsyncCreateLink(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2TracingStub::AsyncDeleteLink(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::logging::v2::DeleteLinkRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "DeleteLink");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteLink(cq, context, request);
+  auto f = child_->AsyncDeleteLink(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -388,38 +388,38 @@ ConfigServiceV2TracingStub::UpdateSettings(
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2TracingStub::AsyncCopyLogEntries(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::logging::v2::CopyLogEntriesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "CopyLogEntries");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCopyLogEntries(cq, context, request);
+  auto f = child_->AsyncCopyLogEntries(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2TracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> ConfigServiceV2TracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

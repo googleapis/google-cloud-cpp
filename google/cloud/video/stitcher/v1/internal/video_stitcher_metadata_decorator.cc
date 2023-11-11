@@ -45,11 +45,11 @@ VideoStitcherServiceMetadata::VideoStitcherServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncCreateCdnKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateCdnKey(cq, std::move(context), request);
+  return child_->AsyncCreateCdnKey(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::ListCdnKeysResponse>
@@ -73,22 +73,22 @@ VideoStitcherServiceMetadata::GetCdnKey(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncDeleteCdnKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteCdnKey(cq, std::move(context), request);
+  return child_->AsyncDeleteCdnKey(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncUpdateCdnKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("cdn_key.name=",
                            internal::UrlEncode(request.cdn_key().name())));
-  return child_->AsyncUpdateCdnKey(cq, std::move(context), request);
+  return child_->AsyncUpdateCdnKey(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
@@ -173,11 +173,11 @@ VideoStitcherServiceMetadata::GetLiveAdTagDetail(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncCreateSlate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateSlate(cq, std::move(context), request);
+  return child_->AsyncCreateSlate(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::ListSlatesResponse>
@@ -201,22 +201,22 @@ VideoStitcherServiceMetadata::GetSlate(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncUpdateSlate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("slate.name=", internal::UrlEncode(request.slate().name())));
-  return child_->AsyncUpdateSlate(cq, std::move(context), request);
+  return child_->AsyncUpdateSlate(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncDeleteSlate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteSlate(cq, std::move(context), request);
+  return child_->AsyncDeleteSlate(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
@@ -241,12 +241,13 @@ VideoStitcherServiceMetadata::GetLiveSession(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncCreateLiveConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateLiveConfig(cq, std::move(context), request);
+  return child_->AsyncCreateLiveConfig(cq, std::move(context), options,
+                                       request);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::ListLiveConfigsResponse>
@@ -270,31 +271,32 @@ VideoStitcherServiceMetadata::GetLiveConfig(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncDeleteLiveConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteLiveConfig(cq, std::move(context), request);
+  return child_->AsyncDeleteLiveConfig(cq, std::move(context), options,
+                                       request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> VideoStitcherServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void VideoStitcherServiceMetadata::SetMetadata(

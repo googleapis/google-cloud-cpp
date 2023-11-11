@@ -45,11 +45,12 @@ SecurityCenterMetadata::SecurityCenterMetadata(
 future<StatusOr<google::longrunning::Operation>>
 SecurityCenterMetadata::AsyncBulkMuteFindings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBulkMuteFindings(cq, std::move(context), request);
+  return child_->AsyncBulkMuteFindings(cq, std::move(context), options,
+                                       request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
@@ -308,12 +309,13 @@ SecurityCenterMetadata::ListSources(
 future<StatusOr<google::longrunning::Operation>>
 SecurityCenterMetadata::AsyncRunAssetDiscovery(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncRunAssetDiscovery(cq, std::move(context), request);
+  return child_->AsyncRunAssetDiscovery(cq, std::move(context), options,
+                                        request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
@@ -500,20 +502,20 @@ SecurityCenterMetadata::ListBigQueryExports(
 future<StatusOr<google::longrunning::Operation>>
 SecurityCenterMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> SecurityCenterMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void SecurityCenterMetadata::SetMetadata(grpc::ClientContext& context,
