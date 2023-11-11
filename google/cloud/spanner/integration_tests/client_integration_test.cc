@@ -49,29 +49,36 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
  protected:
   static void SetUpTestSuite() {
     spanner_testing::DatabaseIntegrationTest::SetUpTestSuite();
-    client_ = std::make_unique<Client>(MakeConnection(GetDatabase()));
+    client_ = std::make_unique<Client>(MakeConnection(
+        GetDatabase(),
+        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_GZIP)));
   }
 
   void SetUp() override {
     auto commit_result = client_->Commit(
-        Mutations{MakeDeleteMutation("Singers", KeySet::All())});
+        Mutations{MakeDeleteMutation("Singers", KeySet::All())},
+        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_DEFLATE));
     ASSERT_STATUS_OK(commit_result);
   }
 
   static StatusOr<Timestamp> DatabaseNow() {
     auto statement = SqlStatement("SELECT CURRENT_TIMESTAMP()");
-    auto rows = client_->ExecuteQuery(std::move(statement));
+    auto rows = client_->ExecuteQuery(
+        std::move(statement),
+        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_NONE));
     auto row = GetSingularRow(StreamOf<std::tuple<Timestamp>>(rows));
     if (!row) return std::move(row).status();
     return std::get<0>(*row);
   }
 
   static void InsertTwoSingers() {
-    auto commit_result = client_->Commit(Mutations{
-        InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
-            .EmplaceRow(1, "test-fname-1", "test-lname-1")
-            .EmplaceRow(2, "test-fname-2", "test-lname-2")
-            .Build()});
+    auto commit_result = client_->Commit(
+        Mutations{InsertMutationBuilder("Singers",
+                                        {"SingerId", "FirstName", "LastName"})
+                      .EmplaceRow(1, "test-fname-1", "test-lname-1")
+                      .EmplaceRow(2, "test-fname-2", "test-lname-2")
+                      .Build()},
+        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_DEFLATE));
     ASSERT_STATUS_OK(commit_result);
   }
 
@@ -94,22 +101,27 @@ class PgClientIntegrationTest
  protected:
   static void SetUpTestSuite() {
     spanner_testing::PgDatabaseIntegrationTest::SetUpTestSuite();
-    client_ = std::make_unique<Client>(MakeConnection(GetDatabase()));
+    client_ = std::make_unique<Client>(MakeConnection(
+        GetDatabase(),
+        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_DEFLATE)));
   }
 
   void SetUp() override {
     if (UsingEmulator()) return;
     auto commit_result = client_->Commit(
-        Mutations{MakeDeleteMutation("Singers", KeySet::All())});
+        Mutations{MakeDeleteMutation("Singers", KeySet::All())},
+        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_DEFLATE));
     ASSERT_STATUS_OK(commit_result);
   }
 
   static void InsertTwoSingers() {
-    auto commit_result = client_->Commit(Mutations{
-        InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
-            .EmplaceRow(1, "test-fname-1", "test-lname-1")
-            .EmplaceRow(2, "test-fname-2", "test-lname-2")
-            .Build()});
+    auto commit_result = client_->Commit(
+        Mutations{InsertMutationBuilder("Singers",
+                                        {"SingerId", "FirstName", "LastName"})
+                      .EmplaceRow(1, "test-fname-1", "test-lname-1")
+                      .EmplaceRow(2, "test-fname-2", "test-lname-2")
+                      .Build()},
+        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_DEFLATE));
     ASSERT_STATUS_OK(commit_result);
   }
 

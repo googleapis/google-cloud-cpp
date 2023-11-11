@@ -26,6 +26,11 @@ void ConfigureContext(grpc::ClientContext& context, Options const& opts) {
   if (opts.has<GrpcSetupOption>()) {
     opts.get<GrpcSetupOption>()(context);
   }
+  if (opts.has<GrpcCompressionAlgorithmOption>()) {
+    // Overwrites anything set by the GrpcSetupOption.
+    context.set_compression_algorithm(
+        opts.get<GrpcCompressionAlgorithmOption>());
+  }
 }
 
 void ConfigurePollContext(grpc::ClientContext& context, Options const& opts) {

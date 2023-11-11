@@ -39,6 +39,16 @@ struct GrpcCredentialOption {
 };
 
 /**
+ * The gRPC compression algorithm used by clients/operations configured
+ * with this object.
+ *
+ * @ingroup options
+ */
+struct GrpcCompressionAlgorithmOption {
+  using Type = grpc_compression_algorithm;
+};
+
+/**
  * The number of transport channels to create.
  *
  * gRPC limits the number of simultaneous calls in progress on a channel to
@@ -175,10 +185,11 @@ struct GrpcBackgroundThreadsFactoryOption {
  * A list of all the gRPC options.
  */
 using GrpcOptionList =
-    OptionList<GrpcCredentialOption, GrpcNumChannelsOption,
-               GrpcChannelArgumentsOption, GrpcChannelArgumentsNativeOption,
-               GrpcTracingOptionsOption, GrpcBackgroundThreadPoolSizeOption,
-               GrpcCompletionQueueOption, GrpcBackgroundThreadsFactoryOption>;
+    OptionList<GrpcCredentialOption, GrpcCompressionAlgorithmOption,
+               GrpcNumChannelsOption, GrpcChannelArgumentsOption,
+               GrpcChannelArgumentsNativeOption, GrpcTracingOptionsOption,
+               GrpcBackgroundThreadPoolSizeOption, GrpcCompletionQueueOption,
+               GrpcBackgroundThreadsFactoryOption>;
 
 namespace internal {
 
@@ -191,6 +202,9 @@ namespace internal {
  *     `set_credentials()` directly on the context. Instead, use the Google
  *     Unified Auth Credentials library, via
  *     #google::cloud::UnifiedCredentialsOption.
+ *
+ * @warning `MergeOptions()` will simply select the preferred function, rather
+ *     than merging the behavior of the preferred and alternate functions.
  */
 struct GrpcSetupOption {
   using Type = std::function<void(grpc::ClientContext&)>;
@@ -207,6 +221,9 @@ struct GrpcSetupOption {
  *     `set_credentials()` directly on the context. Instead, use the Google
  *     Unified Auth Credentials library, via
  *     #google::cloud::UnifiedCredentialsOption.
+ *
+ * @warning `MergeOptions()` will simply select the preferred function, rather
+ *     than merging the behavior of the preferred and alternate functions.
  */
 struct GrpcSetupPollOption {
   using Type = std::function<void(grpc::ClientContext&)>;
