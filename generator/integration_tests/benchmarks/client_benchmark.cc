@@ -108,7 +108,7 @@ class TestStub : public GoldenKitchenSinkStub {
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::test::admin::database::v1::Response>>
-  StreamingRead(std::shared_ptr<grpc::ClientContext>,
+  StreamingRead(std::shared_ptr<grpc::ClientContext>, Options const&,
                 google::test::admin::database::v1::Request const&) override {
     return nullptr;
   }

@@ -73,7 +73,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, StreamingRead) {
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
-      EXPECT_CALL(*m, StreamingRead).WillOnce([](auto, auto) {
+      EXPECT_CALL(*m, StreamingRead).WillOnce([] {
         return std::make_unique<MockStreamingReadRpc>();
       });
     }
@@ -81,8 +81,8 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, StreamingRead) {
 
   GoldenKitchenSinkRoundRobin stub(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
-    auto stream =
-        stub.StreamingRead(std::make_shared<grpc::ClientContext>(), Request{});
+    auto stream = stub.StreamingRead(std::make_shared<grpc::ClientContext>(),
+                                     Options{}, Request{});
     EXPECT_THAT(stream, NotNull());
   }
 }

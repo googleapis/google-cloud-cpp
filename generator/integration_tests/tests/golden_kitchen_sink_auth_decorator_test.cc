@@ -119,22 +119,21 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ListLogs) {
 // This test is fairly different because we need to return a streaming RPC.
 TEST(GoldenKitchenSinkAuthDecoratorTest, StreamingRead) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce([](::testing::Unused, ::testing::Unused) {
-        return std::make_unique<StreamingReadRpcError<Response>>(
-            Status(StatusCode::kPermissionDenied, "uh-oh"));
-      });
+  EXPECT_CALL(*mock, StreamingRead).WillOnce([] {
+    return std::make_unique<StreamingReadRpcError<Response>>(
+        Status(StatusCode::kPermissionDenied, "uh-oh"));
+  });
 
   auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   ::google::test::admin::database::v1::Request request;
   grpc::ClientContext ctx;
   auto auth_failure = under_test.StreamingRead(
-      std::make_shared<grpc::ClientContext>(), request);
+      std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_THAT(auth_failure->Read(),
               VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
 
   auto auth_success = under_test.StreamingRead(
-      std::make_shared<grpc::ClientContext>(), request);
+      std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_THAT(auth_success->Read(),
               VariantWith<Status>(StatusIs(StatusCode::kPermissionDenied)));
 }
