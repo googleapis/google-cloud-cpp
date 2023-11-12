@@ -305,8 +305,9 @@ std::string ConnectionImplGenerator::MethodDefinition(
 StreamRange<$response_type$>
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto factory = [stub = stub_]($request_type$ const& request) {
-    return stub->$method_name$(std::make_shared<grpc::ClientContext>(), request);
+  auto factory = [stub = stub_, current]($request_type$ const& request) {
+    return stub->$method_name$(
+        std::make_shared<grpc::ClientContext>(), *current, request);
   };
   auto resumable =
       internal::MakeResumableStreamingReadRpc<$response_type$, $request_type$>(

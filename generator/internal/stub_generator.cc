@@ -51,6 +51,7 @@ Status StubGenerator::GenerateHeader() {
   HeaderPrint("\n");
   auto const needs_completion_queue =
       HasAsyncMethod() || HasBidirStreamingMethod();
+  auto const needs_options = HasLongrunningMethod() || HasStreamingReadMethod();
   HeaderLocalIncludes(
       {HasBidirStreamingMethod()
            ? "google/cloud/async_streaming_read_write_rpc.h"
@@ -67,6 +68,7 @@ Status StubGenerator::GenerateHeader() {
                                 : "",
        HasStreamingWriteMethod() ? "google/cloud/internal/streaming_write_rpc.h"
                                  : "",
+       needs_options ? "google/cloud/options.h" : "",
        "google/cloud/status_or.h", "google/cloud/version.h"});
   std::vector<std::string> additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
@@ -121,28 +123,28 @@ Status StubGenerator::GenerateHeader() {
 )""");
       continue;
     }
+    if (IsStreamingRead(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
+  $method_name$(
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
+    $request_type$ const& request) = 0;
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern(
-             {{IsResponseTypeEmpty,
-               // clang-format off
+            {{IsResponseTypeEmpty,
+              // clang-format off
     "\n  virtual Status $method_name$(\n",
     "\n  virtual StatusOr<$response_type$> $method_name$(\n"},
    {"    grpc::ClientContext& context,\n"
     "    $request_type$ const& request) = 0;\n"
-                  // clang-format on
-              }},
-             And(IsNonStreaming, Not(IsLongrunningOperation))),
-         MethodPattern(
-             {// clang-format off
-   {"\n"
-    "  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
-    "  $method_name$(\n"
-    "    std::shared_ptr<grpc::ClientContext> context,\n"
-    "    $request_type$ const& request) = 0;\n"
-    }},
-             // clang-format on
-             IsStreamingRead)},
+                 // clang-format on
+             }},
+            And(IsNonStreaming, Not(IsLongrunningOperation)))},
         __FILE__, __LINE__);
   }
 
@@ -268,6 +270,16 @@ Status StubGenerator::GenerateHeader() {
 )""");
       continue;
     }
+    if (IsStreamingRead(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
+  $method_name$(
+    std::shared_ptr<grpc::ClientContext> client_context,
+    Options const& options,
+    $request_type$ const& request) override;
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty,
@@ -278,16 +290,7 @@ Status StubGenerator::GenerateHeader() {
     "    grpc::ClientContext& client_context,\n"
     "    $request_type$ const& request) override;\n"}},
                        // clang-format on
-                       And(IsNonStreaming, Not(IsLongrunningOperation))),
-         MethodPattern(
-             {// clang-format off
-   {"\n"
-    "  std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
-    "  $method_name$(\n"
-    "    std::shared_ptr<grpc::ClientContext> client_context,\n"
-    "    $request_type$ const& request) override;\n"}},
-             // clang-format on
-             IsStreamingRead)},
+                       And(IsNonStreaming, Not(IsLongrunningOperation)))},
         __FILE__, __LINE__);
   }
 
@@ -468,11 +471,26 @@ Default$stub_class_name$::Async$method_name$(
 )""");
       continue;
     }
+    if (IsStreamingRead(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
+Default$stub_class_name$::$method_name$(
+    std::shared_ptr<grpc::ClientContext> client_context,
+    Options const&,
+    $request_type$ const& request) {
+  auto stream = grpc_stub_->$method_name$(client_context.get(), request);
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+      $response_type$>>(
+      std::move(client_context), std::move(stream));
+}
+)""");
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(
-             {{IsResponseTypeEmpty,
-               // clang-format off
+            {{IsResponseTypeEmpty,
+              // clang-format off
     "\nStatus\n",
     "\nStatusOr<$response_type$>\n"},
     {"Default$stub_class_name$::$method_name$(\n"
@@ -488,22 +506,8 @@ Default$stub_class_name$::Async$method_name$(
     "    return google::cloud::Status();\n",
     "    return response;\n"},
    {"}\n"}},
-             // clang-format on
-             And(IsNonStreaming, Not(IsLongrunningOperation))),
-         MethodPattern(
-             {// clang-format off
-   {"\n"
-    "std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
-    "Default$stub_class_name$::$method_name$(\n"
-    "    std::shared_ptr<grpc::ClientContext> client_context,\n"
-    "    $request_type$ const& request) {\n"
-    "  auto stream = grpc_stub_->$method_name$(client_context.get(), request);\n"
-    "  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<\n"
-    "      $response_type$>>(\n"
-    "      std::move(client_context), std::move(stream));\n"
-    "}\n"}},
-             // clang-format on
-             IsStreamingRead)},
+            // clang-format on
+            And(IsNonStreaming, Not(IsLongrunningOperation)))},
         __FILE__, __LINE__);
   }
 

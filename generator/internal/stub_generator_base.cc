@@ -63,6 +63,16 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
 )""");
       continue;
     }
+    if (IsStreamingRead(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
+  $method_name$(
+      std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
+      $request_type$ const& request) override;
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty,
@@ -77,14 +87,7 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
       $request_type$ const& request) override;
 )"""},
                         {""}},
-                       And(IsNonStreaming, Not(IsLongrunningOperation))),
-         MethodPattern({{R"""(
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
-  $method_name$(
-      std::shared_ptr<grpc::ClientContext> context,
-      $request_type$ const& request) override;
-)"""}},
-                       IsStreamingRead)},
+                       And(IsNonStreaming, Not(IsLongrunningOperation)))},
         __FILE__, __LINE__);
   }
 

@@ -114,8 +114,9 @@ $round_robin_class_name$::$round_robin_class_name$(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
 $round_robin_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     $request_type$ const& request) {
-  return Child()->$method_name$(std::move(context), request);
+  return Child()->$method_name$(std::move(context), options, request);
 }
 )""");
       continue;

@@ -259,12 +259,28 @@ $metadata_class_name$::Async$method_name$(
 )""");
       continue;
     }
+    if (IsStreamingRead(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
+$metadata_class_name$::$method_name$(
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
+    $request_type$ const& request) {
+)""");
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    SetMetadataText(method, kPointer, "options"));
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+  return child_->$method_name$(std::move(context), options, request);
+}
+)""");
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(
-             {
-                 {IsResponseTypeEmpty,
-                  // clang-format off
+            {
+                {IsResponseTypeEmpty,
+                 // clang-format off
     "\nStatus\n",
     "\nStatusOr<$response_type$>\n"},
    {"$metadata_class_name$::$method_name$(\n"
@@ -273,23 +289,9 @@ $metadata_class_name$::Async$method_name$(
     {SetMetadataText(method, kReference, "internal::CurrentOptions()")},
    {"\n  return child_->$method_name$(context, request);\n"
     "}\n",}
-                 // clang-format on
-             },
-             And(IsNonStreaming, Not(IsLongrunningOperation))),
-         MethodPattern(
-             {
-                 // clang-format off
-   {"\n"
-    "std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
-    "$metadata_class_name$::$method_name$(\n"
-    "    std::shared_ptr<grpc::ClientContext> context,\n"
-    "    $request_type$ const& request) {\n"},
-   {SetMetadataText(method, kPointer, "internal::CurrentOptions()")},
-   {"\n  return child_->$method_name$(std::move(context), request);\n"
-    "}\n",}
-                 // clang-format on
-             },
-             IsStreamingRead)},
+                // clang-format on
+            },
+            And(IsNonStreaming, Not(IsLongrunningOperation)))},
         __FILE__, __LINE__);
   }
 
