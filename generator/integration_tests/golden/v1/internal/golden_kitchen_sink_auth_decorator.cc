@@ -93,12 +93,13 @@ Status GoldenKitchenSinkAuth::Deprecated2(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
 GoldenKitchenSinkAuth::StreamingRead(
    std::shared_ptr<grpc::ClientContext> context,
+   Options const& options,
    google::test::admin::database::v1::Request const& request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::test::admin::database::v1::Response>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->StreamingRead(std::move(context), request);
+  return child_->StreamingRead(std::move(context), options, request);
 }
 
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<

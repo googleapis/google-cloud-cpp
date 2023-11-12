@@ -108,11 +108,12 @@ Status GoldenKitchenSinkTracingStub::Deprecated2(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
 GoldenKitchenSinkTracingStub::StreamingRead(
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::test::admin::database::v1::Request const& request) {
   auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "StreamingRead");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->StreamingRead(context, request);
+  auto stream = child_->StreamingRead(context, options, request);
   return std::make_unique<internal::StreamingReadRpcTracing<google::test::admin::database::v1::Response>>(
       std::move(context), std::move(stream), std::move(span));
 }

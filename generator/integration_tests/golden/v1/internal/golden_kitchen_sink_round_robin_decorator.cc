@@ -72,8 +72,9 @@ Status GoldenKitchenSinkRoundRobin::Deprecated2(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
 GoldenKitchenSinkRoundRobin::StreamingRead(
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::test::admin::database::v1::Request const& request) {
-  return Child()->StreamingRead(std::move(context), request);
+  return Child()->StreamingRead(std::move(context), options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingWriteRpc<

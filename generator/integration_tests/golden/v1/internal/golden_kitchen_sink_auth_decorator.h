@@ -69,6 +69,7 @@ class GoldenKitchenSinkAuth : public GoldenKitchenSinkStub {
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
   StreamingRead(
       std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
       google::test::admin::database::v1::Request const& request) override;
 
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<

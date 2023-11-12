@@ -103,9 +103,10 @@ GoldenKitchenSinkMetadata::Deprecated2(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
 GoldenKitchenSinkMetadata::StreamingRead(
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::test::admin::database::v1::Request const& request) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->StreamingRead(std::move(context), request);
+  SetMetadata(*context, options);
+  return child_->StreamingRead(std::move(context), options, request);
 }
 
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
