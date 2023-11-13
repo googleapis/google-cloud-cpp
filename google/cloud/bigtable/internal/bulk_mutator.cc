@@ -231,7 +231,7 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
   limiter.Acquire();
 
   // Read the stream of responses.
-  auto stream = stub.MutateRows(std::move(context), mutations);
+  auto stream = stub.MutateRows(std::move(context), options, mutations);
   while (absl::visit(UnpackVariant{state_, limiter}, stream->Read())) {
   }
   return state_.last_status();

@@ -29,13 +29,13 @@ class MockBigtableStub : public bigtable_internal::BigtableStub {
   MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
                   google::bigtable::v2::ReadRowsResponse>>,
               ReadRows,
-              (std::shared_ptr<grpc::ClientContext>,
+              (std::shared_ptr<grpc::ClientContext>, Options const&,
                google::bigtable::v2::ReadRowsRequest const&),
               (override));
   MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
                   google::bigtable::v2::SampleRowKeysResponse>>,
               SampleRowKeys,
-              (std::shared_ptr<grpc::ClientContext>,
+              (std::shared_ptr<grpc::ClientContext>, Options const&,
                google::bigtable::v2::SampleRowKeysRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::bigtable::v2::MutateRowResponse>, MutateRow,
@@ -45,7 +45,7 @@ class MockBigtableStub : public bigtable_internal::BigtableStub {
   MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
                   google::bigtable::v2::MutateRowsResponse>>,
               MutateRows,
-              (std::shared_ptr<grpc::ClientContext>,
+              (std::shared_ptr<grpc::ClientContext>, Options const&,
                google::bigtable::v2::MutateRowsRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>,
