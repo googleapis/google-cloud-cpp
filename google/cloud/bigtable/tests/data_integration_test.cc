@@ -28,6 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::bigtable::testing::TableIntegrationTest;
+using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using ::std::chrono::duration_cast;
 using ::std::chrono::microseconds;
@@ -120,6 +121,27 @@ TEST_P(DataIntegrationTest, TableBulkApply) {
 
   auto actual = ReadRows(table, Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
+}
+
+TEST_P(DataIntegrationTest, TableBulkApplyThrottling) {
+  if (GetParam() == "with-data-client") GTEST_SKIP();
+
+  // Make a custom table with throttling enabled.
+  auto table =
+      Table(MakeDataConnection(Options{}.set<BulkApplyThrottlingOption>(true)),
+            TableResource(TableTestEnvironment::project_id(),
+                          TableTestEnvironment::instance_id(),
+                          TableTestEnvironment::table_id()));
+
+  // This test will take at least 100 queries / (20 QPS) = 5s.
+  for (auto i = 0; i != 100; ++i) {
+    Cell cell{"row-key-5", kFamily1, "c0", 0, "v" + std::to_string(i)};
+    BulkApply(table, {cell});
+  }
+
+  Cell expected{"row-key-5", kFamily1, "c0", 0, "v99"};
+  auto actual = ReadRows(table, Filter::PassAllFilter());
+  CheckEqualUnordered({expected}, actual);
 }
 
 TEST_P(DataIntegrationTest, TableSingleRow) {

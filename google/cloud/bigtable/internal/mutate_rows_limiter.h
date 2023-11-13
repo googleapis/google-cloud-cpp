@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/internal/rate_limiter.h"
 #include "google/cloud/internal/clock.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <chrono>
@@ -87,6 +88,9 @@ class ThrottlingMutateRowsLimiter : public MutateRowsLimiter {
   double min_factor_;
   double max_factor_;
 };
+
+std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(
+    Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

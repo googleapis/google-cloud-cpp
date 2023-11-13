@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <algorithm>
 #include <thread>
@@ -28,6 +29,12 @@ template <typename T>
 T Clamp(T value, T min, T max) {
   return (std::min)(max, (std::max)(min, value));
 }
+
+auto constexpr kMinFactor = .7;
+auto constexpr kMaxFactor = 1.3;
+auto constexpr kInitialPeriod = std::chrono::milliseconds(50);
+auto constexpr kMinPeriod = std::chrono::microseconds(10);
+auto constexpr kMaxPeriod = std::chrono::seconds(10);
 
 }  // namespace
 
@@ -59,6 +66,21 @@ void ThrottlingMutateRowsLimiter::Update(
       std::chrono::duration_cast<Clock::duration>(limiter_.period() / factor),
       min_period_, max_period_);
   limiter_.set_period(period);
+}
+
+std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(
+    Options const& options) {
+  if (options.get<bigtable::BulkApplyThrottlingOption>()) {
+    using duration = ThrottlingMutateRowsLimiter::Clock::duration;
+    std::function<void(duration)> sleeper = [](duration d) {
+      std::this_thread::sleep_for(d);
+    };
+    // TODO(#12959) - tracing for the sleep
+    return std::make_shared<ThrottlingMutateRowsLimiter>(
+        std::make_shared<internal::SteadyClock>(), std::move(sleeper),
+        kInitialPeriod, kMinPeriod, kMaxPeriod, kMinFactor, kMaxFactor);
+  }
+  return std::make_shared<NoopMutateRowsLimiter>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

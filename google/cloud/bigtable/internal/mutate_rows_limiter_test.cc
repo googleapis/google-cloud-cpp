@@ -28,6 +28,7 @@ namespace {
 using Clock = ThrottlingMutateRowsLimiter::Clock;
 using ::google::cloud::testing_util::FakeSteadyClock;
 using ::testing::MockFunction;
+using ::testing::NotNull;
 
 auto constexpr kMinFactor = .7;
 auto constexpr kMaxFactor = 1.3;
@@ -194,6 +195,17 @@ TEST(MutateRowsLimiter, UpdateRespectsResponsePeriod) {
   // modify the underlying rate limiter.
   limiter.Update(MakeResponse(0.8, std::chrono::seconds(2)));
   EXPECT_LE(absl::FromChrono(limiter.period()), absl::Milliseconds(100));
+}
+
+TEST(MutateRowsLimiter, MakeMutateRowsLimiter) {
+  auto noop = MakeMutateRowsLimiter(
+      Options{}.set<bigtable::BulkApplyThrottlingOption>(false));
+  EXPECT_THAT(dynamic_cast<NoopMutateRowsLimiter*>(noop.get()), NotNull());
+
+  auto throttling = MakeMutateRowsLimiter(
+      Options{}.set<bigtable::BulkApplyThrottlingOption>(true));
+  EXPECT_THAT(dynamic_cast<ThrottlingMutateRowsLimiter*>(throttling.get()),
+              NotNull());
 }
 
 }  // namespace
