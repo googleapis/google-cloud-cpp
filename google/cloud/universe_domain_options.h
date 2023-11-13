@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_UNIVERSE_DOMAIN_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_UNIVERSE_DOMAIN_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/retry_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -23,19 +24,37 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+// TODO(#13115): Remove internal namespace.
 namespace internal {
 
+/**
+ * Use with `google::cloud::Options` to configure the universe domain used in
+ * determining service endpoints.
+ */
 struct UniverseDomainOption {
   using Type = std::string;
 };
 
-class UniverseDomainRetryPolicy : public ::google::cloud::RetryPolicy {
+/**
+ * The retry policy used in querying the universe domain from some credentials.
+ */
+class UniverseDomainRetryPolicy : public RetryPolicy {
  public:
   virtual std::unique_ptr<UniverseDomainRetryPolicy> clone() const = 0;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ */
 struct UniverseDomainRetryPolicyOption {
   using Type = std::shared_ptr<UniverseDomainRetryPolicy>;
+};
+
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ */
+struct UniverseDomainBackoffPolicyOption {
+  using Type = std::shared_ptr<BackoffPolicy>;
 };
 
 }  // namespace internal
