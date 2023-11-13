@@ -1,0 +1,87 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/internal/service_endpoint.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/universe_domain_options.h"
+#include <gmock/gmock.h>
+
+namespace google {
+namespace cloud {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
+namespace {
+
+using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
+
+auto constexpr kDefaultHost = "default_host.googleapis.com";
+
+TEST(DetermineServiceEndpoint, EnvVarSet) {
+  auto constexpr kEnvVarEndpoint = "foo.testing.net";
+  ScopedEnvironment service_endpoint("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT",
+                                     kEnvVarEndpoint);
+  Options options;
+  auto result = DetermineServiceEndpoint(
+      GetEnv("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT"),
+      ExtractOption<EndpointOption>(options), options, kDefaultHost);
+  EXPECT_THAT(result, IsOkAndHolds(kEnvVarEndpoint));
+}
+
+TEST(DetermineServiceEndpoint, EndpointOptionSet) {
+  auto constexpr kOptionEndpoint = "option.testing.net";
+  auto options = Options{}.set<EndpointOption>(kOptionEndpoint);
+  auto result = DetermineServiceEndpoint(
+      GetEnv("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT"),
+      ExtractOption<EndpointOption>(options), options, kDefaultHost);
+  EXPECT_THAT(result, IsOkAndHolds(kOptionEndpoint));
+}
+
+TEST(DetermineServiceEndpoint, UniverseDomainSetWithNonEmptyValue) {
+  auto constexpr kUniverseDomain = "universe.domain";
+  auto options = Options{}.set<UniverseDomainOption>(kUniverseDomain);
+  auto result = DetermineServiceEndpoint(
+      GetEnv("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT"),
+      ExtractOption<EndpointOption>(options), options, kDefaultHost);
+  EXPECT_THAT(result, IsOkAndHolds("default_host.universe.domain"));
+}
+
+TEST(DetermineServiceEndpoint, UniverseDomainSetWithEmptyValue) {
+  auto options = Options{}.set<UniverseDomainOption>("");
+  auto result = DetermineServiceEndpoint(
+      GetEnv("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT"),
+      ExtractOption<EndpointOption>(options), options, kDefaultHost);
+  EXPECT_THAT(result,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("UniverseDomainOption can not be empty")));
+}
+
+TEST(DetermineServiceEndpoint, DefaultHost) {
+  Options options;
+  auto result = DetermineServiceEndpoint(
+      GetEnv("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT"),
+      ExtractOption<EndpointOption>(options), options, kDefaultHost);
+  EXPECT_THAT(result, IsOkAndHolds("default_host.googleapis.com"));
+}
+
+}  // namespace
+}  // namespace internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace cloud
+}  // namespace google
