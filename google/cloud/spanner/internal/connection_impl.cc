@@ -564,9 +564,10 @@ spanner::RowStream ConnectionImpl::ReadImpl(
                   tracing_options](std::string const& resume_token) mutable {
     if (!resume_token.empty()) request->set_resume_token(resume_token);
     auto context = std::make_shared<grpc::ClientContext>();
-    internal::ConfigureContext(*context, internal::CurrentOptions());
+    auto const& options = internal::CurrentOptions();
+    internal::ConfigureContext(*context, options);
     if (route_to_leader) RouteToLeader(*context);
-    auto stream = stub->StreamingRead(context, *request);
+    auto stream = stub->StreamingRead(context, options, *request);
     std::unique_ptr<PartialResultSetReader> reader =
         std::make_unique<DefaultPartialResultSetReader>(std::move(context),
                                                         std::move(stream));
@@ -800,9 +801,10 @@ ResultType ConnectionImpl::CommonQueryImpl(
                     tracing_options](std::string const& resume_token) mutable {
       if (!resume_token.empty()) request.set_resume_token(resume_token);
       auto context = std::make_shared<grpc::ClientContext>();
-      internal::ConfigureContext(*context, internal::CurrentOptions());
+      auto const& options = internal::CurrentOptions();
+      internal::ConfigureContext(*context, options);
       if (route_to_leader) RouteToLeader(*context);
-      auto stream = stub->ExecuteStreamingSql(context, request);
+      auto stream = stub->ExecuteStreamingSql(context, options, request);
       std::unique_ptr<PartialResultSetReader> reader =
           std::make_unique<DefaultPartialResultSetReader>(std::move(context),
                                                           std::move(stream));
@@ -1269,9 +1271,10 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
   auto factory = [stub = std::move(stub)](
                      google::spanner::v1::BatchWriteRequest const& request) {
     auto context = std::make_shared<grpc::ClientContext>();
-    internal::ConfigureContext(*context, internal::CurrentOptions());
+    auto const& options = internal::CurrentOptions();
+    internal::ConfigureContext(*context, options);
     RouteToLeader(*context);  // always for BatchWrite()
-    return stub->BatchWrite(std::move(context), request);
+    return stub->BatchWrite(std::move(context), options, request);
   };
   auto updater = [](google::spanner::v1::BatchWriteResponse const&,
                     google::spanner::v1::BatchWriteRequest&) {

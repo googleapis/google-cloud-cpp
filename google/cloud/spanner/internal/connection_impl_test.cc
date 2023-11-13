@@ -431,16 +431,16 @@ TEST(ConnectionImplTest, ReadSuccess) {
   EXPECT_CALL(
       *mock,
       StreamingRead(
-          _, HasPriority(google::spanner::v1::RequestOptions::PRIORITY_LOW)))
-      .WillOnce(
-          [&retry_status](std::shared_ptr<grpc::ClientContext> const&,
-                          google::spanner::v1::ReadRequest const& request) {
-            // The beginning of the row stream, but immediately fail.
-            EXPECT_THAT(request.resume_token(), IsEmpty());
-            return MakeReader<PartialResultSet>({}, retry_status);
-          })
+          _, _, HasPriority(google::spanner::v1::RequestOptions::PRIORITY_LOW)))
+      .WillOnce([&retry_status](
+                    std::shared_ptr<grpc::ClientContext> const&, Options const&,
+                    google::spanner::v1::ReadRequest const& request) {
+        // The beginning of the row stream, but immediately fail.
+        EXPECT_THAT(request.resume_token(), IsEmpty());
+        return MakeReader<PartialResultSet>({}, retry_status);
+      })
       .WillOnce([&responses, &retry_status](
-                    std::shared_ptr<grpc::ClientContext> const&,
+                    std::shared_ptr<grpc::ClientContext> const&, Options const&,
                     google::spanner::v1::ReadRequest const& request) {
         // Restart from the beginning, but return the metadata and first
         // row before failing again.
@@ -448,7 +448,7 @@ TEST(ConnectionImplTest, ReadSuccess) {
         return MakeReader<PartialResultSet>({responses[0]}, retry_status);
       })
       .WillOnce([&responses, &retry_status](
-                    std::shared_ptr<grpc::ClientContext> const&,
+                    std::shared_ptr<grpc::ClientContext> const&, Options const&,
                     google::spanner::v1::ReadRequest const& request) {
         // Restart from the second row, but only return part of it before
         // failing once more.
@@ -456,6 +456,7 @@ TEST(ConnectionImplTest, ReadSuccess) {
         return MakeReader<PartialResultSet>({responses[1]}, retry_status);
       })
       .WillOnce([&responses](std::shared_ptr<grpc::ClientContext> const&,
+                             Options const&,
                              google::spanner::v1::ReadRequest const& request) {
         // Restart from the second row, but now deliver it all in two chunks.
         EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
@@ -488,7 +489,7 @@ TEST(ConnectionImplTest, ReadDirectedRead) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, BeginTransaction).Times(0);
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                    google::spanner::v1::ReadRequest const& request) {
         EXPECT_EQ("test-session-name", request.session());
         EXPECT_TRUE(request.has_directed_read_options());
@@ -557,7 +558,7 @@ TEST(ConnectionImplTest, ReadTooManyTransientFailures) {
   EXPECT_CALL(*mock, StreamingRead)
       .Times(AtLeast(2))
       // This won't compile without `Unused` despite what the gMock docs say.
-      .WillRepeatedly([](Unused, Unused) {
+      .WillRepeatedly([] {
         return MakeReader<PartialResultSet>(
             {}, internal::UnavailableError("try-again"));
       });
@@ -633,12 +634,14 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .InSequence(s)
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("test-session-name"),
-                                            HasBeginTransaction())))
+  EXPECT_CALL(*mock, StreamingRead(_, _,
+                                   AllOf(HasSession("test-session-name"),
+                                         HasBeginTransaction())))
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(failing_reader))));
-  EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("test-session-name"),
-                                            HasBeginTransaction())))
+  EXPECT_CALL(*mock, StreamingRead(_, _,
+                                   AllOf(HasSession("test-session-name"),
+                                         HasBeginTransaction())))
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(ok_reader))));
 
@@ -690,15 +693,17 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .InSequence(s)
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("test-session-name"),
-                                            HasBeginTransaction())))
+  EXPECT_CALL(*mock, StreamingRead(_, _,
+                                   AllOf(HasSession("test-session-name"),
+                                         HasBeginTransaction())))
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(failing_reader))));
   EXPECT_CALL(*mock, BeginTransaction)
       .InSequence(s)
       .WillOnce(Return(MakeTestTransaction("FEDCBA98")));
-  EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("test-session-name"),
-                                            HasTransactionId("FEDCBA98"))))
+  EXPECT_CALL(*mock, StreamingRead(_, _,
+                                   AllOf(HasSession("test-session-name"),
+                                         HasTransactionId("FEDCBA98"))))
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(ok_reader))));
 
@@ -732,15 +737,17 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .InSequence(s)
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("test-session-name"),
-                                            HasBeginTransaction())))
+  EXPECT_CALL(*mock, StreamingRead(_, _,
+                                   AllOf(HasSession("test-session-name"),
+                                         HasBeginTransaction())))
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(reader1))));
   EXPECT_CALL(*mock, BeginTransaction)
       .InSequence(s)
       .WillOnce(Return(MakeTestTransaction("FEDCBA98")));
-  EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("test-session-name"),
-                                            HasTransactionId("FEDCBA98"))))
+  EXPECT_CALL(*mock, StreamingRead(_, _,
+                                   AllOf(HasSession("test-session-name"),
+                                         HasTransactionId("FEDCBA98"))))
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(reader2))));
 
@@ -856,7 +863,7 @@ TEST(ConnectionImplTest, ExecuteQueryDirectedRead) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, BeginTransaction).Times(0);
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                    google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ("test-session-name", request.session());
         EXPECT_TRUE(request.has_directed_read_options());
@@ -1008,7 +1015,7 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
     values: { string_value: "1999" }
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                     google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ(request.params().fields().at("value").string_value(), "998");
         EXPECT_EQ(request.param_types().at("value").code(),
@@ -1018,7 +1025,7 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
                       TYPE_ANNOTATION_CODE_UNSPECIFIED);
         return MakeReader<PartialResultSet>({kResponseNumeric});
       })
-      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                     google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ(request.params().fields().at("value").string_value(), "999");
         EXPECT_EQ(request.param_types().at("value").code(),
@@ -1027,7 +1034,7 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
                   google::spanner::v1::TypeAnnotationCode::PG_NUMERIC);
         return MakeReader<PartialResultSet>({kResponsePgNumeric});
       })
-      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                     google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ(request.params().fields().at("value").string_value(), "NaN");
         EXPECT_EQ(request.param_types().at("value").code(),
@@ -1285,12 +1292,12 @@ TEST(ConnectionImplTest, QueryOptions) {
       EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
           .WillOnce(Return(MakeSessionsResponse({"session-name"})))
           .RetiresOnSaturation();
-      EXPECT_CALL(*mock, ExecuteStreamingSql(_, execute_sql_request_matcher))
+      EXPECT_CALL(*mock, ExecuteStreamingSql(_, _, execute_sql_request_matcher))
           .WillOnce(Return(ByMove(std::move(stream))))
           .RetiresOnSaturation();
 
       // ProfileQuery().
-      EXPECT_CALL(*mock, ExecuteStreamingSql(_, execute_sql_request_matcher))
+      EXPECT_CALL(*mock, ExecuteStreamingSql(_, _, execute_sql_request_matcher))
           .WillOnce(Return(
               ByMove(std::make_unique<
                      NiceMock<MockStreamingReadRpc<PartialResultSet>>>())))
@@ -1303,8 +1310,8 @@ TEST(ConnectionImplTest, QueryOptions) {
       EXPECT_CALL(*mock, BeginTransaction(_, begin_transaction_request_matcher))
           .WillOnce(Return(MakeTestTransaction("2468ACE")))
           .RetiresOnSaturation();
-      EXPECT_CALL(*mock,
-                  ExecuteStreamingSql(_, untagged_execute_sql_request_matcher))
+      EXPECT_CALL(*mock, ExecuteStreamingSql(
+                             _, _, untagged_execute_sql_request_matcher))
           .WillOnce(Return(
               ByMove(std::make_unique<
                      NiceMock<MockStreamingReadRpc<PartialResultSet>>>())))
@@ -1321,7 +1328,7 @@ TEST(ConnectionImplTest, QueryOptions) {
           .RetiresOnSaturation();
 
       // Read().
-      EXPECT_CALL(*mock, StreamingRead(_, read_request_matcher))
+      EXPECT_CALL(*mock, StreamingRead(_, _, read_request_matcher))
           .WillOnce(Return(
               ByMove(std::make_unique<
                      NiceMock<MockStreamingReadRpc<PartialResultSet>>>())))
@@ -2044,8 +2051,9 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
     metadata: {}
     stats: { row_count_lower_bound: 42 }
   )pb";
-  EXPECT_CALL(*mock, ExecuteStreamingSql(
-                         _, AllOf(HasRequestTag("tag"), HasTransactionTag(""))))
+  EXPECT_CALL(*mock,
+              ExecuteStreamingSql(
+                  _, _, AllOf(HasRequestTag("tag"), HasTransactionTag(""))))
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
           {},
           internal::UnavailableError("try-again in ExecutePartitionedDml")))))
@@ -2113,7 +2121,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .Times(AtLeast(2))
       // This won't compile without `Unused` despite what the gMock docs say.
-      .WillRepeatedly([](Unused, Unused) {
+      .WillRepeatedly([] {
         return MakeReader<PartialResultSet>(
             {},
             internal::UnavailableError("try-again in ExecutePartitionedDml"));
@@ -2533,7 +2541,7 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatched) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   using BatchWriteRequest = google::spanner::v1::BatchWriteRequest;
   EXPECT_CALL(*mock, BatchWrite)
-      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                    BatchWriteRequest const& request) {
         EXPECT_EQ("test-session-name", request.session());
         EXPECT_EQ(google::spanner::v1::RequestOptions::PRIORITY_UNSPECIFIED,
@@ -2547,7 +2555,7 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatched) {
         return MakeReader<BatchWriteResponse>(
             {}, Status(StatusCode::kUnavailable, "try-again in BatchWrite"));
       })
-      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                     BatchWriteRequest const& request) {
         EXPECT_EQ("test-session-name", request.session());
         EXPECT_EQ(google::spanner::v1::RequestOptions::PRIORITY_UNSPECIFIED,
@@ -2591,14 +2599,14 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatchedSessionNotFound) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name-2"})));
   using BatchWriteRequest = google::spanner::v1::BatchWriteRequest;
   EXPECT_CALL(*mock, BatchWrite)
-      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                    BatchWriteRequest const& request) {
         EXPECT_EQ("test-session-name-1", request.session());
         EXPECT_THAT(request.mutation_groups(), IsEmpty());
         return MakeReader<BatchWriteResponse>(
             {}, SessionNotFoundError(request.session()));
       })
-      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                     BatchWriteRequest const& request) {
         EXPECT_EQ("test-session-name-2", request.session());
         EXPECT_THAT(request.mutation_groups(), IsEmpty());
@@ -2782,7 +2790,7 @@ TEST(ConnectionImplTest, ReadPartition) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, BeginTransaction).Times(0);
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                    google::spanner::v1::ReadRequest const& request) {
         EXPECT_EQ("test-session-name", request.session());
         EXPECT_EQ("Table", request.table());
@@ -2937,7 +2945,7 @@ TEST(ConnectionImplTest, QueryPartition) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, BeginTransaction).Times(0);
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                    google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ("test-session-name", request.session());
         EXPECT_EQ("SELECT * FROM Table", request.sql());
@@ -3170,17 +3178,21 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   // IDs or "begin" set as appropriate.
   {
     InSequence s;
-    EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("session-1"),
-                                              HasBeginTransaction())))
+    EXPECT_CALL(
+        *mock, StreamingRead(
+                   _, _, AllOf(HasSession("session-1"), HasBeginTransaction())))
         .WillOnce(Return(ByMove(std::move(readers[0]))));
-    EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("session-2"),
-                                              HasBeginTransaction())))
+    EXPECT_CALL(
+        *mock, StreamingRead(
+                   _, _, AllOf(HasSession("session-2"), HasBeginTransaction())))
         .WillOnce(Return(ByMove(std::move(readers[1]))));
-    EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("session-1"),
-                                              HasTransactionId("ABCDEF01"))))
+    EXPECT_CALL(*mock, StreamingRead(_, _,
+                                     AllOf(HasSession("session-1"),
+                                           HasTransactionId("ABCDEF01"))))
         .WillOnce(Return(ByMove(std::move(readers[2]))));
-    EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("session-2"),
-                                              HasTransactionId("ABCDEF02"))))
+    EXPECT_CALL(*mock, StreamingRead(_, _,
+                                     AllOf(HasSession("session-2"),
+                                           HasTransactionId("ABCDEF02"))))
         .WillOnce(Return(ByMove(std::move(readers[3]))));
   }
 
@@ -3267,14 +3279,14 @@ TEST(ConnectionImplTest, ReadSessionNotFound) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name-1"})))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name-2"})));
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                    google::spanner::v1::ReadRequest const& request) {
         EXPECT_THAT(request.session(), Eq("test-session-name-1"));
         EXPECT_THAT(request.transaction().id(), Eq("test-txn-id-1"));
         return MakeReader<PartialResultSet>(
             {}, SessionNotFoundError(request.session()));
       })
-      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&, Options const&,
                    google::spanner::v1::ReadRequest const& request) {
         EXPECT_THAT(request.session(), Eq("test-session-name-2"));
         EXPECT_THAT(request.transaction().id(), Eq("test-txn-id-2"));
