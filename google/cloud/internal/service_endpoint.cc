@@ -22,12 +22,12 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-// TODO(#13122): This function may need to be enhanced to support a env var
+// TODO(#13122): This function may need to be enhanced to support an env var
 // for UniverseDomain.
 StatusOr<std::string> DetermineServiceEndpoint(
     absl::optional<std::string> endpoint_env_var,
     absl::optional<std::string> endpoint_option, Options const& options,
-    std::string default_host) {
+    std::string default_endpoint) {
   auto constexpr kGoogleDefaultUniverse = "googleapis.com";
   if (endpoint_env_var.has_value()) return *endpoint_env_var;
   if (endpoint_option.has_value()) return *endpoint_option;
@@ -38,9 +38,9 @@ StatusOr<std::string> DetermineServiceEndpoint(
           "UniverseDomainOption can not be empty");
     }
     return absl::StrReplaceAll(
-        default_host, {{kGoogleDefaultUniverse, universe_domain_option}});
+        default_endpoint, {{kGoogleDefaultUniverse, universe_domain_option}});
   }
-  return default_host;
+  return default_endpoint;
 }
 
 }  // namespace internal

@@ -45,6 +45,8 @@ TEST(DetermineServiceEndpoint, EnvVarSet) {
 }
 
 TEST(DetermineServiceEndpoint, EndpointOptionSet) {
+  ScopedEnvironment service_endpoint("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT",
+                                     absl::nullopt);
   auto constexpr kOptionEndpoint = "option.testing.net";
   auto options = Options{}.set<EndpointOption>(kOptionEndpoint);
   auto result = DetermineServiceEndpoint(
@@ -54,6 +56,8 @@ TEST(DetermineServiceEndpoint, EndpointOptionSet) {
 }
 
 TEST(DetermineServiceEndpoint, UniverseDomainSetWithNonEmptyValue) {
+  ScopedEnvironment service_endpoint("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT",
+                                     absl::nullopt);
   auto constexpr kUniverseDomain = "universe.domain";
   auto options = Options{}.set<UniverseDomainOption>(kUniverseDomain);
   auto result = DetermineServiceEndpoint(
@@ -63,6 +67,8 @@ TEST(DetermineServiceEndpoint, UniverseDomainSetWithNonEmptyValue) {
 }
 
 TEST(DetermineServiceEndpoint, UniverseDomainSetWithEmptyValue) {
+  ScopedEnvironment service_endpoint("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT",
+                                     absl::nullopt);
   auto options = Options{}.set<UniverseDomainOption>("");
   auto result = DetermineServiceEndpoint(
       GetEnv("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT"),
@@ -73,6 +79,8 @@ TEST(DetermineServiceEndpoint, UniverseDomainSetWithEmptyValue) {
 }
 
 TEST(DetermineServiceEndpoint, DefaultHost) {
+  ScopedEnvironment service_endpoint("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT",
+                                     absl::nullopt);
   Options options;
   auto result = DetermineServiceEndpoint(
       GetEnv("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT"),
