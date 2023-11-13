@@ -493,7 +493,7 @@ GrpcStub::ReadObject(rest_internal::RestContext& context,
   AddIdempotencyToken(*ctx, context);
   auto proto_request = ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
-  auto stream = stub_->ReadObject(std::move(ctx), *proto_request);
+  auto stream = stub_->ReadObject(std::move(ctx), options, *proto_request);
 
   // The default timer source is a no-op. It does not set a timer, and always
   // returns an indication that the timer expired.  The GrpcObjectReadSource

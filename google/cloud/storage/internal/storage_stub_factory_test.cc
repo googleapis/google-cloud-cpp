@@ -100,7 +100,7 @@ TEST_F(StorageStubFactory, ReadObject) {
         auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, ReadObject)
             .WillOnce(
-                [this](auto context,
+                [this](auto context, Options const& options,
                        google::storage::v2::ReadObjectRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context->credentials(), NotNull());
@@ -108,6 +108,9 @@ TEST_F(StorageStubFactory, ReadObject) {
                   IsContextMDValid(*context,
                                    "google.storage.v2.Storage.ReadObject",
                                    request);
+                  // Verify the options are passed through
+                  EXPECT_THAT(options.get<UserAgentProductsOption>(),
+                              Contains("test-only/1"));
                   auto stream = std::make_unique<MockObjectMediaStream>();
                   EXPECT_CALL(*stream, Read)
                       .WillOnce(Return(
@@ -125,8 +128,10 @@ TEST_F(StorageStubFactory, ReadObject) {
   ScopedLog log;
   internal::AutomaticallyCreatedBackgroundThreads pool;
   auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(), {});
-  auto stream = stub->ReadObject(std::make_shared<grpc::ClientContext>(),
-                                 google::storage::v2::ReadObjectRequest{});
+  auto stream =
+      stub->ReadObject(std::make_shared<grpc::ClientContext>(),
+                       Options{}.set<UserAgentProductsOption>({"test-only/1"}),
+                       google::storage::v2::ReadObjectRequest{});
   EXPECT_THAT(stream->Read(),
               VariantWith<Status>(StatusIs(StatusCode::kUnavailable)));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("ReadObject")));
