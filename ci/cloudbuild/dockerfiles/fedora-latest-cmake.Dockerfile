@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:38
+FROM fedora:39
 ARG NCPU=4
 ARG ARCH=amd64
 
-# Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
+# Fedora includes packages for libcurl and OpenSSL that are recent enough
 # for `google-cloud-cpp`. Install these packages and additional development
 # tools to compile the dependencies:
 RUN dnf makecache && \
@@ -210,13 +210,16 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccac
     chmod +x /usr/local/bin/sccache
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
+RUN (echo /usr/local/lib; echo /usr/local/lib64) | tee /etc/ld.so.conf.d/local.conf
 RUN ldconfig /usr/local/lib*
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
 COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
-ENV CLOUDSDK_PYTHON=python3
+# The Google Cloud CLI requires Python <= 3.10, Fedora defaults to 3.12.
+RUN dnf makecache && dnf install -y python3.10
+ENV CLOUDSDK_PYTHON=python3.10
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
