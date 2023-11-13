@@ -11,11 +11,13 @@
     {
       "fileMatch": [
         ".*\\.Dockerfile$",
-        ".*doc/packaging\\.md$"
+        ".*doc/packaging\\.md$",
+        ".github/workflows/*\\.yml$"
       ],
       "matchStrings": [
         "https://github\\.com/(?<depName>.*?)/archive/(?<currentValue>.*?)\\.tar\\.gz",
-        "https://github\\.com/(?<depName>.*?)/releases/download/(?<currentValue>[^/]+)/bazelisk-linux-"
+        "https://github\\.com/(?<depName>.*?)/releases/download/(?<currentValue>[^/]+)/bazelisk-linux-",
+        "https://github\\.com/(?<depName>.*?)/releases/download/(?<currentValue>[^/]+)/.*-x86_64-unknown-linux-musl.tar.gz"
       ],
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "loose"
