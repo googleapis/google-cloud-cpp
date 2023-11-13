@@ -80,11 +80,11 @@ StatusOr<google::spanner::v1::ResultSet> SpannerMetadata::ExecuteSql(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 SpannerMetadata::ExecuteStreamingSql(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::ExecuteSqlRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("session=", internal::UrlEncode(request.session())));
-  return child_->ExecuteStreamingSql(std::move(context), request);
+  return child_->ExecuteStreamingSql(std::move(context), options, request);
 }
 
 StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
@@ -99,11 +99,11 @@ SpannerMetadata::ExecuteBatchDml(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 SpannerMetadata::StreamingRead(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::ReadRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("session=", internal::UrlEncode(request.session())));
-  return child_->StreamingRead(std::move(context), request);
+  return child_->StreamingRead(std::move(context), options, request);
 }
 
 StatusOr<google::spanner::v1::Transaction> SpannerMetadata::BeginTransaction(
@@ -150,11 +150,11 @@ StatusOr<google::spanner::v1::PartitionResponse> SpannerMetadata::PartitionRead(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::BatchWriteResponse>>
 SpannerMetadata::BatchWrite(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::BatchWriteRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("session=", internal::UrlEncode(request.session())));
-  return child_->BatchWrite(std::move(context), request);
+  return child_->BatchWrite(std::move(context), options, request);
 }
 
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_INTERNAL_AGENT_ENDPOINT_STUB_H
 
 #include "google/cloud/internal/streaming_read_rpc.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h>
@@ -38,7 +39,7 @@ class AgentEndpointServiceStub {
       google::cloud::osconfig::agentendpoint::v1::
           ReceiveTaskNotificationResponse>>
   ReceiveTaskNotification(
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::osconfig::agentendpoint::v1::
           ReceiveTaskNotificationRequest const& request) = 0;
 
@@ -89,6 +90,7 @@ class DefaultAgentEndpointServiceStub : public AgentEndpointServiceStub {
           ReceiveTaskNotificationResponse>>
   ReceiveTaskNotification(
       std::shared_ptr<grpc::ClientContext> client_context,
+      Options const& options,
       google::cloud::osconfig::agentendpoint::v1::
           ReceiveTaskNotificationRequest const& request) override;
 

@@ -22,6 +22,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/aiplatform/v1/tensorboard_service.grpc.pb.h>
@@ -205,7 +206,7 @@ class TensorboardServiceStub {
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>
   ReadTensorboardBlobData(
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
           request) = 0;
 
@@ -410,6 +411,7 @@ class DefaultTensorboardServiceStub : public TensorboardServiceStub {
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>
   ReadTensorboardBlobData(
       std::shared_ptr<grpc::ClientContext> client_context,
+      Options const& options,
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
           request) override;
 

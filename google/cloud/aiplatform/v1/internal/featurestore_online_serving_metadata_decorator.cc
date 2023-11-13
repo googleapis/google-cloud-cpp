@@ -56,13 +56,14 @@ FeaturestoreOnlineServingServiceMetadata::ReadFeatureValues(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
 FeaturestoreOnlineServingServiceMetadata::StreamingReadFeatureValues(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
         request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
-  return child_->StreamingReadFeatureValues(std::move(context), request);
+  return child_->StreamingReadFeatureValues(std::move(context), options,
+                                            request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>

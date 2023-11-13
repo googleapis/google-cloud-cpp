@@ -35,7 +35,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationResponse>>
 AgentEndpointServiceTracingStub::ReceiveTaskNotification(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -43,7 +43,7 @@ AgentEndpointServiceTracingStub::ReceiveTaskNotification(
       "ReceiveTaskNotification");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->ReceiveTaskNotification(context, request);
+  auto stream = child_->ReceiveTaskNotification(context, options, request);
   return std::make_unique<internal::StreamingReadRpcTracing<
       google::cloud::osconfig::agentendpoint::v1::
           ReceiveTaskNotificationResponse>>(std::move(context),

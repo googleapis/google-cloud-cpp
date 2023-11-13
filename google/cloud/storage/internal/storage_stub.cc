@@ -248,7 +248,7 @@ StatusOr<google::storage::v2::Object> DefaultStorageStub::GetObject(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 DefaultStorageStub::ReadObject(
-    std::shared_ptr<grpc::ClientContext> client_context,
+    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
     google::storage::v2::ReadObjectRequest const& request) {
   auto stream = grpc_stub_->ReadObject(client_context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<

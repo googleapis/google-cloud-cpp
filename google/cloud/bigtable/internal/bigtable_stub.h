@@ -23,6 +23,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
@@ -39,12 +40,13 @@ class BigtableStub {
 
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ReadRowsResponse>>
-  ReadRows(std::shared_ptr<grpc::ClientContext> context,
+  ReadRows(std::shared_ptr<grpc::ClientContext> context, Options const& options,
            google::bigtable::v2::ReadRowsRequest const& request) = 0;
 
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::SampleRowKeysResponse>>
   SampleRowKeys(std::shared_ptr<grpc::ClientContext> context,
+                Options const& options,
                 google::bigtable::v2::SampleRowKeysRequest const& request) = 0;
 
   virtual StatusOr<google::bigtable::v2::MutateRowResponse> MutateRow(
@@ -54,6 +56,7 @@ class BigtableStub {
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::MutateRowsResponse>>
   MutateRows(std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::bigtable::v2::MutateRowsRequest const& request) = 0;
 
   virtual StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
@@ -116,12 +119,14 @@ class DefaultBigtableStub : public BigtableStub {
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ReadRowsResponse>>
   ReadRows(std::shared_ptr<grpc::ClientContext> client_context,
+           Options const& options,
            google::bigtable::v2::ReadRowsRequest const& request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::SampleRowKeysResponse>>
   SampleRowKeys(
       std::shared_ptr<grpc::ClientContext> client_context,
+      Options const& options,
       google::bigtable::v2::SampleRowKeysRequest const& request) override;
 
   StatusOr<google::bigtable::v2::MutateRowResponse> MutateRow(
@@ -131,6 +136,7 @@ class DefaultBigtableStub : public BigtableStub {
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::MutateRowsResponse>>
   MutateRows(std::shared_ptr<grpc::ClientContext> client_context,
+             Options const& options,
              google::bigtable::v2::MutateRowsRequest const& request) override;
 
   StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> CheckAndMutateRow(

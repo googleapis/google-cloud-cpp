@@ -43,7 +43,7 @@ class AgentEndpointServiceMetadata : public AgentEndpointServiceStub {
       google::cloud::osconfig::agentendpoint::v1::
           ReceiveTaskNotificationResponse>>
   ReceiveTaskNotification(
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::osconfig::agentendpoint::v1::
           ReceiveTaskNotificationRequest const& request) override;
 

@@ -683,11 +683,11 @@ TensorboardServiceConnectionImpl::ReadTensorboardBlobData(
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto factory =
-      [stub = stub_](
+      [stub = stub_, current](
           google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
               request) {
         return stub->ReadTensorboardBlobData(
-            std::make_shared<grpc::ClientContext>(), request);
+            std::make_shared<grpc::ClientContext>(), *current, request);
       };
   auto resumable = internal::MakeResumableStreamingReadRpc<
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse,

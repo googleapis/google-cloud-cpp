@@ -48,7 +48,7 @@ FeaturestoreOnlineServingServiceTracingStub::ReadFeatureValues(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
 FeaturestoreOnlineServingServiceTracingStub::StreamingReadFeatureValues(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -56,7 +56,7 @@ FeaturestoreOnlineServingServiceTracingStub::StreamingReadFeatureValues(
       "StreamingReadFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->StreamingReadFeatureValues(context, request);
+  auto stream = child_->StreamingReadFeatureValues(context, options, request);
   return std::make_unique<internal::StreamingReadRpcTracing<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>(
       std::move(context), std::move(stream), std::move(span));

@@ -420,7 +420,7 @@ DefaultTensorboardServiceStub::ReadTensorboardTimeSeriesData(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>
 DefaultTensorboardServiceStub::ReadTensorboardBlobData(
-    std::shared_ptr<grpc::ClientContext> client_context,
+    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
         request) {
   auto stream =

@@ -249,14 +249,15 @@ StatusOr<google::storage::v2::Object> StorageLogging::GetObject(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageLogging::ReadObject(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::storage::v2::ReadObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::storage::v2::ReadObjectRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::storage::v2::ReadObjectResponse>> {
-        auto stream = child_->ReadObject(std::move(context), request);
+        auto stream = child_->ReadObject(std::move(context), options, request);
         if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
@@ -266,7 +267,7 @@ StorageLogging::ReadObject(
         }
         return stream;
       },
-      std::move(context), request, __func__, tracing_options_);
+      std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::storage::v2::Object> StorageLogging::UpdateObject(

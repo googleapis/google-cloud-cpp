@@ -196,7 +196,7 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>
   ReadTensorboardBlobData(
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
           request) override;
 

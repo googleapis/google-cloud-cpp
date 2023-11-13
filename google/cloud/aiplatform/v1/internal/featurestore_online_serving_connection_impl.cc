@@ -90,11 +90,11 @@ FeaturestoreOnlineServingServiceConnectionImpl::StreamingReadFeatureValues(
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto factory = [stub = stub_](
+  auto factory = [stub = stub_, current](
                      google::cloud::aiplatform::v1::
                          StreamingReadFeatureValuesRequest const& request) {
     return stub->StreamingReadFeatureValues(
-        std::make_shared<grpc::ClientContext>(), request);
+        std::make_shared<grpc::ClientContext>(), *current, request);
   };
   auto resumable = internal::MakeResumableStreamingReadRpc<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse,

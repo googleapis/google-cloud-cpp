@@ -93,11 +93,11 @@ PredictionServiceConnectionImpl::ServerStreamingPredict(
     google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto factory =
-      [stub =
-           stub_](google::cloud::aiplatform::v1::StreamingPredictRequest const&
-                      request) {
+      [stub = stub_,
+       current](google::cloud::aiplatform::v1::StreamingPredictRequest const&
+                    request) {
         return stub->ServerStreamingPredict(
-            std::make_shared<grpc::ClientContext>(), request);
+            std::make_shared<grpc::ClientContext>(), *current, request);
       };
   auto resumable = internal::MakeResumableStreamingReadRpc<
       google::cloud::aiplatform::v1::StreamingPredictResponse,

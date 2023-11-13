@@ -78,7 +78,7 @@ StatusOr<google::spanner::v1::ResultSet> DefaultSpannerStub::ExecuteSql(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 DefaultSpannerStub::ExecuteStreamingSql(
-    std::shared_ptr<grpc::ClientContext> client_context,
+    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   auto stream = grpc_stub_->ExecuteStreamingSql(client_context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
@@ -102,7 +102,7 @@ DefaultSpannerStub::ExecuteBatchDml(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 DefaultSpannerStub::StreamingRead(
-    std::shared_ptr<grpc::ClientContext> client_context,
+    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
     google::spanner::v1::ReadRequest const& request) {
   auto stream = grpc_stub_->StreamingRead(client_context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
@@ -171,7 +171,7 @@ DefaultSpannerStub::PartitionRead(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::BatchWriteResponse>>
 DefaultSpannerStub::BatchWrite(
-    std::shared_ptr<grpc::ClientContext> client_context,
+    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
     google::spanner::v1::BatchWriteRequest const& request) {
   auto stream = grpc_stub_->BatchWrite(client_context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<

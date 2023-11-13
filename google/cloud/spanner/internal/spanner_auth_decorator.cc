@@ -66,13 +66,13 @@ StatusOr<google::spanner::v1::ResultSet> SpannerAuth::ExecuteSql(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 SpannerAuth::ExecuteStreamingSql(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::spanner::v1::PartialResultSet>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->ExecuteStreamingSql(std::move(context), request);
+  return child_->ExecuteStreamingSql(std::move(context), options, request);
 }
 
 StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
@@ -87,12 +87,13 @@ SpannerAuth::ExecuteBatchDml(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 SpannerAuth::StreamingRead(std::shared_ptr<grpc::ClientContext> context,
+                           Options const& options,
                            google::spanner::v1::ReadRequest const& request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::spanner::v1::PartialResultSet>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->StreamingRead(std::move(context), request);
+  return child_->StreamingRead(std::move(context), options, request);
 }
 
 StatusOr<google::spanner::v1::Transaction> SpannerAuth::BeginTransaction(
@@ -138,12 +139,13 @@ StatusOr<google::spanner::v1::PartitionResponse> SpannerAuth::PartitionRead(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::BatchWriteResponse>>
 SpannerAuth::BatchWrite(std::shared_ptr<grpc::ClientContext> context,
+                        Options const& options,
                         google::spanner::v1::BatchWriteRequest const& request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::spanner::v1::BatchWriteResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->BatchWrite(std::move(context), request);
+  return child_->BatchWrite(std::move(context), options, request);
 }
 
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>

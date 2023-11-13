@@ -46,11 +46,11 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationResponse>>
 AgentEndpointServiceMetadata::ReceiveTaskNotification(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->ReceiveTaskNotification(std::move(context), request);
+  SetMetadata(*context, options);
+  return child_->ReceiveTaskNotification(std::move(context), options, request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>

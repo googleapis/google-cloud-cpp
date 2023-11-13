@@ -83,14 +83,16 @@ StatusOr<google::spanner::v1::ResultSet> SpannerLogging::ExecuteSql(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 SpannerLogging::ExecuteStreamingSql(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::spanner::v1::ExecuteSqlRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::spanner::v1::PartialResultSet>> {
-        auto stream = child_->ExecuteStreamingSql(std::move(context), request);
+        auto stream =
+            child_->ExecuteStreamingSql(std::move(context), options, request);
         if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
@@ -100,7 +102,7 @@ SpannerLogging::ExecuteStreamingSql(
         }
         return stream;
       },
-      std::move(context), request, __func__, tracing_options_);
+      std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
@@ -118,13 +120,16 @@ SpannerLogging::ExecuteBatchDml(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 SpannerLogging::StreamingRead(std::shared_ptr<grpc::ClientContext> context,
+                              Options const& options,
                               google::spanner::v1::ReadRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::spanner::v1::ReadRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::spanner::v1::PartialResultSet>> {
-        auto stream = child_->StreamingRead(std::move(context), request);
+        auto stream =
+            child_->StreamingRead(std::move(context), options, request);
         if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
@@ -134,7 +139,7 @@ SpannerLogging::StreamingRead(std::shared_ptr<grpc::ClientContext> context,
         }
         return stream;
       },
-      std::move(context), request, __func__, tracing_options_);
+      std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::v1::Transaction> SpannerLogging::BeginTransaction(
@@ -195,14 +200,15 @@ StatusOr<google::spanner::v1::PartitionResponse> SpannerLogging::PartitionRead(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::BatchWriteResponse>>
 SpannerLogging::BatchWrite(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::BatchWriteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::spanner::v1::BatchWriteRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::spanner::v1::BatchWriteResponse>> {
-        auto stream = child_->BatchWrite(std::move(context), request);
+        auto stream = child_->BatchWrite(std::move(context), options, request);
         if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
@@ -212,7 +218,7 @@ SpannerLogging::BatchWrite(
         }
         return stream;
       },
-      std::move(context), request, __func__, tracing_options_);
+      std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>

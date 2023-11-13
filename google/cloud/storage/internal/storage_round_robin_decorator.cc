@@ -145,9 +145,9 @@ StatusOr<google::storage::v2::Object> StorageRoundRobin::GetObject(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageRoundRobin::ReadObject(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::storage::v2::ReadObjectRequest const& request) {
-  return Child()->ReadObject(std::move(context), request);
+  return Child()->ReadObject(std::move(context), options, request);
 }
 
 StatusOr<google::storage::v2::Object> StorageRoundRobin::UpdateObject(

@@ -46,7 +46,7 @@ DefaultFeaturestoreOnlineServingServiceStub::ReadFeatureValues(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
 DefaultFeaturestoreOnlineServingServiceStub::StreamingReadFeatureValues(
-    std::shared_ptr<grpc::ClientContext> client_context,
+    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
         request) {
   auto stream =

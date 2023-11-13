@@ -47,13 +47,13 @@ BigQueryReadTracingStub::CreateReadSession(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 BigQueryReadTracingStub::ReadRows(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.storage.v1.BigQueryRead", "ReadRows");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->ReadRows(context, request);
+  auto stream = child_->ReadRows(context, options, request);
   return std::make_unique<internal::StreamingReadRpcTracing<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>>(
       std::move(context), std::move(stream), std::move(span));

@@ -52,17 +52,18 @@ FeaturestoreOnlineServingServiceLogging::ReadFeatureValues(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
 FeaturestoreOnlineServingServiceLogging::StreamingReadFeatureValues(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::aiplatform::v1::
                  StreamingReadFeatureValuesRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::cloud::aiplatform::v1::ReadFeatureValuesResponse>> {
-        auto stream =
-            child_->StreamingReadFeatureValues(std::move(context), request);
+        auto stream = child_->StreamingReadFeatureValues(std::move(context),
+                                                         options, request);
         if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
@@ -72,7 +73,7 @@ FeaturestoreOnlineServingServiceLogging::StreamingReadFeatureValues(
         }
         return stream;
       },
-      std::move(context), request, __func__, tracing_options_);
+      std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
