@@ -161,6 +161,7 @@ add_library(
     terminate_handler.h
     tracing_options.cc
     tracing_options.h
+    universe_domain_options.h
     version.cc
     version.h)
 target_link_libraries(
