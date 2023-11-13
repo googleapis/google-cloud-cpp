@@ -56,13 +56,13 @@ VersionsTracingStub::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsTracingStub::AsyncCreateVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Versions",
                                      "CreateVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateVersion(cq, context, request);
+  auto f = child_->AsyncCreateVersion(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -92,13 +92,13 @@ Status VersionsTracingStub::DeleteVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsTracingStub::AsyncLoadVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Versions",
                                      "LoadVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncLoadVersion(cq, context, request);
+  auto f = child_->AsyncLoadVersion(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -117,25 +117,25 @@ VersionsTracingStub::CompareVersions(
 future<StatusOr<google::longrunning::Operation>>
 VersionsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> VersionsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

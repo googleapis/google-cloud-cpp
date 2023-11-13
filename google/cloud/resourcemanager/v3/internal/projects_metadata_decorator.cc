@@ -70,51 +70,51 @@ ProjectsMetadata::SearchProjects(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsMetadata::AsyncCreateProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncCreateProject(cq, std::move(context), request);
+  SetMetadata(*context, options);
+  return child_->AsyncCreateProject(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsMetadata::AsyncUpdateProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("project.name=",
                            internal::UrlEncode(request.project().name())));
-  return child_->AsyncUpdateProject(cq, std::move(context), request);
+  return child_->AsyncUpdateProject(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsMetadata::AsyncMoveProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncMoveProject(cq, std::move(context), request);
+  return child_->AsyncMoveProject(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsMetadata::AsyncDeleteProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteProject(cq, std::move(context), request);
+  return child_->AsyncDeleteProject(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsMetadata::AsyncUndeleteProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUndeleteProject(cq, std::move(context), request);
+  return child_->AsyncUndeleteProject(cq, std::move(context), options, request);
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsMetadata::GetIamPolicy(
@@ -148,20 +148,20 @@ ProjectsMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> ProjectsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void ProjectsMetadata::SetMetadata(grpc::ClientContext& context,

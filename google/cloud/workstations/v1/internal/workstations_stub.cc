@@ -61,7 +61,7 @@ DefaultWorkstationsStub::ListWorkstationClusters(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncCreateWorkstationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -80,7 +80,7 @@ DefaultWorkstationsStub::AsyncCreateWorkstationCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncUpdateWorkstationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -99,7 +99,7 @@ DefaultWorkstationsStub::AsyncUpdateWorkstationCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncDeleteWorkstationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -161,7 +161,7 @@ DefaultWorkstationsStub::ListUsableWorkstationConfigs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncCreateWorkstationConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -181,7 +181,7 @@ DefaultWorkstationsStub::AsyncCreateWorkstationConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncUpdateWorkstationConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -201,7 +201,7 @@ DefaultWorkstationsStub::AsyncUpdateWorkstationConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncDeleteWorkstationConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -260,7 +260,7 @@ DefaultWorkstationsStub::ListUsableWorkstations(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncCreateWorkstation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::workstations::v1::CreateWorkstationRequest,
@@ -278,7 +278,7 @@ DefaultWorkstationsStub::AsyncCreateWorkstation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncUpdateWorkstation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::workstations::v1::UpdateWorkstationRequest,
@@ -296,7 +296,7 @@ DefaultWorkstationsStub::AsyncUpdateWorkstation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncDeleteWorkstation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::workstations::v1::DeleteWorkstationRequest,
@@ -314,7 +314,7 @@ DefaultWorkstationsStub::AsyncDeleteWorkstation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncStartWorkstation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::workstations::v1::StartWorkstationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::workstations::v1::StartWorkstationRequest,
@@ -332,7 +332,7 @@ DefaultWorkstationsStub::AsyncStartWorkstation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncStopWorkstation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::workstations::v1::StopWorkstationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::workstations::v1::StopWorkstationRequest,
@@ -364,7 +364,7 @@ DefaultWorkstationsStub::GenerateAccessToken(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -379,7 +379,7 @@ DefaultWorkstationsStub::AsyncGetOperation(
 
 future<Status> DefaultWorkstationsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

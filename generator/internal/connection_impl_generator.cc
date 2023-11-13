@@ -371,21 +371,24 @@ future<StatusOr<$longrunning_deduced_response_type$>>)""",
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<$longrunning_deduced_response_type$>(
-    background_->cq(), request,
+    background_->cq(), current, request,
     [stub = stub_](google::cloud::CompletionQueue& cq,
                    std::shared_ptr<grpc::ClientContext> context,
+                   Options const& options,
                    $request_type$ const& request) {
-     return stub->Async$method_name$(cq, std::move(context), request);
+     return stub->Async$method_name$(cq, std::move(context), options, request);
     },
     [stub = stub_](google::cloud::CompletionQueue& cq,
                    std::shared_ptr<grpc::ClientContext> context,
+                   Options const& options,
                    google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
+     return stub->AsyncGetOperation(cq, std::move(context), options, request);
     },
     [stub = stub_](google::cloud::CompletionQueue& cq,
                    std::shared_ptr<grpc::ClientContext> context,
+                   Options const& options,
                    google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
+     return stub->AsyncCancelOperation(cq, std::move(context), options, request);
     },)""",
         // One of the variations is how to extract the value from the operation
         // result, some operations use the metadata, some the data. We need to

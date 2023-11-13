@@ -72,24 +72,28 @@ RepositoryManagerConnectionImpl::CreateConnection(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v2::Connection>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::devtools::cloudbuild::v2::CreateConnectionRequest const&
               request) {
-        return stub->AsyncCreateConnection(cq, std::move(context), request);
+        return stub->AsyncCreateConnection(cq, std::move(context), options,
+                                           request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v2::Connection>,
@@ -151,24 +155,28 @@ RepositoryManagerConnectionImpl::UpdateConnection(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v2::Connection>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
               request) {
-        return stub->AsyncUpdateConnection(cq, std::move(context), request);
+        return stub->AsyncUpdateConnection(cq, std::move(context), options,
+                                           request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v2::Connection>,
@@ -183,24 +191,28 @@ RepositoryManagerConnectionImpl::DeleteConnection(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v2::OperationMetadata>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
               request) {
-        return stub->AsyncDeleteConnection(cq, std::move(context), request);
+        return stub->AsyncDeleteConnection(cq, std::move(context), options,
+                                           request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::cloudbuild::v2::OperationMetadata>,
@@ -215,24 +227,28 @@ RepositoryManagerConnectionImpl::CreateRepository(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v2::Repository>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
               request) {
-        return stub->AsyncCreateRepository(cq, std::move(context), request);
+        return stub->AsyncCreateRepository(cq, std::move(context), options,
+                                           request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v2::Repository>,
@@ -249,24 +265,28 @@ RepositoryManagerConnectionImpl::BatchCreateRepositories(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::devtools::cloudbuild::v2::
                          BatchCreateRepositoriesRequest const& request) {
         return stub->AsyncBatchCreateRepositories(cq, std::move(context),
-                                                  request);
+                                                  options, request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>,
@@ -328,24 +348,28 @@ RepositoryManagerConnectionImpl::DeleteRepository(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v2::OperationMetadata>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
               request) {
-        return stub->AsyncDeleteRepository(cq, std::move(context), request);
+        return stub->AsyncDeleteRepository(cq, std::move(context), options,
+                                           request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::cloudbuild::v2::OperationMetadata>,

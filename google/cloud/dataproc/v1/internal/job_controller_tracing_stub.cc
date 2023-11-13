@@ -43,13 +43,13 @@ StatusOr<google::cloud::dataproc::v1::Job> JobControllerTracingStub::SubmitJob(
 future<StatusOr<google::longrunning::Operation>>
 JobControllerTracingStub::AsyncSubmitJobAsOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.JobController",
                                      "SubmitJobAsOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncSubmitJobAsOperation(cq, context, request);
+  auto f = child_->AsyncSubmitJobAsOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -107,25 +107,25 @@ Status JobControllerTracingStub::DeleteJob(
 future<StatusOr<google::longrunning::Operation>>
 JobControllerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> JobControllerTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -53,10 +53,11 @@ SpeechMetadata::Recognize(
 future<StatusOr<google::longrunning::Operation>>
 SpeechMetadata::AsyncLongRunningRecognize(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncLongRunningRecognize(cq, std::move(context), request);
+  SetMetadata(*context, options);
+  return child_->AsyncLongRunningRecognize(cq, std::move(context), options,
+                                           request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -72,20 +73,20 @@ SpeechMetadata::AsyncStreamingRecognize(
 future<StatusOr<google::longrunning::Operation>>
 SpeechMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> SpeechMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void SpeechMetadata::SetMetadata(grpc::ClientContext& context,

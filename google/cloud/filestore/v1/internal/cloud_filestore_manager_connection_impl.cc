@@ -120,23 +120,27 @@ CloudFilestoreManagerConnectionImpl::CreateInstance(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::filestore::v1::Instance>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::filestore::v1::CreateInstanceRequest const& request) {
-        return stub->AsyncCreateInstance(cq, std::move(context), request);
+        return stub->AsyncCreateInstance(cq, std::move(context), options,
+                                         request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::filestore::v1::Instance>,
@@ -151,23 +155,27 @@ CloudFilestoreManagerConnectionImpl::UpdateInstance(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::filestore::v1::Instance>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
-        return stub->AsyncUpdateInstance(cq, std::move(context), request);
+        return stub->AsyncUpdateInstance(cq, std::move(context), options,
+                                         request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::filestore::v1::Instance>,
@@ -182,23 +190,27 @@ CloudFilestoreManagerConnectionImpl::RestoreInstance(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::filestore::v1::Instance>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
-        return stub->AsyncRestoreInstance(cq, std::move(context), request);
+        return stub->AsyncRestoreInstance(cq, std::move(context), options,
+                                          request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::filestore::v1::Instance>,
@@ -213,23 +225,27 @@ CloudFilestoreManagerConnectionImpl::DeleteInstance(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::common::OperationMetadata>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
-        return stub->AsyncDeleteInstance(cq, std::move(context), request);
+        return stub->AsyncDeleteInstance(cq, std::move(context), options,
+                                         request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::common::OperationMetadata>,
@@ -291,23 +307,27 @@ CloudFilestoreManagerConnectionImpl::CreateSnapshot(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::filestore::v1::Snapshot>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
-        return stub->AsyncCreateSnapshot(cq, std::move(context), request);
+        return stub->AsyncCreateSnapshot(cq, std::move(context), options,
+                                         request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::filestore::v1::Snapshot>,
@@ -322,23 +342,27 @@ CloudFilestoreManagerConnectionImpl::DeleteSnapshot(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::common::OperationMetadata>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
-        return stub->AsyncDeleteSnapshot(cq, std::move(context), request);
+        return stub->AsyncDeleteSnapshot(cq, std::move(context), options,
+                                         request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::common::OperationMetadata>,
@@ -353,23 +377,27 @@ CloudFilestoreManagerConnectionImpl::UpdateSnapshot(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::filestore::v1::Snapshot>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
-        return stub->AsyncUpdateSnapshot(cq, std::move(context), request);
+        return stub->AsyncUpdateSnapshot(cq, std::move(context), options,
+                                         request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::filestore::v1::Snapshot>,
@@ -429,23 +457,27 @@ CloudFilestoreManagerConnectionImpl::CreateBackup(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::filestore::v1::Backup>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::filestore::v1::CreateBackupRequest const& request) {
-        return stub->AsyncCreateBackup(cq, std::move(context), request);
+        return stub->AsyncCreateBackup(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::filestore::v1::Backup>,
@@ -460,23 +492,27 @@ CloudFilestoreManagerConnectionImpl::DeleteBackup(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::common::OperationMetadata>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::filestore::v1::DeleteBackupRequest const& request) {
-        return stub->AsyncDeleteBackup(cq, std::move(context), request);
+        return stub->AsyncDeleteBackup(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::common::OperationMetadata>,
@@ -491,23 +527,27 @@ CloudFilestoreManagerConnectionImpl::UpdateBackup(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::filestore::v1::Backup>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::filestore::v1::UpdateBackupRequest const& request) {
-        return stub->AsyncUpdateBackup(cq, std::move(context), request);
+        return stub->AsyncUpdateBackup(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::filestore::v1::Backup>,

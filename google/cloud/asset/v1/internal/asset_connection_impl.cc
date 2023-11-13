@@ -67,23 +67,27 @@ AssetServiceConnectionImpl::ExportAssets(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::asset::v1::ExportAssetsResponse>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::asset::v1::ExportAssetsRequest const& request) {
-        return stub->AsyncExportAssets(cq, std::move(context), request);
+        return stub->AsyncExportAssets(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::asset::v1::ExportAssetsResponse>,
@@ -292,25 +296,28 @@ AssetServiceConnectionImpl::AnalyzeIamPolicyLongrunning(
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>(
-      background_->cq(), request,
+      background_->cq(), current, request,
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
               request) {
         return stub->AsyncAnalyzeIamPolicyLongrunning(cq, std::move(context),
-                                                      request);
+                                                      options, request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), request);
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), request);
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>,

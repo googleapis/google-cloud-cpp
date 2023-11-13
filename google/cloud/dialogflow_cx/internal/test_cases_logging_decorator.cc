@@ -95,32 +95,36 @@ TestCasesLogging::UpdateTestCase(
 future<StatusOr<google::longrunning::Operation>>
 TestCasesLogging::AsyncRunTestCase(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&
                  request) {
-        return child_->AsyncRunTestCase(cq, std::move(context), request);
+        return child_->AsyncRunTestCase(cq, std::move(context), options,
+                                        request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TestCasesLogging::AsyncBatchRunTestCases(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
                  request) {
-        return child_->AsyncBatchRunTestCases(cq, std::move(context), request);
+        return child_->AsyncBatchRunTestCases(cq, std::move(context), options,
+                                              request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
@@ -140,31 +144,35 @@ TestCasesLogging::CalculateCoverage(
 future<StatusOr<google::longrunning::Operation>>
 TestCasesLogging::AsyncImportTestCases(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&
                  request) {
-        return child_->AsyncImportTestCases(cq, std::move(context), request);
+        return child_->AsyncImportTestCases(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TestCasesLogging::AsyncExportTestCases(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
                  request) {
-        return child_->AsyncExportTestCases(cq, std::move(context), request);
+        return child_->AsyncExportTestCases(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>
@@ -199,28 +207,32 @@ TestCasesLogging::GetTestCaseResult(
 future<StatusOr<google::longrunning::Operation>>
 TestCasesLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), request);
+        return child_->AsyncGetOperation(cq, std::move(context), options,
+                                         request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<Status> TestCasesLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), request);
+        return child_->AsyncCancelOperation(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

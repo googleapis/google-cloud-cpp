@@ -63,32 +63,32 @@ EdgeContainerMetadata::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateCluster(cq, std::move(context), request);
+  return child_->AsyncCreateCluster(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("cluster.name=",
                            internal::UrlEncode(request.cluster().name())));
-  return child_->AsyncUpdateCluster(cq, std::move(context), request);
+  return child_->AsyncUpdateCluster(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteCluster(cq, std::move(context), request);
+  return child_->AsyncDeleteCluster(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
@@ -122,32 +122,32 @@ EdgeContainerMetadata::GetNodePool(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncCreateNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateNodePool(cq, std::move(context), request);
+  return child_->AsyncCreateNodePool(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncUpdateNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("node_pool.name=",
                            internal::UrlEncode(request.node_pool().name())));
-  return child_->AsyncUpdateNodePool(cq, std::move(context), request);
+  return child_->AsyncUpdateNodePool(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncDeleteNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteNodePool(cq, std::move(context), request);
+  return child_->AsyncDeleteNodePool(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListMachinesResponse>
@@ -190,42 +190,44 @@ EdgeContainerMetadata::GetVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncCreateVpnConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateVpnConnection(cq, std::move(context), request);
+  return child_->AsyncCreateVpnConnection(cq, std::move(context), options,
+                                          request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncDeleteVpnConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteVpnConnection(cq, std::move(context), request);
+  return child_->AsyncDeleteVpnConnection(cq, std::move(context), options,
+                                          request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> EdgeContainerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void EdgeContainerMetadata::SetMetadata(grpc::ClientContext& context,

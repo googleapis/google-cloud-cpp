@@ -33,52 +33,52 @@ DatastoreAdminTracingStub::DatastoreAdminTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminTracingStub::AsyncExportEntities(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::datastore::admin::v1::ExportEntitiesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.datastore.admin.v1.DatastoreAdmin",
                                      "ExportEntities");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncExportEntities(cq, context, request);
+  auto f = child_->AsyncExportEntities(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminTracingStub::AsyncImportEntities(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::datastore::admin::v1::ImportEntitiesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.datastore.admin.v1.DatastoreAdmin",
                                      "ImportEntities");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncImportEntities(cq, context, request);
+  auto f = child_->AsyncImportEntities(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminTracingStub::AsyncCreateIndex(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::datastore::admin::v1::CreateIndexRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.datastore.admin.v1.DatastoreAdmin",
                                      "CreateIndex");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateIndex(cq, context, request);
+  auto f = child_->AsyncCreateIndex(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminTracingStub::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::datastore::admin::v1::DeleteIndexRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.datastore.admin.v1.DatastoreAdmin",
                                      "DeleteIndex");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteIndex(cq, context, request);
+  auto f = child_->AsyncDeleteIndex(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -108,25 +108,25 @@ DatastoreAdminTracingStub::ListIndexes(
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> DatastoreAdminTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

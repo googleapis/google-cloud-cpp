@@ -50,57 +50,57 @@ EventarcAuth::ListTriggers(
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncCreateTrigger(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateTrigger(cq, *std::move(context), request);
+        return child->AsyncCreateTrigger(cq, *std::move(context), options,
+                                         request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncUpdateTrigger(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateTrigger(cq, *std::move(context), request);
+        return child->AsyncUpdateTrigger(cq, *std::move(context), options,
+                                         request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncDeleteTrigger(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteTrigger(cq, *std::move(context), request);
+        return child->AsyncDeleteTrigger(cq, *std::move(context), options,
+                                         request);
       });
 }
 
@@ -124,57 +124,57 @@ EventarcAuth::ListChannels(
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncCreateChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateChannel(cq, *std::move(context), request);
+        return child->AsyncCreateChannel(cq, *std::move(context), options,
+                                         request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateChannel(cq, *std::move(context), request);
+        return child->AsyncUpdateChannel(cq, *std::move(context), options,
+                                         request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteChannel(cq, *std::move(context), request);
+        return child->AsyncDeleteChannel(cq, *std::move(context), options,
+                                         request);
       });
 }
 
@@ -216,13 +216,12 @@ EventarcAuth::ListChannelConnections(
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncCreateChannelConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -230,20 +229,19 @@ EventarcAuth::AsyncCreateChannelConnection(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncCreateChannelConnection(cq, *std::move(context),
-                                                   request);
+                                                   options, request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncDeleteChannelConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -251,7 +249,7 @@ EventarcAuth::AsyncDeleteChannelConnection(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncDeleteChannelConnection(cq, *std::move(context),
-                                                   request);
+                                                   options, request);
       });
 }
 
@@ -277,34 +275,34 @@ EventarcAuth::UpdateGoogleChannelConfig(
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), request);
+        return child->AsyncGetOperation(cq, *std::move(context), options,
+                                        request);
       });
 }
 
 future<Status> EventarcAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), request);
+        return child->AsyncCancelOperation(cq, *std::move(context), options,
+                                           request);
       });
 }
 

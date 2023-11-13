@@ -57,53 +57,53 @@ VmwareEngineTracingStub::GetPrivateCloud(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncCreatePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "CreatePrivateCloud");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreatePrivateCloud(cq, context, request);
+  auto f = child_->AsyncCreatePrivateCloud(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncUpdatePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UpdatePrivateCloud");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdatePrivateCloud(cq, context, request);
+  auto f = child_->AsyncUpdatePrivateCloud(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncDeletePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "DeletePrivateCloud");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeletePrivateCloud(cq, context, request);
+  auto f = child_->AsyncDeletePrivateCloud(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncUndeletePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UndeletePrivateCloud");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUndeletePrivateCloud(cq, context, request);
+  auto f = child_->AsyncUndeletePrivateCloud(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -134,39 +134,39 @@ VmwareEngineTracingStub::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "CreateCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateCluster(cq, context, request);
+  auto f = child_->AsyncCreateCluster(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateCluster(cq, context, request);
+  auto f = child_->AsyncUpdateCluster(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "DeleteCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteCluster(cq, context, request);
+  auto f = child_->AsyncDeleteCluster(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -196,13 +196,13 @@ VmwareEngineTracingStub::GetSubnet(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncUpdateSubnet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateSubnet");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateSubnet(cq, context, request);
+  auto f = child_->AsyncUpdateSubnet(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -258,42 +258,42 @@ VmwareEngineTracingStub::ShowVcenterCredentials(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncResetNsxCredentials(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ResetNsxCredentials");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncResetNsxCredentials(cq, context, request);
+  auto f = child_->AsyncResetNsxCredentials(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncResetVcenterCredentials(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ResetVcenterCredentials");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncResetVcenterCredentials(cq, context, request);
+  auto f = child_->AsyncResetVcenterCredentials(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncCreateHcxActivationKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "CreateHcxActivationKey");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateHcxActivationKey(cq, context, request);
+  auto f = child_->AsyncCreateHcxActivationKey(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -351,84 +351,87 @@ VmwareEngineTracingStub::ListNetworkPolicies(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncCreateNetworkPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "CreateNetworkPolicy");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateNetworkPolicy(cq, context, request);
+  auto f = child_->AsyncCreateNetworkPolicy(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncUpdateNetworkPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateNetworkPolicy");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateNetworkPolicy(cq, context, request);
+  auto f = child_->AsyncUpdateNetworkPolicy(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncDeleteNetworkPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "DeleteNetworkPolicy");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteNetworkPolicy(cq, context, request);
+  auto f = child_->AsyncDeleteNetworkPolicy(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncCreateVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "CreateVmwareEngineNetwork");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateVmwareEngineNetwork(cq, context, request);
+  auto f =
+      child_->AsyncCreateVmwareEngineNetwork(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncUpdateVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateVmwareEngineNetwork");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateVmwareEngineNetwork(cq, context, request);
+  auto f =
+      child_->AsyncUpdateVmwareEngineNetwork(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncDeleteVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "DeleteVmwareEngineNetwork");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteVmwareEngineNetwork(cq, context, request);
+  auto f =
+      child_->AsyncDeleteVmwareEngineNetwork(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -461,14 +464,14 @@ VmwareEngineTracingStub::ListVmwareEngineNetworks(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncCreatePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "CreatePrivateConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreatePrivateConnection(cq, context, request);
+  auto f = child_->AsyncCreatePrivateConnection(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -501,28 +504,28 @@ VmwareEngineTracingStub::ListPrivateConnections(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncUpdatePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UpdatePrivateConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdatePrivateConnection(cq, context, request);
+  auto f = child_->AsyncUpdatePrivateConnection(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncDeletePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "DeletePrivateConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeletePrivateConnection(cq, context, request);
+  auto f = child_->AsyncDeletePrivateConnection(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -545,25 +548,25 @@ VmwareEngineTracingStub::ListPrivateConnectionPeeringRoutes(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> VmwareEngineTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -73,37 +73,37 @@ Status AgentsAuth::DeleteAgent(
 
 future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncExportAgent(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncExportAgent(cq, *std::move(context), request);
+        return child->AsyncExportAgent(cq, *std::move(context), options,
+                                       request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncRestoreAgent(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRestoreAgent(cq, *std::move(context), request);
+        return child->AsyncRestoreAgent(cq, *std::move(context), options,
+                                        request);
       });
 }
 
@@ -148,34 +148,34 @@ AgentsAuth::UpdateGenerativeSettings(
 
 future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), request);
+        return child->AsyncGetOperation(cq, *std::move(context), options,
+                                        request);
       });
 }
 
 future<Status> AgentsAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), request);
+        return child->AsyncCancelOperation(cq, *std::move(context), options,
+                                           request);
       });
 }
 

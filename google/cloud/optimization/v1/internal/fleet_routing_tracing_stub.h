@@ -44,18 +44,18 @@ class FleetRoutingTracingStub : public FleetRoutingStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchOptimizeTours(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

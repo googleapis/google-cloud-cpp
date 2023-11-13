@@ -40,7 +40,7 @@ class ConversationModelsTracingStub : public ConversationModelsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConversationModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::dialogflow::v2::CreateConversationModelRequest const&
           request) override;
 
@@ -58,20 +58,20 @@ class ConversationModelsTracingStub : public ConversationModelsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteConversationModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeployConversationModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::dialogflow::v2::DeployConversationModelRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncUndeployConversationModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
           request) override;
 
@@ -91,18 +91,18 @@ class ConversationModelsTracingStub : public ConversationModelsStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateConversationModelEvaluation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::dialogflow::v2::
           CreateConversationModelEvaluationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

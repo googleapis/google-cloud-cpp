@@ -40,7 +40,7 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTensorboard(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::CreateTensorboardRequest const& request)
       override;
 
@@ -51,7 +51,7 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTensorboard(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request)
       override;
 
@@ -62,7 +62,7 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTensorboard(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request)
       override;
 
@@ -105,7 +105,7 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteTensorboardExperiment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
           request) override;
 
@@ -138,7 +138,7 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTensorboardRun(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request)
       override;
 
@@ -176,7 +176,7 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteTensorboardTimeSeries(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
           request) override;
 
@@ -222,12 +222,12 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

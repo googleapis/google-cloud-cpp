@@ -57,117 +57,117 @@ DataMigrationServiceTracingStub::GetMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncCreateMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.clouddms.v1.DataMigrationService", "CreateMigrationJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateMigrationJob(cq, context, request);
+  auto f = child_->AsyncCreateMigrationJob(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncUpdateMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.clouddms.v1.DataMigrationService", "UpdateMigrationJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateMigrationJob(cq, context, request);
+  auto f = child_->AsyncUpdateMigrationJob(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncDeleteMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.clouddms.v1.DataMigrationService", "DeleteMigrationJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteMigrationJob(cq, context, request);
+  auto f = child_->AsyncDeleteMigrationJob(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncStartMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.clouddms.v1.DataMigrationService", "StartMigrationJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStartMigrationJob(cq, context, request);
+  auto f = child_->AsyncStartMigrationJob(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncStopMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.clouddms.v1.DataMigrationService", "StopMigrationJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStopMigrationJob(cq, context, request);
+  auto f = child_->AsyncStopMigrationJob(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncResumeMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.clouddms.v1.DataMigrationService", "ResumeMigrationJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncResumeMigrationJob(cq, context, request);
+  auto f = child_->AsyncResumeMigrationJob(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncPromoteMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.clouddms.v1.DataMigrationService", "PromoteMigrationJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncPromoteMigrationJob(cq, context, request);
+  auto f = child_->AsyncPromoteMigrationJob(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncVerifyMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.clouddms.v1.DataMigrationService", "VerifyMigrationJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncVerifyMigrationJob(cq, context, request);
+  auto f = child_->AsyncVerifyMigrationJob(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncRestartMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.clouddms.v1.DataMigrationService", "RestartMigrationJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRestartMigrationJob(cq, context, request);
+  auto f = child_->AsyncRestartMigrationJob(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -224,7 +224,7 @@ DataMigrationServiceTracingStub::GetConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncCreateConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
         request) {
   auto span =
@@ -232,14 +232,14 @@ DataMigrationServiceTracingStub::AsyncCreateConnectionProfile(
                              "CreateConnectionProfile");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateConnectionProfile(cq, context, request);
+  auto f = child_->AsyncCreateConnectionProfile(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
         request) {
   auto span =
@@ -247,14 +247,14 @@ DataMigrationServiceTracingStub::AsyncUpdateConnectionProfile(
                              "UpdateConnectionProfile");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateConnectionProfile(cq, context, request);
+  auto f = child_->AsyncUpdateConnectionProfile(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncDeleteConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
         request) {
   auto span =
@@ -262,14 +262,14 @@ DataMigrationServiceTracingStub::AsyncDeleteConnectionProfile(
                              "DeleteConnectionProfile");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteConnectionProfile(cq, context, request);
+  auto f = child_->AsyncDeleteConnectionProfile(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncCreatePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
         request) {
   auto span =
@@ -277,7 +277,7 @@ DataMigrationServiceTracingStub::AsyncCreatePrivateConnection(
                              "CreatePrivateConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreatePrivateConnection(cq, context, request);
+  auto f = child_->AsyncCreatePrivateConnection(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -309,7 +309,7 @@ DataMigrationServiceTracingStub::ListPrivateConnections(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncDeletePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
         request) {
   auto span =
@@ -317,7 +317,7 @@ DataMigrationServiceTracingStub::AsyncDeletePrivateConnection(
                              "DeletePrivateConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeletePrivateConnection(cq, context, request);
+  auto f = child_->AsyncDeletePrivateConnection(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -351,7 +351,7 @@ DataMigrationServiceTracingStub::ListConversionWorkspaces(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncCreateConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
         request) {
   auto span =
@@ -359,14 +359,15 @@ DataMigrationServiceTracingStub::AsyncCreateConversionWorkspace(
                              "CreateConversionWorkspace");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateConversionWorkspace(cq, context, request);
+  auto f =
+      child_->AsyncCreateConversionWorkspace(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncUpdateConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
         request) {
   auto span =
@@ -374,14 +375,15 @@ DataMigrationServiceTracingStub::AsyncUpdateConversionWorkspace(
                              "UpdateConversionWorkspace");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateConversionWorkspace(cq, context, request);
+  auto f =
+      child_->AsyncUpdateConversionWorkspace(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncDeleteConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
         request) {
   auto span =
@@ -389,7 +391,8 @@ DataMigrationServiceTracingStub::AsyncDeleteConversionWorkspace(
                              "DeleteConversionWorkspace");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteConversionWorkspace(cq, context, request);
+  auto f =
+      child_->AsyncDeleteConversionWorkspace(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -443,7 +446,7 @@ DataMigrationServiceTracingStub::GetMappingRule(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncSeedConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
         request) {
   auto span =
@@ -451,27 +454,27 @@ DataMigrationServiceTracingStub::AsyncSeedConversionWorkspace(
                              "SeedConversionWorkspace");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncSeedConversionWorkspace(cq, context, request);
+  auto f = child_->AsyncSeedConversionWorkspace(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncImportMappingRules(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.clouddms.v1.DataMigrationService", "ImportMappingRules");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncImportMappingRules(cq, context, request);
+  auto f = child_->AsyncImportMappingRules(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncConvertConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
         request) {
   auto span =
@@ -479,14 +482,15 @@ DataMigrationServiceTracingStub::AsyncConvertConversionWorkspace(
                              "ConvertConversionWorkspace");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncConvertConversionWorkspace(cq, context, request);
+  auto f =
+      child_->AsyncConvertConversionWorkspace(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncCommitConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
         request) {
   auto span =
@@ -494,14 +498,15 @@ DataMigrationServiceTracingStub::AsyncCommitConversionWorkspace(
                              "CommitConversionWorkspace");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCommitConversionWorkspace(cq, context, request);
+  auto f =
+      child_->AsyncCommitConversionWorkspace(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncRollbackConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
         request) {
   auto span =
@@ -509,14 +514,15 @@ DataMigrationServiceTracingStub::AsyncRollbackConversionWorkspace(
                              "RollbackConversionWorkspace");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRollbackConversionWorkspace(cq, context, request);
+  auto f =
+      child_->AsyncRollbackConversionWorkspace(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncApplyConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
         request) {
   auto span =
@@ -524,7 +530,7 @@ DataMigrationServiceTracingStub::AsyncApplyConversionWorkspace(
                              "ApplyConversionWorkspace");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncApplyConversionWorkspace(cq, context, request);
+  auto f = child_->AsyncApplyConversionWorkspace(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -585,25 +591,25 @@ DataMigrationServiceTracingStub::FetchStaticIps(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> DataMigrationServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

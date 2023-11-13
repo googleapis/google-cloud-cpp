@@ -69,51 +69,51 @@ FoldersMetadata::SearchFolders(
 future<StatusOr<google::longrunning::Operation>>
 FoldersMetadata::AsyncCreateFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncCreateFolder(cq, std::move(context), request);
+  SetMetadata(*context, options);
+  return child_->AsyncCreateFolder(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FoldersMetadata::AsyncUpdateFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("folder.name=",
                            internal::UrlEncode(request.folder().name())));
-  return child_->AsyncUpdateFolder(cq, std::move(context), request);
+  return child_->AsyncUpdateFolder(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FoldersMetadata::AsyncMoveFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncMoveFolder(cq, std::move(context), request);
+  return child_->AsyncMoveFolder(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FoldersMetadata::AsyncDeleteFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteFolder(cq, std::move(context), request);
+  return child_->AsyncDeleteFolder(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FoldersMetadata::AsyncUndeleteFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUndeleteFolder(cq, std::move(context), request);
+  return child_->AsyncUndeleteFolder(cq, std::move(context), options, request);
 }
 
 StatusOr<google::iam::v1::Policy> FoldersMetadata::GetIamPolicy(
@@ -147,20 +147,20 @@ FoldersMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 FoldersMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> FoldersMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void FoldersMetadata::SetMetadata(grpc::ClientContext& context,

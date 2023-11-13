@@ -45,21 +45,21 @@ TagHoldsMetadata::TagHoldsMetadata(
 future<StatusOr<google::longrunning::Operation>>
 TagHoldsMetadata::AsyncCreateTagHold(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateTagHold(cq, std::move(context), request);
+  return child_->AsyncCreateTagHold(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TagHoldsMetadata::AsyncDeleteTagHold(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteTagHold(cq, std::move(context), request);
+  return child_->AsyncDeleteTagHold(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
@@ -74,20 +74,20 @@ TagHoldsMetadata::ListTagHolds(
 future<StatusOr<google::longrunning::Operation>>
 TagHoldsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> TagHoldsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void TagHoldsMetadata::SetMetadata(grpc::ClientContext& context,

@@ -128,16 +128,17 @@ Status StorageTransferServiceLogging::ResumeTransferOperation(
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceLogging::AsyncRunTransferJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::storagetransfer::v1::RunTransferJobRequest const& request) {
-        return child_->AsyncRunTransferJob(cq, std::move(context), request);
+        return child_->AsyncRunTransferJob(cq, std::move(context), options,
+                                           request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 Status StorageTransferServiceLogging::DeleteTransferJob(
@@ -218,28 +219,32 @@ Status StorageTransferServiceLogging::DeleteAgentPool(
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), request);
+        return child_->AsyncGetOperation(cq, std::move(context), options,
+                                         request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<Status> StorageTransferServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), request);
+        return child_->AsyncCancelOperation(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

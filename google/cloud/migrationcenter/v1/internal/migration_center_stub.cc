@@ -135,7 +135,7 @@ DefaultMigrationCenterStub::AggregateAssetsValues(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreateImportJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::CreateImportJobRequest,
@@ -177,7 +177,7 @@ DefaultMigrationCenterStub::GetImportJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeleteImportJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::DeleteImportJobRequest,
@@ -195,7 +195,7 @@ DefaultMigrationCenterStub::AsyncDeleteImportJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncUpdateImportJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::UpdateImportJobRequest,
@@ -213,7 +213,7 @@ DefaultMigrationCenterStub::AsyncUpdateImportJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncValidateImportJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -232,7 +232,7 @@ DefaultMigrationCenterStub::AsyncValidateImportJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncRunImportJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::RunImportJobRequest,
@@ -278,7 +278,7 @@ DefaultMigrationCenterStub::ListImportDataFiles(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreateImportDataFile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -298,7 +298,7 @@ DefaultMigrationCenterStub::AsyncCreateImportDataFile(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeleteImportDataFile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -342,7 +342,7 @@ DefaultMigrationCenterStub::GetGroup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreateGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::CreateGroupRequest,
@@ -360,7 +360,7 @@ DefaultMigrationCenterStub::AsyncCreateGroup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncUpdateGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::UpdateGroupRequest,
@@ -378,7 +378,7 @@ DefaultMigrationCenterStub::AsyncUpdateGroup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeleteGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::DeleteGroupRequest,
@@ -396,7 +396,7 @@ DefaultMigrationCenterStub::AsyncDeleteGroup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncAddAssetsToGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -415,7 +415,7 @@ DefaultMigrationCenterStub::AsyncAddAssetsToGroup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncRemoveAssetsFromGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -483,7 +483,7 @@ DefaultMigrationCenterStub::GetSource(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreateSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::CreateSourceRequest,
@@ -501,7 +501,7 @@ DefaultMigrationCenterStub::AsyncCreateSource(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncUpdateSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::UpdateSourceRequest,
@@ -519,7 +519,7 @@ DefaultMigrationCenterStub::AsyncUpdateSource(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeleteSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::DeleteSourceRequest,
@@ -565,7 +565,7 @@ DefaultMigrationCenterStub::GetPreferenceSet(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreatePreferenceSet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -585,7 +585,7 @@ DefaultMigrationCenterStub::AsyncCreatePreferenceSet(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncUpdatePreferenceSet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -605,7 +605,7 @@ DefaultMigrationCenterStub::AsyncUpdatePreferenceSet(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeletePreferenceSet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -637,7 +637,7 @@ DefaultMigrationCenterStub::GetSettings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncUpdateSettings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::UpdateSettingsRequest,
@@ -655,7 +655,7 @@ DefaultMigrationCenterStub::AsyncUpdateSettings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreateReportConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -702,7 +702,7 @@ DefaultMigrationCenterStub::ListReportConfigs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeleteReportConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -722,7 +722,7 @@ DefaultMigrationCenterStub::AsyncDeleteReportConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreateReport(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::CreateReportRequest,
@@ -764,7 +764,7 @@ DefaultMigrationCenterStub::ListReports(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeleteReport(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::migrationcenter::v1::DeleteReportRequest,
@@ -782,7 +782,7 @@ DefaultMigrationCenterStub::AsyncDeleteReport(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -797,7 +797,7 @@ DefaultMigrationCenterStub::AsyncGetOperation(
 
 future<Status> DefaultMigrationCenterStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

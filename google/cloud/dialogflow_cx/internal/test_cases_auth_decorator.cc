@@ -78,39 +78,39 @@ TestCasesAuth::UpdateTestCase(
 future<StatusOr<google::longrunning::Operation>>
 TestCasesAuth::AsyncRunTestCase(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRunTestCase(cq, *std::move(context), request);
+        return child->AsyncRunTestCase(cq, *std::move(context), options,
+                                       request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TestCasesAuth::AsyncBatchRunTestCases(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchRunTestCases(cq, *std::move(context), request);
+        return child->AsyncBatchRunTestCases(cq, *std::move(context), options,
+                                             request);
       });
 }
 
@@ -127,38 +127,38 @@ TestCasesAuth::CalculateCoverage(
 future<StatusOr<google::longrunning::Operation>>
 TestCasesAuth::AsyncImportTestCases(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncImportTestCases(cq, *std::move(context), request);
+        return child->AsyncImportTestCases(cq, *std::move(context), options,
+                                           request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TestCasesAuth::AsyncExportTestCases(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncExportTestCases(cq, *std::move(context), request);
+        return child->AsyncExportTestCases(cq, *std::move(context), options,
+                                           request);
       });
 }
 
@@ -185,34 +185,34 @@ TestCasesAuth::GetTestCaseResult(
 future<StatusOr<google::longrunning::Operation>>
 TestCasesAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), request);
+        return child->AsyncGetOperation(cq, *std::move(context), options,
+                                        request);
       });
 }
 
 future<Status> TestCasesAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), request);
+        return child->AsyncCancelOperation(cq, *std::move(context), options,
+                                           request);
       });
 }
 

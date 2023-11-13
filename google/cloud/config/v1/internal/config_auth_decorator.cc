@@ -50,57 +50,57 @@ StatusOr<google::cloud::config::v1::Deployment> ConfigAuth::GetDeployment(
 future<StatusOr<google::longrunning::Operation>>
 ConfigAuth::AsyncCreateDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::config::v1::CreateDeploymentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDeployment(cq, *std::move(context), request);
+        return child->AsyncCreateDeployment(cq, *std::move(context), options,
+                                            request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigAuth::AsyncUpdateDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::config::v1::UpdateDeploymentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDeployment(cq, *std::move(context), request);
+        return child->AsyncUpdateDeployment(cq, *std::move(context), options,
+                                            request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigAuth::AsyncDeleteDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::config::v1::DeleteDeploymentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDeployment(cq, *std::move(context), request);
+        return child->AsyncDeleteDeployment(cq, *std::move(context), options,
+                                            request);
       });
 }
 
@@ -176,38 +176,38 @@ Status ConfigAuth::DeleteStatefile(
 future<StatusOr<google::longrunning::Operation>>
 ConfigAuth::AsyncLockDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::config::v1::LockDeploymentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncLockDeployment(cq, *std::move(context), request);
+        return child->AsyncLockDeployment(cq, *std::move(context), options,
+                                          request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigAuth::AsyncUnlockDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::config::v1::UnlockDeploymentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUnlockDeployment(cq, *std::move(context), request);
+        return child->AsyncUnlockDeployment(cq, *std::move(context), options,
+                                            request);
       });
 }
 
@@ -221,34 +221,34 @@ StatusOr<google::cloud::config::v1::LockInfo> ConfigAuth::ExportLockInfo(
 
 future<StatusOr<google::longrunning::Operation>> ConfigAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), request);
+        return child->AsyncGetOperation(cq, *std::move(context), options,
+                                        request);
       });
 }
 
 future<Status> ConfigAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), request);
+        return child->AsyncCancelOperation(cq, *std::move(context), options,
+                                           request);
       });
 }
 

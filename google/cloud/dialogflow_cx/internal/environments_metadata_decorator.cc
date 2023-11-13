@@ -63,24 +63,26 @@ EnvironmentsMetadata::GetEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateEnvironment(cq, std::move(context), request);
+  return child_->AsyncCreateEnvironment(cq, std::move(context), options,
+                                        request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("environment.name=",
                            internal::UrlEncode(request.environment().name())));
-  return child_->AsyncUpdateEnvironment(cq, std::move(context), request);
+  return child_->AsyncUpdateEnvironment(cq, std::move(context), options,
+                                        request);
 }
 
 Status EnvironmentsMetadata::DeleteEnvironment(
@@ -105,13 +107,14 @@ EnvironmentsMetadata::LookupEnvironmentHistory(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncRunContinuousTest(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
         request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("environment=", internal::UrlEncode(request.environment())));
-  return child_->AsyncRunContinuousTest(cq, std::move(context), request);
+  return child_->AsyncRunContinuousTest(cq, std::move(context), options,
+                                        request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
@@ -127,31 +130,31 @@ EnvironmentsMetadata::ListContinuousTestResults(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncDeployFlow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("environment=", internal::UrlEncode(request.environment())));
-  return child_->AsyncDeployFlow(cq, std::move(context), request);
+  return child_->AsyncDeployFlow(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> EnvironmentsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void EnvironmentsMetadata::SetMetadata(grpc::ClientContext& context,

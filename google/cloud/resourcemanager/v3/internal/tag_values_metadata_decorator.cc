@@ -71,31 +71,31 @@ TagValuesMetadata::GetNamespacedTagValue(
 future<StatusOr<google::longrunning::Operation>>
 TagValuesMetadata::AsyncCreateTagValue(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncCreateTagValue(cq, std::move(context), request);
+  SetMetadata(*context, options);
+  return child_->AsyncCreateTagValue(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TagValuesMetadata::AsyncUpdateTagValue(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("tag_value.name=",
                            internal::UrlEncode(request.tag_value().name())));
-  return child_->AsyncUpdateTagValue(cq, std::move(context), request);
+  return child_->AsyncUpdateTagValue(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TagValuesMetadata::AsyncDeleteTagValue(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteTagValue(cq, std::move(context), request);
+  return child_->AsyncDeleteTagValue(cq, std::move(context), options, request);
 }
 
 StatusOr<google::iam::v1::Policy> TagValuesMetadata::GetIamPolicy(
@@ -129,20 +129,20 @@ TagValuesMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 TagValuesMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> TagValuesMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void TagValuesMetadata::SetMetadata(grpc::ClientContext& context,

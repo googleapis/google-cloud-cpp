@@ -49,7 +49,7 @@ class DomainsTracingStub : public DomainsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncRegisterDomain(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::domains::v1::RegisterDomainRequest const& request)
       override;
 
@@ -61,7 +61,7 @@ class DomainsTracingStub : public DomainsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncTransferDomain(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::domains::v1::TransferDomainRequest const& request)
       override;
 
@@ -77,39 +77,39 @@ class DomainsTracingStub : public DomainsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRegistration(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::domains::v1::UpdateRegistrationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncConfigureManagementSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncConfigureDnsSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncConfigureContactSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::domains::v1::ConfigureContactSettingsRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportRegistration(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::domains::v1::ExportRegistrationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRegistration(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::domains::v1::DeleteRegistrationRequest const& request)
       override;
 
@@ -127,12 +127,12 @@ class DomainsTracingStub : public DomainsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

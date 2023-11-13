@@ -135,7 +135,7 @@ TEST_F(MetadataDecoratorTest, ListDatabases) {
 TEST_F(MetadataDecoratorTest, CreateDatabase) {
   EXPECT_CALL(*mock_, AsyncCreateDatabase)
       .WillOnce(
-          [this](google::cloud::CompletionQueue&, auto context,
+          [this](google::cloud::CompletionQueue&, auto context, Options const&,
                  google::test::admin::database::v1::CreateDatabaseRequest const&
                      request) {
             IsContextMDValid(*context,
@@ -150,7 +150,7 @@ TEST_F(MetadataDecoratorTest, CreateDatabase) {
   google::test::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
   auto status = stub.AsyncCreateDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -158,7 +158,7 @@ TEST_F(MetadataDecoratorTest, UpdateDatabaseDdl) {
   EXPECT_CALL(*mock_, AsyncUpdateDatabaseDdl)
       .WillOnce(
           [this](
-              google::cloud::CompletionQueue&, auto context,
+              google::cloud::CompletionQueue&, auto context, Options const&,
               google::test::admin::database::v1::UpdateDatabaseDdlRequest const&
                   request) {
             IsContextMDValid(*context,
@@ -174,7 +174,7 @@ TEST_F(MetadataDecoratorTest, UpdateDatabaseDdl) {
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
   auto status = stub.AsyncUpdateDatabaseDdl(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -286,7 +286,7 @@ TEST_F(MetadataDecoratorTest, TestIamPermissions) {
 TEST_F(MetadataDecoratorTest, CreateBackup) {
   EXPECT_CALL(*mock_, AsyncCreateBackup)
       .WillOnce(
-          [this](google::cloud::CompletionQueue&, auto context,
+          [this](google::cloud::CompletionQueue&, auto context, Options const&,
                  google::test::admin::database::v1::CreateBackupRequest const&
                      request) {
             IsContextMDValid(
@@ -301,7 +301,7 @@ TEST_F(MetadataDecoratorTest, CreateBackup) {
   google::test::admin::database::v1::CreateBackupRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
   auto status = stub.AsyncCreateBackup(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -394,6 +394,7 @@ TEST_F(MetadataDecoratorTest, ListBackups) {
 TEST_F(MetadataDecoratorTest, RestoreDatabase) {
   EXPECT_CALL(*mock_, AsyncRestoreDatabase)
       .WillOnce([this](google::cloud::CompletionQueue&, auto context,
+                       Options const&,
                        google::test::admin::database::v1::
                            RestoreDatabaseRequest const& request) {
         IsContextMDValid(
@@ -408,7 +409,7 @@ TEST_F(MetadataDecoratorTest, RestoreDatabase) {
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
   auto status = stub.AsyncRestoreDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -504,7 +505,7 @@ TEST_F(MetadataDecoratorTest, LongRunningWithoutRouting) {
   EXPECT_CALL(*mock_, AsyncLongRunningWithoutRouting)
       .WillOnce(
           [this](
-              google::cloud::CompletionQueue&, auto context,
+              google::cloud::CompletionQueue&, auto context, Options const&,
               google::test::admin::database::v1::RestoreDatabaseRequest const&
                   request) {
             IsContextMDValid(*context,
@@ -519,33 +520,34 @@ TEST_F(MetadataDecoratorTest, LongRunningWithoutRouting) {
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
   auto status = stub.AsyncLongRunningWithoutRouting(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
 TEST_F(MetadataDecoratorTest, GetOperation) {
   EXPECT_CALL(*mock_, AsyncGetOperation)
-      .WillOnce([this](
-                    google::cloud::CompletionQueue&, auto context,
-                    google::longrunning::GetOperationRequest const& request) {
-        IsContextMDValid(*context, "google.longrunning.Operations.GetOperation",
-                         request);
-        return LongrunningTransientError();
-      });
+      .WillOnce(
+          [this](google::cloud::CompletionQueue&, auto context, Options const&,
+                 google::longrunning::GetOperationRequest const& request) {
+            IsContextMDValid(*context,
+                             "google.longrunning.Operations.GetOperation",
+                             request);
+            return LongrunningTransientError();
+          });
 
   GoldenThingAdminMetadata stub(mock_, {});
   CompletionQueue cq;
   google::longrunning::GetOperationRequest request;
   request.set_name("operations/my_operation");
   auto status = stub.AsyncGetOperation(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
 TEST_F(MetadataDecoratorTest, CancelOperation) {
   EXPECT_CALL(*mock_, AsyncCancelOperation)
       .WillOnce(
-          [this](google::cloud::CompletionQueue&, auto context,
+          [this](google::cloud::CompletionQueue&, auto context, Options const&,
                  google::longrunning::CancelOperationRequest const& request) {
             IsContextMDValid(*context,
                              "google.longrunning.Operations.CancelOperation",
@@ -558,7 +560,7 @@ TEST_F(MetadataDecoratorTest, CancelOperation) {
   google::longrunning::CancelOperationRequest request;
   request.set_name("operations/my_operation");
   auto status = stub.AsyncCancelOperation(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_EQ(TransientError(), status.get());
 }
 

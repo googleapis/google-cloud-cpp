@@ -66,55 +66,55 @@ NetworkServicesLogging::GetEndpointPolicy(
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncCreateEndpointPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
               request) {
         return child_->AsyncCreateEndpointPolicy(cq, std::move(context),
-                                                 request);
+                                                 options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncUpdateEndpointPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
               request) {
         return child_->AsyncUpdateEndpointPolicy(cq, std::move(context),
-                                                 request);
+                                                 options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncDeleteEndpointPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
               request) {
         return child_->AsyncDeleteEndpointPolicy(cq, std::move(context),
-                                                 request);
+                                                 options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse>
@@ -142,46 +142,52 @@ NetworkServicesLogging::GetGateway(
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncCreateGateway(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::CreateGatewayRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::CreateGatewayRequest const&
                  request) {
-        return child_->AsyncCreateGateway(cq, std::move(context), request);
+        return child_->AsyncCreateGateway(cq, std::move(context), options,
+                                          request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncUpdateGateway(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::UpdateGatewayRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::UpdateGatewayRequest const&
                  request) {
-        return child_->AsyncUpdateGateway(cq, std::move(context), request);
+        return child_->AsyncUpdateGateway(cq, std::move(context), options,
+                                          request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncDeleteGateway(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::DeleteGatewayRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::DeleteGatewayRequest const&
                  request) {
-        return child_->AsyncDeleteGateway(cq, std::move(context), request);
+        return child_->AsyncDeleteGateway(cq, std::move(context), options,
+                                          request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListGrpcRoutesResponse>
@@ -209,46 +215,52 @@ NetworkServicesLogging::GetGrpcRoute(
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncCreateGrpcRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::CreateGrpcRouteRequest const&
                  request) {
-        return child_->AsyncCreateGrpcRoute(cq, std::move(context), request);
+        return child_->AsyncCreateGrpcRoute(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncUpdateGrpcRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::UpdateGrpcRouteRequest const&
                  request) {
-        return child_->AsyncUpdateGrpcRoute(cq, std::move(context), request);
+        return child_->AsyncUpdateGrpcRoute(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncDeleteGrpcRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::DeleteGrpcRouteRequest const&
                  request) {
-        return child_->AsyncDeleteGrpcRoute(cq, std::move(context), request);
+        return child_->AsyncDeleteGrpcRoute(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListHttpRoutesResponse>
@@ -276,46 +288,52 @@ NetworkServicesLogging::GetHttpRoute(
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncCreateHttpRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::CreateHttpRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::CreateHttpRouteRequest const&
                  request) {
-        return child_->AsyncCreateHttpRoute(cq, std::move(context), request);
+        return child_->AsyncCreateHttpRoute(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncUpdateHttpRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::UpdateHttpRouteRequest const&
                  request) {
-        return child_->AsyncUpdateHttpRoute(cq, std::move(context), request);
+        return child_->AsyncUpdateHttpRoute(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncDeleteHttpRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::DeleteHttpRouteRequest const&
                  request) {
-        return child_->AsyncDeleteHttpRoute(cq, std::move(context), request);
+        return child_->AsyncDeleteHttpRoute(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListTcpRoutesResponse>
@@ -343,46 +361,52 @@ NetworkServicesLogging::GetTcpRoute(
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncCreateTcpRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::CreateTcpRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::CreateTcpRouteRequest const&
                  request) {
-        return child_->AsyncCreateTcpRoute(cq, std::move(context), request);
+        return child_->AsyncCreateTcpRoute(cq, std::move(context), options,
+                                           request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncUpdateTcpRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::UpdateTcpRouteRequest const&
                  request) {
-        return child_->AsyncUpdateTcpRoute(cq, std::move(context), request);
+        return child_->AsyncUpdateTcpRoute(cq, std::move(context), options,
+                                           request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncDeleteTcpRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::DeleteTcpRouteRequest const&
                  request) {
-        return child_->AsyncDeleteTcpRoute(cq, std::move(context), request);
+        return child_->AsyncDeleteTcpRoute(cq, std::move(context), options,
+                                           request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListTlsRoutesResponse>
@@ -410,46 +434,52 @@ NetworkServicesLogging::GetTlsRoute(
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncCreateTlsRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::CreateTlsRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::CreateTlsRouteRequest const&
                  request) {
-        return child_->AsyncCreateTlsRoute(cq, std::move(context), request);
+        return child_->AsyncCreateTlsRoute(cq, std::move(context), options,
+                                           request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncUpdateTlsRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::UpdateTlsRouteRequest const&
                  request) {
-        return child_->AsyncUpdateTlsRoute(cq, std::move(context), request);
+        return child_->AsyncUpdateTlsRoute(cq, std::move(context), options,
+                                           request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncDeleteTlsRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::DeleteTlsRouteRequest const&
                  request) {
-        return child_->AsyncDeleteTlsRoute(cq, std::move(context), request);
+        return child_->AsyncDeleteTlsRoute(cq, std::move(context), options,
+                                           request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListServiceBindingsResponse>
@@ -484,37 +514,37 @@ NetworkServicesLogging::GetServiceBinding(
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncCreateServiceBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::CreateServiceBindingRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::networkservices::v1::CreateServiceBindingRequest const&
               request) {
         return child_->AsyncCreateServiceBinding(cq, std::move(context),
-                                                 request);
+                                                 options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncDeleteServiceBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
               request) {
         return child_->AsyncDeleteServiceBinding(cq, std::move(context),
-                                                 request);
+                                                 options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListMeshesResponse>
@@ -544,73 +574,83 @@ NetworkServicesLogging::GetMesh(
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncCreateMesh(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::CreateMeshRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::CreateMeshRequest const&
                  request) {
-        return child_->AsyncCreateMesh(cq, std::move(context), request);
+        return child_->AsyncCreateMesh(cq, std::move(context), options,
+                                       request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncUpdateMesh(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::UpdateMeshRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::UpdateMeshRequest const&
                  request) {
-        return child_->AsyncUpdateMesh(cq, std::move(context), request);
+        return child_->AsyncUpdateMesh(cq, std::move(context), options,
+                                       request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncDeleteMesh(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkservices::v1::DeleteMeshRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::networkservices::v1::DeleteMeshRequest const&
                  request) {
-        return child_->AsyncDeleteMesh(cq, std::move(context), request);
+        return child_->AsyncDeleteMesh(cq, std::move(context), options,
+                                       request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), request);
+        return child_->AsyncGetOperation(cq, std::move(context), options,
+                                         request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<Status> NetworkServicesLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), request);
+        return child_->AsyncCancelOperation(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

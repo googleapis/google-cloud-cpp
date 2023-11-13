@@ -39,14 +39,14 @@ class OsConfigZonalServiceStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
           request) = 0;
 
@@ -72,7 +72,7 @@ class OsConfigZonalServiceStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
           request) = 0;
 
@@ -113,12 +113,12 @@ class OsConfigZonalServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -135,14 +135,14 @@ class DefaultOsConfigZonalServiceStub : public OsConfigZonalServiceStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
           request) override;
 
@@ -167,7 +167,7 @@ class DefaultOsConfigZonalServiceStub : public OsConfigZonalServiceStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
           request) override;
 
@@ -206,12 +206,12 @@ class DefaultOsConfigZonalServiceStub : public OsConfigZonalServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

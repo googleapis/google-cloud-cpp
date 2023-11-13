@@ -74,7 +74,7 @@ DefaultPipelineServiceStub::ListTrainingPipelines(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPipelineServiceStub::AsyncDeleteTrainingPipeline(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -144,7 +144,7 @@ DefaultPipelineServiceStub::ListPipelineJobs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPipelineServiceStub::AsyncDeletePipelineJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeletePipelineJobRequest,
@@ -174,7 +174,7 @@ Status DefaultPipelineServiceStub::CancelPipelineJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPipelineServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -189,7 +189,7 @@ DefaultPipelineServiceStub::AsyncGetOperation(
 
 future<Status> DefaultPipelineServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

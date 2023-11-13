@@ -33,38 +33,38 @@ AwsClustersAuth::AwsClustersAuth(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersAuth::AsyncCreateAwsCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAwsCluster(cq, *std::move(context), request);
+        return child->AsyncCreateAwsCluster(cq, *std::move(context), options,
+                                            request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersAuth::AsyncUpdateAwsCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAwsCluster(cq, *std::move(context), request);
+        return child->AsyncUpdateAwsCluster(cq, *std::move(context), options,
+                                            request);
       });
 }
 
@@ -89,19 +89,19 @@ AwsClustersAuth::ListAwsClusters(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersAuth::AsyncDeleteAwsCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAwsCluster(cq, *std::move(context), request);
+        return child->AsyncDeleteAwsCluster(cq, *std::move(context), options,
+                                            request);
       });
 }
 
@@ -118,38 +118,38 @@ AwsClustersAuth::GenerateAwsAccessToken(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersAuth::AsyncCreateAwsNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAwsNodePool(cq, *std::move(context), request);
+        return child->AsyncCreateAwsNodePool(cq, *std::move(context), options,
+                                             request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersAuth::AsyncUpdateAwsNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAwsNodePool(cq, *std::move(context), request);
+        return child->AsyncUpdateAwsNodePool(cq, *std::move(context), options,
+                                             request);
       });
 }
 
@@ -174,19 +174,19 @@ AwsClustersAuth::ListAwsNodePools(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersAuth::AsyncDeleteAwsNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAwsNodePool(cq, *std::move(context), request);
+        return child->AsyncDeleteAwsNodePool(cq, *std::move(context), options,
+                                             request);
       });
 }
 
@@ -203,34 +203,34 @@ AwsClustersAuth::GetAwsServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), request);
+        return child->AsyncGetOperation(cq, *std::move(context), options,
+                                        request);
       });
 }
 
 future<Status> AwsClustersAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), request);
+        return child->AsyncCancelOperation(cq, *std::move(context), options,
+                                           request);
       });
 }
 

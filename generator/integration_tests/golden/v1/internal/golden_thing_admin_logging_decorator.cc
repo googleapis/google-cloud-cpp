@@ -50,14 +50,16 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminLogging::AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::test::admin::database::v1::CreateDatabaseRequest const& request) {
-        return child_->AsyncCreateDatabase(cq, std::move(context), request);
+        return child_->AsyncCreateDatabase(cq, std::move(context), options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::Database>
@@ -76,14 +78,16 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminLogging::AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
-        return child_->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
+        return child_->AsyncUpdateDatabaseDdl(cq, std::move(context), options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 Status
@@ -150,14 +154,16 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminLogging::AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
       google::test::admin::database::v1::CreateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::test::admin::database::v1::CreateBackupRequest const& request) {
-        return child_->AsyncCreateBackup(cq, std::move(context), request);
+        return child_->AsyncCreateBackup(cq, std::move(context), options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
@@ -212,14 +218,16 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminLogging::AsyncRestoreDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
-        return child_->AsyncRestoreDatabase(cq, std::move(context), request);
+        return child_->AsyncRestoreDatabase(cq, std::move(context), options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
@@ -250,14 +258,16 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminLogging::AsyncLongRunningWithoutRouting(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
-        return child_->AsyncLongRunningWithoutRouting(cq, std::move(context), request);
+        return child_->AsyncLongRunningWithoutRouting(cq, std::move(context), options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -292,27 +302,31 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), request);
+        return child_->AsyncGetOperation(cq, std::move(context), options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<Status> GoldenThingAdminLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), request);
+        return child_->AsyncCancelOperation(cq, std::move(context), options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

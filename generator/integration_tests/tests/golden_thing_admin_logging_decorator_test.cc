@@ -43,7 +43,7 @@ class LoggingDecoratorTest : public ::testing::Test {
   }
 
   static future<StatusOr<google::longrunning::Operation>>
-  LongrunningTransientError(Unused, Unused, Unused) {
+  LongrunningTransientError() {
     return make_ready_future(
         StatusOr<google::longrunning::Operation>(TransientError()));
   }
@@ -102,7 +102,7 @@ TEST_F(LoggingDecoratorTest, CreateDatabase) {
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   CompletionQueue cq;
   auto status = stub.AsyncCreateDatabase(
-      cq, std::make_shared<grpc::ClientContext>(),
+      cq, std::make_shared<grpc::ClientContext>(), Options{},
       google::test::admin::database::v1::CreateDatabaseRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 
@@ -118,7 +118,7 @@ TEST_F(LoggingDecoratorTest, UpdateDatabaseDdl) {
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   CompletionQueue cq;
   auto status = stub.AsyncUpdateDatabaseDdl(
-      cq, std::make_shared<grpc::ClientContext>(),
+      cq, std::make_shared<grpc::ClientContext>(), Options{},
       google::test::admin::database::v1::UpdateDatabaseDdlRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 
@@ -203,7 +203,7 @@ TEST_F(LoggingDecoratorTest, CreateBackup) {
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   CompletionQueue cq;
   auto status = stub.AsyncCreateBackup(
-      cq, std::make_shared<grpc::ClientContext>(),
+      cq, std::make_shared<grpc::ClientContext>(), Options{},
       google::test::admin::database::v1::CreateBackupRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 
@@ -274,7 +274,7 @@ TEST_F(LoggingDecoratorTest, RestoreDatabase) {
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   CompletionQueue cq;
   auto status = stub.AsyncRestoreDatabase(
-      cq, std::make_shared<grpc::ClientContext>(),
+      cq, std::make_shared<grpc::ClientContext>(), Options{},
       google::test::admin::database::v1::RestoreDatabaseRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 
@@ -358,9 +358,9 @@ TEST_F(LoggingDecoratorTest, GetOperation) {
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   CompletionQueue cq;
-  auto status =
-      stub.AsyncGetOperation(cq, std::make_shared<grpc::ClientContext>(),
-                             google::longrunning::GetOperationRequest());
+  auto status = stub.AsyncGetOperation(
+      cq, std::make_shared<grpc::ClientContext>(), Options{},
+      google::longrunning::GetOperationRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 
   auto const log_lines = log_.ExtractLines();
@@ -374,9 +374,9 @@ TEST_F(LoggingDecoratorTest, CancelOperation) {
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   CompletionQueue cq;
-  auto status =
-      stub.AsyncCancelOperation(cq, std::make_shared<grpc::ClientContext>(),
-                                google::longrunning::CancelOperationRequest());
+  auto status = stub.AsyncCancelOperation(
+      cq, std::make_shared<grpc::ClientContext>(), Options{},
+      google::longrunning::CancelOperationRequest());
   EXPECT_EQ(TransientError(), status.get());
 
   auto const log_lines = log_.ExtractLines();

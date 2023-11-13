@@ -61,7 +61,7 @@ ReachabilityServiceTracingStub::GetConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceTracingStub::AsyncCreateConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -69,14 +69,14 @@ ReachabilityServiceTracingStub::AsyncCreateConnectivityTest(
       "CreateConnectivityTest");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateConnectivityTest(cq, context, request);
+  auto f = child_->AsyncCreateConnectivityTest(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceTracingStub::AsyncUpdateConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -84,14 +84,14 @@ ReachabilityServiceTracingStub::AsyncUpdateConnectivityTest(
       "UpdateConnectivityTest");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateConnectivityTest(cq, context, request);
+  auto f = child_->AsyncUpdateConnectivityTest(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceTracingStub::AsyncRerunConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -99,14 +99,14 @@ ReachabilityServiceTracingStub::AsyncRerunConnectivityTest(
       "RerunConnectivityTest");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRerunConnectivityTest(cq, context, request);
+  auto f = child_->AsyncRerunConnectivityTest(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceTracingStub::AsyncDeleteConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -114,32 +114,32 @@ ReachabilityServiceTracingStub::AsyncDeleteConnectivityTest(
       "DeleteConnectivityTest");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteConnectivityTest(cq, context, request);
+  auto f = child_->AsyncDeleteConnectivityTest(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> ReachabilityServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -62,21 +62,23 @@ StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Metadata::GetBucket(
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Metadata::AsyncCreateBucketAsync(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::logging::v2::CreateBucketRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateBucketAsync(cq, std::move(context), request);
+  return child_->AsyncCreateBucketAsync(cq, std::move(context), options,
+                                        request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Metadata::AsyncUpdateBucketAsync(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::logging::v2::UpdateBucketRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUpdateBucketAsync(cq, std::move(context), request);
+  return child_->AsyncUpdateBucketAsync(cq, std::move(context), options,
+                                        request);
 }
 
 StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Metadata::CreateBucket(
@@ -199,21 +201,21 @@ Status ConfigServiceV2Metadata::DeleteSink(
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Metadata::AsyncCreateLink(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::logging::v2::CreateLinkRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateLink(cq, std::move(context), request);
+  return child_->AsyncCreateLink(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Metadata::AsyncDeleteLink(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::logging::v2::DeleteLinkRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteLink(cq, std::move(context), request);
+  return child_->AsyncDeleteLink(cq, std::move(context), options, request);
 }
 
 StatusOr<google::logging::v2::ListLinksResponse>
@@ -314,29 +316,29 @@ StatusOr<google::logging::v2::Settings> ConfigServiceV2Metadata::UpdateSettings(
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Metadata::AsyncCopyLogEntries(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::logging::v2::CopyLogEntriesRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncCopyLogEntries(cq, std::move(context), request);
+  SetMetadata(*context, options);
+  return child_->AsyncCopyLogEntries(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Metadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> ConfigServiceV2Metadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void ConfigServiceV2Metadata::SetMetadata(grpc::ClientContext& context,

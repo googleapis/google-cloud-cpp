@@ -53,13 +53,13 @@ class SecureSourceManagerMetadata : public SecureSourceManagerStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
           request) override;
 
@@ -76,13 +76,13 @@ class SecureSourceManagerMetadata : public SecureSourceManagerStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRepository(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRepository(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
           request) override;
 
@@ -100,12 +100,12 @@ class SecureSourceManagerMetadata : public SecureSourceManagerStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

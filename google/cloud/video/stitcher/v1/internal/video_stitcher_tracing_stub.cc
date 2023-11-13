@@ -33,13 +33,13 @@ VideoStitcherServiceTracingStub::VideoStitcherServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceTracingStub::AsyncCreateCdnKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "CreateCdnKey");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateCdnKey(cq, context, request);
+  auto f = child_->AsyncCreateCdnKey(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -69,26 +69,26 @@ VideoStitcherServiceTracingStub::GetCdnKey(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceTracingStub::AsyncDeleteCdnKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "DeleteCdnKey");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteCdnKey(cq, context, request);
+  auto f = child_->AsyncDeleteCdnKey(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceTracingStub::AsyncUpdateCdnKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "UpdateCdnKey");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateCdnKey(cq, context, request);
+  auto f = child_->AsyncUpdateCdnKey(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -205,13 +205,13 @@ VideoStitcherServiceTracingStub::GetLiveAdTagDetail(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceTracingStub::AsyncCreateSlate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "CreateSlate");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateSlate(cq, context, request);
+  auto f = child_->AsyncCreateSlate(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -241,26 +241,26 @@ VideoStitcherServiceTracingStub::GetSlate(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceTracingStub::AsyncUpdateSlate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "UpdateSlate");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateSlate(cq, context, request);
+  auto f = child_->AsyncUpdateSlate(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceTracingStub::AsyncDeleteSlate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "DeleteSlate");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteSlate(cq, context, request);
+  auto f = child_->AsyncDeleteSlate(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -293,7 +293,7 @@ VideoStitcherServiceTracingStub::GetLiveSession(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceTracingStub::AsyncCreateLiveConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -301,7 +301,7 @@ VideoStitcherServiceTracingStub::AsyncCreateLiveConfig(
       "CreateLiveConfig");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateLiveConfig(cq, context, request);
+  auto f = child_->AsyncCreateLiveConfig(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -332,7 +332,7 @@ VideoStitcherServiceTracingStub::GetLiveConfig(
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceTracingStub::AsyncDeleteLiveConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -340,32 +340,32 @@ VideoStitcherServiceTracingStub::AsyncDeleteLiveConfig(
       "DeleteLiveConfig");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteLiveConfig(cq, context, request);
+  auto f = child_->AsyncDeleteLiveConfig(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> VideoStitcherServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -61,46 +61,52 @@ EdgeContainerLogging::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::edgecontainer::v1::CreateClusterRequest const&
                  request) {
-        return child_->AsyncCreateCluster(cq, std::move(context), request);
+        return child_->AsyncCreateCluster(cq, std::move(context), options,
+                                          request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::edgecontainer::v1::UpdateClusterRequest const&
                  request) {
-        return child_->AsyncUpdateCluster(cq, std::move(context), request);
+        return child_->AsyncUpdateCluster(cq, std::move(context), options,
+                                          request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::edgecontainer::v1::DeleteClusterRequest const&
                  request) {
-        return child_->AsyncDeleteCluster(cq, std::move(context), request);
+        return child_->AsyncDeleteCluster(cq, std::move(context), options,
+                                          request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
@@ -144,46 +150,52 @@ EdgeContainerLogging::GetNodePool(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncCreateNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::edgecontainer::v1::CreateNodePoolRequest const&
                  request) {
-        return child_->AsyncCreateNodePool(cq, std::move(context), request);
+        return child_->AsyncCreateNodePool(cq, std::move(context), options,
+                                           request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncUpdateNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::edgecontainer::v1::UpdateNodePoolRequest const&
                  request) {
-        return child_->AsyncUpdateNodePool(cq, std::move(context), request);
+        return child_->AsyncUpdateNodePool(cq, std::move(context), options,
+                                           request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncDeleteNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::edgecontainer::v1::DeleteNodePoolRequest const&
                  request) {
-        return child_->AsyncDeleteNodePool(cq, std::move(context), request);
+        return child_->AsyncDeleteNodePool(cq, std::move(context), options,
+                                           request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListMachinesResponse>
@@ -240,62 +252,68 @@ EdgeContainerLogging::GetVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncCreateVpnConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
                  request) {
-        return child_->AsyncCreateVpnConnection(cq, std::move(context),
+        return child_->AsyncCreateVpnConnection(cq, std::move(context), options,
                                                 request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncDeleteVpnConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
                  request) {
-        return child_->AsyncDeleteVpnConnection(cq, std::move(context),
+        return child_->AsyncDeleteVpnConnection(cq, std::move(context), options,
                                                 request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), request);
+        return child_->AsyncGetOperation(cq, std::move(context), options,
+                                         request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<Status> EdgeContainerLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), request);
+        return child_->AsyncCancelOperation(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

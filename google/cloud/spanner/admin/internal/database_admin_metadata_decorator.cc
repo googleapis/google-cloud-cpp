@@ -54,12 +54,12 @@ DatabaseAdminMetadata::ListDatabases(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncCreateDatabase(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateDatabase(cq, std::move(context), request);
+  return child_->AsyncCreateDatabase(cq, std::move(context), options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::Database>
@@ -74,25 +74,26 @@ DatabaseAdminMetadata::GetDatabase(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncUpdateDatabase(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::admin::database::v1::UpdateDatabaseRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("database.name=",
                            internal::UrlEncode(request.database().name())));
-  return child_->AsyncUpdateDatabase(cq, std::move(context), request);
+  return child_->AsyncUpdateDatabase(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("database=", internal::UrlEncode(request.database())));
-  return child_->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
+  return child_->AsyncUpdateDatabaseDdl(cq, std::move(context), options,
+                                        request);
 }
 
 Status DatabaseAdminMetadata::DropDatabase(
@@ -146,21 +147,21 @@ DatabaseAdminMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateBackup(cq, std::move(context), request);
+  return child_->AsyncCreateBackup(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCopyBackup(cq, std::move(context), request);
+  return child_->AsyncCopyBackup(cq, std::move(context), options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
@@ -202,12 +203,12 @@ DatabaseAdminMetadata::ListBackups(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncRestoreDatabase(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncRestoreDatabase(cq, std::move(context), request);
+  return child_->AsyncRestoreDatabase(cq, std::move(context), options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
@@ -243,20 +244,20 @@ DatabaseAdminMetadata::ListDatabaseRoles(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> DatabaseAdminMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void DatabaseAdminMetadata::SetMetadata(grpc::ClientContext& context,

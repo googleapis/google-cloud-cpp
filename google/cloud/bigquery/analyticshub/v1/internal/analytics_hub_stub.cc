@@ -196,7 +196,7 @@ DefaultAnalyticsHubServiceStub::SubscribeListing(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAnalyticsHubServiceStub::AsyncSubscribeDataExchange(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::bigquery::analyticshub::v1::
         SubscribeDataExchangeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -215,7 +215,7 @@ DefaultAnalyticsHubServiceStub::AsyncSubscribeDataExchange(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAnalyticsHubServiceStub::AsyncRefreshSubscription(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -293,7 +293,7 @@ DefaultAnalyticsHubServiceStub::RevokeSubscription(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAnalyticsHubServiceStub::AsyncDeleteSubscription(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -347,7 +347,7 @@ DefaultAnalyticsHubServiceStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAnalyticsHubServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -362,7 +362,7 @@ DefaultAnalyticsHubServiceStub::AsyncGetOperation(
 
 future<Status> DefaultAnalyticsHubServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

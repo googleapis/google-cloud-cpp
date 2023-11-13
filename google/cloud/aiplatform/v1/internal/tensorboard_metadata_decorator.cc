@@ -45,11 +45,12 @@ TensorboardServiceMetadata::TensorboardServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceMetadata::AsyncCreateTensorboard(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateTensorboard(cq, std::move(context), request);
+  return child_->AsyncCreateTensorboard(cq, std::move(context), options,
+                                        request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
@@ -64,12 +65,13 @@ TensorboardServiceMetadata::GetTensorboard(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceMetadata::AsyncUpdateTensorboard(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("tensorboard.name=",
                            internal::UrlEncode(request.tensorboard().name())));
-  return child_->AsyncUpdateTensorboard(cq, std::move(context), request);
+  return child_->AsyncUpdateTensorboard(cq, std::move(context), options,
+                                        request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardsResponse>
@@ -84,11 +86,12 @@ TensorboardServiceMetadata::ListTensorboards(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceMetadata::AsyncDeleteTensorboard(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteTensorboard(cq, std::move(context), request);
+  return child_->AsyncDeleteTensorboard(cq, std::move(context), options,
+                                        request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
@@ -156,13 +159,13 @@ TensorboardServiceMetadata::ListTensorboardExperiments(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceMetadata::AsyncDeleteTensorboardExperiment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTensorboardExperiment(cq, std::move(context),
-                                                  request);
+                                                  options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
@@ -216,11 +219,12 @@ TensorboardServiceMetadata::ListTensorboardRuns(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceMetadata::AsyncDeleteTensorboardRun(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteTensorboardRun(cq, std::move(context), request);
+  return child_->AsyncDeleteTensorboardRun(cq, std::move(context), options,
+                                           request);
 }
 
 StatusOr<
@@ -279,13 +283,13 @@ TensorboardServiceMetadata::ListTensorboardTimeSeries(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceMetadata::AsyncDeleteTensorboardTimeSeries(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTensorboardTimeSeries(cq, std::move(context),
-                                                  request);
+                                                  options, request);
 }
 
 StatusOr<
@@ -362,20 +366,20 @@ TensorboardServiceMetadata::ExportTensorboardTimeSeriesData(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> TensorboardServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void TensorboardServiceMetadata::SetMetadata(

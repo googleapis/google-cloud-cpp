@@ -45,12 +45,12 @@ ConversationDatasetsMetadata::ConversationDatasetsMetadata(
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsMetadata::AsyncCreateConversationDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateConversationDataset(cq, std::move(context),
+  return child_->AsyncCreateConversationDataset(cq, std::move(context), options,
                                                 request);
 }
 
@@ -77,43 +77,44 @@ ConversationDatasetsMetadata::ListConversationDatasets(
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsMetadata::AsyncDeleteConversationDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteConversationDataset(cq, std::move(context),
+  return child_->AsyncDeleteConversationDataset(cq, std::move(context), options,
                                                 request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsMetadata::AsyncImportConversationData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&
         request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncImportConversationData(cq, std::move(context), request);
+  return child_->AsyncImportConversationData(cq, std::move(context), options,
+                                             request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> ConversationDatasetsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void ConversationDatasetsMetadata::SetMetadata(

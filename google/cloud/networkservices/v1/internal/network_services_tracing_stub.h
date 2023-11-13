@@ -52,19 +52,19 @@ class NetworkServicesTracingStub : public NetworkServicesStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEndpointPolicy(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateEndpointPolicy(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpointPolicy(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
           request) override;
 
@@ -80,19 +80,19 @@ class NetworkServicesTracingStub : public NetworkServicesStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGateway(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::CreateGatewayRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateGateway(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::UpdateGatewayRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGateway(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::DeleteGatewayRequest const& request)
       override;
 
@@ -109,19 +109,19 @@ class NetworkServicesTracingStub : public NetworkServicesStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGrpcRoute(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateGrpcRoute(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGrpcRoute(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request)
       override;
 
@@ -138,19 +138,19 @@ class NetworkServicesTracingStub : public NetworkServicesStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateHttpRoute(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::CreateHttpRouteRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateHttpRoute(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteHttpRoute(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request)
       override;
 
@@ -166,19 +166,19 @@ class NetworkServicesTracingStub : public NetworkServicesStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTcpRoute(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::CreateTcpRouteRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTcpRoute(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTcpRoute(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request)
       override;
 
@@ -194,19 +194,19 @@ class NetworkServicesTracingStub : public NetworkServicesStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTlsRoute(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::CreateTlsRouteRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTlsRoute(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTlsRoute(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request)
       override;
 
@@ -224,13 +224,13 @@ class NetworkServicesTracingStub : public NetworkServicesStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateServiceBinding(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::CreateServiceBindingRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteServiceBinding(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
           request) override;
 
@@ -246,30 +246,30 @@ class NetworkServicesTracingStub : public NetworkServicesStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMesh(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::CreateMeshRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateMesh(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::UpdateMeshRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMesh(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::networkservices::v1::DeleteMeshRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

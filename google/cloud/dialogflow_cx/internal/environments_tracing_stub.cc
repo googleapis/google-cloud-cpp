@@ -57,28 +57,28 @@ EnvironmentsTracingStub::GetEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "CreateEnvironment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateEnvironment(cq, context, request);
+  auto f = child_->AsyncCreateEnvironment(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "UpdateEnvironment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateEnvironment(cq, context, request);
+  auto f = child_->AsyncUpdateEnvironment(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -110,14 +110,14 @@ EnvironmentsTracingStub::LookupEnvironmentHistory(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncRunContinuousTest(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "RunContinuousTest");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRunContinuousTest(cq, context, request);
+  auto f = child_->AsyncRunContinuousTest(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -138,38 +138,38 @@ EnvironmentsTracingStub::ListContinuousTestResults(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncDeployFlow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "DeployFlow");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeployFlow(cq, context, request);
+  auto f = child_->AsyncDeployFlow(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> EnvironmentsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

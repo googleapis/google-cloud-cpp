@@ -53,6 +53,16 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
 )""");
       continue;
     }
+    if (IsLongrunningOperation(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  future<StatusOr<google::longrunning::Operation>> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
+      $request_type$ const& request) override;
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty,
@@ -68,13 +78,6 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
 )"""},
                         {""}},
                        And(IsNonStreaming, Not(IsLongrunningOperation))),
-         MethodPattern({{R"""(
-  future<StatusOr<google::longrunning::Operation>> Async$method_name$(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      $request_type$ const& request) override;
-)"""}},
-                       IsLongrunningOperation),
          MethodPattern({{R"""(
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
   $method_name$(
@@ -134,11 +137,13 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 )""");
   }

@@ -45,29 +45,29 @@ VideoIntelligenceServiceMetadata::VideoIntelligenceServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 VideoIntelligenceServiceMetadata::AsyncAnnotateVideo(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncAnnotateVideo(cq, std::move(context), request);
+  SetMetadata(*context, options);
+  return child_->AsyncAnnotateVideo(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VideoIntelligenceServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> VideoIntelligenceServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void VideoIntelligenceServiceMetadata::SetMetadata(

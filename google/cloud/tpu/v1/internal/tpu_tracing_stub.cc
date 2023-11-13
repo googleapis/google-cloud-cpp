@@ -50,58 +50,58 @@ StatusOr<google::cloud::tpu::v1::Node> TpuTracingStub::GetNode(
 future<StatusOr<google::longrunning::Operation>>
 TpuTracingStub::AsyncCreateNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::tpu::v1::CreateNodeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "CreateNode");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateNode(cq, context, request);
+  auto f = child_->AsyncCreateNode(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TpuTracingStub::AsyncDeleteNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::tpu::v1::DeleteNodeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "DeleteNode");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteNode(cq, context, request);
+  auto f = child_->AsyncDeleteNode(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TpuTracingStub::AsyncReimageNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::tpu::v1::ReimageNodeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "ReimageNode");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncReimageNode(cq, context, request);
+  auto f = child_->AsyncReimageNode(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStopNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::tpu::v1::StopNodeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "StopNode");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStopNode(cq, context, request);
+  auto f = child_->AsyncStopNode(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStartNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::tpu::v1::StartNodeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "StartNode");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStartNode(cq, context, request);
+  auto f = child_->AsyncStartNode(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -156,25 +156,25 @@ TpuTracingStub::GetAcceleratorType(
 future<StatusOr<google::longrunning::Operation>>
 TpuTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> TpuTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

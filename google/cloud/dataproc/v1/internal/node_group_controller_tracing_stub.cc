@@ -33,26 +33,26 @@ NodeGroupControllerTracingStub::NodeGroupControllerTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerTracingStub::AsyncCreateNodeGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dataproc.v1.NodeGroupController", "CreateNodeGroup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateNodeGroup(cq, context, request);
+  auto f = child_->AsyncCreateNodeGroup(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerTracingStub::AsyncResizeNodeGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dataproc.v1.NodeGroupController", "ResizeNodeGroup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncResizeNodeGroup(cq, context, request);
+  auto f = child_->AsyncResizeNodeGroup(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -71,25 +71,25 @@ NodeGroupControllerTracingStub::GetNodeGroup(
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> NodeGroupControllerTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

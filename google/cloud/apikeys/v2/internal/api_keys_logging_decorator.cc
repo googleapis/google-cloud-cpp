@@ -36,15 +36,16 @@ ApiKeysLogging::ApiKeysLogging(std::shared_ptr<ApiKeysStub> child,
 
 future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncCreateKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::api::apikeys::v2::CreateKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::api::apikeys::v2::CreateKeyRequest const& request) {
-        return child_->AsyncCreateKey(cq, std::move(context), request);
+        return child_->AsyncCreateKey(cq, std::move(context), options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysLogging::ListKeys(
@@ -83,42 +84,46 @@ ApiKeysLogging::GetKeyString(
 
 future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncUpdateKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::api::apikeys::v2::UpdateKeyRequest const& request) {
-        return child_->AsyncUpdateKey(cq, std::move(context), request);
+        return child_->AsyncUpdateKey(cq, std::move(context), options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::api::apikeys::v2::DeleteKeyRequest const& request) {
-        return child_->AsyncDeleteKey(cq, std::move(context), request);
+        return child_->AsyncDeleteKey(cq, std::move(context), options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysLogging::AsyncUndeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::api::apikeys::v2::UndeleteKeyRequest const& request) {
-        return child_->AsyncUndeleteKey(cq, std::move(context), request);
+        return child_->AsyncUndeleteKey(cq, std::move(context), options,
+                                        request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysLogging::LookupKey(
@@ -135,28 +140,32 @@ StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysLogging::LookupKey(
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), request);
+        return child_->AsyncGetOperation(cq, std::move(context), options,
+                                         request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<Status> ApiKeysLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), request);
+        return child_->AsyncCancelOperation(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

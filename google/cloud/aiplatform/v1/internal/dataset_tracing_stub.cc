@@ -33,13 +33,13 @@ DatasetServiceTracingStub::DatasetServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceTracingStub::AsyncCreateDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "CreateDataset");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateDataset(cq, context, request);
+  auto f = child_->AsyncCreateDataset(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -82,65 +82,65 @@ DatasetServiceTracingStub::ListDatasets(
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceTracingStub::AsyncDeleteDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "DeleteDataset");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteDataset(cq, context, request);
+  auto f = child_->AsyncDeleteDataset(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceTracingStub::AsyncImportData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::ImportDataRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "ImportData");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncImportData(cq, context, request);
+  auto f = child_->AsyncImportData(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceTracingStub::AsyncExportData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::ExportDataRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "ExportData");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncExportData(cq, context, request);
+  auto f = child_->AsyncExportData(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceTracingStub::AsyncCreateDatasetVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "CreateDatasetVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateDatasetVersion(cq, context, request);
+  auto f = child_->AsyncCreateDatasetVersion(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceTracingStub::AsyncDeleteDatasetVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "DeleteDatasetVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteDatasetVersion(cq, context, request);
+  auto f = child_->AsyncDeleteDatasetVersion(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -171,14 +171,14 @@ DatasetServiceTracingStub::ListDatasetVersions(
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceTracingStub::AsyncRestoreDatasetVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "RestoreDatasetVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRestoreDatasetVersion(cq, context, request);
+  auto f = child_->AsyncRestoreDatasetVersion(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -221,13 +221,13 @@ DatasetServiceTracingStub::ListSavedQueries(
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceTracingStub::AsyncDeleteSavedQuery(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "DeleteSavedQuery");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteSavedQuery(cq, context, request);
+  auto f = child_->AsyncDeleteSavedQuery(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -258,25 +258,25 @@ DatasetServiceTracingStub::ListAnnotations(
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> DatasetServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

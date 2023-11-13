@@ -34,13 +34,13 @@ TensorboardServiceTracingStub::TensorboardServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceTracingStub::AsyncCreateTensorboard(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.TensorboardService", "CreateTensorboard");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateTensorboard(cq, context, request);
+  auto f = child_->AsyncCreateTensorboard(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -59,13 +59,13 @@ TensorboardServiceTracingStub::GetTensorboard(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceTracingStub::AsyncUpdateTensorboard(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.TensorboardService", "UpdateTensorboard");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateTensorboard(cq, context, request);
+  auto f = child_->AsyncUpdateTensorboard(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -84,13 +84,13 @@ TensorboardServiceTracingStub::ListTensorboards(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceTracingStub::AsyncDeleteTensorboard(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.TensorboardService", "DeleteTensorboard");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteTensorboard(cq, context, request);
+  auto f = child_->AsyncDeleteTensorboard(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -177,7 +177,7 @@ TensorboardServiceTracingStub::ListTensorboardExperiments(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceTracingStub::AsyncDeleteTensorboardExperiment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
         request) {
   auto span =
@@ -185,7 +185,8 @@ TensorboardServiceTracingStub::AsyncDeleteTensorboardExperiment(
                              "DeleteTensorboardExperiment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteTensorboardExperiment(cq, context, request);
+  auto f =
+      child_->AsyncDeleteTensorboardExperiment(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -254,13 +255,13 @@ TensorboardServiceTracingStub::ListTensorboardRuns(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceTracingStub::AsyncDeleteTensorboardRun(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.TensorboardService", "DeleteTensorboardRun");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteTensorboardRun(cq, context, request);
+  auto f = child_->AsyncDeleteTensorboardRun(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -339,7 +340,7 @@ TensorboardServiceTracingStub::ListTensorboardTimeSeries(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceTracingStub::AsyncDeleteTensorboardTimeSeries(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
         request) {
   auto span =
@@ -347,7 +348,8 @@ TensorboardServiceTracingStub::AsyncDeleteTensorboardTimeSeries(
                              "DeleteTensorboardTimeSeries");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteTensorboardTimeSeries(cq, context, request);
+  auto f =
+      child_->AsyncDeleteTensorboardTimeSeries(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -444,25 +446,25 @@ TensorboardServiceTracingStub::ExportTensorboardTimeSeriesData(
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> TensorboardServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

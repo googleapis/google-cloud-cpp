@@ -53,19 +53,19 @@ class TagKeysStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateTagKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::resourcemanager::v3::CreateTagKeyRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateTagKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::resourcemanager::v3::UpdateTagKeyRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::resourcemanager::v3::DeleteTagKeyRequest const&
           request) = 0;
 
@@ -84,12 +84,12 @@ class TagKeysStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -120,19 +120,19 @@ class DefaultTagKeysStub : public TagKeysStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTagKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTagKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request)
       override;
 
@@ -150,12 +150,12 @@ class DefaultTagKeysStub : public TagKeysStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

@@ -33,7 +33,7 @@ TensorboardServiceStub::~TensorboardServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncCreateTensorboard(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::CreateTensorboardRequest,
@@ -63,7 +63,7 @@ DefaultTensorboardServiceStub::GetTensorboard(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncUpdateTensorboard(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::UpdateTensorboardRequest,
@@ -94,7 +94,7 @@ DefaultTensorboardServiceStub::ListTensorboards(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncDeleteTensorboard(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteTensorboardRequest,
@@ -194,7 +194,7 @@ DefaultTensorboardServiceStub::ListTensorboardExperiments(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncDeleteTensorboardExperiment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -280,7 +280,7 @@ DefaultTensorboardServiceStub::ListTensorboardRuns(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncDeleteTensorboardRun(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteTensorboardRunRequest,
@@ -370,7 +370,7 @@ DefaultTensorboardServiceStub::ListTensorboardTimeSeries(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncDeleteTensorboardTimeSeries(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -477,7 +477,7 @@ DefaultTensorboardServiceStub::ExportTensorboardTimeSeriesData(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -492,7 +492,7 @@ DefaultTensorboardServiceStub::AsyncGetOperation(
 
 future<Status> DefaultTensorboardServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -38,7 +38,7 @@ class ModelServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::retail::v2::CreateModelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::retail::v2::Model> GetModel(
@@ -67,17 +67,17 @@ class ModelServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncTuneModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::retail::v2::TuneModelRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -92,7 +92,7 @@ class DefaultModelServiceStub : public ModelServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> GetModel(
@@ -121,17 +121,17 @@ class DefaultModelServiceStub : public ModelServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncTuneModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

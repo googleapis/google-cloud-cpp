@@ -33,7 +33,7 @@ OsConfigZonalServiceStub::~OsConfigZonalServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultOsConfigZonalServiceStub::AsyncCreateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -52,7 +52,7 @@ DefaultOsConfigZonalServiceStub::AsyncCreateOSPolicyAssignment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultOsConfigZonalServiceStub::AsyncUpdateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -112,7 +112,7 @@ DefaultOsConfigZonalServiceStub::ListOSPolicyAssignmentRevisions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultOsConfigZonalServiceStub::AsyncDeleteOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -211,7 +211,7 @@ DefaultOsConfigZonalServiceStub::ListVulnerabilityReports(
 future<StatusOr<google::longrunning::Operation>>
 DefaultOsConfigZonalServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -226,7 +226,7 @@ DefaultOsConfigZonalServiceStub::AsyncGetOperation(
 
 future<Status> DefaultOsConfigZonalServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -65,48 +65,54 @@ AccessContextManagerLogging::GetAccessPolicy(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncCreateAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::AccessPolicy const&
                  request) {
-        return child_->AsyncCreateAccessPolicy(cq, std::move(context), request);
+        return child_->AsyncCreateAccessPolicy(cq, std::move(context), options,
+                                               request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncUpdateAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  UpdateAccessPolicyRequest const& request) {
-        return child_->AsyncUpdateAccessPolicy(cq, std::move(context), request);
+        return child_->AsyncUpdateAccessPolicy(cq, std::move(context), options,
+                                               request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncDeleteAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  DeleteAccessPolicyRequest const& request) {
-        return child_->AsyncDeleteAccessPolicy(cq, std::move(context), request);
+        return child_->AsyncDeleteAccessPolicy(cq, std::move(context), options,
+                                               request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ListAccessLevelsResponse>
@@ -140,66 +146,73 @@ AccessContextManagerLogging::GetAccessLevel(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncCreateAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  CreateAccessLevelRequest const& request) {
-        return child_->AsyncCreateAccessLevel(cq, std::move(context), request);
+        return child_->AsyncCreateAccessLevel(cq, std::move(context), options,
+                                              request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncUpdateAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  UpdateAccessLevelRequest const& request) {
-        return child_->AsyncUpdateAccessLevel(cq, std::move(context), request);
+        return child_->AsyncUpdateAccessLevel(cq, std::move(context), options,
+                                              request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncDeleteAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  DeleteAccessLevelRequest const& request) {
-        return child_->AsyncDeleteAccessLevel(cq, std::move(context), request);
+        return child_->AsyncDeleteAccessLevel(cq, std::move(context), options,
+                                              request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncReplaceAccessLevels(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::
         ReplaceAccessLevelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  ReplaceAccessLevelsRequest const& request) {
-        return child_->AsyncReplaceAccessLevels(cq, std::move(context),
+        return child_->AsyncReplaceAccessLevels(cq, std::move(context), options,
                                                 request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<
@@ -234,86 +247,91 @@ AccessContextManagerLogging::GetServicePerimeter(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncCreateServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::
         CreateServicePerimeterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  CreateServicePerimeterRequest const& request) {
         return child_->AsyncCreateServicePerimeter(cq, std::move(context),
-                                                   request);
+                                                   options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncUpdateServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::
         UpdateServicePerimeterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  UpdateServicePerimeterRequest const& request) {
         return child_->AsyncUpdateServicePerimeter(cq, std::move(context),
-                                                   request);
+                                                   options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncDeleteServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::
         DeleteServicePerimeterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  DeleteServicePerimeterRequest const& request) {
         return child_->AsyncDeleteServicePerimeter(cq, std::move(context),
-                                                   request);
+                                                   options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncReplaceServicePerimeters(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::
         ReplaceServicePerimetersRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  ReplaceServicePerimetersRequest const& request) {
         return child_->AsyncReplaceServicePerimeters(cq, std::move(context),
-                                                     request);
+                                                     options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncCommitServicePerimeters(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::
         CommitServicePerimetersRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  CommitServicePerimetersRequest const& request) {
         return child_->AsyncCommitServicePerimeters(cq, std::move(context),
-                                                    request);
+                                                    options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::
@@ -348,52 +366,55 @@ AccessContextManagerLogging::GetGcpUserAccessBinding(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncCreateGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::
         CreateGcpUserAccessBindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  CreateGcpUserAccessBindingRequest const& request) {
         return child_->AsyncCreateGcpUserAccessBinding(cq, std::move(context),
-                                                       request);
+                                                       options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncUpdateGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::
         UpdateGcpUserAccessBindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  UpdateGcpUserAccessBindingRequest const& request) {
         return child_->AsyncUpdateGcpUserAccessBinding(cq, std::move(context),
-                                                       request);
+                                                       options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncDeleteGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::identity::accesscontextmanager::v1::
         DeleteGcpUserAccessBindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::identity::accesscontextmanager::v1::
                  DeleteGcpUserAccessBindingRequest const& request) {
         return child_->AsyncDeleteGcpUserAccessBinding(cq, std::move(context),
-                                                       request);
+                                                       options, request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> AccessContextManagerLogging::SetIamPolicy(
@@ -433,28 +454,32 @@ AccessContextManagerLogging::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), request);
+        return child_->AsyncGetOperation(cq, std::move(context), options,
+                                         request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 future<Status> AccessContextManagerLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), request);
+        return child_->AsyncCancelOperation(cq, std::move(context), options,
+                                            request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

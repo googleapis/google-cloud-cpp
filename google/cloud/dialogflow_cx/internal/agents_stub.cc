@@ -91,7 +91,7 @@ Status DefaultAgentsStub::DeleteAgent(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAgentsStub::AsyncExportAgent(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::ExportAgentRequest,
@@ -109,7 +109,7 @@ DefaultAgentsStub::AsyncExportAgent(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAgentsStub::AsyncRestoreAgent(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::RestoreAgentRequest,
@@ -181,7 +181,7 @@ DefaultAgentsStub::UpdateGenerativeSettings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAgentsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -196,7 +196,7 @@ DefaultAgentsStub::AsyncGetOperation(
 
 future<Status> DefaultAgentsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

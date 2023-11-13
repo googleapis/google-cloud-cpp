@@ -57,7 +57,7 @@ DefaultHubServiceStub::GetHub(
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncCreateHub(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkconnectivity::v1::CreateHubRequest,
@@ -75,7 +75,7 @@ DefaultHubServiceStub::AsyncCreateHub(
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncUpdateHub(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkconnectivity::v1::UpdateHubRequest,
@@ -93,7 +93,7 @@ DefaultHubServiceStub::AsyncUpdateHub(
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncDeleteHub(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkconnectivity::v1::DeleteHubRequest,
@@ -148,7 +148,7 @@ DefaultHubServiceStub::GetSpoke(
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncCreateSpoke(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkconnectivity::v1::CreateSpokeRequest,
@@ -166,7 +166,7 @@ DefaultHubServiceStub::AsyncCreateSpoke(
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncUpdateSpoke(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest,
@@ -184,7 +184,7 @@ DefaultHubServiceStub::AsyncUpdateSpoke(
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncRejectHubSpoke(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -204,7 +204,7 @@ DefaultHubServiceStub::AsyncRejectHubSpoke(
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncAcceptHubSpoke(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -224,7 +224,7 @@ DefaultHubServiceStub::AsyncAcceptHubSpoke(
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest,
@@ -317,7 +317,7 @@ DefaultHubServiceStub::ListGroups(
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -332,7 +332,7 @@ DefaultHubServiceStub::AsyncGetOperation(
 
 future<Status> DefaultHubServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

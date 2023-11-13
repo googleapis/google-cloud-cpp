@@ -41,7 +41,7 @@ class LivestreamServiceAuth : public LivestreamServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateChannel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::video::livestream::v1::CreateChannelRequest const& request)
       override;
 
@@ -57,31 +57,31 @@ class LivestreamServiceAuth : public LivestreamServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteChannel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::video::livestream::v1::DeleteChannelRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateChannel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::video::livestream::v1::UpdateChannelRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartChannel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::video::livestream::v1::StartChannelRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopChannel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::video::livestream::v1::StopChannelRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInput(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::video::livestream::v1::CreateInputRequest const& request)
       override;
 
@@ -97,13 +97,13 @@ class LivestreamServiceAuth : public LivestreamServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInput(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::video::livestream::v1::DeleteInputRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInput(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::video::livestream::v1::UpdateInputRequest const& request)
       override;
 
@@ -129,13 +129,13 @@ class LivestreamServiceAuth : public LivestreamServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAsset(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::video::livestream::v1::CreateAssetRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAsset(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::video::livestream::v1::DeleteAssetRequest const& request)
       override;
 
@@ -156,18 +156,18 @@ class LivestreamServiceAuth : public LivestreamServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePool(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::video::livestream::v1::UpdatePoolRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

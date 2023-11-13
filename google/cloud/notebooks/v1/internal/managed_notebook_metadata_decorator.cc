@@ -63,92 +63,93 @@ ManagedNotebookServiceMetadata::GetRuntime(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncCreateRuntime(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateRuntime(cq, std::move(context), request);
+  return child_->AsyncCreateRuntime(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncUpdateRuntime(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("runtime.name=",
                            internal::UrlEncode(request.runtime().name())));
-  return child_->AsyncUpdateRuntime(cq, std::move(context), request);
+  return child_->AsyncUpdateRuntime(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncDeleteRuntime(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteRuntime(cq, std::move(context), request);
+  return child_->AsyncDeleteRuntime(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncStartRuntime(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncStartRuntime(cq, std::move(context), request);
+  return child_->AsyncStartRuntime(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncStopRuntime(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncStopRuntime(cq, std::move(context), request);
+  return child_->AsyncStopRuntime(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncSwitchRuntime(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncSwitchRuntime(cq, std::move(context), request);
+  return child_->AsyncSwitchRuntime(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncResetRuntime(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncResetRuntime(cq, std::move(context), request);
+  return child_->AsyncResetRuntime(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncUpgradeRuntime(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUpgradeRuntime(cq, std::move(context), request);
+  return child_->AsyncUpgradeRuntime(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncReportRuntimeEvent(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncReportRuntimeEvent(cq, std::move(context), request);
+  return child_->AsyncReportRuntimeEvent(cq, std::move(context), options,
+                                         request);
 }
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
@@ -164,30 +165,30 @@ ManagedNotebookServiceMetadata::RefreshRuntimeTokenInternal(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncDiagnoseRuntime(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDiagnoseRuntime(cq, std::move(context), request);
+  return child_->AsyncDiagnoseRuntime(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> ManagedNotebookServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void ManagedNotebookServiceMetadata::SetMetadata(

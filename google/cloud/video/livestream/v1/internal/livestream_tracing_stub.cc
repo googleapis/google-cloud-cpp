@@ -33,13 +33,13 @@ LivestreamServiceTracingStub::LivestreamServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncCreateChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "CreateChannel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateChannel(cq, context, request);
+  auto f = child_->AsyncCreateChannel(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -70,65 +70,65 @@ LivestreamServiceTracingStub::GetChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "DeleteChannel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteChannel(cq, context, request);
+  auto f = child_->AsyncDeleteChannel(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "UpdateChannel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateChannel(cq, context, request);
+  auto f = child_->AsyncUpdateChannel(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncStartChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::livestream::v1::StartChannelRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "StartChannel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStartChannel(cq, context, request);
+  auto f = child_->AsyncStartChannel(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncStopChannel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::livestream::v1::StopChannelRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "StopChannel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStopChannel(cq, context, request);
+  auto f = child_->AsyncStopChannel(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::livestream::v1::CreateInputRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "CreateInput");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateInput(cq, context, request);
+  auto f = child_->AsyncCreateInput(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -158,26 +158,26 @@ LivestreamServiceTracingStub::GetInput(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncDeleteInput(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "DeleteInput");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteInput(cq, context, request);
+  auto f = child_->AsyncDeleteInput(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncUpdateInput(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "UpdateInput");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateInput(cq, context, request);
+  auto f = child_->AsyncUpdateInput(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -230,26 +230,26 @@ Status LivestreamServiceTracingStub::DeleteEvent(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncCreateAsset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "CreateAsset");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateAsset(cq, context, request);
+  auto f = child_->AsyncCreateAsset(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "DeleteAsset");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteAsset(cq, context, request);
+  auto f = child_->AsyncDeleteAsset(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -290,38 +290,38 @@ LivestreamServiceTracingStub::GetPool(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncUpdatePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "UpdatePool");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdatePool(cq, context, request);
+  auto f = child_->AsyncUpdatePool(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> LivestreamServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

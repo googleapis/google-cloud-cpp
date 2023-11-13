@@ -45,11 +45,11 @@ ModelServiceMetadata::ModelServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncCreateModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::retail::v2::CreateModelRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateModel(cq, std::move(context), request);
+  return child_->AsyncCreateModel(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceMetadata::GetModel(
@@ -105,30 +105,30 @@ StatusOr<google::cloud::retail::v2::Model> ModelServiceMetadata::UpdateModel(
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncTuneModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::retail::v2::TuneModelRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncTuneModel(cq, std::move(context), request);
+  return child_->AsyncTuneModel(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> ModelServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void ModelServiceMetadata::SetMetadata(grpc::ClientContext& context,

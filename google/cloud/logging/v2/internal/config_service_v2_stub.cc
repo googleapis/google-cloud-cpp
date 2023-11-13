@@ -56,7 +56,7 @@ StatusOr<google::logging::v2::LogBucket> DefaultConfigServiceV2Stub::GetBucket(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigServiceV2Stub::AsyncCreateBucketAsync(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::logging::v2::CreateBucketRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::logging::v2::CreateBucketRequest,
                                     google::longrunning::Operation>(
@@ -72,7 +72,7 @@ DefaultConfigServiceV2Stub::AsyncCreateBucketAsync(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigServiceV2Stub::AsyncUpdateBucketAsync(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::logging::v2::UpdateBucketRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::logging::v2::UpdateBucketRequest,
                                     google::longrunning::Operation>(
@@ -246,7 +246,7 @@ Status DefaultConfigServiceV2Stub::DeleteSink(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigServiceV2Stub::AsyncCreateLink(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::logging::v2::CreateLinkRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::logging::v2::CreateLinkRequest,
                                     google::longrunning::Operation>(
@@ -262,7 +262,7 @@ DefaultConfigServiceV2Stub::AsyncCreateLink(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigServiceV2Stub::AsyncDeleteLink(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::logging::v2::DeleteLinkRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::logging::v2::DeleteLinkRequest,
                                     google::longrunning::Operation>(
@@ -412,7 +412,7 @@ DefaultConfigServiceV2Stub::UpdateSettings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigServiceV2Stub::AsyncCopyLogEntries(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::logging::v2::CopyLogEntriesRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::logging::v2::CopyLogEntriesRequest,
                                     google::longrunning::Operation>(
@@ -428,7 +428,7 @@ DefaultConfigServiceV2Stub::AsyncCopyLogEntries(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigServiceV2Stub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -443,7 +443,7 @@ DefaultConfigServiceV2Stub::AsyncGetOperation(
 
 future<Status> DefaultConfigServiceV2Stub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

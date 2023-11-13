@@ -40,7 +40,7 @@ class SpecialistPoolServiceTracingStub : public SpecialistPoolServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSpecialistPool(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request)
       override;
 
@@ -57,24 +57,24 @@ class SpecialistPoolServiceTracingStub : public SpecialistPoolServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSpecialistPool(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSpecialistPool(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

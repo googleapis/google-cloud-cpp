@@ -34,19 +34,19 @@ SpeechAuth::SpeechAuth(
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncCreateRecognizer(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::CreateRecognizerRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateRecognizer(cq, *std::move(context), request);
+        return child->AsyncCreateRecognizer(cq, *std::move(context), options,
+                                            request);
       });
 }
 
@@ -70,57 +70,57 @@ StatusOr<google::cloud::speech::v2::Recognizer> SpeechAuth::GetRecognizer(
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncUpdateRecognizer(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateRecognizer(cq, *std::move(context), request);
+        return child->AsyncUpdateRecognizer(cq, *std::move(context), options,
+                                            request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncDeleteRecognizer(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteRecognizer(cq, *std::move(context), request);
+        return child->AsyncDeleteRecognizer(cq, *std::move(context), options,
+                                            request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncUndeleteRecognizer(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUndeleteRecognizer(cq, *std::move(context), request);
+        return child->AsyncUndeleteRecognizer(cq, *std::move(context), options,
+                                              request);
       });
 }
 
@@ -153,19 +153,19 @@ SpeechAuth::AsyncStreamingRecognize(
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncBatchRecognize(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::BatchRecognizeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchRecognize(cq, *std::move(context), request);
+        return child->AsyncBatchRecognize(cq, *std::move(context), options,
+                                          request);
       });
 }
 
@@ -188,19 +188,19 @@ StatusOr<google::cloud::speech::v2::Config> SpeechAuth::UpdateConfig(
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncCreateCustomClass(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::CreateCustomClassRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateCustomClass(cq, *std::move(context), request);
+        return child->AsyncCreateCustomClass(cq, *std::move(context), options,
+                                             request);
       });
 }
 
@@ -224,57 +224,56 @@ StatusOr<google::cloud::speech::v2::CustomClass> SpeechAuth::GetCustomClass(
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncUpdateCustomClass(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateCustomClass(cq, *std::move(context), request);
+        return child->AsyncUpdateCustomClass(cq, *std::move(context), options,
+                                             request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncDeleteCustomClass(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteCustomClass(cq, *std::move(context), request);
+        return child->AsyncDeleteCustomClass(cq, *std::move(context), options,
+                                             request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncUndeleteCustomClass(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUndeleteCustomClass(cq, *std::move(context),
+        return child->AsyncUndeleteCustomClass(cq, *std::move(context), options,
                                                request);
       });
 }
@@ -282,19 +281,19 @@ SpeechAuth::AsyncUndeleteCustomClass(
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncCreatePhraseSet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreatePhraseSet(cq, *std::move(context), request);
+        return child->AsyncCreatePhraseSet(cq, *std::move(context), options,
+                                           request);
       });
 }
 
@@ -318,90 +317,90 @@ StatusOr<google::cloud::speech::v2::PhraseSet> SpeechAuth::GetPhraseSet(
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncUpdatePhraseSet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdatePhraseSet(cq, *std::move(context), request);
+        return child->AsyncUpdatePhraseSet(cq, *std::move(context), options,
+                                           request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncDeletePhraseSet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeletePhraseSet(cq, *std::move(context), request);
+        return child->AsyncDeletePhraseSet(cq, *std::move(context), options,
+                                           request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncUndeletePhraseSet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUndeletePhraseSet(cq, *std::move(context), request);
+        return child->AsyncUndeletePhraseSet(cq, *std::move(context), options,
+                                             request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>> SpeechAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), request);
+        return child->AsyncGetOperation(cq, *std::move(context), options,
+                                        request);
       });
 }
 
 future<Status> SpeechAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), request);
+        return child->AsyncCancelOperation(cq, *std::move(context), options,
+                                           request);
       });
 }
 

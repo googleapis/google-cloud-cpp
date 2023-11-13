@@ -42,12 +42,11 @@ DocumentProcessorServiceAuth::ProcessDocument(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceAuth::AsyncBatchProcessDocuments(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::BatchProcessRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -55,7 +54,7 @@ DocumentProcessorServiceAuth::AsyncBatchProcessDocuments(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncBatchProcessDocuments(cq, *std::move(context),
-                                                 request);
+                                                 options, request);
       });
 }
 
@@ -107,13 +106,12 @@ DocumentProcessorServiceAuth::GetProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceAuth::AsyncTrainProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::TrainProcessorVersionRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -121,7 +119,7 @@ DocumentProcessorServiceAuth::AsyncTrainProcessorVersion(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncTrainProcessorVersion(cq, *std::move(context),
-                                                 request);
+                                                 options, request);
       });
 }
 
@@ -147,13 +145,12 @@ DocumentProcessorServiceAuth::ListProcessorVersions(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceAuth::AsyncDeleteProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -161,20 +158,19 @@ DocumentProcessorServiceAuth::AsyncDeleteProcessorVersion(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncDeleteProcessorVersion(cq, *std::move(context),
-                                                  request);
+                                                  options, request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceAuth::AsyncDeployProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::DeployProcessorVersionRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -182,20 +178,19 @@ DocumentProcessorServiceAuth::AsyncDeployProcessorVersion(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncDeployProcessorVersion(cq, *std::move(context),
-                                                  request);
+                                                  options, request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceAuth::AsyncUndeployProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -203,7 +198,7 @@ DocumentProcessorServiceAuth::AsyncUndeployProcessorVersion(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncUndeployProcessorVersion(cq, *std::move(context),
-                                                    request);
+                                                    options, request);
       });
 }
 
@@ -219,70 +214,69 @@ DocumentProcessorServiceAuth::CreateProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceAuth::AsyncDeleteProcessor(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteProcessor(cq, *std::move(context), request);
+        return child->AsyncDeleteProcessor(cq, *std::move(context), options,
+                                           request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceAuth::AsyncEnableProcessor(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::EnableProcessorRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncEnableProcessor(cq, *std::move(context), request);
+        return child->AsyncEnableProcessor(cq, *std::move(context), options,
+                                           request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceAuth::AsyncDisableProcessor(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::DisableProcessorRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDisableProcessor(cq, *std::move(context), request);
+        return child->AsyncDisableProcessor(cq, *std::move(context), options,
+                                            request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceAuth::AsyncSetDefaultProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -290,39 +284,38 @@ DocumentProcessorServiceAuth::AsyncSetDefaultProcessorVersion(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncSetDefaultProcessorVersion(cq, *std::move(context),
-                                                      request);
+                                                      options, request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceAuth::AsyncReviewDocument(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncReviewDocument(cq, *std::move(context), request);
+        return child->AsyncReviewDocument(cq, *std::move(context), options,
+                                          request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceAuth::AsyncEvaluateProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -330,7 +323,7 @@ DocumentProcessorServiceAuth::AsyncEvaluateProcessorVersion(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncEvaluateProcessorVersion(cq, *std::move(context),
-                                                    request);
+                                                    options, request);
       });
 }
 
@@ -355,34 +348,34 @@ DocumentProcessorServiceAuth::ListEvaluations(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), request);
+        return child->AsyncGetOperation(cq, *std::move(context), options,
+                                        request);
       });
 }
 
 future<Status> DocumentProcessorServiceAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options,
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), request);
+        return child->AsyncCancelOperation(cq, *std::move(context), options,
+                                           request);
       });
 }
 

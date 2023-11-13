@@ -49,12 +49,12 @@ class ConfigServiceV2Logging : public ConfigServiceV2Stub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBucketAsync(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::logging::v2::CreateBucketRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateBucketAsync(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::logging::v2::UpdateBucketRequest const& request) override;
 
   StatusOr<google::logging::v2::LogBucket> CreateBucket(
@@ -115,12 +115,12 @@ class ConfigServiceV2Logging : public ConfigServiceV2Stub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateLink(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::logging::v2::CreateLinkRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteLink(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::logging::v2::DeleteLinkRequest const& request) override;
 
   StatusOr<google::logging::v2::ListLinksResponse> ListLinks(
@@ -169,17 +169,17 @@ class ConfigServiceV2Logging : public ConfigServiceV2Stub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCopyLogEntries(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::logging::v2::CopyLogEntriesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

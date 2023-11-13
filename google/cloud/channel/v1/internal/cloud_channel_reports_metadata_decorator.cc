@@ -45,11 +45,11 @@ CloudChannelReportsServiceMetadata::CloudChannelReportsServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelReportsServiceMetadata::AsyncRunReportJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::channel::v1::RunReportJobRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRunReportJob(cq, std::move(context), request);
+  return child_->AsyncRunReportJob(cq, std::move(context), options, request);
 }
 
 StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
@@ -74,20 +74,20 @@ CloudChannelReportsServiceMetadata::ListReports(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelReportsServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> CloudChannelReportsServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void CloudChannelReportsServiceMetadata::SetMetadata(

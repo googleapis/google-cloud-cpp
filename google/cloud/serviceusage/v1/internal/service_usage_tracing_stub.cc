@@ -33,26 +33,26 @@ ServiceUsageTracingStub::ServiceUsageTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageTracingStub::AsyncEnableService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.api.serviceusage.v1.ServiceUsage",
                                      "EnableService");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncEnableService(cq, context, request);
+  auto f = child_->AsyncEnableService(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageTracingStub::AsyncDisableService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.api.serviceusage.v1.ServiceUsage",
                                      "DisableService");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDisableService(cq, context, request);
+  auto f = child_->AsyncDisableService(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -83,13 +83,13 @@ ServiceUsageTracingStub::ListServices(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageTracingStub::AsyncBatchEnableServices(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.api.serviceusage.v1.ServiceUsage",
                                      "BatchEnableServices");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchEnableServices(cq, context, request);
+  auto f = child_->AsyncBatchEnableServices(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -108,25 +108,25 @@ ServiceUsageTracingStub::BatchGetServices(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> ServiceUsageTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -83,7 +83,7 @@ DefaultWebRiskServiceStub::CreateSubmission(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWebRiskServiceStub::AsyncSubmitUri(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::webrisk::v1::SubmitUriRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::webrisk::v1::SubmitUriRequest,
@@ -100,7 +100,7 @@ DefaultWebRiskServiceStub::AsyncSubmitUri(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWebRiskServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -115,7 +115,7 @@ DefaultWebRiskServiceStub::AsyncGetOperation(
 
 future<Status> DefaultWebRiskServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -54,49 +54,52 @@ ApplicationsMetadata::GetApplication(
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsMetadata::AsyncCreateApplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::appengine::v1::CreateApplicationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncCreateApplication(cq, std::move(context), request);
+  SetMetadata(*context, options);
+  return child_->AsyncCreateApplication(cq, std::move(context), options,
+                                        request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsMetadata::AsyncUpdateApplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::appengine::v1::UpdateApplicationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUpdateApplication(cq, std::move(context), request);
+  return child_->AsyncUpdateApplication(cq, std::move(context), options,
+                                        request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsMetadata::AsyncRepairApplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::appengine::v1::RepairApplicationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRepairApplication(cq, std::move(context), request);
+  return child_->AsyncRepairApplication(cq, std::move(context), options,
+                                        request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> ApplicationsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void ApplicationsMetadata::SetMetadata(grpc::ClientContext& context,

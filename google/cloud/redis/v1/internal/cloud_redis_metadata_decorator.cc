@@ -71,101 +71,103 @@ CloudRedisMetadata::GetInstanceAuthString(
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::redis::v1::CreateInstanceRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateInstance(cq, std::move(context), request);
+  return child_->AsyncCreateInstance(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::redis::v1::UpdateInstanceRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("instance.name=",
                            internal::UrlEncode(request.instance().name())));
-  return child_->AsyncUpdateInstance(cq, std::move(context), request);
+  return child_->AsyncUpdateInstance(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncUpgradeInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUpgradeInstance(cq, std::move(context), request);
+  return child_->AsyncUpgradeInstance(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncImportInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::redis::v1::ImportInstanceRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncImportInstance(cq, std::move(context), request);
+  return child_->AsyncImportInstance(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncExportInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::redis::v1::ExportInstanceRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncExportInstance(cq, std::move(context), request);
+  return child_->AsyncExportInstance(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::redis::v1::FailoverInstanceRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncFailoverInstance(cq, std::move(context), request);
+  return child_->AsyncFailoverInstance(cq, std::move(context), options,
+                                       request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::redis::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteInstance(cq, std::move(context), request);
+  return child_->AsyncDeleteInstance(cq, std::move(context), options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRescheduleMaintenance(cq, std::move(context), request);
+  return child_->AsyncRescheduleMaintenance(cq, std::move(context), options,
+                                            request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  return child_->AsyncGetOperation(cq, std::move(context), options, request);
 }
 
 future<Status> CloudRedisMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
 }
 
 void CloudRedisMetadata::SetMetadata(grpc::ClientContext& context,

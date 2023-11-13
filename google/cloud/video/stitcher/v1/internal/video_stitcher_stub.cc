@@ -33,7 +33,7 @@ VideoStitcherServiceStub::~VideoStitcherServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoStitcherServiceStub::AsyncCreateCdnKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest,
@@ -75,7 +75,7 @@ DefaultVideoStitcherServiceStub::GetCdnKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoStitcherServiceStub::AsyncDeleteCdnKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest,
@@ -93,7 +93,7 @@ DefaultVideoStitcherServiceStub::AsyncDeleteCdnKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoStitcherServiceStub::AsyncUpdateCdnKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest,
@@ -221,7 +221,7 @@ DefaultVideoStitcherServiceStub::GetLiveAdTagDetail(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoStitcherServiceStub::AsyncCreateSlate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::stitcher::v1::CreateSlateRequest,
@@ -263,7 +263,7 @@ DefaultVideoStitcherServiceStub::GetSlate(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoStitcherServiceStub::AsyncUpdateSlate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::stitcher::v1::UpdateSlateRequest,
@@ -281,7 +281,7 @@ DefaultVideoStitcherServiceStub::AsyncUpdateSlate(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoStitcherServiceStub::AsyncDeleteSlate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::video::stitcher::v1::DeleteSlateRequest,
@@ -325,7 +325,7 @@ DefaultVideoStitcherServiceStub::GetLiveSession(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoStitcherServiceStub::AsyncCreateLiveConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -369,7 +369,7 @@ DefaultVideoStitcherServiceStub::GetLiveConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoStitcherServiceStub::AsyncDeleteLiveConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -388,7 +388,7 @@ DefaultVideoStitcherServiceStub::AsyncDeleteLiveConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoStitcherServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -403,7 +403,7 @@ DefaultVideoStitcherServiceStub::AsyncGetOperation(
 
 future<Status> DefaultVideoStitcherServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -58,7 +58,7 @@ DefaultConfigStub::GetDeployment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncCreateDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::config::v1::CreateDeploymentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::config::v1::CreateDeploymentRequest,
@@ -75,7 +75,7 @@ DefaultConfigStub::AsyncCreateDeployment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncUpdateDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::config::v1::UpdateDeploymentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::config::v1::UpdateDeploymentRequest,
@@ -92,7 +92,7 @@ DefaultConfigStub::AsyncUpdateDeployment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncDeleteDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::config::v1::DeleteDeploymentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::config::v1::DeleteDeploymentRequest,
@@ -207,7 +207,7 @@ Status DefaultConfigStub::DeleteStatefile(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncLockDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::config::v1::LockDeploymentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::config::v1::LockDeploymentRequest,
@@ -224,7 +224,7 @@ DefaultConfigStub::AsyncLockDeployment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncUnlockDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::config::v1::UnlockDeploymentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::config::v1::UnlockDeploymentRequest,
@@ -252,7 +252,7 @@ StatusOr<google::cloud::config::v1::LockInfo> DefaultConfigStub::ExportLockInfo(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -267,7 +267,7 @@ DefaultConfigStub::AsyncGetOperation(
 
 future<Status> DefaultConfigStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

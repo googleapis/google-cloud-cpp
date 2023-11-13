@@ -33,13 +33,13 @@ BackupForGKETracingStub::BackupForGKETracingStub(
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncCreateBackupPlan(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "CreateBackupPlan");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateBackupPlan(cq, context, request);
+  auto f = child_->AsyncCreateBackupPlan(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -70,39 +70,39 @@ BackupForGKETracingStub::GetBackupPlan(
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncUpdateBackupPlan(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "UpdateBackupPlan");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateBackupPlan(cq, context, request);
+  auto f = child_->AsyncUpdateBackupPlan(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncDeleteBackupPlan(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "DeleteBackupPlan");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteBackupPlan(cq, context, request);
+  auto f = child_->AsyncDeleteBackupPlan(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "CreateBackup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateBackup(cq, context, request);
+  auto f = child_->AsyncCreateBackup(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -132,26 +132,26 @@ BackupForGKETracingStub::GetBackup(
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "UpdateBackup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateBackup(cq, context, request);
+  auto f = child_->AsyncUpdateBackup(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "DeleteBackup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteBackup(cq, context, request);
+  auto f = child_->AsyncDeleteBackup(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -182,13 +182,13 @@ BackupForGKETracingStub::GetVolumeBackup(
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncCreateRestorePlan(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "CreateRestorePlan");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateRestorePlan(cq, context, request);
+  auto f = child_->AsyncCreateRestorePlan(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -219,39 +219,39 @@ BackupForGKETracingStub::GetRestorePlan(
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncUpdateRestorePlan(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "UpdateRestorePlan");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateRestorePlan(cq, context, request);
+  auto f = child_->AsyncUpdateRestorePlan(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncDeleteRestorePlan(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "DeleteRestorePlan");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteRestorePlan(cq, context, request);
+  auto f = child_->AsyncDeleteRestorePlan(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncCreateRestore(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "CreateRestore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateRestore(cq, context, request);
+  auto f = child_->AsyncCreateRestore(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -282,26 +282,26 @@ BackupForGKETracingStub::GetRestore(
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncUpdateRestore(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "UpdateRestore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateRestore(cq, context, request);
+  auto f = child_->AsyncUpdateRestore(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncDeleteRestore(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "DeleteRestore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteRestore(cq, context, request);
+  auto f = child_->AsyncDeleteRestore(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -332,25 +332,25 @@ BackupForGKETracingStub::GetVolumeRestore(
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> BackupForGKETracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

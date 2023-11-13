@@ -91,13 +91,13 @@ VizierServiceTracingStub::LookupStudy(
 future<StatusOr<google::longrunning::Operation>>
 VizierServiceTracingStub::AsyncSuggestTrials(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "SuggestTrials");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncSuggestTrials(cq, context, request);
+  auto f = child_->AsyncSuggestTrials(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -174,14 +174,15 @@ Status VizierServiceTracingStub::DeleteTrial(
 future<StatusOr<google::longrunning::Operation>>
 VizierServiceTracingStub::AsyncCheckTrialEarlyStoppingState(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "CheckTrialEarlyStoppingState");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCheckTrialEarlyStoppingState(cq, context, request);
+  auto f =
+      child_->AsyncCheckTrialEarlyStoppingState(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -211,25 +212,25 @@ VizierServiceTracingStub::ListOptimalTrials(
 future<StatusOr<google::longrunning::Operation>>
 VizierServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, request);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> VizierServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, request);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
