@@ -50,13 +50,13 @@ StatusOr<google::api::HttpBody> PredictionServiceAuth::RawPredict(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
 PredictionServiceAuth::ServerStreamingPredict(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::cloud::aiplatform::v1::StreamingPredictResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->ServerStreamingPredict(std::move(context), request);
+  return child_->ServerStreamingPredict(std::move(context), options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>

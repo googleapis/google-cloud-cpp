@@ -458,11 +458,11 @@ TEST_F(GoldenKitchenSinkStubTest, StreamingRead) {
       .WillOnce(Return(success_response.release()))
       .WillOnce(Return(failure_response.release()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success_stream =
-      stub.StreamingRead(std::make_shared<grpc::ClientContext>(), request);
+  auto success_stream = stub.StreamingRead(
+      std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_THAT(success_stream->Read(), VariantWith<Status>(IsOk()));
-  auto failure_stream =
-      stub.StreamingRead(std::make_shared<grpc::ClientContext>(), request);
+  auto failure_stream = stub.StreamingRead(
+      std::make_shared<grpc::ClientContext>(), Options{}, request);
   EXPECT_THAT(failure_stream->Read(),
               VariantWith<Status>(StatusIs(StatusCode::kUnavailable)));
 }

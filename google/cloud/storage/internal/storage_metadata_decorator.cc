@@ -473,7 +473,7 @@ StatusOr<google::storage::v2::Object> StorageMetadata::GetObject(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageMetadata::ReadObject(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::storage::v2::ReadObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -484,12 +484,11 @@ StorageMetadata::ReadObject(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ReadObject(std::move(context), request);
+  return child_->ReadObject(std::move(context), options, request);
 }
 
 StatusOr<google::storage::v2::Object> StorageMetadata::UpdateObject(

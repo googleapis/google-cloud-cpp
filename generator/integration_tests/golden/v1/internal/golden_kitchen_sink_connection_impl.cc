@@ -168,8 +168,9 @@ GoldenKitchenSinkConnectionImpl::Deprecated2(google::test::admin::database::v1::
 StreamRange<google::test::admin::database::v1::Response>
 GoldenKitchenSinkConnectionImpl::StreamingRead(google::test::admin::database::v1::Request const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto factory = [stub = stub_](google::test::admin::database::v1::Request const& request) {
-    return stub->StreamingRead(std::make_shared<grpc::ClientContext>(), request);
+  auto factory = [stub = stub_, current](google::test::admin::database::v1::Request const& request) {
+    return stub->StreamingRead(
+        std::make_shared<grpc::ClientContext>(), *current, request);
   };
   auto resumable =
       internal::MakeResumableStreamingReadRpc<google::test::admin::database::v1::Response, google::test::admin::database::v1::Request>(

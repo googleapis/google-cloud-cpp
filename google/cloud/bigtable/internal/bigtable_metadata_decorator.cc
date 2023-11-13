@@ -47,7 +47,7 @@ BigtableMetadata::BigtableMetadata(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 BigtableMetadata::ReadRows(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::ReadRowsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -71,18 +71,17 @@ BigtableMetadata::ReadRows(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ReadRows(std::move(context), request);
+  return child_->ReadRows(std::move(context), options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::SampleRowKeysResponse>>
 BigtableMetadata::SampleRowKeys(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -106,12 +105,11 @@ BigtableMetadata::SampleRowKeys(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, options, absl::StrJoin(params, "&"));
   }
-  return child_->SampleRowKeys(std::move(context), request);
+  return child_->SampleRowKeys(std::move(context), options, request);
 }
 
 StatusOr<google::bigtable::v2::MutateRowResponse> BigtableMetadata::MutateRow(
@@ -150,7 +148,7 @@ StatusOr<google::bigtable::v2::MutateRowResponse> BigtableMetadata::MutateRow(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::MutateRowsResponse>>
 BigtableMetadata::MutateRows(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::MutateRowsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -174,12 +172,11 @@ BigtableMetadata::MutateRows(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, options, absl::StrJoin(params, "&"));
   }
-  return child_->MutateRows(std::move(context), request);
+  return child_->MutateRows(std::move(context), options, request);
 }
 
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>

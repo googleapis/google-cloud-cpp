@@ -61,16 +61,16 @@ StatusOr<google::api::HttpBody> PredictionServiceLogging::RawPredict(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
 PredictionServiceLogging::ServerStreamingPredict(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::aiplatform::v1::StreamingPredictRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::cloud::aiplatform::v1::StreamingPredictResponse>> {
-        auto stream =
-            child_->ServerStreamingPredict(std::move(context), request);
+        auto stream = child_->ServerStreamingPredict(std::move(context),
+                                                     options, request);
         if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
@@ -80,7 +80,7 @@ PredictionServiceLogging::ServerStreamingPredict(
         }
         return stream;
       },
-      std::move(context), request, __func__, tracing_options_);
+      std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>

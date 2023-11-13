@@ -176,15 +176,16 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingRead) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   using ErrorStream =
       ::google::cloud::internal::StreamingReadRpcError<Response>;
-  EXPECT_CALL(*mock, StreamingRead).WillOnce([](auto context, auto const&) {
-    ValidatePropagator(*context);
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return std::make_unique<ErrorStream>(internal::AbortedError("fail"));
-  });
+  EXPECT_CALL(*mock, StreamingRead)
+      .WillOnce([](auto context, Options const&, auto const&) {
+        ValidatePropagator(*context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return std::make_unique<ErrorStream>(internal::AbortedError("fail"));
+      });
 
   auto under_test = GoldenKitchenSinkTracingStub(mock);
   auto stream = under_test.StreamingRead(
-      std::make_shared<grpc::ClientContext>(), Request{});
+      std::make_shared<grpc::ClientContext>(), Options{}, Request{});
   auto v = stream->Read();
   EXPECT_THAT(v, VariantWith<Status>(StatusIs(StatusCode::kAborted)));
 

@@ -77,13 +77,13 @@ StatusOr<google::spanner::v1::ResultSet> SpannerTracingStub::ExecuteSql(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 SpannerTracingStub::ExecuteStreamingSql(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.spanner.v1.Spanner",
                                      "ExecuteStreamingSql");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->ExecuteStreamingSql(context, request);
+  auto stream = child_->ExecuteStreamingSql(context, options, request);
   return std::make_unique<
       internal::StreamingReadRpcTracing<google::spanner::v1::PartialResultSet>>(
       std::move(context), std::move(stream), std::move(span));
@@ -104,13 +104,13 @@ SpannerTracingStub::ExecuteBatchDml(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 SpannerTracingStub::StreamingRead(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::ReadRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.spanner.v1.Spanner", "StreamingRead");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->StreamingRead(context, request);
+  auto stream = child_->StreamingRead(context, options, request);
   return std::make_unique<
       internal::StreamingReadRpcTracing<google::spanner::v1::PartialResultSet>>(
       std::move(context), std::move(stream), std::move(span));
@@ -172,12 +172,12 @@ SpannerTracingStub::PartitionRead(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::BatchWriteResponse>>
 SpannerTracingStub::BatchWrite(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::BatchWriteRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.spanner.v1.Spanner", "BatchWrite");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->BatchWrite(context, request);
+  auto stream = child_->BatchWrite(context, options, request);
   return std::make_unique<internal::StreamingReadRpcTracing<
       google::spanner::v1::BatchWriteResponse>>(
       std::move(context), std::move(stream), std::move(span));

@@ -57,7 +57,7 @@ class SpannerTracingStub : public SpannerStub {
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::spanner::v1::PartialResultSet>>
   ExecuteStreamingSql(
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::spanner::v1::ExecuteSqlRequest const& request) override;
 
   StatusOr<google::spanner::v1::ExecuteBatchDmlResponse> ExecuteBatchDml(
@@ -67,6 +67,7 @@ class SpannerTracingStub : public SpannerStub {
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::spanner::v1::PartialResultSet>>
   StreamingRead(std::shared_ptr<grpc::ClientContext> context,
+                Options const& options,
                 google::spanner::v1::ReadRequest const& request) override;
 
   StatusOr<google::spanner::v1::Transaction> BeginTransaction(
@@ -91,6 +92,7 @@ class SpannerTracingStub : public SpannerStub {
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::spanner::v1::BatchWriteResponse>>
   BatchWrite(std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::spanner::v1::BatchWriteRequest const& request) override;
 
   future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>

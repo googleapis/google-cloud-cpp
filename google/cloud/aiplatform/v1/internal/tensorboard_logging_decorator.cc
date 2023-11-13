@@ -419,18 +419,18 @@ TensorboardServiceLogging::ReadTensorboardTimeSeriesData(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>
 TensorboardServiceLogging::ReadTensorboardBlobData(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          std::shared_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
           google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
               request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>> {
-        auto stream =
-            child_->ReadTensorboardBlobData(std::move(context), request);
+        auto stream = child_->ReadTensorboardBlobData(std::move(context),
+                                                      options, request);
         if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
@@ -441,7 +441,7 @@ TensorboardServiceLogging::ReadTensorboardBlobData(
         }
         return stream;
       },
-      std::move(context), request, __func__, tracing_options_);
+      std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>

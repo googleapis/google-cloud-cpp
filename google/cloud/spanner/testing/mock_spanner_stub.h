@@ -69,7 +69,7 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
       std::unique_ptr<
           internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>,
       ExecuteStreamingSql,
-      (std::shared_ptr<grpc::ClientContext>,
+      (std::shared_ptr<grpc::ClientContext>, Options const&,
        google::spanner::v1::ExecuteSqlRequest const&),
       (override));
 
@@ -83,7 +83,7 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
       std::unique_ptr<
           internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>,
       StreamingRead,
-      (std::shared_ptr<grpc::ClientContext>,
+      (std::shared_ptr<grpc::ClientContext>, Options const&,
        google::spanner::v1::ReadRequest const&),
       (override));
 
@@ -115,7 +115,7 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
       std::unique_ptr<
           internal::StreamingReadRpc<google::spanner::v1::BatchWriteResponse>>,
       BatchWrite,
-      (std::shared_ptr<grpc::ClientContext>,
+      (std::shared_ptr<grpc::ClientContext>, Options const&,
        google::spanner::v1::BatchWriteRequest const&),
       (override));
 };

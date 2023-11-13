@@ -81,10 +81,11 @@ BigQueryReadConnectionImpl::ReadRows(
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto factory =
-      [stub =
-           stub_](google::cloud::bigquery::storage::v1::ReadRowsRequest const&
-                      request) {
-        return stub->ReadRows(std::make_shared<grpc::ClientContext>(), request);
+      [stub = stub_,
+       current](google::cloud::bigquery::storage::v1::ReadRowsRequest const&
+                    request) {
+        return stub->ReadRows(std::make_shared<grpc::ClientContext>(), *current,
+                              request);
       };
   auto resumable = internal::MakeResumableStreamingReadRpc<
       google::cloud::bigquery::storage::v1::ReadRowsResponse,

@@ -106,7 +106,7 @@ TEST_F(BigtableStubFactory, ReadRows) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, ReadRows)
             .WillOnce(
-                [this](auto context,
+                [this](auto context, auto const&,
                        google::bigtable::v2::ReadRowsRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context->credentials(), NotNull());
@@ -134,7 +134,8 @@ TEST_F(BigtableStubFactory, ReadRows) {
   req.set_table_name(
       "projects/the-project/instances/the-instance/tables/the-table");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto stream = stub->ReadRows(std::make_shared<grpc::ClientContext>(), req);
+  auto stream =
+      stub->ReadRows(std::make_shared<grpc::ClientContext>(), Options{}, req);
   EXPECT_THAT(stream->Read(),
               VariantWith<Status>(StatusIs(StatusCode::kUnavailable)));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("ReadRows")));

@@ -43,6 +43,7 @@ using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::testing::Contains;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
@@ -623,13 +624,16 @@ TEST_F(GrpcClientTest, GetObjectMetadata) {
 TEST_F(GrpcClientTest, ReadObject) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ReadObject)
-      .WillOnce([this](auto context, v2::ReadObjectRequest const& request) {
+      .WillOnce([this](auto context, Options const& options,
+                       v2::ReadObjectRequest const& request) {
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
                         Pair(kIdempotencyTokenHeader, "test-token-1234"),
                         Pair("x-goog-quota-user", "test-quota-user"),
                         Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(options.get<UserAgentProductsOption>(),
+                    Contains("test-only/1.2.3"));
         EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
         EXPECT_THAT(request.object(), "test-object");
         return std::make_unique<storage::testing::MockObjectMediaStream>();
@@ -637,7 +641,7 @@ TEST_F(GrpcClientTest, ReadObject) {
   auto client = CreateTestClient(mock);
   auto context = TestContext();
   auto stream = client->ReadObject(
-      context, TestOptions(),
+      context, TestOptions().set<UserAgentProductsOption>({"test-only/1.2.3"}),
       storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));

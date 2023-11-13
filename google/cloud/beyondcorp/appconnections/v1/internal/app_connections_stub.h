@@ -22,6 +22,7 @@
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/beyondcorp/appconnections/v1/app_connections_service.grpc.pb.h>

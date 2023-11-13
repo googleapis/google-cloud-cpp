@@ -33,7 +33,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationResponse>>
 DefaultAgentEndpointServiceStub::ReceiveTaskNotification(
-    std::shared_ptr<grpc::ClientContext> client_context,
+    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationRequest const& request) {
   auto stream =

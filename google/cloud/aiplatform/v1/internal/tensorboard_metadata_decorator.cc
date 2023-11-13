@@ -319,13 +319,13 @@ TensorboardServiceMetadata::ReadTensorboardTimeSeriesData(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>
 TensorboardServiceMetadata::ReadTensorboardBlobData(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
         request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, options,
       absl::StrCat("time_series=", internal::UrlEncode(request.time_series())));
-  return child_->ReadTensorboardBlobData(std::move(context), request);
+  return child_->ReadTensorboardBlobData(std::move(context), options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>

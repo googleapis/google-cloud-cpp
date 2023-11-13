@@ -184,6 +184,22 @@ $auth_class_name$::Async$method_name$(
 )""");
       continue;
     }
+    if (IsStreamingRead(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
+$auth_class_name$::$method_name$(
+   std::shared_ptr<grpc::ClientContext> context,
+   Options const& options,
+   $request_type$ const& request) {
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      $response_type$>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
+  return child_->$method_name$(std::move(context), options, request);
+}
+)""");
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty,
@@ -199,20 +215,7 @@ StatusOr<$response_type$> $auth_class_name$::$method_name$()"""},
   return child_->$method_name$(context, request);
 }
 )"""}},
-                       And(IsNonStreaming, Not(IsLongrunningOperation))),
-         MethodPattern({{R"""(
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
-$auth_class_name$::$method_name$(
-   std::shared_ptr<grpc::ClientContext> context,
-   $request_type$ const& request) {
-  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
-      $response_type$>;
-  auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->$method_name$(std::move(context), request);
-}
-)"""}},
-                       IsStreamingRead)},
+                       And(IsNonStreaming, Not(IsLongrunningOperation)))},
         __FILE__, __LINE__);
   }
 

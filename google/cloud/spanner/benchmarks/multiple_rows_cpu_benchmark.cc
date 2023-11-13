@@ -590,8 +590,8 @@ class ReadExperiment : public BasicExperiment<Traits> {
       google::spanner::v1::PartialResultSet result;
       std::vector<google::protobuf::Value> row;
       row.resize(columns.size());
-      auto stream =
-          stub->StreamingRead(std::make_shared<grpc::ClientContext>(), request);
+      auto stream = stub->StreamingRead(std::make_shared<grpc::ClientContext>(),
+                                        google::cloud::Options{}, request);
       for (;;) {
         auto read = stream->Read();
         if (absl::holds_alternative<Status>(read)) {
@@ -739,8 +739,9 @@ class SelectExperiment : public BasicExperiment<Traits> {
       google::spanner::v1::PartialResultSet result;
       std::vector<google::protobuf::Value> row;
       row.resize(ExperimentImpl<Traits>::kColumnCount);
-      auto stream = stub->ExecuteStreamingSql(
-          std::make_shared<grpc::ClientContext>(), request);
+      auto stream =
+          stub->ExecuteStreamingSql(std::make_shared<grpc::ClientContext>(),
+                                    google::cloud::Options{}, request);
       for (;;) {
         auto read = stream->Read();
         if (absl::holds_alternative<Status>(read)) {

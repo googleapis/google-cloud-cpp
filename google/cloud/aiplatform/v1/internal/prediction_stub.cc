@@ -55,7 +55,7 @@ StatusOr<google::api::HttpBody> DefaultPredictionServiceStub::RawPredict(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
 DefaultPredictionServiceStub::ServerStreamingPredict(
-    std::shared_ptr<grpc::ClientContext> client_context,
+    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
     google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
   auto stream =
       grpc_stub_->ServerStreamingPredict(client_context.get(), request);

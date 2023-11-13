@@ -299,7 +299,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
   while (true) {
     auto context = std::make_shared<grpc::ClientContext>();
     internal::ConfigureContext(*context, internal::CurrentOptions());
-    auto stream = stub_->SampleRowKeys(std::move(context), request);
+    auto stream = stub_->SampleRowKeys(std::move(context), Options{}, request);
 
     struct UnpackVariant {
       Status& status;

@@ -60,7 +60,7 @@ void DefaultRowReader::MakeRequest() {
   auto const& options = internal::CurrentOptions();
   auto context = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context, options);
-  stream_ = stub_->ReadRows(std::move(context), request);
+  stream_ = stub_->ReadRows(std::move(context), options, request);
   stream_is_open_ = true;
 
   parser_ = bigtable::internal::ReadRowsParserFactory().Create(reverse_);

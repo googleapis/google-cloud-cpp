@@ -127,6 +127,7 @@ DefaultGoldenKitchenSinkStub::Deprecated2(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
 DefaultGoldenKitchenSinkStub::StreamingRead(
     std::shared_ptr<grpc::ClientContext> client_context,
+    Options const&,
     google::test::admin::database::v1::Request const& request) {
   auto stream = grpc_stub_->StreamingRead(client_context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<

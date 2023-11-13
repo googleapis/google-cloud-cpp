@@ -236,7 +236,7 @@ TEST_F(MetadataDecoratorTest, ListServiceAccountKeys) {
 
 TEST_F(MetadataDecoratorTest, StreamingRead) {
   EXPECT_CALL(*mock_, StreamingRead)
-      .WillOnce([this](auto context, Request const& request) {
+      .WillOnce([this](auto context, Options const&, Request const& request) {
         auto mock_response = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*mock_response, Read)
             .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -247,8 +247,8 @@ TEST_F(MetadataDecoratorTest, StreamingRead) {
         return mock_response;
       });
   GoldenKitchenSinkMetadata stub(mock_, {});
-  auto response =
-      stub.StreamingRead(std::make_shared<grpc::ClientContext>(), Request{});
+  auto response = stub.StreamingRead(std::make_shared<grpc::ClientContext>(),
+                                     Options{}, Request{});
   EXPECT_THAT(response->Read(), VariantWith<Status>(Not(IsOk())));
 }
 

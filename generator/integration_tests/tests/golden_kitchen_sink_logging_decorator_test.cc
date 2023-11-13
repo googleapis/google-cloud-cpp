@@ -194,8 +194,8 @@ TEST_F(LoggingDecoratorTest, StreamingReadRpcNoRpcStreams) {
   EXPECT_CALL(*mock_, StreamingRead)
       .WillOnce(Return(ByMove(std::move(mock_response))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
-  auto response =
-      stub.StreamingRead(std::make_shared<grpc::ClientContext>(), Request{});
+  auto response = stub.StreamingRead(std::make_shared<grpc::ClientContext>(),
+                                     Options{}, Request{});
   EXPECT_THAT(response->Read(), VariantWith<Status>(IsOk()));
 
   auto const log_lines = log_.ExtractLines();
@@ -210,8 +210,8 @@ TEST_F(LoggingDecoratorTest, StreamingReadRpcWithRpcStreams) {
   EXPECT_CALL(*mock_, StreamingRead)
       .WillOnce(Return(ByMove(std::move(mock_response))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
-  auto response =
-      stub.StreamingRead(std::make_shared<grpc::ClientContext>(), Request{});
+  auto response = stub.StreamingRead(std::make_shared<grpc::ClientContext>(),
+                                     Options{}, Request{});
   EXPECT_THAT(response->Read(), VariantWith<Status>(IsOk()));
 
   auto const log_lines = log_.ExtractLines();

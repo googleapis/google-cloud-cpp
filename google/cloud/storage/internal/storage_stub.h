@@ -26,6 +26,7 @@
 #include "google/cloud/internal/async_streaming_write_rpc.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/storage/v2/storage.grpc.pb.h>
@@ -120,6 +121,7 @@ class StorageStub {
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::storage::v2::ReadObjectResponse>>
   ReadObject(std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
              google::storage::v2::ReadObjectRequest const& request) = 0;
 
   virtual StatusOr<google::storage::v2::Object> UpdateObject(
@@ -302,6 +304,7 @@ class DefaultStorageStub : public StorageStub {
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::storage::v2::ReadObjectResponse>>
   ReadObject(std::shared_ptr<grpc::ClientContext> client_context,
+             Options const& options,
              google::storage::v2::ReadObjectRequest const& request) override;
 
   StatusOr<google::storage::v2::Object> UpdateObject(

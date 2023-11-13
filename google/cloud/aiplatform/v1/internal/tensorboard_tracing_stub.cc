@@ -386,7 +386,7 @@ TensorboardServiceTracingStub::ReadTensorboardTimeSeriesData(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>
 TensorboardServiceTracingStub::ReadTensorboardBlobData(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
         request) {
   auto span =
@@ -394,7 +394,7 @@ TensorboardServiceTracingStub::ReadTensorboardBlobData(
                              "ReadTensorboardBlobData");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->ReadTensorboardBlobData(context, request);
+  auto stream = child_->ReadTensorboardBlobData(context, options, request);
   return std::make_unique<internal::StreamingReadRpcTracing<
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>(
       std::move(context), std::move(stream), std::move(span));

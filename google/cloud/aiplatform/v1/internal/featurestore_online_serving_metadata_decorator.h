@@ -49,7 +49,7 @@ class FeaturestoreOnlineServingServiceMetadata
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
   StreamingReadFeatureValues(
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
           request) override;
 

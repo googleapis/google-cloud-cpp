@@ -238,12 +238,12 @@ StatusOr<google::storage::v2::Object> StorageTracingStub::GetObject(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageTracingStub::ReadObject(
-    std::shared_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::storage::v2::ReadObjectRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage", "ReadObject");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->ReadObject(context, request);
+  auto stream = child_->ReadObject(context, options, request);
   return std::make_unique<internal::StreamingReadRpcTracing<
       google::storage::v2::ReadObjectResponse>>(
       std::move(context), std::move(stream), std::move(span));

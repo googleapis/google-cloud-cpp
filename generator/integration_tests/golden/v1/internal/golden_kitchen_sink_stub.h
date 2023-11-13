@@ -26,6 +26,7 @@
 #include "google/cloud/internal/async_streaming_write_rpc.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/backup.pb.h>
@@ -72,6 +73,7 @@ class GoldenKitchenSinkStub {
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
   StreamingRead(
     std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::test::admin::database::v1::Request const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
@@ -153,6 +155,7 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
   StreamingRead(
     std::shared_ptr<grpc::ClientContext> client_context,
+    Options const& options,
     google::test::admin::database::v1::Request const& request) override;
 
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
