@@ -21,7 +21,7 @@ namespace internal {
 
 void LogRequest(absl::string_view where, absl::string_view args,
                 absl::string_view message) {
-  GCP_LOG(DEBUG) << where << '(' << args << ')' << " << status=" << message;
+  GCP_LOG(DEBUG) << where << '(' << args << ')' << " << " << message;
 }
 
 Status LogResponse(Status response, absl::string_view where,
