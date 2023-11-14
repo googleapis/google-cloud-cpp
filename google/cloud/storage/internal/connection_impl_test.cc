@@ -44,12 +44,12 @@ using ::testing::Property;
 using ::testing::Return;
 
 Options BasicTestPolicies() {
-  using us = std::chrono::microseconds;
+  using ms = std::chrono::milliseconds;
   return Options{}
       .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone())
       .set<BackoffPolicyOption>(
           // Make the tests faster.
-          ExponentialBackoffPolicy(us(1), us(2), 2).clone())
+          ExponentialBackoffPolicy(ms(1), ms(2), 2).clone())
       .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy{}.clone());
 }
 
