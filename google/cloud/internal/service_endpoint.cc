@@ -33,7 +33,8 @@ StatusOr<std::string> DetermineServiceEndpoint(
   if (endpoint_env_var.has_value()) return *endpoint_env_var;
   if (endpoint_option.has_value()) return *endpoint_option;
   if (options.has<UniverseDomainOption>()) {
-    std::string universe_domain_option = options.get<UniverseDomainOption>();
+    std::string const& universe_domain_option =
+        options.get<UniverseDomainOption>();
     if (universe_domain_option.empty()) {
       return internal::InvalidArgumentError(
           "UniverseDomainOption can not be empty");
