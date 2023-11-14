@@ -253,7 +253,7 @@ TEST(ListJobsResponseTest, InvalidListFormatJob) {
                        HasSubstr("Not a valid Json ListFormatJob object")));
 }
 
-TEST(ListJobsResponseTest, MimimalProjectionJson) {
+TEST(ListJobsResponseTest, MinimalProjectionJson) {
   BigQueryHttpResponse http_response;
   http_response.payload =
       R"({"etag": "tag-1",
