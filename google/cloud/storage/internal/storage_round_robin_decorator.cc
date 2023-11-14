@@ -159,8 +159,9 @@ StatusOr<google::storage::v2::Object> StorageRoundRobin::UpdateObject(
 std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-StorageRoundRobin::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
-  return Child()->WriteObject(std::move(context));
+StorageRoundRobin::WriteObject(std::shared_ptr<grpc::ClientContext> context,
+                               Options const& options) {
+  return Child()->WriteObject(std::move(context), options);
 }
 
 std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
