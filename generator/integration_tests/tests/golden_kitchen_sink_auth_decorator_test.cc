@@ -158,7 +158,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ListServiceAccountKeys) {
 
 TEST(GoldenKitchenSinkAuthDecoratorTest, StreamingWrite) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, StreamingWrite).WillOnce([](auto) {
+  EXPECT_CALL(*mock, StreamingWrite).WillOnce([] {
     auto stream = std::make_unique<MockStreamingWriteRpc>();
     EXPECT_CALL(*stream, Write).WillOnce(Return(true)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Close)
@@ -168,13 +168,14 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, StreamingWrite) {
   });
 
   auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
-  auto stream =
-      under_test.StreamingWrite(std::make_shared<grpc::ClientContext>());
+  auto stream = under_test.StreamingWrite(
+      std::make_shared<grpc::ClientContext>(), Options{});
   EXPECT_FALSE(stream->Write(Request{}, grpc::WriteOptions()));
   auto response = stream->Close();
   EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument));
 
-  stream = under_test.StreamingWrite(std::make_shared<grpc::ClientContext>());
+  stream = under_test.StreamingWrite(std::make_shared<grpc::ClientContext>(),
+                                     Options{});
   EXPECT_TRUE(stream->Write(Request{}, grpc::WriteOptions()));
   EXPECT_FALSE(stream->Write(Request{}, grpc::WriteOptions()));
   response = stream->Close();

@@ -265,7 +265,7 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingWrite) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, StreamingWrite).WillOnce([](auto context) {
+  EXPECT_CALL(*mock, StreamingWrite).WillOnce([](auto context, Options const&) {
     ValidatePropagator(*context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     auto stream = std::make_unique<MockStreamingWriteRpc>();
@@ -276,8 +276,8 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingWrite) {
   });
 
   auto under_test = GoldenKitchenSinkTracingStub(mock);
-  auto stream =
-      under_test.StreamingWrite(std::make_shared<grpc::ClientContext>());
+  auto stream = under_test.StreamingWrite(
+      std::make_shared<grpc::ClientContext>(), Options{});
   EXPECT_FALSE(stream->Write(Request{}, grpc::WriteOptions()));
   auto response = stream->Close();
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted));
