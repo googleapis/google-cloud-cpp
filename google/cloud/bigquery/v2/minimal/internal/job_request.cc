@@ -19,10 +19,10 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/debug_string.h"
-#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "absl/strings/match.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -139,6 +139,13 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r) {
   return request;
 }
 
+auto CastTimeToMilliseconds(
+    const std::chrono::system_clock::time_point time) {
+  return std::chrono::time_point_cast<std::chrono::milliseconds>(time)
+      .time_since_epoch()
+      .count();
+}
+
 StatusOr<rest_internal::RestRequest> BuildRestRequest(
     ListJobsRequest const& r) {
   rest_internal::RestRequest request;
@@ -165,18 +172,12 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   if (r.min_creation_time()) {
     request.AddQueryParameter(
         "minCreationTime",
-        std::to_string(std::chrono::time_point_cast<std::chrono::milliseconds>(
-                           r.min_creation_time().value())
-                           .time_since_epoch()
-                           .count()));
+        std::to_string(CastTimeToMilliseconds(r.min_creation_time().value())));
   }
   if (r.max_creation_time()) {
     request.AddQueryParameter(
         "maxCreationTime",
-        std::to_string(std::chrono::time_point_cast<std::chrono::milliseconds>(
-                           r.max_creation_time().value())
-                           .time_since_epoch()
-                           .count()));
+        std::to_string(CastTimeToMilliseconds(r.max_creation_time().value())));
   }
 
   auto if_not_empty_add = [&](char const* key, auto const& v) {

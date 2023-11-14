@@ -36,15 +36,23 @@ using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryRequest;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
+auto static const kMin = std::chrono::system_clock::now();
+auto static const kMax = kMin + std::chrono::milliseconds(100);
+auto static const kMin_int =
+    std::chrono::time_point_cast<std::chrono::milliseconds>(kMin)
+        .time_since_epoch()
+        .count();
+auto static const kMax_int =
+    std::chrono::time_point_cast<std::chrono::milliseconds>(kMax)
+        .time_since_epoch()
+        .count();
+
 ListJobsRequest GetListJobsRequest() {
   ListJobsRequest request("1");
-  auto const min = std::chrono::system_clock::now();
-  auto const duration = std::chrono::milliseconds(100);
-  auto const max = min + duration;
   request.set_all_users(true)
       .set_max_results(10)
-      .set_min_creation_time(min)
-      .set_max_creation_time(max)
+      .set_min_creation_time(kMin)
+      .set_max_creation_time(kMax)
       .set_parent_job_id("1")
       .set_page_token("123")
       .set_projection(Projection::Full())
@@ -159,18 +167,8 @@ TEST(ListJobsRequestTest, Success) {
       "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs");
   expected.AddQueryParameter("allUsers", "true");
   expected.AddQueryParameter("maxResults", "10");
-  expected.AddQueryParameter(
-      "minCreationTime",
-      std::to_string(std::chrono::time_point_cast<std::chrono::milliseconds>(
-                         request.min_creation_time().value())
-                         .time_since_epoch()
-                         .count()));
-  expected.AddQueryParameter(
-      "maxCreationTime",
-      std::to_string(std::chrono::time_point_cast<std::chrono::milliseconds>(
-                         request.max_creation_time().value())
-                         .time_since_epoch()
-                         .count()));
+  expected.AddQueryParameter("minCreationTime", std::to_string(kMin_int));
+  expected.AddQueryParameter("maxCreationTime", std::to_string(kMax_int));
   expected.AddQueryParameter("pageToken", "123");
   expected.AddQueryParameter("projection", "FULL");
   expected.AddQueryParameter("stateFilter", "RUNNING");
