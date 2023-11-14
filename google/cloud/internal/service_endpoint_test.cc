@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
@@ -57,6 +58,15 @@ TEST(DetermineServiceEndpoint, UniverseDomainSetWithNonEmptyValue) {
   EXPECT_THAT(result, IsOkAndHolds("default_endpoint.universe.domain"));
 }
 
+TEST(DetermineServiceEndpoint, UniverseDomainSetWithTrailingPeriod) {
+  auto constexpr kUniverseDomain = "universe.domain.";
+  auto options = Options{}.set<UniverseDomainOption>(kUniverseDomain);
+  auto result = DetermineServiceEndpoint(absl::nullopt,
+                                         ExtractOption<EndpointOption>(options),
+                                         options, kDefaultHost);
+  EXPECT_THAT(result, IsOkAndHolds("default_endpoint.universe.domain."));
+}
+
 TEST(DetermineServiceEndpoint, UniverseDomainSetWithEmptyValue) {
   auto options = Options{}.set<UniverseDomainOption>("");
   auto result = DetermineServiceEndpoint(absl::nullopt,
@@ -72,7 +82,7 @@ TEST(DetermineServiceEndpoint, DefaultHost) {
   auto result = DetermineServiceEndpoint(absl::nullopt,
                                          ExtractOption<EndpointOption>(options),
                                          options, kDefaultHost);
-  EXPECT_THAT(result, IsOkAndHolds(kDefaultHost));
+  EXPECT_THAT(result, IsOkAndHolds(absl::StrCat(kDefaultHost, ".")));
 }
 
 }  // namespace
