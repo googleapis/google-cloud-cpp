@@ -99,30 +99,35 @@ TEST_F(SqlIntegrationTest, CreateEphemeral) {
   ASSERT_NE(instances.begin(), instances.end());
   ASSERT_STATUS_OK(*instances.begin());
 
-  // All the RPCs that could repro #12112 are non-idempotent. So we put a little
-  // manual retry loop around the test.
-  auto const attempt_delay = std::chrono::seconds(30);
-  for (int attempt = 0; attempt != 3; ++attempt) {
-    if (attempt != 0) std::this_thread::sleep_for(attempt_delay);
-    google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest request;
-    request.set_project(project_id_);
-    request.set_instance((*instances.begin())->name());
-    request.mutable_body()->set_public_key("THE_PUBLIC_KEY");
+  google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest request;
+  request.set_project(project_id_);
+  request.set_instance((*instances.begin())->name());
+  request.mutable_body()->set_public_key("THE_PUBLIC_KEY");
 
-    auto result = client.CreateEphemeral(request);
-    // This is a transient error, just retry.
-    if (result.status().code() == StatusCode::kUnavailable) continue;
-    EXPECT_THAT(
-        result,
-        AnyOf(StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("Provided public key was in an invalid or "
-                                 "unsupported format")),
-              StatusIs(
-                  StatusCode::kPermissionDenied,
-                  HasSubstr(
-                      "The client is not authorized to make this request"))));
-    break;
-  }
+  auto status = [&]() {
+    // All the RPCs that could repro #12112 are non-idempotent. So we put a
+    // little manual retry loop around the test.
+    auto const attempt_delay = std::chrono::seconds(30);
+    for (int attempt = 0; attempt != 3; ++attempt) {
+      if (attempt != 0) std::this_thread::sleep_for(attempt_delay);
+
+      auto status = client.CreateEphemeral(request).status();
+      // This is a transient error, just retry.
+      if (status.code() == StatusCode::kUnavailable) continue;
+      return status;
+    }
+    return Status(StatusCode::kDeadlineExceeded, "too many retry attempts");
+  }();
+
+  EXPECT_THAT(
+      status,
+      AnyOf(
+          StatusIs(StatusCode::kInvalidArgument,
+                   HasSubstr("Provided public key was in an invalid or "
+                             "unsupported format")),
+          StatusIs(
+              StatusCode::kPermissionDenied,
+              HasSubstr("The client is not authorized to make this request"))));
 }
 
 }  // namespace
