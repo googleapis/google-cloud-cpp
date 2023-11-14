@@ -13,9 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/internal/service_endpoint.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/universe_domain_options.h"
+#include "absl/strings/strip.h"
 
 namespace google {
 namespace cloud {
@@ -37,8 +38,9 @@ StatusOr<std::string> DetermineServiceEndpoint(
       return internal::InvalidArgumentError(
           "UniverseDomainOption can not be empty");
     }
-    return absl::StrReplaceAll(
-        default_endpoint, {{kGoogleDefaultUniverse, universe_domain_option}});
+    return absl::StrCat(
+        absl::StripSuffix(default_endpoint, kGoogleDefaultUniverse),
+        universe_domain_option);
   }
   return default_endpoint;
 }

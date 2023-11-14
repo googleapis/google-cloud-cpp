@@ -14,8 +14,6 @@
 
 #include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
@@ -27,65 +25,54 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOkAndHolds;
-using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
-auto constexpr kDefaultHost = "default_host.googleapis.com";
+auto constexpr kDefaultHost = "default_endpoint.googleapis.com";
 
 TEST(DetermineServiceEndpoint, EnvVarSet) {
   auto constexpr kEnvVarEndpoint = "foo.testing.net";
-  ScopedEnvironment service_endpoint("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT",
-                                     kEnvVarEndpoint);
   Options options;
-  auto result = DetermineServiceEndpoint(
-      GetEnv("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT"),
-      ExtractOption<EndpointOption>(options), options, kDefaultHost);
+  auto result = DetermineServiceEndpoint(kEnvVarEndpoint,
+                                         ExtractOption<EndpointOption>(options),
+                                         options, kDefaultHost);
   EXPECT_THAT(result, IsOkAndHolds(kEnvVarEndpoint));
 }
 
 TEST(DetermineServiceEndpoint, EndpointOptionSet) {
-  ScopedEnvironment service_endpoint("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT",
-                                     absl::nullopt);
   auto constexpr kOptionEndpoint = "option.testing.net";
   auto options = Options{}.set<EndpointOption>(kOptionEndpoint);
-  auto result = DetermineServiceEndpoint(
-      GetEnv("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT"),
-      ExtractOption<EndpointOption>(options), options, kDefaultHost);
+  auto result = DetermineServiceEndpoint(absl::nullopt,
+                                         ExtractOption<EndpointOption>(options),
+                                         options, kDefaultHost);
   EXPECT_THAT(result, IsOkAndHolds(kOptionEndpoint));
 }
 
 TEST(DetermineServiceEndpoint, UniverseDomainSetWithNonEmptyValue) {
-  ScopedEnvironment service_endpoint("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT",
-                                     absl::nullopt);
   auto constexpr kUniverseDomain = "universe.domain";
   auto options = Options{}.set<UniverseDomainOption>(kUniverseDomain);
-  auto result = DetermineServiceEndpoint(
-      GetEnv("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT"),
-      ExtractOption<EndpointOption>(options), options, kDefaultHost);
-  EXPECT_THAT(result, IsOkAndHolds("default_host.universe.domain"));
+  auto result = DetermineServiceEndpoint(absl::nullopt,
+                                         ExtractOption<EndpointOption>(options),
+                                         options, kDefaultHost);
+  EXPECT_THAT(result, IsOkAndHolds("default_endpoint.universe.domain"));
 }
 
 TEST(DetermineServiceEndpoint, UniverseDomainSetWithEmptyValue) {
-  ScopedEnvironment service_endpoint("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT",
-                                     absl::nullopt);
   auto options = Options{}.set<UniverseDomainOption>("");
-  auto result = DetermineServiceEndpoint(
-      GetEnv("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT"),
-      ExtractOption<EndpointOption>(options), options, kDefaultHost);
+  auto result = DetermineServiceEndpoint(absl::nullopt,
+                                         ExtractOption<EndpointOption>(options),
+                                         options, kDefaultHost);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("UniverseDomainOption can not be empty")));
 }
 
 TEST(DetermineServiceEndpoint, DefaultHost) {
-  ScopedEnvironment service_endpoint("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT",
-                                     absl::nullopt);
   Options options;
-  auto result = DetermineServiceEndpoint(
-      GetEnv("GOOGLE_CLOUD_CPP_FOO_SERVICE_ENDPOINT"),
-      ExtractOption<EndpointOption>(options), options, kDefaultHost);
-  EXPECT_THAT(result, IsOkAndHolds("default_host.googleapis.com"));
+  auto result = DetermineServiceEndpoint(absl::nullopt,
+                                         ExtractOption<EndpointOption>(options),
+                                         options, kDefaultHost);
+  EXPECT_THAT(result, IsOkAndHolds(kDefaultHost));
 }
 
 }  // namespace
