@@ -114,8 +114,7 @@ TEST_F(SqlIntegrationTest, CreateEphemeral) {
 
       status = client.CreateEphemeral(request).status();
       // This is a transient error, just retry.
-      if (status.code() == StatusCode::kUnavailable) continue;
-      return status;
+      if (status.code() != StatusCode::kUnavailable) break;
     }
     return status;
   }();
