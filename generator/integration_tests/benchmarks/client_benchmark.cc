@@ -116,7 +116,8 @@ class TestStub : public GoldenKitchenSinkStub {
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
-  StreamingWrite(std::shared_ptr<grpc::ClientContext>) override {
+  StreamingWrite(std::shared_ptr<grpc::ClientContext>,
+                 Options const&) override {
     return nullptr;
   }
 

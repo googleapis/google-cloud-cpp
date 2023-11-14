@@ -514,9 +514,10 @@ StatusOr<google::storage::v2::Object> StorageMetadata::UpdateObject(
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-StorageMetadata::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->WriteObject(std::move(context));
+StorageMetadata::WriteObject(std::shared_ptr<grpc::ClientContext> context,
+                             Options const& options) {
+  SetMetadata(*context, options);
+  return child_->WriteObject(std::move(context), options);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

@@ -117,7 +117,9 @@ class MockStorageStub : public storage_internal::StorageStub {
   MOCK_METHOD((std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
                    google::storage::v2::WriteObjectRequest,
                    google::storage::v2::WriteObjectResponse>>),
-              WriteObject, (std::shared_ptr<grpc::ClientContext>), (override));
+              WriteObject,
+              (std::shared_ptr<grpc::ClientContext>, Options const&),
+              (override));
 
   MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    google::storage::v2::BidiWriteObjectRequest,

@@ -267,7 +267,8 @@ StatusOr<google::storage::v2::Object> DefaultStorageStub::UpdateObject(
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-DefaultStorageStub::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
+DefaultStorageStub::WriteObject(std::shared_ptr<grpc::ClientContext> context,
+                                Options const&) {
   auto response = std::make_unique<google::storage::v2::WriteObjectResponse>();
   auto stream = grpc_stub_->WriteObject(context.get(), response.get());
   return std::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<

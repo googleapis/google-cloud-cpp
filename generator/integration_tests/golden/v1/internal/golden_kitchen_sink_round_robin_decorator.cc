@@ -80,8 +80,9 @@ GoldenKitchenSinkRoundRobin::StreamingRead(
 std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
     google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
 GoldenKitchenSinkRoundRobin::StreamingWrite(
-    std::shared_ptr<grpc::ClientContext> context) {
-  return Child()->StreamingWrite(std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options) {
+  return Child()->StreamingWrite(std::move(context), options);
 }
 
 std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<

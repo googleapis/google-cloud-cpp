@@ -48,7 +48,7 @@ static_assert(
 /// @verify that stall timeouts are reported correctly.
 TEST(GrpcClientUploadChunkTest, StallTimeoutWrite) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, WriteObject).WillOnce([&](auto) {
+  EXPECT_CALL(*mock, WriteObject).WillOnce([&] {
     ::testing::InSequence sequence;
     auto stream = std::make_unique<MockInsertStream>();
     EXPECT_CALL(*stream, Cancel).Times(1);
@@ -87,7 +87,7 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWrite) {
 /// @verify that stall timeouts are reported correctly.
 TEST(GrpcClientUploadChunkTest, StallTimeoutWritesDone) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, WriteObject).WillOnce([&](auto) {
+  EXPECT_CALL(*mock, WriteObject).WillOnce([&] {
     ::testing::InSequence sequence;
     auto stream = std::make_unique<MockInsertStream>();
     EXPECT_CALL(*stream, Write).WillOnce(Return(true));
@@ -130,7 +130,7 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWritesDone) {
 /// @verify that stall timeouts are reported correctly.
 TEST(GrpcClientUploadChunkTest, StallTimeoutClose) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, WriteObject).WillOnce([&](auto) {
+  EXPECT_CALL(*mock, WriteObject).WillOnce([&] {
     ::testing::InSequence sequence;
     auto stream = std::make_unique<MockInsertStream>();
     EXPECT_CALL(*stream, Write).Times(2).WillRepeatedly(Return(true));

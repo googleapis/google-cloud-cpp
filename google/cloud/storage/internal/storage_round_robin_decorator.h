@@ -128,7 +128,8 @@ class StorageRoundRobin : public StorageStub {
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>
-  WriteObject(std::shared_ptr<grpc::ClientContext> context) override;
+  WriteObject(std::shared_ptr<grpc::ClientContext> context,
+              Options const& options) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::storage::v2::BidiWriteObjectRequest,

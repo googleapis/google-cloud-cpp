@@ -51,7 +51,9 @@ Status StubGenerator::GenerateHeader() {
   HeaderPrint("\n");
   auto const needs_completion_queue =
       HasAsyncMethod() || HasBidirStreamingMethod();
-  auto const needs_options = HasLongrunningMethod() || HasStreamingReadMethod();
+  auto const needs_options = HasLongrunningMethod() ||
+                             HasStreamingWriteMethod() ||
+                             HasStreamingReadMethod();
   HeaderLocalIncludes(
       {HasBidirStreamingMethod()
            ? "google/cloud/async_streaming_read_write_rpc.h"
@@ -97,7 +99,8 @@ Status StubGenerator::GenerateHeader() {
       $request_type$,
       $response_type$>>
   $method_name$(
-      std::shared_ptr<grpc::ClientContext> context) = 0;
+      std::shared_ptr<grpc::ClientContext> context,
+      Options const& options) = 0;
 )""");
       continue;
     }
@@ -304,7 +307,8 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     $request_type$,
     $response_type$>>
 Default$stub_class_name$::$method_name$(
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const&) {
   auto response = std::make_unique<$response_type$>();
   auto stream = grpc_stub_->$method_name$(context.get(), response.get());
   return std::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
