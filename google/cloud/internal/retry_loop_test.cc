@@ -54,8 +54,8 @@ std::unique_ptr<RetryPolicy> TestRetryPolicy() {
 }
 
 std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
-  return ExponentialBackoffPolicy(std::chrono::microseconds(1),
-                                  std::chrono::microseconds(5), 2.0)
+  return ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                  std::chrono::milliseconds(5), 2.0)
       .clone();
 }
 

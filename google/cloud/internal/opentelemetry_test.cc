@@ -405,6 +405,21 @@ TEST(OpenTelemetry, MakeTracedSleeperDisabled) {
   EXPECT_THAT(spans, IsEmpty());
 }
 
+TEST(OpenTelemetry, MakeTracedSleeperNoSpansIfNoSleep) {
+  auto span_catcher = InstallSpanCatcher();
+
+  MockFunction<void(ms)> mock_sleeper;
+  EXPECT_CALL(mock_sleeper, Call(ms(0)));
+
+  auto sleeper = mock_sleeper.AsStdFunction();
+  auto result = MakeTracedSleeper(EnableTracing(Options{}), sleeper, "Backoff");
+  result(ms(0));
+
+  // Verify that no spans were made.
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+}
+
 TEST(OpenTelemetry, AddSpanAttributeEnabled) {
   auto span_catcher = InstallSpanCatcher();
 
