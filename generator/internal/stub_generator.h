@@ -17,6 +17,7 @@
 
 #include "generator/internal/printer.h"
 #include "generator/internal/service_code_generator.h"
+#include "generator/internal/stub_generator_base.h"
 #include "google/cloud/status.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
@@ -32,7 +33,7 @@ namespace generator_internal {
  * Generates the header file and cc file for the Stub class for a particular
  * service.
  */
-class StubGenerator : public ServiceCodeGenerator {
+class StubGenerator : public StubGeneratorBase {
  public:
   StubGenerator(google::protobuf::ServiceDescriptor const* service_descriptor,
                 VarsDictionary service_vars,
