@@ -296,9 +296,9 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadPgOid) {
   if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PG.OID";
 
   std::vector<PgOid> const data = {
-      PgOid("0"),   //
-      PgOid("42"),  //
-      PgOid("999"), //
+      PgOid("0"),    //
+      PgOid("42"),   //
+      PgOid("999"),  //
   };
   auto result = WriteReadData(*client_, data, "PgOidValue");
   EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
