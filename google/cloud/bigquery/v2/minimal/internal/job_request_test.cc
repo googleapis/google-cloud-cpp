@@ -38,11 +38,11 @@ using ::testing::HasSubstr;
 
 auto static const kMin = std::chrono::system_clock::now();
 auto static const kMax = kMin + std::chrono::milliseconds(100);
-auto static const kMin_int =
+auto static const kMinInt =
     std::chrono::time_point_cast<std::chrono::milliseconds>(kMin)
         .time_since_epoch()
         .count();
-auto static const kMax_int =
+auto static const kMaxInt =
     std::chrono::time_point_cast<std::chrono::milliseconds>(kMax)
         .time_since_epoch()
         .count();
@@ -167,8 +167,8 @@ TEST(ListJobsRequestTest, Success) {
       "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs");
   expected.AddQueryParameter("allUsers", "true");
   expected.AddQueryParameter("maxResults", "10");
-  expected.AddQueryParameter("minCreationTime", std::to_string(kMin_int));
-  expected.AddQueryParameter("maxCreationTime", std::to_string(kMax_int));
+  expected.AddQueryParameter("minCreationTime", std::to_string(kMinInt));
+  expected.AddQueryParameter("maxCreationTime", std::to_string(kMaxInt));
   expected.AddQueryParameter("pageToken", "123");
   expected.AddQueryParameter("projection", "FULL");
   expected.AddQueryParameter("stateFilter", "RUNNING");
