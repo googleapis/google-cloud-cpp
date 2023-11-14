@@ -139,7 +139,7 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r) {
   return request;
 }
 
-auto CastTimeToMilliseconds(const std::chrono::system_clock::time_point time) {
+auto CastTimeToMilliseconds(std::chrono::system_clock::time_point const time) {
   return std::chrono::time_point_cast<std::chrono::milliseconds>(time)
       .time_since_epoch()
       .count();
