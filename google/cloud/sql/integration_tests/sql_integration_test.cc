@@ -46,10 +46,8 @@ class SqlIntegrationTest
 
 TEST_F(SqlIntegrationTest, PaginatedList) {
   namespace sql = ::google::cloud::sql_v1;
-  auto client =
-      sql::SqlInstancesServiceClient(google::cloud::ExperimentalTag{},
-                                     sql::MakeSqlInstancesServiceConnectionRest(
-                                         google::cloud::ExperimentalTag{}));
+  auto client = sql::SqlInstancesServiceClient(
+      sql::MakeSqlInstancesServiceConnectionRest());
 
   google::cloud::sql::v1::SqlInstancesListRequest request;
   request.set_project(project_id_);
@@ -88,10 +86,8 @@ TEST_F(SqlIntegrationTest, PaginatedList) {
 // successfully.
 TEST_F(SqlIntegrationTest, CreateEphemeral) {
   namespace sql = ::google::cloud::sql_v1;
-  auto client =
-      sql::SqlInstancesServiceClient(google::cloud::ExperimentalTag{},
-                                     sql::MakeSqlInstancesServiceConnectionRest(
-                                         google::cloud::ExperimentalTag{}));
+  auto client = sql::SqlInstancesServiceClient(
+      sql::MakeSqlInstancesServiceConnectionRest());
 
   google::cloud::sql::v1::SqlInstancesListRequest list_request;
   list_request.set_project(project_id_);
