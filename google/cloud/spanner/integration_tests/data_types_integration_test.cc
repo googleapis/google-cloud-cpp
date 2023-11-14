@@ -292,6 +292,18 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadNumeric) {
   EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
+TEST_F(PgDataTypeIntegrationTest, WriteReadPgOid) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PG.OID";
+
+  std::vector<PgNumeric> const data = {
+      PgOid("0"),   //
+      PgOid("42"),  //
+      PgOid("999"), //
+  };
+  auto result = WriteReadData(*client_, data, "PgOidValue");
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+}
+
 TEST_F(DataTypeIntegrationTest, WriteReadArrayBool) {
   std::vector<std::vector<bool>> const data = {
       std::vector<bool>{},
