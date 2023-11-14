@@ -32,11 +32,10 @@ FeaturestoreOnlineServingServiceStub::~FeaturestoreOnlineServingServiceStub() =
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 DefaultFeaturestoreOnlineServingServiceStub::ReadFeatureValues(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
   google::cloud::aiplatform::v1::ReadFeatureValuesResponse response;
-  auto status =
-      grpc_stub_->ReadFeatureValues(&client_context, request, &response);
+  auto status = grpc_stub_->ReadFeatureValues(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -46,23 +45,21 @@ DefaultFeaturestoreOnlineServingServiceStub::ReadFeatureValues(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
 DefaultFeaturestoreOnlineServingServiceStub::StreamingReadFeatureValues(
-    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
         request) {
-  auto stream =
-      grpc_stub_->StreamingReadFeatureValues(client_context.get(), request);
+  auto stream = grpc_stub_->StreamingReadFeatureValues(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>(
-      std::move(client_context), std::move(stream));
+      std::move(context), std::move(stream));
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
 DefaultFeaturestoreOnlineServingServiceStub::WriteFeatureValues(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
   google::cloud::aiplatform::v1::WriteFeatureValuesResponse response;
-  auto status =
-      grpc_stub_->WriteFeatureValues(&client_context, request, &response);
+  auto status = grpc_stub_->WriteFeatureValues(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

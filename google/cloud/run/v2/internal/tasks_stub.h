@@ -49,11 +49,11 @@ class DefaultTasksStub : public TasksStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::run::v2::Task> GetTask(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::run::v2::GetTaskRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListTasksResponse> ListTasks(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::run::v2::ListTasksRequest const& request) override;
 
  private:

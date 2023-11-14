@@ -32,12 +32,11 @@ DataFusionStub::~DataFusionStub() = default;
 
 StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse>
 DefaultDataFusionStub::ListAvailableVersions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
         request) {
   google::cloud::datafusion::v1::ListAvailableVersionsResponse response;
-  auto status =
-      grpc_stub_->ListAvailableVersions(&client_context, request, &response);
+  auto status = grpc_stub_->ListAvailableVersions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -46,10 +45,10 @@ DefaultDataFusionStub::ListAvailableVersions(
 
 StatusOr<google::cloud::datafusion::v1::ListInstancesResponse>
 DefaultDataFusionStub::ListInstances(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datafusion::v1::ListInstancesRequest const& request) {
   google::cloud::datafusion::v1::ListInstancesResponse response;
-  auto status = grpc_stub_->ListInstances(&client_context, request, &response);
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -58,10 +57,10 @@ DefaultDataFusionStub::ListInstances(
 
 StatusOr<google::cloud::datafusion::v1::Instance>
 DefaultDataFusionStub::GetInstance(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datafusion::v1::GetInstanceRequest const& request) {
   google::cloud::datafusion::v1::Instance response;
-  auto status = grpc_stub_->GetInstance(&client_context, request, &response);
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

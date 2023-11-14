@@ -32,10 +32,10 @@ ApplicationsStub::~ApplicationsStub() = default;
 
 StatusOr<google::appengine::v1::Application>
 DefaultApplicationsStub::GetApplication(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::GetApplicationRequest const& request) {
   google::appengine::v1::Application response;
-  auto status = grpc_stub_->GetApplication(&client_context, request, &response);
+  auto status = grpc_stub_->GetApplication(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

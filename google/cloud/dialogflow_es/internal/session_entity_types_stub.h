@@ -74,30 +74,30 @@ class DefaultSessionEntityTypesStub : public SessionEntityTypesStub {
 
   StatusOr<google::cloud::dialogflow::v2::ListSessionEntityTypesResponse>
   ListSessionEntityTypes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
   GetSessionEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
   CreateSessionEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
   UpdateSessionEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
           request) override;
 
   Status DeleteSessionEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
           request) override;
 

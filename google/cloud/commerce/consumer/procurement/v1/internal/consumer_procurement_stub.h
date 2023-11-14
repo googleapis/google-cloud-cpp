@@ -85,13 +85,13 @@ class DefaultConsumerProcurementServiceStub
           PlaceOrderRequest const& request) override;
 
   StatusOr<google::cloud::commerce::consumer::procurement::v1::Order> GetOrder(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::commerce::consumer::procurement::v1::GetOrderRequest const&
           request) override;
 
   StatusOr<
       google::cloud::commerce::consumer::procurement::v1::ListOrdersResponse>
-  ListOrders(grpc::ClientContext& client_context,
+  ListOrders(grpc::ClientContext& context,
              google::cloud::commerce::consumer::procurement::v1::
                  ListOrdersRequest const& request) override;
 

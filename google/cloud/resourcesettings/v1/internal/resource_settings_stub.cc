@@ -31,10 +31,10 @@ ResourceSettingsServiceStub::~ResourceSettingsServiceStub() = default;
 
 StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
 DefaultResourceSettingsServiceStub::ListSettings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
   google::cloud::resourcesettings::v1::ListSettingsResponse response;
-  auto status = grpc_stub_->ListSettings(&client_context, request, &response);
+  auto status = grpc_stub_->ListSettings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultResourceSettingsServiceStub::ListSettings(
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 DefaultResourceSettingsServiceStub::GetSetting(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
   google::cloud::resourcesettings::v1::Setting response;
-  auto status = grpc_stub_->GetSetting(&client_context, request, &response);
+  auto status = grpc_stub_->GetSetting(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,10 +55,10 @@ DefaultResourceSettingsServiceStub::GetSetting(
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 DefaultResourceSettingsServiceStub::UpdateSetting(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
   google::cloud::resourcesettings::v1::Setting response;
-  auto status = grpc_stub_->UpdateSetting(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateSetting(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

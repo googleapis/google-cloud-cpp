@@ -30,10 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SpannerStub::~SpannerStub() = default;
 
 StatusOr<google::spanner::v1::Session> DefaultSpannerStub::CreateSession(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::v1::CreateSessionRequest const& request) {
   google::spanner::v1::Session response;
-  auto status = grpc_stub_->CreateSession(&client_context, request, &response);
+  auto status = grpc_stub_->CreateSession(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,11 +42,10 @@ StatusOr<google::spanner::v1::Session> DefaultSpannerStub::CreateSession(
 
 StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
 DefaultSpannerStub::BatchCreateSessions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
   google::spanner::v1::BatchCreateSessionsResponse response;
-  auto status =
-      grpc_stub_->BatchCreateSessions(&client_context, request, &response);
+  auto status = grpc_stub_->BatchCreateSessions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -54,10 +53,10 @@ DefaultSpannerStub::BatchCreateSessions(
 }
 
 Status DefaultSpannerStub::DeleteSession(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::v1::DeleteSessionRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteSession(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteSession(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -65,10 +64,10 @@ Status DefaultSpannerStub::DeleteSession(
 }
 
 StatusOr<google::spanner::v1::ResultSet> DefaultSpannerStub::ExecuteSql(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   google::spanner::v1::ResultSet response;
-  auto status = grpc_stub_->ExecuteSql(&client_context, request, &response);
+  auto status = grpc_stub_->ExecuteSql(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -78,21 +77,20 @@ StatusOr<google::spanner::v1::ResultSet> DefaultSpannerStub::ExecuteSql(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 DefaultSpannerStub::ExecuteStreamingSql(
-    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::spanner::v1::ExecuteSqlRequest const& request) {
-  auto stream = grpc_stub_->ExecuteStreamingSql(client_context.get(), request);
+  auto stream = grpc_stub_->ExecuteStreamingSql(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
-      google::spanner::v1::PartialResultSet>>(std::move(client_context),
+      google::spanner::v1::PartialResultSet>>(std::move(context),
                                               std::move(stream));
 }
 
 StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
 DefaultSpannerStub::ExecuteBatchDml(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::v1::ExecuteBatchDmlRequest const& request) {
   google::spanner::v1::ExecuteBatchDmlResponse response;
-  auto status =
-      grpc_stub_->ExecuteBatchDml(&client_context, request, &response);
+  auto status = grpc_stub_->ExecuteBatchDml(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -102,20 +100,19 @@ DefaultSpannerStub::ExecuteBatchDml(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 DefaultSpannerStub::StreamingRead(
-    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::spanner::v1::ReadRequest const& request) {
-  auto stream = grpc_stub_->StreamingRead(client_context.get(), request);
+  auto stream = grpc_stub_->StreamingRead(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
-      google::spanner::v1::PartialResultSet>>(std::move(client_context),
+      google::spanner::v1::PartialResultSet>>(std::move(context),
                                               std::move(stream));
 }
 
 StatusOr<google::spanner::v1::Transaction> DefaultSpannerStub::BeginTransaction(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::v1::BeginTransactionRequest const& request) {
   google::spanner::v1::Transaction response;
-  auto status =
-      grpc_stub_->BeginTransaction(&client_context, request, &response);
+  auto status = grpc_stub_->BeginTransaction(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -123,10 +120,10 @@ StatusOr<google::spanner::v1::Transaction> DefaultSpannerStub::BeginTransaction(
 }
 
 StatusOr<google::spanner::v1::CommitResponse> DefaultSpannerStub::Commit(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::v1::CommitRequest const& request) {
   google::spanner::v1::CommitResponse response;
-  auto status = grpc_stub_->Commit(&client_context, request, &response);
+  auto status = grpc_stub_->Commit(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -134,10 +131,10 @@ StatusOr<google::spanner::v1::CommitResponse> DefaultSpannerStub::Commit(
 }
 
 Status DefaultSpannerStub::Rollback(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::v1::RollbackRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->Rollback(&client_context, request, &response);
+  auto status = grpc_stub_->Rollback(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -146,10 +143,10 @@ Status DefaultSpannerStub::Rollback(
 
 StatusOr<google::spanner::v1::PartitionResponse>
 DefaultSpannerStub::PartitionQuery(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::v1::PartitionQueryRequest const& request) {
   google::spanner::v1::PartitionResponse response;
-  auto status = grpc_stub_->PartitionQuery(&client_context, request, &response);
+  auto status = grpc_stub_->PartitionQuery(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -158,10 +155,10 @@ DefaultSpannerStub::PartitionQuery(
 
 StatusOr<google::spanner::v1::PartitionResponse>
 DefaultSpannerStub::PartitionRead(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::v1::PartitionReadRequest const& request) {
   google::spanner::v1::PartitionResponse response;
-  auto status = grpc_stub_->PartitionRead(&client_context, request, &response);
+  auto status = grpc_stub_->PartitionRead(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -171,11 +168,11 @@ DefaultSpannerStub::PartitionRead(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::BatchWriteResponse>>
 DefaultSpannerStub::BatchWrite(
-    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::spanner::v1::BatchWriteRequest const& request) {
-  auto stream = grpc_stub_->BatchWrite(client_context.get(), request);
+  auto stream = grpc_stub_->BatchWrite(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
-      google::spanner::v1::BatchWriteResponse>>(std::move(client_context),
+      google::spanner::v1::BatchWriteResponse>>(std::move(context),
                                                 std::move(stream));
 }
 

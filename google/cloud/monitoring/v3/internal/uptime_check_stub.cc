@@ -31,11 +31,11 @@ UptimeCheckServiceStub::~UptimeCheckServiceStub() = default;
 
 StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
 DefaultUptimeCheckServiceStub::ListUptimeCheckConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) {
   google::monitoring::v3::ListUptimeCheckConfigsResponse response;
   auto status =
-      grpc_stub_->ListUptimeCheckConfigs(&client_context, request, &response);
+      grpc_stub_->ListUptimeCheckConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,11 +44,10 @@ DefaultUptimeCheckServiceStub::ListUptimeCheckConfigs(
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 DefaultUptimeCheckServiceStub::GetUptimeCheckConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
   google::monitoring::v3::UptimeCheckConfig response;
-  auto status =
-      grpc_stub_->GetUptimeCheckConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetUptimeCheckConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,11 +56,11 @@ DefaultUptimeCheckServiceStub::GetUptimeCheckConfig(
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 DefaultUptimeCheckServiceStub::CreateUptimeCheckConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
   google::monitoring::v3::UptimeCheckConfig response;
   auto status =
-      grpc_stub_->CreateUptimeCheckConfig(&client_context, request, &response);
+      grpc_stub_->CreateUptimeCheckConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -70,11 +69,11 @@ DefaultUptimeCheckServiceStub::CreateUptimeCheckConfig(
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 DefaultUptimeCheckServiceStub::UpdateUptimeCheckConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
   google::monitoring::v3::UptimeCheckConfig response;
   auto status =
-      grpc_stub_->UpdateUptimeCheckConfig(&client_context, request, &response);
+      grpc_stub_->UpdateUptimeCheckConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -82,11 +81,11 @@ DefaultUptimeCheckServiceStub::UpdateUptimeCheckConfig(
 }
 
 Status DefaultUptimeCheckServiceStub::DeleteUptimeCheckConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->DeleteUptimeCheckConfig(&client_context, request, &response);
+      grpc_stub_->DeleteUptimeCheckConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -95,11 +94,10 @@ Status DefaultUptimeCheckServiceStub::DeleteUptimeCheckConfig(
 
 StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
 DefaultUptimeCheckServiceStub::ListUptimeCheckIps(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::ListUptimeCheckIpsRequest const& request) {
   google::monitoring::v3::ListUptimeCheckIpsResponse response;
-  auto status =
-      grpc_stub_->ListUptimeCheckIps(&client_context, request, &response);
+  auto status = grpc_stub_->ListUptimeCheckIps(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

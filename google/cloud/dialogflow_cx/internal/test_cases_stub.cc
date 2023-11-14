@@ -32,10 +32,10 @@ TestCasesStub::~TestCasesStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
 DefaultTestCasesStub::ListTestCases(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListTestCasesResponse response;
-  auto status = grpc_stub_->ListTestCases(&client_context, request, &response);
+  auto status = grpc_stub_->ListTestCases(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,12 +43,11 @@ DefaultTestCasesStub::ListTestCases(
 }
 
 Status DefaultTestCasesStub::BatchDeleteTestCases(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->BatchDeleteTestCases(&client_context, request, &response);
+  auto status = grpc_stub_->BatchDeleteTestCases(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,10 +56,10 @@ Status DefaultTestCasesStub::BatchDeleteTestCases(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 DefaultTestCasesStub::GetTestCase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
   google::cloud::dialogflow::cx::v3::TestCase response;
-  auto status = grpc_stub_->GetTestCase(&client_context, request, &response);
+  auto status = grpc_stub_->GetTestCase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -69,10 +68,10 @@ DefaultTestCasesStub::GetTestCase(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 DefaultTestCasesStub::CreateTestCase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
   google::cloud::dialogflow::cx::v3::TestCase response;
-  auto status = grpc_stub_->CreateTestCase(&client_context, request, &response);
+  auto status = grpc_stub_->CreateTestCase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -81,10 +80,10 @@ DefaultTestCasesStub::CreateTestCase(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 DefaultTestCasesStub::UpdateTestCase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
   google::cloud::dialogflow::cx::v3::TestCase response;
-  auto status = grpc_stub_->UpdateTestCase(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateTestCase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -130,12 +129,11 @@ DefaultTestCasesStub::AsyncBatchRunTestCases(
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
 DefaultTestCasesStub::CalculateCoverage(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::CalculateCoverageResponse response;
-  auto status =
-      grpc_stub_->CalculateCoverage(&client_context, request, &response);
+  auto status = grpc_stub_->CalculateCoverage(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -180,12 +178,11 @@ DefaultTestCasesStub::AsyncExportTestCases(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>
 DefaultTestCasesStub::ListTestCaseResults(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse response;
-  auto status =
-      grpc_stub_->ListTestCaseResults(&client_context, request, &response);
+  auto status = grpc_stub_->ListTestCaseResults(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -194,12 +191,11 @@ DefaultTestCasesStub::ListTestCaseResults(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
 DefaultTestCasesStub::GetTestCaseResult(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::TestCaseResult response;
-  auto status =
-      grpc_stub_->GetTestCaseResult(&client_context, request, &response);
+  auto status = grpc_stub_->GetTestCaseResult(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

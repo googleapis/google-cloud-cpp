@@ -87,13 +87,13 @@ class DefaultAppGatewaysServiceStub : public AppGatewaysServiceStub {
 
   StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
   ListAppGateways(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
           request) override;
 
   StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
   GetAppGateway(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
           request) override;
 

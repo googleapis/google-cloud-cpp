@@ -31,10 +31,10 @@ CloudCatalogStub::~CloudCatalogStub() = default;
 
 StatusOr<google::cloud::billing::v1::ListServicesResponse>
 DefaultCloudCatalogStub::ListServices(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::billing::v1::ListServicesRequest const& request) {
   google::cloud::billing::v1::ListServicesResponse response;
-  auto status = grpc_stub_->ListServices(&client_context, request, &response);
+  auto status = grpc_stub_->ListServices(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultCloudCatalogStub::ListServices(
 
 StatusOr<google::cloud::billing::v1::ListSkusResponse>
 DefaultCloudCatalogStub::ListSkus(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::billing::v1::ListSkusRequest const& request) {
   google::cloud::billing::v1::ListSkusResponse response;
-  auto status = grpc_stub_->ListSkus(&client_context, request, &response);
+  auto status = grpc_stub_->ListSkus(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

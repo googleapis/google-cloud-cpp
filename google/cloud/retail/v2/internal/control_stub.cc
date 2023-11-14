@@ -31,10 +31,10 @@ ControlServiceStub::~ControlServiceStub() = default;
 
 StatusOr<google::cloud::retail::v2::Control>
 DefaultControlServiceStub::CreateControl(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::CreateControlRequest const& request) {
   google::cloud::retail::v2::Control response;
-  auto status = grpc_stub_->CreateControl(&client_context, request, &response);
+  auto status = grpc_stub_->CreateControl(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,10 +42,10 @@ DefaultControlServiceStub::CreateControl(
 }
 
 Status DefaultControlServiceStub::DeleteControl(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::DeleteControlRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteControl(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteControl(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -54,10 +54,10 @@ Status DefaultControlServiceStub::DeleteControl(
 
 StatusOr<google::cloud::retail::v2::Control>
 DefaultControlServiceStub::UpdateControl(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateControlRequest const& request) {
   google::cloud::retail::v2::Control response;
-  auto status = grpc_stub_->UpdateControl(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateControl(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -66,10 +66,10 @@ DefaultControlServiceStub::UpdateControl(
 
 StatusOr<google::cloud::retail::v2::Control>
 DefaultControlServiceStub::GetControl(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::GetControlRequest const& request) {
   google::cloud::retail::v2::Control response;
-  auto status = grpc_stub_->GetControl(&client_context, request, &response);
+  auto status = grpc_stub_->GetControl(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -78,10 +78,10 @@ DefaultControlServiceStub::GetControl(
 
 StatusOr<google::cloud::retail::v2::ListControlsResponse>
 DefaultControlServiceStub::ListControls(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::ListControlsRequest const& request) {
   google::cloud::retail::v2::ListControlsResponse response;
-  auto status = grpc_stub_->ListControls(&client_context, request, &response);
+  auto status = grpc_stub_->ListControls(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

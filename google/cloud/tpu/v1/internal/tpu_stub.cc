@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TpuStub::~TpuStub() = default;
 
 StatusOr<google::cloud::tpu::v1::ListNodesResponse> DefaultTpuStub::ListNodes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v1::ListNodesRequest const& request) {
   google::cloud::tpu::v1::ListNodesResponse response;
-  auto status = grpc_stub_->ListNodes(&client_context, request, &response);
+  auto status = grpc_stub_->ListNodes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,10 +42,10 @@ StatusOr<google::cloud::tpu::v1::ListNodesResponse> DefaultTpuStub::ListNodes(
 }
 
 StatusOr<google::cloud::tpu::v1::Node> DefaultTpuStub::GetNode(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v1::GetNodeRequest const& request) {
   google::cloud::tpu::v1::Node response;
-  auto status = grpc_stub_->GetNode(&client_context, request, &response);
+  auto status = grpc_stub_->GetNode(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -132,11 +132,11 @@ future<StatusOr<google::longrunning::Operation>> DefaultTpuStub::AsyncStartNode(
 
 StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>
 DefaultTpuStub::ListTensorFlowVersions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v1::ListTensorFlowVersionsRequest const& request) {
   google::cloud::tpu::v1::ListTensorFlowVersionsResponse response;
   auto status =
-      grpc_stub_->ListTensorFlowVersions(&client_context, request, &response);
+      grpc_stub_->ListTensorFlowVersions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -145,11 +145,10 @@ DefaultTpuStub::ListTensorFlowVersions(
 
 StatusOr<google::cloud::tpu::v1::TensorFlowVersion>
 DefaultTpuStub::GetTensorFlowVersion(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request) {
   google::cloud::tpu::v1::TensorFlowVersion response;
-  auto status =
-      grpc_stub_->GetTensorFlowVersion(&client_context, request, &response);
+  auto status = grpc_stub_->GetTensorFlowVersion(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -158,11 +157,10 @@ DefaultTpuStub::GetTensorFlowVersion(
 
 StatusOr<google::cloud::tpu::v1::ListAcceleratorTypesResponse>
 DefaultTpuStub::ListAcceleratorTypes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v1::ListAcceleratorTypesRequest const& request) {
   google::cloud::tpu::v1::ListAcceleratorTypesResponse response;
-  auto status =
-      grpc_stub_->ListAcceleratorTypes(&client_context, request, &response);
+  auto status = grpc_stub_->ListAcceleratorTypes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -171,11 +169,10 @@ DefaultTpuStub::ListAcceleratorTypes(
 
 StatusOr<google::cloud::tpu::v1::AcceleratorType>
 DefaultTpuStub::GetAcceleratorType(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request) {
   google::cloud::tpu::v1::AcceleratorType response;
-  auto status =
-      grpc_stub_->GetAcceleratorType(&client_context, request, &response);
+  auto status = grpc_stub_->GetAcceleratorType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

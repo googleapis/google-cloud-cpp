@@ -31,10 +31,10 @@ QuotaControllerStub::~QuotaControllerStub() = default;
 
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 DefaultQuotaControllerStub::AllocateQuota(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
   google::api::servicecontrol::v1::AllocateQuotaResponse response;
-  auto status = grpc_stub_->AllocateQuota(&client_context, request, &response);
+  auto status = grpc_stub_->AllocateQuota(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

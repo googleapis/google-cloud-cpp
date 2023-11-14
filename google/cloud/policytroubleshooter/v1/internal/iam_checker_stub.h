@@ -51,7 +51,7 @@ class DefaultIamCheckerStub : public IamCheckerStub {
   StatusOr<
       google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
   TroubleshootIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::policytroubleshooter::v1::
           TroubleshootIamPolicyRequest const& request) override;
 

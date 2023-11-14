@@ -31,11 +31,10 @@ DashboardsServiceStub::~DashboardsServiceStub() = default;
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DefaultDashboardsServiceStub::CreateDashboard(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
   google::monitoring::dashboard::v1::Dashboard response;
-  auto status =
-      grpc_stub_->CreateDashboard(&client_context, request, &response);
+  auto status = grpc_stub_->CreateDashboard(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +43,10 @@ DefaultDashboardsServiceStub::CreateDashboard(
 
 StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
 DefaultDashboardsServiceStub::ListDashboards(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::dashboard::v1::ListDashboardsRequest const& request) {
   google::monitoring::dashboard::v1::ListDashboardsResponse response;
-  auto status = grpc_stub_->ListDashboards(&client_context, request, &response);
+  auto status = grpc_stub_->ListDashboards(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -56,10 +55,10 @@ DefaultDashboardsServiceStub::ListDashboards(
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DefaultDashboardsServiceStub::GetDashboard(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
   google::monitoring::dashboard::v1::Dashboard response;
-  auto status = grpc_stub_->GetDashboard(&client_context, request, &response);
+  auto status = grpc_stub_->GetDashboard(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -67,11 +66,10 @@ DefaultDashboardsServiceStub::GetDashboard(
 }
 
 Status DefaultDashboardsServiceStub::DeleteDashboard(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteDashboard(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteDashboard(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -80,11 +78,10 @@ Status DefaultDashboardsServiceStub::DeleteDashboard(
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DefaultDashboardsServiceStub::UpdateDashboard(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
   google::monitoring::dashboard::v1::Dashboard response;
-  auto status =
-      grpc_stub_->UpdateDashboard(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateDashboard(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

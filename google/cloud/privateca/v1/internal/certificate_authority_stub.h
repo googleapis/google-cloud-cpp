@@ -249,30 +249,30 @@ class DefaultCertificateAuthorityServiceStub
 
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   CreateCertificate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::CreateCertificateRequest const&
           request) override;
 
   StatusOr<google::cloud::security::privateca::v1::Certificate> GetCertificate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::GetCertificateRequest const&
           request) override;
 
   StatusOr<google::cloud::security::privateca::v1::ListCertificatesResponse>
   ListCertificates(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::ListCertificatesRequest const&
           request) override;
 
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   RevokeCertificate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::RevokeCertificateRequest const&
           request) override;
 
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   UpdateCertificate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::UpdateCertificateRequest const&
           request) override;
 
@@ -307,20 +307,20 @@ class DefaultCertificateAuthorityServiceStub
   StatusOr<google::cloud::security::privateca::v1::
                FetchCertificateAuthorityCsrResponse>
   FetchCertificateAuthorityCsr(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::
           FetchCertificateAuthorityCsrRequest const& request) override;
 
   StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
   GetCertificateAuthority(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::
           GetCertificateAuthorityRequest const& request) override;
 
   StatusOr<google::cloud::security::privateca::v1::
                ListCertificateAuthoritiesResponse>
   ListCertificateAuthorities(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::
           ListCertificateAuthoritiesRequest const& request) override;
 
@@ -358,12 +358,12 @@ class DefaultCertificateAuthorityServiceStub
           request) override;
 
   StatusOr<google::cloud::security::privateca::v1::CaPool> GetCaPool(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::GetCaPoolRequest const& request)
       override;
 
   StatusOr<google::cloud::security::privateca::v1::ListCaPoolsResponse>
-  ListCaPools(grpc::ClientContext& client_context,
+  ListCaPools(grpc::ClientContext& context,
               google::cloud::security::privateca::v1::ListCaPoolsRequest const&
                   request) override;
 
@@ -375,20 +375,20 @@ class DefaultCertificateAuthorityServiceStub
 
   StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
   FetchCaCerts(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::FetchCaCertsRequest const&
           request) override;
 
   StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
   GetCertificateRevocationList(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::
           GetCertificateRevocationListRequest const& request) override;
 
   StatusOr<google::cloud::security::privateca::v1::
                ListCertificateRevocationListsResponse>
   ListCertificateRevocationLists(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::
           ListCertificateRevocationListsRequest const& request) override;
 
@@ -415,14 +415,14 @@ class DefaultCertificateAuthorityServiceStub
 
   StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
   GetCertificateTemplate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::
           GetCertificateTemplateRequest const& request) override;
 
   StatusOr<
       google::cloud::security::privateca::v1::ListCertificateTemplatesResponse>
   ListCertificateTemplates(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::security::privateca::v1::
           ListCertificateTemplatesRequest const& request) override;
 

@@ -31,12 +31,11 @@ AdvisoryNotificationsServiceStub::~AdvisoryNotificationsServiceStub() = default;
 
 StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
 DefaultAdvisoryNotificationsServiceStub::ListNotifications(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
         request) {
   google::cloud::advisorynotifications::v1::ListNotificationsResponse response;
-  auto status =
-      grpc_stub_->ListNotifications(&client_context, request, &response);
+  auto status = grpc_stub_->ListNotifications(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,12 +44,11 @@ DefaultAdvisoryNotificationsServiceStub::ListNotifications(
 
 StatusOr<google::cloud::advisorynotifications::v1::Notification>
 DefaultAdvisoryNotificationsServiceStub::GetNotification(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::GetNotificationRequest const&
         request) {
   google::cloud::advisorynotifications::v1::Notification response;
-  auto status =
-      grpc_stub_->GetNotification(&client_context, request, &response);
+  auto status = grpc_stub_->GetNotification(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,11 +57,11 @@ DefaultAdvisoryNotificationsServiceStub::GetNotification(
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
 DefaultAdvisoryNotificationsServiceStub::GetSettings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::GetSettingsRequest const&
         request) {
   google::cloud::advisorynotifications::v1::Settings response;
-  auto status = grpc_stub_->GetSettings(&client_context, request, &response);
+  auto status = grpc_stub_->GetSettings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -72,11 +70,11 @@ DefaultAdvisoryNotificationsServiceStub::GetSettings(
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
 DefaultAdvisoryNotificationsServiceStub::UpdateSettings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
         request) {
   google::cloud::advisorynotifications::v1::Settings response;
-  auto status = grpc_stub_->UpdateSettings(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateSettings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

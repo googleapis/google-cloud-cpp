@@ -32,10 +32,10 @@ ServicesStub::~ServicesStub() = default;
 
 StatusOr<google::appengine::v1::ListServicesResponse>
 DefaultServicesStub::ListServices(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::ListServicesRequest const& request) {
   google::appengine::v1::ListServicesResponse response;
-  auto status = grpc_stub_->ListServices(&client_context, request, &response);
+  auto status = grpc_stub_->ListServices(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultServicesStub::ListServices(
 }
 
 StatusOr<google::appengine::v1::Service> DefaultServicesStub::GetService(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::GetServiceRequest const& request) {
   google::appengine::v1::Service response;
-  auto status = grpc_stub_->GetService(&client_context, request, &response);
+  auto status = grpc_stub_->GetService(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

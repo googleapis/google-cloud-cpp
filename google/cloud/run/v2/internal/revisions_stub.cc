@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RevisionsStub::~RevisionsStub() = default;
 
 StatusOr<google::cloud::run::v2::Revision> DefaultRevisionsStub::GetRevision(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::run::v2::GetRevisionRequest const& request) {
   google::cloud::run::v2::Revision response;
-  auto status = grpc_stub_->GetRevision(&client_context, request, &response);
+  auto status = grpc_stub_->GetRevision(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ StatusOr<google::cloud::run::v2::Revision> DefaultRevisionsStub::GetRevision(
 
 StatusOr<google::cloud::run::v2::ListRevisionsResponse>
 DefaultRevisionsStub::ListRevisions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::run::v2::ListRevisionsRequest const& request) {
   google::cloud::run::v2::ListRevisionsResponse response;
-  auto status = grpc_stub_->ListRevisions(&client_context, request, &response);
+  auto status = grpc_stub_->ListRevisions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

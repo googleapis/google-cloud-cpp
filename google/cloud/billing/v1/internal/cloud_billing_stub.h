@@ -96,54 +96,54 @@ class DefaultCloudBillingStub : public CloudBillingStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::v1::GetBillingAccountRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::v1::ListBillingAccountsResponse>
   ListBillingAccounts(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::v1::ListBillingAccountsRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::v1::UpdateBillingAccountRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::v1::CreateBillingAccountRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::v1::ListProjectBillingInfoResponse>
   ListProjectBillingInfo(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::v1::ListProjectBillingInfoRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   GetProjectBillingInfo(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::v1::GetProjectBillingInfoRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   UpdateProjectBillingInfo(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
           request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:

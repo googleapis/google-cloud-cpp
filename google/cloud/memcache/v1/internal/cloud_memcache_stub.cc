@@ -32,10 +32,10 @@ CloudMemcacheStub::~CloudMemcacheStub() = default;
 
 StatusOr<google::cloud::memcache::v1::ListInstancesResponse>
 DefaultCloudMemcacheStub::ListInstances(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::memcache::v1::ListInstancesRequest const& request) {
   google::cloud::memcache::v1::ListInstancesResponse response;
-  auto status = grpc_stub_->ListInstances(&client_context, request, &response);
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultCloudMemcacheStub::ListInstances(
 
 StatusOr<google::cloud::memcache::v1::Instance>
 DefaultCloudMemcacheStub::GetInstance(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::memcache::v1::GetInstanceRequest const& request) {
   google::cloud::memcache::v1::Instance response;
-  auto status = grpc_stub_->GetInstance(&client_context, request, &response);
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

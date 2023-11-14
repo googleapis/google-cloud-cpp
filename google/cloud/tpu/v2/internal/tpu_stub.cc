@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TpuStub::~TpuStub() = default;
 
 StatusOr<google::cloud::tpu::v2::ListNodesResponse> DefaultTpuStub::ListNodes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v2::ListNodesRequest const& request) {
   google::cloud::tpu::v2::ListNodesResponse response;
-  auto status = grpc_stub_->ListNodes(&client_context, request, &response);
+  auto status = grpc_stub_->ListNodes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,10 +42,10 @@ StatusOr<google::cloud::tpu::v2::ListNodesResponse> DefaultTpuStub::ListNodes(
 }
 
 StatusOr<google::cloud::tpu::v2::Node> DefaultTpuStub::GetNode(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v2::GetNodeRequest const& request) {
   google::cloud::tpu::v2::Node response;
-  auto status = grpc_stub_->GetNode(&client_context, request, &response);
+  auto status = grpc_stub_->GetNode(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -132,11 +132,11 @@ DefaultTpuStub::AsyncUpdateNode(
 
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 DefaultTpuStub::GenerateServiceIdentity(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request) {
   google::cloud::tpu::v2::GenerateServiceIdentityResponse response;
   auto status =
-      grpc_stub_->GenerateServiceIdentity(&client_context, request, &response);
+      grpc_stub_->GenerateServiceIdentity(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -145,11 +145,10 @@ DefaultTpuStub::GenerateServiceIdentity(
 
 StatusOr<google::cloud::tpu::v2::ListAcceleratorTypesResponse>
 DefaultTpuStub::ListAcceleratorTypes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v2::ListAcceleratorTypesRequest const& request) {
   google::cloud::tpu::v2::ListAcceleratorTypesResponse response;
-  auto status =
-      grpc_stub_->ListAcceleratorTypes(&client_context, request, &response);
+  auto status = grpc_stub_->ListAcceleratorTypes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -158,11 +157,10 @@ DefaultTpuStub::ListAcceleratorTypes(
 
 StatusOr<google::cloud::tpu::v2::AcceleratorType>
 DefaultTpuStub::GetAcceleratorType(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request) {
   google::cloud::tpu::v2::AcceleratorType response;
-  auto status =
-      grpc_stub_->GetAcceleratorType(&client_context, request, &response);
+  auto status = grpc_stub_->GetAcceleratorType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -171,11 +169,10 @@ DefaultTpuStub::GetAcceleratorType(
 
 StatusOr<google::cloud::tpu::v2::ListRuntimeVersionsResponse>
 DefaultTpuStub::ListRuntimeVersions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v2::ListRuntimeVersionsRequest const& request) {
   google::cloud::tpu::v2::ListRuntimeVersionsResponse response;
-  auto status =
-      grpc_stub_->ListRuntimeVersions(&client_context, request, &response);
+  auto status = grpc_stub_->ListRuntimeVersions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -184,11 +181,10 @@ DefaultTpuStub::ListRuntimeVersions(
 
 StatusOr<google::cloud::tpu::v2::RuntimeVersion>
 DefaultTpuStub::GetRuntimeVersion(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v2::GetRuntimeVersionRequest const& request) {
   google::cloud::tpu::v2::RuntimeVersion response;
-  auto status =
-      grpc_stub_->GetRuntimeVersion(&client_context, request, &response);
+  auto status = grpc_stub_->GetRuntimeVersion(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -197,11 +193,10 @@ DefaultTpuStub::GetRuntimeVersion(
 
 StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
 DefaultTpuStub::GetGuestAttributes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tpu::v2::GetGuestAttributesRequest const& request) {
   google::cloud::tpu::v2::GetGuestAttributesResponse response;
-  auto status =
-      grpc_stub_->GetGuestAttributes(&client_context, request, &response);
+  auto status = grpc_stub_->GetGuestAttributes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

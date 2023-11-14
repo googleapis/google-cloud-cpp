@@ -143,13 +143,13 @@ class DefaultEnvironmentsStub : public EnvironmentsStub {
           CreateEnvironmentRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
-  GetEnvironment(grpc::ClientContext& client_context,
+  GetEnvironment(grpc::ClientContext& context,
                  google::cloud::orchestration::airflow::service::v1::
                      GetEnvironmentRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ListEnvironmentsResponse>
-  ListEnvironments(grpc::ClientContext& client_context,
+  ListEnvironments(grpc::ClientContext& context,
                    google::cloud::orchestration::airflow::service::v1::
                        ListEnvironmentsRequest const& request) override;
 
@@ -168,19 +168,19 @@ class DefaultEnvironmentsStub : public EnvironmentsStub {
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ExecuteAirflowCommandResponse>
   ExecuteAirflowCommand(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::orchestration::airflow::service::v1::
           ExecuteAirflowCommandRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                StopAirflowCommandResponse>
-  StopAirflowCommand(grpc::ClientContext& client_context,
+  StopAirflowCommand(grpc::ClientContext& context,
                      google::cloud::orchestration::airflow::service::v1::
                          StopAirflowCommandRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                PollAirflowCommandResponse>
-  PollAirflowCommand(grpc::ClientContext& client_context,
+  PollAirflowCommand(grpc::ClientContext& context,
                      google::cloud::orchestration::airflow::service::v1::
                          PollAirflowCommandRequest const& request) override;
 
@@ -205,7 +205,7 @@ class DefaultEnvironmentsStub : public EnvironmentsStub {
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                FetchDatabasePropertiesResponse>
   FetchDatabaseProperties(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::orchestration::airflow::service::v1::
           FetchDatabasePropertiesRequest const& request) override;
 

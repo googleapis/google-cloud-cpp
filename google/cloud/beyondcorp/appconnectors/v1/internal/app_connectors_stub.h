@@ -98,12 +98,12 @@ class DefaultAppConnectorsServiceStub : public AppConnectorsServiceStub {
 
   StatusOr<
       google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse>
-  ListAppConnectors(grpc::ClientContext& client_context,
+  ListAppConnectors(grpc::ClientContext& context,
                     google::cloud::beyondcorp::appconnectors::v1::
                         ListAppConnectorsRequest const& request) override;
 
   StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-  GetAppConnector(grpc::ClientContext& client_context,
+  GetAppConnector(grpc::ClientContext& context,
                   google::cloud::beyondcorp::appconnectors::v1::
                       GetAppConnectorRequest const& request) override;
 

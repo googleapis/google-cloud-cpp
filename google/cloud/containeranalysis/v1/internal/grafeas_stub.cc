@@ -30,10 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GrafeasStub::~GrafeasStub() = default;
 
 StatusOr<grafeas::v1::Occurrence> DefaultGrafeasStub::GetOccurrence(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::GetOccurrenceRequest const& request) {
   grafeas::v1::Occurrence response;
-  auto status = grpc_stub_->GetOccurrence(&client_context, request, &response);
+  auto status = grpc_stub_->GetOccurrence(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,11 +42,10 @@ StatusOr<grafeas::v1::Occurrence> DefaultGrafeasStub::GetOccurrence(
 
 StatusOr<grafeas::v1::ListOccurrencesResponse>
 DefaultGrafeasStub::ListOccurrences(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::ListOccurrencesRequest const& request) {
   grafeas::v1::ListOccurrencesResponse response;
-  auto status =
-      grpc_stub_->ListOccurrences(&client_context, request, &response);
+  auto status = grpc_stub_->ListOccurrences(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -54,11 +53,10 @@ DefaultGrafeasStub::ListOccurrences(
 }
 
 Status DefaultGrafeasStub::DeleteOccurrence(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::DeleteOccurrenceRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteOccurrence(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteOccurrence(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -66,11 +64,10 @@ Status DefaultGrafeasStub::DeleteOccurrence(
 }
 
 StatusOr<grafeas::v1::Occurrence> DefaultGrafeasStub::CreateOccurrence(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::CreateOccurrenceRequest const& request) {
   grafeas::v1::Occurrence response;
-  auto status =
-      grpc_stub_->CreateOccurrence(&client_context, request, &response);
+  auto status = grpc_stub_->CreateOccurrence(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -79,11 +76,11 @@ StatusOr<grafeas::v1::Occurrence> DefaultGrafeasStub::CreateOccurrence(
 
 StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
 DefaultGrafeasStub::BatchCreateOccurrences(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::BatchCreateOccurrencesRequest const& request) {
   grafeas::v1::BatchCreateOccurrencesResponse response;
   auto status =
-      grpc_stub_->BatchCreateOccurrences(&client_context, request, &response);
+      grpc_stub_->BatchCreateOccurrences(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -91,11 +88,10 @@ DefaultGrafeasStub::BatchCreateOccurrences(
 }
 
 StatusOr<grafeas::v1::Occurrence> DefaultGrafeasStub::UpdateOccurrence(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::UpdateOccurrenceRequest const& request) {
   grafeas::v1::Occurrence response;
-  auto status =
-      grpc_stub_->UpdateOccurrence(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateOccurrence(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -103,11 +99,10 @@ StatusOr<grafeas::v1::Occurrence> DefaultGrafeasStub::UpdateOccurrence(
 }
 
 StatusOr<grafeas::v1::Note> DefaultGrafeasStub::GetOccurrenceNote(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::GetOccurrenceNoteRequest const& request) {
   grafeas::v1::Note response;
-  auto status =
-      grpc_stub_->GetOccurrenceNote(&client_context, request, &response);
+  auto status = grpc_stub_->GetOccurrenceNote(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -115,10 +110,9 @@ StatusOr<grafeas::v1::Note> DefaultGrafeasStub::GetOccurrenceNote(
 }
 
 StatusOr<grafeas::v1::Note> DefaultGrafeasStub::GetNote(
-    grpc::ClientContext& client_context,
-    grafeas::v1::GetNoteRequest const& request) {
+    grpc::ClientContext& context, grafeas::v1::GetNoteRequest const& request) {
   grafeas::v1::Note response;
-  auto status = grpc_stub_->GetNote(&client_context, request, &response);
+  auto status = grpc_stub_->GetNote(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -126,10 +120,10 @@ StatusOr<grafeas::v1::Note> DefaultGrafeasStub::GetNote(
 }
 
 StatusOr<grafeas::v1::ListNotesResponse> DefaultGrafeasStub::ListNotes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::ListNotesRequest const& request) {
   grafeas::v1::ListNotesResponse response;
-  auto status = grpc_stub_->ListNotes(&client_context, request, &response);
+  auto status = grpc_stub_->ListNotes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -137,10 +131,10 @@ StatusOr<grafeas::v1::ListNotesResponse> DefaultGrafeasStub::ListNotes(
 }
 
 Status DefaultGrafeasStub::DeleteNote(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::DeleteNoteRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteNote(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteNote(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -148,10 +142,10 @@ Status DefaultGrafeasStub::DeleteNote(
 }
 
 StatusOr<grafeas::v1::Note> DefaultGrafeasStub::CreateNote(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::CreateNoteRequest const& request) {
   grafeas::v1::Note response;
-  auto status = grpc_stub_->CreateNote(&client_context, request, &response);
+  auto status = grpc_stub_->CreateNote(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -160,11 +154,10 @@ StatusOr<grafeas::v1::Note> DefaultGrafeasStub::CreateNote(
 
 StatusOr<grafeas::v1::BatchCreateNotesResponse>
 DefaultGrafeasStub::BatchCreateNotes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::BatchCreateNotesRequest const& request) {
   grafeas::v1::BatchCreateNotesResponse response;
-  auto status =
-      grpc_stub_->BatchCreateNotes(&client_context, request, &response);
+  auto status = grpc_stub_->BatchCreateNotes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -172,10 +165,10 @@ DefaultGrafeasStub::BatchCreateNotes(
 }
 
 StatusOr<grafeas::v1::Note> DefaultGrafeasStub::UpdateNote(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::UpdateNoteRequest const& request) {
   grafeas::v1::Note response;
-  auto status = grpc_stub_->UpdateNote(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateNote(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -184,11 +177,10 @@ StatusOr<grafeas::v1::Note> DefaultGrafeasStub::UpdateNote(
 
 StatusOr<grafeas::v1::ListNoteOccurrencesResponse>
 DefaultGrafeasStub::ListNoteOccurrences(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     grafeas::v1::ListNoteOccurrencesRequest const& request) {
   grafeas::v1::ListNoteOccurrencesResponse response;
-  auto status =
-      grpc_stub_->ListNoteOccurrences(&client_context, request, &response);
+  auto status = grpc_stub_->ListNoteOccurrences(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

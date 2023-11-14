@@ -32,10 +32,10 @@ CloudFilestoreManagerStub::~CloudFilestoreManagerStub() = default;
 
 StatusOr<google::cloud::filestore::v1::ListInstancesResponse>
 DefaultCloudFilestoreManagerStub::ListInstances(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::filestore::v1::ListInstancesRequest const& request) {
   google::cloud::filestore::v1::ListInstancesResponse response;
-  auto status = grpc_stub_->ListInstances(&client_context, request, &response);
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultCloudFilestoreManagerStub::ListInstances(
 
 StatusOr<google::cloud::filestore::v1::Instance>
 DefaultCloudFilestoreManagerStub::GetInstance(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::filestore::v1::GetInstanceRequest const& request) {
   google::cloud::filestore::v1::Instance response;
-  auto status = grpc_stub_->GetInstance(&client_context, request, &response);
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -125,10 +125,10 @@ DefaultCloudFilestoreManagerStub::AsyncDeleteInstance(
 
 StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse>
 DefaultCloudFilestoreManagerStub::ListSnapshots(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::filestore::v1::ListSnapshotsRequest const& request) {
   google::cloud::filestore::v1::ListSnapshotsResponse response;
-  auto status = grpc_stub_->ListSnapshots(&client_context, request, &response);
+  auto status = grpc_stub_->ListSnapshots(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -137,10 +137,10 @@ DefaultCloudFilestoreManagerStub::ListSnapshots(
 
 StatusOr<google::cloud::filestore::v1::Snapshot>
 DefaultCloudFilestoreManagerStub::GetSnapshot(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::filestore::v1::GetSnapshotRequest const& request) {
   google::cloud::filestore::v1::Snapshot response;
-  auto status = grpc_stub_->GetSnapshot(&client_context, request, &response);
+  auto status = grpc_stub_->GetSnapshot(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -200,10 +200,10 @@ DefaultCloudFilestoreManagerStub::AsyncUpdateSnapshot(
 
 StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
 DefaultCloudFilestoreManagerStub::ListBackups(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::filestore::v1::ListBackupsRequest const& request) {
   google::cloud::filestore::v1::ListBackupsResponse response;
-  auto status = grpc_stub_->ListBackups(&client_context, request, &response);
+  auto status = grpc_stub_->ListBackups(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -212,10 +212,10 @@ DefaultCloudFilestoreManagerStub::ListBackups(
 
 StatusOr<google::cloud::filestore::v1::Backup>
 DefaultCloudFilestoreManagerStub::GetBackup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::filestore::v1::GetBackupRequest const& request) {
   google::cloud::filestore::v1::Backup response;
-  auto status = grpc_stub_->GetBackup(&client_context, request, &response);
+  auto status = grpc_stub_->GetBackup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

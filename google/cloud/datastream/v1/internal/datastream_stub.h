@@ -201,13 +201,13 @@ class DefaultDatastreamStub : public DatastreamStub {
 
   StatusOr<google::cloud::datastream::v1::ListConnectionProfilesResponse>
   ListConnectionProfiles(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datastream::v1::ListConnectionProfilesRequest const&
           request) override;
 
   StatusOr<google::cloud::datastream::v1::ConnectionProfile>
   GetConnectionProfile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datastream::v1::GetConnectionProfileRequest const& request)
       override;
 
@@ -231,17 +231,17 @@ class DefaultDatastreamStub : public DatastreamStub {
 
   StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
   DiscoverConnectionProfile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&
           request) override;
 
   StatusOr<google::cloud::datastream::v1::ListStreamsResponse> ListStreams(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datastream::v1::ListStreamsRequest const& request)
       override;
 
   StatusOr<google::cloud::datastream::v1::Stream> GetStream(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datastream::v1::GetStreamRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateStream(
@@ -263,33 +263,33 @@ class DefaultDatastreamStub : public DatastreamStub {
       override;
 
   StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datastream::v1::GetStreamObjectRequest const& request)
       override;
 
   StatusOr<google::cloud::datastream::v1::StreamObject> LookupStreamObject(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datastream::v1::LookupStreamObjectRequest const& request)
       override;
 
   StatusOr<google::cloud::datastream::v1::ListStreamObjectsResponse>
   ListStreamObjects(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datastream::v1::ListStreamObjectsRequest const& request)
       override;
 
   StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>
-  StartBackfillJob(grpc::ClientContext& client_context,
+  StartBackfillJob(grpc::ClientContext& context,
                    google::cloud::datastream::v1::StartBackfillJobRequest const&
                        request) override;
 
   StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>
-  StopBackfillJob(grpc::ClientContext& client_context,
+  StopBackfillJob(grpc::ClientContext& context,
                   google::cloud::datastream::v1::StopBackfillJobRequest const&
                       request) override;
 
   StatusOr<google::cloud::datastream::v1::FetchStaticIpsResponse>
-  FetchStaticIps(grpc::ClientContext& client_context,
+  FetchStaticIps(grpc::ClientContext& context,
                  google::cloud::datastream::v1::FetchStaticIpsRequest const&
                      request) override;
 
@@ -301,13 +301,13 @@ class DefaultDatastreamStub : public DatastreamStub {
 
   StatusOr<google::cloud::datastream::v1::PrivateConnection>
   GetPrivateConnection(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datastream::v1::GetPrivateConnectionRequest const& request)
       override;
 
   StatusOr<google::cloud::datastream::v1::ListPrivateConnectionsResponse>
   ListPrivateConnections(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datastream::v1::ListPrivateConnectionsRequest const&
           request) override;
 
@@ -324,11 +324,11 @@ class DefaultDatastreamStub : public DatastreamStub {
       override;
 
   StatusOr<google::cloud::datastream::v1::Route> GetRoute(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datastream::v1::GetRouteRequest const& request) override;
 
   StatusOr<google::cloud::datastream::v1::ListRoutesResponse> ListRoutes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datastream::v1::ListRoutesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRoute(

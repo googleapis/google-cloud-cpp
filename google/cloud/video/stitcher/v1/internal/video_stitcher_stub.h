@@ -206,12 +206,12 @@ class DefaultVideoStitcherServiceStub : public VideoStitcherServiceStub {
       override;
 
   StatusOr<google::cloud::video::stitcher::v1::ListCdnKeysResponse> ListCdnKeys(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::ListCdnKeysRequest const& request)
       override;
 
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> GetCdnKey(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request)
       override;
 
@@ -228,48 +228,48 @@ class DefaultVideoStitcherServiceStub : public VideoStitcherServiceStub {
       override;
 
   StatusOr<google::cloud::video::stitcher::v1::VodSession> CreateVodSession(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::CreateVodSessionRequest const&
           request) override;
 
   StatusOr<google::cloud::video::stitcher::v1::VodSession> GetVodSession(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::GetVodSessionRequest const& request)
       override;
 
   StatusOr<google::cloud::video::stitcher::v1::ListVodStitchDetailsResponse>
   ListVodStitchDetails(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest const&
           request) override;
 
   StatusOr<google::cloud::video::stitcher::v1::VodStitchDetail>
   GetVodStitchDetail(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const&
           request) override;
 
   StatusOr<google::cloud::video::stitcher::v1::ListVodAdTagDetailsResponse>
   ListVodAdTagDetails(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest const&
           request) override;
 
   StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>
   GetVodAdTagDetail(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const&
           request) override;
 
   StatusOr<google::cloud::video::stitcher::v1::ListLiveAdTagDetailsResponse>
   ListLiveAdTagDetails(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest const&
           request) override;
 
   StatusOr<google::cloud::video::stitcher::v1::LiveAdTagDetail>
   GetLiveAdTagDetail(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
           request) override;
 
@@ -280,12 +280,12 @@ class DefaultVideoStitcherServiceStub : public VideoStitcherServiceStub {
       override;
 
   StatusOr<google::cloud::video::stitcher::v1::ListSlatesResponse> ListSlates(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::ListSlatesRequest const& request)
       override;
 
   StatusOr<google::cloud::video::stitcher::v1::Slate> GetSlate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::GetSlateRequest const& request)
       override;
 
@@ -302,12 +302,12 @@ class DefaultVideoStitcherServiceStub : public VideoStitcherServiceStub {
       override;
 
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
           request) override;
 
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request)
       override;
 
@@ -319,12 +319,12 @@ class DefaultVideoStitcherServiceStub : public VideoStitcherServiceStub {
 
   StatusOr<google::cloud::video::stitcher::v1::ListLiveConfigsResponse>
   ListLiveConfigs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::ListLiveConfigsRequest const& request)
       override;
 
   StatusOr<google::cloud::video::stitcher::v1::LiveConfig> GetLiveConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request)
       override;
 

@@ -31,12 +31,11 @@ ReservationServiceStub::~ReservationServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 DefaultReservationServiceStub::CreateReservation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::Reservation response;
-  auto status =
-      grpc_stub_->CreateReservation(&client_context, request, &response);
+  auto status = grpc_stub_->CreateReservation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,12 +44,11 @@ DefaultReservationServiceStub::CreateReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::ListReservationsResponse>
 DefaultReservationServiceStub::ListReservations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::ListReservationsRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::ListReservationsResponse response;
-  auto status =
-      grpc_stub_->ListReservations(&client_context, request, &response);
+  auto status = grpc_stub_->ListReservations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,11 +57,11 @@ DefaultReservationServiceStub::ListReservations(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 DefaultReservationServiceStub::GetReservation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::GetReservationRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::Reservation response;
-  auto status = grpc_stub_->GetReservation(&client_context, request, &response);
+  auto status = grpc_stub_->GetReservation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -71,12 +69,11 @@ DefaultReservationServiceStub::GetReservation(
 }
 
 Status DefaultReservationServiceStub::DeleteReservation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteReservation(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteReservation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -85,12 +82,11 @@ Status DefaultReservationServiceStub::DeleteReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 DefaultReservationServiceStub::UpdateReservation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::Reservation response;
-  auto status =
-      grpc_stub_->UpdateReservation(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateReservation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -99,12 +95,12 @@ DefaultReservationServiceStub::UpdateReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 DefaultReservationServiceStub::CreateCapacityCommitment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         CreateCapacityCommitmentRequest const& request) {
   google::cloud::bigquery::reservation::v1::CapacityCommitment response;
   auto status =
-      grpc_stub_->CreateCapacityCommitment(&client_context, request, &response);
+      grpc_stub_->CreateCapacityCommitment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -114,13 +110,13 @@ DefaultReservationServiceStub::CreateCapacityCommitment(
 StatusOr<
     google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsResponse>
 DefaultReservationServiceStub::ListCapacityCommitments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         ListCapacityCommitmentsRequest const& request) {
   google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsResponse
       response;
   auto status =
-      grpc_stub_->ListCapacityCommitments(&client_context, request, &response);
+      grpc_stub_->ListCapacityCommitments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -129,12 +125,11 @@ DefaultReservationServiceStub::ListCapacityCommitments(
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 DefaultReservationServiceStub::GetCapacityCommitment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         GetCapacityCommitmentRequest const& request) {
   google::cloud::bigquery::reservation::v1::CapacityCommitment response;
-  auto status =
-      grpc_stub_->GetCapacityCommitment(&client_context, request, &response);
+  auto status = grpc_stub_->GetCapacityCommitment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -142,12 +137,12 @@ DefaultReservationServiceStub::GetCapacityCommitment(
 }
 
 Status DefaultReservationServiceStub::DeleteCapacityCommitment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         DeleteCapacityCommitmentRequest const& request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->DeleteCapacityCommitment(&client_context, request, &response);
+      grpc_stub_->DeleteCapacityCommitment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -156,12 +151,12 @@ Status DefaultReservationServiceStub::DeleteCapacityCommitment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 DefaultReservationServiceStub::UpdateCapacityCommitment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         UpdateCapacityCommitmentRequest const& request) {
   google::cloud::bigquery::reservation::v1::CapacityCommitment response;
   auto status =
-      grpc_stub_->UpdateCapacityCommitment(&client_context, request, &response);
+      grpc_stub_->UpdateCapacityCommitment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -171,13 +166,13 @@ DefaultReservationServiceStub::UpdateCapacityCommitment(
 StatusOr<
     google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
 DefaultReservationServiceStub::SplitCapacityCommitment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         SplitCapacityCommitmentRequest const& request) {
   google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse
       response;
   auto status =
-      grpc_stub_->SplitCapacityCommitment(&client_context, request, &response);
+      grpc_stub_->SplitCapacityCommitment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -186,12 +181,12 @@ DefaultReservationServiceStub::SplitCapacityCommitment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 DefaultReservationServiceStub::MergeCapacityCommitments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         MergeCapacityCommitmentsRequest const& request) {
   google::cloud::bigquery::reservation::v1::CapacityCommitment response;
   auto status =
-      grpc_stub_->MergeCapacityCommitments(&client_context, request, &response);
+      grpc_stub_->MergeCapacityCommitments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -200,12 +195,11 @@ DefaultReservationServiceStub::MergeCapacityCommitments(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 DefaultReservationServiceStub::CreateAssignment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::Assignment response;
-  auto status =
-      grpc_stub_->CreateAssignment(&client_context, request, &response);
+  auto status = grpc_stub_->CreateAssignment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -214,12 +208,11 @@ DefaultReservationServiceStub::CreateAssignment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::ListAssignmentsResponse>
 DefaultReservationServiceStub::ListAssignments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::ListAssignmentsRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::ListAssignmentsResponse response;
-  auto status =
-      grpc_stub_->ListAssignments(&client_context, request, &response);
+  auto status = grpc_stub_->ListAssignments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -227,12 +220,11 @@ DefaultReservationServiceStub::ListAssignments(
 }
 
 Status DefaultReservationServiceStub::DeleteAssignment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteAssignment(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteAssignment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -241,12 +233,11 @@ Status DefaultReservationServiceStub::DeleteAssignment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::SearchAssignmentsResponse>
 DefaultReservationServiceStub::SearchAssignments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::SearchAssignmentsResponse response;
-  auto status =
-      grpc_stub_->SearchAssignments(&client_context, request, &response);
+  auto status = grpc_stub_->SearchAssignments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -255,13 +246,12 @@ DefaultReservationServiceStub::SearchAssignments(
 
 StatusOr<google::cloud::bigquery::reservation::v1::SearchAllAssignmentsResponse>
 DefaultReservationServiceStub::SearchAllAssignments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::SearchAllAssignmentsResponse
       response;
-  auto status =
-      grpc_stub_->SearchAllAssignments(&client_context, request, &response);
+  auto status = grpc_stub_->SearchAllAssignments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -270,11 +260,11 @@ DefaultReservationServiceStub::SearchAllAssignments(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 DefaultReservationServiceStub::MoveAssignment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::Assignment response;
-  auto status = grpc_stub_->MoveAssignment(&client_context, request, &response);
+  auto status = grpc_stub_->MoveAssignment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -283,12 +273,11 @@ DefaultReservationServiceStub::MoveAssignment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 DefaultReservationServiceStub::UpdateAssignment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::Assignment response;
-  auto status =
-      grpc_stub_->UpdateAssignment(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateAssignment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -297,12 +286,11 @@ DefaultReservationServiceStub::UpdateAssignment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 DefaultReservationServiceStub::GetBiReservation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::BiReservation response;
-  auto status =
-      grpc_stub_->GetBiReservation(&client_context, request, &response);
+  auto status = grpc_stub_->GetBiReservation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -311,12 +299,11 @@ DefaultReservationServiceStub::GetBiReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 DefaultReservationServiceStub::UpdateBiReservation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::BiReservation response;
-  auto status =
-      grpc_stub_->UpdateBiReservation(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateBiReservation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

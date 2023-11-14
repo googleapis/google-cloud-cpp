@@ -52,7 +52,7 @@ class DefaultValidationHelperV1Stub : public ValidationHelperV1Stub {
   StatusOr<google::cloud::binaryauthorization::v1::
                ValidateAttestationOccurrenceResponse>
   ValidateAttestationOccurrence(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::binaryauthorization::v1::
           ValidateAttestationOccurrenceRequest const& request) override;
 

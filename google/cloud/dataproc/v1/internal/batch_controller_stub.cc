@@ -49,10 +49,10 @@ DefaultBatchControllerStub::AsyncCreateBatch(
 
 StatusOr<google::cloud::dataproc::v1::Batch>
 DefaultBatchControllerStub::GetBatch(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetBatchRequest const& request) {
   google::cloud::dataproc::v1::Batch response;
-  auto status = grpc_stub_->GetBatch(&client_context, request, &response);
+  auto status = grpc_stub_->GetBatch(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -61,10 +61,10 @@ DefaultBatchControllerStub::GetBatch(
 
 StatusOr<google::cloud::dataproc::v1::ListBatchesResponse>
 DefaultBatchControllerStub::ListBatches(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListBatchesRequest const& request) {
   google::cloud::dataproc::v1::ListBatchesResponse response;
-  auto status = grpc_stub_->ListBatches(&client_context, request, &response);
+  auto status = grpc_stub_->ListBatches(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -72,10 +72,10 @@ DefaultBatchControllerStub::ListBatches(
 }
 
 Status DefaultBatchControllerStub::DeleteBatch(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteBatch(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteBatch(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

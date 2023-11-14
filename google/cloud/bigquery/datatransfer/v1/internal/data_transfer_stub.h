@@ -133,87 +133,87 @@ class DefaultDataTransferServiceStub : public DataTransferServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::ListDataSourcesResponse>
   ListDataSources(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  CreateTransferConfig(grpc::ClientContext& client_context,
+  CreateTransferConfig(grpc::ClientContext& context,
                        google::cloud::bigquery::datatransfer::v1::
                            CreateTransferConfigRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  UpdateTransferConfig(grpc::ClientContext& client_context,
+  UpdateTransferConfig(grpc::ClientContext& context,
                        google::cloud::bigquery::datatransfer::v1::
                            UpdateTransferConfigRequest const& request) override;
 
   Status DeleteTransferConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::
           DeleteTransferConfigRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
   GetTransferConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
           request) override;
 
   StatusOr<
       google::cloud::bigquery::datatransfer::v1::ListTransferConfigsResponse>
-  ListTransferConfigs(grpc::ClientContext& client_context,
+  ListTransferConfigs(grpc::ClientContext& context,
                       google::cloud::bigquery::datatransfer::v1::
                           ListTransferConfigsRequest const& request) override;
 
   StatusOr<
       google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
-  ScheduleTransferRuns(grpc::ClientContext& client_context,
+  ScheduleTransferRuns(grpc::ClientContext& context,
                        google::cloud::bigquery::datatransfer::v1::
                            ScheduleTransferRunsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::
                StartManualTransferRunsResponse>
   StartManualTransferRuns(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::
           StartManualTransferRunsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
   GetTransferRun(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
           request) override;
 
   Status DeleteTransferRun(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferRunsResponse>
   ListTransferRuns(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferLogsResponse>
   ListTransferLogs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
   CheckValidCreds(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
           request) override;
 
   Status EnrollDataSources(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
           request) override;
 

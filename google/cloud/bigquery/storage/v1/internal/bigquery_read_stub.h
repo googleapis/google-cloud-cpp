@@ -64,20 +64,19 @@ class DefaultBigQueryReadStub : public BigQueryReadStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>>
-  ReadRows(std::shared_ptr<grpc::ClientContext> client_context,
-           Options const& options,
+  ReadRows(std::shared_ptr<grpc::ClientContext> context, Options const& options,
            google::cloud::bigquery::storage::v1::ReadRowsRequest const& request)
       override;
 
   StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
   SplitReadStream(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
           request) override;
 

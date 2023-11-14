@@ -52,12 +52,12 @@ class DefaultTraceServiceStub : public TraceServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   Status BatchWriteSpans(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudtrace::v2::Span const& request) override;
 
  private:

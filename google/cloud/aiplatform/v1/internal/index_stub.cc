@@ -49,10 +49,10 @@ DefaultIndexServiceStub::AsyncCreateIndex(
 
 StatusOr<google::cloud::aiplatform::v1::Index>
 DefaultIndexServiceStub::GetIndex(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetIndexRequest const& request) {
   google::cloud::aiplatform::v1::Index response;
-  auto status = grpc_stub_->GetIndex(&client_context, request, &response);
+  auto status = grpc_stub_->GetIndex(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -61,10 +61,10 @@ DefaultIndexServiceStub::GetIndex(
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse>
 DefaultIndexServiceStub::ListIndexes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListIndexesRequest const& request) {
   google::cloud::aiplatform::v1::ListIndexesResponse response;
-  auto status = grpc_stub_->ListIndexes(&client_context, request, &response);
+  auto status = grpc_stub_->ListIndexes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -107,11 +107,10 @@ DefaultIndexServiceStub::AsyncDeleteIndex(
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
 DefaultIndexServiceStub::UpsertDatapoints(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request) {
   google::cloud::aiplatform::v1::UpsertDatapointsResponse response;
-  auto status =
-      grpc_stub_->UpsertDatapoints(&client_context, request, &response);
+  auto status = grpc_stub_->UpsertDatapoints(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -120,11 +119,10 @@ DefaultIndexServiceStub::UpsertDatapoints(
 
 StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
 DefaultIndexServiceStub::RemoveDatapoints(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request) {
   google::cloud::aiplatform::v1::RemoveDatapointsResponse response;
-  auto status =
-      grpc_stub_->RemoveDatapoints(&client_context, request, &response);
+  auto status = grpc_stub_->RemoveDatapoints(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

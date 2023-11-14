@@ -32,12 +32,11 @@ WorkstationsStub::~WorkstationsStub() = default;
 
 StatusOr<google::cloud::workstations::v1::WorkstationCluster>
 DefaultWorkstationsStub::GetWorkstationCluster(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workstations::v1::GetWorkstationClusterRequest const&
         request) {
   google::cloud::workstations::v1::WorkstationCluster response;
-  auto status =
-      grpc_stub_->GetWorkstationCluster(&client_context, request, &response);
+  auto status = grpc_stub_->GetWorkstationCluster(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -46,12 +45,12 @@ DefaultWorkstationsStub::GetWorkstationCluster(
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse>
 DefaultWorkstationsStub::ListWorkstationClusters(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workstations::v1::ListWorkstationClustersRequest const&
         request) {
   google::cloud::workstations::v1::ListWorkstationClustersResponse response;
   auto status =
-      grpc_stub_->ListWorkstationClusters(&client_context, request, &response);
+      grpc_stub_->ListWorkstationClusters(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -117,12 +116,11 @@ DefaultWorkstationsStub::AsyncDeleteWorkstationCluster(
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
 DefaultWorkstationsStub::GetWorkstationConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workstations::v1::GetWorkstationConfigRequest const&
         request) {
   google::cloud::workstations::v1::WorkstationConfig response;
-  auto status =
-      grpc_stub_->GetWorkstationConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetWorkstationConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -131,12 +129,12 @@ DefaultWorkstationsStub::GetWorkstationConfig(
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationConfigsResponse>
 DefaultWorkstationsStub::ListWorkstationConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
         request) {
   google::cloud::workstations::v1::ListWorkstationConfigsResponse response;
   auto status =
-      grpc_stub_->ListWorkstationConfigs(&client_context, request, &response);
+      grpc_stub_->ListWorkstationConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -145,13 +143,13 @@ DefaultWorkstationsStub::ListWorkstationConfigs(
 
 StatusOr<google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse>
 DefaultWorkstationsStub::ListUsableWorkstationConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const&
         request) {
   google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse
       response;
-  auto status = grpc_stub_->ListUsableWorkstationConfigs(&client_context,
-                                                         request, &response);
+  auto status =
+      grpc_stub_->ListUsableWorkstationConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -220,10 +218,10 @@ DefaultWorkstationsStub::AsyncDeleteWorkstationConfig(
 
 StatusOr<google::cloud::workstations::v1::Workstation>
 DefaultWorkstationsStub::GetWorkstation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workstations::v1::GetWorkstationRequest const& request) {
   google::cloud::workstations::v1::Workstation response;
-  auto status = grpc_stub_->GetWorkstation(&client_context, request, &response);
+  auto status = grpc_stub_->GetWorkstation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -232,11 +230,10 @@ DefaultWorkstationsStub::GetWorkstation(
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse>
 DefaultWorkstationsStub::ListWorkstations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workstations::v1::ListWorkstationsRequest const& request) {
   google::cloud::workstations::v1::ListWorkstationsResponse response;
-  auto status =
-      grpc_stub_->ListWorkstations(&client_context, request, &response);
+  auto status = grpc_stub_->ListWorkstations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -245,12 +242,12 @@ DefaultWorkstationsStub::ListWorkstations(
 
 StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse>
 DefaultWorkstationsStub::ListUsableWorkstations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
         request) {
   google::cloud::workstations::v1::ListUsableWorkstationsResponse response;
   auto status =
-      grpc_stub_->ListUsableWorkstations(&client_context, request, &response);
+      grpc_stub_->ListUsableWorkstations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -349,12 +346,11 @@ DefaultWorkstationsStub::AsyncStopWorkstation(
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
 DefaultWorkstationsStub::GenerateAccessToken(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workstations::v1::GenerateAccessTokenRequest const&
         request) {
   google::cloud::workstations::v1::GenerateAccessTokenResponse response;
-  auto status =
-      grpc_stub_->GenerateAccessToken(&client_context, request, &response);
+  auto status = grpc_stub_->GenerateAccessToken(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -32,12 +32,12 @@ MigrationServiceStub::~MigrationServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
 DefaultMigrationServiceStub::SearchMigratableResources(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
         request) {
   google::cloud::aiplatform::v1::SearchMigratableResourcesResponse response;
-  auto status = grpc_stub_->SearchMigratableResources(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->SearchMigratableResources(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

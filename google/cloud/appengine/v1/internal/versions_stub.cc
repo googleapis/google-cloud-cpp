@@ -32,10 +32,10 @@ VersionsStub::~VersionsStub() = default;
 
 StatusOr<google::appengine::v1::ListVersionsResponse>
 DefaultVersionsStub::ListVersions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::ListVersionsRequest const& request) {
   google::appengine::v1::ListVersionsResponse response;
-  auto status = grpc_stub_->ListVersions(&client_context, request, &response);
+  auto status = grpc_stub_->ListVersions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultVersionsStub::ListVersions(
 }
 
 StatusOr<google::appengine::v1::Version> DefaultVersionsStub::GetVersion(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::GetVersionRequest const& request) {
   google::appengine::v1::Version response;
-  auto status = grpc_stub_->GetVersion(&client_context, request, &response);
+  auto status = grpc_stub_->GetVersion(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

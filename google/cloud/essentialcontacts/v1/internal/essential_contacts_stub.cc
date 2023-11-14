@@ -31,10 +31,10 @@ EssentialContactsServiceStub::~EssentialContactsServiceStub() = default;
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 DefaultEssentialContactsServiceStub::CreateContact(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
   google::cloud::essentialcontacts::v1::Contact response;
-  auto status = grpc_stub_->CreateContact(&client_context, request, &response);
+  auto status = grpc_stub_->CreateContact(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultEssentialContactsServiceStub::CreateContact(
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 DefaultEssentialContactsServiceStub::UpdateContact(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
   google::cloud::essentialcontacts::v1::Contact response;
-  auto status = grpc_stub_->UpdateContact(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateContact(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,10 +55,10 @@ DefaultEssentialContactsServiceStub::UpdateContact(
 
 StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
 DefaultEssentialContactsServiceStub::ListContacts(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::ListContactsRequest const& request) {
   google::cloud::essentialcontacts::v1::ListContactsResponse response;
-  auto status = grpc_stub_->ListContacts(&client_context, request, &response);
+  auto status = grpc_stub_->ListContacts(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -67,10 +67,10 @@ DefaultEssentialContactsServiceStub::ListContacts(
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 DefaultEssentialContactsServiceStub::GetContact(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
   google::cloud::essentialcontacts::v1::Contact response;
-  auto status = grpc_stub_->GetContact(&client_context, request, &response);
+  auto status = grpc_stub_->GetContact(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -78,10 +78,10 @@ DefaultEssentialContactsServiceStub::GetContact(
 }
 
 Status DefaultEssentialContactsServiceStub::DeleteContact(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteContact(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteContact(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -90,12 +90,11 @@ Status DefaultEssentialContactsServiceStub::DeleteContact(
 
 StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse>
 DefaultEssentialContactsServiceStub::ComputeContacts(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
         request) {
   google::cloud::essentialcontacts::v1::ComputeContactsResponse response;
-  auto status =
-      grpc_stub_->ComputeContacts(&client_context, request, &response);
+  auto status = grpc_stub_->ComputeContacts(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -103,12 +102,11 @@ DefaultEssentialContactsServiceStub::ComputeContacts(
 }
 
 Status DefaultEssentialContactsServiceStub::SendTestMessage(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->SendTestMessage(&client_context, request, &response);
+  auto status = grpc_stub_->SendTestMessage(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

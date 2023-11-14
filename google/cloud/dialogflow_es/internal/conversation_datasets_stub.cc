@@ -52,12 +52,12 @@ DefaultConversationDatasetsStub::AsyncCreateConversationDataset(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
 DefaultConversationDatasetsStub::GetConversationDataset(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
         request) {
   google::cloud::dialogflow::v2::ConversationDataset response;
   auto status =
-      grpc_stub_->GetConversationDataset(&client_context, request, &response);
+      grpc_stub_->GetConversationDataset(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -66,12 +66,12 @@ DefaultConversationDatasetsStub::GetConversationDataset(
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationDatasetsResponse>
 DefaultConversationDatasetsStub::ListConversationDatasets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
         request) {
   google::cloud::dialogflow::v2::ListConversationDatasetsResponse response;
   auto status =
-      grpc_stub_->ListConversationDatasets(&client_context, request, &response);
+      grpc_stub_->ListConversationDatasets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

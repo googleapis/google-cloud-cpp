@@ -56,12 +56,12 @@ class DefaultAnswerRecordsStub : public AnswerRecordsStub {
 
   StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
   ListAnswerRecords(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::AnswerRecord> UpdateAnswerRecord(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request)
       override;
 

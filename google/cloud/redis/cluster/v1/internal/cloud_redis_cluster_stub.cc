@@ -32,10 +32,10 @@ CloudRedisClusterStub::~CloudRedisClusterStub() = default;
 
 StatusOr<google::cloud::redis::cluster::v1::ListClustersResponse>
 DefaultCloudRedisClusterStub::ListClusters(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::redis::cluster::v1::ListClustersRequest const& request) {
   google::cloud::redis::cluster::v1::ListClustersResponse response;
-  auto status = grpc_stub_->ListClusters(&client_context, request, &response);
+  auto status = grpc_stub_->ListClusters(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultCloudRedisClusterStub::ListClusters(
 
 StatusOr<google::cloud::redis::cluster::v1::Cluster>
 DefaultCloudRedisClusterStub::GetCluster(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::redis::cluster::v1::GetClusterRequest const& request) {
   google::cloud::redis::cluster::v1::Cluster response;
-  auto status = grpc_stub_->GetCluster(&client_context, request, &response);
+  auto status = grpc_stub_->GetCluster(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

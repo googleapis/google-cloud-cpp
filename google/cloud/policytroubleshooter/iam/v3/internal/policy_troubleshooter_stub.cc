@@ -32,13 +32,12 @@ PolicyTroubleshooterStub::~PolicyTroubleshooterStub() = default;
 StatusOr<
     google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
 DefaultPolicyTroubleshooterStub::TroubleshootIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::policytroubleshooter::iam::v3::
         TroubleshootIamPolicyRequest const& request) {
   google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse
       response;
-  auto status =
-      grpc_stub_->TroubleshootIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->TroubleshootIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

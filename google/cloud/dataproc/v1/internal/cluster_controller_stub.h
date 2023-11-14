@@ -127,11 +127,11 @@ class DefaultClusterControllerStub : public ClusterControllerStub {
       override;
 
   StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::GetClusterRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::ListClustersResponse> ListClusters(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::ListClustersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDiagnoseCluster(

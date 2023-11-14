@@ -31,10 +31,10 @@ ContentServiceStub::~ContentServiceStub() = default;
 
 StatusOr<google::cloud::dataplex::v1::Content>
 DefaultContentServiceStub::CreateContent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::CreateContentRequest const& request) {
   google::cloud::dataplex::v1::Content response;
-  auto status = grpc_stub_->CreateContent(&client_context, request, &response);
+  auto status = grpc_stub_->CreateContent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultContentServiceStub::CreateContent(
 
 StatusOr<google::cloud::dataplex::v1::Content>
 DefaultContentServiceStub::UpdateContent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::UpdateContentRequest const& request) {
   google::cloud::dataplex::v1::Content response;
-  auto status = grpc_stub_->UpdateContent(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateContent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -54,10 +54,10 @@ DefaultContentServiceStub::UpdateContent(
 }
 
 Status DefaultContentServiceStub::DeleteContent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::DeleteContentRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteContent(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteContent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -66,10 +66,10 @@ Status DefaultContentServiceStub::DeleteContent(
 
 StatusOr<google::cloud::dataplex::v1::Content>
 DefaultContentServiceStub::GetContent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetContentRequest const& request) {
   google::cloud::dataplex::v1::Content response;
-  auto status = grpc_stub_->GetContent(&client_context, request, &response);
+  auto status = grpc_stub_->GetContent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -77,10 +77,10 @@ DefaultContentServiceStub::GetContent(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultContentServiceStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -88,10 +88,10 @@ StatusOr<google::iam::v1::Policy> DefaultContentServiceStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultContentServiceStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -100,11 +100,10 @@ StatusOr<google::iam::v1::Policy> DefaultContentServiceStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultContentServiceStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -113,10 +112,10 @@ DefaultContentServiceStub::TestIamPermissions(
 
 StatusOr<google::cloud::dataplex::v1::ListContentResponse>
 DefaultContentServiceStub::ListContent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListContentRequest const& request) {
   google::cloud::dataplex::v1::ListContentResponse response;
-  auto status = grpc_stub_->ListContent(&client_context, request, &response);
+  auto status = grpc_stub_->ListContent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

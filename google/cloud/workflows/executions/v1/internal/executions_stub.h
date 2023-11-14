@@ -69,22 +69,22 @@ class DefaultExecutionsStub : public ExecutionsStub {
 
   StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
   ListExecutions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::workflows::executions::v1::ListExecutionsRequest const&
           request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::workflows::executions::v1::CreateExecutionRequest const&
           request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::workflows::executions::v1::GetExecutionRequest const&
           request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::workflows::executions::v1::CancelExecutionRequest const&
           request) override;
 

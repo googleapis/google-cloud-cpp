@@ -82,38 +82,38 @@ class DefaultTimeseriesInsightsControllerStub
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
-  ListDataSets(grpc::ClientContext& client_context,
+  ListDataSets(grpc::ClientContext& context,
                google::cloud::timeseriesinsights::v1::ListDataSetsRequest const&
                    request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::DataSet> CreateDataSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
           request) override;
 
   Status DeleteDataSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
           request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
-  AppendEvents(grpc::ClientContext& client_context,
+  AppendEvents(grpc::ClientContext& context,
                google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
                    request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
-  QueryDataSet(grpc::ClientContext& client_context,
+  QueryDataSet(grpc::ClientContext& context,
                google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
                    request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice> EvaluateSlice(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
           request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
   EvaluateTimeseries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
           request) override;
 

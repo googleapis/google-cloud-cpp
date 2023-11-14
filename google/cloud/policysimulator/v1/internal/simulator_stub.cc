@@ -32,10 +32,10 @@ SimulatorStub::~SimulatorStub() = default;
 
 StatusOr<google::cloud::policysimulator::v1::Replay>
 DefaultSimulatorStub::GetReplay(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::policysimulator::v1::GetReplayRequest const& request) {
   google::cloud::policysimulator::v1::Replay response;
-  auto status = grpc_stub_->GetReplay(&client_context, request, &response);
+  auto status = grpc_stub_->GetReplay(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -62,12 +62,11 @@ DefaultSimulatorStub::AsyncCreateReplay(
 
 StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
 DefaultSimulatorStub::ListReplayResults(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::policysimulator::v1::ListReplayResultsRequest const&
         request) {
   google::cloud::policysimulator::v1::ListReplayResultsResponse response;
-  auto status =
-      grpc_stub_->ListReplayResults(&client_context, request, &response);
+  auto status = grpc_stub_->ListReplayResults(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

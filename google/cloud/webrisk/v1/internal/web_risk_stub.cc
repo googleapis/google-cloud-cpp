@@ -32,11 +32,10 @@ WebRiskServiceStub::~WebRiskServiceStub() = default;
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
 DefaultWebRiskServiceStub::ComputeThreatListDiff(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
   google::cloud::webrisk::v1::ComputeThreatListDiffResponse response;
-  auto status =
-      grpc_stub_->ComputeThreatListDiff(&client_context, request, &response);
+  auto status = grpc_stub_->ComputeThreatListDiff(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,10 +44,10 @@ DefaultWebRiskServiceStub::ComputeThreatListDiff(
 
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
 DefaultWebRiskServiceStub::SearchUris(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::webrisk::v1::SearchUrisRequest const& request) {
   google::cloud::webrisk::v1::SearchUrisResponse response;
-  auto status = grpc_stub_->SearchUris(&client_context, request, &response);
+  auto status = grpc_stub_->SearchUris(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,10 +56,10 @@ DefaultWebRiskServiceStub::SearchUris(
 
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
 DefaultWebRiskServiceStub::SearchHashes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::webrisk::v1::SearchHashesRequest const& request) {
   google::cloud::webrisk::v1::SearchHashesResponse response;
-  auto status = grpc_stub_->SearchHashes(&client_context, request, &response);
+  auto status = grpc_stub_->SearchHashes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -69,11 +68,10 @@ DefaultWebRiskServiceStub::SearchHashes(
 
 StatusOr<google::cloud::webrisk::v1::Submission>
 DefaultWebRiskServiceStub::CreateSubmission(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
   google::cloud::webrisk::v1::Submission response;
-  auto status =
-      grpc_stub_->CreateSubmission(&client_context, request, &response);
+  auto status = grpc_stub_->CreateSubmission(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

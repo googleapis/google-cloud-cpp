@@ -56,16 +56,16 @@ class DefaultTraceServiceStub : public TraceServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> ListTraces(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudtrace::v1::ListTracesRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudtrace::v1::Trace> GetTrace(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudtrace::v1::GetTraceRequest const& request)
       override;
 
-  Status PatchTraces(grpc::ClientContext& client_context,
+  Status PatchTraces(grpc::ClientContext& context,
                      google::devtools::cloudtrace::v1::PatchTracesRequest const&
                          request) override;
 

@@ -46,7 +46,7 @@ class DefaultEventServiceStub : public EventServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::talent::v4::CreateClientEventRequest const& request)
       override;
 

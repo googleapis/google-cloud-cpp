@@ -31,11 +31,10 @@ ConversationsStub::~ConversationsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 DefaultConversationsStub::CreateConversation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateConversationRequest const& request) {
   google::cloud::dialogflow::v2::Conversation response;
-  auto status =
-      grpc_stub_->CreateConversation(&client_context, request, &response);
+  auto status = grpc_stub_->CreateConversation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,11 +43,10 @@ DefaultConversationsStub::CreateConversation(
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationsResponse>
 DefaultConversationsStub::ListConversations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListConversationsRequest const& request) {
   google::cloud::dialogflow::v2::ListConversationsResponse response;
-  auto status =
-      grpc_stub_->ListConversations(&client_context, request, &response);
+  auto status = grpc_stub_->ListConversations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,11 +55,10 @@ DefaultConversationsStub::ListConversations(
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 DefaultConversationsStub::GetConversation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationRequest const& request) {
   google::cloud::dialogflow::v2::Conversation response;
-  auto status =
-      grpc_stub_->GetConversation(&client_context, request, &response);
+  auto status = grpc_stub_->GetConversation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -70,11 +67,10 @@ DefaultConversationsStub::GetConversation(
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 DefaultConversationsStub::CompleteConversation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CompleteConversationRequest const& request) {
   google::cloud::dialogflow::v2::Conversation response;
-  auto status =
-      grpc_stub_->CompleteConversation(&client_context, request, &response);
+  auto status = grpc_stub_->CompleteConversation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -83,10 +79,10 @@ DefaultConversationsStub::CompleteConversation(
 
 StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse>
 DefaultConversationsStub::ListMessages(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListMessagesRequest const& request) {
   google::cloud::dialogflow::v2::ListMessagesResponse response;
-  auto status = grpc_stub_->ListMessages(&client_context, request, &response);
+  auto status = grpc_stub_->ListMessages(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -95,12 +91,12 @@ DefaultConversationsStub::ListMessages(
 
 StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
 DefaultConversationsStub::SuggestConversationSummary(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
         request) {
   google::cloud::dialogflow::v2::SuggestConversationSummaryResponse response;
-  auto status = grpc_stub_->SuggestConversationSummary(&client_context, request,
-                                                       &response);
+  auto status =
+      grpc_stub_->SuggestConversationSummary(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -109,12 +105,12 @@ DefaultConversationsStub::SuggestConversationSummary(
 
 StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
 DefaultConversationsStub::GenerateStatelessSummary(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
         request) {
   google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse response;
   auto status =
-      grpc_stub_->GenerateStatelessSummary(&client_context, request, &response);
+      grpc_stub_->GenerateStatelessSummary(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -123,11 +119,10 @@ DefaultConversationsStub::GenerateStatelessSummary(
 
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
 DefaultConversationsStub::SearchKnowledge(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) {
   google::cloud::dialogflow::v2::SearchKnowledgeResponse response;
-  auto status =
-      grpc_stub_->SearchKnowledge(&client_context, request, &response);
+  auto status = grpc_stub_->SearchKnowledge(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

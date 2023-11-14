@@ -31,10 +31,10 @@ LookupServiceStub::~LookupServiceStub() = default;
 
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 DefaultLookupServiceStub::ResolveService(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
   google::cloud::servicedirectory::v1::ResolveServiceResponse response;
-  auto status = grpc_stub_->ResolveService(&client_context, request, &response);
+  auto status = grpc_stub_->ResolveService(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

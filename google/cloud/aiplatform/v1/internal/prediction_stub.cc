@@ -31,10 +31,10 @@ PredictionServiceStub::~PredictionServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::PredictResponse>
 DefaultPredictionServiceStub::Predict(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::PredictRequest const& request) {
   google::cloud::aiplatform::v1::PredictResponse response;
-  auto status = grpc_stub_->Predict(&client_context, request, &response);
+  auto status = grpc_stub_->Predict(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,10 +42,10 @@ DefaultPredictionServiceStub::Predict(
 }
 
 StatusOr<google::api::HttpBody> DefaultPredictionServiceStub::RawPredict(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::RawPredictRequest const& request) {
   google::api::HttpBody response;
-  auto status = grpc_stub_->RawPredict(&client_context, request, &response);
+  auto status = grpc_stub_->RawPredict(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,21 +55,20 @@ StatusOr<google::api::HttpBody> DefaultPredictionServiceStub::RawPredict(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
 DefaultPredictionServiceStub::ServerStreamingPredict(
-    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
-  auto stream =
-      grpc_stub_->ServerStreamingPredict(client_context.get(), request);
+  auto stream = grpc_stub_->ServerStreamingPredict(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::cloud::aiplatform::v1::StreamingPredictResponse>>(
-      std::move(client_context), std::move(stream));
+      std::move(context), std::move(stream));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 DefaultPredictionServiceStub::Explain(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ExplainRequest const& request) {
   google::cloud::aiplatform::v1::ExplainResponse response;
-  auto status = grpc_stub_->Explain(&client_context, request, &response);
+  auto status = grpc_stub_->Explain(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

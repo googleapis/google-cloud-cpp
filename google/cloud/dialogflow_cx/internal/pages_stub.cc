@@ -31,10 +31,10 @@ PagesStub::~PagesStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse>
 DefaultPagesStub::ListPages(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListPagesRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListPagesResponse response;
-  auto status = grpc_stub_->ListPages(&client_context, request, &response);
+  auto status = grpc_stub_->ListPages(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,10 +42,10 @@ DefaultPagesStub::ListPages(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> DefaultPagesStub::GetPage(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
   google::cloud::dialogflow::cx::v3::Page response;
-  auto status = grpc_stub_->GetPage(&client_context, request, &response);
+  auto status = grpc_stub_->GetPage(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -53,10 +53,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> DefaultPagesStub::GetPage(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> DefaultPagesStub::CreatePage(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
   google::cloud::dialogflow::cx::v3::Page response;
-  auto status = grpc_stub_->CreatePage(&client_context, request, &response);
+  auto status = grpc_stub_->CreatePage(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -64,10 +64,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> DefaultPagesStub::CreatePage(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> DefaultPagesStub::UpdatePage(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
   google::cloud::dialogflow::cx::v3::Page response;
-  auto status = grpc_stub_->UpdatePage(&client_context, request, &response);
+  auto status = grpc_stub_->UpdatePage(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -75,10 +75,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> DefaultPagesStub::UpdatePage(
 }
 
 Status DefaultPagesStub::DeletePage(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeletePage(&client_context, request, &response);
+  auto status = grpc_stub_->DeletePage(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

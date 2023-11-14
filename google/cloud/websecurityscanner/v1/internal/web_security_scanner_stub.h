@@ -117,70 +117,70 @@ class DefaultWebSecurityScannerStub : public WebSecurityScannerStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
           request) override;
 
   Status DeleteScanConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> GetScanConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ListScanConfigsResponse>
   ListScanConfigs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
           request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> UpdateScanConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StartScanRun(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::websecurityscanner::v1::StartScanRunRequest const& request)
       override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> GetScanRun(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::websecurityscanner::v1::GetScanRunRequest const& request)
       override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ListScanRunsResponse>
-  ListScanRuns(grpc::ClientContext& client_context,
+  ListScanRuns(grpc::ClientContext& context,
                google::cloud::websecurityscanner::v1::ListScanRunsRequest const&
                    request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StopScanRun(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::websecurityscanner::v1::StopScanRunRequest const& request)
       override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse>
   ListCrawledUrls(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
           request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::Finding> GetFinding(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::websecurityscanner::v1::GetFindingRequest const& request)
       override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ListFindingsResponse>
-  ListFindings(grpc::ClientContext& client_context,
+  ListFindings(grpc::ClientContext& context,
                google::cloud::websecurityscanner::v1::ListFindingsRequest const&
                    request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
   ListFindingTypeStats(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
           request) override;
 

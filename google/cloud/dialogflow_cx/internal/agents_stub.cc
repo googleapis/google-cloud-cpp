@@ -32,10 +32,10 @@ AgentsStub::~AgentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse>
 DefaultAgentsStub::ListAgents(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListAgentsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListAgentsResponse response;
-  auto status = grpc_stub_->ListAgents(&client_context, request, &response);
+  auto status = grpc_stub_->ListAgents(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultAgentsStub::ListAgents(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> DefaultAgentsStub::GetAgent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Agent response;
-  auto status = grpc_stub_->GetAgent(&client_context, request, &response);
+  auto status = grpc_stub_->GetAgent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,10 +55,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::Agent> DefaultAgentsStub::GetAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 DefaultAgentsStub::CreateAgent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Agent response;
-  auto status = grpc_stub_->CreateAgent(&client_context, request, &response);
+  auto status = grpc_stub_->CreateAgent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -67,10 +67,10 @@ DefaultAgentsStub::CreateAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 DefaultAgentsStub::UpdateAgent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Agent response;
-  auto status = grpc_stub_->UpdateAgent(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateAgent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -78,10 +78,10 @@ DefaultAgentsStub::UpdateAgent(
 }
 
 Status DefaultAgentsStub::DeleteAgent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteAgent(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteAgent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -126,10 +126,10 @@ DefaultAgentsStub::AsyncRestoreAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 DefaultAgentsStub::ValidateAgent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request) {
   google::cloud::dialogflow::cx::v3::AgentValidationResult response;
-  auto status = grpc_stub_->ValidateAgent(&client_context, request, &response);
+  auto status = grpc_stub_->ValidateAgent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -138,12 +138,12 @@ DefaultAgentsStub::ValidateAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 DefaultAgentsStub::GetAgentValidationResult(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::AgentValidationResult response;
   auto status =
-      grpc_stub_->GetAgentValidationResult(&client_context, request, &response);
+      grpc_stub_->GetAgentValidationResult(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -152,12 +152,11 @@ DefaultAgentsStub::GetAgentValidationResult(
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
 DefaultAgentsStub::GetGenerativeSettings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::GenerativeSettings response;
-  auto status =
-      grpc_stub_->GetGenerativeSettings(&client_context, request, &response);
+  auto status = grpc_stub_->GetGenerativeSettings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -166,12 +165,12 @@ DefaultAgentsStub::GetGenerativeSettings(
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
 DefaultAgentsStub::UpdateGenerativeSettings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::GenerativeSettings response;
   auto status =
-      grpc_stub_->UpdateGenerativeSettings(&client_context, request, &response);
+      grpc_stub_->UpdateGenerativeSettings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

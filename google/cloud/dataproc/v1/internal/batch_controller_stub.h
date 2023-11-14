@@ -83,15 +83,15 @@ class DefaultBatchControllerStub : public BatchControllerStub {
       google::cloud::dataproc::v1::CreateBatchRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::GetBatchRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::ListBatchesResponse> ListBatches(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::ListBatchesRequest const& request) override;
 
   Status DeleteBatch(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::DeleteBatchRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

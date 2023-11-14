@@ -31,12 +31,12 @@ NotificationChannelServiceStub::~NotificationChannelServiceStub() = default;
 
 StatusOr<google::monitoring::v3::ListNotificationChannelDescriptorsResponse>
 DefaultNotificationChannelServiceStub::ListNotificationChannelDescriptors(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::ListNotificationChannelDescriptorsRequest const&
         request) {
   google::monitoring::v3::ListNotificationChannelDescriptorsResponse response;
   auto status = grpc_stub_->ListNotificationChannelDescriptors(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,12 +45,12 @@ DefaultNotificationChannelServiceStub::ListNotificationChannelDescriptors(
 
 StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
 DefaultNotificationChannelServiceStub::GetNotificationChannelDescriptor(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
         request) {
   google::monitoring::v3::NotificationChannelDescriptor response;
-  auto status = grpc_stub_->GetNotificationChannelDescriptor(
-      &client_context, request, &response);
+  auto status = grpc_stub_->GetNotificationChannelDescriptor(&context, request,
+                                                             &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,11 +59,11 @@ DefaultNotificationChannelServiceStub::GetNotificationChannelDescriptor(
 
 StatusOr<google::monitoring::v3::ListNotificationChannelsResponse>
 DefaultNotificationChannelServiceStub::ListNotificationChannels(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::ListNotificationChannelsRequest const& request) {
   google::monitoring::v3::ListNotificationChannelsResponse response;
   auto status =
-      grpc_stub_->ListNotificationChannels(&client_context, request, &response);
+      grpc_stub_->ListNotificationChannels(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -72,11 +72,11 @@ DefaultNotificationChannelServiceStub::ListNotificationChannels(
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 DefaultNotificationChannelServiceStub::GetNotificationChannel(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::GetNotificationChannelRequest const& request) {
   google::monitoring::v3::NotificationChannel response;
   auto status =
-      grpc_stub_->GetNotificationChannel(&client_context, request, &response);
+      grpc_stub_->GetNotificationChannel(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -85,11 +85,11 @@ DefaultNotificationChannelServiceStub::GetNotificationChannel(
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 DefaultNotificationChannelServiceStub::CreateNotificationChannel(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::CreateNotificationChannelRequest const& request) {
   google::monitoring::v3::NotificationChannel response;
-  auto status = grpc_stub_->CreateNotificationChannel(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->CreateNotificationChannel(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -98,11 +98,11 @@ DefaultNotificationChannelServiceStub::CreateNotificationChannel(
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 DefaultNotificationChannelServiceStub::UpdateNotificationChannel(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::UpdateNotificationChannelRequest const& request) {
   google::monitoring::v3::NotificationChannel response;
-  auto status = grpc_stub_->UpdateNotificationChannel(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->UpdateNotificationChannel(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -110,11 +110,11 @@ DefaultNotificationChannelServiceStub::UpdateNotificationChannel(
 }
 
 Status DefaultNotificationChannelServiceStub::DeleteNotificationChannel(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::DeleteNotificationChannelRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteNotificationChannel(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->DeleteNotificationChannel(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -123,12 +123,12 @@ Status DefaultNotificationChannelServiceStub::DeleteNotificationChannel(
 
 Status
 DefaultNotificationChannelServiceStub::SendNotificationChannelVerificationCode(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::
         SendNotificationChannelVerificationCodeRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->SendNotificationChannelVerificationCode(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -137,13 +137,13 @@ DefaultNotificationChannelServiceStub::SendNotificationChannelVerificationCode(
 
 StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
 DefaultNotificationChannelServiceStub::GetNotificationChannelVerificationCode(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const&
         request) {
   google::monitoring::v3::GetNotificationChannelVerificationCodeResponse
       response;
   auto status = grpc_stub_->GetNotificationChannelVerificationCode(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -152,11 +152,11 @@ DefaultNotificationChannelServiceStub::GetNotificationChannelVerificationCode(
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 DefaultNotificationChannelServiceStub::VerifyNotificationChannel(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::VerifyNotificationChannelRequest const& request) {
   google::monitoring::v3::NotificationChannel response;
-  auto status = grpc_stub_->VerifyNotificationChannel(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->VerifyNotificationChannel(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

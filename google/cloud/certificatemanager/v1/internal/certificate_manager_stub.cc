@@ -32,12 +32,11 @@ CertificateManagerStub::~CertificateManagerStub() = default;
 
 StatusOr<google::cloud::certificatemanager::v1::ListCertificatesResponse>
 DefaultCertificateManagerStub::ListCertificates(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::certificatemanager::v1::ListCertificatesRequest const&
         request) {
   google::cloud::certificatemanager::v1::ListCertificatesResponse response;
-  auto status =
-      grpc_stub_->ListCertificates(&client_context, request, &response);
+  auto status = grpc_stub_->ListCertificates(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -46,11 +45,11 @@ DefaultCertificateManagerStub::ListCertificates(
 
 StatusOr<google::cloud::certificatemanager::v1::Certificate>
 DefaultCertificateManagerStub::GetCertificate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::certificatemanager::v1::GetCertificateRequest const&
         request) {
   google::cloud::certificatemanager::v1::Certificate response;
-  auto status = grpc_stub_->GetCertificate(&client_context, request, &response);
+  auto status = grpc_stub_->GetCertificate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -119,12 +118,11 @@ DefaultCertificateManagerStub::AsyncDeleteCertificate(
 
 StatusOr<google::cloud::certificatemanager::v1::ListCertificateMapsResponse>
 DefaultCertificateManagerStub::ListCertificateMaps(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::certificatemanager::v1::ListCertificateMapsRequest const&
         request) {
   google::cloud::certificatemanager::v1::ListCertificateMapsResponse response;
-  auto status =
-      grpc_stub_->ListCertificateMaps(&client_context, request, &response);
+  auto status = grpc_stub_->ListCertificateMaps(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -133,12 +131,11 @@ DefaultCertificateManagerStub::ListCertificateMaps(
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
 DefaultCertificateManagerStub::GetCertificateMap(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
         request) {
   google::cloud::certificatemanager::v1::CertificateMap response;
-  auto status =
-      grpc_stub_->GetCertificateMap(&client_context, request, &response);
+  auto status = grpc_stub_->GetCertificateMap(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -205,13 +202,13 @@ DefaultCertificateManagerStub::AsyncDeleteCertificateMap(
 StatusOr<
     google::cloud::certificatemanager::v1::ListCertificateMapEntriesResponse>
 DefaultCertificateManagerStub::ListCertificateMapEntries(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::certificatemanager::v1::
         ListCertificateMapEntriesRequest const& request) {
   google::cloud::certificatemanager::v1::ListCertificateMapEntriesResponse
       response;
-  auto status = grpc_stub_->ListCertificateMapEntries(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->ListCertificateMapEntries(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -220,12 +217,12 @@ DefaultCertificateManagerStub::ListCertificateMapEntries(
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
 DefaultCertificateManagerStub::GetCertificateMapEntry(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const&
         request) {
   google::cloud::certificatemanager::v1::CertificateMapEntry response;
   auto status =
-      grpc_stub_->GetCertificateMapEntry(&client_context, request, &response);
+      grpc_stub_->GetCertificateMapEntry(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -291,12 +288,11 @@ DefaultCertificateManagerStub::AsyncDeleteCertificateMapEntry(
 
 StatusOr<google::cloud::certificatemanager::v1::ListDnsAuthorizationsResponse>
 DefaultCertificateManagerStub::ListDnsAuthorizations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest const&
         request) {
   google::cloud::certificatemanager::v1::ListDnsAuthorizationsResponse response;
-  auto status =
-      grpc_stub_->ListDnsAuthorizations(&client_context, request, &response);
+  auto status = grpc_stub_->ListDnsAuthorizations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -305,12 +301,11 @@ DefaultCertificateManagerStub::ListDnsAuthorizations(
 
 StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
 DefaultCertificateManagerStub::GetDnsAuthorization(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
         request) {
   google::cloud::certificatemanager::v1::DnsAuthorization response;
-  auto status =
-      grpc_stub_->GetDnsAuthorization(&client_context, request, &response);
+  auto status = grpc_stub_->GetDnsAuthorization(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -377,13 +372,13 @@ DefaultCertificateManagerStub::AsyncDeleteDnsAuthorization(
 StatusOr<google::cloud::certificatemanager::v1::
              ListCertificateIssuanceConfigsResponse>
 DefaultCertificateManagerStub::ListCertificateIssuanceConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::certificatemanager::v1::
         ListCertificateIssuanceConfigsRequest const& request) {
   google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsResponse
       response;
-  auto status = grpc_stub_->ListCertificateIssuanceConfigs(&client_context,
-                                                           request, &response);
+  auto status =
+      grpc_stub_->ListCertificateIssuanceConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -392,12 +387,12 @@ DefaultCertificateManagerStub::ListCertificateIssuanceConfigs(
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
 DefaultCertificateManagerStub::GetCertificateIssuanceConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::certificatemanager::v1::
         GetCertificateIssuanceConfigRequest const& request) {
   google::cloud::certificatemanager::v1::CertificateIssuanceConfig response;
-  auto status = grpc_stub_->GetCertificateIssuanceConfig(&client_context,
-                                                         request, &response);
+  auto status =
+      grpc_stub_->GetCertificateIssuanceConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

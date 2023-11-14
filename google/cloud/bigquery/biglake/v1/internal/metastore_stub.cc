@@ -31,10 +31,10 @@ MetastoreServiceStub::~MetastoreServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 DefaultMetastoreServiceStub::CreateCatalog(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request) {
   google::cloud::bigquery::biglake::v1::Catalog response;
-  auto status = grpc_stub_->CreateCatalog(&client_context, request, &response);
+  auto status = grpc_stub_->CreateCatalog(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultMetastoreServiceStub::CreateCatalog(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 DefaultMetastoreServiceStub::DeleteCatalog(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request) {
   google::cloud::bigquery::biglake::v1::Catalog response;
-  auto status = grpc_stub_->DeleteCatalog(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteCatalog(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,10 +55,10 @@ DefaultMetastoreServiceStub::DeleteCatalog(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 DefaultMetastoreServiceStub::GetCatalog(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request) {
   google::cloud::bigquery::biglake::v1::Catalog response;
-  auto status = grpc_stub_->GetCatalog(&client_context, request, &response);
+  auto status = grpc_stub_->GetCatalog(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -67,10 +67,10 @@ DefaultMetastoreServiceStub::GetCatalog(
 
 StatusOr<google::cloud::bigquery::biglake::v1::ListCatalogsResponse>
 DefaultMetastoreServiceStub::ListCatalogs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::ListCatalogsRequest const& request) {
   google::cloud::bigquery::biglake::v1::ListCatalogsResponse response;
-  auto status = grpc_stub_->ListCatalogs(&client_context, request, &response);
+  auto status = grpc_stub_->ListCatalogs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -79,11 +79,11 @@ DefaultMetastoreServiceStub::ListCatalogs(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 DefaultMetastoreServiceStub::CreateDatabase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
         request) {
   google::cloud::bigquery::biglake::v1::Database response;
-  auto status = grpc_stub_->CreateDatabase(&client_context, request, &response);
+  auto status = grpc_stub_->CreateDatabase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -92,11 +92,11 @@ DefaultMetastoreServiceStub::CreateDatabase(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 DefaultMetastoreServiceStub::DeleteDatabase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
         request) {
   google::cloud::bigquery::biglake::v1::Database response;
-  auto status = grpc_stub_->DeleteDatabase(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteDatabase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -105,11 +105,11 @@ DefaultMetastoreServiceStub::DeleteDatabase(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 DefaultMetastoreServiceStub::UpdateDatabase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
         request) {
   google::cloud::bigquery::biglake::v1::Database response;
-  auto status = grpc_stub_->UpdateDatabase(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateDatabase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -118,10 +118,10 @@ DefaultMetastoreServiceStub::UpdateDatabase(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 DefaultMetastoreServiceStub::GetDatabase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request) {
   google::cloud::bigquery::biglake::v1::Database response;
-  auto status = grpc_stub_->GetDatabase(&client_context, request, &response);
+  auto status = grpc_stub_->GetDatabase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -130,10 +130,10 @@ DefaultMetastoreServiceStub::GetDatabase(
 
 StatusOr<google::cloud::bigquery::biglake::v1::ListDatabasesResponse>
 DefaultMetastoreServiceStub::ListDatabases(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::ListDatabasesRequest const& request) {
   google::cloud::bigquery::biglake::v1::ListDatabasesResponse response;
-  auto status = grpc_stub_->ListDatabases(&client_context, request, &response);
+  auto status = grpc_stub_->ListDatabases(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -142,10 +142,10 @@ DefaultMetastoreServiceStub::ListDatabases(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 DefaultMetastoreServiceStub::CreateTable(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::CreateTableRequest const& request) {
   google::cloud::bigquery::biglake::v1::Table response;
-  auto status = grpc_stub_->CreateTable(&client_context, request, &response);
+  auto status = grpc_stub_->CreateTable(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -154,10 +154,10 @@ DefaultMetastoreServiceStub::CreateTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 DefaultMetastoreServiceStub::DeleteTable(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request) {
   google::cloud::bigquery::biglake::v1::Table response;
-  auto status = grpc_stub_->DeleteTable(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteTable(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -166,10 +166,10 @@ DefaultMetastoreServiceStub::DeleteTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 DefaultMetastoreServiceStub::UpdateTable(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request) {
   google::cloud::bigquery::biglake::v1::Table response;
-  auto status = grpc_stub_->UpdateTable(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateTable(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -178,10 +178,10 @@ DefaultMetastoreServiceStub::UpdateTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 DefaultMetastoreServiceStub::RenameTable(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::RenameTableRequest const& request) {
   google::cloud::bigquery::biglake::v1::Table response;
-  auto status = grpc_stub_->RenameTable(&client_context, request, &response);
+  auto status = grpc_stub_->RenameTable(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -190,10 +190,10 @@ DefaultMetastoreServiceStub::RenameTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 DefaultMetastoreServiceStub::GetTable(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::GetTableRequest const& request) {
   google::cloud::bigquery::biglake::v1::Table response;
-  auto status = grpc_stub_->GetTable(&client_context, request, &response);
+  auto status = grpc_stub_->GetTable(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -202,10 +202,10 @@ DefaultMetastoreServiceStub::GetTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::ListTablesResponse>
 DefaultMetastoreServiceStub::ListTables(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::ListTablesRequest const& request) {
   google::cloud::bigquery::biglake::v1::ListTablesResponse response;
-  auto status = grpc_stub_->ListTables(&client_context, request, &response);
+  auto status = grpc_stub_->ListTables(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

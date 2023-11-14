@@ -76,7 +76,7 @@ class DefaultSimulatorStub : public SimulatorStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::policysimulator::v1::GetReplayRequest const& request)
       override;
 
@@ -88,7 +88,7 @@ class DefaultSimulatorStub : public SimulatorStub {
 
   StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
   ListReplayResults(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::policysimulator::v1::ListReplayResultsRequest const&
           request) override;
 

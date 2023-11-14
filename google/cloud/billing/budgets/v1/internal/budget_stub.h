@@ -67,27 +67,27 @@ class DefaultBudgetServiceStub : public BudgetServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::budgets::v1::CreateBudgetRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::budgets::v1::GetBudgetRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
-  ListBudgets(grpc::ClientContext& client_context,
+  ListBudgets(grpc::ClientContext& context,
               google::cloud::billing::budgets::v1::ListBudgetsRequest const&
                   request) override;
 
   Status DeleteBudget(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request)
       override;
 

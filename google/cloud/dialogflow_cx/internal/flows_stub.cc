@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FlowsStub::~FlowsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::Flow> DefaultFlowsStub::CreateFlow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request) {
   google::cloud::dialogflow::cx::v3::Flow response;
-  auto status = grpc_stub_->CreateFlow(&client_context, request, &response);
+  auto status = grpc_stub_->CreateFlow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,10 +42,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> DefaultFlowsStub::CreateFlow(
 }
 
 Status DefaultFlowsStub::DeleteFlow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteFlow(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteFlow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -54,10 +54,10 @@ Status DefaultFlowsStub::DeleteFlow(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListFlowsResponse>
 DefaultFlowsStub::ListFlows(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListFlowsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListFlowsResponse response;
-  auto status = grpc_stub_->ListFlows(&client_context, request, &response);
+  auto status = grpc_stub_->ListFlows(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -65,10 +65,10 @@ DefaultFlowsStub::ListFlows(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Flow> DefaultFlowsStub::GetFlow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetFlowRequest const& request) {
   google::cloud::dialogflow::cx::v3::Flow response;
-  auto status = grpc_stub_->GetFlow(&client_context, request, &response);
+  auto status = grpc_stub_->GetFlow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -76,10 +76,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> DefaultFlowsStub::GetFlow(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Flow> DefaultFlowsStub::UpdateFlow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request) {
   google::cloud::dialogflow::cx::v3::Flow response;
-  auto status = grpc_stub_->UpdateFlow(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateFlow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -105,10 +105,10 @@ DefaultFlowsStub::AsyncTrainFlow(
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 DefaultFlowsStub::ValidateFlow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request) {
   google::cloud::dialogflow::cx::v3::FlowValidationResult response;
-  auto status = grpc_stub_->ValidateFlow(&client_context, request, &response);
+  auto status = grpc_stub_->ValidateFlow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -117,12 +117,12 @@ DefaultFlowsStub::ValidateFlow(
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 DefaultFlowsStub::GetFlowValidationResult(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::FlowValidationResult response;
   auto status =
-      grpc_stub_->GetFlowValidationResult(&client_context, request, &response);
+      grpc_stub_->GetFlowValidationResult(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

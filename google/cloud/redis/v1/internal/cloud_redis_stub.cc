@@ -32,10 +32,10 @@ CloudRedisStub::~CloudRedisStub() = default;
 
 StatusOr<google::cloud::redis::v1::ListInstancesResponse>
 DefaultCloudRedisStub::ListInstances(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::redis::v1::ListInstancesRequest const& request) {
   google::cloud::redis::v1::ListInstancesResponse response;
-  auto status = grpc_stub_->ListInstances(&client_context, request, &response);
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultCloudRedisStub::ListInstances(
 }
 
 StatusOr<google::cloud::redis::v1::Instance> DefaultCloudRedisStub::GetInstance(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::redis::v1::GetInstanceRequest const& request) {
   google::cloud::redis::v1::Instance response;
-  auto status = grpc_stub_->GetInstance(&client_context, request, &response);
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,11 +55,10 @@ StatusOr<google::cloud::redis::v1::Instance> DefaultCloudRedisStub::GetInstance(
 
 StatusOr<google::cloud::redis::v1::InstanceAuthString>
 DefaultCloudRedisStub::GetInstanceAuthString(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
   google::cloud::redis::v1::InstanceAuthString response;
-  auto status =
-      grpc_stub_->GetInstanceAuthString(&client_context, request, &response);
+  auto status = grpc_stub_->GetInstanceAuthString(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -47,7 +47,7 @@ class DefaultSearchServiceStub : public SearchServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::SearchResponse> Search(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::SearchRequest const& request)
       override;
 

@@ -31,12 +31,12 @@ AutoscalingPolicyServiceStub::~AutoscalingPolicyServiceStub() = default;
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 DefaultAutoscalingPolicyServiceStub::CreateAutoscalingPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
         request) {
   google::cloud::dataproc::v1::AutoscalingPolicy response;
   auto status =
-      grpc_stub_->CreateAutoscalingPolicy(&client_context, request, &response);
+      grpc_stub_->CreateAutoscalingPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,12 +45,12 @@ DefaultAutoscalingPolicyServiceStub::CreateAutoscalingPolicy(
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 DefaultAutoscalingPolicyServiceStub::UpdateAutoscalingPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
         request) {
   google::cloud::dataproc::v1::AutoscalingPolicy response;
   auto status =
-      grpc_stub_->UpdateAutoscalingPolicy(&client_context, request, &response);
+      grpc_stub_->UpdateAutoscalingPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,11 +59,10 @@ DefaultAutoscalingPolicyServiceStub::UpdateAutoscalingPolicy(
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 DefaultAutoscalingPolicyServiceStub::GetAutoscalingPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
   google::cloud::dataproc::v1::AutoscalingPolicy response;
-  auto status =
-      grpc_stub_->GetAutoscalingPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetAutoscalingPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -72,12 +71,12 @@ DefaultAutoscalingPolicyServiceStub::GetAutoscalingPolicy(
 
 StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
 DefaultAutoscalingPolicyServiceStub::ListAutoscalingPolicies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
         request) {
   google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse response;
   auto status =
-      grpc_stub_->ListAutoscalingPolicies(&client_context, request, &response);
+      grpc_stub_->ListAutoscalingPolicies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -85,12 +84,12 @@ DefaultAutoscalingPolicyServiceStub::ListAutoscalingPolicies(
 }
 
 Status DefaultAutoscalingPolicyServiceStub::DeleteAutoscalingPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
         request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->DeleteAutoscalingPolicy(&client_context, request, &response);
+      grpc_stub_->DeleteAutoscalingPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

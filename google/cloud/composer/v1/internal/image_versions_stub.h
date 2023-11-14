@@ -50,7 +50,7 @@ class DefaultImageVersionsStub : public ImageVersionsStub {
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ListImageVersionsResponse>
-  ListImageVersions(grpc::ClientContext& client_context,
+  ListImageVersions(grpc::ClientContext& context,
                     google::cloud::orchestration::airflow::service::v1::
                         ListImageVersionsRequest const& request) override;
 

@@ -148,13 +148,13 @@ class DefaultAwsClustersStub : public AwsClustersStub {
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::ListAwsClustersResponse>
   ListAwsClusters(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::ListAwsClustersRequest const& request)
       override;
 
@@ -166,7 +166,7 @@ class DefaultAwsClustersStub : public AwsClustersStub {
 
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
   GenerateAwsAccessToken(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
           request) override;
 
@@ -183,13 +183,13 @@ class DefaultAwsClustersStub : public AwsClustersStub {
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::ListAwsNodePoolsResponse>
   ListAwsNodePools(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const& request)
       override;
 
@@ -201,7 +201,7 @@ class DefaultAwsClustersStub : public AwsClustersStub {
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
   GetAwsServerConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
           request) override;
 

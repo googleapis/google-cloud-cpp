@@ -31,11 +31,10 @@ AlertPolicyServiceStub::~AlertPolicyServiceStub() = default;
 
 StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>
 DefaultAlertPolicyServiceStub::ListAlertPolicies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::ListAlertPoliciesRequest const& request) {
   google::monitoring::v3::ListAlertPoliciesResponse response;
-  auto status =
-      grpc_stub_->ListAlertPolicies(&client_context, request, &response);
+  auto status = grpc_stub_->ListAlertPolicies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +43,10 @@ DefaultAlertPolicyServiceStub::ListAlertPolicies(
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 DefaultAlertPolicyServiceStub::GetAlertPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::GetAlertPolicyRequest const& request) {
   google::monitoring::v3::AlertPolicy response;
-  auto status = grpc_stub_->GetAlertPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetAlertPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -56,11 +55,10 @@ DefaultAlertPolicyServiceStub::GetAlertPolicy(
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 DefaultAlertPolicyServiceStub::CreateAlertPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::CreateAlertPolicyRequest const& request) {
   google::monitoring::v3::AlertPolicy response;
-  auto status =
-      grpc_stub_->CreateAlertPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->CreateAlertPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -68,11 +66,10 @@ DefaultAlertPolicyServiceStub::CreateAlertPolicy(
 }
 
 Status DefaultAlertPolicyServiceStub::DeleteAlertPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteAlertPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteAlertPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -81,11 +78,10 @@ Status DefaultAlertPolicyServiceStub::DeleteAlertPolicy(
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 DefaultAlertPolicyServiceStub::UpdateAlertPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
   google::monitoring::v3::AlertPolicy response;
-  auto status =
-      grpc_stub_->UpdateAlertPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateAlertPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

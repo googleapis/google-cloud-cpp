@@ -286,13 +286,13 @@ class DefaultNetworkServicesStub : public NetworkServicesStub {
 
   StatusOr<google::cloud::networkservices::v1::ListEndpointPoliciesResponse>
   ListEndpointPolicies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::ListEndpointPoliciesRequest const&
           request) override;
 
   StatusOr<google::cloud::networkservices::v1::EndpointPolicy>
   GetEndpointPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::GetEndpointPolicyRequest const&
           request) override;
 
@@ -315,12 +315,12 @@ class DefaultNetworkServicesStub : public NetworkServicesStub {
           request) override;
 
   StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse>
-  ListGateways(grpc::ClientContext& client_context,
+  ListGateways(grpc::ClientContext& context,
                google::cloud::networkservices::v1::ListGatewaysRequest const&
                    request) override;
 
   StatusOr<google::cloud::networkservices::v1::Gateway> GetGateway(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::GetGatewayRequest const& request)
       override;
 
@@ -344,12 +344,12 @@ class DefaultNetworkServicesStub : public NetworkServicesStub {
 
   StatusOr<google::cloud::networkservices::v1::ListGrpcRoutesResponse>
   ListGrpcRoutes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::ListGrpcRoutesRequest const& request)
       override;
 
   StatusOr<google::cloud::networkservices::v1::GrpcRoute> GetGrpcRoute(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::GetGrpcRouteRequest const& request)
       override;
 
@@ -373,12 +373,12 @@ class DefaultNetworkServicesStub : public NetworkServicesStub {
 
   StatusOr<google::cloud::networkservices::v1::ListHttpRoutesResponse>
   ListHttpRoutes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::ListHttpRoutesRequest const& request)
       override;
 
   StatusOr<google::cloud::networkservices::v1::HttpRoute> GetHttpRoute(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::GetHttpRouteRequest const& request)
       override;
 
@@ -401,12 +401,12 @@ class DefaultNetworkServicesStub : public NetworkServicesStub {
       override;
 
   StatusOr<google::cloud::networkservices::v1::ListTcpRoutesResponse>
-  ListTcpRoutes(grpc::ClientContext& client_context,
+  ListTcpRoutes(grpc::ClientContext& context,
                 google::cloud::networkservices::v1::ListTcpRoutesRequest const&
                     request) override;
 
   StatusOr<google::cloud::networkservices::v1::TcpRoute> GetTcpRoute(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::GetTcpRouteRequest const& request)
       override;
 
@@ -429,12 +429,12 @@ class DefaultNetworkServicesStub : public NetworkServicesStub {
       override;
 
   StatusOr<google::cloud::networkservices::v1::ListTlsRoutesResponse>
-  ListTlsRoutes(grpc::ClientContext& client_context,
+  ListTlsRoutes(grpc::ClientContext& context,
                 google::cloud::networkservices::v1::ListTlsRoutesRequest const&
                     request) override;
 
   StatusOr<google::cloud::networkservices::v1::TlsRoute> GetTlsRoute(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::GetTlsRouteRequest const& request)
       override;
 
@@ -458,13 +458,13 @@ class DefaultNetworkServicesStub : public NetworkServicesStub {
 
   StatusOr<google::cloud::networkservices::v1::ListServiceBindingsResponse>
   ListServiceBindings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::ListServiceBindingsRequest const&
           request) override;
 
   StatusOr<google::cloud::networkservices::v1::ServiceBinding>
   GetServiceBinding(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::GetServiceBindingRequest const&
           request) override;
 
@@ -481,12 +481,12 @@ class DefaultNetworkServicesStub : public NetworkServicesStub {
           request) override;
 
   StatusOr<google::cloud::networkservices::v1::ListMeshesResponse> ListMeshes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::ListMeshesRequest const& request)
       override;
 
   StatusOr<google::cloud::networkservices::v1::Mesh> GetMesh(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkservices::v1::GetMeshRequest const& request)
       override;
 

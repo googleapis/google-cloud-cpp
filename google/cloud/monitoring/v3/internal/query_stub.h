@@ -47,7 +47,7 @@ class DefaultQueryServiceStub : public QueryServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::monitoring::v3::QueryTimeSeriesResponse> QueryTimeSeries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::QueryTimeSeriesRequest const& request) override;
 
  private:

@@ -86,42 +86,42 @@ class DefaultTranscoderServiceStub : public TranscoderServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::transcoder::v1::CreateJobRequest const& request)
       override;
 
   StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::transcoder::v1::ListJobsRequest const& request)
       override;
 
   StatusOr<google::cloud::video::transcoder::v1::Job> GetJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::transcoder::v1::GetJobRequest const& request)
       override;
 
-  Status DeleteJob(grpc::ClientContext& client_context,
+  Status DeleteJob(grpc::ClientContext& context,
                    google::cloud::video::transcoder::v1::DeleteJobRequest const&
                        request) override;
 
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
           request) override;
 
   StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse>
   ListJobTemplates(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
           request) override;
 
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
           request) override;
 
   Status DeleteJobTemplate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
           request) override;
 

@@ -48,7 +48,7 @@ class DefaultKeyDashboardServiceStub : public KeyDashboardServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
-  ListCryptoKeys(grpc::ClientContext& client_context,
+  ListCryptoKeys(grpc::ClientContext& context,
                  google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
                      request) override;
 

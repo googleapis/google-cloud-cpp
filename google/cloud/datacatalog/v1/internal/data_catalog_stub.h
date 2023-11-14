@@ -223,136 +223,136 @@ class DefaultDataCatalogStub : public DataCatalogStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse> SearchCatalog(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::SearchCatalogRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::GetEntryGroupRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request)
       override;
 
   Status DeleteEntryGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::ListEntryGroupsResponse>
-  ListEntryGroups(grpc::ClientContext& client_context,
+  ListEntryGroups(grpc::ClientContext& context,
                   google::cloud::datacatalog::v1::ListEntryGroupsRequest const&
                       request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Entry> CreateEntry(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::CreateEntryRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::Entry> UpdateEntry(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::UpdateEntryRequest const& request)
       override;
 
-  Status DeleteEntry(grpc::ClientContext& client_context,
+  Status DeleteEntry(grpc::ClientContext& context,
                      google::cloud::datacatalog::v1::DeleteEntryRequest const&
                          request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Entry> GetEntry(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::GetEntryRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Entry> LookupEntry(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::LookupEntryRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::ListEntriesResponse> ListEntries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::ListEntriesRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::EntryOverview> ModifyEntryOverview(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::Contacts> ModifyEntryContacts(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> CreateTagTemplate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> GetTagTemplate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::GetTagTemplateRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> UpdateTagTemplate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request)
       override;
 
   Status DeleteTagTemplate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
   CreateTagTemplateField(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
           request) override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
   UpdateTagTemplateField(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
           request) override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
   RenameTagTemplateField(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
           request) override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
   RenameTagTemplateFieldEnumValue(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::
           RenameTagTemplateFieldEnumValueRequest const& request) override;
 
   Status DeleteTagTemplateField(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
           request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Tag> CreateTag(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::CreateTagRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::UpdateTagRequest const& request) override;
 
   Status DeleteTag(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::DeleteTagRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::ListTagsResponse> ListTags(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::ListTagsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReconcileTags(
@@ -362,24 +362,24 @@ class DefaultDataCatalogStub : public DataCatalogStub {
       override;
 
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse> UnstarEntry(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::UnstarEntryRequest const& request)
       override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportEntries(

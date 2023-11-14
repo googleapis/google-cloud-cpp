@@ -50,10 +50,10 @@ DefaultLivestreamServiceStub::AsyncCreateChannel(
 
 StatusOr<google::cloud::video::livestream::v1::ListChannelsResponse>
 DefaultLivestreamServiceStub::ListChannels(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::video::livestream::v1::ListChannelsRequest const& request) {
   google::cloud::video::livestream::v1::ListChannelsResponse response;
-  auto status = grpc_stub_->ListChannels(&client_context, request, &response);
+  auto status = grpc_stub_->ListChannels(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -62,10 +62,10 @@ DefaultLivestreamServiceStub::ListChannels(
 
 StatusOr<google::cloud::video::livestream::v1::Channel>
 DefaultLivestreamServiceStub::GetChannel(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::video::livestream::v1::GetChannelRequest const& request) {
   google::cloud::video::livestream::v1::Channel response;
-  auto status = grpc_stub_->GetChannel(&client_context, request, &response);
+  auto status = grpc_stub_->GetChannel(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -164,10 +164,10 @@ DefaultLivestreamServiceStub::AsyncCreateInput(
 
 StatusOr<google::cloud::video::livestream::v1::ListInputsResponse>
 DefaultLivestreamServiceStub::ListInputs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::video::livestream::v1::ListInputsRequest const& request) {
   google::cloud::video::livestream::v1::ListInputsResponse response;
-  auto status = grpc_stub_->ListInputs(&client_context, request, &response);
+  auto status = grpc_stub_->ListInputs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -176,10 +176,10 @@ DefaultLivestreamServiceStub::ListInputs(
 
 StatusOr<google::cloud::video::livestream::v1::Input>
 DefaultLivestreamServiceStub::GetInput(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::video::livestream::v1::GetInputRequest const& request) {
   google::cloud::video::livestream::v1::Input response;
-  auto status = grpc_stub_->GetInput(&client_context, request, &response);
+  auto status = grpc_stub_->GetInput(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -224,10 +224,10 @@ DefaultLivestreamServiceStub::AsyncUpdateInput(
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 DefaultLivestreamServiceStub::CreateEvent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::video::livestream::v1::CreateEventRequest const& request) {
   google::cloud::video::livestream::v1::Event response;
-  auto status = grpc_stub_->CreateEvent(&client_context, request, &response);
+  auto status = grpc_stub_->CreateEvent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -236,10 +236,10 @@ DefaultLivestreamServiceStub::CreateEvent(
 
 StatusOr<google::cloud::video::livestream::v1::ListEventsResponse>
 DefaultLivestreamServiceStub::ListEvents(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::video::livestream::v1::ListEventsRequest const& request) {
   google::cloud::video::livestream::v1::ListEventsResponse response;
-  auto status = grpc_stub_->ListEvents(&client_context, request, &response);
+  auto status = grpc_stub_->ListEvents(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -248,10 +248,10 @@ DefaultLivestreamServiceStub::ListEvents(
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 DefaultLivestreamServiceStub::GetEvent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::video::livestream::v1::GetEventRequest const& request) {
   google::cloud::video::livestream::v1::Event response;
-  auto status = grpc_stub_->GetEvent(&client_context, request, &response);
+  auto status = grpc_stub_->GetEvent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -259,10 +259,10 @@ DefaultLivestreamServiceStub::GetEvent(
 }
 
 Status DefaultLivestreamServiceStub::DeleteEvent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::video::livestream::v1::DeleteEventRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteEvent(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteEvent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -307,10 +307,10 @@ DefaultLivestreamServiceStub::AsyncDeleteAsset(
 
 StatusOr<google::cloud::video::livestream::v1::Asset>
 DefaultLivestreamServiceStub::GetAsset(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::video::livestream::v1::GetAssetRequest const& request) {
   google::cloud::video::livestream::v1::Asset response;
-  auto status = grpc_stub_->GetAsset(&client_context, request, &response);
+  auto status = grpc_stub_->GetAsset(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -319,10 +319,10 @@ DefaultLivestreamServiceStub::GetAsset(
 
 StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
 DefaultLivestreamServiceStub::ListAssets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
   google::cloud::video::livestream::v1::ListAssetsResponse response;
-  auto status = grpc_stub_->ListAssets(&client_context, request, &response);
+  auto status = grpc_stub_->ListAssets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -331,10 +331,10 @@ DefaultLivestreamServiceStub::ListAssets(
 
 StatusOr<google::cloud::video::livestream::v1::Pool>
 DefaultLivestreamServiceStub::GetPool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::video::livestream::v1::GetPoolRequest const& request) {
   google::cloud::video::livestream::v1::Pool response;
-  auto status = grpc_stub_->GetPool(&client_context, request, &response);
+  auto status = grpc_stub_->GetPool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

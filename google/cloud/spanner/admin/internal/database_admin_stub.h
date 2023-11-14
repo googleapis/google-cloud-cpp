@@ -173,7 +173,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
 
   StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
   ListDatabases(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::database::v1::ListDatabasesRequest const& request)
       override;
 
@@ -184,7 +184,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
           request) override;
 
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::database::v1::GetDatabaseRequest const& request)
       override;
 
@@ -201,26 +201,26 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
           request) override;
 
   Status DropDatabase(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::database::v1::DropDatabaseRequest const& request)
       override;
 
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
           request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
@@ -236,22 +236,22 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
       override;
 
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::database::v1::GetBackupRequest const& request)
       override;
 
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::database::v1::UpdateBackupRequest const& request)
       override;
 
   Status DeleteBackup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::database::v1::DeleteBackupRequest const& request)
       override;
 
   StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
-  ListBackups(grpc::ClientContext& client_context,
+  ListBackups(grpc::ClientContext& context,
               google::spanner::admin::database::v1::ListBackupsRequest const&
                   request) override;
 
@@ -263,19 +263,19 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
 
   StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
   ListDatabaseOperations(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
           request) override;
 
   StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
   ListBackupOperations(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::database::v1::ListBackupOperationsRequest const&
           request) override;
 
   StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
   ListDatabaseRoles(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
           request) override;
 

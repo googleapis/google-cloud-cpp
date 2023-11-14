@@ -99,54 +99,54 @@ class DefaultAccessApprovalStub : public AccessApprovalStub {
 
   StatusOr<google::cloud::accessapproval::v1::ListApprovalRequestsResponse>
   ListApprovalRequests(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::accessapproval::v1::ListApprovalRequestsMessage const&
           request) override;
 
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
   GetApprovalRequest(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
           request) override;
 
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
   ApproveApprovalRequest(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
           request) override;
 
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
   DismissApprovalRequest(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
           request) override;
 
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
   InvalidateApprovalRequest(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
           request) override;
 
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
   GetAccessApprovalSettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
           request) override;
 
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
   UpdateAccessApprovalSettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::accessapproval::v1::
           UpdateAccessApprovalSettingsMessage const& request) override;
 
   Status DeleteAccessApprovalSettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::accessapproval::v1::
           DeleteAccessApprovalSettingsMessage const& request) override;
 
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
   GetAccessApprovalServiceAccount(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::accessapproval::v1::
           GetAccessApprovalServiceAccountMessage const& request) override;
 

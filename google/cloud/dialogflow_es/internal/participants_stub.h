@@ -95,27 +95,27 @@ class DefaultParticipantsStub : public ParticipantsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::CreateParticipantRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Participant> GetParticipant(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GetParticipantRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse>
-  ListParticipants(grpc::ClientContext& client_context,
+  ListParticipants(grpc::ClientContext& context,
                    google::cloud::dialogflow::v2::ListParticipantsRequest const&
                        request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::UpdateParticipantRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
-  AnalyzeContent(grpc::ClientContext& client_context,
+  AnalyzeContent(grpc::ClientContext& context,
                  google::cloud::dialogflow::v2::AnalyzeContentRequest const&
                      request) override;
 
@@ -127,19 +127,19 @@ class DefaultParticipantsStub : public ParticipantsStub {
       std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
-  SuggestArticles(grpc::ClientContext& client_context,
+  SuggestArticles(grpc::ClientContext& context,
                   google::cloud::dialogflow::v2::SuggestArticlesRequest const&
                       request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
   SuggestFaqAnswers(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
   SuggestSmartReplies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request)
       override;
 

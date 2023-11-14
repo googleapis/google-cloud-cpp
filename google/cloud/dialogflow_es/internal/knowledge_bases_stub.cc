@@ -31,11 +31,10 @@ KnowledgeBasesStub::~KnowledgeBasesStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
 DefaultKnowledgeBasesStub::ListKnowledgeBases(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) {
   google::cloud::dialogflow::v2::ListKnowledgeBasesResponse response;
-  auto status =
-      grpc_stub_->ListKnowledgeBases(&client_context, request, &response);
+  auto status = grpc_stub_->ListKnowledgeBases(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,11 +43,10 @@ DefaultKnowledgeBasesStub::ListKnowledgeBases(
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 DefaultKnowledgeBasesStub::GetKnowledgeBase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
   google::cloud::dialogflow::v2::KnowledgeBase response;
-  auto status =
-      grpc_stub_->GetKnowledgeBase(&client_context, request, &response);
+  auto status = grpc_stub_->GetKnowledgeBase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,11 +55,10 @@ DefaultKnowledgeBasesStub::GetKnowledgeBase(
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 DefaultKnowledgeBasesStub::CreateKnowledgeBase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
   google::cloud::dialogflow::v2::KnowledgeBase response;
-  auto status =
-      grpc_stub_->CreateKnowledgeBase(&client_context, request, &response);
+  auto status = grpc_stub_->CreateKnowledgeBase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -69,11 +66,10 @@ DefaultKnowledgeBasesStub::CreateKnowledgeBase(
 }
 
 Status DefaultKnowledgeBasesStub::DeleteKnowledgeBase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteKnowledgeBase(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteKnowledgeBase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -82,11 +78,10 @@ Status DefaultKnowledgeBasesStub::DeleteKnowledgeBase(
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 DefaultKnowledgeBasesStub::UpdateKnowledgeBase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
   google::cloud::dialogflow::v2::KnowledgeBase response;
-  auto status =
-      grpc_stub_->UpdateKnowledgeBase(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateKnowledgeBase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

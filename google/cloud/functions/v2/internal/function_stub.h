@@ -100,11 +100,11 @@ class DefaultFunctionServiceStub : public FunctionServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::functions::v2::Function> GetFunction(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::functions::v2::GetFunctionRequest const& request) override;
 
   StatusOr<google::cloud::functions::v2::ListFunctionsResponse> ListFunctions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::functions::v2::ListFunctionsRequest const& request)
       override;
 
@@ -128,18 +128,18 @@ class DefaultFunctionServiceStub : public FunctionServiceStub {
 
   StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
   GenerateUploadUrl(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::functions::v2::GenerateUploadUrlRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
   GenerateDownloadUrl(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::functions::v2::GenerateDownloadUrlRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v2::ListRuntimesResponse> ListRuntimes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::functions::v2::ListRuntimesRequest const& request)
       override;
 

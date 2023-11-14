@@ -31,10 +31,10 @@ TextToSpeechStub::~TextToSpeechStub() = default;
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 DefaultTextToSpeechStub::ListVoices(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
   google::cloud::texttospeech::v1::ListVoicesResponse response;
-  auto status = grpc_stub_->ListVoices(&client_context, request, &response);
+  auto status = grpc_stub_->ListVoices(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,11 +43,10 @@ DefaultTextToSpeechStub::ListVoices(
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 DefaultTextToSpeechStub::SynthesizeSpeech(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
   google::cloud::texttospeech::v1::SynthesizeSpeechResponse response;
-  auto status =
-      grpc_stub_->SynthesizeSpeech(&client_context, request, &response);
+  auto status = grpc_stub_->SynthesizeSpeech(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

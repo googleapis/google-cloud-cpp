@@ -46,7 +46,7 @@ class DefaultSearchServiceStub : public SearchServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::retail::v2::SearchResponse> Search(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::SearchRequest const& request) override;
 
  private:

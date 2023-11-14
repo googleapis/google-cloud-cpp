@@ -96,12 +96,12 @@ class DefaultVersionsStub : public VersionsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListVersionsResponse>
-  ListVersions(grpc::ClientContext& client_context,
+  ListVersions(grpc::ClientContext& context,
                google::cloud::dialogflow::cx::v3::ListVersionsRequest const&
                    request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Version> GetVersion(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetVersionRequest const& request)
       override;
 
@@ -112,12 +112,12 @@ class DefaultVersionsStub : public VersionsStub {
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Version> UpdateVersion(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request)
       override;
 
   Status DeleteVersion(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request)
       override;
 
@@ -129,7 +129,7 @@ class DefaultVersionsStub : public VersionsStub {
 
   StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
   CompareVersions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request)
       override;
 

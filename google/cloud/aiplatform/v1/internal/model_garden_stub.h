@@ -49,7 +49,7 @@ class DefaultModelGardenServiceStub : public ModelGardenServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
       override;
 

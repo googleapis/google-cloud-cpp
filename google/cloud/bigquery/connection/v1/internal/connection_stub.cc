@@ -31,12 +31,11 @@ ConnectionServiceStub::~ConnectionServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 DefaultConnectionServiceStub::CreateConnection(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
         request) {
   google::cloud::bigquery::connection::v1::Connection response;
-  auto status =
-      grpc_stub_->CreateConnection(&client_context, request, &response);
+  auto status = grpc_stub_->CreateConnection(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,11 +44,11 @@ DefaultConnectionServiceStub::CreateConnection(
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 DefaultConnectionServiceStub::GetConnection(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::connection::v1::GetConnectionRequest const&
         request) {
   google::cloud::bigquery::connection::v1::Connection response;
-  auto status = grpc_stub_->GetConnection(&client_context, request, &response);
+  auto status = grpc_stub_->GetConnection(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -58,12 +57,11 @@ DefaultConnectionServiceStub::GetConnection(
 
 StatusOr<google::cloud::bigquery::connection::v1::ListConnectionsResponse>
 DefaultConnectionServiceStub::ListConnections(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::connection::v1::ListConnectionsRequest const&
         request) {
   google::cloud::bigquery::connection::v1::ListConnectionsResponse response;
-  auto status =
-      grpc_stub_->ListConnections(&client_context, request, &response);
+  auto status = grpc_stub_->ListConnections(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -72,12 +70,11 @@ DefaultConnectionServiceStub::ListConnections(
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 DefaultConnectionServiceStub::UpdateConnection(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
         request) {
   google::cloud::bigquery::connection::v1::Connection response;
-  auto status =
-      grpc_stub_->UpdateConnection(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateConnection(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -85,12 +82,11 @@ DefaultConnectionServiceStub::UpdateConnection(
 }
 
 Status DefaultConnectionServiceStub::DeleteConnection(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteConnection(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteConnection(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -98,10 +94,10 @@ Status DefaultConnectionServiceStub::DeleteConnection(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultConnectionServiceStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -109,10 +105,10 @@ StatusOr<google::iam::v1::Policy> DefaultConnectionServiceStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultConnectionServiceStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -121,11 +117,10 @@ StatusOr<google::iam::v1::Policy> DefaultConnectionServiceStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultConnectionServiceStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

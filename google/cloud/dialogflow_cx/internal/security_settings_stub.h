@@ -74,30 +74,30 @@ class DefaultSecuritySettingsServiceStub : public SecuritySettingsServiceStub {
 
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   CreateSecuritySettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   GetSecuritySettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   UpdateSecuritySettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListSecuritySettingsResponse>
   ListSecuritySettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const&
           request) override;
 
   Status DeleteSecuritySettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
           request) override;
 

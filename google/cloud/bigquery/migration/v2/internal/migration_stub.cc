@@ -31,12 +31,12 @@ MigrationServiceStub::~MigrationServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 DefaultMigrationServiceStub::CreateMigrationWorkflow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::
         CreateMigrationWorkflowRequest const& request) {
   google::cloud::bigquery::migration::v2::MigrationWorkflow response;
   auto status =
-      grpc_stub_->CreateMigrationWorkflow(&client_context, request, &response);
+      grpc_stub_->CreateMigrationWorkflow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,12 +45,11 @@ DefaultMigrationServiceStub::CreateMigrationWorkflow(
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 DefaultMigrationServiceStub::GetMigrationWorkflow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
         request) {
   google::cloud::bigquery::migration::v2::MigrationWorkflow response;
-  auto status =
-      grpc_stub_->GetMigrationWorkflow(&client_context, request, &response);
+  auto status = grpc_stub_->GetMigrationWorkflow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,13 +58,13 @@ DefaultMigrationServiceStub::GetMigrationWorkflow(
 
 StatusOr<google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse>
 DefaultMigrationServiceStub::ListMigrationWorkflows(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const&
         request) {
   google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse
       response;
   auto status =
-      grpc_stub_->ListMigrationWorkflows(&client_context, request, &response);
+      grpc_stub_->ListMigrationWorkflows(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -73,12 +72,12 @@ DefaultMigrationServiceStub::ListMigrationWorkflows(
 }
 
 Status DefaultMigrationServiceStub::DeleteMigrationWorkflow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::
         DeleteMigrationWorkflowRequest const& request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->DeleteMigrationWorkflow(&client_context, request, &response);
+      grpc_stub_->DeleteMigrationWorkflow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -86,12 +85,12 @@ Status DefaultMigrationServiceStub::DeleteMigrationWorkflow(
 }
 
 Status DefaultMigrationServiceStub::StartMigrationWorkflow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&
         request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->StartMigrationWorkflow(&client_context, request, &response);
+      grpc_stub_->StartMigrationWorkflow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -100,12 +99,11 @@ Status DefaultMigrationServiceStub::StartMigrationWorkflow(
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
 DefaultMigrationServiceStub::GetMigrationSubtask(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
         request) {
   google::cloud::bigquery::migration::v2::MigrationSubtask response;
-  auto status =
-      grpc_stub_->GetMigrationSubtask(&client_context, request, &response);
+  auto status = grpc_stub_->GetMigrationSubtask(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -114,13 +112,12 @@ DefaultMigrationServiceStub::GetMigrationSubtask(
 
 StatusOr<google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse>
 DefaultMigrationServiceStub::ListMigrationSubtasks(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const&
         request) {
   google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse
       response;
-  auto status =
-      grpc_stub_->ListMigrationSubtasks(&client_context, request, &response);
+  auto status = grpc_stub_->ListMigrationSubtasks(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -128,17 +128,17 @@ class DefaultManagedIdentitiesServiceStub
 
   StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
   ResetAdminPassword(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
           request) override;
 
   StatusOr<google::cloud::managedidentities::v1::ListDomainsResponse>
-  ListDomains(grpc::ClientContext& client_context,
+  ListDomains(grpc::ClientContext& context,
               google::cloud::managedidentities::v1::ListDomainsRequest const&
                   request) override;
 
   StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::managedidentities::v1::GetDomainRequest const& request)
       override;
 

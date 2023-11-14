@@ -32,10 +32,10 @@ WorkflowsStub::~WorkflowsStub() = default;
 
 StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
 DefaultWorkflowsStub::ListWorkflows(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
   google::cloud::workflows::v1::ListWorkflowsResponse response;
-  auto status = grpc_stub_->ListWorkflows(&client_context, request, &response);
+  auto status = grpc_stub_->ListWorkflows(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultWorkflowsStub::ListWorkflows(
 
 StatusOr<google::cloud::workflows::v1::Workflow>
 DefaultWorkflowsStub::GetWorkflow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
   google::cloud::workflows::v1::Workflow response;
-  auto status = grpc_stub_->GetWorkflow(&client_context, request, &response);
+  auto status = grpc_stub_->GetWorkflow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

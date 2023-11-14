@@ -31,10 +31,10 @@ ContextsStub::~ContextsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListContextsResponse>
 DefaultContextsStub::ListContexts(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListContextsRequest const& request) {
   google::cloud::dialogflow::v2::ListContextsResponse response;
-  auto status = grpc_stub_->ListContexts(&client_context, request, &response);
+  auto status = grpc_stub_->ListContexts(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultContextsStub::ListContexts(
 
 StatusOr<google::cloud::dialogflow::v2::Context>
 DefaultContextsStub::GetContext(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetContextRequest const& request) {
   google::cloud::dialogflow::v2::Context response;
-  auto status = grpc_stub_->GetContext(&client_context, request, &response);
+  auto status = grpc_stub_->GetContext(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,10 +55,10 @@ DefaultContextsStub::GetContext(
 
 StatusOr<google::cloud::dialogflow::v2::Context>
 DefaultContextsStub::CreateContext(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateContextRequest const& request) {
   google::cloud::dialogflow::v2::Context response;
-  auto status = grpc_stub_->CreateContext(&client_context, request, &response);
+  auto status = grpc_stub_->CreateContext(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -67,10 +67,10 @@ DefaultContextsStub::CreateContext(
 
 StatusOr<google::cloud::dialogflow::v2::Context>
 DefaultContextsStub::UpdateContext(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateContextRequest const& request) {
   google::cloud::dialogflow::v2::Context response;
-  auto status = grpc_stub_->UpdateContext(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateContext(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -78,10 +78,10 @@ DefaultContextsStub::UpdateContext(
 }
 
 Status DefaultContextsStub::DeleteContext(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteContextRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteContext(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteContext(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -89,11 +89,10 @@ Status DefaultContextsStub::DeleteContext(
 }
 
 Status DefaultContextsStub::DeleteAllContexts(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteAllContexts(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteAllContexts(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

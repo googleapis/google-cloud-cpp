@@ -138,12 +138,12 @@ class DefaultServiceManagerStub : public ServiceManagerStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
-  ListServices(grpc::ClientContext& client_context,
+  ListServices(grpc::ClientContext& context,
                google::api::servicemanagement::v1::ListServicesRequest const&
                    request) override;
 
   StatusOr<google::api::servicemanagement::v1::ManagedService> GetService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::api::servicemanagement::v1::GetServiceRequest const& request)
       override;
 
@@ -167,17 +167,17 @@ class DefaultServiceManagerStub : public ServiceManagerStub {
 
   StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse>
   ListServiceConfigs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::api::servicemanagement::v1::ListServiceConfigsRequest const&
           request) override;
 
   StatusOr<google::api::Service> GetServiceConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::api::servicemanagement::v1::GetServiceConfigRequest const&
           request) override;
 
   StatusOr<google::api::Service> CreateServiceConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::api::servicemanagement::v1::CreateServiceConfigRequest const&
           request) override;
 
@@ -189,12 +189,12 @@ class DefaultServiceManagerStub : public ServiceManagerStub {
 
   StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
   ListServiceRollouts(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
           request) override;
 
   StatusOr<google::api::servicemanagement::v1::Rollout> GetServiceRollout(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::api::servicemanagement::v1::GetServiceRolloutRequest const&
           request) override;
 
@@ -206,7 +206,7 @@ class DefaultServiceManagerStub : public ServiceManagerStub {
 
   StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
   GenerateConfigReport(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::api::servicemanagement::v1::GenerateConfigReportRequest const&
           request) override;
 

@@ -51,11 +51,11 @@ class DefaultCloudCatalogStub : public CloudCatalogStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::billing::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::cloud::billing::v1::ListSkusResponse> ListSkus(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::billing::v1::ListSkusRequest const& request) override;
 
  private:

@@ -166,61 +166,61 @@ class DefaultAdminServiceStub : public AdminServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::CreateTopicRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::GetTopicRequest const& request) override;
 
   StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ListTopicsResponse> ListTopics(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::ListTopicsRequest const& request) override;
 
   StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::UpdateTopicRequest const& request)
       override;
 
-  Status DeleteTopic(grpc::ClientContext& client_context,
+  Status DeleteTopic(grpc::ClientContext& context,
                      google::cloud::pubsublite::v1::DeleteTopicRequest const&
                          request) override;
 
   StatusOr<google::cloud::pubsublite::v1::ListTopicSubscriptionsResponse>
   ListTopicSubscriptions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest const&
           request) override;
 
   StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::GetSubscriptionRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ListSubscriptionsResponse>
   ListSubscriptions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::ListSubscriptionsRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request)
       override;
 
   Status DeleteSubscription(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request)
       override;
 
@@ -231,33 +231,33 @@ class DefaultAdminServiceStub : public AdminServiceStub {
       override;
 
   StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::CreateReservationRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::GetReservationRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ListReservationsResponse>
-  ListReservations(grpc::ClientContext& client_context,
+  ListReservations(grpc::ClientContext& context,
                    google::cloud::pubsublite::v1::ListReservationsRequest const&
                        request) override;
 
   StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::UpdateReservationRequest const& request)
       override;
 
   Status DeleteReservation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::DeleteReservationRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ListReservationTopicsResponse>
   ListReservationTopics(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::pubsublite::v1::ListReservationTopicsRequest const&
           request) override;
 

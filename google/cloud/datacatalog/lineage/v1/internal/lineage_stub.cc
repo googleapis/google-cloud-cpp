@@ -33,13 +33,13 @@ LineageStub::~LineageStub() = default;
 StatusOr<
     google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
 DefaultLineageStub::ProcessOpenLineageRunEvent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::
         ProcessOpenLineageRunEventRequest const& request) {
   google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse
       response;
-  auto status = grpc_stub_->ProcessOpenLineageRunEvent(&client_context, request,
-                                                       &response);
+  auto status =
+      grpc_stub_->ProcessOpenLineageRunEvent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -48,11 +48,11 @@ DefaultLineageStub::ProcessOpenLineageRunEvent(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 DefaultLineageStub::CreateProcess(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
         request) {
   google::cloud::datacatalog::lineage::v1::Process response;
-  auto status = grpc_stub_->CreateProcess(&client_context, request, &response);
+  auto status = grpc_stub_->CreateProcess(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -61,11 +61,11 @@ DefaultLineageStub::CreateProcess(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 DefaultLineageStub::UpdateProcess(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
         request) {
   google::cloud::datacatalog::lineage::v1::Process response;
-  auto status = grpc_stub_->UpdateProcess(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateProcess(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -74,10 +74,10 @@ DefaultLineageStub::UpdateProcess(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 DefaultLineageStub::GetProcess(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request) {
   google::cloud::datacatalog::lineage::v1::Process response;
-  auto status = grpc_stub_->GetProcess(&client_context, request, &response);
+  auto status = grpc_stub_->GetProcess(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -86,11 +86,11 @@ DefaultLineageStub::GetProcess(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListProcessesResponse>
 DefaultLineageStub::ListProcesses(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
         request) {
   google::cloud::datacatalog::lineage::v1::ListProcessesResponse response;
-  auto status = grpc_stub_->ListProcesses(&client_context, request, &response);
+  auto status = grpc_stub_->ListProcesses(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -119,10 +119,10 @@ DefaultLineageStub::AsyncDeleteProcess(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 DefaultLineageStub::CreateRun(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) {
   google::cloud::datacatalog::lineage::v1::Run response;
-  auto status = grpc_stub_->CreateRun(&client_context, request, &response);
+  auto status = grpc_stub_->CreateRun(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -131,10 +131,10 @@ DefaultLineageStub::CreateRun(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 DefaultLineageStub::UpdateRun(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request) {
   google::cloud::datacatalog::lineage::v1::Run response;
-  auto status = grpc_stub_->UpdateRun(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateRun(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -143,10 +143,10 @@ DefaultLineageStub::UpdateRun(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 DefaultLineageStub::GetRun(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::GetRunRequest const& request) {
   google::cloud::datacatalog::lineage::v1::Run response;
-  auto status = grpc_stub_->GetRun(&client_context, request, &response);
+  auto status = grpc_stub_->GetRun(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -155,10 +155,10 @@ DefaultLineageStub::GetRun(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListRunsResponse>
 DefaultLineageStub::ListRuns(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::ListRunsRequest const& request) {
   google::cloud::datacatalog::lineage::v1::ListRunsResponse response;
-  auto status = grpc_stub_->ListRuns(&client_context, request, &response);
+  auto status = grpc_stub_->ListRuns(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -185,12 +185,11 @@ DefaultLineageStub::AsyncDeleteRun(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
 DefaultLineageStub::CreateLineageEvent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
         request) {
   google::cloud::datacatalog::lineage::v1::LineageEvent response;
-  auto status =
-      grpc_stub_->CreateLineageEvent(&client_context, request, &response);
+  auto status = grpc_stub_->CreateLineageEvent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -199,12 +198,11 @@ DefaultLineageStub::CreateLineageEvent(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
 DefaultLineageStub::GetLineageEvent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
         request) {
   google::cloud::datacatalog::lineage::v1::LineageEvent response;
-  auto status =
-      grpc_stub_->GetLineageEvent(&client_context, request, &response);
+  auto status = grpc_stub_->GetLineageEvent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -213,12 +211,11 @@ DefaultLineageStub::GetLineageEvent(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse>
 DefaultLineageStub::ListLineageEvents(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const&
         request) {
   google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse response;
-  auto status =
-      grpc_stub_->ListLineageEvents(&client_context, request, &response);
+  auto status = grpc_stub_->ListLineageEvents(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -226,12 +223,11 @@ DefaultLineageStub::ListLineageEvents(
 }
 
 Status DefaultLineageStub::DeleteLineageEvent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteLineageEvent(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteLineageEvent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -240,11 +236,11 @@ Status DefaultLineageStub::DeleteLineageEvent(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse>
 DefaultLineageStub::SearchLinks(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
         request) {
   google::cloud::datacatalog::lineage::v1::SearchLinksResponse response;
-  auto status = grpc_stub_->SearchLinks(&client_context, request, &response);
+  auto status = grpc_stub_->SearchLinks(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -254,13 +250,13 @@ DefaultLineageStub::SearchLinks(
 StatusOr<
     google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse>
 DefaultLineageStub::BatchSearchLinkProcesses(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::lineage::v1::
         BatchSearchLinkProcessesRequest const& request) {
   google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse
       response;
   auto status =
-      grpc_stub_->BatchSearchLinkProcesses(&client_context, request, &response);
+      grpc_stub_->BatchSearchLinkProcesses(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

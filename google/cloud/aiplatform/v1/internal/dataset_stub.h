@@ -164,16 +164,16 @@ class DefaultDatasetServiceStub : public DatasetServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetDatasetRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::UpdateDatasetRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListDatasetsResponse> ListDatasets(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ListDatasetsRequest const& request)
       override;
 
@@ -206,13 +206,13 @@ class DefaultDatasetServiceStub : public DatasetServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
   ListDatasetVersions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request)
       override;
 
@@ -223,17 +223,17 @@ class DefaultDatasetServiceStub : public DatasetServiceStub {
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse> ListDataItems(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ListDataItemsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::SearchDataItemsResponse>
-  SearchDataItems(grpc::ClientContext& client_context,
+  SearchDataItems(grpc::ClientContext& context,
                   google::cloud::aiplatform::v1::SearchDataItemsRequest const&
                       request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListSavedQueriesResponse>
-  ListSavedQueries(grpc::ClientContext& client_context,
+  ListSavedQueries(grpc::ClientContext& context,
                    google::cloud::aiplatform::v1::ListSavedQueriesRequest const&
                        request) override;
 
@@ -244,12 +244,12 @@ class DefaultDatasetServiceStub : public DatasetServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListAnnotationsResponse>
-  ListAnnotations(grpc::ClientContext& client_context,
+  ListAnnotations(grpc::ClientContext& context,
                   google::cloud::aiplatform::v1::ListAnnotationsRequest const&
                       request) override;
 

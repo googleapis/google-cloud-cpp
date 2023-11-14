@@ -32,10 +32,10 @@ DocumentServiceStub::~DocumentServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DefaultDocumentServiceStub::GetDocument(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::GetDocumentRequest const& request) {
   google::cloud::discoveryengine::v1::Document response;
-  auto status = grpc_stub_->GetDocument(&client_context, request, &response);
+  auto status = grpc_stub_->GetDocument(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultDocumentServiceStub::GetDocument(
 
 StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
 DefaultDocumentServiceStub::ListDocuments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::ListDocumentsRequest const& request) {
   google::cloud::discoveryengine::v1::ListDocumentsResponse response;
-  auto status = grpc_stub_->ListDocuments(&client_context, request, &response);
+  auto status = grpc_stub_->ListDocuments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -56,10 +56,10 @@ DefaultDocumentServiceStub::ListDocuments(
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DefaultDocumentServiceStub::CreateDocument(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) {
   google::cloud::discoveryengine::v1::Document response;
-  auto status = grpc_stub_->CreateDocument(&client_context, request, &response);
+  auto status = grpc_stub_->CreateDocument(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -68,10 +68,10 @@ DefaultDocumentServiceStub::CreateDocument(
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DefaultDocumentServiceStub::UpdateDocument(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) {
   google::cloud::discoveryengine::v1::Document response;
-  auto status = grpc_stub_->UpdateDocument(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateDocument(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -79,10 +79,10 @@ DefaultDocumentServiceStub::UpdateDocument(
 }
 
 Status DefaultDocumentServiceStub::DeleteDocument(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteDocument(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteDocument(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

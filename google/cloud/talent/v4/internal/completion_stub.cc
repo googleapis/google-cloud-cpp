@@ -31,10 +31,10 @@ CompletionStub::~CompletionStub() = default;
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 DefaultCompletionStub::CompleteQuery(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
   google::cloud::talent::v4::CompleteQueryResponse response;
-  auto status = grpc_stub_->CompleteQuery(&client_context, request, &response);
+  auto status = grpc_stub_->CompleteQuery(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

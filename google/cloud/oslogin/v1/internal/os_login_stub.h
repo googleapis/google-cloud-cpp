@@ -74,38 +74,38 @@ class DefaultOsLoginServiceStub : public OsLoginServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request)
       override;
 
   Status DeletePosixAccount(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request)
       override;
 
   Status DeleteSshPublicKey(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::oslogin::v1::GetLoginProfileRequest const& request)
       override;
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
   ImportSshPublicKey(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request)
       override;
 

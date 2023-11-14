@@ -59,13 +59,13 @@ class DefaultPublisherStub : public PublisherStub {
   StatusOr<google::cloud::eventarc::publishing::v1::
                PublishChannelConnectionEventsResponse>
   PublishChannelConnectionEvents(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::eventarc::publishing::v1::
           PublishChannelConnectionEventsRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
   PublishEvents(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
           request) override;
 

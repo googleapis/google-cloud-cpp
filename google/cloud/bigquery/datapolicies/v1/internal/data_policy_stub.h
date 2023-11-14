@@ -93,48 +93,48 @@ class DefaultDataPolicyServiceStub : public DataPolicyServiceStub {
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   CreateDataPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   UpdateDataPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   RenameDataPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
           request) override;
 
   Status DeleteDataPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> GetDataPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse>
   ListDataPolicies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const&
           request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:

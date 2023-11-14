@@ -32,11 +32,10 @@ ParticipantsStub::~ParticipantsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 DefaultParticipantsStub::CreateParticipant(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateParticipantRequest const& request) {
   google::cloud::dialogflow::v2::Participant response;
-  auto status =
-      grpc_stub_->CreateParticipant(&client_context, request, &response);
+  auto status = grpc_stub_->CreateParticipant(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,10 +44,10 @@ DefaultParticipantsStub::CreateParticipant(
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 DefaultParticipantsStub::GetParticipant(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
   google::cloud::dialogflow::v2::Participant response;
-  auto status = grpc_stub_->GetParticipant(&client_context, request, &response);
+  auto status = grpc_stub_->GetParticipant(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,11 +56,10 @@ DefaultParticipantsStub::GetParticipant(
 
 StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse>
 DefaultParticipantsStub::ListParticipants(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListParticipantsRequest const& request) {
   google::cloud::dialogflow::v2::ListParticipantsResponse response;
-  auto status =
-      grpc_stub_->ListParticipants(&client_context, request, &response);
+  auto status = grpc_stub_->ListParticipants(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -70,11 +68,10 @@ DefaultParticipantsStub::ListParticipants(
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 DefaultParticipantsStub::UpdateParticipant(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) {
   google::cloud::dialogflow::v2::Participant response;
-  auto status =
-      grpc_stub_->UpdateParticipant(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateParticipant(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -83,10 +80,10 @@ DefaultParticipantsStub::UpdateParticipant(
 
 StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
 DefaultParticipantsStub::AnalyzeContent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
   google::cloud::dialogflow::v2::AnalyzeContentResponse response;
-  auto status = grpc_stub_->AnalyzeContent(&client_context, request, &response);
+  auto status = grpc_stub_->AnalyzeContent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -110,11 +107,10 @@ DefaultParticipantsStub::AsyncStreamingAnalyzeContent(
 
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 DefaultParticipantsStub::SuggestArticles(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
   google::cloud::dialogflow::v2::SuggestArticlesResponse response;
-  auto status =
-      grpc_stub_->SuggestArticles(&client_context, request, &response);
+  auto status = grpc_stub_->SuggestArticles(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -123,11 +119,10 @@ DefaultParticipantsStub::SuggestArticles(
 
 StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
 DefaultParticipantsStub::SuggestFaqAnswers(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) {
   google::cloud::dialogflow::v2::SuggestFaqAnswersResponse response;
-  auto status =
-      grpc_stub_->SuggestFaqAnswers(&client_context, request, &response);
+  auto status = grpc_stub_->SuggestFaqAnswers(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -136,11 +131,10 @@ DefaultParticipantsStub::SuggestFaqAnswers(
 
 StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
 DefaultParticipantsStub::SuggestSmartReplies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) {
   google::cloud::dialogflow::v2::SuggestSmartRepliesResponse response;
-  auto status =
-      grpc_stub_->SuggestSmartReplies(&client_context, request, &response);
+  auto status = grpc_stub_->SuggestSmartReplies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

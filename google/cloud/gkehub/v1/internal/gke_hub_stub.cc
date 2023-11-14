@@ -32,11 +32,10 @@ GkeHubStub::~GkeHubStub() = default;
 
 StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
 DefaultGkeHubStub::ListMemberships(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkehub::v1::ListMembershipsRequest const& request) {
   google::cloud::gkehub::v1::ListMembershipsResponse response;
-  auto status =
-      grpc_stub_->ListMemberships(&client_context, request, &response);
+  auto status = grpc_stub_->ListMemberships(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,10 +44,10 @@ DefaultGkeHubStub::ListMemberships(
 
 StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
 DefaultGkeHubStub::ListFeatures(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkehub::v1::ListFeaturesRequest const& request) {
   google::cloud::gkehub::v1::ListFeaturesResponse response;
-  auto status = grpc_stub_->ListFeatures(&client_context, request, &response);
+  auto status = grpc_stub_->ListFeatures(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,10 +56,10 @@ DefaultGkeHubStub::ListFeatures(
 
 StatusOr<google::cloud::gkehub::v1::Membership>
 DefaultGkeHubStub::GetMembership(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkehub::v1::GetMembershipRequest const& request) {
   google::cloud::gkehub::v1::Membership response;
-  auto status = grpc_stub_->GetMembership(&client_context, request, &response);
+  auto status = grpc_stub_->GetMembership(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -68,10 +67,10 @@ DefaultGkeHubStub::GetMembership(
 }
 
 StatusOr<google::cloud::gkehub::v1::Feature> DefaultGkeHubStub::GetFeature(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkehub::v1::GetFeatureRequest const& request) {
   google::cloud::gkehub::v1::Feature response;
-  auto status = grpc_stub_->GetFeature(&client_context, request, &response);
+  auto status = grpc_stub_->GetFeature(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -182,11 +181,11 @@ DefaultGkeHubStub::AsyncUpdateFeature(
 
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
 DefaultGkeHubStub::GenerateConnectManifest(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) {
   google::cloud::gkehub::v1::GenerateConnectManifestResponse response;
   auto status =
-      grpc_stub_->GenerateConnectManifest(&client_context, request, &response);
+      grpc_stub_->GenerateConnectManifest(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

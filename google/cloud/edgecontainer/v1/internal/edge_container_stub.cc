@@ -32,10 +32,10 @@ EdgeContainerStub::~EdgeContainerStub() = default;
 
 StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse>
 DefaultEdgeContainerStub::ListClusters(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::ListClustersRequest const& request) {
   google::cloud::edgecontainer::v1::ListClustersResponse response;
-  auto status = grpc_stub_->ListClusters(&client_context, request, &response);
+  auto status = grpc_stub_->ListClusters(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultEdgeContainerStub::ListClusters(
 
 StatusOr<google::cloud::edgecontainer::v1::Cluster>
 DefaultEdgeContainerStub::GetCluster(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::GetClusterRequest const& request) {
   google::cloud::edgecontainer::v1::Cluster response;
-  auto status = grpc_stub_->GetCluster(&client_context, request, &response);
+  auto status = grpc_stub_->GetCluster(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -110,12 +110,11 @@ DefaultEdgeContainerStub::AsyncDeleteCluster(
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
 DefaultEdgeContainerStub::GenerateAccessToken(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
         request) {
   google::cloud::edgecontainer::v1::GenerateAccessTokenResponse response;
-  auto status =
-      grpc_stub_->GenerateAccessToken(&client_context, request, &response);
+  auto status = grpc_stub_->GenerateAccessToken(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -124,10 +123,10 @@ DefaultEdgeContainerStub::GenerateAccessToken(
 
 StatusOr<google::cloud::edgecontainer::v1::ListNodePoolsResponse>
 DefaultEdgeContainerStub::ListNodePools(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::ListNodePoolsRequest const& request) {
   google::cloud::edgecontainer::v1::ListNodePoolsResponse response;
-  auto status = grpc_stub_->ListNodePools(&client_context, request, &response);
+  auto status = grpc_stub_->ListNodePools(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -136,10 +135,10 @@ DefaultEdgeContainerStub::ListNodePools(
 
 StatusOr<google::cloud::edgecontainer::v1::NodePool>
 DefaultEdgeContainerStub::GetNodePool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) {
   google::cloud::edgecontainer::v1::NodePool response;
-  auto status = grpc_stub_->GetNodePool(&client_context, request, &response);
+  auto status = grpc_stub_->GetNodePool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -202,10 +201,10 @@ DefaultEdgeContainerStub::AsyncDeleteNodePool(
 
 StatusOr<google::cloud::edgecontainer::v1::ListMachinesResponse>
 DefaultEdgeContainerStub::ListMachines(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::ListMachinesRequest const& request) {
   google::cloud::edgecontainer::v1::ListMachinesResponse response;
-  auto status = grpc_stub_->ListMachines(&client_context, request, &response);
+  auto status = grpc_stub_->ListMachines(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -214,10 +213,10 @@ DefaultEdgeContainerStub::ListMachines(
 
 StatusOr<google::cloud::edgecontainer::v1::Machine>
 DefaultEdgeContainerStub::GetMachine(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::GetMachineRequest const& request) {
   google::cloud::edgecontainer::v1::Machine response;
-  auto status = grpc_stub_->GetMachine(&client_context, request, &response);
+  auto status = grpc_stub_->GetMachine(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -226,12 +225,11 @@ DefaultEdgeContainerStub::GetMachine(
 
 StatusOr<google::cloud::edgecontainer::v1::ListVpnConnectionsResponse>
 DefaultEdgeContainerStub::ListVpnConnections(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::ListVpnConnectionsRequest const&
         request) {
   google::cloud::edgecontainer::v1::ListVpnConnectionsResponse response;
-  auto status =
-      grpc_stub_->ListVpnConnections(&client_context, request, &response);
+  auto status = grpc_stub_->ListVpnConnections(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -240,11 +238,10 @@ DefaultEdgeContainerStub::ListVpnConnections(
 
 StatusOr<google::cloud::edgecontainer::v1::VpnConnection>
 DefaultEdgeContainerStub::GetVpnConnection(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request) {
   google::cloud::edgecontainer::v1::VpnConnection response;
-  auto status =
-      grpc_stub_->GetVpnConnection(&client_context, request, &response);
+  auto status = grpc_stub_->GetVpnConnection(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

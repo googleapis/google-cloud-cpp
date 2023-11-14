@@ -99,58 +99,58 @@ class DefaultGrafeasStub : public GrafeasStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<grafeas::v1::Occurrence> GetOccurrence(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::GetOccurrenceRequest const& request) override;
 
   StatusOr<grafeas::v1::ListOccurrencesResponse> ListOccurrences(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::ListOccurrencesRequest const& request) override;
 
   Status DeleteOccurrence(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::DeleteOccurrenceRequest const& request) override;
 
   StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::CreateOccurrenceRequest const& request) override;
 
   StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::BatchCreateOccurrencesRequest const& request) override;
 
   StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::UpdateOccurrenceRequest const& request) override;
 
   StatusOr<grafeas::v1::Note> GetOccurrenceNote(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::GetOccurrenceNoteRequest const& request) override;
 
   StatusOr<grafeas::v1::Note> GetNote(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::GetNoteRequest const& request) override;
 
   StatusOr<grafeas::v1::ListNotesResponse> ListNotes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::ListNotesRequest const& request) override;
 
-  Status DeleteNote(grpc::ClientContext& client_context,
+  Status DeleteNote(grpc::ClientContext& context,
                     grafeas::v1::DeleteNoteRequest const& request) override;
 
   StatusOr<grafeas::v1::Note> CreateNote(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::CreateNoteRequest const& request) override;
 
   StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::BatchCreateNotesRequest const& request) override;
 
   StatusOr<grafeas::v1::Note> UpdateNote(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::UpdateNoteRequest const& request) override;
 
   StatusOr<grafeas::v1::ListNoteOccurrencesResponse> ListNoteOccurrences(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       grafeas::v1::ListNoteOccurrencesRequest const& request) override;
 
  private:

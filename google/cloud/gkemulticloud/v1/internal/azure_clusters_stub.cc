@@ -50,10 +50,10 @@ DefaultAzureClustersStub::AsyncCreateAzureClient(
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 DefaultAzureClustersStub::GetAzureClient(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) {
   google::cloud::gkemulticloud::v1::AzureClient response;
-  auto status = grpc_stub_->GetAzureClient(&client_context, request, &response);
+  auto status = grpc_stub_->GetAzureClient(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -62,11 +62,10 @@ DefaultAzureClustersStub::GetAzureClient(
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClientsResponse>
 DefaultAzureClustersStub::ListAzureClients(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request) {
   google::cloud::gkemulticloud::v1::ListAzureClientsResponse response;
-  auto status =
-      grpc_stub_->ListAzureClients(&client_context, request, &response);
+  auto status = grpc_stub_->ListAzureClients(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -131,11 +130,10 @@ DefaultAzureClustersStub::AsyncUpdateAzureCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
 DefaultAzureClustersStub::GetAzureCluster(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request) {
   google::cloud::gkemulticloud::v1::AzureCluster response;
-  auto status =
-      grpc_stub_->GetAzureCluster(&client_context, request, &response);
+  auto status = grpc_stub_->GetAzureCluster(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -144,11 +142,10 @@ DefaultAzureClustersStub::GetAzureCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClustersResponse>
 DefaultAzureClustersStub::ListAzureClusters(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request) {
   google::cloud::gkemulticloud::v1::ListAzureClustersResponse response;
-  auto status =
-      grpc_stub_->ListAzureClusters(&client_context, request, &response);
+  auto status = grpc_stub_->ListAzureClusters(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -176,12 +173,12 @@ DefaultAzureClustersStub::AsyncDeleteAzureCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 DefaultAzureClustersStub::GenerateAzureAccessToken(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
         request) {
   google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse response;
   auto status =
-      grpc_stub_->GenerateAzureAccessToken(&client_context, request, &response);
+      grpc_stub_->GenerateAzureAccessToken(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -228,11 +225,10 @@ DefaultAzureClustersStub::AsyncUpdateAzureNodePool(
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
 DefaultAzureClustersStub::GetAzureNodePool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request) {
   google::cloud::gkemulticloud::v1::AzureNodePool response;
-  auto status =
-      grpc_stub_->GetAzureNodePool(&client_context, request, &response);
+  auto status = grpc_stub_->GetAzureNodePool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -241,12 +237,11 @@ DefaultAzureClustersStub::GetAzureNodePool(
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse>
 DefaultAzureClustersStub::ListAzureNodePools(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
         request) {
   google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse response;
-  auto status =
-      grpc_stub_->ListAzureNodePools(&client_context, request, &response);
+  auto status = grpc_stub_->ListAzureNodePools(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -274,12 +269,11 @@ DefaultAzureClustersStub::AsyncDeleteAzureNodePool(
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
 DefaultAzureClustersStub::GetAzureServerConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
         request) {
   google::cloud::gkemulticloud::v1::AzureServerConfig response;
-  auto status =
-      grpc_stub_->GetAzureServerConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetAzureServerConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

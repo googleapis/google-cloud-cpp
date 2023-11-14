@@ -54,13 +54,13 @@ class DefaultMatchServiceStub : public MatchServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::FindNeighborsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
   ReadIndexDatapoints(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request)
       override;
 

@@ -31,12 +31,11 @@ RegistrationServiceStub::~RegistrationServiceStub() = default;
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 DefaultRegistrationServiceStub::CreateNamespace(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
         request) {
   google::cloud::servicedirectory::v1::Namespace response;
-  auto status =
-      grpc_stub_->CreateNamespace(&client_context, request, &response);
+  auto status = grpc_stub_->CreateNamespace(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,10 +44,10 @@ DefaultRegistrationServiceStub::CreateNamespace(
 
 StatusOr<google::cloud::servicedirectory::v1::ListNamespacesResponse>
 DefaultRegistrationServiceStub::ListNamespaces(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::ListNamespacesRequest const& request) {
   google::cloud::servicedirectory::v1::ListNamespacesResponse response;
-  auto status = grpc_stub_->ListNamespaces(&client_context, request, &response);
+  auto status = grpc_stub_->ListNamespaces(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,10 +56,10 @@ DefaultRegistrationServiceStub::ListNamespaces(
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 DefaultRegistrationServiceStub::GetNamespace(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::GetNamespaceRequest const& request) {
   google::cloud::servicedirectory::v1::Namespace response;
-  auto status = grpc_stub_->GetNamespace(&client_context, request, &response);
+  auto status = grpc_stub_->GetNamespace(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -69,12 +68,11 @@ DefaultRegistrationServiceStub::GetNamespace(
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 DefaultRegistrationServiceStub::UpdateNamespace(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
         request) {
   google::cloud::servicedirectory::v1::Namespace response;
-  auto status =
-      grpc_stub_->UpdateNamespace(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateNamespace(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -82,12 +80,11 @@ DefaultRegistrationServiceStub::UpdateNamespace(
 }
 
 Status DefaultRegistrationServiceStub::DeleteNamespace(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteNamespace(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteNamespace(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -96,10 +93,10 @@ Status DefaultRegistrationServiceStub::DeleteNamespace(
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
 DefaultRegistrationServiceStub::CreateService(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::CreateServiceRequest const& request) {
   google::cloud::servicedirectory::v1::Service response;
-  auto status = grpc_stub_->CreateService(&client_context, request, &response);
+  auto status = grpc_stub_->CreateService(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -108,10 +105,10 @@ DefaultRegistrationServiceStub::CreateService(
 
 StatusOr<google::cloud::servicedirectory::v1::ListServicesResponse>
 DefaultRegistrationServiceStub::ListServices(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::ListServicesRequest const& request) {
   google::cloud::servicedirectory::v1::ListServicesResponse response;
-  auto status = grpc_stub_->ListServices(&client_context, request, &response);
+  auto status = grpc_stub_->ListServices(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -120,10 +117,10 @@ DefaultRegistrationServiceStub::ListServices(
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
 DefaultRegistrationServiceStub::GetService(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::GetServiceRequest const& request) {
   google::cloud::servicedirectory::v1::Service response;
-  auto status = grpc_stub_->GetService(&client_context, request, &response);
+  auto status = grpc_stub_->GetService(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -132,10 +129,10 @@ DefaultRegistrationServiceStub::GetService(
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
 DefaultRegistrationServiceStub::UpdateService(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::UpdateServiceRequest const& request) {
   google::cloud::servicedirectory::v1::Service response;
-  auto status = grpc_stub_->UpdateService(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateService(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -143,10 +140,10 @@ DefaultRegistrationServiceStub::UpdateService(
 }
 
 Status DefaultRegistrationServiceStub::DeleteService(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::DeleteServiceRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteService(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteService(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -155,10 +152,10 @@ Status DefaultRegistrationServiceStub::DeleteService(
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
 DefaultRegistrationServiceStub::CreateEndpoint(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::CreateEndpointRequest const& request) {
   google::cloud::servicedirectory::v1::Endpoint response;
-  auto status = grpc_stub_->CreateEndpoint(&client_context, request, &response);
+  auto status = grpc_stub_->CreateEndpoint(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -167,10 +164,10 @@ DefaultRegistrationServiceStub::CreateEndpoint(
 
 StatusOr<google::cloud::servicedirectory::v1::ListEndpointsResponse>
 DefaultRegistrationServiceStub::ListEndpoints(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::ListEndpointsRequest const& request) {
   google::cloud::servicedirectory::v1::ListEndpointsResponse response;
-  auto status = grpc_stub_->ListEndpoints(&client_context, request, &response);
+  auto status = grpc_stub_->ListEndpoints(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -179,10 +176,10 @@ DefaultRegistrationServiceStub::ListEndpoints(
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
 DefaultRegistrationServiceStub::GetEndpoint(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::GetEndpointRequest const& request) {
   google::cloud::servicedirectory::v1::Endpoint response;
-  auto status = grpc_stub_->GetEndpoint(&client_context, request, &response);
+  auto status = grpc_stub_->GetEndpoint(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -191,10 +188,10 @@ DefaultRegistrationServiceStub::GetEndpoint(
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
 DefaultRegistrationServiceStub::UpdateEndpoint(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request) {
   google::cloud::servicedirectory::v1::Endpoint response;
-  auto status = grpc_stub_->UpdateEndpoint(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateEndpoint(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -202,10 +199,10 @@ DefaultRegistrationServiceStub::UpdateEndpoint(
 }
 
 Status DefaultRegistrationServiceStub::DeleteEndpoint(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteEndpoint(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteEndpoint(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -213,10 +210,10 @@ Status DefaultRegistrationServiceStub::DeleteEndpoint(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultRegistrationServiceStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -224,10 +221,10 @@ StatusOr<google::iam::v1::Policy> DefaultRegistrationServiceStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultRegistrationServiceStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -236,11 +233,10 @@ StatusOr<google::iam::v1::Policy> DefaultRegistrationServiceStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultRegistrationServiceStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

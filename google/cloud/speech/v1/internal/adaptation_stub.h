@@ -84,49 +84,49 @@ class DefaultAdaptationStub : public AdaptationStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::speech::v1::PhraseSet> CreatePhraseSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::speech::v1::CreatePhraseSetRequest const& request)
       override;
 
   StatusOr<google::cloud::speech::v1::PhraseSet> GetPhraseSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::speech::v1::GetPhraseSetRequest const& request) override;
 
   StatusOr<google::cloud::speech::v1::ListPhraseSetResponse> ListPhraseSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::speech::v1::ListPhraseSetRequest const& request) override;
 
   StatusOr<google::cloud::speech::v1::PhraseSet> UpdatePhraseSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::speech::v1::UpdatePhraseSetRequest const& request)
       override;
 
   Status DeletePhraseSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::speech::v1::DeletePhraseSetRequest const& request)
       override;
 
   StatusOr<google::cloud::speech::v1::CustomClass> CreateCustomClass(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::speech::v1::CreateCustomClassRequest const& request)
       override;
 
   StatusOr<google::cloud::speech::v1::CustomClass> GetCustomClass(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::speech::v1::GetCustomClassRequest const& request) override;
 
   StatusOr<google::cloud::speech::v1::ListCustomClassesResponse>
-  ListCustomClasses(grpc::ClientContext& client_context,
+  ListCustomClasses(grpc::ClientContext& context,
                     google::cloud::speech::v1::ListCustomClassesRequest const&
                         request) override;
 
   StatusOr<google::cloud::speech::v1::CustomClass> UpdateCustomClass(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::speech::v1::UpdateCustomClassRequest const& request)
       override;
 
   Status DeleteCustomClass(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::speech::v1::DeleteCustomClassRequest const& request)
       override;
 

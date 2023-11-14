@@ -175,48 +175,48 @@ class DefaultAssetServiceStub : public AssetServiceStub {
       google::cloud::asset::v1::ExportAssetsRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::ListAssetsResponse> ListAssets(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::ListAssetsRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
   BatchGetAssetsHistory(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request)
       override;
 
   StatusOr<google::cloud::asset::v1::Feed> CreateFeed(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::CreateFeedRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::Feed> GetFeed(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::GetFeedRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::ListFeedsResponse> ListFeeds(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::ListFeedsRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::Feed> UpdateFeed(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::UpdateFeedRequest const& request) override;
 
   Status DeleteFeed(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::DeleteFeedRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse>
-  SearchAllResources(grpc::ClientContext& client_context,
+  SearchAllResources(grpc::ClientContext& context,
                      google::cloud::asset::v1::SearchAllResourcesRequest const&
                          request) override;
 
   StatusOr<google::cloud::asset::v1::SearchAllIamPoliciesResponse>
   SearchAllIamPolicies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::SearchAllIamPoliciesRequest const& request)
       override;
 
   StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse> AnalyzeIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request)
       override;
 
@@ -228,57 +228,57 @@ class DefaultAssetServiceStub : public AssetServiceStub {
           request) override;
 
   StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::AnalyzeMoveRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::QueryAssetsResponse> QueryAssets(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::QueryAssetsRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::CreateSavedQueryRequest const& request)
       override;
 
   StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::GetSavedQueryRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse> ListSavedQueries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::ListSavedQueriesRequest const& request)
       override;
 
   StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::UpdateSavedQueryRequest const& request)
       override;
 
   Status DeleteSavedQuery(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::DeleteSavedQueryRequest const& request)
       override;
 
   StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
   BatchGetEffectiveIamPolicies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
           request) override;
 
   StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
-  AnalyzeOrgPolicies(grpc::ClientContext& client_context,
+  AnalyzeOrgPolicies(grpc::ClientContext& context,
                      google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const&
                          request) override;
 
   StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
   AnalyzeOrgPolicyGovernedContainers(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
           request) override;
 
   StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
   AnalyzeOrgPolicyGovernedAssets(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
           request) override;
 

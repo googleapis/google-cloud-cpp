@@ -31,11 +31,11 @@ AuthorizedCertificatesStub::~AuthorizedCertificatesStub() = default;
 
 StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
 DefaultAuthorizedCertificatesStub::ListAuthorizedCertificates(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::ListAuthorizedCertificatesRequest const& request) {
   google::appengine::v1::ListAuthorizedCertificatesResponse response;
-  auto status = grpc_stub_->ListAuthorizedCertificates(&client_context, request,
-                                                       &response);
+  auto status =
+      grpc_stub_->ListAuthorizedCertificates(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,11 +44,11 @@ DefaultAuthorizedCertificatesStub::ListAuthorizedCertificates(
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 DefaultAuthorizedCertificatesStub::GetAuthorizedCertificate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
   google::appengine::v1::AuthorizedCertificate response;
   auto status =
-      grpc_stub_->GetAuthorizedCertificate(&client_context, request, &response);
+      grpc_stub_->GetAuthorizedCertificate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,11 +57,11 @@ DefaultAuthorizedCertificatesStub::GetAuthorizedCertificate(
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 DefaultAuthorizedCertificatesStub::CreateAuthorizedCertificate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
   google::appengine::v1::AuthorizedCertificate response;
-  auto status = grpc_stub_->CreateAuthorizedCertificate(&client_context,
-                                                        request, &response);
+  auto status =
+      grpc_stub_->CreateAuthorizedCertificate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -70,11 +70,11 @@ DefaultAuthorizedCertificatesStub::CreateAuthorizedCertificate(
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 DefaultAuthorizedCertificatesStub::UpdateAuthorizedCertificate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
   google::appengine::v1::AuthorizedCertificate response;
-  auto status = grpc_stub_->UpdateAuthorizedCertificate(&client_context,
-                                                        request, &response);
+  auto status =
+      grpc_stub_->UpdateAuthorizedCertificate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -82,11 +82,11 @@ DefaultAuthorizedCertificatesStub::UpdateAuthorizedCertificate(
 }
 
 Status DefaultAuthorizedCertificatesStub::DeleteAuthorizedCertificate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteAuthorizedCertificate(&client_context,
-                                                        request, &response);
+  auto status =
+      grpc_stub_->DeleteAuthorizedCertificate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

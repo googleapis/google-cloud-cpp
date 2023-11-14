@@ -32,11 +32,10 @@ TagBindingsStub::~TagBindingsStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
 DefaultTagBindingsStub::ListTagBindings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request) {
   google::cloud::resourcemanager::v3::ListTagBindingsResponse response;
-  auto status =
-      grpc_stub_->ListTagBindings(&client_context, request, &response);
+  auto status = grpc_stub_->ListTagBindings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -83,12 +82,11 @@ DefaultTagBindingsStub::AsyncDeleteTagBinding(
 
 StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
 DefaultTagBindingsStub::ListEffectiveTags(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
         request) {
   google::cloud::resourcemanager::v3::ListEffectiveTagsResponse response;
-  auto status =
-      grpc_stub_->ListEffectiveTags(&client_context, request, &response);
+  auto status = grpc_stub_->ListEffectiveTags(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
