@@ -253,6 +253,41 @@ TEST(ListJobsResponseTest, InvalidListFormatJob) {
                        HasSubstr("Not a valid Json ListFormatJob object")));
 }
 
+TEST(ListJobsResponseTest, MimimalProjectionJson) {
+  BigQueryHttpResponse http_response;
+  http_response.payload =
+      R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "jobs": [
+              {
+                "id": "1",
+                "kind": "kind-2",
+                "jobReference": {"projectId": "p123", "jobId": "j123"},
+                "state": "DONE",
+                "status": {"state": "DONE"},
+                "user_email": "user-email",
+                "principal_subject": "principal-subj"
+              }
+  ]})";
+  auto const list_jobs_response =
+      ListJobsResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(list_jobs_response);
+  EXPECT_FALSE(list_jobs_response->http_response.payload.empty());
+  EXPECT_EQ(list_jobs_response->kind, "kind-1");
+  EXPECT_EQ(list_jobs_response->etag, "tag-1");
+  EXPECT_THAT(list_jobs_response->next_page_token, IsEmpty());
+
+  auto const jobs = list_jobs_response->jobs;
+  ASSERT_EQ(jobs.size(), 1);
+  EXPECT_EQ(jobs[0].id, "1");
+  EXPECT_EQ(jobs[0].kind, "kind-2");
+  EXPECT_EQ(jobs[0].status.state, "DONE");
+  EXPECT_EQ(jobs[0].state, "DONE");
+  EXPECT_EQ(jobs[0].user_email, "user-email");
+  EXPECT_EQ(jobs[0].job_reference.project_id, "p123");
+  EXPECT_EQ(jobs[0].job_reference.job_id, "j123");
+}
+
 TEST(GetJobResponseTest, DebugString) {
   BigQueryHttpResponse http_response;
   http_response.http_status_code = HttpStatusCode::kOk;
