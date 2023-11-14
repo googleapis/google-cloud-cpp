@@ -34,7 +34,7 @@ namespace sql_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<SqlInstancesServiceConnection>
-MakeSqlInstancesServiceConnectionRest(ExperimentalTag, Options options) {
+MakeSqlInstancesServiceConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  rest_internal::TargetApiVersionOption,

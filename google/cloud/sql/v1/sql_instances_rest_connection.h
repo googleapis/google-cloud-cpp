@@ -55,7 +55,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * created by this function.
  */
 std::shared_ptr<SqlInstancesServiceConnection>
-MakeSqlInstancesServiceConnectionRest(ExperimentalTag, Options options = {});
+MakeSqlInstancesServiceConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

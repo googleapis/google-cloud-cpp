@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_DATABASES_CLIENT_H
 
 #include "google/cloud/sql/v1/sql_databases_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -62,7 +61,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SqlDatabasesServiceClient {
  public:
   explicit SqlDatabasesServiceClient(
-      ExperimentalTag,
       std::shared_ptr<SqlDatabasesServiceConnection> connection,
       Options opts = {});
   ~SqlDatabasesServiceClient();
