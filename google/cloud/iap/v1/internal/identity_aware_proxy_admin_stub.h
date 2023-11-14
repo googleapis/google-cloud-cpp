@@ -88,48 +88,48 @@ class DefaultIdentityAwareProxyAdminServiceStub
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::IapSettings> GetIapSettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::iap::v1::GetIapSettingsRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
   ListTunnelDestGroups(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request)
       override;
 
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request)
       override;
 
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::iap::v1::GetTunnelDestGroupRequest const& request)
       override;
 
   Status DeleteTunnelDestGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request)
       override;
 
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request)
       override;
 

@@ -33,24 +33,23 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationResponse>>
 DefaultAgentEndpointServiceStub::ReceiveTaskNotification(
-    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationRequest const& request) {
-  auto stream =
-      grpc_stub_->ReceiveTaskNotification(client_context.get(), request);
+  auto stream = grpc_stub_->ReceiveTaskNotification(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::cloud::osconfig::agentendpoint::v1::
-          ReceiveTaskNotificationResponse>>(std::move(client_context),
+          ReceiveTaskNotificationResponse>>(std::move(context),
                                             std::move(stream));
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
 DefaultAgentEndpointServiceStub::StartNextTask(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
         request) {
   google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse response;
-  auto status = grpc_stub_->StartNextTask(&client_context, request, &response);
+  auto status = grpc_stub_->StartNextTask(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,13 +58,12 @@ DefaultAgentEndpointServiceStub::StartNextTask(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
 DefaultAgentEndpointServiceStub::ReportTaskProgress(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
         request) {
   google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse
       response;
-  auto status =
-      grpc_stub_->ReportTaskProgress(&client_context, request, &response);
+  auto status = grpc_stub_->ReportTaskProgress(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -74,13 +72,12 @@ DefaultAgentEndpointServiceStub::ReportTaskProgress(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
 DefaultAgentEndpointServiceStub::ReportTaskComplete(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
         request) {
   google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse
       response;
-  auto status =
-      grpc_stub_->ReportTaskComplete(&client_context, request, &response);
+  auto status = grpc_stub_->ReportTaskComplete(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -89,11 +86,11 @@ DefaultAgentEndpointServiceStub::ReportTaskComplete(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
 DefaultAgentEndpointServiceStub::RegisterAgent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
         request) {
   google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse response;
-  auto status = grpc_stub_->RegisterAgent(&client_context, request, &response);
+  auto status = grpc_stub_->RegisterAgent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -102,12 +99,11 @@ DefaultAgentEndpointServiceStub::RegisterAgent(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
 DefaultAgentEndpointServiceStub::ReportInventory(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
         request) {
   google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse response;
-  auto status =
-      grpc_stub_->ReportInventory(&client_context, request, &response);
+  auto status = grpc_stub_->ReportInventory(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

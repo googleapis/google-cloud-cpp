@@ -92,12 +92,11 @@ DefaultAttachedClustersStub::AsyncImportAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
 DefaultAttachedClustersStub::GetAttachedCluster(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
         request) {
   google::cloud::gkemulticloud::v1::AttachedCluster response;
-  auto status =
-      grpc_stub_->GetAttachedCluster(&client_context, request, &response);
+  auto status = grpc_stub_->GetAttachedCluster(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -106,12 +105,11 @@ DefaultAttachedClustersStub::GetAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse>
 DefaultAttachedClustersStub::ListAttachedClusters(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
         request) {
   google::cloud::gkemulticloud::v1::ListAttachedClustersResponse response;
-  auto status =
-      grpc_stub_->ListAttachedClusters(&client_context, request, &response);
+  auto status = grpc_stub_->ListAttachedClusters(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -140,12 +138,12 @@ DefaultAttachedClustersStub::AsyncDeleteAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
 DefaultAttachedClustersStub::GetAttachedServerConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
         request) {
   google::cloud::gkemulticloud::v1::AttachedServerConfig response;
   auto status =
-      grpc_stub_->GetAttachedServerConfig(&client_context, request, &response);
+      grpc_stub_->GetAttachedServerConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -155,13 +153,13 @@ DefaultAttachedClustersStub::GetAttachedServerConfig(
 StatusOr<google::cloud::gkemulticloud::v1::
              GenerateAttachedClusterInstallManifestResponse>
 DefaultAttachedClustersStub::GenerateAttachedClusterInstallManifest(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::
         GenerateAttachedClusterInstallManifestRequest const& request) {
   google::cloud::gkemulticloud::v1::
       GenerateAttachedClusterInstallManifestResponse response;
   auto status = grpc_stub_->GenerateAttachedClusterInstallManifest(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -32,10 +32,10 @@ NotebookServiceStub::~NotebookServiceStub() = default;
 
 StatusOr<google::cloud::notebooks::v2::ListInstancesResponse>
 DefaultNotebookServiceStub::ListInstances(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::notebooks::v2::ListInstancesRequest const& request) {
   google::cloud::notebooks::v2::ListInstancesResponse response;
-  auto status = grpc_stub_->ListInstances(&client_context, request, &response);
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultNotebookServiceStub::ListInstances(
 
 StatusOr<google::cloud::notebooks::v2::Instance>
 DefaultNotebookServiceStub::GetInstance(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::notebooks::v2::GetInstanceRequest const& request) {
   google::cloud::notebooks::v2::Instance response;
-  auto status = grpc_stub_->GetInstance(&client_context, request, &response);
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -158,12 +158,12 @@ DefaultNotebookServiceStub::AsyncResetInstance(
 
 StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
 DefaultNotebookServiceStub::CheckInstanceUpgradability(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
         request) {
   google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse response;
-  auto status = grpc_stub_->CheckInstanceUpgradability(&client_context, request,
-                                                       &response);
+  auto status =
+      grpc_stub_->CheckInstanceUpgradability(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

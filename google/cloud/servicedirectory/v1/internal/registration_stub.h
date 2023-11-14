@@ -136,91 +136,91 @@ class DefaultRegistrationServiceStub : public RegistrationServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
           request) override;
 
   StatusOr<google::cloud::servicedirectory::v1::ListNamespacesResponse>
   ListNamespaces(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::ListNamespacesRequest const& request)
       override;
 
   StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::GetNamespaceRequest const& request)
       override;
 
   StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
           request) override;
 
   Status DeleteNamespace(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
           request) override;
 
   StatusOr<google::cloud::servicedirectory::v1::Service> CreateService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::CreateServiceRequest const& request)
       override;
 
   StatusOr<google::cloud::servicedirectory::v1::ListServicesResponse>
-  ListServices(grpc::ClientContext& client_context,
+  ListServices(grpc::ClientContext& context,
                google::cloud::servicedirectory::v1::ListServicesRequest const&
                    request) override;
 
   StatusOr<google::cloud::servicedirectory::v1::Service> GetService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::GetServiceRequest const& request)
       override;
 
   StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::UpdateServiceRequest const& request)
       override;
 
   Status DeleteService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::DeleteServiceRequest const& request)
       override;
 
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> CreateEndpoint(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::CreateEndpointRequest const& request)
       override;
 
   StatusOr<google::cloud::servicedirectory::v1::ListEndpointsResponse>
-  ListEndpoints(grpc::ClientContext& client_context,
+  ListEndpoints(grpc::ClientContext& context,
                 google::cloud::servicedirectory::v1::ListEndpointsRequest const&
                     request) override;
 
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::GetEndpointRequest const& request)
       override;
 
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request)
       override;
 
   Status DeleteEndpoint(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request)
       override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:

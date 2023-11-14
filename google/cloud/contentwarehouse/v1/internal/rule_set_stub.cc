@@ -31,10 +31,10 @@ RuleSetServiceStub::~RuleSetServiceStub() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 DefaultRuleSetServiceStub::CreateRuleSet(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
   google::cloud::contentwarehouse::v1::RuleSet response;
-  auto status = grpc_stub_->CreateRuleSet(&client_context, request, &response);
+  auto status = grpc_stub_->CreateRuleSet(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultRuleSetServiceStub::CreateRuleSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 DefaultRuleSetServiceStub::GetRuleSet(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
   google::cloud::contentwarehouse::v1::RuleSet response;
-  auto status = grpc_stub_->GetRuleSet(&client_context, request, &response);
+  auto status = grpc_stub_->GetRuleSet(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,10 +55,10 @@ DefaultRuleSetServiceStub::GetRuleSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 DefaultRuleSetServiceStub::UpdateRuleSet(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
   google::cloud::contentwarehouse::v1::RuleSet response;
-  auto status = grpc_stub_->UpdateRuleSet(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateRuleSet(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -66,10 +66,10 @@ DefaultRuleSetServiceStub::UpdateRuleSet(
 }
 
 Status DefaultRuleSetServiceStub::DeleteRuleSet(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteRuleSet(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteRuleSet(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -78,10 +78,10 @@ Status DefaultRuleSetServiceStub::DeleteRuleSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
 DefaultRuleSetServiceStub::ListRuleSets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) {
   google::cloud::contentwarehouse::v1::ListRuleSetsResponse response;
-  auto status = grpc_stub_->ListRuleSets(&client_context, request, &response);
+  auto status = grpc_stub_->ListRuleSets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

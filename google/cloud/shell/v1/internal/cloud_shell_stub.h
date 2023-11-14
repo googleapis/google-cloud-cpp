@@ -85,7 +85,7 @@ class DefaultCloudShellServiceStub : public CloudShellServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::shell::v1::GetEnvironmentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartEnvironment(

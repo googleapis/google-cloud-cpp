@@ -96,27 +96,27 @@ class DefaultDocumentServiceStub : public DocumentServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::GetDocumentRequest const& request)
       override;
 
   StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
-  ListDocuments(grpc::ClientContext& client_context,
+  ListDocuments(grpc::ClientContext& context,
                 google::cloud::discoveryengine::v1::ListDocumentsRequest const&
                     request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::CreateDocumentRequest const& request)
       override;
 
   StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request)
       override;
 
   Status DeleteDocument(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request)
       override;
 

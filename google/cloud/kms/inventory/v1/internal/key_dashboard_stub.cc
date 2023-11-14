@@ -31,10 +31,10 @@ KeyDashboardServiceStub::~KeyDashboardServiceStub() = default;
 
 StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
 DefaultKeyDashboardServiceStub::ListCryptoKeys(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
   google::cloud::kms::inventory::v1::ListCryptoKeysResponse response;
-  auto status = grpc_stub_->ListCryptoKeys(&client_context, request, &response);
+  auto status = grpc_stub_->ListCryptoKeys(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

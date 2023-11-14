@@ -31,10 +31,10 @@ ClusterManagerStub::~ClusterManagerStub() = default;
 
 StatusOr<google::container::v1::ListClustersResponse>
 DefaultClusterManagerStub::ListClusters(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::ListClustersRequest const& request) {
   google::container::v1::ListClustersResponse response;
-  auto status = grpc_stub_->ListClusters(&client_context, request, &response);
+  auto status = grpc_stub_->ListClusters(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,10 +42,10 @@ DefaultClusterManagerStub::ListClusters(
 }
 
 StatusOr<google::container::v1::Cluster> DefaultClusterManagerStub::GetCluster(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::GetClusterRequest const& request) {
   google::container::v1::Cluster response;
-  auto status = grpc_stub_->GetCluster(&client_context, request, &response);
+  auto status = grpc_stub_->GetCluster(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -54,10 +54,10 @@ StatusOr<google::container::v1::Cluster> DefaultClusterManagerStub::GetCluster(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::CreateCluster(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::CreateClusterRequest const& request) {
   google::container::v1::Operation response;
-  auto status = grpc_stub_->CreateCluster(&client_context, request, &response);
+  auto status = grpc_stub_->CreateCluster(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -66,10 +66,10 @@ DefaultClusterManagerStub::CreateCluster(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::UpdateCluster(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::UpdateClusterRequest const& request) {
   google::container::v1::Operation response;
-  auto status = grpc_stub_->UpdateCluster(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateCluster(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -78,10 +78,10 @@ DefaultClusterManagerStub::UpdateCluster(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::UpdateNodePool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::UpdateNodePoolRequest const& request) {
   google::container::v1::Operation response;
-  auto status = grpc_stub_->UpdateNodePool(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateNodePool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -90,11 +90,11 @@ DefaultClusterManagerStub::UpdateNodePool(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::SetNodePoolAutoscaling(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::SetNodePoolAutoscalingRequest const& request) {
   google::container::v1::Operation response;
   auto status =
-      grpc_stub_->SetNodePoolAutoscaling(&client_context, request, &response);
+      grpc_stub_->SetNodePoolAutoscaling(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -103,11 +103,10 @@ DefaultClusterManagerStub::SetNodePoolAutoscaling(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::SetLoggingService(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::SetLoggingServiceRequest const& request) {
   google::container::v1::Operation response;
-  auto status =
-      grpc_stub_->SetLoggingService(&client_context, request, &response);
+  auto status = grpc_stub_->SetLoggingService(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -116,11 +115,10 @@ DefaultClusterManagerStub::SetLoggingService(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::SetMonitoringService(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::SetMonitoringServiceRequest const& request) {
   google::container::v1::Operation response;
-  auto status =
-      grpc_stub_->SetMonitoringService(&client_context, request, &response);
+  auto status = grpc_stub_->SetMonitoringService(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -129,11 +127,10 @@ DefaultClusterManagerStub::SetMonitoringService(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::SetAddonsConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::SetAddonsConfigRequest const& request) {
   google::container::v1::Operation response;
-  auto status =
-      grpc_stub_->SetAddonsConfig(&client_context, request, &response);
+  auto status = grpc_stub_->SetAddonsConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -142,10 +139,10 @@ DefaultClusterManagerStub::SetAddonsConfig(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::SetLocations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::SetLocationsRequest const& request) {
   google::container::v1::Operation response;
-  auto status = grpc_stub_->SetLocations(&client_context, request, &response);
+  auto status = grpc_stub_->SetLocations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -154,10 +151,10 @@ DefaultClusterManagerStub::SetLocations(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::UpdateMaster(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::UpdateMasterRequest const& request) {
   google::container::v1::Operation response;
-  auto status = grpc_stub_->UpdateMaster(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateMaster(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -166,10 +163,10 @@ DefaultClusterManagerStub::UpdateMaster(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::SetMasterAuth(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::SetMasterAuthRequest const& request) {
   google::container::v1::Operation response;
-  auto status = grpc_stub_->SetMasterAuth(&client_context, request, &response);
+  auto status = grpc_stub_->SetMasterAuth(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -178,10 +175,10 @@ DefaultClusterManagerStub::SetMasterAuth(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::DeleteCluster(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::DeleteClusterRequest const& request) {
   google::container::v1::Operation response;
-  auto status = grpc_stub_->DeleteCluster(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteCluster(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -190,10 +187,10 @@ DefaultClusterManagerStub::DeleteCluster(
 
 StatusOr<google::container::v1::ListOperationsResponse>
 DefaultClusterManagerStub::ListOperations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::ListOperationsRequest const& request) {
   google::container::v1::ListOperationsResponse response;
-  auto status = grpc_stub_->ListOperations(&client_context, request, &response);
+  auto status = grpc_stub_->ListOperations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -202,10 +199,10 @@ DefaultClusterManagerStub::ListOperations(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::GetOperation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::GetOperationRequest const& request) {
   google::container::v1::Operation response;
-  auto status = grpc_stub_->GetOperation(&client_context, request, &response);
+  auto status = grpc_stub_->GetOperation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -213,11 +210,10 @@ DefaultClusterManagerStub::GetOperation(
 }
 
 Status DefaultClusterManagerStub::CancelOperation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::CancelOperationRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->CancelOperation(&client_context, request, &response);
+  auto status = grpc_stub_->CancelOperation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -226,11 +222,10 @@ Status DefaultClusterManagerStub::CancelOperation(
 
 StatusOr<google::container::v1::ServerConfig>
 DefaultClusterManagerStub::GetServerConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::GetServerConfigRequest const& request) {
   google::container::v1::ServerConfig response;
-  auto status =
-      grpc_stub_->GetServerConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetServerConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -239,10 +234,10 @@ DefaultClusterManagerStub::GetServerConfig(
 
 StatusOr<google::container::v1::GetJSONWebKeysResponse>
 DefaultClusterManagerStub::GetJSONWebKeys(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::GetJSONWebKeysRequest const& request) {
   google::container::v1::GetJSONWebKeysResponse response;
-  auto status = grpc_stub_->GetJSONWebKeys(&client_context, request, &response);
+  auto status = grpc_stub_->GetJSONWebKeys(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -251,10 +246,10 @@ DefaultClusterManagerStub::GetJSONWebKeys(
 
 StatusOr<google::container::v1::ListNodePoolsResponse>
 DefaultClusterManagerStub::ListNodePools(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::ListNodePoolsRequest const& request) {
   google::container::v1::ListNodePoolsResponse response;
-  auto status = grpc_stub_->ListNodePools(&client_context, request, &response);
+  auto status = grpc_stub_->ListNodePools(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -263,10 +258,10 @@ DefaultClusterManagerStub::ListNodePools(
 
 StatusOr<google::container::v1::NodePool>
 DefaultClusterManagerStub::GetNodePool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::GetNodePoolRequest const& request) {
   google::container::v1::NodePool response;
-  auto status = grpc_stub_->GetNodePool(&client_context, request, &response);
+  auto status = grpc_stub_->GetNodePool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -275,10 +270,10 @@ DefaultClusterManagerStub::GetNodePool(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::CreateNodePool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::CreateNodePoolRequest const& request) {
   google::container::v1::Operation response;
-  auto status = grpc_stub_->CreateNodePool(&client_context, request, &response);
+  auto status = grpc_stub_->CreateNodePool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -287,10 +282,10 @@ DefaultClusterManagerStub::CreateNodePool(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::DeleteNodePool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::DeleteNodePoolRequest const& request) {
   google::container::v1::Operation response;
-  auto status = grpc_stub_->DeleteNodePool(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteNodePool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -298,11 +293,11 @@ DefaultClusterManagerStub::DeleteNodePool(
 }
 
 Status DefaultClusterManagerStub::CompleteNodePoolUpgrade(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->CompleteNodePoolUpgrade(&client_context, request, &response);
+      grpc_stub_->CompleteNodePoolUpgrade(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -311,11 +306,11 @@ Status DefaultClusterManagerStub::CompleteNodePoolUpgrade(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::RollbackNodePoolUpgrade(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::RollbackNodePoolUpgradeRequest const& request) {
   google::container::v1::Operation response;
   auto status =
-      grpc_stub_->RollbackNodePoolUpgrade(&client_context, request, &response);
+      grpc_stub_->RollbackNodePoolUpgrade(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -324,11 +319,10 @@ DefaultClusterManagerStub::RollbackNodePoolUpgrade(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::SetNodePoolManagement(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::SetNodePoolManagementRequest const& request) {
   google::container::v1::Operation response;
-  auto status =
-      grpc_stub_->SetNodePoolManagement(&client_context, request, &response);
+  auto status = grpc_stub_->SetNodePoolManagement(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -336,10 +330,10 @@ DefaultClusterManagerStub::SetNodePoolManagement(
 }
 
 StatusOr<google::container::v1::Operation> DefaultClusterManagerStub::SetLabels(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::SetLabelsRequest const& request) {
   google::container::v1::Operation response;
-  auto status = grpc_stub_->SetLabels(&client_context, request, &response);
+  auto status = grpc_stub_->SetLabels(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -348,10 +342,10 @@ StatusOr<google::container::v1::Operation> DefaultClusterManagerStub::SetLabels(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::SetLegacyAbac(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::SetLegacyAbacRequest const& request) {
   google::container::v1::Operation response;
-  auto status = grpc_stub_->SetLegacyAbac(&client_context, request, &response);
+  auto status = grpc_stub_->SetLegacyAbac(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -360,11 +354,10 @@ DefaultClusterManagerStub::SetLegacyAbac(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::StartIPRotation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::StartIPRotationRequest const& request) {
   google::container::v1::Operation response;
-  auto status =
-      grpc_stub_->StartIPRotation(&client_context, request, &response);
+  auto status = grpc_stub_->StartIPRotation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -373,11 +366,10 @@ DefaultClusterManagerStub::StartIPRotation(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::CompleteIPRotation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::CompleteIPRotationRequest const& request) {
   google::container::v1::Operation response;
-  auto status =
-      grpc_stub_->CompleteIPRotation(&client_context, request, &response);
+  auto status = grpc_stub_->CompleteIPRotation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -386,11 +378,10 @@ DefaultClusterManagerStub::CompleteIPRotation(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::SetNodePoolSize(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::SetNodePoolSizeRequest const& request) {
   google::container::v1::Operation response;
-  auto status =
-      grpc_stub_->SetNodePoolSize(&client_context, request, &response);
+  auto status = grpc_stub_->SetNodePoolSize(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -399,11 +390,10 @@ DefaultClusterManagerStub::SetNodePoolSize(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::SetNetworkPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::SetNetworkPolicyRequest const& request) {
   google::container::v1::Operation response;
-  auto status =
-      grpc_stub_->SetNetworkPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetNetworkPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -412,11 +402,10 @@ DefaultClusterManagerStub::SetNetworkPolicy(
 
 StatusOr<google::container::v1::Operation>
 DefaultClusterManagerStub::SetMaintenancePolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::SetMaintenancePolicyRequest const& request) {
   google::container::v1::Operation response;
-  auto status =
-      grpc_stub_->SetMaintenancePolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetMaintenancePolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -425,11 +414,10 @@ DefaultClusterManagerStub::SetMaintenancePolicy(
 
 StatusOr<google::container::v1::ListUsableSubnetworksResponse>
 DefaultClusterManagerStub::ListUsableSubnetworks(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::ListUsableSubnetworksRequest const& request) {
   google::container::v1::ListUsableSubnetworksResponse response;
-  auto status =
-      grpc_stub_->ListUsableSubnetworks(&client_context, request, &response);
+  auto status = grpc_stub_->ListUsableSubnetworks(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -438,11 +426,11 @@ DefaultClusterManagerStub::ListUsableSubnetworks(
 
 StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
 DefaultClusterManagerStub::CheckAutopilotCompatibility(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
   google::container::v1::CheckAutopilotCompatibilityResponse response;
-  auto status = grpc_stub_->CheckAutopilotCompatibility(&client_context,
-                                                        request, &response);
+  auto status =
+      grpc_stub_->CheckAutopilotCompatibility(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

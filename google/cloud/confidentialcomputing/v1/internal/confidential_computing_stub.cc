@@ -31,12 +31,11 @@ ConfidentialComputingStub::~ConfidentialComputingStub() = default;
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
 DefaultConfidentialComputingStub::CreateChallenge(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
         request) {
   google::cloud::confidentialcomputing::v1::Challenge response;
-  auto status =
-      grpc_stub_->CreateChallenge(&client_context, request, &response);
+  auto status = grpc_stub_->CreateChallenge(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,12 +44,11 @@ DefaultConfidentialComputingStub::CreateChallenge(
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
 DefaultConfidentialComputingStub::VerifyAttestation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
         request) {
   google::cloud::confidentialcomputing::v1::VerifyAttestationResponse response;
-  auto status =
-      grpc_stub_->VerifyAttestation(&client_context, request, &response);
+  auto status = grpc_stub_->VerifyAttestation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

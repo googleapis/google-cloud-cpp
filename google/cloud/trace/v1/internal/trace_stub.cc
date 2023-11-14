@@ -31,10 +31,10 @@ TraceServiceStub::~TraceServiceStub() = default;
 
 StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
 DefaultTraceServiceStub::ListTraces(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
   google::devtools::cloudtrace::v1::ListTracesResponse response;
-  auto status = grpc_stub_->ListTraces(&client_context, request, &response);
+  auto status = grpc_stub_->ListTraces(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultTraceServiceStub::ListTraces(
 
 StatusOr<google::devtools::cloudtrace::v1::Trace>
 DefaultTraceServiceStub::GetTrace(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
   google::devtools::cloudtrace::v1::Trace response;
-  auto status = grpc_stub_->GetTrace(&client_context, request, &response);
+  auto status = grpc_stub_->GetTrace(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -54,10 +54,10 @@ DefaultTraceServiceStub::GetTrace(
 }
 
 Status DefaultTraceServiceStub::PatchTraces(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->PatchTraces(&client_context, request, &response);
+  auto status = grpc_stub_->PatchTraces(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

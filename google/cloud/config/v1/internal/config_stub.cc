@@ -32,11 +32,10 @@ ConfigStub::~ConfigStub() = default;
 
 StatusOr<google::cloud::config::v1::ListDeploymentsResponse>
 DefaultConfigStub::ListDeployments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::config::v1::ListDeploymentsRequest const& request) {
   google::cloud::config::v1::ListDeploymentsResponse response;
-  auto status =
-      grpc_stub_->ListDeployments(&client_context, request, &response);
+  auto status = grpc_stub_->ListDeployments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,10 +44,10 @@ DefaultConfigStub::ListDeployments(
 
 StatusOr<google::cloud::config::v1::Deployment>
 DefaultConfigStub::GetDeployment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::config::v1::GetDeploymentRequest const& request) {
   google::cloud::config::v1::Deployment response;
-  auto status = grpc_stub_->GetDeployment(&client_context, request, &response);
+  auto status = grpc_stub_->GetDeployment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -108,10 +107,10 @@ DefaultConfigStub::AsyncDeleteDeployment(
 
 StatusOr<google::cloud::config::v1::ListRevisionsResponse>
 DefaultConfigStub::ListRevisions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::config::v1::ListRevisionsRequest const& request) {
   google::cloud::config::v1::ListRevisionsResponse response;
-  auto status = grpc_stub_->ListRevisions(&client_context, request, &response);
+  auto status = grpc_stub_->ListRevisions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -119,10 +118,10 @@ DefaultConfigStub::ListRevisions(
 }
 
 StatusOr<google::cloud::config::v1::Revision> DefaultConfigStub::GetRevision(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::config::v1::GetRevisionRequest const& request) {
   google::cloud::config::v1::Revision response;
-  auto status = grpc_stub_->GetRevision(&client_context, request, &response);
+  auto status = grpc_stub_->GetRevision(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -130,10 +129,10 @@ StatusOr<google::cloud::config::v1::Revision> DefaultConfigStub::GetRevision(
 }
 
 StatusOr<google::cloud::config::v1::Resource> DefaultConfigStub::GetResource(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::config::v1::GetResourceRequest const& request) {
   google::cloud::config::v1::Resource response;
-  auto status = grpc_stub_->GetResource(&client_context, request, &response);
+  auto status = grpc_stub_->GetResource(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -142,10 +141,10 @@ StatusOr<google::cloud::config::v1::Resource> DefaultConfigStub::GetResource(
 
 StatusOr<google::cloud::config::v1::ListResourcesResponse>
 DefaultConfigStub::ListResources(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::config::v1::ListResourcesRequest const& request) {
   google::cloud::config::v1::ListResourcesResponse response;
-  auto status = grpc_stub_->ListResources(&client_context, request, &response);
+  auto status = grpc_stub_->ListResources(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -154,12 +153,12 @@ DefaultConfigStub::ListResources(
 
 StatusOr<google::cloud::config::v1::Statefile>
 DefaultConfigStub::ExportDeploymentStatefile(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::config::v1::ExportDeploymentStatefileRequest const&
         request) {
   google::cloud::config::v1::Statefile response;
-  auto status = grpc_stub_->ExportDeploymentStatefile(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->ExportDeploymentStatefile(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -168,11 +167,11 @@ DefaultConfigStub::ExportDeploymentStatefile(
 
 StatusOr<google::cloud::config::v1::Statefile>
 DefaultConfigStub::ExportRevisionStatefile(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::config::v1::ExportRevisionStatefileRequest const& request) {
   google::cloud::config::v1::Statefile response;
   auto status =
-      grpc_stub_->ExportRevisionStatefile(&client_context, request, &response);
+      grpc_stub_->ExportRevisionStatefile(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -181,11 +180,10 @@ DefaultConfigStub::ExportRevisionStatefile(
 
 StatusOr<google::cloud::config::v1::Statefile>
 DefaultConfigStub::ImportStatefile(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::config::v1::ImportStatefileRequest const& request) {
   google::cloud::config::v1::Statefile response;
-  auto status =
-      grpc_stub_->ImportStatefile(&client_context, request, &response);
+  auto status = grpc_stub_->ImportStatefile(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -193,11 +191,10 @@ DefaultConfigStub::ImportStatefile(
 }
 
 Status DefaultConfigStub::DeleteStatefile(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::config::v1::DeleteStatefileRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteStatefile(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteStatefile(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -239,10 +236,10 @@ DefaultConfigStub::AsyncUnlockDeployment(
 }
 
 StatusOr<google::cloud::config::v1::LockInfo> DefaultConfigStub::ExportLockInfo(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::config::v1::ExportLockInfoRequest const& request) {
   google::cloud::config::v1::LockInfo response;
-  auto status = grpc_stub_->ExportLockInfo(&client_context, request, &response);
+  auto status = grpc_stub_->ExportLockInfo(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

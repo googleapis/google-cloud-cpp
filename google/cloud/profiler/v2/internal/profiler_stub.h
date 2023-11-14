@@ -59,17 +59,17 @@ class DefaultProfilerServiceStub : public ProfilerServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudprofiler::v2::CreateProfileRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
           request) override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request)
       override;
 

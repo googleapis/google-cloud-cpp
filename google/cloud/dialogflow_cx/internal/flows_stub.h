@@ -106,26 +106,26 @@ class DefaultFlowsStub : public FlowsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> CreateFlow(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request)
       override;
 
-  Status DeleteFlow(grpc::ClientContext& client_context,
+  Status DeleteFlow(grpc::ClientContext& context,
                     google::cloud::dialogflow::cx::v3::DeleteFlowRequest const&
                         request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListFlowsResponse> ListFlows(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::ListFlowsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetFlowRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request)
       override;
 
@@ -136,13 +136,13 @@ class DefaultFlowsStub : public FlowsStub {
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
-  ValidateFlow(grpc::ClientContext& client_context,
+  ValidateFlow(grpc::ClientContext& context,
                google::cloud::dialogflow::cx::v3::ValidateFlowRequest const&
                    request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
   GetFlowValidationResult(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
           request) override;
 

@@ -50,10 +50,10 @@ DefaultVpcAccessServiceStub::AsyncCreateConnector(
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 DefaultVpcAccessServiceStub::GetConnector(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
   google::cloud::vpcaccess::v1::Connector response;
-  auto status = grpc_stub_->GetConnector(&client_context, request, &response);
+  auto status = grpc_stub_->GetConnector(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -62,10 +62,10 @@ DefaultVpcAccessServiceStub::GetConnector(
 
 StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
 DefaultVpcAccessServiceStub::ListConnectors(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
   google::cloud::vpcaccess::v1::ListConnectorsResponse response;
-  auto status = grpc_stub_->ListConnectors(&client_context, request, &response);
+  auto status = grpc_stub_->ListConnectors(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

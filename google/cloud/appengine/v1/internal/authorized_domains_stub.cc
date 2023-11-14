@@ -31,11 +31,10 @@ AuthorizedDomainsStub::~AuthorizedDomainsStub() = default;
 
 StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
 DefaultAuthorizedDomainsStub::ListAuthorizedDomains(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
   google::appengine::v1::ListAuthorizedDomainsResponse response;
-  auto status =
-      grpc_stub_->ListAuthorizedDomains(&client_context, request, &response);
+  auto status = grpc_stub_->ListAuthorizedDomains(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -87,38 +87,38 @@ class DefaultStorageInsightsStub : public StorageInsightsStub {
 
   StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
   ListReportConfigs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::storageinsights::v1::ListReportConfigsRequest const&
           request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> GetReportConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::storageinsights::v1::GetReportConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> CreateReportConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::storageinsights::v1::CreateReportConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> UpdateReportConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
           request) override;
 
   Status DeleteReportConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse>
   ListReportDetails(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::storageinsights::v1::ListReportDetailsRequest const&
           request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportDetail> GetReportDetail(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::storageinsights::v1::GetReportDetailRequest const& request)
       override;
 

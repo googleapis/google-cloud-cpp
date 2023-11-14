@@ -86,12 +86,12 @@ class DefaultSchemaServiceStub : public SchemaServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::Schema> GetSchema(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::GetSchemaRequest const& request)
       override;
 
   StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse> ListSchemas(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::ListSchemasRequest const& request)
       override;
 

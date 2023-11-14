@@ -32,12 +32,12 @@ PipelineServiceStub::~PipelineServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 DefaultPipelineServiceStub::CreateTrainingPipeline(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
         request) {
   google::cloud::aiplatform::v1::TrainingPipeline response;
   auto status =
-      grpc_stub_->CreateTrainingPipeline(&client_context, request, &response);
+      grpc_stub_->CreateTrainingPipeline(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -46,11 +46,10 @@ DefaultPipelineServiceStub::CreateTrainingPipeline(
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 DefaultPipelineServiceStub::GetTrainingPipeline(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request) {
   google::cloud::aiplatform::v1::TrainingPipeline response;
-  auto status =
-      grpc_stub_->GetTrainingPipeline(&client_context, request, &response);
+  auto status = grpc_stub_->GetTrainingPipeline(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,12 +58,11 @@ DefaultPipelineServiceStub::GetTrainingPipeline(
 
 StatusOr<google::cloud::aiplatform::v1::ListTrainingPipelinesResponse>
 DefaultPipelineServiceStub::ListTrainingPipelines(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListTrainingPipelinesRequest const&
         request) {
   google::cloud::aiplatform::v1::ListTrainingPipelinesResponse response;
-  auto status =
-      grpc_stub_->ListTrainingPipelines(&client_context, request, &response);
+  auto status = grpc_stub_->ListTrainingPipelines(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -91,12 +89,12 @@ DefaultPipelineServiceStub::AsyncDeleteTrainingPipeline(
 }
 
 Status DefaultPipelineServiceStub::CancelTrainingPipeline(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
         request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->CancelTrainingPipeline(&client_context, request, &response);
+      grpc_stub_->CancelTrainingPipeline(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -105,11 +103,10 @@ Status DefaultPipelineServiceStub::CancelTrainingPipeline(
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 DefaultPipelineServiceStub::CreatePipelineJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request) {
   google::cloud::aiplatform::v1::PipelineJob response;
-  auto status =
-      grpc_stub_->CreatePipelineJob(&client_context, request, &response);
+  auto status = grpc_stub_->CreatePipelineJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -118,10 +115,10 @@ DefaultPipelineServiceStub::CreatePipelineJob(
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 DefaultPipelineServiceStub::GetPipelineJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
   google::cloud::aiplatform::v1::PipelineJob response;
-  auto status = grpc_stub_->GetPipelineJob(&client_context, request, &response);
+  auto status = grpc_stub_->GetPipelineJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -130,11 +127,10 @@ DefaultPipelineServiceStub::GetPipelineJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListPipelineJobsResponse>
 DefaultPipelineServiceStub::ListPipelineJobs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListPipelineJobsRequest const& request) {
   google::cloud::aiplatform::v1::ListPipelineJobsResponse response;
-  auto status =
-      grpc_stub_->ListPipelineJobs(&client_context, request, &response);
+  auto status = grpc_stub_->ListPipelineJobs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -160,11 +156,10 @@ DefaultPipelineServiceStub::AsyncDeletePipelineJob(
 }
 
 Status DefaultPipelineServiceStub::CancelPipelineJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->CancelPipelineJob(&client_context, request, &response);
+  auto status = grpc_stub_->CancelPipelineJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

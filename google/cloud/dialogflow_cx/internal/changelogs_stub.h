@@ -53,12 +53,12 @@ class DefaultChangelogsStub : public ChangelogsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
-  ListChangelogs(grpc::ClientContext& client_context,
+  ListChangelogs(grpc::ClientContext& context,
                  google::cloud::dialogflow::cx::v3::ListChangelogsRequest const&
                      request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Changelog> GetChangelog(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request)
       override;
 

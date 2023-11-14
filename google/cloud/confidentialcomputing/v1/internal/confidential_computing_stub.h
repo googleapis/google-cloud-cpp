@@ -56,13 +56,13 @@ class DefaultConfidentialComputingStub : public ConfidentialComputingStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
           request) override;
 
   StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
   VerifyAttestation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request) override;
 

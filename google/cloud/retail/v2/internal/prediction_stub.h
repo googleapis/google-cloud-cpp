@@ -47,7 +47,7 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::PredictRequest const& request) override;
 
  private:

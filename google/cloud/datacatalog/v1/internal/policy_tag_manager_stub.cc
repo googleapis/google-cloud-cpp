@@ -31,10 +31,10 @@ PolicyTagManagerStub::~PolicyTagManagerStub() = default;
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 DefaultPolicyTagManagerStub::CreateTaxonomy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
   google::cloud::datacatalog::v1::Taxonomy response;
-  auto status = grpc_stub_->CreateTaxonomy(&client_context, request, &response);
+  auto status = grpc_stub_->CreateTaxonomy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,10 +42,10 @@ DefaultPolicyTagManagerStub::CreateTaxonomy(
 }
 
 Status DefaultPolicyTagManagerStub::DeleteTaxonomy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteTaxonomy(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteTaxonomy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -54,10 +54,10 @@ Status DefaultPolicyTagManagerStub::DeleteTaxonomy(
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 DefaultPolicyTagManagerStub::UpdateTaxonomy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
   google::cloud::datacatalog::v1::Taxonomy response;
-  auto status = grpc_stub_->UpdateTaxonomy(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateTaxonomy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -66,10 +66,10 @@ DefaultPolicyTagManagerStub::UpdateTaxonomy(
 
 StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse>
 DefaultPolicyTagManagerStub::ListTaxonomies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ListTaxonomiesRequest const& request) {
   google::cloud::datacatalog::v1::ListTaxonomiesResponse response;
-  auto status = grpc_stub_->ListTaxonomies(&client_context, request, &response);
+  auto status = grpc_stub_->ListTaxonomies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -78,10 +78,10 @@ DefaultPolicyTagManagerStub::ListTaxonomies(
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 DefaultPolicyTagManagerStub::GetTaxonomy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
   google::cloud::datacatalog::v1::Taxonomy response;
-  auto status = grpc_stub_->GetTaxonomy(&client_context, request, &response);
+  auto status = grpc_stub_->GetTaxonomy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -90,11 +90,10 @@ DefaultPolicyTagManagerStub::GetTaxonomy(
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 DefaultPolicyTagManagerStub::CreatePolicyTag(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
   google::cloud::datacatalog::v1::PolicyTag response;
-  auto status =
-      grpc_stub_->CreatePolicyTag(&client_context, request, &response);
+  auto status = grpc_stub_->CreatePolicyTag(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -102,11 +101,10 @@ DefaultPolicyTagManagerStub::CreatePolicyTag(
 }
 
 Status DefaultPolicyTagManagerStub::DeletePolicyTag(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeletePolicyTag(&client_context, request, &response);
+  auto status = grpc_stub_->DeletePolicyTag(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -115,11 +113,10 @@ Status DefaultPolicyTagManagerStub::DeletePolicyTag(
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 DefaultPolicyTagManagerStub::UpdatePolicyTag(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
   google::cloud::datacatalog::v1::PolicyTag response;
-  auto status =
-      grpc_stub_->UpdatePolicyTag(&client_context, request, &response);
+  auto status = grpc_stub_->UpdatePolicyTag(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -128,10 +125,10 @@ DefaultPolicyTagManagerStub::UpdatePolicyTag(
 
 StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse>
 DefaultPolicyTagManagerStub::ListPolicyTags(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ListPolicyTagsRequest const& request) {
   google::cloud::datacatalog::v1::ListPolicyTagsResponse response;
-  auto status = grpc_stub_->ListPolicyTags(&client_context, request, &response);
+  auto status = grpc_stub_->ListPolicyTags(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -140,10 +137,10 @@ DefaultPolicyTagManagerStub::ListPolicyTags(
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 DefaultPolicyTagManagerStub::GetPolicyTag(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
   google::cloud::datacatalog::v1::PolicyTag response;
-  auto status = grpc_stub_->GetPolicyTag(&client_context, request, &response);
+  auto status = grpc_stub_->GetPolicyTag(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -151,10 +148,10 @@ DefaultPolicyTagManagerStub::GetPolicyTag(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultPolicyTagManagerStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -162,10 +159,10 @@ StatusOr<google::iam::v1::Policy> DefaultPolicyTagManagerStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultPolicyTagManagerStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -174,11 +171,10 @@ StatusOr<google::iam::v1::Policy> DefaultPolicyTagManagerStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultPolicyTagManagerStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

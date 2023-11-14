@@ -31,10 +31,10 @@ WebhooksStub::~WebhooksStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
 DefaultWebhooksStub::ListWebhooks(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListWebhooksResponse response;
-  auto status = grpc_stub_->ListWebhooks(&client_context, request, &response);
+  auto status = grpc_stub_->ListWebhooks(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultWebhooksStub::ListWebhooks(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 DefaultWebhooksStub::GetWebhook(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
   google::cloud::dialogflow::cx::v3::Webhook response;
-  auto status = grpc_stub_->GetWebhook(&client_context, request, &response);
+  auto status = grpc_stub_->GetWebhook(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,10 +55,10 @@ DefaultWebhooksStub::GetWebhook(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 DefaultWebhooksStub::CreateWebhook(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
   google::cloud::dialogflow::cx::v3::Webhook response;
-  auto status = grpc_stub_->CreateWebhook(&client_context, request, &response);
+  auto status = grpc_stub_->CreateWebhook(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -67,10 +67,10 @@ DefaultWebhooksStub::CreateWebhook(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 DefaultWebhooksStub::UpdateWebhook(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
   google::cloud::dialogflow::cx::v3::Webhook response;
-  auto status = grpc_stub_->UpdateWebhook(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateWebhook(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -78,10 +78,10 @@ DefaultWebhooksStub::UpdateWebhook(
 }
 
 Status DefaultWebhooksStub::DeleteWebhook(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteWebhook(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteWebhook(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

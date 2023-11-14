@@ -32,10 +32,10 @@ ManagedNotebookServiceStub::~ManagedNotebookServiceStub() = default;
 
 StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse>
 DefaultManagedNotebookServiceStub::ListRuntimes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::notebooks::v1::ListRuntimesRequest const& request) {
   google::cloud::notebooks::v1::ListRuntimesResponse response;
-  auto status = grpc_stub_->ListRuntimes(&client_context, request, &response);
+  auto status = grpc_stub_->ListRuntimes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultManagedNotebookServiceStub::ListRuntimes(
 
 StatusOr<google::cloud::notebooks::v1::Runtime>
 DefaultManagedNotebookServiceStub::GetRuntime(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
   google::cloud::notebooks::v1::Runtime response;
-  auto status = grpc_stub_->GetRuntime(&client_context, request, &response);
+  auto status = grpc_stub_->GetRuntime(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -210,12 +210,12 @@ DefaultManagedNotebookServiceStub::AsyncReportRuntimeEvent(
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
 DefaultManagedNotebookServiceStub::RefreshRuntimeTokenInternal(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
         request) {
   google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse response;
-  auto status = grpc_stub_->RefreshRuntimeTokenInternal(&client_context,
-                                                        request, &response);
+  auto status =
+      grpc_stub_->RefreshRuntimeTokenInternal(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

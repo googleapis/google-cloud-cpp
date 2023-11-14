@@ -31,12 +31,11 @@ WebSecurityScannerStub::~WebSecurityScannerStub() = default;
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 DefaultWebSecurityScannerStub::CreateScanConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
         request) {
   google::cloud::websecurityscanner::v1::ScanConfig response;
-  auto status =
-      grpc_stub_->CreateScanConfig(&client_context, request, &response);
+  auto status = grpc_stub_->CreateScanConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,12 +43,11 @@ DefaultWebSecurityScannerStub::CreateScanConfig(
 }
 
 Status DefaultWebSecurityScannerStub::DeleteScanConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteScanConfig(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteScanConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -58,11 +56,11 @@ Status DefaultWebSecurityScannerStub::DeleteScanConfig(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 DefaultWebSecurityScannerStub::GetScanConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
         request) {
   google::cloud::websecurityscanner::v1::ScanConfig response;
-  auto status = grpc_stub_->GetScanConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetScanConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -71,12 +69,11 @@ DefaultWebSecurityScannerStub::GetScanConfig(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListScanConfigsResponse>
 DefaultWebSecurityScannerStub::ListScanConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
         request) {
   google::cloud::websecurityscanner::v1::ListScanConfigsResponse response;
-  auto status =
-      grpc_stub_->ListScanConfigs(&client_context, request, &response);
+  auto status = grpc_stub_->ListScanConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -85,12 +82,11 @@ DefaultWebSecurityScannerStub::ListScanConfigs(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 DefaultWebSecurityScannerStub::UpdateScanConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
         request) {
   google::cloud::websecurityscanner::v1::ScanConfig response;
-  auto status =
-      grpc_stub_->UpdateScanConfig(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateScanConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -99,10 +95,10 @@ DefaultWebSecurityScannerStub::UpdateScanConfig(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 DefaultWebSecurityScannerStub::StartScanRun(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
   google::cloud::websecurityscanner::v1::ScanRun response;
-  auto status = grpc_stub_->StartScanRun(&client_context, request, &response);
+  auto status = grpc_stub_->StartScanRun(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -111,10 +107,10 @@ DefaultWebSecurityScannerStub::StartScanRun(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 DefaultWebSecurityScannerStub::GetScanRun(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
   google::cloud::websecurityscanner::v1::ScanRun response;
-  auto status = grpc_stub_->GetScanRun(&client_context, request, &response);
+  auto status = grpc_stub_->GetScanRun(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -123,10 +119,10 @@ DefaultWebSecurityScannerStub::GetScanRun(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListScanRunsResponse>
 DefaultWebSecurityScannerStub::ListScanRuns(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::ListScanRunsRequest const& request) {
   google::cloud::websecurityscanner::v1::ListScanRunsResponse response;
-  auto status = grpc_stub_->ListScanRuns(&client_context, request, &response);
+  auto status = grpc_stub_->ListScanRuns(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -135,10 +131,10 @@ DefaultWebSecurityScannerStub::ListScanRuns(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 DefaultWebSecurityScannerStub::StopScanRun(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
   google::cloud::websecurityscanner::v1::ScanRun response;
-  auto status = grpc_stub_->StopScanRun(&client_context, request, &response);
+  auto status = grpc_stub_->StopScanRun(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -147,12 +143,11 @@ DefaultWebSecurityScannerStub::StopScanRun(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse>
 DefaultWebSecurityScannerStub::ListCrawledUrls(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
         request) {
   google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse response;
-  auto status =
-      grpc_stub_->ListCrawledUrls(&client_context, request, &response);
+  auto status = grpc_stub_->ListCrawledUrls(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -161,10 +156,10 @@ DefaultWebSecurityScannerStub::ListCrawledUrls(
 
 StatusOr<google::cloud::websecurityscanner::v1::Finding>
 DefaultWebSecurityScannerStub::GetFinding(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
   google::cloud::websecurityscanner::v1::Finding response;
-  auto status = grpc_stub_->GetFinding(&client_context, request, &response);
+  auto status = grpc_stub_->GetFinding(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -173,10 +168,10 @@ DefaultWebSecurityScannerStub::GetFinding(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingsResponse>
 DefaultWebSecurityScannerStub::ListFindings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::ListFindingsRequest const& request) {
   google::cloud::websecurityscanner::v1::ListFindingsResponse response;
-  auto status = grpc_stub_->ListFindings(&client_context, request, &response);
+  auto status = grpc_stub_->ListFindings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -185,12 +180,11 @@ DefaultWebSecurityScannerStub::ListFindings(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
 DefaultWebSecurityScannerStub::ListFindingTypeStats(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
         request) {
   google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse response;
-  auto status =
-      grpc_stub_->ListFindingTypeStats(&client_context, request, &response);
+  auto status = grpc_stub_->ListFindingTypeStats(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

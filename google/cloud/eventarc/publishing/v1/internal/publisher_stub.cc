@@ -32,13 +32,13 @@ PublisherStub::~PublisherStub() = default;
 StatusOr<google::cloud::eventarc::publishing::v1::
              PublishChannelConnectionEventsResponse>
 DefaultPublisherStub::PublishChannelConnectionEvents(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::eventarc::publishing::v1::
         PublishChannelConnectionEventsRequest const& request) {
   google::cloud::eventarc::publishing::v1::
       PublishChannelConnectionEventsResponse response;
-  auto status = grpc_stub_->PublishChannelConnectionEvents(&client_context,
-                                                           request, &response);
+  auto status =
+      grpc_stub_->PublishChannelConnectionEvents(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -47,11 +47,11 @@ DefaultPublisherStub::PublishChannelConnectionEvents(
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
 DefaultPublisherStub::PublishEvents(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
         request) {
   google::cloud::eventarc::publishing::v1::PublishEventsResponse response;
-  auto status = grpc_stub_->PublishEvents(&client_context, request, &response);
+  auto status = grpc_stub_->PublishEvents(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

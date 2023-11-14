@@ -31,10 +31,10 @@ FulfillmentsStub::~FulfillmentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 DefaultFulfillmentsStub::GetFulfillment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
   google::cloud::dialogflow::v2::Fulfillment response;
-  auto status = grpc_stub_->GetFulfillment(&client_context, request, &response);
+  auto status = grpc_stub_->GetFulfillment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,11 +43,10 @@ DefaultFulfillmentsStub::GetFulfillment(
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 DefaultFulfillmentsStub::UpdateFulfillment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
   google::cloud::dialogflow::v2::Fulfillment response;
-  auto status =
-      grpc_stub_->UpdateFulfillment(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateFulfillment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

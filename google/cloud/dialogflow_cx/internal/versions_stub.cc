@@ -32,10 +32,10 @@ VersionsStub::~VersionsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListVersionsResponse>
 DefaultVersionsStub::ListVersions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListVersionsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListVersionsResponse response;
-  auto status = grpc_stub_->ListVersions(&client_context, request, &response);
+  auto status = grpc_stub_->ListVersions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultVersionsStub::ListVersions(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 DefaultVersionsStub::GetVersion(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetVersionRequest const& request) {
   google::cloud::dialogflow::cx::v3::Version response;
-  auto status = grpc_stub_->GetVersion(&client_context, request, &response);
+  auto status = grpc_stub_->GetVersion(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -74,10 +74,10 @@ DefaultVersionsStub::AsyncCreateVersion(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 DefaultVersionsStub::UpdateVersion(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request) {
   google::cloud::dialogflow::cx::v3::Version response;
-  auto status = grpc_stub_->UpdateVersion(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateVersion(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -85,10 +85,10 @@ DefaultVersionsStub::UpdateVersion(
 }
 
 Status DefaultVersionsStub::DeleteVersion(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteVersion(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteVersion(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -115,11 +115,10 @@ DefaultVersionsStub::AsyncLoadVersion(
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
 DefaultVersionsStub::CompareVersions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request) {
   google::cloud::dialogflow::cx::v3::CompareVersionsResponse response;
-  auto status =
-      grpc_stub_->CompareVersions(&client_context, request, &response);
+  auto status = grpc_stub_->CompareVersions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

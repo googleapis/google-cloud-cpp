@@ -87,11 +87,11 @@ class DefaultDomainMappingsStub : public DomainMappingsStub {
 
   StatusOr<google::appengine::v1::ListDomainMappingsResponse>
   ListDomainMappings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::appengine::v1::ListDomainMappingsRequest const& request) override;
 
   StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::appengine::v1::GetDomainMappingRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDomainMapping(

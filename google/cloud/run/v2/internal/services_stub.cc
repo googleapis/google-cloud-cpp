@@ -48,10 +48,10 @@ DefaultServicesStub::AsyncCreateService(
 }
 
 StatusOr<google::cloud::run::v2::Service> DefaultServicesStub::GetService(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::run::v2::GetServiceRequest const& request) {
   google::cloud::run::v2::Service response;
-  auto status = grpc_stub_->GetService(&client_context, request, &response);
+  auto status = grpc_stub_->GetService(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -60,10 +60,10 @@ StatusOr<google::cloud::run::v2::Service> DefaultServicesStub::GetService(
 
 StatusOr<google::cloud::run::v2::ListServicesResponse>
 DefaultServicesStub::ListServices(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::run::v2::ListServicesRequest const& request) {
   google::cloud::run::v2::ListServicesResponse response;
-  auto status = grpc_stub_->ListServices(&client_context, request, &response);
+  auto status = grpc_stub_->ListServices(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -105,10 +105,10 @@ DefaultServicesStub::AsyncDeleteService(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultServicesStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -116,10 +116,10 @@ StatusOr<google::iam::v1::Policy> DefaultServicesStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultServicesStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -128,11 +128,10 @@ StatusOr<google::iam::v1::Policy> DefaultServicesStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultServicesStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

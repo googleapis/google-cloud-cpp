@@ -32,12 +32,11 @@ InstanceAdminStub::~InstanceAdminStub() = default;
 
 StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
 DefaultInstanceAdminStub::ListInstanceConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
         request) {
   google::spanner::admin::instance::v1::ListInstanceConfigsResponse response;
-  auto status =
-      grpc_stub_->ListInstanceConfigs(&client_context, request, &response);
+  auto status = grpc_stub_->ListInstanceConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -46,12 +45,11 @@ DefaultInstanceAdminStub::ListInstanceConfigs(
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
 DefaultInstanceAdminStub::GetInstanceConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
         request) {
   google::spanner::admin::instance::v1::InstanceConfig response;
-  auto status =
-      grpc_stub_->GetInstanceConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetInstanceConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -97,12 +95,11 @@ DefaultInstanceAdminStub::AsyncUpdateInstanceConfig(
 }
 
 Status DefaultInstanceAdminStub::DeleteInstanceConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteInstanceConfig(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteInstanceConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -112,13 +109,13 @@ Status DefaultInstanceAdminStub::DeleteInstanceConfig(
 StatusOr<
     google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse>
 DefaultInstanceAdminStub::ListInstanceConfigOperations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::admin::instance::v1::
         ListInstanceConfigOperationsRequest const& request) {
   google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse
       response;
-  auto status = grpc_stub_->ListInstanceConfigOperations(&client_context,
-                                                         request, &response);
+  auto status =
+      grpc_stub_->ListInstanceConfigOperations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -127,10 +124,10 @@ DefaultInstanceAdminStub::ListInstanceConfigOperations(
 
 StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
 DefaultInstanceAdminStub::ListInstances(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::admin::instance::v1::ListInstancesRequest const& request) {
   google::spanner::admin::instance::v1::ListInstancesResponse response;
-  auto status = grpc_stub_->ListInstances(&client_context, request, &response);
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -139,10 +136,10 @@ DefaultInstanceAdminStub::ListInstances(
 
 StatusOr<google::spanner::admin::instance::v1::Instance>
 DefaultInstanceAdminStub::GetInstance(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
   google::spanner::admin::instance::v1::Instance response;
-  auto status = grpc_stub_->GetInstance(&client_context, request, &response);
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -188,11 +185,11 @@ DefaultInstanceAdminStub::AsyncUpdateInstance(
 }
 
 Status DefaultInstanceAdminStub::DeleteInstance(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::spanner::admin::instance::v1::DeleteInstanceRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteInstance(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -200,10 +197,10 @@ Status DefaultInstanceAdminStub::DeleteInstance(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultInstanceAdminStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -211,10 +208,10 @@ StatusOr<google::iam::v1::Policy> DefaultInstanceAdminStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultInstanceAdminStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -223,11 +220,10 @@ StatusOr<google::iam::v1::Policy> DefaultInstanceAdminStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultInstanceAdminStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

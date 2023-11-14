@@ -101,13 +101,13 @@ class DefaultReachabilityServiceStub : public ReachabilityServiceStub {
 
   StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
   ListConnectivityTests(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
           request) override;
 
   StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
   GetConnectivityTest(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
           request) override;
 

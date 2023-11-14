@@ -138,12 +138,12 @@ class DefaultConfigStub : public ConfigStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::config::v1::ListDeploymentsResponse> ListDeployments(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::config::v1::ListDeploymentsRequest const& request)
       override;
 
   StatusOr<google::cloud::config::v1::Deployment> GetDeployment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::config::v1::GetDeploymentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDeployment(
@@ -165,38 +165,38 @@ class DefaultConfigStub : public ConfigStub {
       override;
 
   StatusOr<google::cloud::config::v1::ListRevisionsResponse> ListRevisions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::config::v1::ListRevisionsRequest const& request) override;
 
   StatusOr<google::cloud::config::v1::Revision> GetRevision(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::config::v1::GetRevisionRequest const& request) override;
 
   StatusOr<google::cloud::config::v1::Resource> GetResource(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::config::v1::GetResourceRequest const& request) override;
 
   StatusOr<google::cloud::config::v1::ListResourcesResponse> ListResources(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::config::v1::ListResourcesRequest const& request) override;
 
   StatusOr<google::cloud::config::v1::Statefile> ExportDeploymentStatefile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::config::v1::ExportDeploymentStatefileRequest const&
           request) override;
 
   StatusOr<google::cloud::config::v1::Statefile> ExportRevisionStatefile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::config::v1::ExportRevisionStatefileRequest const& request)
       override;
 
   StatusOr<google::cloud::config::v1::Statefile> ImportStatefile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::config::v1::ImportStatefileRequest const& request)
       override;
 
   Status DeleteStatefile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::config::v1::DeleteStatefileRequest const& request)
       override;
 
@@ -212,7 +212,7 @@ class DefaultConfigStub : public ConfigStub {
       override;
 
   StatusOr<google::cloud::config::v1::LockInfo> ExportLockInfo(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::config::v1::ExportLockInfoRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

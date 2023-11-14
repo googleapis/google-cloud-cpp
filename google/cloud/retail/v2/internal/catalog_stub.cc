@@ -31,10 +31,10 @@ CatalogServiceStub::~CatalogServiceStub() = default;
 
 StatusOr<google::cloud::retail::v2::ListCatalogsResponse>
 DefaultCatalogServiceStub::ListCatalogs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::ListCatalogsRequest const& request) {
   google::cloud::retail::v2::ListCatalogsResponse response;
-  auto status = grpc_stub_->ListCatalogs(&client_context, request, &response);
+  auto status = grpc_stub_->ListCatalogs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultCatalogServiceStub::ListCatalogs(
 
 StatusOr<google::cloud::retail::v2::Catalog>
 DefaultCatalogServiceStub::UpdateCatalog(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateCatalogRequest const& request) {
   google::cloud::retail::v2::Catalog response;
-  auto status = grpc_stub_->UpdateCatalog(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateCatalog(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -54,11 +54,10 @@ DefaultCatalogServiceStub::UpdateCatalog(
 }
 
 Status DefaultCatalogServiceStub::SetDefaultBranch(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::SetDefaultBranchRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->SetDefaultBranch(&client_context, request, &response);
+  auto status = grpc_stub_->SetDefaultBranch(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -67,11 +66,10 @@ Status DefaultCatalogServiceStub::SetDefaultBranch(
 
 StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
 DefaultCatalogServiceStub::GetDefaultBranch(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::GetDefaultBranchRequest const& request) {
   google::cloud::retail::v2::GetDefaultBranchResponse response;
-  auto status =
-      grpc_stub_->GetDefaultBranch(&client_context, request, &response);
+  auto status = grpc_stub_->GetDefaultBranch(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -80,11 +78,10 @@ DefaultCatalogServiceStub::GetDefaultBranch(
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
 DefaultCatalogServiceStub::GetCompletionConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::GetCompletionConfigRequest const& request) {
   google::cloud::retail::v2::CompletionConfig response;
-  auto status =
-      grpc_stub_->GetCompletionConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetCompletionConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -93,11 +90,11 @@ DefaultCatalogServiceStub::GetCompletionConfig(
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
 DefaultCatalogServiceStub::UpdateCompletionConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) {
   google::cloud::retail::v2::CompletionConfig response;
   auto status =
-      grpc_stub_->UpdateCompletionConfig(&client_context, request, &response);
+      grpc_stub_->UpdateCompletionConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -106,11 +103,10 @@ DefaultCatalogServiceStub::UpdateCompletionConfig(
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 DefaultCatalogServiceStub::GetAttributesConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::GetAttributesConfigRequest const& request) {
   google::cloud::retail::v2::AttributesConfig response;
-  auto status =
-      grpc_stub_->GetAttributesConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetAttributesConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -119,11 +115,11 @@ DefaultCatalogServiceStub::GetAttributesConfig(
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 DefaultCatalogServiceStub::UpdateAttributesConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) {
   google::cloud::retail::v2::AttributesConfig response;
   auto status =
-      grpc_stub_->UpdateAttributesConfig(&client_context, request, &response);
+      grpc_stub_->UpdateAttributesConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -132,11 +128,10 @@ DefaultCatalogServiceStub::UpdateAttributesConfig(
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 DefaultCatalogServiceStub::AddCatalogAttribute(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::AddCatalogAttributeRequest const& request) {
   google::cloud::retail::v2::AttributesConfig response;
-  auto status =
-      grpc_stub_->AddCatalogAttribute(&client_context, request, &response);
+  auto status = grpc_stub_->AddCatalogAttribute(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -145,11 +140,11 @@ DefaultCatalogServiceStub::AddCatalogAttribute(
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 DefaultCatalogServiceStub::RemoveCatalogAttribute(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) {
   google::cloud::retail::v2::AttributesConfig response;
   auto status =
-      grpc_stub_->RemoveCatalogAttribute(&client_context, request, &response);
+      grpc_stub_->RemoveCatalogAttribute(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -158,11 +153,11 @@ DefaultCatalogServiceStub::RemoveCatalogAttribute(
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 DefaultCatalogServiceStub::ReplaceCatalogAttribute(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) {
   google::cloud::retail::v2::AttributesConfig response;
   auto status =
-      grpc_stub_->ReplaceCatalogAttribute(&client_context, request, &response);
+      grpc_stub_->ReplaceCatalogAttribute(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

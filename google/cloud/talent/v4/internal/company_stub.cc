@@ -31,10 +31,10 @@ CompanyServiceStub::~CompanyServiceStub() = default;
 
 StatusOr<google::cloud::talent::v4::Company>
 DefaultCompanyServiceStub::CreateCompany(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::talent::v4::CreateCompanyRequest const& request) {
   google::cloud::talent::v4::Company response;
-  auto status = grpc_stub_->CreateCompany(&client_context, request, &response);
+  auto status = grpc_stub_->CreateCompany(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultCompanyServiceStub::CreateCompany(
 
 StatusOr<google::cloud::talent::v4::Company>
 DefaultCompanyServiceStub::GetCompany(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::talent::v4::GetCompanyRequest const& request) {
   google::cloud::talent::v4::Company response;
-  auto status = grpc_stub_->GetCompany(&client_context, request, &response);
+  auto status = grpc_stub_->GetCompany(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,10 +55,10 @@ DefaultCompanyServiceStub::GetCompany(
 
 StatusOr<google::cloud::talent::v4::Company>
 DefaultCompanyServiceStub::UpdateCompany(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::talent::v4::UpdateCompanyRequest const& request) {
   google::cloud::talent::v4::Company response;
-  auto status = grpc_stub_->UpdateCompany(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateCompany(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -66,10 +66,10 @@ DefaultCompanyServiceStub::UpdateCompany(
 }
 
 Status DefaultCompanyServiceStub::DeleteCompany(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::talent::v4::DeleteCompanyRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteCompany(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteCompany(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -78,10 +78,10 @@ Status DefaultCompanyServiceStub::DeleteCompany(
 
 StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
 DefaultCompanyServiceStub::ListCompanies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::talent::v4::ListCompaniesRequest const& request) {
   google::cloud::talent::v4::ListCompaniesResponse response;
-  auto status = grpc_stub_->ListCompanies(&client_context, request, &response);
+  auto status = grpc_stub_->ListCompanies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

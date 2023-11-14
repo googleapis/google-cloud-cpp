@@ -32,10 +32,10 @@ IntentsStub::~IntentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListIntentsResponse>
 DefaultIntentsStub::ListIntents(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListIntentsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListIntentsResponse response;
-  auto status = grpc_stub_->ListIntents(&client_context, request, &response);
+  auto status = grpc_stub_->ListIntents(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultIntentsStub::ListIntents(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 DefaultIntentsStub::GetIntent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetIntentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Intent response;
-  auto status = grpc_stub_->GetIntent(&client_context, request, &response);
+  auto status = grpc_stub_->GetIntent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -56,10 +56,10 @@ DefaultIntentsStub::GetIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 DefaultIntentsStub::CreateIntent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Intent response;
-  auto status = grpc_stub_->CreateIntent(&client_context, request, &response);
+  auto status = grpc_stub_->CreateIntent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -68,10 +68,10 @@ DefaultIntentsStub::CreateIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 DefaultIntentsStub::UpdateIntent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Intent response;
-  auto status = grpc_stub_->UpdateIntent(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateIntent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -79,10 +79,10 @@ DefaultIntentsStub::UpdateIntent(
 }
 
 Status DefaultIntentsStub::DeleteIntent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteIntent(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteIntent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

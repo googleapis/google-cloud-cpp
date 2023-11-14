@@ -66,21 +66,20 @@ class DefaultFeaturestoreOnlineServingServiceStub
 
   StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
   ReadFeatureValues(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request)
       override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
   StreamingReadFeatureValues(
-      std::shared_ptr<grpc::ClientContext> client_context,
-      Options const& options,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
   WriteFeatureValues(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request)
       override;
 

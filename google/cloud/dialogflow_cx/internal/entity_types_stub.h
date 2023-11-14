@@ -72,27 +72,27 @@ class DefaultEntityTypesStub : public EntityTypesStub {
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
   ListEntityTypes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> CreateEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request)
       override;
 
   Status DeleteEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request)
       override;
 

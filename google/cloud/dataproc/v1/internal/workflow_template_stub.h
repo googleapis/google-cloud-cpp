@@ -103,12 +103,12 @@ class DefaultWorkflowTemplateServiceStub : public WorkflowTemplateServiceStub {
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   CreateWorkflowTemplate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request)
       override;
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate> GetWorkflowTemplate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request)
       override;
 
@@ -128,18 +128,18 @@ class DefaultWorkflowTemplateServiceStub : public WorkflowTemplateServiceStub {
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   UpdateWorkflowTemplate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request)
       override;
 
   StatusOr<google::cloud::dataproc::v1::ListWorkflowTemplatesResponse>
   ListWorkflowTemplates(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const& request)
       override;
 
   Status DeleteWorkflowTemplate(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request)
       override;
 

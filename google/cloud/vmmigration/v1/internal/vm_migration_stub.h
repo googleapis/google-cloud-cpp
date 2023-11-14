@@ -329,12 +329,12 @@ class DefaultVmMigrationStub : public VmMigrationStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse> ListSources(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::ListSourcesRequest const& request)
       override;
 
   StatusOr<google::cloud::vmmigration::v1::Source> GetSource(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::GetSourceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSource(
@@ -356,19 +356,19 @@ class DefaultVmMigrationStub : public VmMigrationStub {
       override;
 
   StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
-  FetchInventory(grpc::ClientContext& client_context,
+  FetchInventory(grpc::ClientContext& context,
                  google::cloud::vmmigration::v1::FetchInventoryRequest const&
                      request) override;
 
   StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
   ListUtilizationReports(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::ListUtilizationReportsRequest const&
           request) override;
 
   StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
   GetUtilizationReport(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
           request) override;
 
@@ -386,13 +386,13 @@ class DefaultVmMigrationStub : public VmMigrationStub {
 
   StatusOr<google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse>
   ListDatacenterConnectors(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest const&
           request) override;
 
   StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
   GetDatacenterConnector(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
           request) override;
 
@@ -424,12 +424,12 @@ class DefaultVmMigrationStub : public VmMigrationStub {
 
   StatusOr<google::cloud::vmmigration::v1::ListMigratingVmsResponse>
   ListMigratingVms(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::ListMigratingVmsRequest const& request)
       override;
 
   StatusOr<google::cloud::vmmigration::v1::MigratingVm> GetMigratingVm(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::GetMigratingVmRequest const& request)
       override;
 
@@ -482,12 +482,12 @@ class DefaultVmMigrationStub : public VmMigrationStub {
       override;
 
   StatusOr<google::cloud::vmmigration::v1::ListCloneJobsResponse> ListCloneJobs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::ListCloneJobsRequest const& request)
       override;
 
   StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::GetCloneJobRequest const& request)
       override;
 
@@ -504,22 +504,22 @@ class DefaultVmMigrationStub : public VmMigrationStub {
       override;
 
   StatusOr<google::cloud::vmmigration::v1::ListCutoverJobsResponse>
-  ListCutoverJobs(grpc::ClientContext& client_context,
+  ListCutoverJobs(grpc::ClientContext& context,
                   google::cloud::vmmigration::v1::ListCutoverJobsRequest const&
                       request) override;
 
   StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::GetCutoverJobRequest const& request)
       override;
 
   StatusOr<google::cloud::vmmigration::v1::ListGroupsResponse> ListGroups(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::ListGroupsRequest const& request)
       override;
 
   StatusOr<google::cloud::vmmigration::v1::Group> GetGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::GetGroupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGroup(
@@ -554,12 +554,12 @@ class DefaultVmMigrationStub : public VmMigrationStub {
 
   StatusOr<google::cloud::vmmigration::v1::ListTargetProjectsResponse>
   ListTargetProjects(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::ListTargetProjectsRequest const& request)
       override;
 
   StatusOr<google::cloud::vmmigration::v1::TargetProject> GetTargetProject(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::GetTargetProjectRequest const& request)
       override;
 
@@ -583,13 +583,13 @@ class DefaultVmMigrationStub : public VmMigrationStub {
 
   StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
   ListReplicationCycles(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
           request) override;
 
   StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
   GetReplicationCycle(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request)
       override;
 

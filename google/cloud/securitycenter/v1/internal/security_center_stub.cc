@@ -50,13 +50,13 @@ DefaultSecurityCenterStub::AsyncBulkMuteFindings(
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 DefaultSecurityCenterStub::CreateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule
       response;
   auto status = grpc_stub_->CreateSecurityHealthAnalyticsCustomModule(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -65,10 +65,10 @@ DefaultSecurityCenterStub::CreateSecurityHealthAnalyticsCustomModule(
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 DefaultSecurityCenterStub::CreateSource(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::CreateSourceRequest const& request) {
   google::cloud::securitycenter::v1::Source response;
-  auto status = grpc_stub_->CreateSource(&client_context, request, &response);
+  auto status = grpc_stub_->CreateSource(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -77,10 +77,10 @@ DefaultSecurityCenterStub::CreateSource(
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 DefaultSecurityCenterStub::CreateFinding(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::CreateFindingRequest const& request) {
   google::cloud::securitycenter::v1::Finding response;
-  auto status = grpc_stub_->CreateFinding(&client_context, request, &response);
+  auto status = grpc_stub_->CreateFinding(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -89,11 +89,10 @@ DefaultSecurityCenterStub::CreateFinding(
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 DefaultSecurityCenterStub::CreateMuteConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request) {
   google::cloud::securitycenter::v1::MuteConfig response;
-  auto status =
-      grpc_stub_->CreateMuteConfig(&client_context, request, &response);
+  auto status = grpc_stub_->CreateMuteConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -102,12 +101,12 @@ DefaultSecurityCenterStub::CreateMuteConfig(
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 DefaultSecurityCenterStub::CreateNotificationConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&
         request) {
   google::cloud::securitycenter::v1::NotificationConfig response;
   auto status =
-      grpc_stub_->CreateNotificationConfig(&client_context, request, &response);
+      grpc_stub_->CreateNotificationConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -115,11 +114,10 @@ DefaultSecurityCenterStub::CreateNotificationConfig(
 }
 
 Status DefaultSecurityCenterStub::DeleteMuteConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteMuteConfig(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteMuteConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -127,12 +125,12 @@ Status DefaultSecurityCenterStub::DeleteMuteConfig(
 }
 
 Status DefaultSecurityCenterStub::DeleteNotificationConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
         request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->DeleteNotificationConfig(&client_context, request, &response);
+      grpc_stub_->DeleteNotificationConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -140,12 +138,12 @@ Status DefaultSecurityCenterStub::DeleteNotificationConfig(
 }
 
 Status DefaultSecurityCenterStub::DeleteSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteSecurityHealthAnalyticsCustomModule(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -154,12 +152,11 @@ Status DefaultSecurityCenterStub::DeleteSecurityHealthAnalyticsCustomModule(
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 DefaultSecurityCenterStub::GetBigQueryExport(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
         request) {
   google::cloud::securitycenter::v1::BigQueryExport response;
-  auto status =
-      grpc_stub_->GetBigQueryExport(&client_context, request, &response);
+  auto status = grpc_stub_->GetBigQueryExport(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -167,10 +164,10 @@ DefaultSecurityCenterStub::GetBigQueryExport(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultSecurityCenterStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -179,10 +176,10 @@ StatusOr<google::iam::v1::Policy> DefaultSecurityCenterStub::GetIamPolicy(
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 DefaultSecurityCenterStub::GetMuteConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GetMuteConfigRequest const& request) {
   google::cloud::securitycenter::v1::MuteConfig response;
-  auto status = grpc_stub_->GetMuteConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetMuteConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -191,12 +188,11 @@ DefaultSecurityCenterStub::GetMuteConfig(
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 DefaultSecurityCenterStub::GetNotificationConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GetNotificationConfigRequest const&
         request) {
   google::cloud::securitycenter::v1::NotificationConfig response;
-  auto status =
-      grpc_stub_->GetNotificationConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetNotificationConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -205,12 +201,12 @@ DefaultSecurityCenterStub::GetNotificationConfig(
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 DefaultSecurityCenterStub::GetOrganizationSettings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
         request) {
   google::cloud::securitycenter::v1::OrganizationSettings response;
   auto status =
-      grpc_stub_->GetOrganizationSettings(&client_context, request, &response);
+      grpc_stub_->GetOrganizationSettings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -220,13 +216,13 @@ DefaultSecurityCenterStub::GetOrganizationSettings(
 StatusOr<google::cloud::securitycenter::v1::
              EffectiveSecurityHealthAnalyticsCustomModule>
 DefaultSecurityCenterStub::GetEffectiveSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
   google::cloud::securitycenter::v1::
       EffectiveSecurityHealthAnalyticsCustomModule response;
   auto status = grpc_stub_->GetEffectiveSecurityHealthAnalyticsCustomModule(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -235,13 +231,13 @@ DefaultSecurityCenterStub::GetEffectiveSecurityHealthAnalyticsCustomModule(
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 DefaultSecurityCenterStub::GetSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
   google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule
       response;
   auto status = grpc_stub_->GetSecurityHealthAnalyticsCustomModule(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -250,10 +246,10 @@ DefaultSecurityCenterStub::GetSecurityHealthAnalyticsCustomModule(
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 DefaultSecurityCenterStub::GetSource(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GetSourceRequest const& request) {
   google::cloud::securitycenter::v1::Source response;
-  auto status = grpc_stub_->GetSource(&client_context, request, &response);
+  auto status = grpc_stub_->GetSource(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -262,10 +258,10 @@ DefaultSecurityCenterStub::GetSource(
 
 StatusOr<google::cloud::securitycenter::v1::GroupAssetsResponse>
 DefaultSecurityCenterStub::GroupAssets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GroupAssetsRequest const& request) {
   google::cloud::securitycenter::v1::GroupAssetsResponse response;
-  auto status = grpc_stub_->GroupAssets(&client_context, request, &response);
+  auto status = grpc_stub_->GroupAssets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -274,10 +270,10 @@ DefaultSecurityCenterStub::GroupAssets(
 
 StatusOr<google::cloud::securitycenter::v1::GroupFindingsResponse>
 DefaultSecurityCenterStub::GroupFindings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::GroupFindingsRequest const& request) {
   google::cloud::securitycenter::v1::GroupFindingsResponse response;
-  auto status = grpc_stub_->GroupFindings(&client_context, request, &response);
+  auto status = grpc_stub_->GroupFindings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -286,10 +282,10 @@ DefaultSecurityCenterStub::GroupFindings(
 
 StatusOr<google::cloud::securitycenter::v1::ListAssetsResponse>
 DefaultSecurityCenterStub::ListAssets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::ListAssetsRequest const& request) {
   google::cloud::securitycenter::v1::ListAssetsResponse response;
-  auto status = grpc_stub_->ListAssets(&client_context, request, &response);
+  auto status = grpc_stub_->ListAssets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -299,14 +295,14 @@ DefaultSecurityCenterStub::ListAssets(
 StatusOr<google::cloud::securitycenter::v1::
              ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
 DefaultSecurityCenterStub::ListDescendantSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
             request) {
   google::cloud::securitycenter::v1::
       ListDescendantSecurityHealthAnalyticsCustomModulesResponse response;
   auto status = grpc_stub_->ListDescendantSecurityHealthAnalyticsCustomModules(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -315,10 +311,10 @@ DefaultSecurityCenterStub::ListDescendantSecurityHealthAnalyticsCustomModules(
 
 StatusOr<google::cloud::securitycenter::v1::ListFindingsResponse>
 DefaultSecurityCenterStub::ListFindings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::ListFindingsRequest const& request) {
   google::cloud::securitycenter::v1::ListFindingsResponse response;
-  auto status = grpc_stub_->ListFindings(&client_context, request, &response);
+  auto status = grpc_stub_->ListFindings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -327,11 +323,10 @@ DefaultSecurityCenterStub::ListFindings(
 
 StatusOr<google::cloud::securitycenter::v1::ListMuteConfigsResponse>
 DefaultSecurityCenterStub::ListMuteConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::ListMuteConfigsRequest const& request) {
   google::cloud::securitycenter::v1::ListMuteConfigsResponse response;
-  auto status =
-      grpc_stub_->ListMuteConfigs(&client_context, request, &response);
+  auto status = grpc_stub_->ListMuteConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -340,12 +335,12 @@ DefaultSecurityCenterStub::ListMuteConfigs(
 
 StatusOr<google::cloud::securitycenter::v1::ListNotificationConfigsResponse>
 DefaultSecurityCenterStub::ListNotificationConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::ListNotificationConfigsRequest const&
         request) {
   google::cloud::securitycenter::v1::ListNotificationConfigsResponse response;
   auto status =
-      grpc_stub_->ListNotificationConfigs(&client_context, request, &response);
+      grpc_stub_->ListNotificationConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -355,14 +350,14 @@ DefaultSecurityCenterStub::ListNotificationConfigs(
 StatusOr<google::cloud::securitycenter::v1::
              ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
 DefaultSecurityCenterStub::ListEffectiveSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
             request) {
   google::cloud::securitycenter::v1::
       ListEffectiveSecurityHealthAnalyticsCustomModulesResponse response;
   auto status = grpc_stub_->ListEffectiveSecurityHealthAnalyticsCustomModules(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -372,13 +367,13 @@ DefaultSecurityCenterStub::ListEffectiveSecurityHealthAnalyticsCustomModules(
 StatusOr<google::cloud::securitycenter::v1::
              ListSecurityHealthAnalyticsCustomModulesResponse>
 DefaultSecurityCenterStub::ListSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
   google::cloud::securitycenter::v1::
       ListSecurityHealthAnalyticsCustomModulesResponse response;
   auto status = grpc_stub_->ListSecurityHealthAnalyticsCustomModules(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -387,10 +382,10 @@ DefaultSecurityCenterStub::ListSecurityHealthAnalyticsCustomModules(
 
 StatusOr<google::cloud::securitycenter::v1::ListSourcesResponse>
 DefaultSecurityCenterStub::ListSources(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::ListSourcesRequest const& request) {
   google::cloud::securitycenter::v1::ListSourcesResponse response;
-  auto status = grpc_stub_->ListSources(&client_context, request, &response);
+  auto status = grpc_stub_->ListSources(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -418,11 +413,10 @@ DefaultSecurityCenterStub::AsyncRunAssetDiscovery(
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 DefaultSecurityCenterStub::SetFindingState(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::SetFindingStateRequest const& request) {
   google::cloud::securitycenter::v1::Finding response;
-  auto status =
-      grpc_stub_->SetFindingState(&client_context, request, &response);
+  auto status = grpc_stub_->SetFindingState(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -431,10 +425,10 @@ DefaultSecurityCenterStub::SetFindingState(
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 DefaultSecurityCenterStub::SetMute(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::SetMuteRequest const& request) {
   google::cloud::securitycenter::v1::Finding response;
-  auto status = grpc_stub_->SetMute(&client_context, request, &response);
+  auto status = grpc_stub_->SetMute(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -442,10 +436,10 @@ DefaultSecurityCenterStub::SetMute(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultSecurityCenterStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -454,11 +448,10 @@ StatusOr<google::iam::v1::Policy> DefaultSecurityCenterStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultSecurityCenterStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -468,13 +461,13 @@ DefaultSecurityCenterStub::TestIamPermissions(
 StatusOr<google::cloud::securitycenter::v1::
              SimulateSecurityHealthAnalyticsCustomModuleResponse>
 DefaultSecurityCenterStub::SimulateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   google::cloud::securitycenter::v1::
       SimulateSecurityHealthAnalyticsCustomModuleResponse response;
   auto status = grpc_stub_->SimulateSecurityHealthAnalyticsCustomModule(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -483,12 +476,11 @@ DefaultSecurityCenterStub::SimulateSecurityHealthAnalyticsCustomModule(
 
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 DefaultSecurityCenterStub::UpdateExternalSystem(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
         request) {
   google::cloud::securitycenter::v1::ExternalSystem response;
-  auto status =
-      grpc_stub_->UpdateExternalSystem(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateExternalSystem(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -497,10 +489,10 @@ DefaultSecurityCenterStub::UpdateExternalSystem(
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 DefaultSecurityCenterStub::UpdateFinding(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::UpdateFindingRequest const& request) {
   google::cloud::securitycenter::v1::Finding response;
-  auto status = grpc_stub_->UpdateFinding(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateFinding(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -509,11 +501,10 @@ DefaultSecurityCenterStub::UpdateFinding(
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 DefaultSecurityCenterStub::UpdateMuteConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request) {
   google::cloud::securitycenter::v1::MuteConfig response;
-  auto status =
-      grpc_stub_->UpdateMuteConfig(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateMuteConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -522,12 +513,12 @@ DefaultSecurityCenterStub::UpdateMuteConfig(
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 DefaultSecurityCenterStub::UpdateNotificationConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&
         request) {
   google::cloud::securitycenter::v1::NotificationConfig response;
   auto status =
-      grpc_stub_->UpdateNotificationConfig(&client_context, request, &response);
+      grpc_stub_->UpdateNotificationConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -536,12 +527,12 @@ DefaultSecurityCenterStub::UpdateNotificationConfig(
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 DefaultSecurityCenterStub::UpdateOrganizationSettings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const&
         request) {
   google::cloud::securitycenter::v1::OrganizationSettings response;
-  auto status = grpc_stub_->UpdateOrganizationSettings(&client_context, request,
-                                                       &response);
+  auto status =
+      grpc_stub_->UpdateOrganizationSettings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -550,13 +541,13 @@ DefaultSecurityCenterStub::UpdateOrganizationSettings(
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 DefaultSecurityCenterStub::UpdateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::
         UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule
       response;
   auto status = grpc_stub_->UpdateSecurityHealthAnalyticsCustomModule(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -565,10 +556,10 @@ DefaultSecurityCenterStub::UpdateSecurityHealthAnalyticsCustomModule(
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 DefaultSecurityCenterStub::UpdateSource(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::UpdateSourceRequest const& request) {
   google::cloud::securitycenter::v1::Source response;
-  auto status = grpc_stub_->UpdateSource(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateSource(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -577,12 +568,11 @@ DefaultSecurityCenterStub::UpdateSource(
 
 StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
 DefaultSecurityCenterStub::UpdateSecurityMarks(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
         request) {
   google::cloud::securitycenter::v1::SecurityMarks response;
-  auto status =
-      grpc_stub_->UpdateSecurityMarks(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateSecurityMarks(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -591,12 +581,11 @@ DefaultSecurityCenterStub::UpdateSecurityMarks(
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 DefaultSecurityCenterStub::CreateBigQueryExport(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
         request) {
   google::cloud::securitycenter::v1::BigQueryExport response;
-  auto status =
-      grpc_stub_->CreateBigQueryExport(&client_context, request, &response);
+  auto status = grpc_stub_->CreateBigQueryExport(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -604,12 +593,11 @@ DefaultSecurityCenterStub::CreateBigQueryExport(
 }
 
 Status DefaultSecurityCenterStub::DeleteBigQueryExport(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteBigQueryExport(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteBigQueryExport(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -618,12 +606,11 @@ Status DefaultSecurityCenterStub::DeleteBigQueryExport(
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 DefaultSecurityCenterStub::UpdateBigQueryExport(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
         request) {
   google::cloud::securitycenter::v1::BigQueryExport response;
-  auto status =
-      grpc_stub_->UpdateBigQueryExport(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateBigQueryExport(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -632,12 +619,11 @@ DefaultSecurityCenterStub::UpdateBigQueryExport(
 
 StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
 DefaultSecurityCenterStub::ListBigQueryExports(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
         request) {
   google::cloud::securitycenter::v1::ListBigQueryExportsResponse response;
-  auto status =
-      grpc_stub_->ListBigQueryExports(&client_context, request, &response);
+  auto status = grpc_stub_->ListBigQueryExports(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

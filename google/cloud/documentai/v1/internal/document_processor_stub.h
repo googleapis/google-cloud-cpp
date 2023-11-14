@@ -186,7 +186,7 @@ class DefaultDocumentProcessorServiceStub
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::documentai::v1::ProcessRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchProcessDocuments(
@@ -197,28 +197,28 @@ class DefaultDocumentProcessorServiceStub
 
   StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
   FetchProcessorTypes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::documentai::v1::FetchProcessorTypesRequest const& request)
       override;
 
   StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse>
   ListProcessorTypes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::documentai::v1::ListProcessorTypesRequest const& request)
       override;
 
   StatusOr<google::cloud::documentai::v1::ProcessorType> GetProcessorType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::documentai::v1::GetProcessorTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
-  ListProcessors(grpc::ClientContext& client_context,
+  ListProcessors(grpc::ClientContext& context,
                  google::cloud::documentai::v1::ListProcessorsRequest const&
                      request) override;
 
   StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::documentai::v1::GetProcessorRequest const& request)
       override;
 
@@ -229,13 +229,13 @@ class DefaultDocumentProcessorServiceStub
           request) override;
 
   StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::documentai::v1::GetProcessorVersionRequest const& request)
       override;
 
   StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse>
   ListProcessorVersions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::documentai::v1::ListProcessorVersionsRequest const&
           request) override;
 
@@ -259,7 +259,7 @@ class DefaultDocumentProcessorServiceStub
           request) override;
 
   StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::documentai::v1::CreateProcessorRequest const& request)
       override;
 
@@ -302,12 +302,12 @@ class DefaultDocumentProcessorServiceStub
           request) override;
 
   StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::documentai::v1::GetEvaluationRequest const& request)
       override;
 
   StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
-  ListEvaluations(grpc::ClientContext& client_context,
+  ListEvaluations(grpc::ClientContext& context,
                   google::cloud::documentai::v1::ListEvaluationsRequest const&
                       request) override;
 

@@ -49,10 +49,10 @@ DefaultDatasetServiceStub::AsyncCreateDataset(
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DefaultDatasetServiceStub::GetDataset(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
   google::cloud::aiplatform::v1::Dataset response;
-  auto status = grpc_stub_->GetDataset(&client_context, request, &response);
+  auto status = grpc_stub_->GetDataset(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -61,10 +61,10 @@ DefaultDatasetServiceStub::GetDataset(
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DefaultDatasetServiceStub::UpdateDataset(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
   google::cloud::aiplatform::v1::Dataset response;
-  auto status = grpc_stub_->UpdateDataset(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateDataset(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -73,10 +73,10 @@ DefaultDatasetServiceStub::UpdateDataset(
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetsResponse>
 DefaultDatasetServiceStub::ListDatasets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListDatasetsRequest const& request) {
   google::cloud::aiplatform::v1::ListDatasetsResponse response;
-  auto status = grpc_stub_->ListDatasets(&client_context, request, &response);
+  auto status = grpc_stub_->ListDatasets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -172,11 +172,10 @@ DefaultDatasetServiceStub::AsyncDeleteDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
 DefaultDatasetServiceStub::GetDatasetVersion(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
   google::cloud::aiplatform::v1::DatasetVersion response;
-  auto status =
-      grpc_stub_->GetDatasetVersion(&client_context, request, &response);
+  auto status = grpc_stub_->GetDatasetVersion(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -185,11 +184,10 @@ DefaultDatasetServiceStub::GetDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
 DefaultDatasetServiceStub::ListDatasetVersions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) {
   google::cloud::aiplatform::v1::ListDatasetVersionsResponse response;
-  auto status =
-      grpc_stub_->ListDatasetVersions(&client_context, request, &response);
+  auto status = grpc_stub_->ListDatasetVersions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -217,10 +215,10 @@ DefaultDatasetServiceStub::AsyncRestoreDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
 DefaultDatasetServiceStub::ListDataItems(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListDataItemsRequest const& request) {
   google::cloud::aiplatform::v1::ListDataItemsResponse response;
-  auto status = grpc_stub_->ListDataItems(&client_context, request, &response);
+  auto status = grpc_stub_->ListDataItems(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -229,11 +227,10 @@ DefaultDatasetServiceStub::ListDataItems(
 
 StatusOr<google::cloud::aiplatform::v1::SearchDataItemsResponse>
 DefaultDatasetServiceStub::SearchDataItems(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::SearchDataItemsRequest const& request) {
   google::cloud::aiplatform::v1::SearchDataItemsResponse response;
-  auto status =
-      grpc_stub_->SearchDataItems(&client_context, request, &response);
+  auto status = grpc_stub_->SearchDataItems(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -242,11 +239,10 @@ DefaultDatasetServiceStub::SearchDataItems(
 
 StatusOr<google::cloud::aiplatform::v1::ListSavedQueriesResponse>
 DefaultDatasetServiceStub::ListSavedQueries(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListSavedQueriesRequest const& request) {
   google::cloud::aiplatform::v1::ListSavedQueriesResponse response;
-  auto status =
-      grpc_stub_->ListSavedQueries(&client_context, request, &response);
+  auto status = grpc_stub_->ListSavedQueries(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -273,11 +269,10 @@ DefaultDatasetServiceStub::AsyncDeleteSavedQuery(
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DefaultDatasetServiceStub::GetAnnotationSpec(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {
   google::cloud::aiplatform::v1::AnnotationSpec response;
-  auto status =
-      grpc_stub_->GetAnnotationSpec(&client_context, request, &response);
+  auto status = grpc_stub_->GetAnnotationSpec(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -286,11 +281,10 @@ DefaultDatasetServiceStub::GetAnnotationSpec(
 
 StatusOr<google::cloud::aiplatform::v1::ListAnnotationsResponse>
 DefaultDatasetServiceStub::ListAnnotations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListAnnotationsRequest const& request) {
   google::cloud::aiplatform::v1::ListAnnotationsResponse response;
-  auto status =
-      grpc_stub_->ListAnnotations(&client_context, request, &response);
+  auto status = grpc_stub_->ListAnnotations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

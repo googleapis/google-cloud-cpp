@@ -32,11 +32,10 @@ JobServiceStub::~JobServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
 DefaultJobServiceStub::CreateCustomJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
   google::cloud::aiplatform::v1::CustomJob response;
-  auto status =
-      grpc_stub_->CreateCustomJob(&client_context, request, &response);
+  auto status = grpc_stub_->CreateCustomJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,10 +44,10 @@ DefaultJobServiceStub::CreateCustomJob(
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
 DefaultJobServiceStub::GetCustomJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
   google::cloud::aiplatform::v1::CustomJob response;
-  auto status = grpc_stub_->GetCustomJob(&client_context, request, &response);
+  auto status = grpc_stub_->GetCustomJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,10 +56,10 @@ DefaultJobServiceStub::GetCustomJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListCustomJobsResponse>
 DefaultJobServiceStub::ListCustomJobs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListCustomJobsRequest const& request) {
   google::cloud::aiplatform::v1::ListCustomJobsResponse response;
-  auto status = grpc_stub_->ListCustomJobs(&client_context, request, &response);
+  auto status = grpc_stub_->ListCustomJobs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -86,11 +85,10 @@ DefaultJobServiceStub::AsyncDeleteCustomJob(
 }
 
 Status DefaultJobServiceStub::CancelCustomJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->CancelCustomJob(&client_context, request, &response);
+  auto status = grpc_stub_->CancelCustomJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -99,12 +97,11 @@ Status DefaultJobServiceStub::CancelCustomJob(
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 DefaultJobServiceStub::CreateDataLabelingJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
         request) {
   google::cloud::aiplatform::v1::DataLabelingJob response;
-  auto status =
-      grpc_stub_->CreateDataLabelingJob(&client_context, request, &response);
+  auto status = grpc_stub_->CreateDataLabelingJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -113,11 +110,10 @@ DefaultJobServiceStub::CreateDataLabelingJob(
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 DefaultJobServiceStub::GetDataLabelingJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
   google::cloud::aiplatform::v1::DataLabelingJob response;
-  auto status =
-      grpc_stub_->GetDataLabelingJob(&client_context, request, &response);
+  auto status = grpc_stub_->GetDataLabelingJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -126,11 +122,10 @@ DefaultJobServiceStub::GetDataLabelingJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListDataLabelingJobsResponse>
 DefaultJobServiceStub::ListDataLabelingJobs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& request) {
   google::cloud::aiplatform::v1::ListDataLabelingJobsResponse response;
-  auto status =
-      grpc_stub_->ListDataLabelingJobs(&client_context, request, &response);
+  auto status = grpc_stub_->ListDataLabelingJobs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -157,12 +152,11 @@ DefaultJobServiceStub::AsyncDeleteDataLabelingJob(
 }
 
 Status DefaultJobServiceStub::CancelDataLabelingJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->CancelDataLabelingJob(&client_context, request, &response);
+  auto status = grpc_stub_->CancelDataLabelingJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -171,12 +165,12 @@ Status DefaultJobServiceStub::CancelDataLabelingJob(
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
 DefaultJobServiceStub::CreateHyperparameterTuningJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
         request) {
   google::cloud::aiplatform::v1::HyperparameterTuningJob response;
-  auto status = grpc_stub_->CreateHyperparameterTuningJob(&client_context,
-                                                          request, &response);
+  auto status =
+      grpc_stub_->CreateHyperparameterTuningJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -185,12 +179,12 @@ DefaultJobServiceStub::CreateHyperparameterTuningJob(
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
 DefaultJobServiceStub::GetHyperparameterTuningJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
         request) {
   google::cloud::aiplatform::v1::HyperparameterTuningJob response;
-  auto status = grpc_stub_->GetHyperparameterTuningJob(&client_context, request,
-                                                       &response);
+  auto status =
+      grpc_stub_->GetHyperparameterTuningJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -199,12 +193,12 @@ DefaultJobServiceStub::GetHyperparameterTuningJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse>
 DefaultJobServiceStub::ListHyperparameterTuningJobs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const&
         request) {
   google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse response;
-  auto status = grpc_stub_->ListHyperparameterTuningJobs(&client_context,
-                                                         request, &response);
+  auto status =
+      grpc_stub_->ListHyperparameterTuningJobs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -232,12 +226,12 @@ DefaultJobServiceStub::AsyncDeleteHyperparameterTuningJob(
 }
 
 Status DefaultJobServiceStub::CancelHyperparameterTuningJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->CancelHyperparameterTuningJob(&client_context,
-                                                          request, &response);
+  auto status =
+      grpc_stub_->CancelHyperparameterTuningJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -246,10 +240,10 @@ Status DefaultJobServiceStub::CancelHyperparameterTuningJob(
 
 StatusOr<google::cloud::aiplatform::v1::NasJob>
 DefaultJobServiceStub::CreateNasJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
   google::cloud::aiplatform::v1::NasJob response;
-  auto status = grpc_stub_->CreateNasJob(&client_context, request, &response);
+  auto status = grpc_stub_->CreateNasJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -258,10 +252,10 @@ DefaultJobServiceStub::CreateNasJob(
 
 StatusOr<google::cloud::aiplatform::v1::NasJob>
 DefaultJobServiceStub::GetNasJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
   google::cloud::aiplatform::v1::NasJob response;
-  auto status = grpc_stub_->GetNasJob(&client_context, request, &response);
+  auto status = grpc_stub_->GetNasJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -270,10 +264,10 @@ DefaultJobServiceStub::GetNasJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListNasJobsResponse>
 DefaultJobServiceStub::ListNasJobs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListNasJobsRequest const& request) {
   google::cloud::aiplatform::v1::ListNasJobsResponse response;
-  auto status = grpc_stub_->ListNasJobs(&client_context, request, &response);
+  auto status = grpc_stub_->ListNasJobs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -298,10 +292,10 @@ DefaultJobServiceStub::AsyncDeleteNasJob(
 }
 
 Status DefaultJobServiceStub::CancelNasJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->CancelNasJob(&client_context, request, &response);
+  auto status = grpc_stub_->CancelNasJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -310,11 +304,10 @@ Status DefaultJobServiceStub::CancelNasJob(
 
 StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
 DefaultJobServiceStub::GetNasTrialDetail(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
   google::cloud::aiplatform::v1::NasTrialDetail response;
-  auto status =
-      grpc_stub_->GetNasTrialDetail(&client_context, request, &response);
+  auto status = grpc_stub_->GetNasTrialDetail(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -323,11 +316,10 @@ DefaultJobServiceStub::GetNasTrialDetail(
 
 StatusOr<google::cloud::aiplatform::v1::ListNasTrialDetailsResponse>
 DefaultJobServiceStub::ListNasTrialDetails(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& request) {
   google::cloud::aiplatform::v1::ListNasTrialDetailsResponse response;
-  auto status =
-      grpc_stub_->ListNasTrialDetails(&client_context, request, &response);
+  auto status = grpc_stub_->ListNasTrialDetails(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -336,12 +328,12 @@ DefaultJobServiceStub::ListNasTrialDetails(
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
 DefaultJobServiceStub::CreateBatchPredictionJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
         request) {
   google::cloud::aiplatform::v1::BatchPredictionJob response;
   auto status =
-      grpc_stub_->CreateBatchPredictionJob(&client_context, request, &response);
+      grpc_stub_->CreateBatchPredictionJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -350,12 +342,11 @@ DefaultJobServiceStub::CreateBatchPredictionJob(
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
 DefaultJobServiceStub::GetBatchPredictionJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
         request) {
   google::cloud::aiplatform::v1::BatchPredictionJob response;
-  auto status =
-      grpc_stub_->GetBatchPredictionJob(&client_context, request, &response);
+  auto status = grpc_stub_->GetBatchPredictionJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -364,12 +355,12 @@ DefaultJobServiceStub::GetBatchPredictionJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse>
 DefaultJobServiceStub::ListBatchPredictionJobs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
         request) {
   google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse response;
   auto status =
-      grpc_stub_->ListBatchPredictionJobs(&client_context, request, &response);
+      grpc_stub_->ListBatchPredictionJobs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -397,12 +388,12 @@ DefaultJobServiceStub::AsyncDeleteBatchPredictionJob(
 }
 
 Status DefaultJobServiceStub::CancelBatchPredictionJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
         request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->CancelBatchPredictionJob(&client_context, request, &response);
+      grpc_stub_->CancelBatchPredictionJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -411,12 +402,12 @@ Status DefaultJobServiceStub::CancelBatchPredictionJob(
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
 DefaultJobServiceStub::CreateModelDeploymentMonitoringJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         CreateModelDeploymentMonitoringJobRequest const& request) {
   google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob response;
   auto status = grpc_stub_->CreateModelDeploymentMonitoringJob(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -426,13 +417,13 @@ DefaultJobServiceStub::CreateModelDeploymentMonitoringJob(
 StatusOr<google::cloud::aiplatform::v1::
              SearchModelDeploymentMonitoringStatsAnomaliesResponse>
 DefaultJobServiceStub::SearchModelDeploymentMonitoringStatsAnomalies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         SearchModelDeploymentMonitoringStatsAnomaliesRequest const& request) {
   google::cloud::aiplatform::v1::
       SearchModelDeploymentMonitoringStatsAnomaliesResponse response;
   auto status = grpc_stub_->SearchModelDeploymentMonitoringStatsAnomalies(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -441,12 +432,12 @@ DefaultJobServiceStub::SearchModelDeploymentMonitoringStatsAnomalies(
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
 DefaultJobServiceStub::GetModelDeploymentMonitoringJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const&
         request) {
   google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob response;
-  auto status = grpc_stub_->GetModelDeploymentMonitoringJob(&client_context,
-                                                            request, &response);
+  auto status =
+      grpc_stub_->GetModelDeploymentMonitoringJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -456,13 +447,13 @@ DefaultJobServiceStub::GetModelDeploymentMonitoringJob(
 StatusOr<
     google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse>
 DefaultJobServiceStub::ListModelDeploymentMonitoringJobs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         ListModelDeploymentMonitoringJobsRequest const& request) {
   google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse
       response;
-  auto status = grpc_stub_->ListModelDeploymentMonitoringJobs(
-      &client_context, request, &response);
+  auto status = grpc_stub_->ListModelDeploymentMonitoringJobs(&context, request,
+                                                              &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -510,12 +501,12 @@ DefaultJobServiceStub::AsyncDeleteModelDeploymentMonitoringJob(
 }
 
 Status DefaultJobServiceStub::PauseModelDeploymentMonitoringJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         PauseModelDeploymentMonitoringJobRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->PauseModelDeploymentMonitoringJob(
-      &client_context, request, &response);
+  auto status = grpc_stub_->PauseModelDeploymentMonitoringJob(&context, request,
+                                                              &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -523,12 +514,12 @@ Status DefaultJobServiceStub::PauseModelDeploymentMonitoringJob(
 }
 
 Status DefaultJobServiceStub::ResumeModelDeploymentMonitoringJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         ResumeModelDeploymentMonitoringJobRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->ResumeModelDeploymentMonitoringJob(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

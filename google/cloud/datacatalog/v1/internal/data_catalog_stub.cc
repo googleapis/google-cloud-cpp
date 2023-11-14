@@ -32,10 +32,10 @@ DataCatalogStub::~DataCatalogStub() = default;
 
 StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse>
 DefaultDataCatalogStub::SearchCatalog(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::SearchCatalogRequest const& request) {
   google::cloud::datacatalog::v1::SearchCatalogResponse response;
-  auto status = grpc_stub_->SearchCatalog(&client_context, request, &response);
+  auto status = grpc_stub_->SearchCatalog(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,11 +44,10 @@ DefaultDataCatalogStub::SearchCatalog(
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DefaultDataCatalogStub::CreateEntryGroup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request) {
   google::cloud::datacatalog::v1::EntryGroup response;
-  auto status =
-      grpc_stub_->CreateEntryGroup(&client_context, request, &response);
+  auto status = grpc_stub_->CreateEntryGroup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,10 +56,10 @@ DefaultDataCatalogStub::CreateEntryGroup(
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DefaultDataCatalogStub::GetEntryGroup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
   google::cloud::datacatalog::v1::EntryGroup response;
-  auto status = grpc_stub_->GetEntryGroup(&client_context, request, &response);
+  auto status = grpc_stub_->GetEntryGroup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -69,11 +68,10 @@ DefaultDataCatalogStub::GetEntryGroup(
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DefaultDataCatalogStub::UpdateEntryGroup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request) {
   google::cloud::datacatalog::v1::EntryGroup response;
-  auto status =
-      grpc_stub_->UpdateEntryGroup(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateEntryGroup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -81,11 +79,10 @@ DefaultDataCatalogStub::UpdateEntryGroup(
 }
 
 Status DefaultDataCatalogStub::DeleteEntryGroup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteEntryGroup(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteEntryGroup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -94,11 +91,10 @@ Status DefaultDataCatalogStub::DeleteEntryGroup(
 
 StatusOr<google::cloud::datacatalog::v1::ListEntryGroupsResponse>
 DefaultDataCatalogStub::ListEntryGroups(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ListEntryGroupsRequest const& request) {
   google::cloud::datacatalog::v1::ListEntryGroupsResponse response;
-  auto status =
-      grpc_stub_->ListEntryGroups(&client_context, request, &response);
+  auto status = grpc_stub_->ListEntryGroups(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -107,10 +103,10 @@ DefaultDataCatalogStub::ListEntryGroups(
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DefaultDataCatalogStub::CreateEntry(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
   google::cloud::datacatalog::v1::Entry response;
-  auto status = grpc_stub_->CreateEntry(&client_context, request, &response);
+  auto status = grpc_stub_->CreateEntry(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -119,10 +115,10 @@ DefaultDataCatalogStub::CreateEntry(
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DefaultDataCatalogStub::UpdateEntry(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
   google::cloud::datacatalog::v1::Entry response;
-  auto status = grpc_stub_->UpdateEntry(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateEntry(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -130,10 +126,10 @@ DefaultDataCatalogStub::UpdateEntry(
 }
 
 Status DefaultDataCatalogStub::DeleteEntry(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteEntry(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteEntry(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -142,10 +138,10 @@ Status DefaultDataCatalogStub::DeleteEntry(
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DefaultDataCatalogStub::GetEntry(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::GetEntryRequest const& request) {
   google::cloud::datacatalog::v1::Entry response;
-  auto status = grpc_stub_->GetEntry(&client_context, request, &response);
+  auto status = grpc_stub_->GetEntry(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -154,10 +150,10 @@ DefaultDataCatalogStub::GetEntry(
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DefaultDataCatalogStub::LookupEntry(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
   google::cloud::datacatalog::v1::Entry response;
-  auto status = grpc_stub_->LookupEntry(&client_context, request, &response);
+  auto status = grpc_stub_->LookupEntry(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -166,10 +162,10 @@ DefaultDataCatalogStub::LookupEntry(
 
 StatusOr<google::cloud::datacatalog::v1::ListEntriesResponse>
 DefaultDataCatalogStub::ListEntries(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ListEntriesRequest const& request) {
   google::cloud::datacatalog::v1::ListEntriesResponse response;
-  auto status = grpc_stub_->ListEntries(&client_context, request, &response);
+  auto status = grpc_stub_->ListEntries(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -178,11 +174,10 @@ DefaultDataCatalogStub::ListEntries(
 
 StatusOr<google::cloud::datacatalog::v1::EntryOverview>
 DefaultDataCatalogStub::ModifyEntryOverview(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
   google::cloud::datacatalog::v1::EntryOverview response;
-  auto status =
-      grpc_stub_->ModifyEntryOverview(&client_context, request, &response);
+  auto status = grpc_stub_->ModifyEntryOverview(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -191,11 +186,10 @@ DefaultDataCatalogStub::ModifyEntryOverview(
 
 StatusOr<google::cloud::datacatalog::v1::Contacts>
 DefaultDataCatalogStub::ModifyEntryContacts(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
   google::cloud::datacatalog::v1::Contacts response;
-  auto status =
-      grpc_stub_->ModifyEntryContacts(&client_context, request, &response);
+  auto status = grpc_stub_->ModifyEntryContacts(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -204,11 +198,10 @@ DefaultDataCatalogStub::ModifyEntryContacts(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DefaultDataCatalogStub::CreateTagTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request) {
   google::cloud::datacatalog::v1::TagTemplate response;
-  auto status =
-      grpc_stub_->CreateTagTemplate(&client_context, request, &response);
+  auto status = grpc_stub_->CreateTagTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -217,10 +210,10 @@ DefaultDataCatalogStub::CreateTagTemplate(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DefaultDataCatalogStub::GetTagTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::GetTagTemplateRequest const& request) {
   google::cloud::datacatalog::v1::TagTemplate response;
-  auto status = grpc_stub_->GetTagTemplate(&client_context, request, &response);
+  auto status = grpc_stub_->GetTagTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -229,11 +222,10 @@ DefaultDataCatalogStub::GetTagTemplate(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DefaultDataCatalogStub::UpdateTagTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request) {
   google::cloud::datacatalog::v1::TagTemplate response;
-  auto status =
-      grpc_stub_->UpdateTagTemplate(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateTagTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -241,11 +233,10 @@ DefaultDataCatalogStub::UpdateTagTemplate(
 }
 
 Status DefaultDataCatalogStub::DeleteTagTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteTagTemplate(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteTagTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -254,12 +245,12 @@ Status DefaultDataCatalogStub::DeleteTagTemplate(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DefaultDataCatalogStub::CreateTagTemplateField(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
         request) {
   google::cloud::datacatalog::v1::TagTemplateField response;
   auto status =
-      grpc_stub_->CreateTagTemplateField(&client_context, request, &response);
+      grpc_stub_->CreateTagTemplateField(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -268,12 +259,12 @@ DefaultDataCatalogStub::CreateTagTemplateField(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DefaultDataCatalogStub::UpdateTagTemplateField(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
         request) {
   google::cloud::datacatalog::v1::TagTemplateField response;
   auto status =
-      grpc_stub_->UpdateTagTemplateField(&client_context, request, &response);
+      grpc_stub_->UpdateTagTemplateField(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -282,12 +273,12 @@ DefaultDataCatalogStub::UpdateTagTemplateField(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DefaultDataCatalogStub::RenameTagTemplateField(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
         request) {
   google::cloud::datacatalog::v1::TagTemplateField response;
   auto status =
-      grpc_stub_->RenameTagTemplateField(&client_context, request, &response);
+      grpc_stub_->RenameTagTemplateField(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -296,12 +287,12 @@ DefaultDataCatalogStub::RenameTagTemplateField(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DefaultDataCatalogStub::RenameTagTemplateFieldEnumValue(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::
         RenameTagTemplateFieldEnumValueRequest const& request) {
   google::cloud::datacatalog::v1::TagTemplateField response;
-  auto status = grpc_stub_->RenameTagTemplateFieldEnumValue(&client_context,
-                                                            request, &response);
+  auto status =
+      grpc_stub_->RenameTagTemplateFieldEnumValue(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -309,12 +300,12 @@ DefaultDataCatalogStub::RenameTagTemplateFieldEnumValue(
 }
 
 Status DefaultDataCatalogStub::DeleteTagTemplateField(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
         request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->DeleteTagTemplateField(&client_context, request, &response);
+      grpc_stub_->DeleteTagTemplateField(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -322,10 +313,10 @@ Status DefaultDataCatalogStub::DeleteTagTemplateField(
 }
 
 StatusOr<google::cloud::datacatalog::v1::Tag> DefaultDataCatalogStub::CreateTag(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::CreateTagRequest const& request) {
   google::cloud::datacatalog::v1::Tag response;
-  auto status = grpc_stub_->CreateTag(&client_context, request, &response);
+  auto status = grpc_stub_->CreateTag(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -333,10 +324,10 @@ StatusOr<google::cloud::datacatalog::v1::Tag> DefaultDataCatalogStub::CreateTag(
 }
 
 StatusOr<google::cloud::datacatalog::v1::Tag> DefaultDataCatalogStub::UpdateTag(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::UpdateTagRequest const& request) {
   google::cloud::datacatalog::v1::Tag response;
-  auto status = grpc_stub_->UpdateTag(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateTag(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -344,10 +335,10 @@ StatusOr<google::cloud::datacatalog::v1::Tag> DefaultDataCatalogStub::UpdateTag(
 }
 
 Status DefaultDataCatalogStub::DeleteTag(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::DeleteTagRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteTag(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteTag(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -356,10 +347,10 @@ Status DefaultDataCatalogStub::DeleteTag(
 
 StatusOr<google::cloud::datacatalog::v1::ListTagsResponse>
 DefaultDataCatalogStub::ListTags(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ListTagsRequest const& request) {
   google::cloud::datacatalog::v1::ListTagsResponse response;
-  auto status = grpc_stub_->ListTags(&client_context, request, &response);
+  auto status = grpc_stub_->ListTags(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -386,10 +377,10 @@ DefaultDataCatalogStub::AsyncReconcileTags(
 
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DefaultDataCatalogStub::StarEntry(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::StarEntryRequest const& request) {
   google::cloud::datacatalog::v1::StarEntryResponse response;
-  auto status = grpc_stub_->StarEntry(&client_context, request, &response);
+  auto status = grpc_stub_->StarEntry(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -398,10 +389,10 @@ DefaultDataCatalogStub::StarEntry(
 
 StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
 DefaultDataCatalogStub::UnstarEntry(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
   google::cloud::datacatalog::v1::UnstarEntryResponse response;
-  auto status = grpc_stub_->UnstarEntry(&client_context, request, &response);
+  auto status = grpc_stub_->UnstarEntry(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -409,10 +400,10 @@ DefaultDataCatalogStub::UnstarEntry(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDataCatalogStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -420,10 +411,10 @@ StatusOr<google::iam::v1::Policy> DefaultDataCatalogStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDataCatalogStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -432,11 +423,10 @@ StatusOr<google::iam::v1::Policy> DefaultDataCatalogStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultDataCatalogStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

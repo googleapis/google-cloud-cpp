@@ -31,13 +31,12 @@ IamCheckerStub::~IamCheckerStub() = default;
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 DefaultIamCheckerStub::TroubleshootIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
         request) {
   google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse
       response;
-  auto status =
-      grpc_stub_->TroubleshootIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->TroubleshootIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

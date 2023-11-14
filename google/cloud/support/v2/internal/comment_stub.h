@@ -51,11 +51,11 @@ class DefaultCommentServiceStub : public CommentServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::support::v2::ListCommentsResponse> ListComments(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::support::v2::ListCommentsRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Comment> CreateComment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::support::v2::CreateCommentRequest const& request) override;
 
  private:

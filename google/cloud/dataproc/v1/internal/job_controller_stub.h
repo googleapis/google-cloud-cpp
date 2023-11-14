@@ -88,7 +88,7 @@ class DefaultJobControllerStub : public JobControllerStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::SubmitJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSubmitJobAsOperation(
@@ -97,23 +97,23 @@ class DefaultJobControllerStub : public JobControllerStub {
       google::cloud::dataproc::v1::SubmitJobRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Job> GetJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::GetJobRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::ListJobsRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Job> UpdateJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::UpdateJobRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Job> CancelJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::CancelJobRequest const& request) override;
 
   Status DeleteJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::DeleteJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -49,7 +49,7 @@ class DefaultAuthorizedDomainsStub : public AuthorizedDomainsStub {
 
   StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
   ListAuthorizedDomains(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::appengine::v1::ListAuthorizedDomainsRequest const& request)
       override;
 

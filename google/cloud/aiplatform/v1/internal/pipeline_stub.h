@@ -117,18 +117,18 @@ class DefaultPipelineServiceStub : public PipelineServiceStub {
 
   StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
   CreateTrainingPipeline(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::TrainingPipeline> GetTrainingPipeline(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListTrainingPipelinesResponse>
   ListTrainingPipelines(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ListTrainingPipelinesRequest const&
           request) override;
 
@@ -139,22 +139,22 @@ class DefaultPipelineServiceStub : public PipelineServiceStub {
           request) override;
 
   Status CancelTrainingPipeline(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::PipelineJob> CreatePipelineJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::PipelineJob> GetPipelineJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetPipelineJobRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListPipelineJobsResponse>
-  ListPipelineJobs(grpc::ClientContext& client_context,
+  ListPipelineJobs(grpc::ClientContext& context,
                    google::cloud::aiplatform::v1::ListPipelineJobsRequest const&
                        request) override;
 
@@ -165,7 +165,7 @@ class DefaultPipelineServiceStub : public PipelineServiceStub {
       override;
 
   Status CancelPipelineJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request)
       override;
 

@@ -32,10 +32,10 @@ DataprocMetastoreStub::~DataprocMetastoreStub() = default;
 
 StatusOr<google::cloud::metastore::v1::ListServicesResponse>
 DefaultDataprocMetastoreStub::ListServices(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::metastore::v1::ListServicesRequest const& request) {
   google::cloud::metastore::v1::ListServicesResponse response;
-  auto status = grpc_stub_->ListServices(&client_context, request, &response);
+  auto status = grpc_stub_->ListServices(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultDataprocMetastoreStub::ListServices(
 
 StatusOr<google::cloud::metastore::v1::Service>
 DefaultDataprocMetastoreStub::GetService(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::metastore::v1::GetServiceRequest const& request) {
   google::cloud::metastore::v1::Service response;
-  auto status = grpc_stub_->GetService(&client_context, request, &response);
+  auto status = grpc_stub_->GetService(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -107,11 +107,10 @@ DefaultDataprocMetastoreStub::AsyncDeleteService(
 
 StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
 DefaultDataprocMetastoreStub::ListMetadataImports(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::metastore::v1::ListMetadataImportsRequest const& request) {
   google::cloud::metastore::v1::ListMetadataImportsResponse response;
-  auto status =
-      grpc_stub_->ListMetadataImports(&client_context, request, &response);
+  auto status = grpc_stub_->ListMetadataImports(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -120,11 +119,10 @@ DefaultDataprocMetastoreStub::ListMetadataImports(
 
 StatusOr<google::cloud::metastore::v1::MetadataImport>
 DefaultDataprocMetastoreStub::GetMetadataImport(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::metastore::v1::GetMetadataImportRequest const& request) {
   google::cloud::metastore::v1::MetadataImport response;
-  auto status =
-      grpc_stub_->GetMetadataImport(&client_context, request, &response);
+  auto status = grpc_stub_->GetMetadataImport(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -203,10 +201,10 @@ DefaultDataprocMetastoreStub::AsyncRestoreService(
 
 StatusOr<google::cloud::metastore::v1::ListBackupsResponse>
 DefaultDataprocMetastoreStub::ListBackups(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::metastore::v1::ListBackupsRequest const& request) {
   google::cloud::metastore::v1::ListBackupsResponse response;
-  auto status = grpc_stub_->ListBackups(&client_context, request, &response);
+  auto status = grpc_stub_->ListBackups(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -215,10 +213,10 @@ DefaultDataprocMetastoreStub::ListBackups(
 
 StatusOr<google::cloud::metastore::v1::Backup>
 DefaultDataprocMetastoreStub::GetBackup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::metastore::v1::GetBackupRequest const& request) {
   google::cloud::metastore::v1::Backup response;
-  auto status = grpc_stub_->GetBackup(&client_context, request, &response);
+  auto status = grpc_stub_->GetBackup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

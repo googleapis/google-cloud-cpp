@@ -51,11 +51,11 @@ class DefaultServiceControllerStub : public ServiceControllerStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::api::servicecontrol::v1::CheckRequest const& request) override;
 
   StatusOr<google::api::servicecontrol::v1::ReportResponse> Report(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::api::servicecontrol::v1::ReportRequest const& request) override;
 
  private:

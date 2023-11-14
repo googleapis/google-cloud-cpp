@@ -32,13 +32,13 @@ NetworkSecurityStub::~NetworkSecurityStub() = default;
 
 StatusOr<google::cloud::networksecurity::v1::ListAuthorizationPoliciesResponse>
 DefaultNetworkSecurityStub::ListAuthorizationPolicies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest const&
         request) {
   google::cloud::networksecurity::v1::ListAuthorizationPoliciesResponse
       response;
-  auto status = grpc_stub_->ListAuthorizationPolicies(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->ListAuthorizationPolicies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -47,12 +47,12 @@ DefaultNetworkSecurityStub::ListAuthorizationPolicies(
 
 StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
 DefaultNetworkSecurityStub::GetAuthorizationPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
         request) {
   google::cloud::networksecurity::v1::AuthorizationPolicy response;
   auto status =
-      grpc_stub_->GetAuthorizationPolicy(&client_context, request, &response);
+      grpc_stub_->GetAuthorizationPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -118,12 +118,11 @@ DefaultNetworkSecurityStub::AsyncDeleteAuthorizationPolicy(
 
 StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
 DefaultNetworkSecurityStub::ListServerTlsPolicies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest const&
         request) {
   google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse response;
-  auto status =
-      grpc_stub_->ListServerTlsPolicies(&client_context, request, &response);
+  auto status = grpc_stub_->ListServerTlsPolicies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -132,12 +131,11 @@ DefaultNetworkSecurityStub::ListServerTlsPolicies(
 
 StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
 DefaultNetworkSecurityStub::GetServerTlsPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
         request) {
   google::cloud::networksecurity::v1::ServerTlsPolicy response;
-  auto status =
-      grpc_stub_->GetServerTlsPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetServerTlsPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -203,12 +201,11 @@ DefaultNetworkSecurityStub::AsyncDeleteServerTlsPolicy(
 
 StatusOr<google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse>
 DefaultNetworkSecurityStub::ListClientTlsPolicies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest const&
         request) {
   google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse response;
-  auto status =
-      grpc_stub_->ListClientTlsPolicies(&client_context, request, &response);
+  auto status = grpc_stub_->ListClientTlsPolicies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -217,12 +214,11 @@ DefaultNetworkSecurityStub::ListClientTlsPolicies(
 
 StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
 DefaultNetworkSecurityStub::GetClientTlsPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
         request) {
   google::cloud::networksecurity::v1::ClientTlsPolicy response;
-  auto status =
-      grpc_stub_->GetClientTlsPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetClientTlsPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

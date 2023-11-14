@@ -118,27 +118,27 @@ class DefaultEntityTypesStub : public EntityTypesStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::dialogflow::v2::ListEntityTypesResponse>
-  ListEntityTypes(grpc::ClientContext& client_context,
+  ListEntityTypes(grpc::ClientContext& context,
                   google::cloud::dialogflow::v2::ListEntityTypesRequest const&
                       request) override;
 
   StatusOr<google::cloud::dialogflow::v2::EntityType> GetEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GetEntityTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::EntityType> CreateEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::EntityType> UpdateEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request)
       override;
 
   Status DeleteEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request)
       override;
 

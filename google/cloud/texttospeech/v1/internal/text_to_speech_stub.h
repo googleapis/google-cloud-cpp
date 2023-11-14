@@ -54,13 +54,13 @@ class DefaultTextToSpeechStub : public TextToSpeechStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::texttospeech::v1::ListVoicesRequest const& request)
       override;
 
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
   SynthesizeSpeech(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request)
       override;
 

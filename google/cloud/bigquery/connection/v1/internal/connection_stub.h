@@ -87,42 +87,42 @@ class DefaultConnectionServiceStub : public ConnectionServiceStub {
 
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
   CreateConnection(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::connection::v1::Connection> GetConnection(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::connection::v1::GetConnectionRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::connection::v1::ListConnectionsResponse>
   ListConnections(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::connection::v1::ListConnectionsRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
   UpdateConnection(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
           request) override;
 
   Status DeleteConnection(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
           request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:

@@ -47,7 +47,7 @@ class DefaultCompletionStub : public CompletionStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
  private:

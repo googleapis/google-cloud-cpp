@@ -32,10 +32,10 @@ IDSStub::~IDSStub() = default;
 
 StatusOr<google::cloud::ids::v1::ListEndpointsResponse>
 DefaultIDSStub::ListEndpoints(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::ids::v1::ListEndpointsRequest const& request) {
   google::cloud::ids::v1::ListEndpointsResponse response;
-  auto status = grpc_stub_->ListEndpoints(&client_context, request, &response);
+  auto status = grpc_stub_->ListEndpoints(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultIDSStub::ListEndpoints(
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> DefaultIDSStub::GetEndpoint(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::ids::v1::GetEndpointRequest const& request) {
   google::cloud::ids::v1::Endpoint response;
-  auto status = grpc_stub_->GetEndpoint(&client_context, request, &response);
+  auto status = grpc_stub_->GetEndpoint(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -32,12 +32,11 @@ MetricsScopesStub::~MetricsScopesStub() = default;
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 DefaultMetricsScopesStub::GetMetricsScope(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
         request) {
   google::monitoring::metricsscope::v1::MetricsScope response;
-  auto status =
-      grpc_stub_->GetMetricsScope(&client_context, request, &response);
+  auto status = grpc_stub_->GetMetricsScope(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -47,13 +46,13 @@ DefaultMetricsScopesStub::GetMetricsScope(
 StatusOr<google::monitoring::metricsscope::v1::
              ListMetricsScopesByMonitoredProjectResponse>
 DefaultMetricsScopesStub::ListMetricsScopesByMonitoredProject(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
   google::monitoring::metricsscope::v1::
       ListMetricsScopesByMonitoredProjectResponse response;
   auto status = grpc_stub_->ListMetricsScopesByMonitoredProject(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

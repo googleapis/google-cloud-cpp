@@ -84,11 +84,11 @@ class DefaultUserEventServiceStub : public UserEventServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::WriteUserEventRequest const& request) override;
 
   StatusOr<google::api::HttpBody> CollectUserEvent(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::CollectUserEventRequest const& request)
       override;
 

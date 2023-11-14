@@ -31,10 +31,10 @@ MetadataServiceStub::~MetadataServiceStub() = default;
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 DefaultMetadataServiceStub::CreateEntity(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::CreateEntityRequest const& request) {
   google::cloud::dataplex::v1::Entity response;
-  auto status = grpc_stub_->CreateEntity(&client_context, request, &response);
+  auto status = grpc_stub_->CreateEntity(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultMetadataServiceStub::CreateEntity(
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 DefaultMetadataServiceStub::UpdateEntity(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
   google::cloud::dataplex::v1::Entity response;
-  auto status = grpc_stub_->UpdateEntity(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateEntity(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -54,10 +54,10 @@ DefaultMetadataServiceStub::UpdateEntity(
 }
 
 Status DefaultMetadataServiceStub::DeleteEntity(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteEntity(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteEntity(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -66,10 +66,10 @@ Status DefaultMetadataServiceStub::DeleteEntity(
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 DefaultMetadataServiceStub::GetEntity(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetEntityRequest const& request) {
   google::cloud::dataplex::v1::Entity response;
-  auto status = grpc_stub_->GetEntity(&client_context, request, &response);
+  auto status = grpc_stub_->GetEntity(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -78,10 +78,10 @@ DefaultMetadataServiceStub::GetEntity(
 
 StatusOr<google::cloud::dataplex::v1::ListEntitiesResponse>
 DefaultMetadataServiceStub::ListEntities(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListEntitiesRequest const& request) {
   google::cloud::dataplex::v1::ListEntitiesResponse response;
-  auto status = grpc_stub_->ListEntities(&client_context, request, &response);
+  auto status = grpc_stub_->ListEntities(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -90,11 +90,10 @@ DefaultMetadataServiceStub::ListEntities(
 
 StatusOr<google::cloud::dataplex::v1::Partition>
 DefaultMetadataServiceStub::CreatePartition(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
   google::cloud::dataplex::v1::Partition response;
-  auto status =
-      grpc_stub_->CreatePartition(&client_context, request, &response);
+  auto status = grpc_stub_->CreatePartition(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -102,11 +101,10 @@ DefaultMetadataServiceStub::CreatePartition(
 }
 
 Status DefaultMetadataServiceStub::DeletePartition(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeletePartition(&client_context, request, &response);
+  auto status = grpc_stub_->DeletePartition(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -115,10 +113,10 @@ Status DefaultMetadataServiceStub::DeletePartition(
 
 StatusOr<google::cloud::dataplex::v1::Partition>
 DefaultMetadataServiceStub::GetPartition(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetPartitionRequest const& request) {
   google::cloud::dataplex::v1::Partition response;
-  auto status = grpc_stub_->GetPartition(&client_context, request, &response);
+  auto status = grpc_stub_->GetPartition(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -127,10 +125,10 @@ DefaultMetadataServiceStub::GetPartition(
 
 StatusOr<google::cloud::dataplex::v1::ListPartitionsResponse>
 DefaultMetadataServiceStub::ListPartitions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListPartitionsRequest const& request) {
   google::cloud::dataplex::v1::ListPartitionsResponse response;
-  auto status = grpc_stub_->ListPartitions(&client_context, request, &response);
+  auto status = grpc_stub_->ListPartitions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

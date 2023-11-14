@@ -61,19 +61,19 @@ class DefaultPolicyTagManagerSerializationStub
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
   ImportTaxonomies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
   ExportTaxonomies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request)
       override;
 

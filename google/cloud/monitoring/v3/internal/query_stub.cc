@@ -31,11 +31,10 @@ QueryServiceStub::~QueryServiceStub() = default;
 
 StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
 DefaultQueryServiceStub::QueryTimeSeries(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::QueryTimeSeriesRequest const& request) {
   google::monitoring::v3::QueryTimeSeriesResponse response;
-  auto status =
-      grpc_stub_->QueryTimeSeries(&client_context, request, &response);
+  auto status = grpc_stub_->QueryTimeSeries(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

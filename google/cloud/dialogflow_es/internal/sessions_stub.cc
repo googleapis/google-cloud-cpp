@@ -32,10 +32,10 @@ SessionsStub::~SessionsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 DefaultSessionsStub::DetectIntent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
   google::cloud::dialogflow::v2::DetectIntentResponse response;
-  auto status = grpc_stub_->DetectIntent(&client_context, request, &response);
+  auto status = grpc_stub_->DetectIntent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

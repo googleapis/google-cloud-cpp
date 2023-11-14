@@ -71,11 +71,11 @@ DefaultRapidMigrationAssessmentStub::AsyncCreateAnnotation(
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
 DefaultRapidMigrationAssessmentStub::GetAnnotation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::rapidmigrationassessment::v1::GetAnnotationRequest const&
         request) {
   google::cloud::rapidmigrationassessment::v1::Annotation response;
-  auto status = grpc_stub_->GetAnnotation(&client_context, request, &response);
+  auto status = grpc_stub_->GetAnnotation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -84,11 +84,11 @@ DefaultRapidMigrationAssessmentStub::GetAnnotation(
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::ListCollectorsResponse>
 DefaultRapidMigrationAssessmentStub::ListCollectors(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::rapidmigrationassessment::v1::ListCollectorsRequest const&
         request) {
   google::cloud::rapidmigrationassessment::v1::ListCollectorsResponse response;
-  auto status = grpc_stub_->ListCollectors(&client_context, request, &response);
+  auto status = grpc_stub_->ListCollectors(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -97,11 +97,11 @@ DefaultRapidMigrationAssessmentStub::ListCollectors(
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>
 DefaultRapidMigrationAssessmentStub::GetCollector(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::rapidmigrationassessment::v1::GetCollectorRequest const&
         request) {
   google::cloud::rapidmigrationassessment::v1::Collector response;
-  auto status = grpc_stub_->GetCollector(&client_context, request, &response);
+  auto status = grpc_stub_->GetCollector(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

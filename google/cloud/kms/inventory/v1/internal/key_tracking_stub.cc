@@ -31,12 +31,12 @@ KeyTrackingServiceStub::~KeyTrackingServiceStub() = default;
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
 DefaultKeyTrackingServiceStub::GetProtectedResourcesSummary(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::kms::inventory::v1::
         GetProtectedResourcesSummaryRequest const& request) {
   google::cloud::kms::inventory::v1::ProtectedResourcesSummary response;
-  auto status = grpc_stub_->GetProtectedResourcesSummary(&client_context,
-                                                         request, &response);
+  auto status =
+      grpc_stub_->GetProtectedResourcesSummary(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,12 +45,12 @@ DefaultKeyTrackingServiceStub::GetProtectedResourcesSummary(
 
 StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
 DefaultKeyTrackingServiceStub::SearchProtectedResources(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
         request) {
   google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse response;
   auto status =
-      grpc_stub_->SearchProtectedResources(&client_context, request, &response);
+      grpc_stub_->SearchProtectedResources(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

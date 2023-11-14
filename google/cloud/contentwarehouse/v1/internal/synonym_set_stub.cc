@@ -31,12 +31,11 @@ SynonymSetServiceStub::~SynonymSetServiceStub() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 DefaultSynonymSetServiceStub::CreateSynonymSet(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
         request) {
   google::cloud::contentwarehouse::v1::SynonymSet response;
-  auto status =
-      grpc_stub_->CreateSynonymSet(&client_context, request, &response);
+  auto status = grpc_stub_->CreateSynonymSet(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,10 +44,10 @@ DefaultSynonymSetServiceStub::CreateSynonymSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 DefaultSynonymSetServiceStub::GetSynonymSet(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
   google::cloud::contentwarehouse::v1::SynonymSet response;
-  auto status = grpc_stub_->GetSynonymSet(&client_context, request, &response);
+  auto status = grpc_stub_->GetSynonymSet(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,12 +56,11 @@ DefaultSynonymSetServiceStub::GetSynonymSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 DefaultSynonymSetServiceStub::UpdateSynonymSet(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
         request) {
   google::cloud::contentwarehouse::v1::SynonymSet response;
-  auto status =
-      grpc_stub_->UpdateSynonymSet(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateSynonymSet(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -70,12 +68,11 @@ DefaultSynonymSetServiceStub::UpdateSynonymSet(
 }
 
 Status DefaultSynonymSetServiceStub::DeleteSynonymSet(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteSynonymSet(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteSynonymSet(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -84,12 +81,11 @@ Status DefaultSynonymSetServiceStub::DeleteSynonymSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::ListSynonymSetsResponse>
 DefaultSynonymSetServiceStub::ListSynonymSets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
         request) {
   google::cloud::contentwarehouse::v1::ListSynonymSetsResponse response;
-  auto status =
-      grpc_stub_->ListSynonymSets(&client_context, request, &response);
+  auto status = grpc_stub_->ListSynonymSets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -31,11 +31,10 @@ EkmServiceStub::~EkmServiceStub() = default;
 
 StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
 DefaultEkmServiceStub::ListEkmConnections(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::kms::v1::ListEkmConnectionsRequest const& request) {
   google::cloud::kms::v1::ListEkmConnectionsResponse response;
-  auto status =
-      grpc_stub_->ListEkmConnections(&client_context, request, &response);
+  auto status = grpc_stub_->ListEkmConnections(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,11 +43,10 @@ DefaultEkmServiceStub::ListEkmConnections(
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 DefaultEkmServiceStub::GetEkmConnection(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
   google::cloud::kms::v1::EkmConnection response;
-  auto status =
-      grpc_stub_->GetEkmConnection(&client_context, request, &response);
+  auto status = grpc_stub_->GetEkmConnection(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,11 +55,10 @@ DefaultEkmServiceStub::GetEkmConnection(
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 DefaultEkmServiceStub::CreateEkmConnection(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
   google::cloud::kms::v1::EkmConnection response;
-  auto status =
-      grpc_stub_->CreateEkmConnection(&client_context, request, &response);
+  auto status = grpc_stub_->CreateEkmConnection(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -70,11 +67,10 @@ DefaultEkmServiceStub::CreateEkmConnection(
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 DefaultEkmServiceStub::UpdateEkmConnection(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
   google::cloud::kms::v1::EkmConnection response;
-  auto status =
-      grpc_stub_->UpdateEkmConnection(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateEkmConnection(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -82,10 +78,10 @@ DefaultEkmServiceStub::UpdateEkmConnection(
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig> DefaultEkmServiceStub::GetEkmConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::kms::v1::GetEkmConfigRequest const& request) {
   google::cloud::kms::v1::EkmConfig response;
-  auto status = grpc_stub_->GetEkmConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetEkmConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -94,11 +90,10 @@ StatusOr<google::cloud::kms::v1::EkmConfig> DefaultEkmServiceStub::GetEkmConfig(
 
 StatusOr<google::cloud::kms::v1::EkmConfig>
 DefaultEkmServiceStub::UpdateEkmConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
   google::cloud::kms::v1::EkmConfig response;
-  auto status =
-      grpc_stub_->UpdateEkmConfig(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateEkmConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -107,11 +102,10 @@ DefaultEkmServiceStub::UpdateEkmConfig(
 
 StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
 DefaultEkmServiceStub::VerifyConnectivity(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
   google::cloud::kms::v1::VerifyConnectivityResponse response;
-  auto status =
-      grpc_stub_->VerifyConnectivity(&client_context, request, &response);
+  auto status = grpc_stub_->VerifyConnectivity(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

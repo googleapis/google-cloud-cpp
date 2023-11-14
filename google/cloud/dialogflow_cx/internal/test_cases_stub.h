@@ -126,27 +126,27 @@ class DefaultTestCasesStub : public TestCasesStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
-  ListTestCases(grpc::ClientContext& client_context,
+  ListTestCases(grpc::ClientContext& context,
                 google::cloud::dialogflow::cx::v3::ListTestCasesRequest const&
                     request) override;
 
   Status BatchDeleteTestCases(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> GetTestCase(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> CreateTestCase(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request)
       override;
 
@@ -164,7 +164,7 @@ class DefaultTestCasesStub : public TestCasesStub {
 
   StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
   CalculateCoverage(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
           request) override;
 
@@ -182,12 +182,12 @@ class DefaultTestCasesStub : public TestCasesStub {
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>
   ListTestCaseResults(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult> GetTestCaseResult(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
           request) override;
 

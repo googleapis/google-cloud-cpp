@@ -31,10 +31,10 @@ CloudTasksStub::~CloudTasksStub() = default;
 
 StatusOr<google::cloud::tasks::v2::ListQueuesResponse>
 DefaultCloudTasksStub::ListQueues(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::ListQueuesRequest const& request) {
   google::cloud::tasks::v2::ListQueuesResponse response;
-  auto status = grpc_stub_->ListQueues(&client_context, request, &response);
+  auto status = grpc_stub_->ListQueues(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,10 +42,10 @@ DefaultCloudTasksStub::ListQueues(
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> DefaultCloudTasksStub::GetQueue(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::GetQueueRequest const& request) {
   google::cloud::tasks::v2::Queue response;
-  auto status = grpc_stub_->GetQueue(&client_context, request, &response);
+  auto status = grpc_stub_->GetQueue(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -53,10 +53,10 @@ StatusOr<google::cloud::tasks::v2::Queue> DefaultCloudTasksStub::GetQueue(
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> DefaultCloudTasksStub::CreateQueue(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::CreateQueueRequest const& request) {
   google::cloud::tasks::v2::Queue response;
-  auto status = grpc_stub_->CreateQueue(&client_context, request, &response);
+  auto status = grpc_stub_->CreateQueue(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -64,10 +64,10 @@ StatusOr<google::cloud::tasks::v2::Queue> DefaultCloudTasksStub::CreateQueue(
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> DefaultCloudTasksStub::UpdateQueue(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::UpdateQueueRequest const& request) {
   google::cloud::tasks::v2::Queue response;
-  auto status = grpc_stub_->UpdateQueue(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateQueue(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -75,10 +75,10 @@ StatusOr<google::cloud::tasks::v2::Queue> DefaultCloudTasksStub::UpdateQueue(
 }
 
 Status DefaultCloudTasksStub::DeleteQueue(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::DeleteQueueRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteQueue(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteQueue(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -86,10 +86,10 @@ Status DefaultCloudTasksStub::DeleteQueue(
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> DefaultCloudTasksStub::PurgeQueue(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::PurgeQueueRequest const& request) {
   google::cloud::tasks::v2::Queue response;
-  auto status = grpc_stub_->PurgeQueue(&client_context, request, &response);
+  auto status = grpc_stub_->PurgeQueue(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -97,10 +97,10 @@ StatusOr<google::cloud::tasks::v2::Queue> DefaultCloudTasksStub::PurgeQueue(
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> DefaultCloudTasksStub::PauseQueue(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::PauseQueueRequest const& request) {
   google::cloud::tasks::v2::Queue response;
-  auto status = grpc_stub_->PauseQueue(&client_context, request, &response);
+  auto status = grpc_stub_->PauseQueue(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -108,10 +108,10 @@ StatusOr<google::cloud::tasks::v2::Queue> DefaultCloudTasksStub::PauseQueue(
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> DefaultCloudTasksStub::ResumeQueue(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::ResumeQueueRequest const& request) {
   google::cloud::tasks::v2::Queue response;
-  auto status = grpc_stub_->ResumeQueue(&client_context, request, &response);
+  auto status = grpc_stub_->ResumeQueue(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -119,10 +119,10 @@ StatusOr<google::cloud::tasks::v2::Queue> DefaultCloudTasksStub::ResumeQueue(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultCloudTasksStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -130,10 +130,10 @@ StatusOr<google::iam::v1::Policy> DefaultCloudTasksStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultCloudTasksStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -142,11 +142,10 @@ StatusOr<google::iam::v1::Policy> DefaultCloudTasksStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultCloudTasksStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -155,10 +154,10 @@ DefaultCloudTasksStub::TestIamPermissions(
 
 StatusOr<google::cloud::tasks::v2::ListTasksResponse>
 DefaultCloudTasksStub::ListTasks(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::ListTasksRequest const& request) {
   google::cloud::tasks::v2::ListTasksResponse response;
-  auto status = grpc_stub_->ListTasks(&client_context, request, &response);
+  auto status = grpc_stub_->ListTasks(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -166,10 +165,10 @@ DefaultCloudTasksStub::ListTasks(
 }
 
 StatusOr<google::cloud::tasks::v2::Task> DefaultCloudTasksStub::GetTask(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::GetTaskRequest const& request) {
   google::cloud::tasks::v2::Task response;
-  auto status = grpc_stub_->GetTask(&client_context, request, &response);
+  auto status = grpc_stub_->GetTask(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -177,10 +176,10 @@ StatusOr<google::cloud::tasks::v2::Task> DefaultCloudTasksStub::GetTask(
 }
 
 StatusOr<google::cloud::tasks::v2::Task> DefaultCloudTasksStub::CreateTask(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::CreateTaskRequest const& request) {
   google::cloud::tasks::v2::Task response;
-  auto status = grpc_stub_->CreateTask(&client_context, request, &response);
+  auto status = grpc_stub_->CreateTask(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -188,10 +187,10 @@ StatusOr<google::cloud::tasks::v2::Task> DefaultCloudTasksStub::CreateTask(
 }
 
 Status DefaultCloudTasksStub::DeleteTask(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::DeleteTaskRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteTask(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteTask(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -199,10 +198,10 @@ Status DefaultCloudTasksStub::DeleteTask(
 }
 
 StatusOr<google::cloud::tasks::v2::Task> DefaultCloudTasksStub::RunTask(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::tasks::v2::RunTaskRequest const& request) {
   google::cloud::tasks::v2::Task response;
-  auto status = grpc_stub_->RunTask(&client_context, request, &response);
+  auto status = grpc_stub_->RunTask(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -32,11 +32,10 @@ NetAppStub::~NetAppStub() = default;
 
 StatusOr<google::cloud::netapp::v1::ListStoragePoolsResponse>
 DefaultNetAppStub::ListStoragePools(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::ListStoragePoolsRequest const& request) {
   google::cloud::netapp::v1::ListStoragePoolsResponse response;
-  auto status =
-      grpc_stub_->ListStoragePools(&client_context, request, &response);
+  auto status = grpc_stub_->ListStoragePools(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -62,10 +61,10 @@ DefaultNetAppStub::AsyncCreateStoragePool(
 
 StatusOr<google::cloud::netapp::v1::StoragePool>
 DefaultNetAppStub::GetStoragePool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
   google::cloud::netapp::v1::StoragePool response;
-  auto status = grpc_stub_->GetStoragePool(&client_context, request, &response);
+  auto status = grpc_stub_->GetStoragePool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -108,10 +107,10 @@ DefaultNetAppStub::AsyncDeleteStoragePool(
 
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
 DefaultNetAppStub::ListVolumes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::ListVolumesRequest const& request) {
   google::cloud::netapp::v1::ListVolumesResponse response;
-  auto status = grpc_stub_->ListVolumes(&client_context, request, &response);
+  auto status = grpc_stub_->ListVolumes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -119,10 +118,10 @@ DefaultNetAppStub::ListVolumes(
 }
 
 StatusOr<google::cloud::netapp::v1::Volume> DefaultNetAppStub::GetVolume(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::GetVolumeRequest const& request) {
   google::cloud::netapp::v1::Volume response;
-  auto status = grpc_stub_->GetVolume(&client_context, request, &response);
+  auto status = grpc_stub_->GetVolume(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -199,10 +198,10 @@ DefaultNetAppStub::AsyncRevertVolume(
 
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
 DefaultNetAppStub::ListSnapshots(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::ListSnapshotsRequest const& request) {
   google::cloud::netapp::v1::ListSnapshotsResponse response;
-  auto status = grpc_stub_->ListSnapshots(&client_context, request, &response);
+  auto status = grpc_stub_->ListSnapshots(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -210,10 +209,10 @@ DefaultNetAppStub::ListSnapshots(
 }
 
 StatusOr<google::cloud::netapp::v1::Snapshot> DefaultNetAppStub::GetSnapshot(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::GetSnapshotRequest const& request) {
   google::cloud::netapp::v1::Snapshot response;
-  auto status = grpc_stub_->GetSnapshot(&client_context, request, &response);
+  auto status = grpc_stub_->GetSnapshot(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -273,11 +272,10 @@ DefaultNetAppStub::AsyncUpdateSnapshot(
 
 StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
 DefaultNetAppStub::ListActiveDirectories(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::ListActiveDirectoriesRequest const& request) {
   google::cloud::netapp::v1::ListActiveDirectoriesResponse response;
-  auto status =
-      grpc_stub_->ListActiveDirectories(&client_context, request, &response);
+  auto status = grpc_stub_->ListActiveDirectories(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -286,11 +284,10 @@ DefaultNetAppStub::ListActiveDirectories(
 
 StatusOr<google::cloud::netapp::v1::ActiveDirectory>
 DefaultNetAppStub::GetActiveDirectory(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::GetActiveDirectoryRequest const& request) {
   google::cloud::netapp::v1::ActiveDirectory response;
-  auto status =
-      grpc_stub_->GetActiveDirectory(&client_context, request, &response);
+  auto status = grpc_stub_->GetActiveDirectory(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -353,10 +350,10 @@ DefaultNetAppStub::AsyncDeleteActiveDirectory(
 
 StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse>
 DefaultNetAppStub::ListKmsConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::ListKmsConfigsRequest const& request) {
   google::cloud::netapp::v1::ListKmsConfigsResponse response;
-  auto status = grpc_stub_->ListKmsConfigs(&client_context, request, &response);
+  auto status = grpc_stub_->ListKmsConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -381,10 +378,10 @@ DefaultNetAppStub::AsyncCreateKmsConfig(
 }
 
 StatusOr<google::cloud::netapp::v1::KmsConfig> DefaultNetAppStub::GetKmsConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
   google::cloud::netapp::v1::KmsConfig response;
-  auto status = grpc_stub_->GetKmsConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetKmsConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -427,11 +424,10 @@ DefaultNetAppStub::AsyncEncryptVolumes(
 
 StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
 DefaultNetAppStub::VerifyKmsConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::VerifyKmsConfigRequest const& request) {
   google::cloud::netapp::v1::VerifyKmsConfigResponse response;
-  auto status =
-      grpc_stub_->VerifyKmsConfig(&client_context, request, &response);
+  auto status = grpc_stub_->VerifyKmsConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -457,11 +453,10 @@ DefaultNetAppStub::AsyncDeleteKmsConfig(
 
 StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
 DefaultNetAppStub::ListReplications(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::ListReplicationsRequest const& request) {
   google::cloud::netapp::v1::ListReplicationsResponse response;
-  auto status =
-      grpc_stub_->ListReplications(&client_context, request, &response);
+  auto status = grpc_stub_->ListReplications(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -470,10 +465,10 @@ DefaultNetAppStub::ListReplications(
 
 StatusOr<google::cloud::netapp::v1::Replication>
 DefaultNetAppStub::GetReplication(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::netapp::v1::GetReplicationRequest const& request) {
   google::cloud::netapp::v1::Replication response;
-  auto status = grpc_stub_->GetReplication(&client_context, request, &response);
+  auto status = grpc_stub_->GetReplication(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

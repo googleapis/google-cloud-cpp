@@ -89,38 +89,37 @@ class DefaultAgentEndpointServiceStub : public AgentEndpointServiceStub {
       google::cloud::osconfig::agentendpoint::v1::
           ReceiveTaskNotificationResponse>>
   ReceiveTaskNotification(
-      std::shared_ptr<grpc::ClientContext> client_context,
-      Options const& options,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::osconfig::agentendpoint::v1::
           ReceiveTaskNotificationRequest const& request) override;
 
   StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
   StartNextTask(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
           request) override;
 
   StatusOr<
       google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
-  ReportTaskProgress(grpc::ClientContext& client_context,
+  ReportTaskProgress(grpc::ClientContext& context,
                      google::cloud::osconfig::agentendpoint::v1::
                          ReportTaskProgressRequest const& request) override;
 
   StatusOr<
       google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
-  ReportTaskComplete(grpc::ClientContext& client_context,
+  ReportTaskComplete(grpc::ClientContext& context,
                      google::cloud::osconfig::agentendpoint::v1::
                          ReportTaskCompleteRequest const& request) override;
 
   StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
   RegisterAgent(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
           request) override;
 
   StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
   ReportInventory(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
           request) override;
 

@@ -31,10 +31,10 @@ TenantServiceStub::~TenantServiceStub() = default;
 
 StatusOr<google::cloud::talent::v4::Tenant>
 DefaultTenantServiceStub::CreateTenant(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::talent::v4::CreateTenantRequest const& request) {
   google::cloud::talent::v4::Tenant response;
-  auto status = grpc_stub_->CreateTenant(&client_context, request, &response);
+  auto status = grpc_stub_->CreateTenant(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,10 +42,10 @@ DefaultTenantServiceStub::CreateTenant(
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> DefaultTenantServiceStub::GetTenant(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::talent::v4::GetTenantRequest const& request) {
   google::cloud::talent::v4::Tenant response;
-  auto status = grpc_stub_->GetTenant(&client_context, request, &response);
+  auto status = grpc_stub_->GetTenant(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -54,10 +54,10 @@ StatusOr<google::cloud::talent::v4::Tenant> DefaultTenantServiceStub::GetTenant(
 
 StatusOr<google::cloud::talent::v4::Tenant>
 DefaultTenantServiceStub::UpdateTenant(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::talent::v4::UpdateTenantRequest const& request) {
   google::cloud::talent::v4::Tenant response;
-  auto status = grpc_stub_->UpdateTenant(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateTenant(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -65,10 +65,10 @@ DefaultTenantServiceStub::UpdateTenant(
 }
 
 Status DefaultTenantServiceStub::DeleteTenant(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::talent::v4::DeleteTenantRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteTenant(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteTenant(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -77,10 +77,10 @@ Status DefaultTenantServiceStub::DeleteTenant(
 
 StatusOr<google::cloud::talent::v4::ListTenantsResponse>
 DefaultTenantServiceStub::ListTenants(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::talent::v4::ListTenantsRequest const& request) {
   google::cloud::talent::v4::ListTenantsResponse response;
-  auto status = grpc_stub_->ListTenants(&client_context, request, &response);
+  auto status = grpc_stub_->ListTenants(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

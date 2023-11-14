@@ -68,29 +68,29 @@ class DefaultFirewallStub : public FirewallStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::appengine::v1::ListIngressRulesResponse> ListIngressRules(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::appengine::v1::ListIngressRulesRequest const& request) override;
 
   StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
   BatchUpdateIngressRules(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::appengine::v1::BatchUpdateIngressRulesRequest const& request)
       override;
 
   StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::appengine::v1::CreateIngressRuleRequest const& request) override;
 
   StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::appengine::v1::GetIngressRuleRequest const& request) override;
 
   StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::appengine::v1::UpdateIngressRuleRequest const& request) override;
 
   Status DeleteIngressRule(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::appengine::v1::DeleteIngressRuleRequest const& request) override;
 
  private:

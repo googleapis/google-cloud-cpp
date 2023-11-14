@@ -99,11 +99,11 @@ class DefaultIndexServiceStub : public IndexServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Index> GetIndex(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetIndexRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse> ListIndexes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ListIndexesRequest const& request)
       override;
 
@@ -120,12 +120,12 @@ class DefaultIndexServiceStub : public IndexServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
-  UpsertDatapoints(grpc::ClientContext& client_context,
+  UpsertDatapoints(grpc::ClientContext& context,
                    google::cloud::aiplatform::v1::UpsertDatapointsRequest const&
                        request) override;
 
   StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
-  RemoveDatapoints(grpc::ClientContext& client_context,
+  RemoveDatapoints(grpc::ClientContext& context,
                    google::cloud::aiplatform::v1::RemoveDatapointsRequest const&
                        request) override;
 

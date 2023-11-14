@@ -31,10 +31,10 @@ PredictionServiceStub::~PredictionServiceStub() = default;
 
 StatusOr<google::cloud::retail::v2::PredictResponse>
 DefaultPredictionServiceStub::Predict(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::PredictRequest const& request) {
   google::cloud::retail::v2::PredictResponse response;
-  auto status = grpc_stub_->Predict(&client_context, request, &response);
+  auto status = grpc_stub_->Predict(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

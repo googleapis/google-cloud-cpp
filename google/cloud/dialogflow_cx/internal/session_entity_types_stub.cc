@@ -31,12 +31,12 @@ SessionEntityTypesStub::~SessionEntityTypesStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse>
 DefaultSessionEntityTypesStub::ListSessionEntityTypes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse response;
   auto status =
-      grpc_stub_->ListSessionEntityTypes(&client_context, request, &response);
+      grpc_stub_->ListSessionEntityTypes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,12 +45,11 @@ DefaultSessionEntityTypesStub::ListSessionEntityTypes(
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 DefaultSessionEntityTypesStub::GetSessionEntityType(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::SessionEntityType response;
-  auto status =
-      grpc_stub_->GetSessionEntityType(&client_context, request, &response);
+  auto status = grpc_stub_->GetSessionEntityType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,12 +58,12 @@ DefaultSessionEntityTypesStub::GetSessionEntityType(
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 DefaultSessionEntityTypesStub::CreateSessionEntityType(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::SessionEntityType response;
   auto status =
-      grpc_stub_->CreateSessionEntityType(&client_context, request, &response);
+      grpc_stub_->CreateSessionEntityType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -73,12 +72,12 @@ DefaultSessionEntityTypesStub::CreateSessionEntityType(
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 DefaultSessionEntityTypesStub::UpdateSessionEntityType(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::SessionEntityType response;
   auto status =
-      grpc_stub_->UpdateSessionEntityType(&client_context, request, &response);
+      grpc_stub_->UpdateSessionEntityType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -86,12 +85,12 @@ DefaultSessionEntityTypesStub::UpdateSessionEntityType(
 }
 
 Status DefaultSessionEntityTypesStub::DeleteSessionEntityType(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
         request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->DeleteSessionEntityType(&client_context, request, &response);
+      grpc_stub_->DeleteSessionEntityType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

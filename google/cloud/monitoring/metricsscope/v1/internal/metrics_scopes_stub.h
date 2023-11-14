@@ -86,14 +86,14 @@ class DefaultMetricsScopesStub : public MetricsScopesStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
           request) override;
 
   StatusOr<google::monitoring::metricsscope::v1::
                ListMetricsScopesByMonitoredProjectResponse>
   ListMetricsScopesByMonitoredProject(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::metricsscope::v1::
           ListMetricsScopesByMonitoredProjectRequest const& request) override;
 

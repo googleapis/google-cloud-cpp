@@ -49,7 +49,7 @@ class DefaultSystemPolicyV1Stub : public SystemPolicyV1Stub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
           request) override;
 

@@ -31,10 +31,10 @@ MetricsServiceV2Stub::~MetricsServiceV2Stub() = default;
 
 StatusOr<google::logging::v2::ListLogMetricsResponse>
 DefaultMetricsServiceV2Stub::ListLogMetrics(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::logging::v2::ListLogMetricsRequest const& request) {
   google::logging::v2::ListLogMetricsResponse response;
-  auto status = grpc_stub_->ListLogMetrics(&client_context, request, &response);
+  auto status = grpc_stub_->ListLogMetrics(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultMetricsServiceV2Stub::ListLogMetrics(
 
 StatusOr<google::logging::v2::LogMetric>
 DefaultMetricsServiceV2Stub::GetLogMetric(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::logging::v2::GetLogMetricRequest const& request) {
   google::logging::v2::LogMetric response;
-  auto status = grpc_stub_->GetLogMetric(&client_context, request, &response);
+  auto status = grpc_stub_->GetLogMetric(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,11 +55,10 @@ DefaultMetricsServiceV2Stub::GetLogMetric(
 
 StatusOr<google::logging::v2::LogMetric>
 DefaultMetricsServiceV2Stub::CreateLogMetric(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::logging::v2::CreateLogMetricRequest const& request) {
   google::logging::v2::LogMetric response;
-  auto status =
-      grpc_stub_->CreateLogMetric(&client_context, request, &response);
+  auto status = grpc_stub_->CreateLogMetric(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -68,11 +67,10 @@ DefaultMetricsServiceV2Stub::CreateLogMetric(
 
 StatusOr<google::logging::v2::LogMetric>
 DefaultMetricsServiceV2Stub::UpdateLogMetric(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::logging::v2::UpdateLogMetricRequest const& request) {
   google::logging::v2::LogMetric response;
-  auto status =
-      grpc_stub_->UpdateLogMetric(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateLogMetric(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -80,11 +78,10 @@ DefaultMetricsServiceV2Stub::UpdateLogMetric(
 }
 
 Status DefaultMetricsServiceV2Stub::DeleteLogMetric(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::logging::v2::DeleteLogMetricRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteLogMetric(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteLogMetric(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -31,11 +31,10 @@ OsLoginServiceStub::~OsLoginServiceStub() = default;
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
 DefaultOsLoginServiceStub::CreateSshPublicKey(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
   google::cloud::oslogin::common::SshPublicKey response;
-  auto status =
-      grpc_stub_->CreateSshPublicKey(&client_context, request, &response);
+  auto status = grpc_stub_->CreateSshPublicKey(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,11 +42,10 @@ DefaultOsLoginServiceStub::CreateSshPublicKey(
 }
 
 Status DefaultOsLoginServiceStub::DeletePosixAccount(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeletePosixAccount(&client_context, request, &response);
+  auto status = grpc_stub_->DeletePosixAccount(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,11 +53,10 @@ Status DefaultOsLoginServiceStub::DeletePosixAccount(
 }
 
 Status DefaultOsLoginServiceStub::DeleteSshPublicKey(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteSshPublicKey(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteSshPublicKey(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -68,11 +65,10 @@ Status DefaultOsLoginServiceStub::DeleteSshPublicKey(
 
 StatusOr<google::cloud::oslogin::v1::LoginProfile>
 DefaultOsLoginServiceStub::GetLoginProfile(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
   google::cloud::oslogin::v1::LoginProfile response;
-  auto status =
-      grpc_stub_->GetLoginProfile(&client_context, request, &response);
+  auto status = grpc_stub_->GetLoginProfile(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -81,11 +77,10 @@ DefaultOsLoginServiceStub::GetLoginProfile(
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
 DefaultOsLoginServiceStub::GetSshPublicKey(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
   google::cloud::oslogin::common::SshPublicKey response;
-  auto status =
-      grpc_stub_->GetSshPublicKey(&client_context, request, &response);
+  auto status = grpc_stub_->GetSshPublicKey(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -94,11 +89,10 @@ DefaultOsLoginServiceStub::GetSshPublicKey(
 
 StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
 DefaultOsLoginServiceStub::ImportSshPublicKey(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
   google::cloud::oslogin::v1::ImportSshPublicKeyResponse response;
-  auto status =
-      grpc_stub_->ImportSshPublicKey(&client_context, request, &response);
+  auto status = grpc_stub_->ImportSshPublicKey(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -107,11 +101,10 @@ DefaultOsLoginServiceStub::ImportSshPublicKey(
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
 DefaultOsLoginServiceStub::UpdateSshPublicKey(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
   google::cloud::oslogin::common::SshPublicKey response;
-  auto status =
-      grpc_stub_->UpdateSshPublicKey(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateSshPublicKey(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

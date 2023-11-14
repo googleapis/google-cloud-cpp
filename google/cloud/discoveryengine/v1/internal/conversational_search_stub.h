@@ -82,33 +82,33 @@ class DefaultConversationalSearchServiceStub
 
   StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
   ConverseConversation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::ConverseConversationRequest const&
           request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Conversation> CreateConversation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::CreateConversationRequest const&
           request) override;
 
   Status DeleteConversation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::DeleteConversationRequest const&
           request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Conversation> UpdateConversation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::UpdateConversationRequest const&
           request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Conversation> GetConversation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::GetConversationRequest const& request)
       override;
 
   StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse>
   ListConversations(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::discoveryengine::v1::ListConversationsRequest const&
           request) override;
 

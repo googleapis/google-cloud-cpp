@@ -31,10 +31,10 @@ ServiceControllerStub::~ServiceControllerStub() = default;
 
 StatusOr<google::api::servicecontrol::v2::CheckResponse>
 DefaultServiceControllerStub::Check(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::servicecontrol::v2::CheckRequest const& request) {
   google::api::servicecontrol::v2::CheckResponse response;
-  auto status = grpc_stub_->Check(&client_context, request, &response);
+  auto status = grpc_stub_->Check(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultServiceControllerStub::Check(
 
 StatusOr<google::api::servicecontrol::v2::ReportResponse>
 DefaultServiceControllerStub::Report(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::servicecontrol::v2::ReportRequest const& request) {
   google::api::servicecontrol::v2::ReportResponse response;
-  auto status = grpc_stub_->Report(&client_context, request, &response);
+  auto status = grpc_stub_->Report(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -116,23 +116,23 @@ class DefaultProductServiceStub : public ProductServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::CreateProductRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Product> GetProduct(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::GetProductRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ListProductsResponse> ListProducts(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::ListProductsRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::UpdateProductRequest const& request) override;
 
   Status DeleteProduct(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::DeleteProductRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportProducts(

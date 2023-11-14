@@ -31,11 +31,10 @@ OrgPolicyStub::~OrgPolicyStub() = default;
 
 StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
 DefaultOrgPolicyStub::ListConstraints(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::ListConstraintsRequest const& request) {
   google::cloud::orgpolicy::v2::ListConstraintsResponse response;
-  auto status =
-      grpc_stub_->ListConstraints(&client_context, request, &response);
+  auto status = grpc_stub_->ListConstraints(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +43,10 @@ DefaultOrgPolicyStub::ListConstraints(
 
 StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>
 DefaultOrgPolicyStub::ListPolicies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::ListPoliciesRequest const& request) {
   google::cloud::orgpolicy::v2::ListPoliciesResponse response;
-  auto status = grpc_stub_->ListPolicies(&client_context, request, &response);
+  auto status = grpc_stub_->ListPolicies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,10 +54,10 @@ DefaultOrgPolicyStub::ListPolicies(
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> DefaultOrgPolicyStub::GetPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
   google::cloud::orgpolicy::v2::Policy response;
-  auto status = grpc_stub_->GetPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -67,11 +66,10 @@ StatusOr<google::cloud::orgpolicy::v2::Policy> DefaultOrgPolicyStub::GetPolicy(
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 DefaultOrgPolicyStub::GetEffectivePolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
   google::cloud::orgpolicy::v2::Policy response;
-  auto status =
-      grpc_stub_->GetEffectivePolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetEffectivePolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -80,10 +78,10 @@ DefaultOrgPolicyStub::GetEffectivePolicy(
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 DefaultOrgPolicyStub::CreatePolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
   google::cloud::orgpolicy::v2::Policy response;
-  auto status = grpc_stub_->CreatePolicy(&client_context, request, &response);
+  auto status = grpc_stub_->CreatePolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -92,10 +90,10 @@ DefaultOrgPolicyStub::CreatePolicy(
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 DefaultOrgPolicyStub::UpdatePolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
   google::cloud::orgpolicy::v2::Policy response;
-  auto status = grpc_stub_->UpdatePolicy(&client_context, request, &response);
+  auto status = grpc_stub_->UpdatePolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -103,10 +101,10 @@ DefaultOrgPolicyStub::UpdatePolicy(
 }
 
 Status DefaultOrgPolicyStub::DeletePolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeletePolicy(&client_context, request, &response);
+  auto status = grpc_stub_->DeletePolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

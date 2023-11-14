@@ -169,13 +169,13 @@ class DefaultAzureClustersStub : public AzureClustersStub {
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::ListAzureClientsResponse>
   ListAzureClients(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request)
       override;
 
@@ -198,13 +198,13 @@ class DefaultAzureClustersStub : public AzureClustersStub {
           request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureCluster> GetAzureCluster(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::ListAzureClustersResponse>
   ListAzureClusters(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request)
       override;
 
@@ -216,7 +216,7 @@ class DefaultAzureClustersStub : public AzureClustersStub {
 
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
   GenerateAzureAccessToken(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
           request) override;
 
@@ -233,13 +233,13 @@ class DefaultAzureClustersStub : public AzureClustersStub {
           request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool> GetAzureNodePool(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse>
   ListAzureNodePools(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
           request) override;
 
@@ -251,7 +251,7 @@ class DefaultAzureClustersStub : public AzureClustersStub {
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
   GetAzureServerConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
           request) override;
 

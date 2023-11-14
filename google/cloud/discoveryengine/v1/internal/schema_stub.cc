@@ -32,10 +32,10 @@ SchemaServiceStub::~SchemaServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
 DefaultSchemaServiceStub::GetSchema(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
   google::cloud::discoveryengine::v1::Schema response;
-  auto status = grpc_stub_->GetSchema(&client_context, request, &response);
+  auto status = grpc_stub_->GetSchema(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultSchemaServiceStub::GetSchema(
 
 StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
 DefaultSchemaServiceStub::ListSchemas(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
   google::cloud::discoveryengine::v1::ListSchemasResponse response;
-  auto status = grpc_stub_->ListSchemas(&client_context, request, &response);
+  auto status = grpc_stub_->ListSchemas(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

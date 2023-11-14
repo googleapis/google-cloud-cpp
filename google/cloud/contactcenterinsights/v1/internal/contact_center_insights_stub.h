@@ -295,7 +295,7 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   CreateConversation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
           request) override;
 
@@ -307,24 +307,24 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   UpdateConversation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   GetConversation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetConversationRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::ListConversationsResponse>
   ListConversations(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::ListConversationsRequest const&
           request) override;
 
   Status DeleteConversation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
           request) override;
 
@@ -335,18 +335,18 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Analysis> GetAnalysis(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysesResponse>
   ListAnalyses(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::ListAnalysesRequest const&
           request) override;
 
   Status DeleteAnalysis(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
           request) override;
 
@@ -383,18 +383,18 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
 
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
   UpdateIssueModel(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel> GetIssueModel(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
   ListIssueModels(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
           request) override;
 
@@ -417,97 +417,97 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetIssueRequest const& request)
       override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
-  ListIssues(grpc::ClientContext& client_context,
+  ListIssues(grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
                  request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
           request) override;
 
   Status DeleteIssue(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::
                CalculateIssueModelStatsResponse>
   CalculateIssueModelStats(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::
           CalculateIssueModelStatsRequest const& request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  CreatePhraseMatcher(grpc::ClientContext& client_context,
+  CreatePhraseMatcher(grpc::ClientContext& context,
                       google::cloud::contactcenterinsights::v1::
                           CreatePhraseMatcherRequest const& request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
   GetPhraseMatcher(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::ListPhraseMatchersResponse>
   ListPhraseMatchers(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest const&
           request) override;
 
   Status DeletePhraseMatcher(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::
           DeletePhraseMatcherRequest const& request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  UpdatePhraseMatcher(grpc::ClientContext& client_context,
+  UpdatePhraseMatcher(grpc::ClientContext& context,
                       google::cloud::contactcenterinsights::v1::
                           UpdatePhraseMatcherRequest const& request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
   CalculateStats(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> GetSettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> UpdateSettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::CreateViewRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetViewRequest const& request)
       override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::ListViewsResponse>
-  ListViews(grpc::ClientContext& client_context,
+  ListViews(grpc::ClientContext& context,
             google::cloud::contactcenterinsights::v1::ListViewsRequest const&
                 request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
           request) override;
 
   Status DeleteView(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
           request) override;
 

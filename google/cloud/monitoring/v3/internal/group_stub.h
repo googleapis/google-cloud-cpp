@@ -67,27 +67,27 @@ class DefaultGroupServiceStub : public GroupServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::monitoring::v3::ListGroupsResponse> ListGroups(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::ListGroupsRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> GetGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::GetGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> CreateGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::CreateGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> UpdateGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::UpdateGroupRequest const& request) override;
 
   Status DeleteGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::DeleteGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListGroupMembersResponse> ListGroupMembers(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::ListGroupMembersRequest const& request) override;
 
  private:

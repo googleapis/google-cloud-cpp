@@ -153,11 +153,11 @@ class DefaultEventarcStub : public EventarcStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::eventarc::v1::GetTriggerRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::ListTriggersResponse> ListTriggers(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::eventarc::v1::ListTriggersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTrigger(
@@ -179,11 +179,11 @@ class DefaultEventarcStub : public EventarcStub {
       override;
 
   StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::eventarc::v1::GetChannelRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::ListChannelsResponse> ListChannels(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::eventarc::v1::ListChannelsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateChannel(
@@ -205,22 +205,22 @@ class DefaultEventarcStub : public EventarcStub {
       override;
 
   StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::eventarc::v1::GetProviderRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::ListProvidersResponse> ListProviders(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::eventarc::v1::ListProvidersRequest const& request)
       override;
 
   StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::eventarc::v1::GetChannelConnectionRequest const& request)
       override;
 
   StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse>
   ListChannelConnections(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request)
       override;
 
@@ -238,13 +238,13 @@ class DefaultEventarcStub : public EventarcStub {
 
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
   GetGoogleChannelConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
   UpdateGoogleChannelConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
           request) override;
 

@@ -79,36 +79,36 @@ class DefaultLanguageServiceStub : public LanguageServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
-  AnalyzeSentiment(grpc::ClientContext& client_context,
+  AnalyzeSentiment(grpc::ClientContext& context,
                    google::cloud::language::v1::AnalyzeSentimentRequest const&
                        request) override;
 
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
-  AnalyzeEntities(grpc::ClientContext& client_context,
+  AnalyzeEntities(grpc::ClientContext& context,
                   google::cloud::language::v1::AnalyzeEntitiesRequest const&
                       request) override;
 
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request)
       override;
 
   StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::language::v1::AnalyzeSyntaxRequest const& request)
       override;
 
   StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::language::v1::ClassifyTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v1::ModerateTextResponse> ModerateText(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::language::v1::ModerateTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::language::v1::AnnotateTextRequest const& request) override;
 
  private:

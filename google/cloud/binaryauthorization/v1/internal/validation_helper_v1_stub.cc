@@ -32,13 +32,13 @@ ValidationHelperV1Stub::~ValidationHelperV1Stub() = default;
 StatusOr<google::cloud::binaryauthorization::v1::
              ValidateAttestationOccurrenceResponse>
 DefaultValidationHelperV1Stub::ValidateAttestationOccurrence(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request) {
   google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse
       response;
-  auto status = grpc_stub_->ValidateAttestationOccurrence(&client_context,
-                                                          request, &response);
+  auto status =
+      grpc_stub_->ValidateAttestationOccurrence(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

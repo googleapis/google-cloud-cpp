@@ -32,10 +32,10 @@ ProjectsStub::~ProjectsStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
 DefaultProjectsStub::GetProject(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::GetProjectRequest const& request) {
   google::cloud::resourcemanager::v3::Project response;
-  auto status = grpc_stub_->GetProject(&client_context, request, &response);
+  auto status = grpc_stub_->GetProject(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultProjectsStub::GetProject(
 
 StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
 DefaultProjectsStub::ListProjects(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::ListProjectsRequest const& request) {
   google::cloud::resourcemanager::v3::ListProjectsResponse response;
-  auto status = grpc_stub_->ListProjects(&client_context, request, &response);
+  auto status = grpc_stub_->ListProjects(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -56,10 +56,10 @@ DefaultProjectsStub::ListProjects(
 
 StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
 DefaultProjectsStub::SearchProjects(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) {
   google::cloud::resourcemanager::v3::SearchProjectsResponse response;
-  auto status = grpc_stub_->SearchProjects(&client_context, request, &response);
+  auto status = grpc_stub_->SearchProjects(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -157,10 +157,10 @@ DefaultProjectsStub::AsyncUndeleteProject(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultProjectsStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -168,10 +168,10 @@ StatusOr<google::iam::v1::Policy> DefaultProjectsStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultProjectsStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -180,11 +180,10 @@ StatusOr<google::iam::v1::Policy> DefaultProjectsStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultProjectsStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

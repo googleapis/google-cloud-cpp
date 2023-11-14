@@ -49,10 +49,10 @@ DefaultAssetServiceStub::AsyncExportAssets(
 
 StatusOr<google::cloud::asset::v1::ListAssetsResponse>
 DefaultAssetServiceStub::ListAssets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::ListAssetsRequest const& request) {
   google::cloud::asset::v1::ListAssetsResponse response;
-  auto status = grpc_stub_->ListAssets(&client_context, request, &response);
+  auto status = grpc_stub_->ListAssets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -61,11 +61,10 @@ DefaultAssetServiceStub::ListAssets(
 
 StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
 DefaultAssetServiceStub::BatchGetAssetsHistory(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request) {
   google::cloud::asset::v1::BatchGetAssetsHistoryResponse response;
-  auto status =
-      grpc_stub_->BatchGetAssetsHistory(&client_context, request, &response);
+  auto status = grpc_stub_->BatchGetAssetsHistory(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -73,10 +72,10 @@ DefaultAssetServiceStub::BatchGetAssetsHistory(
 }
 
 StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::CreateFeed(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::CreateFeedRequest const& request) {
   google::cloud::asset::v1::Feed response;
-  auto status = grpc_stub_->CreateFeed(&client_context, request, &response);
+  auto status = grpc_stub_->CreateFeed(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -84,10 +83,10 @@ StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::CreateFeed(
 }
 
 StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::GetFeed(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::GetFeedRequest const& request) {
   google::cloud::asset::v1::Feed response;
-  auto status = grpc_stub_->GetFeed(&client_context, request, &response);
+  auto status = grpc_stub_->GetFeed(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -96,10 +95,10 @@ StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::GetFeed(
 
 StatusOr<google::cloud::asset::v1::ListFeedsResponse>
 DefaultAssetServiceStub::ListFeeds(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::ListFeedsRequest const& request) {
   google::cloud::asset::v1::ListFeedsResponse response;
-  auto status = grpc_stub_->ListFeeds(&client_context, request, &response);
+  auto status = grpc_stub_->ListFeeds(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -107,10 +106,10 @@ DefaultAssetServiceStub::ListFeeds(
 }
 
 StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::UpdateFeed(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::UpdateFeedRequest const& request) {
   google::cloud::asset::v1::Feed response;
-  auto status = grpc_stub_->UpdateFeed(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateFeed(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -118,10 +117,10 @@ StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::UpdateFeed(
 }
 
 Status DefaultAssetServiceStub::DeleteFeed(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::DeleteFeedRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteFeed(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteFeed(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -130,11 +129,10 @@ Status DefaultAssetServiceStub::DeleteFeed(
 
 StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse>
 DefaultAssetServiceStub::SearchAllResources(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::SearchAllResourcesRequest const& request) {
   google::cloud::asset::v1::SearchAllResourcesResponse response;
-  auto status =
-      grpc_stub_->SearchAllResources(&client_context, request, &response);
+  auto status = grpc_stub_->SearchAllResources(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -143,11 +141,10 @@ DefaultAssetServiceStub::SearchAllResources(
 
 StatusOr<google::cloud::asset::v1::SearchAllIamPoliciesResponse>
 DefaultAssetServiceStub::SearchAllIamPolicies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::SearchAllIamPoliciesRequest const& request) {
   google::cloud::asset::v1::SearchAllIamPoliciesResponse response;
-  auto status =
-      grpc_stub_->SearchAllIamPolicies(&client_context, request, &response);
+  auto status = grpc_stub_->SearchAllIamPolicies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -156,11 +153,10 @@ DefaultAssetServiceStub::SearchAllIamPolicies(
 
 StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>
 DefaultAssetServiceStub::AnalyzeIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) {
   google::cloud::asset::v1::AnalyzeIamPolicyResponse response;
-  auto status =
-      grpc_stub_->AnalyzeIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->AnalyzeIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -189,10 +185,10 @@ DefaultAssetServiceStub::AsyncAnalyzeIamPolicyLongrunning(
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>
 DefaultAssetServiceStub::AnalyzeMove(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeMoveRequest const& request) {
   google::cloud::asset::v1::AnalyzeMoveResponse response;
-  auto status = grpc_stub_->AnalyzeMove(&client_context, request, &response);
+  auto status = grpc_stub_->AnalyzeMove(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -201,10 +197,10 @@ DefaultAssetServiceStub::AnalyzeMove(
 
 StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
 DefaultAssetServiceStub::QueryAssets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::QueryAssetsRequest const& request) {
   google::cloud::asset::v1::QueryAssetsResponse response;
-  auto status = grpc_stub_->QueryAssets(&client_context, request, &response);
+  auto status = grpc_stub_->QueryAssets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -213,11 +209,10 @@ DefaultAssetServiceStub::QueryAssets(
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
 DefaultAssetServiceStub::CreateSavedQuery(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
   google::cloud::asset::v1::SavedQuery response;
-  auto status =
-      grpc_stub_->CreateSavedQuery(&client_context, request, &response);
+  auto status = grpc_stub_->CreateSavedQuery(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -226,10 +221,10 @@ DefaultAssetServiceStub::CreateSavedQuery(
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
 DefaultAssetServiceStub::GetSavedQuery(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::GetSavedQueryRequest const& request) {
   google::cloud::asset::v1::SavedQuery response;
-  auto status = grpc_stub_->GetSavedQuery(&client_context, request, &response);
+  auto status = grpc_stub_->GetSavedQuery(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -238,11 +233,10 @@ DefaultAssetServiceStub::GetSavedQuery(
 
 StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse>
 DefaultAssetServiceStub::ListSavedQueries(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
   google::cloud::asset::v1::ListSavedQueriesResponse response;
-  auto status =
-      grpc_stub_->ListSavedQueries(&client_context, request, &response);
+  auto status = grpc_stub_->ListSavedQueries(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -251,11 +245,10 @@ DefaultAssetServiceStub::ListSavedQueries(
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
 DefaultAssetServiceStub::UpdateSavedQuery(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
   google::cloud::asset::v1::SavedQuery response;
-  auto status =
-      grpc_stub_->UpdateSavedQuery(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateSavedQuery(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -263,11 +256,10 @@ DefaultAssetServiceStub::UpdateSavedQuery(
 }
 
 Status DefaultAssetServiceStub::DeleteSavedQuery(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteSavedQuery(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteSavedQuery(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -276,12 +268,12 @@ Status DefaultAssetServiceStub::DeleteSavedQuery(
 
 StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
 DefaultAssetServiceStub::BatchGetEffectiveIamPolicies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
         request) {
   google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse response;
-  auto status = grpc_stub_->BatchGetEffectiveIamPolicies(&client_context,
-                                                         request, &response);
+  auto status =
+      grpc_stub_->BatchGetEffectiveIamPolicies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -290,11 +282,10 @@ DefaultAssetServiceStub::BatchGetEffectiveIamPolicies(
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
 DefaultAssetServiceStub::AnalyzeOrgPolicies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
   google::cloud::asset::v1::AnalyzeOrgPoliciesResponse response;
-  auto status =
-      grpc_stub_->AnalyzeOrgPolicies(&client_context, request, &response);
+  auto status = grpc_stub_->AnalyzeOrgPolicies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -303,12 +294,12 @@ DefaultAssetServiceStub::AnalyzeOrgPolicies(
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
 DefaultAssetServiceStub::AnalyzeOrgPolicyGovernedContainers(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
         request) {
   google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse response;
   auto status = grpc_stub_->AnalyzeOrgPolicyGovernedContainers(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -317,12 +308,12 @@ DefaultAssetServiceStub::AnalyzeOrgPolicyGovernedContainers(
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
 DefaultAssetServiceStub::AnalyzeOrgPolicyGovernedAssets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
         request) {
   google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse response;
-  auto status = grpc_stub_->AnalyzeOrgPolicyGovernedAssets(&client_context,
-                                                           request, &response);
+  auto status =
+      grpc_stub_->AnalyzeOrgPolicyGovernedAssets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

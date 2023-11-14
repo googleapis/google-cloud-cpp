@@ -32,12 +32,11 @@ AppGatewaysServiceStub::~AppGatewaysServiceStub() = default;
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
 DefaultAppGatewaysServiceStub::ListAppGateways(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
         request) {
   google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse response;
-  auto status =
-      grpc_stub_->ListAppGateways(&client_context, request, &response);
+  auto status = grpc_stub_->ListAppGateways(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -46,11 +45,11 @@ DefaultAppGatewaysServiceStub::ListAppGateways(
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
 DefaultAppGatewaysServiceStub::GetAppGateway(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
         request) {
   google::cloud::beyondcorp::appgateways::v1::AppGateway response;
-  auto status = grpc_stub_->GetAppGateway(&client_context, request, &response);
+  auto status = grpc_stub_->GetAppGateway(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

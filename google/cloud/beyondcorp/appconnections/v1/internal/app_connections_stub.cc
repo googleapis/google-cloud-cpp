@@ -34,13 +34,12 @@ AppConnectionsServiceStub::~AppConnectionsServiceStub() = default;
 StatusOr<
     google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse>
 DefaultAppConnectionsServiceStub::ListAppConnections(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::beyondcorp::appconnections::v1::
         ListAppConnectionsRequest const& request) {
   google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse
       response;
-  auto status =
-      grpc_stub_->ListAppConnections(&client_context, request, &response);
+  auto status = grpc_stub_->ListAppConnections(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -49,12 +48,11 @@ DefaultAppConnectionsServiceStub::ListAppConnections(
 
 StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
 DefaultAppConnectionsServiceStub::GetAppConnection(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::beyondcorp::appconnections::v1::
         GetAppConnectionRequest const& request) {
   google::cloud::beyondcorp::appconnections::v1::AppConnection response;
-  auto status =
-      grpc_stub_->GetAppConnection(&client_context, request, &response);
+  auto status = grpc_stub_->GetAppConnection(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -121,13 +119,12 @@ DefaultAppConnectionsServiceStub::AsyncDeleteAppConnection(
 StatusOr<google::cloud::beyondcorp::appconnections::v1::
              ResolveAppConnectionsResponse>
 DefaultAppConnectionsServiceStub::ResolveAppConnections(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::beyondcorp::appconnections::v1::
         ResolveAppConnectionsRequest const& request) {
   google::cloud::beyondcorp::appconnections::v1::ResolveAppConnectionsResponse
       response;
-  auto status =
-      grpc_stub_->ResolveAppConnections(&client_context, request, &response);
+  auto status = grpc_stub_->ResolveAppConnections(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

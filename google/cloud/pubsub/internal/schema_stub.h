@@ -83,43 +83,43 @@ class DefaultSchemaServiceStub : public SchemaServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::CreateSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> GetSchema(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::GetSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSchemasResponse> ListSchemas(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::ListSchemasRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse> ListSchemaRevisions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::ListSchemaRevisionsRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> CommitSchema(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::CommitSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> RollbackSchema(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::RollbackSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::DeleteSchemaRevisionRequest const& request) override;
 
   Status DeleteSchema(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::DeleteSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::ValidateSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::pubsub::v1::ValidateMessageRequest const& request) override;
 
  private:

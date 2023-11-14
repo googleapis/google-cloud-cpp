@@ -51,7 +51,7 @@ class DefaultPolicyTroubleshooterStub : public PolicyTroubleshooterStub {
   StatusOr<google::cloud::policytroubleshooter::iam::v3::
                TroubleshootIamPolicyResponse>
   TroubleshootIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::policytroubleshooter::iam::v3::
           TroubleshootIamPolicyRequest const& request) override;
 

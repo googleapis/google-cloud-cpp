@@ -55,12 +55,12 @@ class DefaultDeploymentsStub : public DeploymentsStub {
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
   ListDeployments(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request)
       override;
 

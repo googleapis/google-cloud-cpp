@@ -32,10 +32,10 @@ BareMetalSolutionStub::~BareMetalSolutionStub() = default;
 
 StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
 DefaultBareMetalSolutionStub::ListInstances(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::ListInstancesRequest const& request) {
   google::cloud::baremetalsolution::v2::ListInstancesResponse response;
-  auto status = grpc_stub_->ListInstances(&client_context, request, &response);
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultBareMetalSolutionStub::ListInstances(
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 DefaultBareMetalSolutionStub::GetInstance(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::GetInstanceRequest const& request) {
   google::cloud::baremetalsolution::v2::Instance response;
-  auto status = grpc_stub_->GetInstance(&client_context, request, &response);
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -75,11 +75,11 @@ DefaultBareMetalSolutionStub::AsyncUpdateInstance(
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 DefaultBareMetalSolutionStub::RenameInstance(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
         request) {
   google::cloud::baremetalsolution::v2::Instance response;
-  auto status = grpc_stub_->RenameInstance(&client_context, request, &response);
+  auto status = grpc_stub_->RenameInstance(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -200,10 +200,10 @@ DefaultBareMetalSolutionStub::AsyncDetachLun(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListSSHKeysResponse>
 DefaultBareMetalSolutionStub::ListSSHKeys(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::ListSSHKeysRequest const& request) {
   google::cloud::baremetalsolution::v2::ListSSHKeysResponse response;
-  auto status = grpc_stub_->ListSSHKeys(&client_context, request, &response);
+  auto status = grpc_stub_->ListSSHKeys(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -212,10 +212,10 @@ DefaultBareMetalSolutionStub::ListSSHKeys(
 
 StatusOr<google::cloud::baremetalsolution::v2::SSHKey>
 DefaultBareMetalSolutionStub::CreateSSHKey(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request) {
   google::cloud::baremetalsolution::v2::SSHKey response;
-  auto status = grpc_stub_->CreateSSHKey(&client_context, request, &response);
+  auto status = grpc_stub_->CreateSSHKey(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -223,10 +223,10 @@ DefaultBareMetalSolutionStub::CreateSSHKey(
 }
 
 Status DefaultBareMetalSolutionStub::DeleteSSHKey(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteSSHKey(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteSSHKey(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -235,10 +235,10 @@ Status DefaultBareMetalSolutionStub::DeleteSSHKey(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
 DefaultBareMetalSolutionStub::ListVolumes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::ListVolumesRequest const& request) {
   google::cloud::baremetalsolution::v2::ListVolumesResponse response;
-  auto status = grpc_stub_->ListVolumes(&client_context, request, &response);
+  auto status = grpc_stub_->ListVolumes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -247,10 +247,10 @@ DefaultBareMetalSolutionStub::ListVolumes(
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 DefaultBareMetalSolutionStub::GetVolume(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::GetVolumeRequest const& request) {
   google::cloud::baremetalsolution::v2::Volume response;
-  auto status = grpc_stub_->GetVolume(&client_context, request, &response);
+  auto status = grpc_stub_->GetVolume(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -277,10 +277,10 @@ DefaultBareMetalSolutionStub::AsyncUpdateVolume(
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 DefaultBareMetalSolutionStub::RenameVolume(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request) {
   google::cloud::baremetalsolution::v2::Volume response;
-  auto status = grpc_stub_->RenameVolume(&client_context, request, &response);
+  auto status = grpc_stub_->RenameVolume(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -325,10 +325,10 @@ DefaultBareMetalSolutionStub::AsyncResizeVolume(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworksResponse>
 DefaultBareMetalSolutionStub::ListNetworks(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::ListNetworksRequest const& request) {
   google::cloud::baremetalsolution::v2::ListNetworksResponse response;
-  auto status = grpc_stub_->ListNetworks(&client_context, request, &response);
+  auto status = grpc_stub_->ListNetworks(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -337,12 +337,11 @@ DefaultBareMetalSolutionStub::ListNetworks(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
 DefaultBareMetalSolutionStub::ListNetworkUsage(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
         request) {
   google::cloud::baremetalsolution::v2::ListNetworkUsageResponse response;
-  auto status =
-      grpc_stub_->ListNetworkUsage(&client_context, request, &response);
+  auto status = grpc_stub_->ListNetworkUsage(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -351,10 +350,10 @@ DefaultBareMetalSolutionStub::ListNetworkUsage(
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 DefaultBareMetalSolutionStub::GetNetwork(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::GetNetworkRequest const& request) {
   google::cloud::baremetalsolution::v2::Network response;
-  auto status = grpc_stub_->GetNetwork(&client_context, request, &response);
+  auto status = grpc_stub_->GetNetwork(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -381,12 +380,11 @@ DefaultBareMetalSolutionStub::AsyncUpdateNetwork(
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 DefaultBareMetalSolutionStub::CreateVolumeSnapshot(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
         request) {
   google::cloud::baremetalsolution::v2::VolumeSnapshot response;
-  auto status =
-      grpc_stub_->CreateVolumeSnapshot(&client_context, request, &response);
+  auto status = grpc_stub_->CreateVolumeSnapshot(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -413,12 +411,11 @@ DefaultBareMetalSolutionStub::AsyncRestoreVolumeSnapshot(
 }
 
 Status DefaultBareMetalSolutionStub::DeleteVolumeSnapshot(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteVolumeSnapshot(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteVolumeSnapshot(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -427,12 +424,11 @@ Status DefaultBareMetalSolutionStub::DeleteVolumeSnapshot(
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 DefaultBareMetalSolutionStub::GetVolumeSnapshot(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
         request) {
   google::cloud::baremetalsolution::v2::VolumeSnapshot response;
-  auto status =
-      grpc_stub_->GetVolumeSnapshot(&client_context, request, &response);
+  auto status = grpc_stub_->GetVolumeSnapshot(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -441,12 +437,11 @@ DefaultBareMetalSolutionStub::GetVolumeSnapshot(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
 DefaultBareMetalSolutionStub::ListVolumeSnapshots(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
         request) {
   google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse response;
-  auto status =
-      grpc_stub_->ListVolumeSnapshots(&client_context, request, &response);
+  auto status = grpc_stub_->ListVolumeSnapshots(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -455,10 +450,10 @@ DefaultBareMetalSolutionStub::ListVolumeSnapshots(
 
 StatusOr<google::cloud::baremetalsolution::v2::Lun>
 DefaultBareMetalSolutionStub::GetLun(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::GetLunRequest const& request) {
   google::cloud::baremetalsolution::v2::Lun response;
-  auto status = grpc_stub_->GetLun(&client_context, request, &response);
+  auto status = grpc_stub_->GetLun(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -467,10 +462,10 @@ DefaultBareMetalSolutionStub::GetLun(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListLunsResponse>
 DefaultBareMetalSolutionStub::ListLuns(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::ListLunsRequest const& request) {
   google::cloud::baremetalsolution::v2::ListLunsResponse response;
-  auto status = grpc_stub_->ListLuns(&client_context, request, &response);
+  auto status = grpc_stub_->ListLuns(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -497,10 +492,10 @@ DefaultBareMetalSolutionStub::AsyncEvictLun(
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 DefaultBareMetalSolutionStub::GetNfsShare(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request) {
   google::cloud::baremetalsolution::v2::NfsShare response;
-  auto status = grpc_stub_->GetNfsShare(&client_context, request, &response);
+  auto status = grpc_stub_->GetNfsShare(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -509,10 +504,10 @@ DefaultBareMetalSolutionStub::GetNfsShare(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNfsSharesResponse>
 DefaultBareMetalSolutionStub::ListNfsShares(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& request) {
   google::cloud::baremetalsolution::v2::ListNfsSharesResponse response;
-  auto status = grpc_stub_->ListNfsShares(&client_context, request, &response);
+  auto status = grpc_stub_->ListNfsShares(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -559,11 +554,11 @@ DefaultBareMetalSolutionStub::AsyncCreateNfsShare(
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 DefaultBareMetalSolutionStub::RenameNfsShare(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
         request) {
   google::cloud::baremetalsolution::v2::NfsShare response;
-  auto status = grpc_stub_->RenameNfsShare(&client_context, request, &response);
+  auto status = grpc_stub_->RenameNfsShare(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -591,12 +586,12 @@ DefaultBareMetalSolutionStub::AsyncDeleteNfsShare(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse>
 DefaultBareMetalSolutionStub::ListProvisioningQuotas(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const&
         request) {
   google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse response;
   auto status =
-      grpc_stub_->ListProvisioningQuotas(&client_context, request, &response);
+      grpc_stub_->ListProvisioningQuotas(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -605,13 +600,13 @@ DefaultBareMetalSolutionStub::ListProvisioningQuotas(
 
 StatusOr<google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
 DefaultBareMetalSolutionStub::SubmitProvisioningConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const&
         request) {
   google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse
       response;
   auto status =
-      grpc_stub_->SubmitProvisioningConfig(&client_context, request, &response);
+      grpc_stub_->SubmitProvisioningConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -620,12 +615,11 @@ DefaultBareMetalSolutionStub::SubmitProvisioningConfig(
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 DefaultBareMetalSolutionStub::GetProvisioningConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
         request) {
   google::cloud::baremetalsolution::v2::ProvisioningConfig response;
-  auto status =
-      grpc_stub_->GetProvisioningConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetProvisioningConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -634,12 +628,12 @@ DefaultBareMetalSolutionStub::GetProvisioningConfig(
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 DefaultBareMetalSolutionStub::CreateProvisioningConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const&
         request) {
   google::cloud::baremetalsolution::v2::ProvisioningConfig response;
   auto status =
-      grpc_stub_->CreateProvisioningConfig(&client_context, request, &response);
+      grpc_stub_->CreateProvisioningConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -648,12 +642,12 @@ DefaultBareMetalSolutionStub::CreateProvisioningConfig(
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 DefaultBareMetalSolutionStub::UpdateProvisioningConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const&
         request) {
   google::cloud::baremetalsolution::v2::ProvisioningConfig response;
   auto status =
-      grpc_stub_->UpdateProvisioningConfig(&client_context, request, &response);
+      grpc_stub_->UpdateProvisioningConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -662,10 +656,10 @@ DefaultBareMetalSolutionStub::UpdateProvisioningConfig(
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 DefaultBareMetalSolutionStub::RenameNetwork(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request) {
   google::cloud::baremetalsolution::v2::Network response;
-  auto status = grpc_stub_->RenameNetwork(&client_context, request, &response);
+  auto status = grpc_stub_->RenameNetwork(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -674,10 +668,10 @@ DefaultBareMetalSolutionStub::RenameNetwork(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListOSImagesResponse>
 DefaultBareMetalSolutionStub::ListOSImages(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::baremetalsolution::v2::ListOSImagesRequest const& request) {
   google::cloud::baremetalsolution::v2::ListOSImagesResponse response;
-  auto status = grpc_stub_->ListOSImages(&client_context, request, &response);
+  auto status = grpc_stub_->ListOSImages(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

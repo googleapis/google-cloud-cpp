@@ -33,31 +33,31 @@ BigtableStub::~BigtableStub() = default;
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 DefaultBigtableStub::ReadRows(
-    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::bigtable::v2::ReadRowsRequest const& request) {
-  auto stream = grpc_stub_->ReadRows(client_context.get(), request);
+  auto stream = grpc_stub_->ReadRows(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
-      google::bigtable::v2::ReadRowsResponse>>(std::move(client_context),
+      google::bigtable::v2::ReadRowsResponse>>(std::move(context),
                                                std::move(stream));
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::SampleRowKeysResponse>>
 DefaultBigtableStub::SampleRowKeys(
-    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
-  auto stream = grpc_stub_->SampleRowKeys(client_context.get(), request);
+  auto stream = grpc_stub_->SampleRowKeys(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
-      google::bigtable::v2::SampleRowKeysResponse>>(std::move(client_context),
+      google::bigtable::v2::SampleRowKeysResponse>>(std::move(context),
                                                     std::move(stream));
 }
 
 StatusOr<google::bigtable::v2::MutateRowResponse>
 DefaultBigtableStub::MutateRow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::v2::MutateRowRequest const& request) {
   google::bigtable::v2::MutateRowResponse response;
-  auto status = grpc_stub_->MutateRow(&client_context, request, &response);
+  auto status = grpc_stub_->MutateRow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -67,21 +67,20 @@ DefaultBigtableStub::MutateRow(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::MutateRowsResponse>>
 DefaultBigtableStub::MutateRows(
-    std::shared_ptr<grpc::ClientContext> client_context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::bigtable::v2::MutateRowsRequest const& request) {
-  auto stream = grpc_stub_->MutateRows(client_context.get(), request);
+  auto stream = grpc_stub_->MutateRows(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
-      google::bigtable::v2::MutateRowsResponse>>(std::move(client_context),
+      google::bigtable::v2::MutateRowsResponse>>(std::move(context),
                                                  std::move(stream));
 }
 
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 DefaultBigtableStub::CheckAndMutateRow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
   google::bigtable::v2::CheckAndMutateRowResponse response;
-  auto status =
-      grpc_stub_->CheckAndMutateRow(&client_context, request, &response);
+  auto status = grpc_stub_->CheckAndMutateRow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -90,10 +89,10 @@ DefaultBigtableStub::CheckAndMutateRow(
 
 StatusOr<google::bigtable::v2::PingAndWarmResponse>
 DefaultBigtableStub::PingAndWarm(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::v2::PingAndWarmRequest const& request) {
   google::bigtable::v2::PingAndWarmResponse response;
-  auto status = grpc_stub_->PingAndWarm(&client_context, request, &response);
+  auto status = grpc_stub_->PingAndWarm(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -102,11 +101,10 @@ DefaultBigtableStub::PingAndWarm(
 
 StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 DefaultBigtableStub::ReadModifyWriteRow(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
   google::bigtable::v2::ReadModifyWriteRowResponse response;
-  auto status =
-      grpc_stub_->ReadModifyWriteRow(&client_context, request, &response);
+  auto status = grpc_stub_->ReadModifyWriteRow(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

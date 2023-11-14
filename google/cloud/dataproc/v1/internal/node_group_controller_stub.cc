@@ -66,10 +66,10 @@ DefaultNodeGroupControllerStub::AsyncResizeNodeGroup(
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>
 DefaultNodeGroupControllerStub::GetNodeGroup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
   google::cloud::dataproc::v1::NodeGroup response;
-  auto status = grpc_stub_->GetNodeGroup(&client_context, request, &response);
+  auto status = grpc_stub_->GetNodeGroup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
