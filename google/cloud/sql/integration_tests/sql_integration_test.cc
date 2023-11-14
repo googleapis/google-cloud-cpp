@@ -102,7 +102,7 @@ TEST_F(SqlIntegrationTest, CreateEphemeral) {
   // All the RPCs that could repro #12112 are non-idempotent. So we put a little
   // manual retry loop around the test.
   auto const attempt_delay = std::chrono::seconds(30);
-  for (int attempt = 0; attempt != 3; ++i) {
+  for (int attempt = 0; attempt != 3; ++attempt) {
     if (attempt != 0) std::this_thread::sleep_for(attempt_delay);
     google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest request;
     request.set_project(project_id_);
