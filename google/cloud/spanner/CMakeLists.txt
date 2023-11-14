@@ -177,6 +177,7 @@ add_library(
     mutations.cc
     mutations.h
     numeric.cc
+    oid.h
     numeric.h
     options.h
     partition_options.cc

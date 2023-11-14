@@ -295,7 +295,7 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadNumeric) {
 TEST_F(PgDataTypeIntegrationTest, WriteReadPgOid) {
   if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PG.OID";
 
-  std::vector<PgNumeric> const data = {
+  std::vector<PgOid> const data = {
       PgOid("0"),   //
       PgOid("42"),  //
       PgOid("999"), //

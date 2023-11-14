@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_OID_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_OID_H
 
-
 #include "google/cloud/spanner/version.h"
 #include <ostream>
 #include <string>
@@ -25,8 +24,15 @@ namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A representation of the PostgreSQL Object Identifier type: an opaque string
+ * used as primary keys for various system tables in the PostgreSQL dialect.
+ */
 class PgOid {
  public:
+  /// Default construction yields OID 0.
+  PgOid() : rep_("0") {}
+
   /// @name Regular value type, supporting copy, assign, move.
   ///@{
   PgOid(PgOid const&) = default;
@@ -40,9 +46,9 @@ class PgOid {
    * argument string is indeed well-formatted. Error detection will be delayed
    * until the value is passed to Spanner.
    */
-  explicit PgOid(std::string value) : rep_(value) {}
+  explicit PgOid(std::string value) : rep_(std::move(value)) {}
 
-  /// @name Conversion to a JSON-formatted string.
+  /// @name Conversion to a oid string.
   ///@{
   explicit operator std::string() const& { return rep_; }
   explicit operator std::string() && { return std::move(rep_); }
