@@ -3038,7 +3038,6 @@ service {
   product_path: "google/cloud/sql/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
-  experimental: true
   generate_rest_transport: true
   generate_grpc_transport: false
   preserve_proto_field_names_in_json: true
