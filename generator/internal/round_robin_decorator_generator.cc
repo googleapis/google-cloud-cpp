@@ -126,8 +126,9 @@ $round_robin_class_name$::$method_name$(
 std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
     $request_type$, $response_type$>>
 $round_robin_class_name$::$method_name$(
-    std::shared_ptr<grpc::ClientContext> context) {
-  return Child()->$method_name$(std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options) {
+  return Child()->$method_name$(std::move(context), options);
 }
 )""");
       continue;
