@@ -29,7 +29,6 @@ StatusOr<std::string> DetermineServiceEndpoint(
     absl::optional<std::string> endpoint_env_var,
     absl::optional<std::string> endpoint_option, Options const& options,
     std::string default_endpoint) {
-  auto constexpr kGoogleDefaultUniverse = ".googleapis.com.";
   if (endpoint_env_var.has_value()) return *endpoint_env_var;
   if (endpoint_option.has_value()) return *endpoint_option;
   if (!absl::EndsWith(default_endpoint, ".")) {
@@ -44,9 +43,8 @@ StatusOr<std::string> DetermineServiceEndpoint(
     if (!absl::StartsWith(universe_domain_option, ".")) {
       universe_domain_option = absl::StrCat(".", universe_domain_option);
     }
-    return absl::StrCat(
-        absl::StripSuffix(default_endpoint, kGoogleDefaultUniverse),
-        universe_domain_option);
+    return absl::StrCat(absl::StripSuffix(default_endpoint, ".googleapis.com."),
+                        universe_domain_option);
   }
   return default_endpoint;
 }

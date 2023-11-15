@@ -29,14 +29,14 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
-auto constexpr kDefaultHost = "default_endpoint.googleapis.com";
+auto constexpr kDefaultEndpoint = "default_endpoint.googleapis.com";
 
 TEST(DetermineServiceEndpoint, EnvVarSet) {
   auto constexpr kEnvVarEndpoint = "foo.testing.net";
   Options options;
   auto result = DetermineServiceEndpoint(kEnvVarEndpoint,
                                          ExtractOption<EndpointOption>(options),
-                                         options, kDefaultHost);
+                                         options, kDefaultEndpoint);
   EXPECT_THAT(result, IsOkAndHolds(kEnvVarEndpoint));
 }
 
@@ -45,7 +45,7 @@ TEST(DetermineServiceEndpoint, EndpointOptionSet) {
   auto options = Options{}.set<EndpointOption>(kOptionEndpoint);
   auto result = DetermineServiceEndpoint(absl::nullopt,
                                          ExtractOption<EndpointOption>(options),
-                                         options, kDefaultHost);
+                                         options, kDefaultEndpoint);
   EXPECT_THAT(result, IsOkAndHolds(kOptionEndpoint));
 }
 
@@ -54,7 +54,7 @@ TEST(DetermineServiceEndpoint, UniverseDomainSetWithNonEmptyValue) {
   auto options = Options{}.set<UniverseDomainOption>(kUniverseDomain);
   auto result = DetermineServiceEndpoint(absl::nullopt,
                                          ExtractOption<EndpointOption>(options),
-                                         options, kDefaultHost);
+                                         options, kDefaultEndpoint);
   EXPECT_THAT(result, IsOkAndHolds("default_endpoint.universe.domain"));
 }
 
@@ -63,7 +63,7 @@ TEST(DetermineServiceEndpoint, UniverseDomainSetWithTrailingPeriod) {
   auto options = Options{}.set<UniverseDomainOption>(kUniverseDomain);
   auto result = DetermineServiceEndpoint(absl::nullopt,
                                          ExtractOption<EndpointOption>(options),
-                                         options, kDefaultHost);
+                                         options, kDefaultEndpoint);
   EXPECT_THAT(result, IsOkAndHolds("default_endpoint.universe.domain."));
 }
 
@@ -71,7 +71,7 @@ TEST(DetermineServiceEndpoint, UniverseDomainSetWithEmptyValue) {
   auto options = Options{}.set<UniverseDomainOption>("");
   auto result = DetermineServiceEndpoint(absl::nullopt,
                                          ExtractOption<EndpointOption>(options),
-                                         options, kDefaultHost);
+                                         options, kDefaultEndpoint);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("UniverseDomainOption can not be empty")));
@@ -81,8 +81,8 @@ TEST(DetermineServiceEndpoint, DefaultHost) {
   Options options;
   auto result = DetermineServiceEndpoint(absl::nullopt,
                                          ExtractOption<EndpointOption>(options),
-                                         options, kDefaultHost);
-  EXPECT_THAT(result, IsOkAndHolds(absl::StrCat(kDefaultHost, ".")));
+                                         options, kDefaultEndpoint);
+  EXPECT_THAT(result, IsOkAndHolds(absl::StrCat(kDefaultEndpoint, ".")));
 }
 
 }  // namespace
