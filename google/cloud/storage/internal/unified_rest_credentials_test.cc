@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/unified_rest_credentials.h"
 #include "google/cloud/storage/testing/constants.h"
+#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -36,6 +37,7 @@ using ::google::cloud::MakeGoogleDefaultCredentials;
 using ::google::cloud::MakeInsecureCredentials;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsEmpty;
 
 class UnifiedRestCredentialsTest : public ::testing::Test {
@@ -59,6 +61,15 @@ TEST_F(UnifiedRestCredentialsTest, Insecure) {
   auto header = credentials->AuthorizationHeader();
   ASSERT_THAT(header, IsOk());
   EXPECT_THAT(*header, IsEmpty());
+}
+
+TEST_F(UnifiedRestCredentialsTest, Error) {
+  Status const error_status{StatusCode::kFailedPrecondition,
+                            "Precondition failed."};
+  auto credentials = MapCredentials(
+      *google::cloud::internal::MakeErrorCredentials(error_status));
+  auto header = credentials->AuthorizationHeader();
+  EXPECT_THAT(header, StatusIs(error_status.code()));
 }
 
 TEST_F(UnifiedRestCredentialsTest, AccessToken) {

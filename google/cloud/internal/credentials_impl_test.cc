@@ -32,6 +32,9 @@ struct Visitor : public CredentialsVisitor {
   std::string json_object;
   Options options;
 
+  void visit(ErrorCredentialsConfig const&) override {
+    name = "ErrorCredentialsConfig";
+  }
   void visit(InsecureCredentialsConfig const&) override {
     name = "InsecureCredentialsConfig";
   }
@@ -56,6 +59,14 @@ struct Visitor : public CredentialsVisitor {
     options = cfg.options();
   }
 };
+
+TEST(Credentials, ErrorCredentials) {
+  Visitor visitor;
+
+  auto credentials = internal::MakeErrorCredentials({});
+  CredentialsVisitor::dispatch(*credentials, visitor);
+  EXPECT_EQ("ErrorCredentialsConfig", visitor.name);
+}
 
 TEST(Credentials, InsecureCredentials) {
   Visitor visitor;
