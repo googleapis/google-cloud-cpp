@@ -47,6 +47,30 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+class GrpcErrorCredentialsAuthentication : public GrpcAuthenticationStrategy {
+ public:
+  explicit GrpcErrorCredentialsAuthentication(ErrorCredentialsConfig const& cfg)
+      : error_status_(std::move(cfg.status())) {}
+  ~GrpcErrorCredentialsAuthentication() override = default;
+
+  std::shared_ptr<grpc::Channel> CreateChannel(
+      std::string const&, grpc::ChannelArguments const&) override {
+    return {};
+  }
+  bool RequiresConfigureContext() const override { return true; }
+  Status ConfigureContext(grpc::ClientContext&) override {
+    return error_status_;
+  }
+  future<StatusOr<std::shared_ptr<grpc::ClientContext>>> AsyncConfigureContext(
+      std::shared_ptr<grpc::ClientContext>) override {
+    return make_ready_future<StatusOr<std::shared_ptr<grpc::ClientContext>>>(
+        error_status_);
+  }
+
+ private:
+  Status error_status_;
+};
+
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     google::cloud::CompletionQueue cq, Options const& options) {
   if (options.has<google::cloud::UnifiedCredentialsOption>()) {
@@ -68,6 +92,9 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     Visitor(CompletionQueue c, Options o)
         : cq(std::move(c)), options(std::move(o)) {}
 
+    void visit(ErrorCredentialsConfig const& cfg) override {
+      result = std::make_unique<GrpcErrorCredentialsAuthentication>(cfg);
+    }
     void visit(InsecureCredentialsConfig const&) override {
       result = std::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::InsecureChannelCredentials());

@@ -32,6 +32,7 @@ namespace {
 
 using ::google::cloud::internal::AccessTokenConfig;
 using ::google::cloud::internal::CredentialsVisitor;
+using ::google::cloud::internal::ErrorCredentialsConfig;
 using ::google::cloud::internal::ExternalAccountConfig;
 using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
@@ -81,6 +82,11 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
         : client_factory_(std::move(client_factory)) {}
 
     std::shared_ptr<oauth2_internal::Credentials> result;
+
+    void visit(ErrorCredentialsConfig const& cfg) override {
+      result =
+          std::make_shared<oauth2_internal::ErrorCredentials>(cfg.status());
+    }
 
     void visit(InsecureCredentialsConfig const&) override {
       result = std::make_shared<oauth2_internal::AnonymousCredentials>();

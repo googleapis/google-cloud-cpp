@@ -158,6 +158,15 @@ TEST(UnifiedRestCredentialsTest, Insecure) {
   EXPECT_THAT(token->token, IsEmpty());
 }
 
+TEST(UnifiedRestCredentialsTest, Error) {
+  Status const error_status{StatusCode::kFailedPrecondition,
+                            "Precondition failed."};
+  auto credentials =
+      MapCredentials(*internal::MakeErrorCredentials(error_status));
+  auto token = credentials->GetToken(std::chrono::system_clock::now());
+  EXPECT_THAT(token, StatusIs(error_status.code()));
+}
+
 TEST(UnifiedRestCredentialsTest, AdcIsServiceAccount) {
   auto const expected_expires_in = std::chrono::seconds(3600);
   auto const contents = MakeServiceAccountContents();

@@ -32,6 +32,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+class ErrorCredentialsConfig;
 class InsecureCredentialsConfig;
 class GoogleDefaultCredentialsConfig;
 class AccessTokenConfig;
@@ -39,9 +40,12 @@ class ImpersonateServiceAccountConfig;
 class ServiceAccountConfig;
 class ExternalAccountConfig;
 
+std::shared_ptr<Credentials> MakeErrorCredentials(Status error_status);
+
 class CredentialsVisitor {
  public:
   virtual ~CredentialsVisitor() = default;
+  virtual void visit(ErrorCredentialsConfig const&) = 0;
   virtual void visit(InsecureCredentialsConfig const&) = 0;
   virtual void visit(GoogleDefaultCredentialsConfig const&) = 0;
   virtual void visit(AccessTokenConfig const&) = 0;
@@ -51,6 +55,19 @@ class CredentialsVisitor {
 
   static void dispatch(Credentials const& credentials,
                        CredentialsVisitor& visitor);
+};
+
+class ErrorCredentialsConfig : public Credentials {
+ public:
+  explicit ErrorCredentialsConfig(Status error_status);
+  ~ErrorCredentialsConfig() override = default;
+
+  Status const& status() const { return status_; }
+
+ private:
+  void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
+
+  Status status_;
 };
 
 class InsecureCredentialsConfig : public Credentials {
