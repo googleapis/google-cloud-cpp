@@ -29,18 +29,24 @@ StatusOr<std::string> DetermineServiceEndpoint(
     absl::optional<std::string> endpoint_env_var,
     absl::optional<std::string> endpoint_option, Options const& options,
     std::string default_endpoint) {
-  auto constexpr kGoogleDefaultUniverse = "googleapis.com.";
+  auto constexpr kGoogleDefaultUniverse = ".googleapis.com.";
   if (endpoint_env_var.has_value()) return *endpoint_env_var;
   if (endpoint_option.has_value()) return *endpoint_option;
   if (!absl::EndsWith(default_endpoint, ".")) {
     absl::StrAppend(&default_endpoint, ".");
   }
+  if (!absl::EndsWith(default_endpoint, kGoogleDefaultUniverse)) {
+    return internal::InternalError(
+        absl::StrCat("default_endpoint is not in GDU: ", default_endpoint));
+  }
   if (options.has<UniverseDomainOption>()) {
-    std::string const& universe_domain_option =
-        options.get<UniverseDomainOption>();
+    std::string universe_domain_option = options.get<UniverseDomainOption>();
     if (universe_domain_option.empty()) {
       return internal::InvalidArgumentError(
           "UniverseDomainOption can not be empty");
+    }
+    if (!absl::StartsWith(universe_domain_option, ".")) {
+      universe_domain_option = absl::StrCat(".", universe_domain_option);
     }
     return absl::StrCat(
         absl::StripSuffix(default_endpoint, kGoogleDefaultUniverse),

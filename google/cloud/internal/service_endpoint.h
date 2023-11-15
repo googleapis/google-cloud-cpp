@@ -29,7 +29,7 @@ namespace internal {
 // If the ENDPOINT environment variable for the service or EndpointOption has a
 // value, that value is used as the service endpoint. If the
 // UniverseDomainOption is contained in options, then the endpoint is computed
-// by replacing the googleapis.com string in the default_host value with the
+// by replacing the googleapis.com string in the default_endpoint value with the
 // value of the universe_domain, e.g.:
 //  auto endpoint = internal::DetermineServiceEndpoint(
 //      internal::GetEnv("GOOGLE_CLOUD_CPP_${service_name}_SERVICE_ENDPOINT"),
