@@ -24,7 +24,7 @@ namespace internal {
 
 std::string GceMetadataHostname() {
   return google::cloud::internal::GetEnv(GceMetadataHostnameEnvVar())
-      .value_or("metadata.google.internal");
+      .value_or("metadata.google.internal.");
 }
 
 }  // namespace internal
