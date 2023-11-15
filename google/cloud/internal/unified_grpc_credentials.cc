@@ -50,7 +50,7 @@ namespace internal {
 class GrpcErrorCredentialsAuthentication : public GrpcAuthenticationStrategy {
  public:
   explicit GrpcErrorCredentialsAuthentication(ErrorCredentialsConfig const& cfg)
-      : error_status_(std::move(cfg.error_status())) {}
+      : error_status_(std::move(cfg.status())) {}
   ~GrpcErrorCredentialsAuthentication() override = default;
 
   std::shared_ptr<grpc::Channel> CreateChannel(

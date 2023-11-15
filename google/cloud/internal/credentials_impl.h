@@ -62,12 +62,12 @@ class ErrorCredentialsConfig : public Credentials {
   explicit ErrorCredentialsConfig(Status error_status);
   ~ErrorCredentialsConfig() override = default;
 
-  Status const& error_status() const { return error_status_; }
+  Status const& status() const { return status_; }
 
  private:
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
-  Status error_status_;
+  Status status_;
 };
 
 class InsecureCredentialsConfig : public Credentials {

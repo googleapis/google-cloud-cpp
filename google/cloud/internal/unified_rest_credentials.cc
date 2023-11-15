@@ -84,8 +84,8 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     std::shared_ptr<oauth2_internal::Credentials> result;
 
     void visit(ErrorCredentialsConfig const& cfg) override {
-      result = std::make_shared<oauth2_internal::ErrorCredentials>(
-          cfg.error_status());
+      result =
+          std::make_shared<oauth2_internal::ErrorCredentials>(cfg.status());
     }
 
     void visit(InsecureCredentialsConfig const&) override {

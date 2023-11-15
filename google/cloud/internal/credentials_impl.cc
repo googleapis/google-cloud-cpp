@@ -52,7 +52,7 @@ void CredentialsVisitor::dispatch(Credentials const& credentials,
 }
 
 ErrorCredentialsConfig::ErrorCredentialsConfig(Status error_status)
-    : error_status_(std::move(error_status)) {}
+    : status_(std::move(error_status)) {}
 
 InsecureCredentialsConfig::InsecureCredentialsConfig(Options opts)
     : options_(PopulateAuthOptions(std::move(opts))) {}
