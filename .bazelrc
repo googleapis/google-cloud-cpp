@@ -50,7 +50,7 @@ build --//:enable_opentelemetry
 
 # Don't show warnings when building external dependencies. This still shows
 # warnings when using these dependencies (say in headers).
-build --output_filter='^//((?!(external):).)*$' 
+build --output_filter='^//((?!(external):).)*$'
 
 # Clang Sanitizers, use with (for example):
 #
