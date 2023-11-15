@@ -48,6 +48,10 @@ test --test_env=GTEST_SHUFFLE --test_env=GTEST_RANDOM_SEED
 build --@io_opentelemetry_cpp//api:with_abseil
 build --//:enable_opentelemetry
 
+# Don't show warnings when building external dependencies. This still shows
+# warnings when using these dependencies (say in headers).
+build --output_filter='^//((?!(external):).)*$'
+
 # Clang Sanitizers, use with (for example):
 #
 # --client_env=CXX=clang++ --client_env=CC=clang --config asan
