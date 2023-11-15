@@ -52,17 +52,26 @@ build --//:enable_opentelemetry
 # warnings when using these dependencies (say in headers).
 build --output_filter='^//((?!(external):).)*$'
 
+# --config libcxx: Compile and link using libc++.
+build:libcxx --cxxopt=-stdlib=libc++
+build:libcxx --linkopt=-stdlib=libc++
+build:libcxx --linkopt=-lc++
+build:libcxx --linkopt=-lc++abi
+
 # Clang Sanitizers, use with (for example):
 #
 # --client_env=CXX=clang++ --client_env=CC=clang --config asan
 #
 
+# --config sanitizer refactors comment settings for all sanitizers
+build:sanitizer --strip=never
+build:sanitizer --copt=-Og
+build:sanitizer --copt=-g
+build:sanitizer --copt=-fno-omit-frame-pointer
+
 # --config asan: Address Sanitizer
-build:asan --strip=never
-build:asan --copt=-Og
-build:asan --copt=-g
+build:asan --config=sanitizer
 build:asan --copt=-fsanitize=address
-build:asan --copt=-fno-omit-frame-pointer
 # Protobuf enables -Werror by default. We are building with GCC 13. With
 # -Werror and Address Sanitizer the compiler emits warnings in some of the
 # Protobuf code, and that stops the build. It may be a compiler bug, or Protobuf
@@ -74,65 +83,39 @@ build:asan --action_env=ASAN_OPTIONS=detect_leaks=1:color=always
 build:asan --action_env=LSAN_OPTIONS=report_objects=1
 
 # --config tsan: Thread Sanitizer
-build:tsan --strip=never
-build:tsan --copt=-Og
-build:tsan --copt=-g
+build:tsan --config=sanitizer
 build:tsan --copt=-fsanitize=thread
-build:tsan --copt=-fno-omit-frame-pointer
 build:tsan --linkopt=-fsanitize=thread
 # report_atomic_races=0: https://github.com/google/sanitizers/issues/953
 build:tsan --action_env=TSAN_OPTIONS=halt_on_error=1:second_deadlock_stack=1:report_atomic_races=0
 
 # --config ubsan: Undefined Behavior Sanitizer
-build:ubsan --strip=never
-build:ubsan --copt=-Og
-build:ubsan --copt=-g
+build:ubsan --config=sanitizer
+build:ubsan --config=libcxx
 build:ubsan --copt=-fsanitize=undefined
-build:ubsan --copt=-fno-omit-frame-pointer
 build:ubsan --linkopt=-fsanitize=undefined
 build:ubsan --linkopt=-fsanitize-link-c++-runtime
 build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
-build:ubsan --cxxopt=-stdlib=libc++
-build:ubsan --linkopt=-stdlib=libc++
-build:ubsan --linkopt=-lc++
-build:ubsan --linkopt=-lc++abi
 
 # --config xsan: Runs misc. sanitizers that aren't covered elsewhere.
-build:xsan --strip=never
-build:xsan --copt=-Og
-build:xsan --copt=-g
+build:xsan --config=sanitizer
+build:xsan --config=libcxx
 build:xsan --copt=-fsanitize=float-divide-by-zero
 build:xsan --copt=-fsanitize=nullability
-build:xsan --copt=-fno-omit-frame-pointer
-build:xsan --cxxopt=-stdlib=libc++
-build:xsan --linkopt=-stdlib=libc++
-build:xsan --linkopt=-lc++
-build:xsan --linkopt=-lc++abi
 build:xsan --linkopt=-fsanitize-link-c++-runtime
 build:xsan --linkopt=-fsanitize=float-divide-by-zero
 build:xsan --linkopt=-fsanitize=nullability
 build:xsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
 
 # --config msan: Memory Sanitizer
-build:msan --strip=never
-build:msan --copt=-Og
-build:msan --copt=-g
+# This requires a version of libc++ compiled with memory sanitizer too. Only
+build:msan --config=sanitizer
+build:msan --config=libcxx
 build:msan --copt=-fsanitize=memory
-build:msan --copt=-fno-omit-frame-pointer
 build:msan --copt=-fsanitize-memory-track-origins
 build:msan --copt=-fsanitize-memory-use-after-dtor
 build:msan --cxxopt=-I/usr/include/x86_64-unknown-linux-gnu/c++/v1
 build:msan --linkopt=-fsanitize=memory
 build:msan --action_env=LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:/usr/lib64:/usr/lib:/lib64:/lib
 build:msan --action_env=MSAN_OPTIONS=poison_in_dtor=1
-build:msan --cxxopt=-stdlib=libc++
-build:msan --linkopt=-stdlib=libc++
 build:msan --linkopt=-L/usr/lib/x86_64-unknown-linux-gnu
-build:msan --linkopt=-lc++
-build:msan --linkopt=-lc++abi
-
-# --config libcxx: Compile and link using libc++.
-build:libcxx --cxxopt=-stdlib=libc++
-build:libcxx --linkopt=-stdlib=libc++
-build:libcxx --linkopt=-lc++
-build:libcxx --linkopt=-lc++abi
