@@ -236,7 +236,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
     auto client = std::make_unique<MockRestClient>();
     auto expected_request = AllOf(
         Property(&RestRequest::path,
-                 absl::StrCat("http://metadata.google.internal/",
+                 absl::StrCat("http://metadata.google.internal./",
                               "computeMetadata/v1/instance/service-accounts/",
                               "default/")),
         Property(&RestRequest::headers,
@@ -250,7 +250,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
     auto client = std::make_unique<MockRestClient>();
     auto expected_request = AllOf(
         Property(&RestRequest::path,
-                 absl::StrCat("http://metadata.google.internal/",
+                 absl::StrCat("http://metadata.google.internal./",
                               "computeMetadata/v1/instance/service-accounts/",
                               "default/", "token")),
         Property(&RestRequest::headers,
