@@ -24,10 +24,8 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace sql = ::google::cloud::sql_v1;
-  auto client =
-      sql::SqlInstancesServiceClient(google::cloud::ExperimentalTag{},
-                                     sql::MakeSqlInstancesServiceConnectionRest(
-                                         google::cloud::ExperimentalTag{}));
+  auto client = sql::SqlInstancesServiceClient(
+      sql::MakeSqlInstancesServiceConnectionRest());
 
   google::cloud::sql::v1::SqlInstancesListRequest request;
   request.set_project(argv[1]);

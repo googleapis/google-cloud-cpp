@@ -1,15 +1,11 @@
 # Cloud SQL Admin API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Cloud SQL Admin API][cloud-service-docs], a service for Cloud SQL database
 instance management.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please, note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 
@@ -32,10 +28,8 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace sql = ::google::cloud::sql_v1;
-  auto client =
-      sql::SqlInstancesServiceClient(google::cloud::ExperimentalTag{},
-                                     sql::MakeSqlInstancesServiceConnectionRest(
-                                         google::cloud::ExperimentalTag{}));
+  auto client = sql::SqlInstancesServiceClient(
+      sql::MakeSqlInstancesServiceConnectionRest());
 
   google::cloud::sql::v1::SqlInstancesListRequest request;
   request.set_project(argv[1]);
