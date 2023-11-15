@@ -112,6 +112,8 @@ add_library(
     internal/retry_loop_helpers.h
     internal/retry_policy_impl.cc
     internal/retry_policy_impl.h
+    internal/service_endpoint.cc
+    internal/service_endpoint.h
     internal/sha256_hash.cc
     internal/sha256_hash.h
     internal/sha256_hmac.cc
@@ -359,6 +361,7 @@ if (BUILD_TESTING)
         internal/random_test.cc
         internal/retry_loop_helpers_test.cc
         internal/retry_policy_impl_test.cc
+        internal/service_endpoint_test.cc
         internal/sha256_hash_test.cc
         internal/sha256_hmac_test.cc
         internal/status_payload_keys_test.cc
