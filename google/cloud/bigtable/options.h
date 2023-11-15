@@ -44,6 +44,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "absl/types/variant.h"
 #include <chrono>
 #include <string>
 

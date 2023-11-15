@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/fake_clock.h"
+#include "absl/types/variant.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
