@@ -67,19 +67,6 @@ TEST(DetermineServiceEndpoint, UniverseDomainSetWithTrailingPeriod) {
   EXPECT_THAT(result, IsOkAndHolds("default_endpoint.universe.domain."));
 }
 
-TEST(DetermineServiceEndpoint, DefaultHostNotInGDU) {
-  auto constexpr kUniverseDomain = "universe.domain";
-  auto options = Options{}.set<UniverseDomainOption>(kUniverseDomain);
-  auto result = DetermineServiceEndpoint(absl::nullopt,
-                                         ExtractOption<EndpointOption>(options),
-                                         options, "foo.bargoogleapis.com");
-  EXPECT_THAT(
-      result,
-      StatusIs(
-          StatusCode::kInternal,
-          HasSubstr("default_endpoint is not in GDU: foo.bargoogleapis.com")));
-}
-
 TEST(DetermineServiceEndpoint, UniverseDomainSetWithEmptyValue) {
   auto options = Options{}.set<UniverseDomainOption>("");
   auto result = DetermineServiceEndpoint(absl::nullopt,

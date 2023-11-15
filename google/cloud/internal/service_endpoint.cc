@@ -35,10 +35,6 @@ StatusOr<std::string> DetermineServiceEndpoint(
   if (!absl::EndsWith(default_endpoint, ".")) {
     absl::StrAppend(&default_endpoint, ".");
   }
-  if (!absl::EndsWith(default_endpoint, kGoogleDefaultUniverse)) {
-    return internal::InternalError(
-        absl::StrCat("default_endpoint is not in GDU: ", default_endpoint));
-  }
   if (options.has<UniverseDomainOption>()) {
     std::string universe_domain_option = options.get<UniverseDomainOption>();
     if (universe_domain_option.empty()) {
