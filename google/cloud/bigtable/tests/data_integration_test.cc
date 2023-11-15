@@ -127,11 +127,12 @@ TEST_P(DataIntegrationTest, TableBulkApplyThrottling) {
   if (GetParam() == "with-data-client") GTEST_SKIP();
 
   // Make a custom table with throttling enabled.
-  auto table =
-      Table(MakeDataConnection(Options{}.set<BulkApplyThrottlingOption>(true)),
-            TableResource(TableTestEnvironment::project_id(),
-                          TableTestEnvironment::instance_id(),
-                          TableTestEnvironment::table_id()));
+  auto table = Table(
+      MakeDataConnection(Options{}.set<experimental::BulkApplyThrottlingOption>(
+          absl::monostate{})),
+      TableResource(TableTestEnvironment::project_id(),
+                    TableTestEnvironment::instance_id(),
+                    TableTestEnvironment::table_id()));
 
   // This test will take at least 100 queries / (20 QPS) = 5s.
   for (auto i = 0; i != 100; ++i) {

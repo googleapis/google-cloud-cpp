@@ -157,6 +157,8 @@ struct MaxConnectionRefreshOption {
   using Type = std::chrono::milliseconds;
 };
 
+namespace experimental {
+
 /**
  * If set, the client will throttle mutations in batch write jobs.
  *
@@ -186,8 +188,10 @@ struct MaxConnectionRefreshOption {
  * https://cloud.google.com/bigtable/docs/routing#single-cluster
  */
 struct BulkApplyThrottlingOption {
-  using Type = bool;
+  using Type = absl::monostate;
 };
+
+}  // namespace experimental
 
 /// The complete list of options accepted by `bigtable::*Client`
 using ClientOptionList =

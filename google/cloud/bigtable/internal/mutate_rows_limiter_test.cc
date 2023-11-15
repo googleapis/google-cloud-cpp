@@ -198,12 +198,12 @@ TEST(MutateRowsLimiter, UpdateRespectsResponsePeriod) {
 }
 
 TEST(MutateRowsLimiter, MakeMutateRowsLimiter) {
-  auto noop = MakeMutateRowsLimiter(
-      Options{}.set<bigtable::BulkApplyThrottlingOption>(false));
+  using ::google::cloud::bigtable::experimental::BulkApplyThrottlingOption;
+  auto noop = MakeMutateRowsLimiter(Options{});
   EXPECT_THAT(dynamic_cast<NoopMutateRowsLimiter*>(noop.get()), NotNull());
 
   auto throttling = MakeMutateRowsLimiter(
-      Options{}.set<bigtable::BulkApplyThrottlingOption>(true));
+      Options{}.set<BulkApplyThrottlingOption>(absl::monostate{}));
   EXPECT_THAT(dynamic_cast<ThrottlingMutateRowsLimiter*>(throttling.get()),
               NotNull());
 }
