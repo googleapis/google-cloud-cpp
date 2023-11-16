@@ -139,8 +139,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r) {
   return request;
 }
 
-// Assuming that std::chrono::system_clock epoch is the Unix Time epoch.
-// It's not guaranteed, but de-facto works for most of the platforms
 auto TimePointToUnixMilliseconds(std::chrono::system_clock::time_point tp) {
   return std::chrono::duration_cast<std::chrono::milliseconds>(
              tp - std::chrono::system_clock::from_time_t(0))

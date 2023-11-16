@@ -36,12 +36,12 @@ using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryRequest;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
-auto static const kMinCreationTime = 1111111111111;
-auto static const kMaxCreationTime = 1111111111211;
-std::chrono::system_clock::time_point static const kMinTime{
-    std::chrono::milliseconds{kMinCreationTime}};
-std::chrono::system_clock::time_point static const kMaxTime{
-    std::chrono::milliseconds{kMaxCreationTime}};
+auto static const kMinCreationTimeMs = 1111111111111;
+auto static const kMaxCreationTimeMs = 1111111111211;
+auto static const kMinTime = std::chrono::system_clock::from_time_t(0) +
+                             std::chrono::milliseconds{kMinCreationTimeMs};
+auto static const kMaxTime = std::chrono::system_clock::from_time_t(0) +
+                             std::chrono::milliseconds{kMaxCreationTimeMs};
 
 ListJobsRequest GetListJobsRequest() {
   ListJobsRequest request("1");
@@ -164,9 +164,9 @@ TEST(ListJobsRequestTest, Success) {
   expected.AddQueryParameter("allUsers", "true");
   expected.AddQueryParameter("maxResults", "10");
   expected.AddQueryParameter("minCreationTime",
-                             std::to_string(kMinCreationTime));
+                             std::to_string(kMinCreationTimeMs));
   expected.AddQueryParameter("maxCreationTime",
-                             std::to_string(kMaxCreationTime));
+                             std::to_string(kMaxCreationTimeMs));
   expected.AddQueryParameter("pageToken", "123");
   expected.AddQueryParameter("projection", "FULL");
   expected.AddQueryParameter("stateFilter", "RUNNING");
