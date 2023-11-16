@@ -996,6 +996,10 @@ TEST(Value, GetBadPgOid) {
   ClearProtoKind(v);
   EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 
+  Value v2(PgOid(2));
+  ClearProtoKind(v);
+  EXPECT_THAT(v2.get<std::string>(), Not(IsOk()));
+
   SetProtoKind(v, google::protobuf::NULL_VALUE);
   EXPECT_THAT(v.get<PgOid>(), Not(IsOk()));
 
@@ -1196,6 +1200,7 @@ TEST(Value, OutputStream) {
       {Value(MakeNumeric(1234567890).value()), "1234567890", normal},
       {Value(MakePgNumeric(1234567890).value()), "1234567890", normal},
       {Value(PgOid("1234567890")), "1234567890", normal},
+      {Value(PgOid(42)), "42", normal},
       {Value(absl::CivilDay()), "1970-01-01", normal},
       {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
 
@@ -1378,7 +1383,7 @@ TEST(Value, OutputStreamMatchesT) {
 
   // PgOid
   StreamMatchesValueStream(PgOid("999"));
-  StreamMatchesValueStream(PgOid("-1"));
+  StreamMatchesValueStream(PgOid(42));
   StreamMatchesValueStream(PgOid("0"));
 
   // Date

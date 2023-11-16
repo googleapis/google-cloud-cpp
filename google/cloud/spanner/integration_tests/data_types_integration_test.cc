@@ -297,7 +297,7 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadPgOid) {
 
   std::vector<PgOid> const data = {
       PgOid("0"),   //
-      PgOid("42"),  //
+      PgOid(42),  //
       PgOid("999"), //
   };
   auto result = WriteReadData(*client_, data, "PgOidValue");

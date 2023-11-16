@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_OID_H
 
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <ostream>
 #include <string>
 
@@ -25,8 +26,8 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A representation of the PostgreSQL Object Identifier type: an opaque string
- * used as primary keys for various system tables in the PostgreSQL dialect.
+ * A representation of the PostgreSQL Object Identifier (OID) type: used as
+ * primary keys for various system tables in the PostgreSQL dialect.
  */
 class PgOid {
  public:
@@ -42,16 +43,27 @@ class PgOid {
   ///@}
 
   /**
-   * Construction from an oid string. Note that there is no check here that the
+   * Construction from an OID string. Note that there is no check here that the
    * argument string is indeed well-formatted. Error detection will be delayed
    * until the value is passed to Spanner.
    */
   explicit PgOid(std::string value) : rep_(std::move(value)) {}
 
-  /// @name Conversion to a oid string.
+  /**
+   * Construction from an OID unsigned four-byte integer.
+  */
+  explicit PgOid(std::uint64_t value) : rep_(absl::StrCat(value)) {}
+
+  /// @name Conversion to an OID string.
   ///@{
   explicit operator std::string() const& { return rep_; }
   explicit operator std::string() && { return std::move(rep_); }
+  ///@}
+
+  /// @name Conversion to an OID unsigned four-byte integer.
+  ///@{
+  explicit operator std::uint64_t() const& { return std::stoull(rep_); }
+  explicit operator std::uint64_t() && { return std::move(std::stoull(rep_)); }
   ///@}
 
  private:
@@ -66,7 +78,7 @@ inline bool operator==(PgOid const& lhs, PgOid const& rhs) {
 inline bool operator!=(PgOid const& lhs, PgOid const& rhs) { return !(lhs == rhs); }
 ///@}
 
-/// Outputs an Oid formatted string to the provided stream.
+/// Outputs an OID formatted string to the provided stream.
 inline std::ostream& operator<<(std::ostream& os, PgOid const& oid) {
   return os << std::string(oid);
 }
