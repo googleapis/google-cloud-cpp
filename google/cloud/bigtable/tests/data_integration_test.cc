@@ -134,7 +134,14 @@ TEST_P(DataIntegrationTest, TableBulkApplyThrottling) {
                           TableTestEnvironment::instance_id(),
                           TableTestEnvironment::table_id()));
 
-  // This test will take at least 10 queries / (20 QPS) = 500ms.
+  // This test should take around 10 queries / (20 QPS) = 500ms.
+  //
+  // While this behavior is observable, we don't want to put strict expectations
+  // on it. The server might tell us to go faster. We might change the initial
+  // period.
+  //
+  // The purpose of the integration test is more to verify that our rate
+  // limiting implementation does not crash and burn in production.
   for (auto i = 0; i != 10; ++i) {
     Cell cell{"row-key-5", kFamily1, "c0", 0, "v" + std::to_string(i)};
     BulkApply(table, {cell});
