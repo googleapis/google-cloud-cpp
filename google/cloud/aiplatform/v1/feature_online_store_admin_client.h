@@ -98,7 +98,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   /// @param parent  Required. The resource name of the Location to create FeatureOnlineStores.
   ///  Format:
-  ///  `projects/{project}/locations/{location}'`
+  ///  `projects/{project}/locations/{location}`
   /// @param feature_online_store  Required. The FeatureOnlineStore to create.
   /// @param feature_online_store_id  Required. The ID to use for this FeatureOnlineStore, which will become the
   ///  final component of the FeatureOnlineStore's resource name.
