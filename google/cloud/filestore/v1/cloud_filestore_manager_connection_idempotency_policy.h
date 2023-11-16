@@ -52,6 +52,9 @@ class CloudFilestoreManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency RestoreInstance(
       google::cloud::filestore::v1::RestoreInstanceRequest const& request);
 
+  virtual google::cloud::Idempotency RevertInstance(
+      google::cloud::filestore::v1::RevertInstanceRequest const& request);
+
   virtual google::cloud::Idempotency DeleteInstance(
       google::cloud::filestore::v1::DeleteInstanceRequest const& request);
 

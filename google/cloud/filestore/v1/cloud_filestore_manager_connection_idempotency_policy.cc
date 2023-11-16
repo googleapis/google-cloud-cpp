@@ -60,6 +60,11 @@ Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::RestoreInstance(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::RevertInstance(
+    google::cloud::filestore::v1::RevertInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteInstance(
     google::cloud::filestore::v1::DeleteInstanceRequest const&) {
   return Idempotency::kNonIdempotent;

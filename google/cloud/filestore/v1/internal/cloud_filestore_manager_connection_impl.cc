@@ -219,6 +219,41 @@ CloudFilestoreManagerConnectionImpl::RestoreInstance(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerConnectionImpl::RevertInstance(
+    google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::filestore::v1::Instance>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+        return stub->AsyncRevertInstance(cq, std::move(context), options,
+                                         request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::filestore::v1::Instance>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RevertInstance(request),
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerConnectionImpl::DeleteInstance(
     google::cloud::filestore::v1::DeleteInstanceRequest const& request) {

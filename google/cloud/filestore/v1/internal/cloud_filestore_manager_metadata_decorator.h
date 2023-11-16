@@ -67,6 +67,12 @@ class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
       google::cloud::filestore::v1::RestoreInstanceRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncRevertInstance(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::filestore::v1::RevertInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context, Options const& options,

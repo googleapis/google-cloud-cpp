@@ -72,6 +72,11 @@ class MockCloudFilestoreManagerConnection
       (override));
 
   MOCK_METHOD(
+      future<StatusOr<google::cloud::filestore::v1::Instance>>, RevertInstance,
+      (google::cloud::filestore::v1::RevertInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::common::OperationMetadata>>,
       DeleteInstance,
       (google::cloud::filestore::v1::DeleteInstanceRequest const& request),

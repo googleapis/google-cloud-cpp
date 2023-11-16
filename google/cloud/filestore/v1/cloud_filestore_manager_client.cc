@@ -112,6 +112,14 @@ CloudFilestoreManagerClient::RestoreInstance(
   return connection_->RestoreInstance(request);
 }
 
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerClient::RevertInstance(
+    google::cloud::filestore::v1::RevertInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RevertInstance(request);
+}
+
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerClient::DeleteInstance(std::string const& name,
                                             Options opts) {

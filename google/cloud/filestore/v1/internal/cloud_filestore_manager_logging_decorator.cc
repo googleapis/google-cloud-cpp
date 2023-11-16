@@ -108,6 +108,22 @@ CloudFilestoreManagerLogging::AsyncRestoreInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerLogging::AsyncRevertInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+        return child_->AsyncRevertInstance(cq, std::move(context), options,
+                                           request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
