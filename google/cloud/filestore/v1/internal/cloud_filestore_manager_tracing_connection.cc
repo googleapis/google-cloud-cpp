@@ -79,6 +79,15 @@ CloudFilestoreManagerTracingConnection::RestoreInstance(
   return internal::EndSpan(std::move(span), child_->RestoreInstance(request));
 }
 
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerTracingConnection::RevertInstance(
+    google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "filestore_v1::CloudFilestoreManagerConnection::RevertInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->RevertInstance(request));
+}
+
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerTracingConnection::DeleteInstance(
     google::cloud::filestore::v1::DeleteInstanceRequest const& request) {

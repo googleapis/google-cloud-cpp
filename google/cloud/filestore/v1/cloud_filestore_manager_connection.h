@@ -209,6 +209,10 @@ class CloudFilestoreManagerConnection {
   RestoreInstance(
       google::cloud::filestore::v1::RestoreInstanceRequest const& request);
 
+  virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
+  RevertInstance(
+      google::cloud::filestore::v1::RevertInstanceRequest const& request);
+
   virtual future<StatusOr<google::cloud::common::OperationMetadata>>
   DeleteInstance(
       google::cloud::filestore::v1::DeleteInstanceRequest const& request);

@@ -92,6 +92,16 @@ CloudFilestoreManagerMetadata::AsyncRestoreInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerMetadata::AsyncRevertInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+  SetMetadata(*context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRevertInstance(cq, std::move(context), options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context, Options const& options,

@@ -992,9 +992,11 @@ class FeaturestoreServiceClient {
   ///
   /// Creates a new Feature in a given EntityType.
   ///
-  /// @param parent  Required. The resource name of the EntityType to create a Feature.
-  ///  Format:
+  /// @param parent  Required. The resource name of the EntityType or FeatureGroup to create a
+  ///  Feature. Format for entity_type as parent:
   ///  `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}`
+  ///  Format for feature_group as parent:
+  ///  `projects/{project}/locations/{location}/featureGroups/{feature_group}`
   /// @param feature  Required. The Feature to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1016,8 +1018,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L953}
-  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L35}
+  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L955}
+  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
@@ -1028,9 +1030,11 @@ class FeaturestoreServiceClient {
   ///
   /// Creates a new Feature in a given EntityType.
   ///
-  /// @param parent  Required. The resource name of the EntityType to create a Feature.
-  ///  Format:
+  /// @param parent  Required. The resource name of the EntityType or FeatureGroup to create a
+  ///  Feature. Format for entity_type as parent:
   ///  `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}`
+  ///  Format for feature_group as parent:
+  ///  `projects/{project}/locations/{location}/featureGroups/{feature_group}`
   /// @param feature  Required. The Feature to create.
   /// @param feature_id  Required. The ID to use for the Feature, which will become the final
   ///  component of the Feature's resource name.
@@ -1038,7 +1042,7 @@ class FeaturestoreServiceClient {
   ///  This value may be up to 128 characters, and valid characters are
   ///  `[a-z0-9_]`. The first character cannot be a number.
   ///  @n
-  ///  The value must be unique within an EntityType.
+  ///  The value must be unique within an EntityType/FeatureGroup.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1059,8 +1063,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L953}
-  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L35}
+  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L955}
+  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
@@ -1098,8 +1102,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L953}
-  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L35}
+  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L955}
+  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
@@ -1138,8 +1142,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L979}
-  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1001}
+  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L983}
+  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1005}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
@@ -1179,8 +1183,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L979}
-  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1001}
+  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L983}
+  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1005}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
@@ -1193,8 +1197,10 @@ class FeaturestoreServiceClient {
   /// Gets details of a single Feature.
   ///
   /// @param name  Required. The name of the Feature resource.
-  ///  Format:
+  ///  Format for entity_type as parent:
   ///  `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}`
+  ///  Format for feature_group as parent:
+  ///  `projects/{project}/locations/{location}/featureGroups/{feature_group}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -1208,8 +1214,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L35}
-  /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1008}
+  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
+  /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1014}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
@@ -1238,8 +1244,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L35}
-  /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1008}
+  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
+  /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1014}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
@@ -1251,8 +1257,10 @@ class FeaturestoreServiceClient {
   /// Lists Features in a given EntityType.
   ///
   /// @param parent  Required. The resource name of the Location to list Features.
-  ///  Format:
+  ///  Format for entity_type as parent:
   ///  `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}`
+  ///  Format for feature_group as parent:
+  ///  `projects/{project}/locations/{location}/featureGroups/{feature_group}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1275,8 +1283,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1022}
+  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
+  /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1032}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
@@ -1314,8 +1322,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1022}
+  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
+  /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1032}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
@@ -1330,6 +1338,7 @@ class FeaturestoreServiceClient {
   ///  updated.
   ///  Format:
   ///  `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}`
+  ///  `projects/{project}/locations/{location}/featureGroups/{feature_group}/features/{feature}`
   /// @param update_mask  Field mask is used to specify the fields to be overwritten in the
   ///  Features resource by the update.
   ///  The fields specified in the update_mask are relative to the resource, not
@@ -1342,7 +1351,7 @@ class FeaturestoreServiceClient {
   ///  @n
   ///    * `description`
   ///    * `labels`
-  ///    * `disable_monitoring`
+  ///    * `disable_monitoring` (Not supported for FeatureRegistry Feature)
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -1356,8 +1365,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L35}
-  /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1219}
+  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
+  /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1240}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
@@ -1387,8 +1396,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L35}
-  /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1219}
+  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
+  /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1240}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
@@ -1402,6 +1411,7 @@ class FeaturestoreServiceClient {
   /// @param name  Required. The name of the Features to be deleted.
   ///  Format:
   ///  `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}`
+  ///  `projects/{project}/locations/{location}/featureGroups/{feature_group}/features/{feature}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1422,7 +1432,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1244}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1268}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1459,7 +1469,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1244}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1268}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1774,8 +1784,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1336}
-  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1393}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1361}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1418}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
@@ -1820,8 +1830,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1336}
-  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1393}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1361}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1418}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
@@ -1858,8 +1868,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L35}
-  /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1107}
+  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
+  /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1126}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Feature> SearchFeatures(
@@ -1899,8 +1909,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L35}
-  /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1107}
+  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
+  /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1126}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Feature> SearchFeatures(
@@ -1938,8 +1948,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L35}
-  /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1107}
+  /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
+  /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1126}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Feature> SearchFeatures(

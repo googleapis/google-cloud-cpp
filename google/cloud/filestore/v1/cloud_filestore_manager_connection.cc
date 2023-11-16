@@ -74,6 +74,14 @@ CloudFilestoreManagerConnection::RestoreInstance(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerConnection::RevertInstance(
+    google::cloud::filestore::v1::RevertInstanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::filestore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerConnection::DeleteInstance(
     google::cloud::filestore::v1::DeleteInstanceRequest const&) {

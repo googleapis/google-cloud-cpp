@@ -106,6 +106,25 @@ CloudFilestoreManagerAuth::AsyncRestoreInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerAuth::AsyncRevertInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncRevertInstance(cq, *std::move(context), options,
+                                          request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
