@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/telcoautomation/v1/ EDIT HERE _client.h"
+#include "google/cloud/telcoautomation/v1/telco_automation_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -26,10 +26,10 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace telcoautomation = ::google::cloud::telcoautomation_v1;
-  auto client = telcoautomation::ServiceClient(
-      telcoautomation::MakeServiceConnection());  // EDIT HERE
+  auto client = telcoautomation::TelcoAutomationClient(
+      telcoautomation::MakeTelcoAutomationConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListOrchestrationClusters(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

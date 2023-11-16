@@ -3268,7 +3268,6 @@ service {
 service {
   service_proto_path: "google/cloud/telcoautomation/v1/telcoautomation.proto"
   product_path: "google/cloud/telcoautomation/v1"
-  forwarding_product_path: "google/cloud/telcoautomation"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }

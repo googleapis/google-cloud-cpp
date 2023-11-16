@@ -67,6 +67,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section telcoautomation-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `telcoautomation_v1::TelcoAutomationClient`:
+
+@snippet telco_automation_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet telco_automation_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section telcoautomation-override-retry-more-information More Information
@@ -80,4 +89,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
+
+/*! @page telcoautomation_v1::TelcoAutomationClient-retry-snippet Override telcoautomation_v1::TelcoAutomationClient Retry Policies
+
+This shows how to override the retry policies for telcoautomation_v1::TelcoAutomationClient:
+
+@snippet google/cloud/telcoautomation/v1/samples/telco_automation_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/telcoautomation/v1/samples/telco_automation_client_samples.cc custom-idempotency-policy
+
+*/
 // <!-- inject-retry-pages-end -->
