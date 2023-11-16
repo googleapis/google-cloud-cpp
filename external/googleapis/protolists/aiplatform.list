@@ -61,8 +61,15 @@
 @com_google_googleapis//google/cloud/aiplatform/v1:explanation.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:explanation_metadata.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:feature.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:feature_group.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:feature_monitoring_stats.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:feature_online_store.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:feature_online_store_admin_service.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:feature_online_store_service.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:feature_registry_service.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:feature_selector.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:feature_view.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:feature_view_sync.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:featurestore.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:featurestore_monitoring.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:featurestore_online_service.proto
@@ -76,6 +83,7 @@
 @com_google_googleapis//google/cloud/aiplatform/v1:job_service.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:job_state.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:lineage_subgraph.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:llm_utility_service.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:machine_resources.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:manual_batch_tuning_parameters.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:match_service.proto
