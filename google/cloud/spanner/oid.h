@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_OID_H
 
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -50,8 +49,8 @@ class PgOid {
 
   /// @name Conversion to an OID string.
   ///@{
-  explicit operator std::string() const& { return absl::StrCat(rep_); }
-  explicit operator std::string() && { return absl::StrCat(rep_); }
+  explicit operator std::string() const& { return std::to_string(rep_); }
+  explicit operator std::string() && { return std::to_string(rep_); }
   ///@}
 
   /// @name Relational operators
