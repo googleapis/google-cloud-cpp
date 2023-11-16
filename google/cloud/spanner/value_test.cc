@@ -764,7 +764,8 @@ TEST(Value, ProtoConversionPgOid) {
     auto const p = spanner_internal::ToProto(v);
     EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
     EXPECT_EQ(p.first.code(), google::spanner::v1::TypeCode::INT64);
-    EXPECT_EQ(p.first.type_annotation(), google::spanner::v1::TypeAnnotationCode::PG_OID);
+    EXPECT_EQ(p.first.type_annotation(),
+              google::spanner::v1::TypeAnnotationCode::PG_OID);
     EXPECT_EQ(std::string(x), p.second.string_value());
   }
 }
