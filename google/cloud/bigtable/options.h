@@ -44,7 +44,6 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
-#include "absl/types/variant.h"
 #include <chrono>
 #include <string>
 
@@ -189,7 +188,7 @@ namespace experimental {
  * https://cloud.google.com/bigtable/docs/routing#single-cluster
  */
 struct BulkApplyThrottlingOption {
-  using Type = absl::variant<absl::monostate>;
+  using Type = bool;
 };
 
 }  // namespace experimental

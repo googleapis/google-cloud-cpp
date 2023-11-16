@@ -16,7 +16,6 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/fake_clock.h"
-#include "absl/types/variant.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -200,11 +199,12 @@ TEST(MutateRowsLimiter, UpdateRespectsResponsePeriod) {
 
 TEST(MutateRowsLimiter, MakeMutateRowsLimiter) {
   using ::google::cloud::bigtable::experimental::BulkApplyThrottlingOption;
-  auto noop = MakeMutateRowsLimiter(Options{});
+  auto noop =
+      MakeMutateRowsLimiter(Options{}.set<BulkApplyThrottlingOption>(false));
   EXPECT_THAT(dynamic_cast<NoopMutateRowsLimiter*>(noop.get()), NotNull());
 
-  auto throttling = MakeMutateRowsLimiter(
-      Options{}.set<BulkApplyThrottlingOption>(absl::monostate{}));
+  auto throttling =
+      MakeMutateRowsLimiter(Options{}.set<BulkApplyThrottlingOption>(true));
   EXPECT_THAT(dynamic_cast<ThrottlingMutateRowsLimiter*>(throttling.get()),
               NotNull());
 }

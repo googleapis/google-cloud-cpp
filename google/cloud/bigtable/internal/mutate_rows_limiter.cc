@@ -70,7 +70,7 @@ void ThrottlingMutateRowsLimiter::Update(
 
 std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(
     Options const& options) {
-  if (options.has<bigtable::experimental::BulkApplyThrottlingOption>()) {
+  if (options.get<bigtable::experimental::BulkApplyThrottlingOption>()) {
     using duration = ThrottlingMutateRowsLimiter::Clock::duration;
     std::function<void(duration)> sleeper = [](duration d) {
       std::this_thread::sleep_for(d);
