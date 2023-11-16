@@ -111,3 +111,13 @@ endforeach ()
 # Export the list of unit tests so the Bazel BUILD file can pick it up.
 export_list_to_bazel("storage_benchmarks_unit_tests.bzl"
                      "storage_benchmarks_unit_tests" YEAR "2019")
+
+if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    return()
+endif ()
+
+add_executable(async_throughput_benchmark async_throughput_benchmark.cc)
+target_compile_features(async_throughput_benchmark PRIVATE cxx_std_20)
+target_link_libraries(
+    async_throughput_benchmark
+    PRIVATE storage_benchmarks google-cloud-cpp::experimental-storage_grpc)

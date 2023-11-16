@@ -17,6 +17,8 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 load(":storage_benchmarks.bzl", "storage_benchmarks_hdrs", "storage_benchmarks_srcs")
+load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
+load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
 
 cc_library(
     name = "storage_benchmarks",
@@ -36,8 +38,6 @@ cc_library(
         "@com_google_googleapis//google/storage/v2:storage_cc_proto",
     ],
 )
-
-load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
 
 [cc_binary(
     name = program.replace("/", "_").replace(".cc", ""),
@@ -60,8 +60,6 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
     ],
 ) for program in storage_benchmark_programs]
 
-load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
-
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
@@ -81,3 +79,15 @@ load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_benchmarks_unit_tests]
+
+cc_binary(
+    name = "async_throughput_benchmark",
+    testonly = True,
+    srcs = ["async_throughput_benchmark.cc"],
+    tags = ["manual"],
+    deps = [
+        ":storage_benchmarks",
+        "//:experimental-storage_grpc",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+)

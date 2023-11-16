@@ -116,6 +116,20 @@ std::string FormatBandwidthGbPerSecond(
   return std::move(os).str();
 }
 
+template <typename Rep, typename Period>
+std::string FormatBandwidthMiBs(std::uintmax_t bytes,
+                                std::chrono::duration<Rep, Period> elapsed) {
+  using us = ::std::chrono::microseconds;
+  auto const e = std::chrono::duration_cast<us>(elapsed);
+  if (e == us(0)) return "NaN";
+
+  auto const bandwidth = static_cast<double>(bytes) / (1024 * 1024.0) /
+                         static_cast<double>(e.count()) * 1'000'000;
+  std::ostringstream os;
+  os << std::fixed << std::setprecision(2) << bandwidth;
+  return std::move(os).str();
+}
+
 // Print any well-known options.
 void PrintOptions(std::ostream& os, std::string const& prefix,
                   Options const& options);
