@@ -24,6 +24,7 @@
 #include "opentelemetry/trace/span.h"
 #include <algorithm>
 #include <string>
+#include <thread>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
@@ -42,6 +43,11 @@ using Attributes =
                           opentelemetry::common::AttributeValue>>;
 using Links =
     std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
+
+int64_t GetCurrentThreadId() {
+  return static_cast<std::int64_t>(
+      std::hash<std::thread::id>{}(std::this_thread::get_id()));
+}
 
 /// Creates a link for each sampled span in the range @p begin to @p end.
 auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
@@ -66,7 +72,8 @@ auto MakeParent(Links const& links, Spans const& message_spans) {
                          /*attributes=*/
                          {{sc::kMessagingBatchMessageCount,
                            static_cast<std::int64_t>(message_spans.size())},
-                          {sc::kCodeFunction, "BatchSink::AsyncPublish"}},
+                          {sc::kCodeFunction, "BatchSink::AsyncPublish"},
+                          {sc::kThreadId, GetCurrentThreadId()}},
                          /*links*/ std::move(links));
 
   // Add metadata to the message spans about the batch sink span.

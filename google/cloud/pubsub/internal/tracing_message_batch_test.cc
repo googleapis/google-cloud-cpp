@@ -147,6 +147,30 @@ TEST(TracingMessageBatch, Flush) {
                                  "messaging.pubsub.message.link", 0)))))));
 }
 
+TEST(TracingMessageBatch, PublishSpanHasThreadIdAttribute) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+  auto message_span = MakeSpan("test span");
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, SaveMessage(_));
+  EXPECT_CALL(*mock, Flush).WillOnce([] {
+    return [](auto) { };
+  });
+  auto message_batch =
+      MakeTracingMessageBatch(std::move(mock), MakeTestOptions());
+  auto initial_spans = {message_span};
+  SaveMessages(initial_spans, message_batch);
+
+  auto end_spans = message_batch->Flush();
+  end_spans(make_ready_future());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Contains(AllOf(SpanHasInstrumentationScope(),
+                                    SpanKindIsClient(), SpanNamed("publish"),
+                                    SpanHasAttributes(OTelAttribute<int64_t>(
+                                        sc::kThreadId, _)))));
+}
+
 TEST(TracingMessageBatch, FlushOnlyIncludeSampledLink) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   // Create span before the span catcher so it is not sampled.
