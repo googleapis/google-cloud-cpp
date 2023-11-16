@@ -75,7 +75,9 @@ class PgOid {
 inline bool operator==(PgOid const& lhs, PgOid const& rhs) {
   return std::string(lhs) == std::string(rhs);
 }
-inline bool operator!=(PgOid const& lhs, PgOid const& rhs) { return !(lhs == rhs); }
+inline bool operator!=(PgOid const& lhs, PgOid const& rhs) {
+  return !(lhs == rhs);
+}
 ///@}
 
 /// Outputs an OID formatted string to the provided stream.
