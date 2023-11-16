@@ -55,7 +55,7 @@ class DefaultSessionsStub : public SessionsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::DetectIntentRequest const& request)
       override;
 

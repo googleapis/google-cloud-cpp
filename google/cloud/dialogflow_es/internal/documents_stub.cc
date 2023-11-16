@@ -32,10 +32,10 @@ DocumentsStub::~DocumentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse>
 DefaultDocumentsStub::ListDocuments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListDocumentsRequest const& request) {
   google::cloud::dialogflow::v2::ListDocumentsResponse response;
-  auto status = grpc_stub_->ListDocuments(&client_context, request, &response);
+  auto status = grpc_stub_->ListDocuments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultDocumentsStub::ListDocuments(
 
 StatusOr<google::cloud::dialogflow::v2::Document>
 DefaultDocumentsStub::GetDocument(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetDocumentRequest const& request) {
   google::cloud::dialogflow::v2::Document response;
-  auto status = grpc_stub_->GetDocument(&client_context, request, &response);
+  auto status = grpc_stub_->GetDocument(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

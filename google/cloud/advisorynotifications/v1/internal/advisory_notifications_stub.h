@@ -70,23 +70,23 @@ class DefaultAdvisoryNotificationsServiceStub
 
   StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
   ListNotifications(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
           request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Notification>
   GetNotification(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::advisorynotifications::v1::GetNotificationRequest const&
           request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::advisorynotifications::v1::GetSettingsRequest const&
           request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
           request) override;
 

@@ -136,12 +136,12 @@ class DefaultCloudFilestoreManagerStub : public CloudFilestoreManagerStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::filestore::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::filestore::v1::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::cloud::filestore::v1::Instance> GetInstance(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::filestore::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -169,12 +169,12 @@ class DefaultCloudFilestoreManagerStub : public CloudFilestoreManagerStub {
       override;
 
   StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::filestore::v1::ListSnapshotsRequest const& request)
       override;
 
   StatusOr<google::cloud::filestore::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::filestore::v1::GetSnapshotRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSnapshot(
@@ -196,11 +196,11 @@ class DefaultCloudFilestoreManagerStub : public CloudFilestoreManagerStub {
       override;
 
   StatusOr<google::cloud::filestore::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::filestore::v1::ListBackupsRequest const& request) override;
 
   StatusOr<google::cloud::filestore::v1::Backup> GetBackup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::filestore::v1::GetBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(

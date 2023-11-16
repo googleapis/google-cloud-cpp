@@ -30,9 +30,8 @@ add_custom_target(sql-client-integration-tests)
 foreach (fname ${sql_client_integration_tests})
     google_cloud_cpp_add_executable(target "sql" ${fname})
     target_link_libraries(
-        ${target}
-        PRIVATE google-cloud-cpp::experimental-sql google_cloud_cpp_testing
-                GTest::gmock_main GTest::gmock GTest::gtest)
+        ${target} PRIVATE google-cloud-cpp::sql google_cloud_cpp_testing
+                          GTest::gmock_main GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(${target})
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(

@@ -30,10 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CaseServiceStub::~CaseServiceStub() = default;
 
 StatusOr<google::cloud::support::v2::Case> DefaultCaseServiceStub::GetCase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::support::v2::GetCaseRequest const& request) {
   google::cloud::support::v2::Case response;
-  auto status = grpc_stub_->GetCase(&client_context, request, &response);
+  auto status = grpc_stub_->GetCase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,10 +42,10 @@ StatusOr<google::cloud::support::v2::Case> DefaultCaseServiceStub::GetCase(
 
 StatusOr<google::cloud::support::v2::ListCasesResponse>
 DefaultCaseServiceStub::ListCases(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::support::v2::ListCasesRequest const& request) {
   google::cloud::support::v2::ListCasesResponse response;
-  auto status = grpc_stub_->ListCases(&client_context, request, &response);
+  auto status = grpc_stub_->ListCases(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -54,10 +54,10 @@ DefaultCaseServiceStub::ListCases(
 
 StatusOr<google::cloud::support::v2::SearchCasesResponse>
 DefaultCaseServiceStub::SearchCases(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::support::v2::SearchCasesRequest const& request) {
   google::cloud::support::v2::SearchCasesResponse response;
-  auto status = grpc_stub_->SearchCases(&client_context, request, &response);
+  auto status = grpc_stub_->SearchCases(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -65,10 +65,10 @@ DefaultCaseServiceStub::SearchCases(
 }
 
 StatusOr<google::cloud::support::v2::Case> DefaultCaseServiceStub::CreateCase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::support::v2::CreateCaseRequest const& request) {
   google::cloud::support::v2::Case response;
-  auto status = grpc_stub_->CreateCase(&client_context, request, &response);
+  auto status = grpc_stub_->CreateCase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -76,10 +76,10 @@ StatusOr<google::cloud::support::v2::Case> DefaultCaseServiceStub::CreateCase(
 }
 
 StatusOr<google::cloud::support::v2::Case> DefaultCaseServiceStub::UpdateCase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::support::v2::UpdateCaseRequest const& request) {
   google::cloud::support::v2::Case response;
-  auto status = grpc_stub_->UpdateCase(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateCase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -87,10 +87,10 @@ StatusOr<google::cloud::support::v2::Case> DefaultCaseServiceStub::UpdateCase(
 }
 
 StatusOr<google::cloud::support::v2::Case> DefaultCaseServiceStub::EscalateCase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::support::v2::EscalateCaseRequest const& request) {
   google::cloud::support::v2::Case response;
-  auto status = grpc_stub_->EscalateCase(&client_context, request, &response);
+  auto status = grpc_stub_->EscalateCase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -98,10 +98,10 @@ StatusOr<google::cloud::support::v2::Case> DefaultCaseServiceStub::EscalateCase(
 }
 
 StatusOr<google::cloud::support::v2::Case> DefaultCaseServiceStub::CloseCase(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::support::v2::CloseCaseRequest const& request) {
   google::cloud::support::v2::Case response;
-  auto status = grpc_stub_->CloseCase(&client_context, request, &response);
+  auto status = grpc_stub_->CloseCase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -110,12 +110,12 @@ StatusOr<google::cloud::support::v2::Case> DefaultCaseServiceStub::CloseCase(
 
 StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse>
 DefaultCaseServiceStub::SearchCaseClassifications(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::support::v2::SearchCaseClassificationsRequest const&
         request) {
   google::cloud::support::v2::SearchCaseClassificationsResponse response;
-  auto status = grpc_stub_->SearchCaseClassifications(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->SearchCaseClassifications(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

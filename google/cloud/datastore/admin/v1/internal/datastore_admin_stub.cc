@@ -100,10 +100,10 @@ DefaultDatastoreAdminStub::AsyncDeleteIndex(
 
 StatusOr<google::datastore::admin::v1::Index>
 DefaultDatastoreAdminStub::GetIndex(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::datastore::admin::v1::GetIndexRequest const& request) {
   google::datastore::admin::v1::Index response;
-  auto status = grpc_stub_->GetIndex(&client_context, request, &response);
+  auto status = grpc_stub_->GetIndex(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -112,10 +112,10 @@ DefaultDatastoreAdminStub::GetIndex(
 
 StatusOr<google::datastore::admin::v1::ListIndexesResponse>
 DefaultDatastoreAdminStub::ListIndexes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::datastore::admin::v1::ListIndexesRequest const& request) {
   google::datastore::admin::v1::ListIndexesResponse response;
-  auto status = grpc_stub_->ListIndexes(&client_context, request, &response);
+  auto status = grpc_stub_->ListIndexes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

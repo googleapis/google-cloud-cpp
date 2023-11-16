@@ -62,23 +62,23 @@ class DefaultTenantServiceStub : public TenantServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::talent::v4::CreateTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::talent::v4::GetTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::talent::v4::UpdateTenantRequest const& request) override;
 
   Status DeleteTenant(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::talent::v4::DeleteTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::ListTenantsResponse> ListTenants(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::talent::v4::ListTenantsRequest const& request) override;
 
  private:

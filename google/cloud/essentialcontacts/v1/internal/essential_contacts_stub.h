@@ -81,38 +81,38 @@ class DefaultEssentialContactsServiceStub
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::essentialcontacts::v1::CreateContactRequest const& request)
       override;
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> UpdateContact(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::essentialcontacts::v1::UpdateContactRequest const& request)
       override;
 
   StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
-  ListContacts(grpc::ClientContext& client_context,
+  ListContacts(grpc::ClientContext& context,
                google::cloud::essentialcontacts::v1::ListContactsRequest const&
                    request) override;
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> GetContact(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::essentialcontacts::v1::GetContactRequest const& request)
       override;
 
   Status DeleteContact(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::essentialcontacts::v1::DeleteContactRequest const& request)
       override;
 
   StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse>
   ComputeContacts(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
           request) override;
 
   Status SendTestMessage(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
           request) override;
 

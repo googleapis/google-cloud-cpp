@@ -31,11 +31,10 @@ ExperimentsStub::~ExperimentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
 DefaultExperimentsStub::ListExperiments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListExperimentsResponse response;
-  auto status =
-      grpc_stub_->ListExperiments(&client_context, request, &response);
+  auto status = grpc_stub_->ListExperiments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +43,10 @@ DefaultExperimentsStub::ListExperiments(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 DefaultExperimentsStub::GetExperiment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Experiment response;
-  auto status = grpc_stub_->GetExperiment(&client_context, request, &response);
+  auto status = grpc_stub_->GetExperiment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -56,11 +55,10 @@ DefaultExperimentsStub::GetExperiment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 DefaultExperimentsStub::CreateExperiment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Experiment response;
-  auto status =
-      grpc_stub_->CreateExperiment(&client_context, request, &response);
+  auto status = grpc_stub_->CreateExperiment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -69,11 +67,10 @@ DefaultExperimentsStub::CreateExperiment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 DefaultExperimentsStub::UpdateExperiment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Experiment response;
-  auto status =
-      grpc_stub_->UpdateExperiment(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateExperiment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -81,11 +78,10 @@ DefaultExperimentsStub::UpdateExperiment(
 }
 
 Status DefaultExperimentsStub::DeleteExperiment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteExperiment(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteExperiment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -94,11 +90,10 @@ Status DefaultExperimentsStub::DeleteExperiment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 DefaultExperimentsStub::StartExperiment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Experiment response;
-  auto status =
-      grpc_stub_->StartExperiment(&client_context, request, &response);
+  auto status = grpc_stub_->StartExperiment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -107,10 +102,10 @@ DefaultExperimentsStub::StartExperiment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 DefaultExperimentsStub::StopExperiment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Experiment response;
-  auto status = grpc_stub_->StopExperiment(&client_context, request, &response);
+  auto status = grpc_stub_->StopExperiment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

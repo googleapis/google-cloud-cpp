@@ -50,7 +50,7 @@ class DefaultConnectionServiceStub : public ConnectionServiceStub {
 
   StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
   ListConnections(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request)
       override;
 

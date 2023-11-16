@@ -72,34 +72,34 @@ class DefaultEkmServiceStub : public EkmServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
-  ListEkmConnections(grpc::ClientContext& client_context,
+  ListEkmConnections(grpc::ClientContext& context,
                      google::cloud::kms::v1::ListEkmConnectionsRequest const&
                          request) override;
 
   StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::kms::v1::GetEkmConnectionRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::kms::v1::CreateEkmConnectionRequest const& request)
       override;
 
   StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request)
       override;
 
   StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::kms::v1::GetEkmConfigRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::kms::v1::UpdateEkmConfigRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
-  VerifyConnectivity(grpc::ClientContext& client_context,
+  VerifyConnectivity(grpc::ClientContext& context,
                      google::cloud::kms::v1::VerifyConnectivityRequest const&
                          request) override;
 

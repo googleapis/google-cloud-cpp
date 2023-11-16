@@ -48,7 +48,7 @@ class DefaultQuotaControllerStub : public QuotaControllerStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-  AllocateQuota(grpc::ClientContext& client_context,
+  AllocateQuota(grpc::ClientContext& context,
                 google::api::servicecontrol::v1::AllocateQuotaRequest const&
                     request) override;
 

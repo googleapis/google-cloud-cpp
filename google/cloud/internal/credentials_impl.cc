@@ -28,6 +28,11 @@ auto constexpr kDefaultTokenLifetime = std::chrono::hours(1);
 
 }  // namespace
 
+std::shared_ptr<Credentials> MakeErrorCredentials(Status error_status) {
+  return std::make_shared<internal::ErrorCredentialsConfig>(
+      std::move(error_status));
+}
+
 Options PopulateAuthOptions(Options options) {
   // First set any defaults that may be missing.
   options =
@@ -45,6 +50,9 @@ void CredentialsVisitor::dispatch(Credentials const& credentials,
                                   CredentialsVisitor& visitor) {
   credentials.dispatch(visitor);
 }
+
+ErrorCredentialsConfig::ErrorCredentialsConfig(Status error_status)
+    : status_(std::move(error_status)) {}
 
 InsecureCredentialsConfig::InsecureCredentialsConfig(Options opts)
     : options_(PopulateAuthOptions(std::move(opts))) {}

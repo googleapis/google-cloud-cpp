@@ -100,12 +100,12 @@ class DefaultCloudMemcacheStub : public CloudMemcacheStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::memcache::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::memcache::v1::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::cloud::memcache::v1::Instance> GetInstance(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::memcache::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(

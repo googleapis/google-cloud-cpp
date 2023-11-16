@@ -105,17 +105,17 @@ class DefaultEndpointServiceStub : public EndpointServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Endpoint> GetEndpoint(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetEndpointRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListEndpointsResponse> ListEndpoints(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ListEndpointsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::UpdateEndpointRequest const& request)
       override;
 

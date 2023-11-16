@@ -164,13 +164,13 @@ class DefaultNetworkSecurityStub : public NetworkSecurityStub {
   StatusOr<
       google::cloud::networksecurity::v1::ListAuthorizationPoliciesResponse>
   ListAuthorizationPolicies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networksecurity::v1::
           ListAuthorizationPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
   GetAuthorizationPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
           request) override;
 
@@ -197,13 +197,13 @@ class DefaultNetworkSecurityStub : public NetworkSecurityStub {
 
   StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
   ListServerTlsPolicies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest const&
           request) override;
 
   StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
   GetServerTlsPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
           request) override;
 
@@ -227,13 +227,13 @@ class DefaultNetworkSecurityStub : public NetworkSecurityStub {
 
   StatusOr<google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse>
   ListClientTlsPolicies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest const&
           request) override;
 
   StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
   GetClientTlsPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
           request) override;
 

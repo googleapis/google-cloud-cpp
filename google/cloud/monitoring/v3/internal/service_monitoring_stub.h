@@ -93,51 +93,51 @@ class DefaultServiceMonitoringServiceStub
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::monitoring::v3::Service> CreateService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::CreateServiceRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Service> GetService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::GetServiceRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListServicesResponse> ListServices(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::ListServicesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Service> UpdateService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::UpdateServiceRequest const& request) override;
 
   Status DeleteService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::DeleteServiceRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   CreateServiceLevelObjective(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   GetServiceLevelObjective(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::GetServiceLevelObjectiveRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse>
   ListServiceLevelObjectives(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::ListServiceLevelObjectivesRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   UpdateServiceLevelObjective(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request)
       override;
 
   Status DeleteServiceLevelObjective(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request)
       override;
 

@@ -411,7 +411,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::InsertObjectMedia(
   ApplyQueryParameters(*ctx, options, request, "resource");
   AddIdempotencyToken(*ctx, context);
   ApplyRoutingHeaders(*ctx, request);
-  auto stream = stub_->WriteObject(std::move(ctx));
+  auto stream = stub_->WriteObject(std::move(ctx), options);
 
   auto splitter = SplitObjectWriteData<ContentType>(request.payload());
   std::int64_t offset = 0;
@@ -665,7 +665,7 @@ StatusOr<storage::internal::QueryResumableUploadResponse> GrpcStub::UploadChunk(
   ApplyQueryParameters(*ctx, options, request, "resource");
   AddIdempotencyToken(*ctx, context);
   ApplyRoutingHeaders(*ctx, request);
-  auto stream = stub_->WriteObject(std::move(ctx));
+  auto stream = stub_->WriteObject(std::move(ctx), options);
 
   auto splitter = SplitObjectWriteData<ContentType>(request.payload());
   auto offset = request.offset();

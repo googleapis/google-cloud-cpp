@@ -53,6 +53,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/random_test.cc",
     "internal/retry_loop_helpers_test.cc",
     "internal/retry_policy_impl_test.cc",
+    "internal/service_endpoint_test.cc",
     "internal/sha256_hash_test.cc",
     "internal/sha256_hmac_test.cc",
     "internal/status_payload_keys_test.cc",

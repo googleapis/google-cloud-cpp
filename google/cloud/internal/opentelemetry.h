@@ -229,6 +229,8 @@ std::function<void(std::chrono::duration<Rep, Period>)> MakeTracedSleeper(
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (TracingEnabled(options)) {
     return [=](std::chrono::duration<Rep, Period> d) {
+      // A sleep of 0 is not an interesting event worth tracing.
+      if (d == std::chrono::duration<Rep, Period>::zero()) return sleeper(d);
       auto span = MakeSpan(name);
       sleeper(d);
       span->End();

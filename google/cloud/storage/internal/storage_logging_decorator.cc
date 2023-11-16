@@ -284,14 +284,15 @@ StatusOr<google::storage::v2::Object> StorageLogging::UpdateObject(
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-StorageLogging::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
+StorageLogging::WriteObject(std::shared_ptr<grpc::ClientContext> context,
+                            Options const& options) {
   using LoggingStream = ::google::cloud::internal::StreamingWriteRpcLogging<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->WriteObject(std::move(context));
+  auto stream = child_->WriteObject(std::move(context), options);
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));

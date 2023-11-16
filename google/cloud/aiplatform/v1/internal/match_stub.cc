@@ -31,10 +31,10 @@ MatchServiceStub::~MatchServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
 DefaultMatchServiceStub::FindNeighbors(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
   google::cloud::aiplatform::v1::FindNeighborsResponse response;
-  auto status = grpc_stub_->FindNeighbors(&client_context, request, &response);
+  auto status = grpc_stub_->FindNeighbors(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,11 +43,10 @@ DefaultMatchServiceStub::FindNeighbors(
 
 StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
 DefaultMatchServiceStub::ReadIndexDatapoints(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
   google::cloud::aiplatform::v1::ReadIndexDatapointsResponse response;
-  auto status =
-      grpc_stub_->ReadIndexDatapoints(&client_context, request, &response);
+  auto status = grpc_stub_->ReadIndexDatapoints(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

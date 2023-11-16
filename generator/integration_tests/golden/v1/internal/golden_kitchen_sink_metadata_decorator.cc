@@ -113,9 +113,10 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::test::admin::database::v1::Request,
     google::test::admin::database::v1::Response>>
 GoldenKitchenSinkMetadata::StreamingWrite(
-    std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->StreamingWrite(std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options) {
+  SetMetadata(*context, options);
+  return child_->StreamingWrite(std::move(context), options);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

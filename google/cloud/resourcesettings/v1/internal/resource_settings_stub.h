@@ -58,17 +58,17 @@ class DefaultResourceSettingsServiceStub : public ResourceSettingsServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
-  ListSettings(grpc::ClientContext& client_context,
+  ListSettings(grpc::ClientContext& context,
                google::cloud::resourcesettings::v1::ListSettingsRequest const&
                    request) override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::resourcesettings::v1::GetSettingRequest const& request)
       override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::resourcesettings::v1::UpdateSettingRequest const& request)
       override;
 

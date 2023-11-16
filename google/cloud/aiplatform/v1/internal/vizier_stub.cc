@@ -32,10 +32,10 @@ VizierServiceStub::~VizierServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::Study>
 DefaultVizierServiceStub::CreateStudy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateStudyRequest const& request) {
   google::cloud::aiplatform::v1::Study response;
-  auto status = grpc_stub_->CreateStudy(&client_context, request, &response);
+  auto status = grpc_stub_->CreateStudy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultVizierServiceStub::CreateStudy(
 
 StatusOr<google::cloud::aiplatform::v1::Study>
 DefaultVizierServiceStub::GetStudy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetStudyRequest const& request) {
   google::cloud::aiplatform::v1::Study response;
-  auto status = grpc_stub_->GetStudy(&client_context, request, &response);
+  auto status = grpc_stub_->GetStudy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -56,10 +56,10 @@ DefaultVizierServiceStub::GetStudy(
 
 StatusOr<google::cloud::aiplatform::v1::ListStudiesResponse>
 DefaultVizierServiceStub::ListStudies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListStudiesRequest const& request) {
   google::cloud::aiplatform::v1::ListStudiesResponse response;
-  auto status = grpc_stub_->ListStudies(&client_context, request, &response);
+  auto status = grpc_stub_->ListStudies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -67,10 +67,10 @@ DefaultVizierServiceStub::ListStudies(
 }
 
 Status DefaultVizierServiceStub::DeleteStudy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::DeleteStudyRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteStudy(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteStudy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -79,10 +79,10 @@ Status DefaultVizierServiceStub::DeleteStudy(
 
 StatusOr<google::cloud::aiplatform::v1::Study>
 DefaultVizierServiceStub::LookupStudy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::LookupStudyRequest const& request) {
   google::cloud::aiplatform::v1::Study response;
-  auto status = grpc_stub_->LookupStudy(&client_context, request, &response);
+  auto status = grpc_stub_->LookupStudy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -108,10 +108,10 @@ DefaultVizierServiceStub::AsyncSuggestTrials(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 DefaultVizierServiceStub::CreateTrial(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateTrialRequest const& request) {
   google::cloud::aiplatform::v1::Trial response;
-  auto status = grpc_stub_->CreateTrial(&client_context, request, &response);
+  auto status = grpc_stub_->CreateTrial(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -120,10 +120,10 @@ DefaultVizierServiceStub::CreateTrial(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 DefaultVizierServiceStub::GetTrial(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetTrialRequest const& request) {
   google::cloud::aiplatform::v1::Trial response;
-  auto status = grpc_stub_->GetTrial(&client_context, request, &response);
+  auto status = grpc_stub_->GetTrial(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -132,10 +132,10 @@ DefaultVizierServiceStub::GetTrial(
 
 StatusOr<google::cloud::aiplatform::v1::ListTrialsResponse>
 DefaultVizierServiceStub::ListTrials(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListTrialsRequest const& request) {
   google::cloud::aiplatform::v1::ListTrialsResponse response;
-  auto status = grpc_stub_->ListTrials(&client_context, request, &response);
+  auto status = grpc_stub_->ListTrials(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -144,11 +144,10 @@ DefaultVizierServiceStub::ListTrials(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 DefaultVizierServiceStub::AddTrialMeasurement(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request) {
   google::cloud::aiplatform::v1::Trial response;
-  auto status =
-      grpc_stub_->AddTrialMeasurement(&client_context, request, &response);
+  auto status = grpc_stub_->AddTrialMeasurement(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -157,10 +156,10 @@ DefaultVizierServiceStub::AddTrialMeasurement(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 DefaultVizierServiceStub::CompleteTrial(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CompleteTrialRequest const& request) {
   google::cloud::aiplatform::v1::Trial response;
-  auto status = grpc_stub_->CompleteTrial(&client_context, request, &response);
+  auto status = grpc_stub_->CompleteTrial(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -168,10 +167,10 @@ DefaultVizierServiceStub::CompleteTrial(
 }
 
 Status DefaultVizierServiceStub::DeleteTrial(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::DeleteTrialRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteTrial(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteTrial(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -200,10 +199,10 @@ DefaultVizierServiceStub::AsyncCheckTrialEarlyStoppingState(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 DefaultVizierServiceStub::StopTrial(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::StopTrialRequest const& request) {
   google::cloud::aiplatform::v1::Trial response;
-  auto status = grpc_stub_->StopTrial(&client_context, request, &response);
+  auto status = grpc_stub_->StopTrial(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -212,11 +211,10 @@ DefaultVizierServiceStub::StopTrial(
 
 StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
 DefaultVizierServiceStub::ListOptimalTrials(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request) {
   google::cloud::aiplatform::v1::ListOptimalTrialsResponse response;
-  auto status =
-      grpc_stub_->ListOptimalTrials(&client_context, request, &response);
+  auto status = grpc_stub_->ListOptimalTrials(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

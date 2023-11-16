@@ -31,11 +31,11 @@ ExecutionsStub::~ExecutionsStub() = default;
 
 StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
 DefaultExecutionsStub::ListExecutions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workflows::executions::v1::ListExecutionsRequest const&
         request) {
   google::cloud::workflows::executions::v1::ListExecutionsResponse response;
-  auto status = grpc_stub_->ListExecutions(&client_context, request, &response);
+  auto status = grpc_stub_->ListExecutions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,12 +44,11 @@ DefaultExecutionsStub::ListExecutions(
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 DefaultExecutionsStub::CreateExecution(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workflows::executions::v1::CreateExecutionRequest const&
         request) {
   google::cloud::workflows::executions::v1::Execution response;
-  auto status =
-      grpc_stub_->CreateExecution(&client_context, request, &response);
+  auto status = grpc_stub_->CreateExecution(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -58,11 +57,11 @@ DefaultExecutionsStub::CreateExecution(
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 DefaultExecutionsStub::GetExecution(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workflows::executions::v1::GetExecutionRequest const&
         request) {
   google::cloud::workflows::executions::v1::Execution response;
-  auto status = grpc_stub_->GetExecution(&client_context, request, &response);
+  auto status = grpc_stub_->GetExecution(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -71,12 +70,11 @@ DefaultExecutionsStub::GetExecution(
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 DefaultExecutionsStub::CancelExecution(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::workflows::executions::v1::CancelExecutionRequest const&
         request) {
   google::cloud::workflows::executions::v1::Execution response;
-  auto status =
-      grpc_stub_->CancelExecution(&client_context, request, &response);
+  auto status = grpc_stub_->CancelExecution(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -82,12 +82,12 @@ class DefaultWorkflowsStub : public WorkflowsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse> ListWorkflows(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::workflows::v1::ListWorkflowsRequest const& request)
       override;
 
   StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::workflows::v1::GetWorkflowRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkflow(

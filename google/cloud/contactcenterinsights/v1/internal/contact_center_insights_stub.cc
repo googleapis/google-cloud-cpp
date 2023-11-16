@@ -32,12 +32,11 @@ ContactCenterInsightsStub::~ContactCenterInsightsStub() = default;
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 DefaultContactCenterInsightsStub::CreateConversation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Conversation response;
-  auto status =
-      grpc_stub_->CreateConversation(&client_context, request, &response);
+  auto status = grpc_stub_->CreateConversation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -65,12 +64,11 @@ DefaultContactCenterInsightsStub::AsyncUploadConversation(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 DefaultContactCenterInsightsStub::UpdateConversation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Conversation response;
-  auto status =
-      grpc_stub_->UpdateConversation(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateConversation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -79,12 +77,11 @@ DefaultContactCenterInsightsStub::UpdateConversation(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 DefaultContactCenterInsightsStub::GetConversation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::GetConversationRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Conversation response;
-  auto status =
-      grpc_stub_->GetConversation(&client_context, request, &response);
+  auto status = grpc_stub_->GetConversation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -93,12 +90,11 @@ DefaultContactCenterInsightsStub::GetConversation(
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListConversationsResponse>
 DefaultContactCenterInsightsStub::ListConversations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::ListConversationsRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::ListConversationsResponse response;
-  auto status =
-      grpc_stub_->ListConversations(&client_context, request, &response);
+  auto status = grpc_stub_->ListConversations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -106,12 +102,11 @@ DefaultContactCenterInsightsStub::ListConversations(
 }
 
 Status DefaultContactCenterInsightsStub::DeleteConversation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteConversation(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteConversation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -140,11 +135,11 @@ DefaultContactCenterInsightsStub::AsyncCreateAnalysis(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
 DefaultContactCenterInsightsStub::GetAnalysis(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Analysis response;
-  auto status = grpc_stub_->GetAnalysis(&client_context, request, &response);
+  auto status = grpc_stub_->GetAnalysis(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -153,11 +148,11 @@ DefaultContactCenterInsightsStub::GetAnalysis(
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysesResponse>
 DefaultContactCenterInsightsStub::ListAnalyses(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::ListAnalysesRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::ListAnalysesResponse response;
-  auto status = grpc_stub_->ListAnalyses(&client_context, request, &response);
+  auto status = grpc_stub_->ListAnalyses(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -165,11 +160,11 @@ DefaultContactCenterInsightsStub::ListAnalyses(
 }
 
 Status DefaultContactCenterInsightsStub::DeleteAnalysis(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteAnalysis(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteAnalysis(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -273,12 +268,11 @@ DefaultContactCenterInsightsStub::AsyncCreateIssueModel(
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
 DefaultContactCenterInsightsStub::UpdateIssueModel(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::IssueModel response;
-  auto status =
-      grpc_stub_->UpdateIssueModel(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateIssueModel(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -287,11 +281,11 @@ DefaultContactCenterInsightsStub::UpdateIssueModel(
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
 DefaultContactCenterInsightsStub::GetIssueModel(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::IssueModel response;
-  auto status = grpc_stub_->GetIssueModel(&client_context, request, &response);
+  auto status = grpc_stub_->GetIssueModel(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -300,12 +294,11 @@ DefaultContactCenterInsightsStub::GetIssueModel(
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
 DefaultContactCenterInsightsStub::ListIssueModels(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::ListIssueModelsResponse response;
-  auto status =
-      grpc_stub_->ListIssueModels(&client_context, request, &response);
+  auto status = grpc_stub_->ListIssueModels(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -371,10 +364,10 @@ DefaultContactCenterInsightsStub::AsyncUndeployIssueModel(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 DefaultContactCenterInsightsStub::GetIssue(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::GetIssueRequest const& request) {
   google::cloud::contactcenterinsights::v1::Issue response;
-  auto status = grpc_stub_->GetIssue(&client_context, request, &response);
+  auto status = grpc_stub_->GetIssue(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -383,11 +376,11 @@ DefaultContactCenterInsightsStub::GetIssue(
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
 DefaultContactCenterInsightsStub::ListIssues(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::ListIssuesResponse response;
-  auto status = grpc_stub_->ListIssues(&client_context, request, &response);
+  auto status = grpc_stub_->ListIssues(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -396,11 +389,11 @@ DefaultContactCenterInsightsStub::ListIssues(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 DefaultContactCenterInsightsStub::UpdateIssue(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Issue response;
-  auto status = grpc_stub_->UpdateIssue(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateIssue(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -408,11 +401,11 @@ DefaultContactCenterInsightsStub::UpdateIssue(
 }
 
 Status DefaultContactCenterInsightsStub::DeleteIssue(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteIssue(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteIssue(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -422,13 +415,13 @@ Status DefaultContactCenterInsightsStub::DeleteIssue(
 StatusOr<
     google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
 DefaultContactCenterInsightsStub::CalculateIssueModelStats(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::
         CalculateIssueModelStatsRequest const& request) {
   google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse
       response;
   auto status =
-      grpc_stub_->CalculateIssueModelStats(&client_context, request, &response);
+      grpc_stub_->CalculateIssueModelStats(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -437,12 +430,11 @@ DefaultContactCenterInsightsStub::CalculateIssueModelStats(
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 DefaultContactCenterInsightsStub::CreatePhraseMatcher(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::PhraseMatcher response;
-  auto status =
-      grpc_stub_->CreatePhraseMatcher(&client_context, request, &response);
+  auto status = grpc_stub_->CreatePhraseMatcher(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -451,12 +443,11 @@ DefaultContactCenterInsightsStub::CreatePhraseMatcher(
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 DefaultContactCenterInsightsStub::GetPhraseMatcher(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::PhraseMatcher response;
-  auto status =
-      grpc_stub_->GetPhraseMatcher(&client_context, request, &response);
+  auto status = grpc_stub_->GetPhraseMatcher(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -465,12 +456,11 @@ DefaultContactCenterInsightsStub::GetPhraseMatcher(
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListPhraseMatchersResponse>
 DefaultContactCenterInsightsStub::ListPhraseMatchers(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::ListPhraseMatchersResponse response;
-  auto status =
-      grpc_stub_->ListPhraseMatchers(&client_context, request, &response);
+  auto status = grpc_stub_->ListPhraseMatchers(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -478,12 +468,11 @@ DefaultContactCenterInsightsStub::ListPhraseMatchers(
 }
 
 Status DefaultContactCenterInsightsStub::DeletePhraseMatcher(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeletePhraseMatcher(&client_context, request, &response);
+  auto status = grpc_stub_->DeletePhraseMatcher(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -492,12 +481,11 @@ Status DefaultContactCenterInsightsStub::DeletePhraseMatcher(
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 DefaultContactCenterInsightsStub::UpdatePhraseMatcher(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::PhraseMatcher response;
-  auto status =
-      grpc_stub_->UpdatePhraseMatcher(&client_context, request, &response);
+  auto status = grpc_stub_->UpdatePhraseMatcher(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -506,11 +494,11 @@ DefaultContactCenterInsightsStub::UpdatePhraseMatcher(
 
 StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
 DefaultContactCenterInsightsStub::CalculateStats(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::CalculateStatsResponse response;
-  auto status = grpc_stub_->CalculateStats(&client_context, request, &response);
+  auto status = grpc_stub_->CalculateStats(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -519,11 +507,11 @@ DefaultContactCenterInsightsStub::CalculateStats(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 DefaultContactCenterInsightsStub::GetSettings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Settings response;
-  auto status = grpc_stub_->GetSettings(&client_context, request, &response);
+  auto status = grpc_stub_->GetSettings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -532,11 +520,11 @@ DefaultContactCenterInsightsStub::GetSettings(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 DefaultContactCenterInsightsStub::UpdateSettings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Settings response;
-  auto status = grpc_stub_->UpdateSettings(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateSettings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -545,11 +533,11 @@ DefaultContactCenterInsightsStub::UpdateSettings(
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 DefaultContactCenterInsightsStub::CreateView(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::CreateViewRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::View response;
-  auto status = grpc_stub_->CreateView(&client_context, request, &response);
+  auto status = grpc_stub_->CreateView(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -558,10 +546,10 @@ DefaultContactCenterInsightsStub::CreateView(
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 DefaultContactCenterInsightsStub::GetView(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::GetViewRequest const& request) {
   google::cloud::contactcenterinsights::v1::View response;
-  auto status = grpc_stub_->GetView(&client_context, request, &response);
+  auto status = grpc_stub_->GetView(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -570,10 +558,10 @@ DefaultContactCenterInsightsStub::GetView(
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListViewsResponse>
 DefaultContactCenterInsightsStub::ListViews(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::ListViewsRequest const& request) {
   google::cloud::contactcenterinsights::v1::ListViewsResponse response;
-  auto status = grpc_stub_->ListViews(&client_context, request, &response);
+  auto status = grpc_stub_->ListViews(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -582,11 +570,11 @@ DefaultContactCenterInsightsStub::ListViews(
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 DefaultContactCenterInsightsStub::UpdateView(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::View response;
-  auto status = grpc_stub_->UpdateView(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateView(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -594,11 +582,11 @@ DefaultContactCenterInsightsStub::UpdateView(
 }
 
 Status DefaultContactCenterInsightsStub::DeleteView(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteView(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteView(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

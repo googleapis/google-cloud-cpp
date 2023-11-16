@@ -17,6 +17,8 @@
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <chrono>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -44,10 +46,8 @@ class SqlIntegrationTest
 
 TEST_F(SqlIntegrationTest, PaginatedList) {
   namespace sql = ::google::cloud::sql_v1;
-  auto client =
-      sql::SqlInstancesServiceClient(google::cloud::ExperimentalTag{},
-                                     sql::MakeSqlInstancesServiceConnectionRest(
-                                         google::cloud::ExperimentalTag{}));
+  auto client = sql::SqlInstancesServiceClient(
+      sql::MakeSqlInstancesServiceConnectionRest());
 
   google::cloud::sql::v1::SqlInstancesListRequest request;
   request.set_project(project_id_);
@@ -86,10 +86,8 @@ TEST_F(SqlIntegrationTest, PaginatedList) {
 // successfully.
 TEST_F(SqlIntegrationTest, CreateEphemeral) {
   namespace sql = ::google::cloud::sql_v1;
-  auto client =
-      sql::SqlInstancesServiceClient(google::cloud::ExperimentalTag{},
-                                     sql::MakeSqlInstancesServiceConnectionRest(
-                                         google::cloud::ExperimentalTag{}));
+  auto client = sql::SqlInstancesServiceClient(
+      sql::MakeSqlInstancesServiceConnectionRest());
 
   google::cloud::sql::v1::SqlInstancesListRequest list_request;
   list_request.set_project(project_id_);
@@ -102,9 +100,23 @@ TEST_F(SqlIntegrationTest, CreateEphemeral) {
   request.set_instance((*instances.begin())->name());
   request.mutable_body()->set_public_key("THE_PUBLIC_KEY");
 
-  auto result = client.CreateEphemeral(request);
+  auto status = [&]() {
+    // All the RPCs that could repro #12112 are non-idempotent. So we put a
+    // little manual retry loop around the test.
+    auto const attempt_delay = std::chrono::seconds(30);
+    Status status;
+    for (int attempt = 0; attempt != 3; ++attempt) {
+      if (attempt != 0) std::this_thread::sleep_for(attempt_delay);
+
+      status = client.CreateEphemeral(request).status();
+      // This is a transient error, just retry.
+      if (status.code() != StatusCode::kUnavailable) break;
+    }
+    return status;
+  }();
+
   EXPECT_THAT(
-      result,
+      status,
       AnyOf(
           StatusIs(StatusCode::kInvalidArgument,
                    HasSubstr("Provided public key was in an invalid or "

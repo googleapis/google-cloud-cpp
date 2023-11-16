@@ -32,10 +32,10 @@ EdgeNetworkStub::~EdgeNetworkStub() = default;
 
 StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
 DefaultEdgeNetworkStub::InitializeZone(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::InitializeZoneRequest const& request) {
   google::cloud::edgenetwork::v1::InitializeZoneResponse response;
-  auto status = grpc_stub_->InitializeZone(&client_context, request, &response);
+  auto status = grpc_stub_->InitializeZone(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultEdgeNetworkStub::InitializeZone(
 
 StatusOr<google::cloud::edgenetwork::v1::ListZonesResponse>
 DefaultEdgeNetworkStub::ListZones(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::ListZonesRequest const& request) {
   google::cloud::edgenetwork::v1::ListZonesResponse response;
-  auto status = grpc_stub_->ListZones(&client_context, request, &response);
+  auto status = grpc_stub_->ListZones(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,10 +55,10 @@ DefaultEdgeNetworkStub::ListZones(
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Zone> DefaultEdgeNetworkStub::GetZone(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::GetZoneRequest const& request) {
   google::cloud::edgenetwork::v1::Zone response;
-  auto status = grpc_stub_->GetZone(&client_context, request, &response);
+  auto status = grpc_stub_->GetZone(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -67,10 +67,10 @@ StatusOr<google::cloud::edgenetwork::v1::Zone> DefaultEdgeNetworkStub::GetZone(
 
 StatusOr<google::cloud::edgenetwork::v1::ListNetworksResponse>
 DefaultEdgeNetworkStub::ListNetworks(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::ListNetworksRequest const& request) {
   google::cloud::edgenetwork::v1::ListNetworksResponse response;
-  auto status = grpc_stub_->ListNetworks(&client_context, request, &response);
+  auto status = grpc_stub_->ListNetworks(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -79,10 +79,10 @@ DefaultEdgeNetworkStub::ListNetworks(
 
 StatusOr<google::cloud::edgenetwork::v1::Network>
 DefaultEdgeNetworkStub::GetNetwork(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::GetNetworkRequest const& request) {
   google::cloud::edgenetwork::v1::Network response;
-  auto status = grpc_stub_->GetNetwork(&client_context, request, &response);
+  auto status = grpc_stub_->GetNetwork(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -91,11 +91,10 @@ DefaultEdgeNetworkStub::GetNetwork(
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
 DefaultEdgeNetworkStub::DiagnoseNetwork(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request) {
   google::cloud::edgenetwork::v1::DiagnoseNetworkResponse response;
-  auto status =
-      grpc_stub_->DiagnoseNetwork(&client_context, request, &response);
+  auto status = grpc_stub_->DiagnoseNetwork(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -140,10 +139,10 @@ DefaultEdgeNetworkStub::AsyncDeleteNetwork(
 
 StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse>
 DefaultEdgeNetworkStub::ListSubnets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::ListSubnetsRequest const& request) {
   google::cloud::edgenetwork::v1::ListSubnetsResponse response;
-  auto status = grpc_stub_->ListSubnets(&client_context, request, &response);
+  auto status = grpc_stub_->ListSubnets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -152,10 +151,10 @@ DefaultEdgeNetworkStub::ListSubnets(
 
 StatusOr<google::cloud::edgenetwork::v1::Subnet>
 DefaultEdgeNetworkStub::GetSubnet(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::GetSubnetRequest const& request) {
   google::cloud::edgenetwork::v1::Subnet response;
-  auto status = grpc_stub_->GetSubnet(&client_context, request, &response);
+  auto status = grpc_stub_->GetSubnet(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -215,11 +214,10 @@ DefaultEdgeNetworkStub::AsyncDeleteSubnet(
 
 StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse>
 DefaultEdgeNetworkStub::ListInterconnects(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::ListInterconnectsRequest const& request) {
   google::cloud::edgenetwork::v1::ListInterconnectsResponse response;
-  auto status =
-      grpc_stub_->ListInterconnects(&client_context, request, &response);
+  auto status = grpc_stub_->ListInterconnects(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -228,11 +226,10 @@ DefaultEdgeNetworkStub::ListInterconnects(
 
 StatusOr<google::cloud::edgenetwork::v1::Interconnect>
 DefaultEdgeNetworkStub::GetInterconnect(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::GetInterconnectRequest const& request) {
   google::cloud::edgenetwork::v1::Interconnect response;
-  auto status =
-      grpc_stub_->GetInterconnect(&client_context, request, &response);
+  auto status = grpc_stub_->GetInterconnect(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -241,12 +238,11 @@ DefaultEdgeNetworkStub::GetInterconnect(
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
 DefaultEdgeNetworkStub::DiagnoseInterconnect(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
         request) {
   google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse response;
-  auto status =
-      grpc_stub_->DiagnoseInterconnect(&client_context, request, &response);
+  auto status = grpc_stub_->DiagnoseInterconnect(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -255,12 +251,12 @@ DefaultEdgeNetworkStub::DiagnoseInterconnect(
 
 StatusOr<google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse>
 DefaultEdgeNetworkStub::ListInterconnectAttachments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const&
         request) {
   google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse response;
-  auto status = grpc_stub_->ListInterconnectAttachments(&client_context,
-                                                        request, &response);
+  auto status =
+      grpc_stub_->ListInterconnectAttachments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -269,12 +265,12 @@ DefaultEdgeNetworkStub::ListInterconnectAttachments(
 
 StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
 DefaultEdgeNetworkStub::GetInterconnectAttachment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
         request) {
   google::cloud::edgenetwork::v1::InterconnectAttachment response;
-  auto status = grpc_stub_->GetInterconnectAttachment(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->GetInterconnectAttachment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -323,10 +319,10 @@ DefaultEdgeNetworkStub::AsyncDeleteInterconnectAttachment(
 
 StatusOr<google::cloud::edgenetwork::v1::ListRoutersResponse>
 DefaultEdgeNetworkStub::ListRouters(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::ListRoutersRequest const& request) {
   google::cloud::edgenetwork::v1::ListRoutersResponse response;
-  auto status = grpc_stub_->ListRouters(&client_context, request, &response);
+  auto status = grpc_stub_->ListRouters(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -335,10 +331,10 @@ DefaultEdgeNetworkStub::ListRouters(
 
 StatusOr<google::cloud::edgenetwork::v1::Router>
 DefaultEdgeNetworkStub::GetRouter(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::GetRouterRequest const& request) {
   google::cloud::edgenetwork::v1::Router response;
-  auto status = grpc_stub_->GetRouter(&client_context, request, &response);
+  auto status = grpc_stub_->GetRouter(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -347,10 +343,10 @@ DefaultEdgeNetworkStub::GetRouter(
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
 DefaultEdgeNetworkStub::DiagnoseRouter(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request) {
   google::cloud::edgenetwork::v1::DiagnoseRouterResponse response;
-  auto status = grpc_stub_->DiagnoseRouter(&client_context, request, &response);
+  auto status = grpc_stub_->DiagnoseRouter(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

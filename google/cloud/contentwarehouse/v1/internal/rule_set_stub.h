@@ -68,27 +68,27 @@ class DefaultRuleSetServiceStub : public RuleSetServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> GetRuleSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> UpdateRuleSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request)
       override;
 
   Status DeleteRuleSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
-  ListRuleSets(grpc::ClientContext& client_context,
+  ListRuleSets(grpc::ClientContext& context,
                google::cloud::contentwarehouse::v1::ListRuleSetsRequest const&
                    request) override;
 

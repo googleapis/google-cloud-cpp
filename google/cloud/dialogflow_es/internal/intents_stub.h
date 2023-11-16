@@ -94,25 +94,25 @@ class DefaultIntentsStub : public IntentsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse> ListIntents(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::ListIntentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Intent> GetIntent(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GetIntentRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Intent> CreateIntent(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::CreateIntentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Intent> UpdateIntent(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::UpdateIntentRequest const& request)
       override;
 
-  Status DeleteIntent(grpc::ClientContext& client_context,
+  Status DeleteIntent(grpc::ClientContext& context,
                       google::cloud::dialogflow::v2::DeleteIntentRequest const&
                           request) override;
 

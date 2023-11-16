@@ -31,11 +31,10 @@ DeploymentsStub::~DeploymentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
 DefaultDeploymentsStub::ListDeployments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListDeploymentsResponse response;
-  auto status =
-      grpc_stub_->ListDeployments(&client_context, request, &response);
+  auto status = grpc_stub_->ListDeployments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +43,10 @@ DefaultDeploymentsStub::ListDeployments(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
 DefaultDeploymentsStub::GetDeployment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Deployment response;
-  auto status = grpc_stub_->GetDeployment(&client_context, request, &response);
+  auto status = grpc_stub_->GetDeployment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

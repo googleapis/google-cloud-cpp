@@ -68,7 +68,7 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::automl::v1::PredictRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchPredict(

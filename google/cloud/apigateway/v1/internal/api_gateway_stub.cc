@@ -32,10 +32,10 @@ ApiGatewayServiceStub::~ApiGatewayServiceStub() = default;
 
 StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>
 DefaultApiGatewayServiceStub::ListGateways(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
   google::cloud::apigateway::v1::ListGatewaysResponse response;
-  auto status = grpc_stub_->ListGateways(&client_context, request, &response);
+  auto status = grpc_stub_->ListGateways(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultApiGatewayServiceStub::ListGateways(
 
 StatusOr<google::cloud::apigateway::v1::Gateway>
 DefaultApiGatewayServiceStub::GetGateway(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::apigateway::v1::GetGatewayRequest const& request) {
   google::cloud::apigateway::v1::Gateway response;
-  auto status = grpc_stub_->GetGateway(&client_context, request, &response);
+  auto status = grpc_stub_->GetGateway(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -107,10 +107,10 @@ DefaultApiGatewayServiceStub::AsyncDeleteGateway(
 
 StatusOr<google::cloud::apigateway::v1::ListApisResponse>
 DefaultApiGatewayServiceStub::ListApis(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::apigateway::v1::ListApisRequest const& request) {
   google::cloud::apigateway::v1::ListApisResponse response;
-  auto status = grpc_stub_->ListApis(&client_context, request, &response);
+  auto status = grpc_stub_->ListApis(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -119,10 +119,10 @@ DefaultApiGatewayServiceStub::ListApis(
 
 StatusOr<google::cloud::apigateway::v1::Api>
 DefaultApiGatewayServiceStub::GetApi(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::apigateway::v1::GetApiRequest const& request) {
   google::cloud::apigateway::v1::Api response;
-  auto status = grpc_stub_->GetApi(&client_context, request, &response);
+  auto status = grpc_stub_->GetApi(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -182,10 +182,10 @@ DefaultApiGatewayServiceStub::AsyncDeleteApi(
 
 StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
 DefaultApiGatewayServiceStub::ListApiConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
   google::cloud::apigateway::v1::ListApiConfigsResponse response;
-  auto status = grpc_stub_->ListApiConfigs(&client_context, request, &response);
+  auto status = grpc_stub_->ListApiConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -194,10 +194,10 @@ DefaultApiGatewayServiceStub::ListApiConfigs(
 
 StatusOr<google::cloud::apigateway::v1::ApiConfig>
 DefaultApiGatewayServiceStub::GetApiConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
   google::cloud::apigateway::v1::ApiConfig response;
-  auto status = grpc_stub_->GetApiConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetApiConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

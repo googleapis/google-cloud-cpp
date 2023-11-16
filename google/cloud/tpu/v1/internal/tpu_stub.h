@@ -109,11 +109,11 @@ class DefaultTpuStub : public TpuStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::tpu::v1::ListNodesResponse> ListNodes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::tpu::v1::ListNodesRequest const& request) override;
 
   StatusOr<google::cloud::tpu::v1::Node> GetNode(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::tpu::v1::GetNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNode(
@@ -143,23 +143,23 @@ class DefaultTpuStub : public TpuStub {
 
   StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>
   ListTensorFlowVersions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::tpu::v1::ListTensorFlowVersionsRequest const& request)
       override;
 
   StatusOr<google::cloud::tpu::v1::TensorFlowVersion> GetTensorFlowVersion(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request)
       override;
 
   StatusOr<google::cloud::tpu::v1::ListAcceleratorTypesResponse>
   ListAcceleratorTypes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::tpu::v1::ListAcceleratorTypesRequest const& request)
       override;
 
   StatusOr<google::cloud::tpu::v1::AcceleratorType> GetAcceleratorType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request)
       override;
 

@@ -74,7 +74,7 @@ class DefaultMigrationServiceStub : public MigrationServiceStub {
 
   StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
   SearchMigratableResources(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
           request) override;
 

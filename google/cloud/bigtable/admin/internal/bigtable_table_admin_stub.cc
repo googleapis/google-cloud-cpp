@@ -32,10 +32,10 @@ BigtableTableAdminStub::~BigtableTableAdminStub() = default;
 
 StatusOr<google::bigtable::admin::v2::Table>
 DefaultBigtableTableAdminStub::CreateTable(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::admin::v2::CreateTableRequest const& request) {
   google::bigtable::admin::v2::Table response;
-  auto status = grpc_stub_->CreateTable(&client_context, request, &response);
+  auto status = grpc_stub_->CreateTable(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultBigtableTableAdminStub::CreateTable(
 
 StatusOr<google::bigtable::admin::v2::ListTablesResponse>
 DefaultBigtableTableAdminStub::ListTables(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::admin::v2::ListTablesRequest const& request) {
   google::bigtable::admin::v2::ListTablesResponse response;
-  auto status = grpc_stub_->ListTables(&client_context, request, &response);
+  auto status = grpc_stub_->ListTables(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -56,10 +56,10 @@ DefaultBigtableTableAdminStub::ListTables(
 
 StatusOr<google::bigtable::admin::v2::Table>
 DefaultBigtableTableAdminStub::GetTable(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::admin::v2::GetTableRequest const& request) {
   google::bigtable::admin::v2::Table response;
-  auto status = grpc_stub_->GetTable(&client_context, request, &response);
+  auto status = grpc_stub_->GetTable(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -84,10 +84,10 @@ DefaultBigtableTableAdminStub::AsyncUpdateTable(
 }
 
 Status DefaultBigtableTableAdminStub::DeleteTable(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteTable(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteTable(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -113,11 +113,10 @@ DefaultBigtableTableAdminStub::AsyncUndeleteTable(
 
 StatusOr<google::bigtable::admin::v2::Table>
 DefaultBigtableTableAdminStub::ModifyColumnFamilies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) {
   google::bigtable::admin::v2::Table response;
-  auto status =
-      grpc_stub_->ModifyColumnFamilies(&client_context, request, &response);
+  auto status = grpc_stub_->ModifyColumnFamilies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -125,10 +124,10 @@ DefaultBigtableTableAdminStub::ModifyColumnFamilies(
 }
 
 Status DefaultBigtableTableAdminStub::DropRowRange(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::admin::v2::DropRowRangeRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DropRowRange(&client_context, request, &response);
+  auto status = grpc_stub_->DropRowRange(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -137,12 +136,12 @@ Status DefaultBigtableTableAdminStub::DropRowRange(
 
 StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
 DefaultBigtableTableAdminStub::GenerateConsistencyToken(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
         request) {
   google::bigtable::admin::v2::GenerateConsistencyTokenResponse response;
   auto status =
-      grpc_stub_->GenerateConsistencyToken(&client_context, request, &response);
+      grpc_stub_->GenerateConsistencyToken(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -151,11 +150,10 @@ DefaultBigtableTableAdminStub::GenerateConsistencyToken(
 
 StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
 DefaultBigtableTableAdminStub::CheckConsistency(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   google::bigtable::admin::v2::CheckConsistencyResponse response;
-  auto status =
-      grpc_stub_->CheckConsistency(&client_context, request, &response);
+  auto status = grpc_stub_->CheckConsistency(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -181,10 +179,10 @@ DefaultBigtableTableAdminStub::AsyncCreateBackup(
 
 StatusOr<google::bigtable::admin::v2::Backup>
 DefaultBigtableTableAdminStub::GetBackup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::admin::v2::GetBackupRequest const& request) {
   google::bigtable::admin::v2::Backup response;
-  auto status = grpc_stub_->GetBackup(&client_context, request, &response);
+  auto status = grpc_stub_->GetBackup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -193,10 +191,10 @@ DefaultBigtableTableAdminStub::GetBackup(
 
 StatusOr<google::bigtable::admin::v2::Backup>
 DefaultBigtableTableAdminStub::UpdateBackup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::admin::v2::UpdateBackupRequest const& request) {
   google::bigtable::admin::v2::Backup response;
-  auto status = grpc_stub_->UpdateBackup(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateBackup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -204,10 +202,10 @@ DefaultBigtableTableAdminStub::UpdateBackup(
 }
 
 Status DefaultBigtableTableAdminStub::DeleteBackup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteBackupRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteBackup(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteBackup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -216,10 +214,10 @@ Status DefaultBigtableTableAdminStub::DeleteBackup(
 
 StatusOr<google::bigtable::admin::v2::ListBackupsResponse>
 DefaultBigtableTableAdminStub::ListBackups(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::bigtable::admin::v2::ListBackupsRequest const& request) {
   google::bigtable::admin::v2::ListBackupsResponse response;
-  auto status = grpc_stub_->ListBackups(&client_context, request, &response);
+  auto status = grpc_stub_->ListBackups(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -261,10 +259,10 @@ DefaultBigtableTableAdminStub::AsyncCopyBackup(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultBigtableTableAdminStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -272,10 +270,10 @@ StatusOr<google::iam::v1::Policy> DefaultBigtableTableAdminStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultBigtableTableAdminStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -284,11 +282,10 @@ StatusOr<google::iam::v1::Policy> DefaultBigtableTableAdminStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultBigtableTableAdminStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

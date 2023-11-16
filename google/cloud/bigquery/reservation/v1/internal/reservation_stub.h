@@ -170,124 +170,124 @@ class DefaultReservationServiceStub : public ReservationServiceStub {
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   CreateReservation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::ListReservationsResponse>
   ListReservations(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::ListReservationsRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   GetReservation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::GetReservationRequest const&
           request) override;
 
   Status DeleteReservation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   UpdateReservation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   CreateCapacityCommitment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::
           CreateCapacityCommitmentRequest const& request) override;
 
   StatusOr<
       google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsResponse>
   ListCapacityCommitments(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::
           ListCapacityCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   GetCapacityCommitment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::
           GetCapacityCommitmentRequest const& request) override;
 
   Status DeleteCapacityCommitment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::
           DeleteCapacityCommitmentRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   UpdateCapacityCommitment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::
           UpdateCapacityCommitmentRequest const& request) override;
 
   StatusOr<
       google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
   SplitCapacityCommitment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::
           SplitCapacityCommitmentRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   MergeCapacityCommitments(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::
           MergeCapacityCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   CreateAssignment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::ListAssignmentsResponse>
   ListAssignments(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::ListAssignmentsRequest const&
           request) override;
 
   Status DeleteAssignment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::SearchAssignmentsResponse>
   SearchAssignments(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest const&
           request) override;
 
   StatusOr<
       google::cloud::bigquery::reservation::v1::SearchAllAssignmentsResponse>
-  SearchAllAssignments(grpc::ClientContext& client_context,
+  SearchAllAssignments(grpc::ClientContext& context,
                        google::cloud::bigquery::reservation::v1::
                            SearchAllAssignmentsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment> MoveAssignment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   UpdateAssignment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   GetBiReservation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-  UpdateBiReservation(grpc::ClientContext& client_context,
+  UpdateBiReservation(grpc::ClientContext& context,
                       google::cloud::bigquery::reservation::v1::
                           UpdateBiReservationRequest const& request) override;
 

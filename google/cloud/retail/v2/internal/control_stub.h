@@ -63,23 +63,23 @@ class DefaultControlServiceStub : public ControlServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::retail::v2::Control> CreateControl(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::CreateControlRequest const& request) override;
 
   Status DeleteControl(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::DeleteControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Control> UpdateControl(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::UpdateControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Control> GetControl(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::GetControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ListControlsResponse> ListControls(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::retail::v2::ListControlsRequest const& request) override;
 
  private:

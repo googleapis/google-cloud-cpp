@@ -48,10 +48,10 @@ DefaultAutoMlStub::AsyncCreateDataset(
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> DefaultAutoMlStub::GetDataset(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::automl::v1::GetDatasetRequest const& request) {
   google::cloud::automl::v1::Dataset response;
-  auto status = grpc_stub_->GetDataset(&client_context, request, &response);
+  auto status = grpc_stub_->GetDataset(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -60,10 +60,10 @@ StatusOr<google::cloud::automl::v1::Dataset> DefaultAutoMlStub::GetDataset(
 
 StatusOr<google::cloud::automl::v1::ListDatasetsResponse>
 DefaultAutoMlStub::ListDatasets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::automl::v1::ListDatasetsRequest const& request) {
   google::cloud::automl::v1::ListDatasetsResponse response;
-  auto status = grpc_stub_->ListDatasets(&client_context, request, &response);
+  auto status = grpc_stub_->ListDatasets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -71,10 +71,10 @@ DefaultAutoMlStub::ListDatasets(
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> DefaultAutoMlStub::UpdateDataset(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::automl::v1::UpdateDatasetRequest const& request) {
   google::cloud::automl::v1::Dataset response;
-  auto status = grpc_stub_->UpdateDataset(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateDataset(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -134,11 +134,10 @@ DefaultAutoMlStub::AsyncExportData(
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
 DefaultAutoMlStub::GetAnnotationSpec(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
   google::cloud::automl::v1::AnnotationSpec response;
-  auto status =
-      grpc_stub_->GetAnnotationSpec(&client_context, request, &response);
+  auto status = grpc_stub_->GetAnnotationSpec(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -163,10 +162,10 @@ DefaultAutoMlStub::AsyncCreateModel(
 }
 
 StatusOr<google::cloud::automl::v1::Model> DefaultAutoMlStub::GetModel(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::automl::v1::GetModelRequest const& request) {
   google::cloud::automl::v1::Model response;
-  auto status = grpc_stub_->GetModel(&client_context, request, &response);
+  auto status = grpc_stub_->GetModel(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -175,10 +174,10 @@ StatusOr<google::cloud::automl::v1::Model> DefaultAutoMlStub::GetModel(
 
 StatusOr<google::cloud::automl::v1::ListModelsResponse>
 DefaultAutoMlStub::ListModels(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::automl::v1::ListModelsRequest const& request) {
   google::cloud::automl::v1::ListModelsResponse response;
-  auto status = grpc_stub_->ListModels(&client_context, request, &response);
+  auto status = grpc_stub_->ListModels(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -203,10 +202,10 @@ DefaultAutoMlStub::AsyncDeleteModel(
 }
 
 StatusOr<google::cloud::automl::v1::Model> DefaultAutoMlStub::UpdateModel(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::automl::v1::UpdateModelRequest const& request) {
   google::cloud::automl::v1::Model response;
-  auto status = grpc_stub_->UpdateModel(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateModel(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -266,11 +265,10 @@ DefaultAutoMlStub::AsyncExportModel(
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>
 DefaultAutoMlStub::GetModelEvaluation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
   google::cloud::automl::v1::ModelEvaluation response;
-  auto status =
-      grpc_stub_->GetModelEvaluation(&client_context, request, &response);
+  auto status = grpc_stub_->GetModelEvaluation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -279,11 +277,10 @@ DefaultAutoMlStub::GetModelEvaluation(
 
 StatusOr<google::cloud::automl::v1::ListModelEvaluationsResponse>
 DefaultAutoMlStub::ListModelEvaluations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::automl::v1::ListModelEvaluationsRequest const& request) {
   google::cloud::automl::v1::ListModelEvaluationsResponse response;
-  auto status =
-      grpc_stub_->ListModelEvaluations(&client_context, request, &response);
+  auto status = grpc_stub_->ListModelEvaluations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

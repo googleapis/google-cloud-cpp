@@ -94,17 +94,17 @@ class DefaultDataFusionStub : public DataFusionStub {
 
   StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse>
   ListAvailableVersions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
           request) override;
 
   StatusOr<google::cloud::datafusion::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datafusion::v1::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::cloud::datafusion::v1::Instance> GetInstance(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::datafusion::v1::GetInstanceRequest const& request)
       override;
 

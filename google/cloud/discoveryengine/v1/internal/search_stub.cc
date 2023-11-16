@@ -31,10 +31,10 @@ SearchServiceStub::~SearchServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::SearchResponse>
 DefaultSearchServiceStub::Search(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::SearchRequest const& request) {
   google::cloud::discoveryengine::v1::SearchResponse response;
-  auto status = grpc_stub_->Search(&client_context, request, &response);
+  auto status = grpc_stub_->Search(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

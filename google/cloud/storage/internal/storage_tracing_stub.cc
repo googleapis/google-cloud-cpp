@@ -263,12 +263,13 @@ StatusOr<google::storage::v2::Object> StorageTracingStub::UpdateObject(
 std::unique_ptr<
     internal::StreamingWriteRpc<google::storage::v2::WriteObjectRequest,
                                 google::storage::v2::WriteObjectResponse>>
-StorageTracingStub::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
+StorageTracingStub::WriteObject(std::shared_ptr<grpc::ClientContext> context,
+                                Options const& options) {
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "WriteObject");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->WriteObject(context);
+  auto stream = child_->WriteObject(context, options);
   return std::make_unique<internal::StreamingWriteRpcTracing<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>(

@@ -31,10 +31,10 @@ DlpServiceStub::~DlpServiceStub() = default;
 
 StatusOr<google::privacy::dlp::v2::InspectContentResponse>
 DefaultDlpServiceStub::InspectContent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::InspectContentRequest const& request) {
   google::privacy::dlp::v2::InspectContentResponse response;
-  auto status = grpc_stub_->InspectContent(&client_context, request, &response);
+  auto status = grpc_stub_->InspectContent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultDlpServiceStub::InspectContent(
 
 StatusOr<google::privacy::dlp::v2::RedactImageResponse>
 DefaultDlpServiceStub::RedactImage(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::RedactImageRequest const& request) {
   google::privacy::dlp::v2::RedactImageResponse response;
-  auto status = grpc_stub_->RedactImage(&client_context, request, &response);
+  auto status = grpc_stub_->RedactImage(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,11 +55,10 @@ DefaultDlpServiceStub::RedactImage(
 
 StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
 DefaultDlpServiceStub::DeidentifyContent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
   google::privacy::dlp::v2::DeidentifyContentResponse response;
-  auto status =
-      grpc_stub_->DeidentifyContent(&client_context, request, &response);
+  auto status = grpc_stub_->DeidentifyContent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -68,11 +67,10 @@ DefaultDlpServiceStub::DeidentifyContent(
 
 StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
 DefaultDlpServiceStub::ReidentifyContent(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
   google::privacy::dlp::v2::ReidentifyContentResponse response;
-  auto status =
-      grpc_stub_->ReidentifyContent(&client_context, request, &response);
+  auto status = grpc_stub_->ReidentifyContent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -81,10 +79,10 @@ DefaultDlpServiceStub::ReidentifyContent(
 
 StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
 DefaultDlpServiceStub::ListInfoTypes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
   google::privacy::dlp::v2::ListInfoTypesResponse response;
-  auto status = grpc_stub_->ListInfoTypes(&client_context, request, &response);
+  auto status = grpc_stub_->ListInfoTypes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -93,11 +91,10 @@ DefaultDlpServiceStub::ListInfoTypes(
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DefaultDlpServiceStub::CreateInspectTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::CreateInspectTemplateRequest const& request) {
   google::privacy::dlp::v2::InspectTemplate response;
-  auto status =
-      grpc_stub_->CreateInspectTemplate(&client_context, request, &response);
+  auto status = grpc_stub_->CreateInspectTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -106,11 +103,10 @@ DefaultDlpServiceStub::CreateInspectTemplate(
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DefaultDlpServiceStub::UpdateInspectTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request) {
   google::privacy::dlp::v2::InspectTemplate response;
-  auto status =
-      grpc_stub_->UpdateInspectTemplate(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateInspectTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -119,11 +115,10 @@ DefaultDlpServiceStub::UpdateInspectTemplate(
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DefaultDlpServiceStub::GetInspectTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
   google::privacy::dlp::v2::InspectTemplate response;
-  auto status =
-      grpc_stub_->GetInspectTemplate(&client_context, request, &response);
+  auto status = grpc_stub_->GetInspectTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -132,11 +127,10 @@ DefaultDlpServiceStub::GetInspectTemplate(
 
 StatusOr<google::privacy::dlp::v2::ListInspectTemplatesResponse>
 DefaultDlpServiceStub::ListInspectTemplates(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::ListInspectTemplatesRequest const& request) {
   google::privacy::dlp::v2::ListInspectTemplatesResponse response;
-  auto status =
-      grpc_stub_->ListInspectTemplates(&client_context, request, &response);
+  auto status = grpc_stub_->ListInspectTemplates(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -144,11 +138,10 @@ DefaultDlpServiceStub::ListInspectTemplates(
 }
 
 Status DefaultDlpServiceStub::DeleteInspectTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteInspectTemplate(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteInspectTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -157,11 +150,11 @@ Status DefaultDlpServiceStub::DeleteInspectTemplate(
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DefaultDlpServiceStub::CreateDeidentifyTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request) {
   google::privacy::dlp::v2::DeidentifyTemplate response;
   auto status =
-      grpc_stub_->CreateDeidentifyTemplate(&client_context, request, &response);
+      grpc_stub_->CreateDeidentifyTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -170,11 +163,11 @@ DefaultDlpServiceStub::CreateDeidentifyTemplate(
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DefaultDlpServiceStub::UpdateDeidentifyTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request) {
   google::privacy::dlp::v2::DeidentifyTemplate response;
   auto status =
-      grpc_stub_->UpdateDeidentifyTemplate(&client_context, request, &response);
+      grpc_stub_->UpdateDeidentifyTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -183,11 +176,10 @@ DefaultDlpServiceStub::UpdateDeidentifyTemplate(
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DefaultDlpServiceStub::GetDeidentifyTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request) {
   google::privacy::dlp::v2::DeidentifyTemplate response;
-  auto status =
-      grpc_stub_->GetDeidentifyTemplate(&client_context, request, &response);
+  auto status = grpc_stub_->GetDeidentifyTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -196,11 +188,11 @@ DefaultDlpServiceStub::GetDeidentifyTemplate(
 
 StatusOr<google::privacy::dlp::v2::ListDeidentifyTemplatesResponse>
 DefaultDlpServiceStub::ListDeidentifyTemplates(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const& request) {
   google::privacy::dlp::v2::ListDeidentifyTemplatesResponse response;
   auto status =
-      grpc_stub_->ListDeidentifyTemplates(&client_context, request, &response);
+      grpc_stub_->ListDeidentifyTemplates(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -208,11 +200,11 @@ DefaultDlpServiceStub::ListDeidentifyTemplates(
 }
 
 Status DefaultDlpServiceStub::DeleteDeidentifyTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->DeleteDeidentifyTemplate(&client_context, request, &response);
+      grpc_stub_->DeleteDeidentifyTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -221,11 +213,10 @@ Status DefaultDlpServiceStub::DeleteDeidentifyTemplate(
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DefaultDlpServiceStub::CreateJobTrigger(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::CreateJobTriggerRequest const& request) {
   google::privacy::dlp::v2::JobTrigger response;
-  auto status =
-      grpc_stub_->CreateJobTrigger(&client_context, request, &response);
+  auto status = grpc_stub_->CreateJobTrigger(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -234,11 +225,10 @@ DefaultDlpServiceStub::CreateJobTrigger(
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DefaultDlpServiceStub::UpdateJobTrigger(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) {
   google::privacy::dlp::v2::JobTrigger response;
-  auto status =
-      grpc_stub_->UpdateJobTrigger(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateJobTrigger(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -247,11 +237,11 @@ DefaultDlpServiceStub::UpdateJobTrigger(
 
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DefaultDlpServiceStub::HybridInspectJobTrigger(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request) {
   google::privacy::dlp::v2::HybridInspectResponse response;
   auto status =
-      grpc_stub_->HybridInspectJobTrigger(&client_context, request, &response);
+      grpc_stub_->HybridInspectJobTrigger(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -260,10 +250,10 @@ DefaultDlpServiceStub::HybridInspectJobTrigger(
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DefaultDlpServiceStub::GetJobTrigger(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::GetJobTriggerRequest const& request) {
   google::privacy::dlp::v2::JobTrigger response;
-  auto status = grpc_stub_->GetJobTrigger(&client_context, request, &response);
+  auto status = grpc_stub_->GetJobTrigger(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -272,11 +262,10 @@ DefaultDlpServiceStub::GetJobTrigger(
 
 StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse>
 DefaultDlpServiceStub::ListJobTriggers(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::ListJobTriggersRequest const& request) {
   google::privacy::dlp::v2::ListJobTriggersResponse response;
-  auto status =
-      grpc_stub_->ListJobTriggers(&client_context, request, &response);
+  auto status = grpc_stub_->ListJobTriggers(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -284,11 +273,10 @@ DefaultDlpServiceStub::ListJobTriggers(
 }
 
 Status DefaultDlpServiceStub::DeleteJobTrigger(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteJobTrigger(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteJobTrigger(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -297,11 +285,10 @@ Status DefaultDlpServiceStub::DeleteJobTrigger(
 
 StatusOr<google::privacy::dlp::v2::DlpJob>
 DefaultDlpServiceStub::ActivateJobTrigger(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
   google::privacy::dlp::v2::DlpJob response;
-  auto status =
-      grpc_stub_->ActivateJobTrigger(&client_context, request, &response);
+  auto status = grpc_stub_->ActivateJobTrigger(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -310,11 +297,10 @@ DefaultDlpServiceStub::ActivateJobTrigger(
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
 DefaultDlpServiceStub::CreateDiscoveryConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
   google::privacy::dlp::v2::DiscoveryConfig response;
-  auto status =
-      grpc_stub_->CreateDiscoveryConfig(&client_context, request, &response);
+  auto status = grpc_stub_->CreateDiscoveryConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -323,11 +309,10 @@ DefaultDlpServiceStub::CreateDiscoveryConfig(
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
 DefaultDlpServiceStub::UpdateDiscoveryConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
   google::privacy::dlp::v2::DiscoveryConfig response;
-  auto status =
-      grpc_stub_->UpdateDiscoveryConfig(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateDiscoveryConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -336,11 +321,10 @@ DefaultDlpServiceStub::UpdateDiscoveryConfig(
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
 DefaultDlpServiceStub::GetDiscoveryConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
   google::privacy::dlp::v2::DiscoveryConfig response;
-  auto status =
-      grpc_stub_->GetDiscoveryConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetDiscoveryConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -349,11 +333,10 @@ DefaultDlpServiceStub::GetDiscoveryConfig(
 
 StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
 DefaultDlpServiceStub::ListDiscoveryConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
   google::privacy::dlp::v2::ListDiscoveryConfigsResponse response;
-  auto status =
-      grpc_stub_->ListDiscoveryConfigs(&client_context, request, &response);
+  auto status = grpc_stub_->ListDiscoveryConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -361,11 +344,10 @@ DefaultDlpServiceStub::ListDiscoveryConfigs(
 }
 
 Status DefaultDlpServiceStub::DeleteDiscoveryConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteDiscoveryConfig(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteDiscoveryConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -373,10 +355,10 @@ Status DefaultDlpServiceStub::DeleteDiscoveryConfig(
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DefaultDlpServiceStub::CreateDlpJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
   google::privacy::dlp::v2::DlpJob response;
-  auto status = grpc_stub_->CreateDlpJob(&client_context, request, &response);
+  auto status = grpc_stub_->CreateDlpJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -385,10 +367,10 @@ StatusOr<google::privacy::dlp::v2::DlpJob> DefaultDlpServiceStub::CreateDlpJob(
 
 StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse>
 DefaultDlpServiceStub::ListDlpJobs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::ListDlpJobsRequest const& request) {
   google::privacy::dlp::v2::ListDlpJobsResponse response;
-  auto status = grpc_stub_->ListDlpJobs(&client_context, request, &response);
+  auto status = grpc_stub_->ListDlpJobs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -396,10 +378,10 @@ DefaultDlpServiceStub::ListDlpJobs(
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DefaultDlpServiceStub::GetDlpJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::GetDlpJobRequest const& request) {
   google::privacy::dlp::v2::DlpJob response;
-  auto status = grpc_stub_->GetDlpJob(&client_context, request, &response);
+  auto status = grpc_stub_->GetDlpJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -407,10 +389,10 @@ StatusOr<google::privacy::dlp::v2::DlpJob> DefaultDlpServiceStub::GetDlpJob(
 }
 
 Status DefaultDlpServiceStub::DeleteDlpJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::DeleteDlpJobRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteDlpJob(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteDlpJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -418,10 +400,10 @@ Status DefaultDlpServiceStub::DeleteDlpJob(
 }
 
 Status DefaultDlpServiceStub::CancelDlpJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::CancelDlpJobRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->CancelDlpJob(&client_context, request, &response);
+  auto status = grpc_stub_->CancelDlpJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -430,11 +412,10 @@ Status DefaultDlpServiceStub::CancelDlpJob(
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DefaultDlpServiceStub::CreateStoredInfoType(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) {
   google::privacy::dlp::v2::StoredInfoType response;
-  auto status =
-      grpc_stub_->CreateStoredInfoType(&client_context, request, &response);
+  auto status = grpc_stub_->CreateStoredInfoType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -443,11 +424,10 @@ DefaultDlpServiceStub::CreateStoredInfoType(
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DefaultDlpServiceStub::UpdateStoredInfoType(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) {
   google::privacy::dlp::v2::StoredInfoType response;
-  auto status =
-      grpc_stub_->UpdateStoredInfoType(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateStoredInfoType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -456,11 +436,10 @@ DefaultDlpServiceStub::UpdateStoredInfoType(
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DefaultDlpServiceStub::GetStoredInfoType(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
   google::privacy::dlp::v2::StoredInfoType response;
-  auto status =
-      grpc_stub_->GetStoredInfoType(&client_context, request, &response);
+  auto status = grpc_stub_->GetStoredInfoType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -469,11 +448,10 @@ DefaultDlpServiceStub::GetStoredInfoType(
 
 StatusOr<google::privacy::dlp::v2::ListStoredInfoTypesResponse>
 DefaultDlpServiceStub::ListStoredInfoTypes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::ListStoredInfoTypesRequest const& request) {
   google::privacy::dlp::v2::ListStoredInfoTypesResponse response;
-  auto status =
-      grpc_stub_->ListStoredInfoTypes(&client_context, request, &response);
+  auto status = grpc_stub_->ListStoredInfoTypes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -481,11 +459,10 @@ DefaultDlpServiceStub::ListStoredInfoTypes(
 }
 
 Status DefaultDlpServiceStub::DeleteStoredInfoType(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteStoredInfoType(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteStoredInfoType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -494,11 +471,10 @@ Status DefaultDlpServiceStub::DeleteStoredInfoType(
 
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DefaultDlpServiceStub::HybridInspectDlpJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
   google::privacy::dlp::v2::HybridInspectResponse response;
-  auto status =
-      grpc_stub_->HybridInspectDlpJob(&client_context, request, &response);
+  auto status = grpc_stub_->HybridInspectDlpJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -506,10 +482,10 @@ DefaultDlpServiceStub::HybridInspectDlpJob(
 }
 
 Status DefaultDlpServiceStub::FinishDlpJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->FinishDlpJob(&client_context, request, &response);
+  auto status = grpc_stub_->FinishDlpJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

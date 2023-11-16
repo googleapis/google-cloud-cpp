@@ -32,13 +32,12 @@ ImageVersionsStub::~ImageVersionsStub() = default;
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ListImageVersionsResponse>
 DefaultImageVersionsStub::ListImageVersions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::orchestration::airflow::service::v1::
         ListImageVersionsRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::ListImageVersionsResponse
       response;
-  auto status =
-      grpc_stub_->ListImageVersions(&client_context, request, &response);
+  auto status = grpc_stub_->ListImageVersions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

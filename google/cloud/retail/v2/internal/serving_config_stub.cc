@@ -31,11 +31,10 @@ ServingConfigServiceStub::~ServingConfigServiceStub() = default;
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::CreateServingConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::CreateServingConfigRequest const& request) {
   google::cloud::retail::v2::ServingConfig response;
-  auto status =
-      grpc_stub_->CreateServingConfig(&client_context, request, &response);
+  auto status = grpc_stub_->CreateServingConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,11 +42,10 @@ DefaultServingConfigServiceStub::CreateServingConfig(
 }
 
 Status DefaultServingConfigServiceStub::DeleteServingConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteServingConfig(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteServingConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -56,11 +54,10 @@ Status DefaultServingConfigServiceStub::DeleteServingConfig(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::UpdateServingConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
   google::cloud::retail::v2::ServingConfig response;
-  auto status =
-      grpc_stub_->UpdateServingConfig(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateServingConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -69,11 +66,10 @@ DefaultServingConfigServiceStub::UpdateServingConfig(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::GetServingConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::GetServingConfigRequest const& request) {
   google::cloud::retail::v2::ServingConfig response;
-  auto status =
-      grpc_stub_->GetServingConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetServingConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -82,11 +78,10 @@ DefaultServingConfigServiceStub::GetServingConfig(
 
 StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
 DefaultServingConfigServiceStub::ListServingConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::ListServingConfigsRequest const& request) {
   google::cloud::retail::v2::ListServingConfigsResponse response;
-  auto status =
-      grpc_stub_->ListServingConfigs(&client_context, request, &response);
+  auto status = grpc_stub_->ListServingConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -95,10 +90,10 @@ DefaultServingConfigServiceStub::ListServingConfigs(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::AddControl(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::AddControlRequest const& request) {
   google::cloud::retail::v2::ServingConfig response;
-  auto status = grpc_stub_->AddControl(&client_context, request, &response);
+  auto status = grpc_stub_->AddControl(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -107,10 +102,10 @@ DefaultServingConfigServiceStub::AddControl(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::RemoveControl(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::retail::v2::RemoveControlRequest const& request) {
   google::cloud::retail::v2::ServingConfig response;
-  auto status = grpc_stub_->RemoveControl(&client_context, request, &response);
+  auto status = grpc_stub_->RemoveControl(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

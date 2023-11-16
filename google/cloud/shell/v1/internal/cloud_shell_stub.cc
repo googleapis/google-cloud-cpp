@@ -32,10 +32,10 @@ CloudShellServiceStub::~CloudShellServiceStub() = default;
 
 StatusOr<google::cloud::shell::v1::Environment>
 DefaultCloudShellServiceStub::GetEnvironment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
   google::cloud::shell::v1::Environment response;
-  auto status = grpc_stub_->GetEnvironment(&client_context, request, &response);
+  auto status = grpc_stub_->GetEnvironment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

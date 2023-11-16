@@ -71,11 +71,11 @@ class DefaultRevisionsStub : public RevisionsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::run::v2::GetRevisionRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListRevisionsResponse> ListRevisions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::run::v2::ListRevisionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRevision(

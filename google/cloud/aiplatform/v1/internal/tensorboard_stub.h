@@ -259,7 +259,7 @@ class DefaultTensorboardServiceStub : public TensorboardServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Tensorboard> GetTensorboard(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetTensorboardRequest const& request)
       override;
 
@@ -270,7 +270,7 @@ class DefaultTensorboardServiceStub : public TensorboardServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListTensorboardsResponse>
-  ListTensorboards(grpc::ClientContext& client_context,
+  ListTensorboards(grpc::ClientContext& context,
                    google::cloud::aiplatform::v1::ListTensorboardsRequest const&
                        request) override;
 
@@ -282,37 +282,37 @@ class DefaultTensorboardServiceStub : public TensorboardServiceStub {
 
   StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
   ReadTensorboardUsage(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
   ReadTensorboardSize(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
   CreateTensorboardExperiment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
   GetTensorboardExperiment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
   UpdateTensorboardExperiment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListTensorboardExperimentsResponse>
   ListTensorboardExperiments(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest const&
           request) override;
 
@@ -324,29 +324,29 @@ class DefaultTensorboardServiceStub : public TensorboardServiceStub {
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardRun> CreateTensorboardRun(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
   BatchCreateTensorboardRuns(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardRun> GetTensorboardRun(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardRun> UpdateTensorboardRun(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListTensorboardRunsResponse>
   ListTensorboardRuns(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ListTensorboardRunsRequest const& request)
       override;
 
@@ -359,31 +359,31 @@ class DefaultTensorboardServiceStub : public TensorboardServiceStub {
   StatusOr<
       google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
   BatchCreateTensorboardTimeSeries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::
           BatchCreateTensorboardTimeSeriesRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
   CreateTensorboardTimeSeries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
   GetTensorboardTimeSeries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
   UpdateTensorboardTimeSeries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListTensorboardTimeSeriesResponse>
   ListTensorboardTimeSeries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest const&
           request) override;
 
@@ -397,41 +397,40 @@ class DefaultTensorboardServiceStub : public TensorboardServiceStub {
   StatusOr<
       google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
   BatchReadTensorboardTimeSeriesData(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::
           BatchReadTensorboardTimeSeriesDataRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
   ReadTensorboardTimeSeriesData(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&
           request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>
   ReadTensorboardBlobData(
-      std::shared_ptr<grpc::ClientContext> client_context,
-      Options const& options,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
           request) override;
 
   StatusOr<
       google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
   WriteTensorboardExperimentData(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::
           WriteTensorboardExperimentDataRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
   WriteTensorboardRunData(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
           request) override;
 
   StatusOr<
       google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataResponse>
   ExportTensorboardTimeSeriesData(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::
           ExportTensorboardTimeSeriesDataRequest const& request) override;
 

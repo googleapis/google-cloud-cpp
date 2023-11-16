@@ -50,7 +50,7 @@ class DefaultLookupServiceStub : public LookupServiceStub {
 
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::servicedirectory::v1::ResolveServiceRequest const& request)
       override;
 

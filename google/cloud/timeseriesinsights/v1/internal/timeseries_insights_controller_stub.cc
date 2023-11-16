@@ -31,10 +31,10 @@ TimeseriesInsightsControllerStub::~TimeseriesInsightsControllerStub() = default;
 
 StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
 DefaultTimeseriesInsightsControllerStub::ListDataSets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::ListDataSetsRequest const& request) {
   google::cloud::timeseriesinsights::v1::ListDataSetsResponse response;
-  auto status = grpc_stub_->ListDataSets(&client_context, request, &response);
+  auto status = grpc_stub_->ListDataSets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,11 +43,11 @@ DefaultTimeseriesInsightsControllerStub::ListDataSets(
 
 StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
 DefaultTimeseriesInsightsControllerStub::CreateDataSet(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
         request) {
   google::cloud::timeseriesinsights::v1::DataSet response;
-  auto status = grpc_stub_->CreateDataSet(&client_context, request, &response);
+  auto status = grpc_stub_->CreateDataSet(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -55,11 +55,11 @@ DefaultTimeseriesInsightsControllerStub::CreateDataSet(
 }
 
 Status DefaultTimeseriesInsightsControllerStub::DeleteDataSet(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteDataSet(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteDataSet(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -68,10 +68,10 @@ Status DefaultTimeseriesInsightsControllerStub::DeleteDataSet(
 
 StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
 DefaultTimeseriesInsightsControllerStub::AppendEvents(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) {
   google::cloud::timeseriesinsights::v1::AppendEventsResponse response;
-  auto status = grpc_stub_->AppendEvents(&client_context, request, &response);
+  auto status = grpc_stub_->AppendEvents(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -80,10 +80,10 @@ DefaultTimeseriesInsightsControllerStub::AppendEvents(
 
 StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
 DefaultTimeseriesInsightsControllerStub::QueryDataSet(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) {
   google::cloud::timeseriesinsights::v1::QueryDataSetResponse response;
-  auto status = grpc_stub_->QueryDataSet(&client_context, request, &response);
+  auto status = grpc_stub_->QueryDataSet(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -92,11 +92,11 @@ DefaultTimeseriesInsightsControllerStub::QueryDataSet(
 
 StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
 DefaultTimeseriesInsightsControllerStub::EvaluateSlice(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
         request) {
   google::cloud::timeseriesinsights::v1::EvaluatedSlice response;
-  auto status = grpc_stub_->EvaluateSlice(&client_context, request, &response);
+  auto status = grpc_stub_->EvaluateSlice(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -105,12 +105,11 @@ DefaultTimeseriesInsightsControllerStub::EvaluateSlice(
 
 StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
 DefaultTimeseriesInsightsControllerStub::EvaluateTimeseries(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
         request) {
   google::cloud::timeseriesinsights::v1::EvaluatedSlice response;
-  auto status =
-      grpc_stub_->EvaluateTimeseries(&client_context, request, &response);
+  auto status = grpc_stub_->EvaluateTimeseries(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

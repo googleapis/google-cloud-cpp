@@ -31,12 +31,11 @@ AccessApprovalStub::~AccessApprovalStub() = default;
 
 StatusOr<google::cloud::accessapproval::v1::ListApprovalRequestsResponse>
 DefaultAccessApprovalStub::ListApprovalRequests(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::accessapproval::v1::ListApprovalRequestsMessage const&
         request) {
   google::cloud::accessapproval::v1::ListApprovalRequestsResponse response;
-  auto status =
-      grpc_stub_->ListApprovalRequests(&client_context, request, &response);
+  auto status = grpc_stub_->ListApprovalRequests(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,12 +44,11 @@ DefaultAccessApprovalStub::ListApprovalRequests(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 DefaultAccessApprovalStub::GetApprovalRequest(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
         request) {
   google::cloud::accessapproval::v1::ApprovalRequest response;
-  auto status =
-      grpc_stub_->GetApprovalRequest(&client_context, request, &response);
+  auto status = grpc_stub_->GetApprovalRequest(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,12 +57,12 @@ DefaultAccessApprovalStub::GetApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 DefaultAccessApprovalStub::ApproveApprovalRequest(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
         request) {
   google::cloud::accessapproval::v1::ApprovalRequest response;
   auto status =
-      grpc_stub_->ApproveApprovalRequest(&client_context, request, &response);
+      grpc_stub_->ApproveApprovalRequest(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -73,12 +71,12 @@ DefaultAccessApprovalStub::ApproveApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 DefaultAccessApprovalStub::DismissApprovalRequest(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
         request) {
   google::cloud::accessapproval::v1::ApprovalRequest response;
   auto status =
-      grpc_stub_->DismissApprovalRequest(&client_context, request, &response);
+      grpc_stub_->DismissApprovalRequest(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -87,12 +85,12 @@ DefaultAccessApprovalStub::DismissApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 DefaultAccessApprovalStub::InvalidateApprovalRequest(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
         request) {
   google::cloud::accessapproval::v1::ApprovalRequest response;
-  auto status = grpc_stub_->InvalidateApprovalRequest(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->InvalidateApprovalRequest(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -101,12 +99,12 @@ DefaultAccessApprovalStub::InvalidateApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 DefaultAccessApprovalStub::GetAccessApprovalSettings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
         request) {
   google::cloud::accessapproval::v1::AccessApprovalSettings response;
-  auto status = grpc_stub_->GetAccessApprovalSettings(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->GetAccessApprovalSettings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -115,12 +113,12 @@ DefaultAccessApprovalStub::GetAccessApprovalSettings(
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 DefaultAccessApprovalStub::UpdateAccessApprovalSettings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::accessapproval::v1::
         UpdateAccessApprovalSettingsMessage const& request) {
   google::cloud::accessapproval::v1::AccessApprovalSettings response;
-  auto status = grpc_stub_->UpdateAccessApprovalSettings(&client_context,
-                                                         request, &response);
+  auto status =
+      grpc_stub_->UpdateAccessApprovalSettings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -128,12 +126,12 @@ DefaultAccessApprovalStub::UpdateAccessApprovalSettings(
 }
 
 Status DefaultAccessApprovalStub::DeleteAccessApprovalSettings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::accessapproval::v1::
         DeleteAccessApprovalSettingsMessage const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteAccessApprovalSettings(&client_context,
-                                                         request, &response);
+  auto status =
+      grpc_stub_->DeleteAccessApprovalSettings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -142,12 +140,12 @@ Status DefaultAccessApprovalStub::DeleteAccessApprovalSettings(
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
 DefaultAccessApprovalStub::GetAccessApprovalServiceAccount(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::accessapproval::v1::
         GetAccessApprovalServiceAccountMessage const& request) {
   google::cloud::accessapproval::v1::AccessApprovalServiceAccount response;
-  auto status = grpc_stub_->GetAccessApprovalServiceAccount(&client_context,
-                                                            request, &response);
+  auto status =
+      grpc_stub_->GetAccessApprovalServiceAccount(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

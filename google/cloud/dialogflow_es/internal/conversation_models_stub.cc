@@ -52,11 +52,10 @@ DefaultConversationModelsStub::AsyncCreateConversationModel(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 DefaultConversationModelsStub::GetConversationModel(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationModelRequest const& request) {
   google::cloud::dialogflow::v2::ConversationModel response;
-  auto status =
-      grpc_stub_->GetConversationModel(&client_context, request, &response);
+  auto status = grpc_stub_->GetConversationModel(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -65,12 +64,12 @@ DefaultConversationModelsStub::GetConversationModel(
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse>
 DefaultConversationModelsStub::ListConversationModels(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListConversationModelsRequest const&
         request) {
   google::cloud::dialogflow::v2::ListConversationModelsResponse response;
   auto status =
-      grpc_stub_->ListConversationModels(&client_context, request, &response);
+      grpc_stub_->ListConversationModels(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -139,12 +138,12 @@ DefaultConversationModelsStub::AsyncUndeployConversationModel(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
 DefaultConversationModelsStub::GetConversationModelEvaluation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const&
         request) {
   google::cloud::dialogflow::v2::ConversationModelEvaluation response;
-  auto status = grpc_stub_->GetConversationModelEvaluation(&client_context,
-                                                           request, &response);
+  auto status =
+      grpc_stub_->GetConversationModelEvaluation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -154,13 +153,13 @@ DefaultConversationModelsStub::GetConversationModelEvaluation(
 StatusOr<
     google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse>
 DefaultConversationModelsStub::ListConversationModelEvaluations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::
         ListConversationModelEvaluationsRequest const& request) {
   google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse
       response;
-  auto status = grpc_stub_->ListConversationModelEvaluations(
-      &client_context, request, &response);
+  auto status = grpc_stub_->ListConversationModelEvaluations(&context, request,
+                                                             &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

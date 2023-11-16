@@ -31,12 +31,11 @@ StorageInsightsStub::~StorageInsightsStub() = default;
 
 StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
 DefaultStorageInsightsStub::ListReportConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::storageinsights::v1::ListReportConfigsRequest const&
         request) {
   google::cloud::storageinsights::v1::ListReportConfigsResponse response;
-  auto status =
-      grpc_stub_->ListReportConfigs(&client_context, request, &response);
+  auto status = grpc_stub_->ListReportConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,11 +44,10 @@ DefaultStorageInsightsStub::ListReportConfigs(
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 DefaultStorageInsightsStub::GetReportConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
   google::cloud::storageinsights::v1::ReportConfig response;
-  auto status =
-      grpc_stub_->GetReportConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetReportConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -58,12 +56,11 @@ DefaultStorageInsightsStub::GetReportConfig(
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 DefaultStorageInsightsStub::CreateReportConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::storageinsights::v1::CreateReportConfigRequest const&
         request) {
   google::cloud::storageinsights::v1::ReportConfig response;
-  auto status =
-      grpc_stub_->CreateReportConfig(&client_context, request, &response);
+  auto status = grpc_stub_->CreateReportConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -72,12 +69,11 @@ DefaultStorageInsightsStub::CreateReportConfig(
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 DefaultStorageInsightsStub::UpdateReportConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
         request) {
   google::cloud::storageinsights::v1::ReportConfig response;
-  auto status =
-      grpc_stub_->UpdateReportConfig(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateReportConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -85,12 +81,11 @@ DefaultStorageInsightsStub::UpdateReportConfig(
 }
 
 Status DefaultStorageInsightsStub::DeleteReportConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteReportConfig(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteReportConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -99,12 +94,11 @@ Status DefaultStorageInsightsStub::DeleteReportConfig(
 
 StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse>
 DefaultStorageInsightsStub::ListReportDetails(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::storageinsights::v1::ListReportDetailsRequest const&
         request) {
   google::cloud::storageinsights::v1::ListReportDetailsResponse response;
-  auto status =
-      grpc_stub_->ListReportDetails(&client_context, request, &response);
+  auto status = grpc_stub_->ListReportDetails(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -113,11 +107,10 @@ DefaultStorageInsightsStub::ListReportDetails(
 
 StatusOr<google::cloud::storageinsights::v1::ReportDetail>
 DefaultStorageInsightsStub::GetReportDetail(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
   google::cloud::storageinsights::v1::ReportDetail response;
-  auto status =
-      grpc_stub_->GetReportDetail(&client_context, request, &response);
+  auto status = grpc_stub_->GetReportDetail(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

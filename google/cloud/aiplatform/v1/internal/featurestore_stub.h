@@ -187,13 +187,13 @@ class DefaultFeaturestoreServiceStub : public FeaturestoreServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Featurestore> GetFeaturestore(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse>
   ListFeaturestores(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request)
       override;
 
@@ -216,17 +216,17 @@ class DefaultFeaturestoreServiceStub : public FeaturestoreServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::EntityType> GetEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetEntityTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse>
-  ListEntityTypes(grpc::ClientContext& client_context,
+  ListEntityTypes(grpc::ClientContext& context,
                   google::cloud::aiplatform::v1::ListEntityTypesRequest const&
                       request) override;
 
   StatusOr<google::cloud::aiplatform::v1::EntityType> UpdateEntityType(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request)
       override;
 
@@ -249,16 +249,16 @@ class DefaultFeaturestoreServiceStub : public FeaturestoreServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetFeatureRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse> ListFeatures(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ListFeaturesRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
       override;
 
@@ -293,7 +293,7 @@ class DefaultFeaturestoreServiceStub : public FeaturestoreServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>
-  SearchFeatures(grpc::ClientContext& client_context,
+  SearchFeatures(grpc::ClientContext& context,
                  google::cloud::aiplatform::v1::SearchFeaturesRequest const&
                      request) override;
 

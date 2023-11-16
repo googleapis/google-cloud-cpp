@@ -32,10 +32,10 @@ CloudChannelServiceStub::~CloudChannelServiceStub() = default;
 
 StatusOr<google::cloud::channel::v1::ListCustomersResponse>
 DefaultCloudChannelServiceStub::ListCustomers(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListCustomersRequest const& request) {
   google::cloud::channel::v1::ListCustomersResponse response;
-  auto status = grpc_stub_->ListCustomers(&client_context, request, &response);
+  auto status = grpc_stub_->ListCustomers(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultCloudChannelServiceStub::ListCustomers(
 
 StatusOr<google::cloud::channel::v1::Customer>
 DefaultCloudChannelServiceStub::GetCustomer(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::GetCustomerRequest const& request) {
   google::cloud::channel::v1::Customer response;
-  auto status = grpc_stub_->GetCustomer(&client_context, request, &response);
+  auto status = grpc_stub_->GetCustomer(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -56,12 +56,12 @@ DefaultCloudChannelServiceStub::GetCustomer(
 
 StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
 DefaultCloudChannelServiceStub::CheckCloudIdentityAccountsExist(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&
         request) {
   google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse response;
-  auto status = grpc_stub_->CheckCloudIdentityAccountsExist(&client_context,
-                                                            request, &response);
+  auto status =
+      grpc_stub_->CheckCloudIdentityAccountsExist(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -70,10 +70,10 @@ DefaultCloudChannelServiceStub::CheckCloudIdentityAccountsExist(
 
 StatusOr<google::cloud::channel::v1::Customer>
 DefaultCloudChannelServiceStub::CreateCustomer(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::CreateCustomerRequest const& request) {
   google::cloud::channel::v1::Customer response;
-  auto status = grpc_stub_->CreateCustomer(&client_context, request, &response);
+  auto status = grpc_stub_->CreateCustomer(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -82,10 +82,10 @@ DefaultCloudChannelServiceStub::CreateCustomer(
 
 StatusOr<google::cloud::channel::v1::Customer>
 DefaultCloudChannelServiceStub::UpdateCustomer(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::UpdateCustomerRequest const& request) {
   google::cloud::channel::v1::Customer response;
-  auto status = grpc_stub_->UpdateCustomer(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateCustomer(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -93,10 +93,10 @@ DefaultCloudChannelServiceStub::UpdateCustomer(
 }
 
 Status DefaultCloudChannelServiceStub::DeleteCustomer(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::DeleteCustomerRequest const& request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteCustomer(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteCustomer(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -105,10 +105,10 @@ Status DefaultCloudChannelServiceStub::DeleteCustomer(
 
 StatusOr<google::cloud::channel::v1::Customer>
 DefaultCloudChannelServiceStub::ImportCustomer(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ImportCustomerRequest const& request) {
   google::cloud::channel::v1::Customer response;
-  auto status = grpc_stub_->ImportCustomer(&client_context, request, &response);
+  auto status = grpc_stub_->ImportCustomer(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -135,11 +135,10 @@ DefaultCloudChannelServiceStub::AsyncProvisionCloudIdentity(
 
 StatusOr<google::cloud::channel::v1::ListEntitlementsResponse>
 DefaultCloudChannelServiceStub::ListEntitlements(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListEntitlementsRequest const& request) {
   google::cloud::channel::v1::ListEntitlementsResponse response;
-  auto status =
-      grpc_stub_->ListEntitlements(&client_context, request, &response);
+  auto status = grpc_stub_->ListEntitlements(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -148,11 +147,10 @@ DefaultCloudChannelServiceStub::ListEntitlements(
 
 StatusOr<google::cloud::channel::v1::ListTransferableSkusResponse>
 DefaultCloudChannelServiceStub::ListTransferableSkus(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListTransferableSkusRequest const& request) {
   google::cloud::channel::v1::ListTransferableSkusResponse response;
-  auto status =
-      grpc_stub_->ListTransferableSkus(&client_context, request, &response);
+  auto status = grpc_stub_->ListTransferableSkus(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -161,11 +159,11 @@ DefaultCloudChannelServiceStub::ListTransferableSkus(
 
 StatusOr<google::cloud::channel::v1::ListTransferableOffersResponse>
 DefaultCloudChannelServiceStub::ListTransferableOffers(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListTransferableOffersRequest const& request) {
   google::cloud::channel::v1::ListTransferableOffersResponse response;
   auto status =
-      grpc_stub_->ListTransferableOffers(&client_context, request, &response);
+      grpc_stub_->ListTransferableOffers(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -174,10 +172,10 @@ DefaultCloudChannelServiceStub::ListTransferableOffers(
 
 StatusOr<google::cloud::channel::v1::Entitlement>
 DefaultCloudChannelServiceStub::GetEntitlement(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::GetEntitlementRequest const& request) {
   google::cloud::channel::v1::Entitlement response;
-  auto status = grpc_stub_->GetEntitlement(&client_context, request, &response);
+  auto status = grpc_stub_->GetEntitlement(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -366,11 +364,11 @@ DefaultCloudChannelServiceStub::AsyncTransferEntitlementsToGoogle(
 
 StatusOr<google::cloud::channel::v1::ListChannelPartnerLinksResponse>
 DefaultCloudChannelServiceStub::ListChannelPartnerLinks(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListChannelPartnerLinksRequest const& request) {
   google::cloud::channel::v1::ListChannelPartnerLinksResponse response;
   auto status =
-      grpc_stub_->ListChannelPartnerLinks(&client_context, request, &response);
+      grpc_stub_->ListChannelPartnerLinks(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -379,11 +377,10 @@ DefaultCloudChannelServiceStub::ListChannelPartnerLinks(
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
 DefaultCloudChannelServiceStub::GetChannelPartnerLink(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request) {
   google::cloud::channel::v1::ChannelPartnerLink response;
-  auto status =
-      grpc_stub_->GetChannelPartnerLink(&client_context, request, &response);
+  auto status = grpc_stub_->GetChannelPartnerLink(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -392,12 +389,12 @@ DefaultCloudChannelServiceStub::GetChannelPartnerLink(
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
 DefaultCloudChannelServiceStub::CreateChannelPartnerLink(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&
         request) {
   google::cloud::channel::v1::ChannelPartnerLink response;
   auto status =
-      grpc_stub_->CreateChannelPartnerLink(&client_context, request, &response);
+      grpc_stub_->CreateChannelPartnerLink(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -406,12 +403,12 @@ DefaultCloudChannelServiceStub::CreateChannelPartnerLink(
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
 DefaultCloudChannelServiceStub::UpdateChannelPartnerLink(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
         request) {
   google::cloud::channel::v1::ChannelPartnerLink response;
   auto status =
-      grpc_stub_->UpdateChannelPartnerLink(&client_context, request, &response);
+      grpc_stub_->UpdateChannelPartnerLink(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -420,12 +417,12 @@ DefaultCloudChannelServiceStub::UpdateChannelPartnerLink(
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
 DefaultCloudChannelServiceStub::GetCustomerRepricingConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
         request) {
   google::cloud::channel::v1::CustomerRepricingConfig response;
-  auto status = grpc_stub_->GetCustomerRepricingConfig(&client_context, request,
-                                                       &response);
+  auto status =
+      grpc_stub_->GetCustomerRepricingConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -434,12 +431,12 @@ DefaultCloudChannelServiceStub::GetCustomerRepricingConfig(
 
 StatusOr<google::cloud::channel::v1::ListCustomerRepricingConfigsResponse>
 DefaultCloudChannelServiceStub::ListCustomerRepricingConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
         request) {
   google::cloud::channel::v1::ListCustomerRepricingConfigsResponse response;
-  auto status = grpc_stub_->ListCustomerRepricingConfigs(&client_context,
-                                                         request, &response);
+  auto status =
+      grpc_stub_->ListCustomerRepricingConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -448,12 +445,12 @@ DefaultCloudChannelServiceStub::ListCustomerRepricingConfigs(
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
 DefaultCloudChannelServiceStub::CreateCustomerRepricingConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
         request) {
   google::cloud::channel::v1::CustomerRepricingConfig response;
-  auto status = grpc_stub_->CreateCustomerRepricingConfig(&client_context,
-                                                          request, &response);
+  auto status =
+      grpc_stub_->CreateCustomerRepricingConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -462,12 +459,12 @@ DefaultCloudChannelServiceStub::CreateCustomerRepricingConfig(
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
 DefaultCloudChannelServiceStub::UpdateCustomerRepricingConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
         request) {
   google::cloud::channel::v1::CustomerRepricingConfig response;
-  auto status = grpc_stub_->UpdateCustomerRepricingConfig(&client_context,
-                                                          request, &response);
+  auto status =
+      grpc_stub_->UpdateCustomerRepricingConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -475,12 +472,12 @@ DefaultCloudChannelServiceStub::UpdateCustomerRepricingConfig(
 }
 
 Status DefaultCloudChannelServiceStub::DeleteCustomerRepricingConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteCustomerRepricingConfig(&client_context,
-                                                          request, &response);
+  auto status =
+      grpc_stub_->DeleteCustomerRepricingConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -489,12 +486,12 @@ Status DefaultCloudChannelServiceStub::DeleteCustomerRepricingConfig(
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 DefaultCloudChannelServiceStub::GetChannelPartnerRepricingConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
         request) {
   google::cloud::channel::v1::ChannelPartnerRepricingConfig response;
-  auto status = grpc_stub_->GetChannelPartnerRepricingConfig(
-      &client_context, request, &response);
+  auto status = grpc_stub_->GetChannelPartnerRepricingConfig(&context, request,
+                                                             &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -503,13 +500,13 @@ DefaultCloudChannelServiceStub::GetChannelPartnerRepricingConfig(
 
 StatusOr<google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse>
 DefaultCloudChannelServiceStub::ListChannelPartnerRepricingConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest const&
         request) {
   google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse
       response;
   auto status = grpc_stub_->ListChannelPartnerRepricingConfigs(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -518,12 +515,12 @@ DefaultCloudChannelServiceStub::ListChannelPartnerRepricingConfigs(
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 DefaultCloudChannelServiceStub::CreateChannelPartnerRepricingConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::
         CreateChannelPartnerRepricingConfigRequest const& request) {
   google::cloud::channel::v1::ChannelPartnerRepricingConfig response;
   auto status = grpc_stub_->CreateChannelPartnerRepricingConfig(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -532,12 +529,12 @@ DefaultCloudChannelServiceStub::CreateChannelPartnerRepricingConfig(
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 DefaultCloudChannelServiceStub::UpdateChannelPartnerRepricingConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::
         UpdateChannelPartnerRepricingConfigRequest const& request) {
   google::cloud::channel::v1::ChannelPartnerRepricingConfig response;
   auto status = grpc_stub_->UpdateChannelPartnerRepricingConfig(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -545,12 +542,12 @@ DefaultCloudChannelServiceStub::UpdateChannelPartnerRepricingConfig(
 }
 
 Status DefaultCloudChannelServiceStub::DeleteChannelPartnerRepricingConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::
         DeleteChannelPartnerRepricingConfigRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteChannelPartnerRepricingConfig(
-      &client_context, request, &response);
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -559,10 +556,10 @@ Status DefaultCloudChannelServiceStub::DeleteChannelPartnerRepricingConfig(
 
 StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse>
 DefaultCloudChannelServiceStub::ListSkuGroups(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListSkuGroupsRequest const& request) {
   google::cloud::channel::v1::ListSkuGroupsResponse response;
-  auto status = grpc_stub_->ListSkuGroups(&client_context, request, &response);
+  auto status = grpc_stub_->ListSkuGroups(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -571,12 +568,12 @@ DefaultCloudChannelServiceStub::ListSkuGroups(
 
 StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
 DefaultCloudChannelServiceStub::ListSkuGroupBillableSkus(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
         request) {
   google::cloud::channel::v1::ListSkuGroupBillableSkusResponse response;
   auto status =
-      grpc_stub_->ListSkuGroupBillableSkus(&client_context, request, &response);
+      grpc_stub_->ListSkuGroupBillableSkus(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -585,10 +582,10 @@ DefaultCloudChannelServiceStub::ListSkuGroupBillableSkus(
 
 StatusOr<google::cloud::channel::v1::Offer>
 DefaultCloudChannelServiceStub::LookupOffer(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::LookupOfferRequest const& request) {
   google::cloud::channel::v1::Offer response;
-  auto status = grpc_stub_->LookupOffer(&client_context, request, &response);
+  auto status = grpc_stub_->LookupOffer(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -597,10 +594,10 @@ DefaultCloudChannelServiceStub::LookupOffer(
 
 StatusOr<google::cloud::channel::v1::ListProductsResponse>
 DefaultCloudChannelServiceStub::ListProducts(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListProductsRequest const& request) {
   google::cloud::channel::v1::ListProductsResponse response;
-  auto status = grpc_stub_->ListProducts(&client_context, request, &response);
+  auto status = grpc_stub_->ListProducts(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -609,10 +606,10 @@ DefaultCloudChannelServiceStub::ListProducts(
 
 StatusOr<google::cloud::channel::v1::ListSkusResponse>
 DefaultCloudChannelServiceStub::ListSkus(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListSkusRequest const& request) {
   google::cloud::channel::v1::ListSkusResponse response;
-  auto status = grpc_stub_->ListSkus(&client_context, request, &response);
+  auto status = grpc_stub_->ListSkus(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -621,10 +618,10 @@ DefaultCloudChannelServiceStub::ListSkus(
 
 StatusOr<google::cloud::channel::v1::ListOffersResponse>
 DefaultCloudChannelServiceStub::ListOffers(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListOffersRequest const& request) {
   google::cloud::channel::v1::ListOffersResponse response;
-  auto status = grpc_stub_->ListOffers(&client_context, request, &response);
+  auto status = grpc_stub_->ListOffers(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -633,11 +630,10 @@ DefaultCloudChannelServiceStub::ListOffers(
 
 StatusOr<google::cloud::channel::v1::ListPurchasableSkusResponse>
 DefaultCloudChannelServiceStub::ListPurchasableSkus(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListPurchasableSkusRequest const& request) {
   google::cloud::channel::v1::ListPurchasableSkusResponse response;
-  auto status =
-      grpc_stub_->ListPurchasableSkus(&client_context, request, &response);
+  auto status = grpc_stub_->ListPurchasableSkus(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -646,11 +642,10 @@ DefaultCloudChannelServiceStub::ListPurchasableSkus(
 
 StatusOr<google::cloud::channel::v1::ListPurchasableOffersResponse>
 DefaultCloudChannelServiceStub::ListPurchasableOffers(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListPurchasableOffersRequest const& request) {
   google::cloud::channel::v1::ListPurchasableOffersResponse response;
-  auto status =
-      grpc_stub_->ListPurchasableOffers(&client_context, request, &response);
+  auto status = grpc_stub_->ListPurchasableOffers(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -659,12 +654,12 @@ DefaultCloudChannelServiceStub::ListPurchasableOffers(
 
 StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
 DefaultCloudChannelServiceStub::QueryEligibleBillingAccounts(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
         request) {
   google::cloud::channel::v1::QueryEligibleBillingAccountsResponse response;
-  auto status = grpc_stub_->QueryEligibleBillingAccounts(&client_context,
-                                                         request, &response);
+  auto status =
+      grpc_stub_->QueryEligibleBillingAccounts(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -673,11 +668,10 @@ DefaultCloudChannelServiceStub::QueryEligibleBillingAccounts(
 
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 DefaultCloudChannelServiceStub::RegisterSubscriber(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::RegisterSubscriberRequest const& request) {
   google::cloud::channel::v1::RegisterSubscriberResponse response;
-  auto status =
-      grpc_stub_->RegisterSubscriber(&client_context, request, &response);
+  auto status = grpc_stub_->RegisterSubscriber(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -686,11 +680,10 @@ DefaultCloudChannelServiceStub::RegisterSubscriber(
 
 StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
 DefaultCloudChannelServiceStub::UnregisterSubscriber(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::UnregisterSubscriberRequest const& request) {
   google::cloud::channel::v1::UnregisterSubscriberResponse response;
-  auto status =
-      grpc_stub_->UnregisterSubscriber(&client_context, request, &response);
+  auto status = grpc_stub_->UnregisterSubscriber(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -699,11 +692,10 @@ DefaultCloudChannelServiceStub::UnregisterSubscriber(
 
 StatusOr<google::cloud::channel::v1::ListSubscribersResponse>
 DefaultCloudChannelServiceStub::ListSubscribers(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListSubscribersRequest const& request) {
   google::cloud::channel::v1::ListSubscribersResponse response;
-  auto status =
-      grpc_stub_->ListSubscribers(&client_context, request, &response);
+  auto status = grpc_stub_->ListSubscribers(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -712,11 +704,11 @@ DefaultCloudChannelServiceStub::ListSubscribers(
 
 StatusOr<google::cloud::channel::v1::ListEntitlementChangesResponse>
 DefaultCloudChannelServiceStub::ListEntitlementChanges(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::channel::v1::ListEntitlementChangesRequest const& request) {
   google::cloud::channel::v1::ListEntitlementChangesResponse response;
   auto status =
-      grpc_stub_->ListEntitlementChanges(&client_context, request, &response);
+      grpc_stub_->ListEntitlementChanges(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

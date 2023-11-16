@@ -114,24 +114,24 @@ class DefaultTranslationServiceStub : public TranslationServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::translation::v3::TranslateTextRequest const& request)
       override;
 
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
-  DetectLanguage(grpc::ClientContext& client_context,
+  DetectLanguage(grpc::ClientContext& context,
                  google::cloud::translation::v3::DetectLanguageRequest const&
                      request) override;
 
   StatusOr<google::cloud::translation::v3::SupportedLanguages>
   GetSupportedLanguages(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::translation::v3::GetSupportedLanguagesRequest const&
           request) override;
 
   StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
   TranslateDocument(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::translation::v3::TranslateDocumentRequest const& request)
       override;
 
@@ -154,12 +154,12 @@ class DefaultTranslationServiceStub : public TranslationServiceStub {
       override;
 
   StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
-  ListGlossaries(grpc::ClientContext& client_context,
+  ListGlossaries(grpc::ClientContext& context,
                  google::cloud::translation::v3::ListGlossariesRequest const&
                      request) override;
 
   StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::translation::v3::GetGlossaryRequest const& request)
       override;
 

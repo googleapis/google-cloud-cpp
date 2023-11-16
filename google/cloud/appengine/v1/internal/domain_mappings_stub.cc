@@ -32,11 +32,10 @@ DomainMappingsStub::~DomainMappingsStub() = default;
 
 StatusOr<google::appengine::v1::ListDomainMappingsResponse>
 DefaultDomainMappingsStub::ListDomainMappings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
   google::appengine::v1::ListDomainMappingsResponse response;
-  auto status =
-      grpc_stub_->ListDomainMappings(&client_context, request, &response);
+  auto status = grpc_stub_->ListDomainMappings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,11 +44,10 @@ DefaultDomainMappingsStub::ListDomainMappings(
 
 StatusOr<google::appengine::v1::DomainMapping>
 DefaultDomainMappingsStub::GetDomainMapping(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::GetDomainMappingRequest const& request) {
   google::appengine::v1::DomainMapping response;
-  auto status =
-      grpc_stub_->GetDomainMapping(&client_context, request, &response);
+  auto status = grpc_stub_->GetDomainMapping(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

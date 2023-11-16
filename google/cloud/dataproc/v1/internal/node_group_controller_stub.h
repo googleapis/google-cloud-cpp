@@ -85,7 +85,7 @@ class DefaultNodeGroupControllerStub : public NodeGroupControllerStub {
       override;
 
   StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -31,11 +31,10 @@ AnswerRecordsStub::~AnswerRecordsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
 DefaultAnswerRecordsStub::ListAnswerRecords(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) {
   google::cloud::dialogflow::v2::ListAnswerRecordsResponse response;
-  auto status =
-      grpc_stub_->ListAnswerRecords(&client_context, request, &response);
+  auto status = grpc_stub_->ListAnswerRecords(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,11 +43,10 @@ DefaultAnswerRecordsStub::ListAnswerRecords(
 
 StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
 DefaultAnswerRecordsStub::UpdateAnswerRecord(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
   google::cloud::dialogflow::v2::AnswerRecord response;
-  auto status =
-      grpc_stub_->UpdateAnswerRecord(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateAnswerRecord(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

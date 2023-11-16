@@ -64,23 +64,22 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::PredictResponse> Predict(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::PredictRequest const& request) override;
 
   StatusOr<google::api::HttpBody> RawPredict(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::aiplatform::v1::StreamingPredictResponse>>
   ServerStreamingPredict(
-      std::shared_ptr<grpc::ClientContext> client_context,
-      Options const& options,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::StreamingPredictRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
 
  private:

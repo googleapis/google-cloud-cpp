@@ -48,7 +48,7 @@ class DefaultCaseAttachmentServiceStub : public CaseAttachmentServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::support::v2::ListAttachmentsRequest const& request)
       override;
 

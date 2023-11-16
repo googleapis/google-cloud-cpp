@@ -35,11 +35,11 @@ GoldenKitchenSinkStub::~GoldenKitchenSinkStub() = default;
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 DefaultGoldenKitchenSinkStub::GenerateAccessToken(
-  grpc::ClientContext& client_context,
+  grpc::ClientContext& context,
   google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
     google::test::admin::database::v1::GenerateAccessTokenResponse response;
     auto status =
-        grpc_stub_->GenerateAccessToken(&client_context, request, &response);
+        grpc_stub_->GenerateAccessToken(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
     }
@@ -48,11 +48,11 @@ DefaultGoldenKitchenSinkStub::GenerateAccessToken(
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 DefaultGoldenKitchenSinkStub::GenerateIdToken(
-  grpc::ClientContext& client_context,
+  grpc::ClientContext& context,
   google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
     google::test::admin::database::v1::GenerateIdTokenResponse response;
     auto status =
-        grpc_stub_->GenerateIdToken(&client_context, request, &response);
+        grpc_stub_->GenerateIdToken(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
     }
@@ -61,11 +61,11 @@ DefaultGoldenKitchenSinkStub::GenerateIdToken(
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 DefaultGoldenKitchenSinkStub::WriteLogEntries(
-  grpc::ClientContext& client_context,
+  grpc::ClientContext& context,
   google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
     google::test::admin::database::v1::WriteLogEntriesResponse response;
     auto status =
-        grpc_stub_->WriteLogEntries(&client_context, request, &response);
+        grpc_stub_->WriteLogEntries(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
     }
@@ -74,11 +74,11 @@ DefaultGoldenKitchenSinkStub::WriteLogEntries(
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse>
 DefaultGoldenKitchenSinkStub::ListLogs(
-  grpc::ClientContext& client_context,
+  grpc::ClientContext& context,
   google::test::admin::database::v1::ListLogsRequest const& request) {
     google::test::admin::database::v1::ListLogsResponse response;
     auto status =
-        grpc_stub_->ListLogs(&client_context, request, &response);
+        grpc_stub_->ListLogs(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
     }
@@ -87,11 +87,11 @@ DefaultGoldenKitchenSinkStub::ListLogs(
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 DefaultGoldenKitchenSinkStub::ListServiceAccountKeys(
-  grpc::ClientContext& client_context,
+  grpc::ClientContext& context,
   google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
     google::test::admin::database::v1::ListServiceAccountKeysResponse response;
     auto status =
-        grpc_stub_->ListServiceAccountKeys(&client_context, request, &response);
+        grpc_stub_->ListServiceAccountKeys(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
     }
@@ -100,11 +100,11 @@ DefaultGoldenKitchenSinkStub::ListServiceAccountKeys(
 
 Status
 DefaultGoldenKitchenSinkStub::DoNothing(
-  grpc::ClientContext& client_context,
+  grpc::ClientContext& context,
   google::protobuf::Empty const& request) {
     google::protobuf::Empty response;
     auto status =
-        grpc_stub_->DoNothing(&client_context, request, &response);
+        grpc_stub_->DoNothing(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
     }
@@ -113,11 +113,11 @@ DefaultGoldenKitchenSinkStub::DoNothing(
 
 Status
 DefaultGoldenKitchenSinkStub::Deprecated2(
-  grpc::ClientContext& client_context,
+  grpc::ClientContext& context,
   google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
     google::protobuf::Empty response;
     auto status =
-        grpc_stub_->Deprecated2(&client_context, request, &response);
+        grpc_stub_->Deprecated2(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
     }
@@ -126,20 +126,21 @@ DefaultGoldenKitchenSinkStub::Deprecated2(
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
 DefaultGoldenKitchenSinkStub::StreamingRead(
-    std::shared_ptr<grpc::ClientContext> client_context,
+    std::shared_ptr<grpc::ClientContext> context,
     Options const&,
     google::test::admin::database::v1::Request const& request) {
-  auto stream = grpc_stub_->StreamingRead(client_context.get(), request);
+  auto stream = grpc_stub_->StreamingRead(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::test::admin::database::v1::Response>>(
-      std::move(client_context), std::move(stream));
+      std::move(context), std::move(stream));
 }
 
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::test::admin::database::v1::Request,
     google::test::admin::database::v1::Response>>
 DefaultGoldenKitchenSinkStub::StreamingWrite(
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const&) {
   auto response = std::make_unique<google::test::admin::database::v1::Response>();
   auto stream = grpc_stub_->StreamingWrite(context.get(), response.get());
   return std::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
@@ -162,11 +163,11 @@ DefaultGoldenKitchenSinkStub::AsyncStreamingReadWrite(
 
 Status
 DefaultGoldenKitchenSinkStub::ExplicitRouting1(
-  grpc::ClientContext& client_context,
+  grpc::ClientContext& context,
   google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
     google::protobuf::Empty response;
     auto status =
-        grpc_stub_->ExplicitRouting1(&client_context, request, &response);
+        grpc_stub_->ExplicitRouting1(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
     }
@@ -175,11 +176,11 @@ DefaultGoldenKitchenSinkStub::ExplicitRouting1(
 
 Status
 DefaultGoldenKitchenSinkStub::ExplicitRouting2(
-  grpc::ClientContext& client_context,
+  grpc::ClientContext& context,
   google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
     google::protobuf::Empty response;
     auto status =
-        grpc_stub_->ExplicitRouting2(&client_context, request, &response);
+        grpc_stub_->ExplicitRouting2(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
     }

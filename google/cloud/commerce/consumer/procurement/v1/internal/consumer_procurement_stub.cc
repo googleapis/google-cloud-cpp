@@ -52,11 +52,11 @@ DefaultConsumerProcurementServiceStub::AsyncPlaceOrder(
 
 StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
 DefaultConsumerProcurementServiceStub::GetOrder(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::commerce::consumer::procurement::v1::GetOrderRequest const&
         request) {
   google::cloud::commerce::consumer::procurement::v1::Order response;
-  auto status = grpc_stub_->GetOrder(&client_context, request, &response);
+  auto status = grpc_stub_->GetOrder(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -65,12 +65,12 @@ DefaultConsumerProcurementServiceStub::GetOrder(
 
 StatusOr<google::cloud::commerce::consumer::procurement::v1::ListOrdersResponse>
 DefaultConsumerProcurementServiceStub::ListOrders(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest const&
         request) {
   google::cloud::commerce::consumer::procurement::v1::ListOrdersResponse
       response;
-  auto status = grpc_stub_->ListOrders(&client_context, request, &response);
+  auto status = grpc_stub_->ListOrders(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -63,26 +63,26 @@ class DefaultPagesStub : public PagesStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse> ListPages(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::ListPagesRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Page> GetPage(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetPageRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Page> CreatePage(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::CreatePageRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request)
       override;
 
-  Status DeletePage(grpc::ClientContext& client_context,
+  Status DeletePage(grpc::ClientContext& context,
                     google::cloud::dialogflow::cx::v3::DeletePageRequest const&
                         request) override;
 

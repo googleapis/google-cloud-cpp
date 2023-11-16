@@ -37,8 +37,10 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       $request_type$,
-      $response_type$>> $method_name$(
-      std::shared_ptr<grpc::ClientContext> context) override;
+      $response_type$>>
+  $method_name$(
+      std::shared_ptr<grpc::ClientContext> context,
+      Options const& options) override;
 )""");
       continue;
     }

@@ -131,12 +131,13 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     $request_type$,
     $response_type$>>
 $auth_class_name$::$method_name$(
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options) {
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       $request_type$, $response_type$>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->$method_name$(std::move(context));
+  return child_->$method_name$(std::move(context), options);
 }
 )""");
       continue;

@@ -17,7 +17,7 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud SQL Admin API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud SQL Admin API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
@@ -73,13 +73,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_sql)
 set_target_properties(
     google_cloud_cpp_sql
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-sql
+    PROPERTIES EXPORT_NAME google-cloud-cpp::sql
                VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_sql
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-sql ALIAS google_cloud_cpp_sql)
+add_library(google-cloud-cpp::sql ALIAS google_cloud_cpp_sql)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -98,11 +98,9 @@ add_library(google_cloud_cpp_sql_mocks INTERFACE)
 target_sources(google_cloud_cpp_sql_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_sql_mocks
-    INTERFACE google-cloud-cpp::experimental-sql GTest::gmock_main GTest::gmock
-              GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_sql_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-sql_mocks)
+    INTERFACE google-cloud-cpp::sql GTest::gmock_main GTest::gmock GTest::gtest)
+set_target_properties(google_cloud_cpp_sql_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::sql_mocks)
 target_include_directories(
     google_cloud_cpp_sql_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -113,8 +111,7 @@ target_compile_options(google_cloud_cpp_sql_mocks
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(sql_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(sql_quickstart
-                          PRIVATE google-cloud-cpp::experimental-sql)
+    target_link_libraries(sql_quickstart PRIVATE google-cloud-cpp::sql)
     google_cloud_cpp_add_common_options(sql_quickstart)
     add_test(
         NAME sql_quickstart

@@ -106,12 +106,13 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::test::admin::database::v1::Request,
     google::test::admin::database::v1::Response>>
 GoldenKitchenSinkAuth::StreamingWrite(
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options) {
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->StreamingWrite(std::move(context));
+  return child_->StreamingWrite(std::move(context), options);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

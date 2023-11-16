@@ -97,12 +97,12 @@ class DefaultDocumentsStub : public DocumentsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse> ListDocuments(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::ListDocumentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Document> GetDocument(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GetDocumentRequest const& request)
       override;
 

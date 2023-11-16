@@ -32,12 +32,11 @@ AnalyticsHubServiceStub::~AnalyticsHubServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse>
 DefaultAnalyticsHubServiceStub::ListDataExchanges(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse response;
-  auto status =
-      grpc_stub_->ListDataExchanges(&client_context, request, &response);
+  auto status = grpc_stub_->ListDataExchanges(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -47,13 +46,12 @@ DefaultAnalyticsHubServiceStub::ListDataExchanges(
 StatusOr<
     google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesResponse>
 DefaultAnalyticsHubServiceStub::ListOrgDataExchanges(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::
         ListOrgDataExchangesRequest const& request) {
   google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesResponse
       response;
-  auto status =
-      grpc_stub_->ListOrgDataExchanges(&client_context, request, &response);
+  auto status = grpc_stub_->ListOrgDataExchanges(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -62,12 +60,11 @@ DefaultAnalyticsHubServiceStub::ListOrgDataExchanges(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 DefaultAnalyticsHubServiceStub::GetDataExchange(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::DataExchange response;
-  auto status =
-      grpc_stub_->GetDataExchange(&client_context, request, &response);
+  auto status = grpc_stub_->GetDataExchange(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -76,12 +73,11 @@ DefaultAnalyticsHubServiceStub::GetDataExchange(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 DefaultAnalyticsHubServiceStub::CreateDataExchange(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::DataExchange response;
-  auto status =
-      grpc_stub_->CreateDataExchange(&client_context, request, &response);
+  auto status = grpc_stub_->CreateDataExchange(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -90,12 +86,11 @@ DefaultAnalyticsHubServiceStub::CreateDataExchange(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 DefaultAnalyticsHubServiceStub::UpdateDataExchange(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::DataExchange response;
-  auto status =
-      grpc_stub_->UpdateDataExchange(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateDataExchange(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -103,12 +98,11 @@ DefaultAnalyticsHubServiceStub::UpdateDataExchange(
 }
 
 Status DefaultAnalyticsHubServiceStub::DeleteDataExchange(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteDataExchange(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteDataExchange(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -117,11 +111,11 @@ Status DefaultAnalyticsHubServiceStub::DeleteDataExchange(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::ListListingsResponse>
 DefaultAnalyticsHubServiceStub::ListListings(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::ListListingsRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::ListListingsResponse response;
-  auto status = grpc_stub_->ListListings(&client_context, request, &response);
+  auto status = grpc_stub_->ListListings(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -130,11 +124,11 @@ DefaultAnalyticsHubServiceStub::ListListings(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
 DefaultAnalyticsHubServiceStub::GetListing(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::Listing response;
-  auto status = grpc_stub_->GetListing(&client_context, request, &response);
+  auto status = grpc_stub_->GetListing(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -143,11 +137,11 @@ DefaultAnalyticsHubServiceStub::GetListing(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
 DefaultAnalyticsHubServiceStub::CreateListing(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::Listing response;
-  auto status = grpc_stub_->CreateListing(&client_context, request, &response);
+  auto status = grpc_stub_->CreateListing(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -156,11 +150,11 @@ DefaultAnalyticsHubServiceStub::CreateListing(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
 DefaultAnalyticsHubServiceStub::UpdateListing(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::Listing response;
-  auto status = grpc_stub_->UpdateListing(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateListing(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -168,11 +162,11 @@ DefaultAnalyticsHubServiceStub::UpdateListing(
 }
 
 Status DefaultAnalyticsHubServiceStub::DeleteListing(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteListing(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteListing(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -181,12 +175,11 @@ Status DefaultAnalyticsHubServiceStub::DeleteListing(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
 DefaultAnalyticsHubServiceStub::SubscribeListing(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse response;
-  auto status =
-      grpc_stub_->SubscribeListing(&client_context, request, &response);
+  auto status = grpc_stub_->SubscribeListing(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -233,12 +226,11 @@ DefaultAnalyticsHubServiceStub::AsyncRefreshSubscription(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
 DefaultAnalyticsHubServiceStub::GetSubscription(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::Subscription response;
-  auto status =
-      grpc_stub_->GetSubscription(&client_context, request, &response);
+  auto status = grpc_stub_->GetSubscription(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -247,12 +239,11 @@ DefaultAnalyticsHubServiceStub::GetSubscription(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse>
 DefaultAnalyticsHubServiceStub::ListSubscriptions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse response;
-  auto status =
-      grpc_stub_->ListSubscriptions(&client_context, request, &response);
+  auto status = grpc_stub_->ListSubscriptions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -262,13 +253,13 @@ DefaultAnalyticsHubServiceStub::ListSubscriptions(
 StatusOr<google::cloud::bigquery::analyticshub::v1::
              ListSharedResourceSubscriptionsResponse>
 DefaultAnalyticsHubServiceStub::ListSharedResourceSubscriptions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::
         ListSharedResourceSubscriptionsRequest const& request) {
   google::cloud::bigquery::analyticshub::v1::
       ListSharedResourceSubscriptionsResponse response;
-  auto status = grpc_stub_->ListSharedResourceSubscriptions(&client_context,
-                                                            request, &response);
+  auto status =
+      grpc_stub_->ListSharedResourceSubscriptions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -277,13 +268,12 @@ DefaultAnalyticsHubServiceStub::ListSharedResourceSubscriptions(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
 DefaultAnalyticsHubServiceStub::RevokeSubscription(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse
       response;
-  auto status =
-      grpc_stub_->RevokeSubscription(&client_context, request, &response);
+  auto status = grpc_stub_->RevokeSubscription(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -310,10 +300,10 @@ DefaultAnalyticsHubServiceStub::AsyncDeleteSubscription(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultAnalyticsHubServiceStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -321,10 +311,10 @@ StatusOr<google::iam::v1::Policy> DefaultAnalyticsHubServiceStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultAnalyticsHubServiceStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -333,11 +323,10 @@ StatusOr<google::iam::v1::Policy> DefaultAnalyticsHubServiceStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultAnalyticsHubServiceStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -102,11 +102,11 @@ class DefaultServiceUsageStub : public ServiceUsageStub {
       override;
 
   StatusOr<google::api::serviceusage::v1::Service> GetService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::api::serviceusage::v1::GetServiceRequest const& request) override;
 
   StatusOr<google::api::serviceusage::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::api::serviceusage::v1::ListServicesRequest const& request)
       override;
 
@@ -117,7 +117,7 @@ class DefaultServiceUsageStub : public ServiceUsageStub {
       override;
 
   StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
-  BatchGetServices(grpc::ClientContext& client_context,
+  BatchGetServices(grpc::ClientContext& context,
                    google::api::serviceusage::v1::BatchGetServicesRequest const&
                        request) override;
 

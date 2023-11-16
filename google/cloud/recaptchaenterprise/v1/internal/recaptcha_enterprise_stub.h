@@ -149,105 +149,105 @@ class DefaultRecaptchaEnterpriseServiceStub
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::recaptchaenterprise::v1::Assessment> CreateAssessment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
           request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
   AnnotateAssessment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
           request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::Key> CreateKey(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::ListKeysResponse> ListKeys(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::ListKeysRequest const& request)
       override;
 
   StatusOr<
       google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
   RetrieveLegacySecretKey(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::
           RetrieveLegacySecretKeyRequest const& request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::Key> GetKey(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::Key> UpdateKey(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request)
       override;
 
   Status DeleteKey(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::Key> MigrateKey(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request)
       override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
   CreateFirewallPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse>
   ListFirewallPolicies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const&
           request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
   GetFirewallPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
   UpdateFirewallPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
           request) override;
 
   Status DeleteFirewallPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
           request) override;
 
   StatusOr<
       google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
   ListRelatedAccountGroups(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::
           ListRelatedAccountGroupsRequest const& request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::
                ListRelatedAccountGroupMembershipsResponse>
   ListRelatedAccountGroupMemberships(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::
           ListRelatedAccountGroupMembershipsRequest const& request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::
                SearchRelatedAccountGroupMembershipsResponse>
   SearchRelatedAccountGroupMemberships(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::
           SearchRelatedAccountGroupMembershipsRequest const& request) override;
 

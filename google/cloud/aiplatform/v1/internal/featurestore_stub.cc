@@ -50,11 +50,10 @@ DefaultFeaturestoreServiceStub::AsyncCreateFeaturestore(
 
 StatusOr<google::cloud::aiplatform::v1::Featurestore>
 DefaultFeaturestoreServiceStub::GetFeaturestore(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) {
   google::cloud::aiplatform::v1::Featurestore response;
-  auto status =
-      grpc_stub_->GetFeaturestore(&client_context, request, &response);
+  auto status = grpc_stub_->GetFeaturestore(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -63,11 +62,10 @@ DefaultFeaturestoreServiceStub::GetFeaturestore(
 
 StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse>
 DefaultFeaturestoreServiceStub::ListFeaturestores(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request) {
   google::cloud::aiplatform::v1::ListFeaturestoresResponse response;
-  auto status =
-      grpc_stub_->ListFeaturestores(&client_context, request, &response);
+  auto status = grpc_stub_->ListFeaturestores(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -130,10 +128,10 @@ DefaultFeaturestoreServiceStub::AsyncCreateEntityType(
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
 DefaultFeaturestoreServiceStub::GetEntityType(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) {
   google::cloud::aiplatform::v1::EntityType response;
-  auto status = grpc_stub_->GetEntityType(&client_context, request, &response);
+  auto status = grpc_stub_->GetEntityType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -142,11 +140,10 @@ DefaultFeaturestoreServiceStub::GetEntityType(
 
 StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse>
 DefaultFeaturestoreServiceStub::ListEntityTypes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListEntityTypesRequest const& request) {
   google::cloud::aiplatform::v1::ListEntityTypesResponse response;
-  auto status =
-      grpc_stub_->ListEntityTypes(&client_context, request, &response);
+  auto status = grpc_stub_->ListEntityTypes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -155,11 +152,10 @@ DefaultFeaturestoreServiceStub::ListEntityTypes(
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
 DefaultFeaturestoreServiceStub::UpdateEntityType(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) {
   google::cloud::aiplatform::v1::EntityType response;
-  auto status =
-      grpc_stub_->UpdateEntityType(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateEntityType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -221,10 +217,10 @@ DefaultFeaturestoreServiceStub::AsyncBatchCreateFeatures(
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
 DefaultFeaturestoreServiceStub::GetFeature(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
   google::cloud::aiplatform::v1::Feature response;
-  auto status = grpc_stub_->GetFeature(&client_context, request, &response);
+  auto status = grpc_stub_->GetFeature(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -233,10 +229,10 @@ DefaultFeaturestoreServiceStub::GetFeature(
 
 StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse>
 DefaultFeaturestoreServiceStub::ListFeatures(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListFeaturesRequest const& request) {
   google::cloud::aiplatform::v1::ListFeaturesResponse response;
-  auto status = grpc_stub_->ListFeatures(&client_context, request, &response);
+  auto status = grpc_stub_->ListFeatures(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -245,10 +241,10 @@ DefaultFeaturestoreServiceStub::ListFeatures(
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
 DefaultFeaturestoreServiceStub::UpdateFeature(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
   google::cloud::aiplatform::v1::Feature response;
-  auto status = grpc_stub_->UpdateFeature(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateFeature(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -347,10 +343,10 @@ DefaultFeaturestoreServiceStub::AsyncDeleteFeatureValues(
 
 StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>
 DefaultFeaturestoreServiceStub::SearchFeatures(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::aiplatform::v1::SearchFeaturesRequest const& request) {
   google::cloud::aiplatform::v1::SearchFeaturesResponse response;
-  auto status = grpc_stub_->SearchFeatures(&client_context, request, &response);
+  auto status = grpc_stub_->SearchFeatures(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

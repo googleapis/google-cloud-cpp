@@ -89,45 +89,45 @@ class DefaultConversationsStub : public ConversationsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::v2::Conversation> CreateConversation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::CreateConversationRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::ListConversationsResponse>
   ListConversations(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::ListConversationsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Conversation> GetConversation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GetConversationRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Conversation> CompleteConversation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::CompleteConversationRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse> ListMessages(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::ListMessagesRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
   SuggestConversationSummary(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
   GenerateStatelessSummary(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
-  SearchKnowledge(grpc::ClientContext& client_context,
+  SearchKnowledge(grpc::ClientContext& context,
                   google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
                       request) override;
 

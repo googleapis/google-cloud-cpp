@@ -331,78 +331,78 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
   StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   CreateSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::
           CreateSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::Source> CreateSource(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::CreateSourceRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::Finding> CreateFinding(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::CreateFindingRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> CreateMuteConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
   CreateNotificationConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&
           request) override;
 
   Status DeleteMuteConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request)
       override;
 
   Status DeleteNotificationConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
           request) override;
 
   Status DeleteSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::
           DeleteSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport> GetBigQueryExport(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
           request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> GetMuteConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::GetMuteConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
   GetNotificationConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::GetNotificationConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
   GetOrganizationSettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
           request) override;
 
   StatusOr<google::cloud::securitycenter::v1::
                EffectiveSecurityHealthAnalyticsCustomModule>
   GetEffectiveSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::
           GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
@@ -410,60 +410,60 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
   StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   GetSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::
           GetSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::Source> GetSource(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::GetSourceRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::GroupAssetsResponse> GroupAssets(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::GroupAssetsRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::GroupFindingsResponse>
-  GroupFindings(grpc::ClientContext& client_context,
+  GroupFindings(grpc::ClientContext& context,
                 google::cloud::securitycenter::v1::GroupFindingsRequest const&
                     request) override;
 
   StatusOr<google::cloud::securitycenter::v1::ListAssetsResponse> ListAssets(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::ListAssetsRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::
                ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
   ListDescendantSecurityHealthAnalyticsCustomModules(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::
           ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
               request) override;
 
   StatusOr<google::cloud::securitycenter::v1::ListFindingsResponse>
-  ListFindings(grpc::ClientContext& client_context,
+  ListFindings(grpc::ClientContext& context,
                google::cloud::securitycenter::v1::ListFindingsRequest const&
                    request) override;
 
   StatusOr<google::cloud::securitycenter::v1::ListMuteConfigsResponse>
   ListMuteConfigs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::ListMuteConfigsRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::ListNotificationConfigsResponse>
   ListNotificationConfigs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::ListNotificationConfigsRequest const&
           request) override;
 
   StatusOr<google::cloud::securitycenter::v1::
                ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
   ListEffectiveSecurityHealthAnalyticsCustomModules(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::
           ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
               request) override;
@@ -471,13 +471,13 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
   StatusOr<google::cloud::securitycenter::v1::
                ListSecurityHealthAnalyticsCustomModulesResponse>
   ListSecurityHealthAnalyticsCustomModules(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::
           ListSecurityHealthAnalyticsCustomModulesRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::ListSourcesResponse> ListSources(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::ListSourcesRequest const& request)
       override;
 
@@ -488,98 +488,98 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
           request) override;
 
   StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::SetFindingStateRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::Finding> SetMute(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::SetMuteRequest const& request)
       override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::
                SimulateSecurityHealthAnalyticsCustomModuleResponse>
   SimulateSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::
           SimulateSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
   UpdateExternalSystem(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
           request) override;
 
   StatusOr<google::cloud::securitycenter::v1::Finding> UpdateFinding(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::UpdateFindingRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> UpdateMuteConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
   UpdateNotificationConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
   UpdateOrganizationSettings(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::
           UpdateOrganizationSettingsRequest const& request) override;
 
   StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   UpdateSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::
           UpdateSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::Source> UpdateSource(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::UpdateSourceRequest const& request)
       override;
 
   StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
   UpdateSecurityMarks(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
           request) override;
 
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
   CreateBigQueryExport(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
           request) override;
 
   Status DeleteBigQueryExport(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
           request) override;
 
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
   UpdateBigQueryExport(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
           request) override;
 
   StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
   ListBigQueryExports(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
           request) override;
 

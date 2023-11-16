@@ -76,11 +76,11 @@ class DefaultServicesStub : public ServicesStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::appengine::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::appengine::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::appengine::v1::Service> GetService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::appengine::v1::GetServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateService(

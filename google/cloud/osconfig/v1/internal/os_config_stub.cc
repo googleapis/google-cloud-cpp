@@ -31,11 +31,10 @@ OsConfigServiceStub::~OsConfigServiceStub() = default;
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 DefaultOsConfigServiceStub::ExecutePatchJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) {
   google::cloud::osconfig::v1::PatchJob response;
-  auto status =
-      grpc_stub_->ExecutePatchJob(&client_context, request, &response);
+  auto status = grpc_stub_->ExecutePatchJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +43,10 @@ DefaultOsConfigServiceStub::ExecutePatchJob(
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 DefaultOsConfigServiceStub::GetPatchJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::v1::GetPatchJobRequest const& request) {
   google::cloud::osconfig::v1::PatchJob response;
-  auto status = grpc_stub_->GetPatchJob(&client_context, request, &response);
+  auto status = grpc_stub_->GetPatchJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -56,10 +55,10 @@ DefaultOsConfigServiceStub::GetPatchJob(
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 DefaultOsConfigServiceStub::CancelPatchJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::v1::CancelPatchJobRequest const& request) {
   google::cloud::osconfig::v1::PatchJob response;
-  auto status = grpc_stub_->CancelPatchJob(&client_context, request, &response);
+  auto status = grpc_stub_->CancelPatchJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -68,10 +67,10 @@ DefaultOsConfigServiceStub::CancelPatchJob(
 
 StatusOr<google::cloud::osconfig::v1::ListPatchJobsResponse>
 DefaultOsConfigServiceStub::ListPatchJobs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::v1::ListPatchJobsRequest const& request) {
   google::cloud::osconfig::v1::ListPatchJobsResponse response;
-  auto status = grpc_stub_->ListPatchJobs(&client_context, request, &response);
+  auto status = grpc_stub_->ListPatchJobs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -80,12 +79,12 @@ DefaultOsConfigServiceStub::ListPatchJobs(
 
 StatusOr<google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse>
 DefaultOsConfigServiceStub::ListPatchJobInstanceDetails(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const&
         request) {
   google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse response;
-  auto status = grpc_stub_->ListPatchJobInstanceDetails(&client_context,
-                                                        request, &response);
+  auto status =
+      grpc_stub_->ListPatchJobInstanceDetails(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -94,11 +93,10 @@ DefaultOsConfigServiceStub::ListPatchJobInstanceDetails(
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 DefaultOsConfigServiceStub::CreatePatchDeployment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request) {
   google::cloud::osconfig::v1::PatchDeployment response;
-  auto status =
-      grpc_stub_->CreatePatchDeployment(&client_context, request, &response);
+  auto status = grpc_stub_->CreatePatchDeployment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -107,11 +105,10 @@ DefaultOsConfigServiceStub::CreatePatchDeployment(
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 DefaultOsConfigServiceStub::GetPatchDeployment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request) {
   google::cloud::osconfig::v1::PatchDeployment response;
-  auto status =
-      grpc_stub_->GetPatchDeployment(&client_context, request, &response);
+  auto status = grpc_stub_->GetPatchDeployment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -120,11 +117,10 @@ DefaultOsConfigServiceStub::GetPatchDeployment(
 
 StatusOr<google::cloud::osconfig::v1::ListPatchDeploymentsResponse>
 DefaultOsConfigServiceStub::ListPatchDeployments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::v1::ListPatchDeploymentsRequest const& request) {
   google::cloud::osconfig::v1::ListPatchDeploymentsResponse response;
-  auto status =
-      grpc_stub_->ListPatchDeployments(&client_context, request, &response);
+  auto status = grpc_stub_->ListPatchDeployments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -132,11 +128,10 @@ DefaultOsConfigServiceStub::ListPatchDeployments(
 }
 
 Status DefaultOsConfigServiceStub::DeletePatchDeployment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeletePatchDeployment(&client_context, request, &response);
+  auto status = grpc_stub_->DeletePatchDeployment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -145,11 +140,10 @@ Status DefaultOsConfigServiceStub::DeletePatchDeployment(
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 DefaultOsConfigServiceStub::UpdatePatchDeployment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
   google::cloud::osconfig::v1::PatchDeployment response;
-  auto status =
-      grpc_stub_->UpdatePatchDeployment(&client_context, request, &response);
+  auto status = grpc_stub_->UpdatePatchDeployment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -158,11 +152,10 @@ DefaultOsConfigServiceStub::UpdatePatchDeployment(
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 DefaultOsConfigServiceStub::PausePatchDeployment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
   google::cloud::osconfig::v1::PatchDeployment response;
-  auto status =
-      grpc_stub_->PausePatchDeployment(&client_context, request, &response);
+  auto status = grpc_stub_->PausePatchDeployment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -171,11 +164,10 @@ DefaultOsConfigServiceStub::PausePatchDeployment(
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 DefaultOsConfigServiceStub::ResumePatchDeployment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
   google::cloud::osconfig::v1::PatchDeployment response;
-  auto status =
-      grpc_stub_->ResumePatchDeployment(&client_context, request, &response);
+  auto status = grpc_stub_->ResumePatchDeployment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

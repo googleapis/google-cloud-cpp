@@ -70,27 +70,27 @@ class DefaultDashboardsServiceStub : public DashboardsServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::dashboard::v1::CreateDashboardRequest const& request)
       override;
 
   StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
-  ListDashboards(grpc::ClientContext& client_context,
+  ListDashboards(grpc::ClientContext& context,
                  google::monitoring::dashboard::v1::ListDashboardsRequest const&
                      request) override;
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::dashboard::v1::GetDashboardRequest const& request)
       override;
 
   Status DeleteDashboard(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::dashboard::v1::DeleteDashboardRequest const& request)
       override;
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> UpdateDashboard(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::dashboard::v1::UpdateDashboardRequest const& request)
       override;
 

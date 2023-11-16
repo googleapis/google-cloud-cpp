@@ -32,12 +32,11 @@ ReachabilityServiceStub::~ReachabilityServiceStub() = default;
 
 StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
 DefaultReachabilityServiceStub::ListConnectivityTests(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
         request) {
   google::cloud::networkmanagement::v1::ListConnectivityTestsResponse response;
-  auto status =
-      grpc_stub_->ListConnectivityTests(&client_context, request, &response);
+  auto status = grpc_stub_->ListConnectivityTests(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -46,12 +45,11 @@ DefaultReachabilityServiceStub::ListConnectivityTests(
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
 DefaultReachabilityServiceStub::GetConnectivityTest(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
         request) {
   google::cloud::networkmanagement::v1::ConnectivityTest response;
-  auto status =
-      grpc_stub_->GetConnectivityTest(&client_context, request, &response);
+  auto status = grpc_stub_->GetConnectivityTest(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -154,13 +154,13 @@ class DefaultRepositoryManagerStub : public RepositoryManagerStub {
       override;
 
   StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudbuild::v2::GetConnectionRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
   ListConnections(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudbuild::v2::ListConnectionsRequest const& request)
       override;
 
@@ -189,13 +189,13 @@ class DefaultRepositoryManagerStub : public RepositoryManagerStub {
           request) override;
 
   StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudbuild::v2::GetRepositoryRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
   ListRepositories(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request)
       override;
 
@@ -207,23 +207,23 @@ class DefaultRepositoryManagerStub : public RepositoryManagerStub {
 
   StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
   FetchReadWriteToken(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
           request) override;
 
   StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
-  FetchReadToken(grpc::ClientContext& client_context,
+  FetchReadToken(grpc::ClientContext& context,
                  google::devtools::cloudbuild::v2::FetchReadTokenRequest const&
                      request) override;
 
   StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
   FetchLinkableRepositories(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
           request) override;
 
   StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request)
       override;
 

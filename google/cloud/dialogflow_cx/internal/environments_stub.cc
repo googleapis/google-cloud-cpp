@@ -32,11 +32,10 @@ EnvironmentsStub::~EnvironmentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse>
 DefaultEnvironmentsStub::ListEnvironments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse response;
-  auto status =
-      grpc_stub_->ListEnvironments(&client_context, request, &response);
+  auto status = grpc_stub_->ListEnvironments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,10 +44,10 @@ DefaultEnvironmentsStub::ListEnvironments(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Environment>
 DefaultEnvironmentsStub::GetEnvironment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Environment response;
-  auto status = grpc_stub_->GetEnvironment(&client_context, request, &response);
+  auto status = grpc_stub_->GetEnvironment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -94,12 +93,11 @@ DefaultEnvironmentsStub::AsyncUpdateEnvironment(
 }
 
 Status DefaultEnvironmentsStub::DeleteEnvironment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteEnvironment(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteEnvironment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -108,12 +106,12 @@ Status DefaultEnvironmentsStub::DeleteEnvironment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse>
 DefaultEnvironmentsStub::LookupEnvironmentHistory(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse response;
   auto status =
-      grpc_stub_->LookupEnvironmentHistory(&client_context, request, &response);
+      grpc_stub_->LookupEnvironmentHistory(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -141,12 +139,12 @@ DefaultEnvironmentsStub::AsyncRunContinuousTest(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
 DefaultEnvironmentsStub::ListContinuousTestResults(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse response;
-  auto status = grpc_stub_->ListContinuousTestResults(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->ListContinuousTestResults(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

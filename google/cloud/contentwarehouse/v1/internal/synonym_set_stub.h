@@ -71,28 +71,28 @@ class DefaultSynonymSetServiceStub : public SynonymSetServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> CreateSynonymSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
           request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> GetSynonymSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> UpdateSynonymSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
           request) override;
 
   Status DeleteSynonymSet(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
           request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::ListSynonymSetsResponse>
   ListSynonymSets(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
           request) override;
 

@@ -32,12 +32,12 @@ StorageTransferServiceStub::~StorageTransferServiceStub() = default;
 
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
 DefaultStorageTransferServiceStub::GetGoogleServiceAccount(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
         request) {
   google::storagetransfer::v1::GoogleServiceAccount response;
   auto status =
-      grpc_stub_->GetGoogleServiceAccount(&client_context, request, &response);
+      grpc_stub_->GetGoogleServiceAccount(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -46,11 +46,10 @@ DefaultStorageTransferServiceStub::GetGoogleServiceAccount(
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 DefaultStorageTransferServiceStub::CreateTransferJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::CreateTransferJobRequest const& request) {
   google::storagetransfer::v1::TransferJob response;
-  auto status =
-      grpc_stub_->CreateTransferJob(&client_context, request, &response);
+  auto status = grpc_stub_->CreateTransferJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,11 +58,10 @@ DefaultStorageTransferServiceStub::CreateTransferJob(
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 DefaultStorageTransferServiceStub::UpdateTransferJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::UpdateTransferJobRequest const& request) {
   google::storagetransfer::v1::TransferJob response;
-  auto status =
-      grpc_stub_->UpdateTransferJob(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateTransferJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -72,10 +70,10 @@ DefaultStorageTransferServiceStub::UpdateTransferJob(
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 DefaultStorageTransferServiceStub::GetTransferJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::GetTransferJobRequest const& request) {
   google::storagetransfer::v1::TransferJob response;
-  auto status = grpc_stub_->GetTransferJob(&client_context, request, &response);
+  auto status = grpc_stub_->GetTransferJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -84,11 +82,10 @@ DefaultStorageTransferServiceStub::GetTransferJob(
 
 StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>
 DefaultStorageTransferServiceStub::ListTransferJobs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::ListTransferJobsRequest const& request) {
   google::storagetransfer::v1::ListTransferJobsResponse response;
-  auto status =
-      grpc_stub_->ListTransferJobs(&client_context, request, &response);
+  auto status = grpc_stub_->ListTransferJobs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -96,11 +93,11 @@ DefaultStorageTransferServiceStub::ListTransferJobs(
 }
 
 Status DefaultStorageTransferServiceStub::PauseTransferOperation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::PauseTransferOperationRequest const& request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->PauseTransferOperation(&client_context, request, &response);
+      grpc_stub_->PauseTransferOperation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -108,12 +105,12 @@ Status DefaultStorageTransferServiceStub::PauseTransferOperation(
 }
 
 Status DefaultStorageTransferServiceStub::ResumeTransferOperation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::ResumeTransferOperationRequest const&
         request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->ResumeTransferOperation(&client_context, request, &response);
+      grpc_stub_->ResumeTransferOperation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -138,11 +135,10 @@ DefaultStorageTransferServiceStub::AsyncRunTransferJob(
 }
 
 Status DefaultStorageTransferServiceStub::DeleteTransferJob(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteTransferJob(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteTransferJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -151,11 +147,10 @@ Status DefaultStorageTransferServiceStub::DeleteTransferJob(
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 DefaultStorageTransferServiceStub::CreateAgentPool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
   google::storagetransfer::v1::AgentPool response;
-  auto status =
-      grpc_stub_->CreateAgentPool(&client_context, request, &response);
+  auto status = grpc_stub_->CreateAgentPool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -164,11 +159,10 @@ DefaultStorageTransferServiceStub::CreateAgentPool(
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 DefaultStorageTransferServiceStub::UpdateAgentPool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
   google::storagetransfer::v1::AgentPool response;
-  auto status =
-      grpc_stub_->UpdateAgentPool(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateAgentPool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -177,10 +171,10 @@ DefaultStorageTransferServiceStub::UpdateAgentPool(
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 DefaultStorageTransferServiceStub::GetAgentPool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::GetAgentPoolRequest const& request) {
   google::storagetransfer::v1::AgentPool response;
-  auto status = grpc_stub_->GetAgentPool(&client_context, request, &response);
+  auto status = grpc_stub_->GetAgentPool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -189,10 +183,10 @@ DefaultStorageTransferServiceStub::GetAgentPool(
 
 StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse>
 DefaultStorageTransferServiceStub::ListAgentPools(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::ListAgentPoolsRequest const& request) {
   google::storagetransfer::v1::ListAgentPoolsResponse response;
-  auto status = grpc_stub_->ListAgentPools(&client_context, request, &response);
+  auto status = grpc_stub_->ListAgentPools(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -200,11 +194,10 @@ DefaultStorageTransferServiceStub::ListAgentPools(
 }
 
 Status DefaultStorageTransferServiceStub::DeleteAgentPool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteAgentPool(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteAgentPool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

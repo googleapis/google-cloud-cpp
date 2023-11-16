@@ -83,12 +83,12 @@ class DefaultImageAnnotatorStub : public ImageAnnotatorStub {
 
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
   BatchAnnotateImages(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::vision::v1::BatchAnnotateImagesRequest const& request)
       override;
 
   StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
-  BatchAnnotateFiles(grpc::ClientContext& client_context,
+  BatchAnnotateFiles(grpc::ClientContext& context,
                      google::cloud::vision::v1::BatchAnnotateFilesRequest const&
                          request) override;
 

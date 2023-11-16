@@ -63,23 +63,23 @@ class DefaultCompanyServiceStub : public CompanyServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::talent::v4::CreateCompanyRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Company> GetCompany(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::talent::v4::GetCompanyRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::talent::v4::UpdateCompanyRequest const& request) override;
 
   Status DeleteCompany(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::talent::v4::DeleteCompanyRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::ListCompaniesResponse> ListCompanies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::talent::v4::ListCompaniesRequest const& request) override;
 
  private:

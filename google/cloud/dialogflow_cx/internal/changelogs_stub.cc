@@ -31,10 +31,10 @@ ChangelogsStub::~ChangelogsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
 DefaultChangelogsStub::ListChangelogs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListChangelogsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListChangelogsResponse response;
-  auto status = grpc_stub_->ListChangelogs(&client_context, request, &response);
+  auto status = grpc_stub_->ListChangelogs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultChangelogsStub::ListChangelogs(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Changelog>
 DefaultChangelogsStub::GetChangelog(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request) {
   google::cloud::dialogflow::cx::v3::Changelog response;
-  auto status = grpc_stub_->GetChangelog(&client_context, request, &response);
+  auto status = grpc_stub_->GetChangelog(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

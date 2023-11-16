@@ -31,12 +31,12 @@ TransitionRouteGroupsStub::~TransitionRouteGroupsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse>
 DefaultTransitionRouteGroupsStub::ListTransitionRouteGroups(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse response;
-  auto status = grpc_stub_->ListTransitionRouteGroups(&client_context, request,
-                                                      &response);
+  auto status =
+      grpc_stub_->ListTransitionRouteGroups(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,12 +45,12 @@ DefaultTransitionRouteGroupsStub::ListTransitionRouteGroups(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 DefaultTransitionRouteGroupsStub::GetTransitionRouteGroup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::TransitionRouteGroup response;
   auto status =
-      grpc_stub_->GetTransitionRouteGroup(&client_context, request, &response);
+      grpc_stub_->GetTransitionRouteGroup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,12 +59,12 @@ DefaultTransitionRouteGroupsStub::GetTransitionRouteGroup(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 DefaultTransitionRouteGroupsStub::CreateTransitionRouteGroup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::TransitionRouteGroup response;
-  auto status = grpc_stub_->CreateTransitionRouteGroup(&client_context, request,
-                                                       &response);
+  auto status =
+      grpc_stub_->CreateTransitionRouteGroup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -73,12 +73,12 @@ DefaultTransitionRouteGroupsStub::CreateTransitionRouteGroup(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 DefaultTransitionRouteGroupsStub::UpdateTransitionRouteGroup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::TransitionRouteGroup response;
-  auto status = grpc_stub_->UpdateTransitionRouteGroup(&client_context, request,
-                                                       &response);
+  auto status =
+      grpc_stub_->UpdateTransitionRouteGroup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -86,12 +86,12 @@ DefaultTransitionRouteGroupsStub::UpdateTransitionRouteGroup(
 }
 
 Status DefaultTransitionRouteGroupsStub::DeleteTransitionRouteGroup(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteTransitionRouteGroup(&client_context, request,
-                                                       &response);
+  auto status =
+      grpc_stub_->DeleteTransitionRouteGroup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

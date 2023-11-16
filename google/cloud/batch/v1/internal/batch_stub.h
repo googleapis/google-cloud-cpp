@@ -83,11 +83,11 @@ class DefaultBatchServiceStub : public BatchServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::batch::v1::Job> CreateJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::batch::v1::CreateJobRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::Job> GetJob(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::batch::v1::GetJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteJob(
@@ -96,15 +96,15 @@ class DefaultBatchServiceStub : public BatchServiceStub {
       google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::batch::v1::ListJobsRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::Task> GetTask(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::batch::v1::GetTaskRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::ListTasksResponse> ListTasks(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::batch::v1::ListTasksRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

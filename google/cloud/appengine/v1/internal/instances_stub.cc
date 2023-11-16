@@ -32,10 +32,10 @@ InstancesStub::~InstancesStub() = default;
 
 StatusOr<google::appengine::v1::ListInstancesResponse>
 DefaultInstancesStub::ListInstances(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::ListInstancesRequest const& request) {
   google::appengine::v1::ListInstancesResponse response;
-  auto status = grpc_stub_->ListInstances(&client_context, request, &response);
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultInstancesStub::ListInstances(
 }
 
 StatusOr<google::appengine::v1::Instance> DefaultInstancesStub::GetInstance(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::GetInstanceRequest const& request) {
   google::appengine::v1::Instance response;
-  auto status = grpc_stub_->GetInstance(&client_context, request, &response);
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

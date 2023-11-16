@@ -53,12 +53,12 @@ class DefaultFulfillmentsStub : public FulfillmentsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GetFulfillmentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> UpdateFulfillment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request)
       override;
 

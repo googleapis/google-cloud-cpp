@@ -488,7 +488,7 @@ TEST_F(GoldenKitchenSinkStubTest, StreamingWrite) {
         return stream.release();
       });
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto stream = stub.StreamingWrite(std::move(context));
+  auto stream = stub.StreamingWrite(std::move(context), Options{});
   EXPECT_TRUE(stream->Write(Request{}, grpc::WriteOptions()));
   EXPECT_THAT(stream->Close(), StatusIs(StatusCode::kOk));
 }

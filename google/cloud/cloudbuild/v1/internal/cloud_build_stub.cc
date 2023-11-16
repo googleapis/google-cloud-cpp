@@ -50,10 +50,10 @@ DefaultCloudBuildStub::AsyncCreateBuild(
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
 DefaultCloudBuildStub::GetBuild(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
   google::devtools::cloudbuild::v1::Build response;
-  auto status = grpc_stub_->GetBuild(&client_context, request, &response);
+  auto status = grpc_stub_->GetBuild(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -62,10 +62,10 @@ DefaultCloudBuildStub::GetBuild(
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse>
 DefaultCloudBuildStub::ListBuilds(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::ListBuildsRequest const& request) {
   google::devtools::cloudbuild::v1::ListBuildsResponse response;
-  auto status = grpc_stub_->ListBuilds(&client_context, request, &response);
+  auto status = grpc_stub_->ListBuilds(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -74,10 +74,10 @@ DefaultCloudBuildStub::ListBuilds(
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
 DefaultCloudBuildStub::CancelBuild(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
   google::devtools::cloudbuild::v1::Build response;
-  auto status = grpc_stub_->CancelBuild(&client_context, request, &response);
+  auto status = grpc_stub_->CancelBuild(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -121,12 +121,11 @@ DefaultCloudBuildStub::AsyncApproveBuild(
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 DefaultCloudBuildStub::CreateBuildTrigger(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
         request) {
   google::devtools::cloudbuild::v1::BuildTrigger response;
-  auto status =
-      grpc_stub_->CreateBuildTrigger(&client_context, request, &response);
+  auto status = grpc_stub_->CreateBuildTrigger(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -135,11 +134,10 @@ DefaultCloudBuildStub::CreateBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 DefaultCloudBuildStub::GetBuildTrigger(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
   google::devtools::cloudbuild::v1::BuildTrigger response;
-  auto status =
-      grpc_stub_->GetBuildTrigger(&client_context, request, &response);
+  auto status = grpc_stub_->GetBuildTrigger(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -148,11 +146,10 @@ DefaultCloudBuildStub::GetBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse>
 DefaultCloudBuildStub::ListBuildTriggers(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) {
   google::devtools::cloudbuild::v1::ListBuildTriggersResponse response;
-  auto status =
-      grpc_stub_->ListBuildTriggers(&client_context, request, &response);
+  auto status = grpc_stub_->ListBuildTriggers(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -160,12 +157,11 @@ DefaultCloudBuildStub::ListBuildTriggers(
 }
 
 Status DefaultCloudBuildStub::DeleteBuildTrigger(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteBuildTrigger(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteBuildTrigger(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -174,12 +170,11 @@ Status DefaultCloudBuildStub::DeleteBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 DefaultCloudBuildStub::UpdateBuildTrigger(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
         request) {
   google::devtools::cloudbuild::v1::BuildTrigger response;
-  auto status =
-      grpc_stub_->UpdateBuildTrigger(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateBuildTrigger(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -206,12 +201,11 @@ DefaultCloudBuildStub::AsyncRunBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 DefaultCloudBuildStub::ReceiveTriggerWebhook(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
         request) {
   google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse response;
-  auto status =
-      grpc_stub_->ReceiveTriggerWebhook(&client_context, request, &response);
+  auto status = grpc_stub_->ReceiveTriggerWebhook(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -238,10 +232,10 @@ DefaultCloudBuildStub::AsyncCreateWorkerPool(
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
 DefaultCloudBuildStub::GetWorkerPool(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) {
   google::devtools::cloudbuild::v1::WorkerPool response;
-  auto status = grpc_stub_->GetWorkerPool(&client_context, request, &response);
+  auto status = grpc_stub_->GetWorkerPool(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -286,11 +280,10 @@ DefaultCloudBuildStub::AsyncUpdateWorkerPool(
 
 StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>
 DefaultCloudBuildStub::ListWorkerPools(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request) {
   google::devtools::cloudbuild::v1::ListWorkerPoolsResponse response;
-  auto status =
-      grpc_stub_->ListWorkerPools(&client_context, request, &response);
+  auto status = grpc_stub_->ListWorkerPools(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

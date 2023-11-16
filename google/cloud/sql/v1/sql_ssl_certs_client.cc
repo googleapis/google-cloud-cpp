@@ -25,8 +25,7 @@ namespace sql_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SqlSslCertsServiceClient::SqlSslCertsServiceClient(
-    ExperimentalTag, std::shared_ptr<SqlSslCertsServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<SqlSslCertsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

@@ -99,12 +99,12 @@ class DefaultAppConnectionsServiceStub : public AppConnectionsServiceStub {
 
   StatusOr<
       google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse>
-  ListAppConnections(grpc::ClientContext& client_context,
+  ListAppConnections(grpc::ClientContext& context,
                      google::cloud::beyondcorp::appconnections::v1::
                          ListAppConnectionsRequest const& request) override;
 
   StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
-  GetAppConnection(grpc::ClientContext& client_context,
+  GetAppConnection(grpc::ClientContext& context,
                    google::cloud::beyondcorp::appconnections::v1::
                        GetAppConnectionRequest const& request) override;
 
@@ -129,7 +129,7 @@ class DefaultAppConnectionsServiceStub : public AppConnectionsServiceStub {
   StatusOr<google::cloud::beyondcorp::appconnections::v1::
                ResolveAppConnectionsResponse>
   ResolveAppConnections(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::beyondcorp::appconnections::v1::
           ResolveAppConnectionsRequest const& request) override;
 

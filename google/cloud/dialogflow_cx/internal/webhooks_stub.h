@@ -67,27 +67,27 @@ class DefaultWebhooksStub : public WebhooksStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
-  ListWebhooks(grpc::ClientContext& client_context,
+  ListWebhooks(grpc::ClientContext& context,
                google::cloud::dialogflow::cx::v3::ListWebhooksRequest const&
                    request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> GetWebhook(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> CreateWebhook(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> UpdateWebhook(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request)
       override;
 
   Status DeleteWebhook(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request)
       override;
 

@@ -81,12 +81,12 @@ class DefaultCloudChannelReportsServiceStub
 
   StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
   FetchReportResults(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::channel::v1::FetchReportResultsRequest const& request)
       override;
 
   StatusOr<google::cloud::channel::v1::ListReportsResponse> ListReports(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::channel::v1::ListReportsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

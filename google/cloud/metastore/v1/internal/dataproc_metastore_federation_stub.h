@@ -87,12 +87,12 @@ class DefaultDataprocMetastoreFederationStub
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::metastore::v1::ListFederationsResponse>
-  ListFederations(grpc::ClientContext& client_context,
+  ListFederations(grpc::ClientContext& context,
                   google::cloud::metastore::v1::ListFederationsRequest const&
                       request) override;
 
   StatusOr<google::cloud::metastore::v1::Federation> GetFederation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::metastore::v1::GetFederationRequest const& request)
       override;
 

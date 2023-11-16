@@ -81,25 +81,25 @@ class DefaultLoggingServiceV2Stub : public LoggingServiceV2Stub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   Status DeleteLog(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::logging::v2::DeleteLogRequest const& request) override;
 
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
   StatusOr<google::logging::v2::ListLogEntriesResponse> ListLogEntries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::logging::v2::ListLogEntriesRequest const& request) override;
 
   StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
   ListMonitoredResourceDescriptors(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
           request) override;
 
   StatusOr<google::logging::v2::ListLogsResponse> ListLogs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::logging::v2::ListLogsRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

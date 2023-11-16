@@ -93,47 +93,47 @@ class DefaultMetricServiceStub : public MetricServiceStub {
 
   StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
   ListMonitoredResourceDescriptors(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
           request) override;
 
   StatusOr<google::api::MonitoredResourceDescriptor>
   GetMonitoredResourceDescriptor(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
           request) override;
 
   StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>
   ListMetricDescriptors(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::ListMetricDescriptorsRequest const& request)
       override;
 
   StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::GetMetricDescriptorRequest const& request)
       override;
 
   StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::CreateMetricDescriptorRequest const& request)
       override;
 
   Status DeleteMetricDescriptor(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::DeleteMetricDescriptorRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::ListTimeSeriesResponse> ListTimeSeries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::ListTimeSeriesRequest const& request) override;
 
   Status CreateTimeSeries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
   Status CreateServiceTimeSeries(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
   future<Status> AsyncCreateTimeSeries(

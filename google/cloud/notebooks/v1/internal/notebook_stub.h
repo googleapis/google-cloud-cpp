@@ -251,12 +251,12 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::notebooks::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::notebooks::v1::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::cloud::notebooks::v1::Instance> GetInstance(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::notebooks::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -304,7 +304,7 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
 
   StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
   UpdateInstanceMetadataItems(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
           request) override;
 
@@ -340,13 +340,13 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
 
   StatusOr<google::cloud::notebooks::v1::IsInstanceUpgradeableResponse>
   IsInstanceUpgradeable(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::notebooks::v1::IsInstanceUpgradeableRequest const& request)
       override;
 
   StatusOr<google::cloud::notebooks::v1::GetInstanceHealthResponse>
   GetInstanceHealth(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::notebooks::v1::GetInstanceHealthRequest const& request)
       override;
 
@@ -375,12 +375,12 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
           request) override;
 
   StatusOr<google::cloud::notebooks::v1::ListEnvironmentsResponse>
-  ListEnvironments(grpc::ClientContext& client_context,
+  ListEnvironments(grpc::ClientContext& context,
                    google::cloud::notebooks::v1::ListEnvironmentsRequest const&
                        request) override;
 
   StatusOr<google::cloud::notebooks::v1::Environment> GetEnvironment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::notebooks::v1::GetEnvironmentRequest const& request)
       override;
 
@@ -397,12 +397,12 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
       override;
 
   StatusOr<google::cloud::notebooks::v1::ListSchedulesResponse> ListSchedules(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::notebooks::v1::ListSchedulesRequest const& request)
       override;
 
   StatusOr<google::cloud::notebooks::v1::Schedule> GetSchedule(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::notebooks::v1::GetScheduleRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSchedule(
@@ -424,12 +424,12 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
       override;
 
   StatusOr<google::cloud::notebooks::v1::ListExecutionsResponse> ListExecutions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::notebooks::v1::ListExecutionsRequest const& request)
       override;
 
   StatusOr<google::cloud::notebooks::v1::Execution> GetExecution(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::notebooks::v1::GetExecutionRequest const& request)
       override;
 

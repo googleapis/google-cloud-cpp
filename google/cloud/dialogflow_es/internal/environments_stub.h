@@ -75,33 +75,33 @@ class DefaultEnvironmentsStub : public EnvironmentsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::v2::ListEnvironmentsResponse>
-  ListEnvironments(grpc::ClientContext& client_context,
+  ListEnvironments(grpc::ClientContext& context,
                    google::cloud::dialogflow::v2::ListEnvironmentsRequest const&
                        request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Environment> GetEnvironment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GetEnvironmentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Environment> CreateEnvironment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Environment> UpdateEnvironment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request)
       override;
 
   Status DeleteEnvironment(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::EnvironmentHistory>
   GetEnvironmentHistory(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest const&
           request) override;
 

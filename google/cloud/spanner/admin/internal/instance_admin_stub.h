@@ -140,13 +140,13 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
 
   StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
   ListInstanceConfigs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
           request) override;
 
   StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
   GetInstanceConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
           request) override;
 
@@ -163,25 +163,25 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
           request) override;
 
   Status DeleteInstanceConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
           request) override;
 
   StatusOr<google::spanner::admin::instance::v1::
                ListInstanceConfigOperationsResponse>
   ListInstanceConfigOperations(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::instance::v1::
           ListInstanceConfigOperationsRequest const& request) override;
 
   StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
   ListInstances(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::instance::v1::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::instance::v1::GetInstanceRequest const& request)
       override;
 
@@ -198,20 +198,20 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
           request) override;
 
   Status DeleteInstance(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::spanner::admin::instance::v1::DeleteInstanceRequest const&
           request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

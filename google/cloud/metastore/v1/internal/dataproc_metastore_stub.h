@@ -157,12 +157,12 @@ class DefaultDataprocMetastoreStub : public DataprocMetastoreStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::metastore::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::metastore::v1::ListServicesRequest const& request)
       override;
 
   StatusOr<google::cloud::metastore::v1::Service> GetService(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::metastore::v1::GetServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateService(
@@ -185,12 +185,12 @@ class DefaultDataprocMetastoreStub : public DataprocMetastoreStub {
 
   StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
   ListMetadataImports(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::metastore::v1::ListMetadataImportsRequest const& request)
       override;
 
   StatusOr<google::cloud::metastore::v1::MetadataImport> GetMetadataImport(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::metastore::v1::GetMetadataImportRequest const& request)
       override;
 
@@ -219,11 +219,11 @@ class DefaultDataprocMetastoreStub : public DataprocMetastoreStub {
       override;
 
   StatusOr<google::cloud::metastore::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::metastore::v1::ListBackupsRequest const& request) override;
 
   StatusOr<google::cloud::metastore::v1::Backup> GetBackup(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::metastore::v1::GetBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(

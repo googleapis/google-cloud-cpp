@@ -117,46 +117,46 @@ class DefaultAssuredWorkloadsServiceStub : public AssuredWorkloadsServiceStub {
       override;
 
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request)
       override;
 
   StatusOr<
       google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
   RestrictAllowedResources(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::assuredworkloads::v1::
           RestrictAllowedResourcesRequest const& request) override;
 
   Status DeleteWorkload(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request)
       override;
 
   StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request)
       override;
 
   StatusOr<google::cloud::assuredworkloads::v1::ListWorkloadsResponse>
-  ListWorkloads(grpc::ClientContext& client_context,
+  ListWorkloads(grpc::ClientContext& context,
                 google::cloud::assuredworkloads::v1::ListWorkloadsRequest const&
                     request) override;
 
   StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
   ListViolations(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::assuredworkloads::v1::ListViolationsRequest const& request)
       override;
 
   StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::assuredworkloads::v1::GetViolationRequest const& request)
       override;
 
   StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
   AcknowledgeViolation(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
           request) override;
 

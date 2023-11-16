@@ -30,10 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SnoozeServiceStub::~SnoozeServiceStub() = default;
 
 StatusOr<google::monitoring::v3::Snooze> DefaultSnoozeServiceStub::CreateSnooze(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::CreateSnoozeRequest const& request) {
   google::monitoring::v3::Snooze response;
-  auto status = grpc_stub_->CreateSnooze(&client_context, request, &response);
+  auto status = grpc_stub_->CreateSnooze(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -42,10 +42,10 @@ StatusOr<google::monitoring::v3::Snooze> DefaultSnoozeServiceStub::CreateSnooze(
 
 StatusOr<google::monitoring::v3::ListSnoozesResponse>
 DefaultSnoozeServiceStub::ListSnoozes(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::ListSnoozesRequest const& request) {
   google::monitoring::v3::ListSnoozesResponse response;
-  auto status = grpc_stub_->ListSnoozes(&client_context, request, &response);
+  auto status = grpc_stub_->ListSnoozes(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -53,10 +53,10 @@ DefaultSnoozeServiceStub::ListSnoozes(
 }
 
 StatusOr<google::monitoring::v3::Snooze> DefaultSnoozeServiceStub::GetSnooze(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::GetSnoozeRequest const& request) {
   google::monitoring::v3::Snooze response;
-  auto status = grpc_stub_->GetSnooze(&client_context, request, &response);
+  auto status = grpc_stub_->GetSnooze(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -64,10 +64,10 @@ StatusOr<google::monitoring::v3::Snooze> DefaultSnoozeServiceStub::GetSnooze(
 }
 
 StatusOr<google::monitoring::v3::Snooze> DefaultSnoozeServiceStub::UpdateSnooze(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::monitoring::v3::UpdateSnoozeRequest const& request) {
   google::monitoring::v3::Snooze response;
-  auto status = grpc_stub_->UpdateSnooze(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateSnooze(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

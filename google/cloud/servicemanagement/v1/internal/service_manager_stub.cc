@@ -32,10 +32,10 @@ ServiceManagerStub::~ServiceManagerStub() = default;
 
 StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
 DefaultServiceManagerStub::ListServices(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::servicemanagement::v1::ListServicesRequest const& request) {
   google::api::servicemanagement::v1::ListServicesResponse response;
-  auto status = grpc_stub_->ListServices(&client_context, request, &response);
+  auto status = grpc_stub_->ListServices(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +44,10 @@ DefaultServiceManagerStub::ListServices(
 
 StatusOr<google::api::servicemanagement::v1::ManagedService>
 DefaultServiceManagerStub::GetService(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::servicemanagement::v1::GetServiceRequest const& request) {
   google::api::servicemanagement::v1::ManagedService response;
-  auto status = grpc_stub_->GetService(&client_context, request, &response);
+  auto status = grpc_stub_->GetService(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -110,12 +110,11 @@ DefaultServiceManagerStub::AsyncUndeleteService(
 
 StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse>
 DefaultServiceManagerStub::ListServiceConfigs(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::servicemanagement::v1::ListServiceConfigsRequest const&
         request) {
   google::api::servicemanagement::v1::ListServiceConfigsResponse response;
-  auto status =
-      grpc_stub_->ListServiceConfigs(&client_context, request, &response);
+  auto status = grpc_stub_->ListServiceConfigs(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -123,12 +122,11 @@ DefaultServiceManagerStub::ListServiceConfigs(
 }
 
 StatusOr<google::api::Service> DefaultServiceManagerStub::GetServiceConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::servicemanagement::v1::GetServiceConfigRequest const&
         request) {
   google::api::Service response;
-  auto status =
-      grpc_stub_->GetServiceConfig(&client_context, request, &response);
+  auto status = grpc_stub_->GetServiceConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -136,12 +134,11 @@ StatusOr<google::api::Service> DefaultServiceManagerStub::GetServiceConfig(
 }
 
 StatusOr<google::api::Service> DefaultServiceManagerStub::CreateServiceConfig(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::servicemanagement::v1::CreateServiceConfigRequest const&
         request) {
   google::api::Service response;
-  auto status =
-      grpc_stub_->CreateServiceConfig(&client_context, request, &response);
+  auto status = grpc_stub_->CreateServiceConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -170,12 +167,11 @@ DefaultServiceManagerStub::AsyncSubmitConfigSource(
 
 StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
 DefaultServiceManagerStub::ListServiceRollouts(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
         request) {
   google::api::servicemanagement::v1::ListServiceRolloutsResponse response;
-  auto status =
-      grpc_stub_->ListServiceRollouts(&client_context, request, &response);
+  auto status = grpc_stub_->ListServiceRollouts(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -184,12 +180,11 @@ DefaultServiceManagerStub::ListServiceRollouts(
 
 StatusOr<google::api::servicemanagement::v1::Rollout>
 DefaultServiceManagerStub::GetServiceRollout(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::servicemanagement::v1::GetServiceRolloutRequest const&
         request) {
   google::api::servicemanagement::v1::Rollout response;
-  auto status =
-      grpc_stub_->GetServiceRollout(&client_context, request, &response);
+  auto status = grpc_stub_->GetServiceRollout(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -218,12 +213,11 @@ DefaultServiceManagerStub::AsyncCreateServiceRollout(
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
 DefaultServiceManagerStub::GenerateConfigReport(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::servicemanagement::v1::GenerateConfigReportRequest const&
         request) {
   google::api::servicemanagement::v1::GenerateConfigReportResponse response;
-  auto status =
-      grpc_stub_->GenerateConfigReport(&client_context, request, &response);
+  auto status = grpc_stub_->GenerateConfigReport(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

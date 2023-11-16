@@ -32,11 +32,11 @@ WorkflowTemplateServiceStub::~WorkflowTemplateServiceStub() = default;
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 DefaultWorkflowTemplateServiceStub::CreateWorkflowTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request) {
   google::cloud::dataproc::v1::WorkflowTemplate response;
   auto status =
-      grpc_stub_->CreateWorkflowTemplate(&client_context, request, &response);
+      grpc_stub_->CreateWorkflowTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,11 +45,10 @@ DefaultWorkflowTemplateServiceStub::CreateWorkflowTemplate(
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 DefaultWorkflowTemplateServiceStub::GetWorkflowTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request) {
   google::cloud::dataproc::v1::WorkflowTemplate response;
-  auto status =
-      grpc_stub_->GetWorkflowTemplate(&client_context, request, &response);
+  auto status = grpc_stub_->GetWorkflowTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -99,11 +98,11 @@ DefaultWorkflowTemplateServiceStub::AsyncInstantiateInlineWorkflowTemplate(
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 DefaultWorkflowTemplateServiceStub::UpdateWorkflowTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request) {
   google::cloud::dataproc::v1::WorkflowTemplate response;
   auto status =
-      grpc_stub_->UpdateWorkflowTemplate(&client_context, request, &response);
+      grpc_stub_->UpdateWorkflowTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -112,11 +111,10 @@ DefaultWorkflowTemplateServiceStub::UpdateWorkflowTemplate(
 
 StatusOr<google::cloud::dataproc::v1::ListWorkflowTemplatesResponse>
 DefaultWorkflowTemplateServiceStub::ListWorkflowTemplates(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const& request) {
   google::cloud::dataproc::v1::ListWorkflowTemplatesResponse response;
-  auto status =
-      grpc_stub_->ListWorkflowTemplates(&client_context, request, &response);
+  auto status = grpc_stub_->ListWorkflowTemplates(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -124,11 +122,11 @@ DefaultWorkflowTemplateServiceStub::ListWorkflowTemplates(
 }
 
 Status DefaultWorkflowTemplateServiceStub::DeleteWorkflowTemplate(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->DeleteWorkflowTemplate(&client_context, request, &response);
+      grpc_stub_->DeleteWorkflowTemplate(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

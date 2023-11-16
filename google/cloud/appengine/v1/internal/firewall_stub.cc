@@ -31,11 +31,10 @@ FirewallStub::~FirewallStub() = default;
 
 StatusOr<google::appengine::v1::ListIngressRulesResponse>
 DefaultFirewallStub::ListIngressRules(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::ListIngressRulesRequest const& request) {
   google::appengine::v1::ListIngressRulesResponse response;
-  auto status =
-      grpc_stub_->ListIngressRules(&client_context, request, &response);
+  auto status = grpc_stub_->ListIngressRules(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,11 +43,11 @@ DefaultFirewallStub::ListIngressRules(
 
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
 DefaultFirewallStub::BatchUpdateIngressRules(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
   google::appengine::v1::BatchUpdateIngressRulesResponse response;
   auto status =
-      grpc_stub_->BatchUpdateIngressRules(&client_context, request, &response);
+      grpc_stub_->BatchUpdateIngressRules(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -57,11 +56,10 @@ DefaultFirewallStub::BatchUpdateIngressRules(
 
 StatusOr<google::appengine::v1::FirewallRule>
 DefaultFirewallStub::CreateIngressRule(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::CreateIngressRuleRequest const& request) {
   google::appengine::v1::FirewallRule response;
-  auto status =
-      grpc_stub_->CreateIngressRule(&client_context, request, &response);
+  auto status = grpc_stub_->CreateIngressRule(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -70,10 +68,10 @@ DefaultFirewallStub::CreateIngressRule(
 
 StatusOr<google::appengine::v1::FirewallRule>
 DefaultFirewallStub::GetIngressRule(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::GetIngressRuleRequest const& request) {
   google::appengine::v1::FirewallRule response;
-  auto status = grpc_stub_->GetIngressRule(&client_context, request, &response);
+  auto status = grpc_stub_->GetIngressRule(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -82,11 +80,10 @@ DefaultFirewallStub::GetIngressRule(
 
 StatusOr<google::appengine::v1::FirewallRule>
 DefaultFirewallStub::UpdateIngressRule(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::UpdateIngressRuleRequest const& request) {
   google::appengine::v1::FirewallRule response;
-  auto status =
-      grpc_stub_->UpdateIngressRule(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateIngressRule(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -94,11 +91,10 @@ DefaultFirewallStub::UpdateIngressRule(
 }
 
 Status DefaultFirewallStub::DeleteIngressRule(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::appengine::v1::DeleteIngressRuleRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteIngressRule(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteIngressRule(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

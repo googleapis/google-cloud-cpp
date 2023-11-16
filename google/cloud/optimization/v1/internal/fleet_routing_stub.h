@@ -71,7 +71,7 @@ class DefaultFleetRoutingStub : public FleetRoutingStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
-  OptimizeTours(grpc::ClientContext& client_context,
+  OptimizeTours(grpc::ClientContext& context,
                 google::cloud::optimization::v1::OptimizeToursRequest const&
                     request) override;
 

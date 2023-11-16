@@ -77,11 +77,11 @@ class DefaultExecutionsStub : public ExecutionsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::run::v2::Execution> GetExecution(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::run::v2::GetExecutionRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListExecutionsResponse> ListExecutions(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::run::v2::ListExecutionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteExecution(

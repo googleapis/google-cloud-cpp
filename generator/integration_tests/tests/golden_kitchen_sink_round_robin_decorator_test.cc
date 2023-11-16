@@ -92,7 +92,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, StreamingWrite) {
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
-      EXPECT_CALL(*m, StreamingWrite).WillOnce([](auto) {
+      EXPECT_CALL(*m, StreamingWrite).WillOnce([] {
         return std::make_unique<MockStreamingWriteRpc>();
       });
     }
@@ -100,7 +100,8 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, StreamingWrite) {
 
   GoldenKitchenSinkRoundRobin stub(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
-    auto stream = stub.StreamingWrite(std::make_shared<grpc::ClientContext>());
+    auto stream =
+        stub.StreamingWrite(std::make_shared<grpc::ClientContext>(), Options{});
     EXPECT_THAT(stream, NotNull());
   }
 }

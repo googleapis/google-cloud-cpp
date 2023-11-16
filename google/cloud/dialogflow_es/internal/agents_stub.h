@@ -102,19 +102,19 @@ class DefaultAgentsStub : public AgentsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GetAgentRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::SetAgentRequest const& request) override;
 
-  Status DeleteAgent(grpc::ClientContext& client_context,
+  Status DeleteAgent(grpc::ClientContext& context,
                      google::cloud::dialogflow::v2::DeleteAgentRequest const&
                          request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SearchAgentsResponse> SearchAgents(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::SearchAgentsRequest const& request)
       override;
 
@@ -142,7 +142,7 @@ class DefaultAgentsStub : public AgentsStub {
       override;
 
   StatusOr<google::cloud::dialogflow::v2::ValidationResult> GetValidationResult(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GetValidationResultRequest const& request)
       override;
 

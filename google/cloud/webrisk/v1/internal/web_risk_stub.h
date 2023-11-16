@@ -83,20 +83,20 @@ class DefaultWebRiskServiceStub : public WebRiskServiceStub {
 
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request)
       override;
 
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::webrisk::v1::SearchUrisRequest const& request) override;
 
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::webrisk::v1::SearchHashesRequest const& request) override;
 
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request)
       override;
 

@@ -31,12 +31,11 @@ ConversationalSearchServiceStub::~ConversationalSearchServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
 DefaultConversationalSearchServiceStub::ConverseConversation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::ConverseConversationRequest const&
         request) {
   google::cloud::discoveryengine::v1::ConverseConversationResponse response;
-  auto status =
-      grpc_stub_->ConverseConversation(&client_context, request, &response);
+  auto status = grpc_stub_->ConverseConversation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,12 +44,11 @@ DefaultConversationalSearchServiceStub::ConverseConversation(
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 DefaultConversationalSearchServiceStub::CreateConversation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::CreateConversationRequest const&
         request) {
   google::cloud::discoveryengine::v1::Conversation response;
-  auto status =
-      grpc_stub_->CreateConversation(&client_context, request, &response);
+  auto status = grpc_stub_->CreateConversation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -58,12 +56,11 @@ DefaultConversationalSearchServiceStub::CreateConversation(
 }
 
 Status DefaultConversationalSearchServiceStub::DeleteConversation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::DeleteConversationRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteConversation(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteConversation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -72,12 +69,11 @@ Status DefaultConversationalSearchServiceStub::DeleteConversation(
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 DefaultConversationalSearchServiceStub::UpdateConversation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::UpdateConversationRequest const&
         request) {
   google::cloud::discoveryengine::v1::Conversation response;
-  auto status =
-      grpc_stub_->UpdateConversation(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateConversation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -86,11 +82,10 @@ DefaultConversationalSearchServiceStub::UpdateConversation(
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 DefaultConversationalSearchServiceStub::GetConversation(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
   google::cloud::discoveryengine::v1::Conversation response;
-  auto status =
-      grpc_stub_->GetConversation(&client_context, request, &response);
+  auto status = grpc_stub_->GetConversation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -99,12 +94,11 @@ DefaultConversationalSearchServiceStub::GetConversation(
 
 StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse>
 DefaultConversationalSearchServiceStub::ListConversations(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::ListConversationsRequest const&
         request) {
   google::cloud::discoveryengine::v1::ListConversationsResponse response;
-  auto status =
-      grpc_stub_->ListConversations(&client_context, request, &response);
+  auto status = grpc_stub_->ListConversations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

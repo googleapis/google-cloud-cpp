@@ -33,7 +33,7 @@ bool valid_job(nlohmann::json const& j) {
 
 bool valid_list_format_job(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("state") && j.contains("id") &&
-          j.contains("jobReference") && j.contains("configuration"));
+          j.contains("jobReference"));
 }
 
 bool valid_jobs_list(nlohmann::json const& j) {

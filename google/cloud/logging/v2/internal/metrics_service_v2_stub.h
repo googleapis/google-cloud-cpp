@@ -62,23 +62,23 @@ class DefaultMetricsServiceV2Stub : public MetricsServiceV2Stub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::logging::v2::ListLogMetricsResponse> ListLogMetrics(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::logging::v2::ListLogMetricsRequest const& request) override;
 
   StatusOr<google::logging::v2::LogMetric> GetLogMetric(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::logging::v2::GetLogMetricRequest const& request) override;
 
   StatusOr<google::logging::v2::LogMetric> CreateLogMetric(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::logging::v2::CreateLogMetricRequest const& request) override;
 
   StatusOr<google::logging::v2::LogMetric> UpdateLogMetric(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::logging::v2::UpdateLogMetricRequest const& request) override;
 
   Status DeleteLogMetric(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::logging::v2::DeleteLogMetricRequest const& request) override;
 
  private:

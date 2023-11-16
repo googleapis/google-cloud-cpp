@@ -31,12 +31,11 @@ DocumentLinkServiceStub::~DocumentLinkServiceStub() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
 DefaultDocumentLinkServiceStub::ListLinkedTargets(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
         request) {
   google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse response;
-  auto status =
-      grpc_stub_->ListLinkedTargets(&client_context, request, &response);
+  auto status = grpc_stub_->ListLinkedTargets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -45,12 +44,11 @@ DefaultDocumentLinkServiceStub::ListLinkedTargets(
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse>
 DefaultDocumentLinkServiceStub::ListLinkedSources(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
         request) {
   google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse response;
-  auto status =
-      grpc_stub_->ListLinkedSources(&client_context, request, &response);
+  auto status = grpc_stub_->ListLinkedSources(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,12 +57,11 @@ DefaultDocumentLinkServiceStub::ListLinkedSources(
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
 DefaultDocumentLinkServiceStub::CreateDocumentLink(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
         request) {
   google::cloud::contentwarehouse::v1::DocumentLink response;
-  auto status =
-      grpc_stub_->CreateDocumentLink(&client_context, request, &response);
+  auto status = grpc_stub_->CreateDocumentLink(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -72,12 +69,11 @@ DefaultDocumentLinkServiceStub::CreateDocumentLink(
 }
 
 Status DefaultDocumentLinkServiceStub::DeleteDocumentLink(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
         request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteDocumentLink(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteDocumentLink(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

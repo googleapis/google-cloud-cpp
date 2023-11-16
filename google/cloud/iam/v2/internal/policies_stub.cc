@@ -32,10 +32,10 @@ PoliciesStub::~PoliciesStub() = default;
 
 StatusOr<google::iam::v2::ListPoliciesResponse>
 DefaultPoliciesStub::ListPolicies(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v2::ListPoliciesRequest const& request) {
   google::iam::v2::ListPoliciesResponse response;
-  auto status = grpc_stub_->ListPolicies(&client_context, request, &response);
+  auto status = grpc_stub_->ListPolicies(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -43,10 +43,10 @@ DefaultPoliciesStub::ListPolicies(
 }
 
 StatusOr<google::iam::v2::Policy> DefaultPoliciesStub::GetPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v2::GetPolicyRequest const& request) {
   google::iam::v2::Policy response;
-  auto status = grpc_stub_->GetPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -248,7 +248,7 @@ class DefaultNetAppStub : public NetAppStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::netapp::v1::ListStoragePoolsResponse>
-  ListStoragePools(grpc::ClientContext& client_context,
+  ListStoragePools(grpc::ClientContext& context,
                    google::cloud::netapp::v1::ListStoragePoolsRequest const&
                        request) override;
 
@@ -259,7 +259,7 @@ class DefaultNetAppStub : public NetAppStub {
       override;
 
   StatusOr<google::cloud::netapp::v1::StoragePool> GetStoragePool(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::netapp::v1::GetStoragePoolRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateStoragePool(
@@ -275,11 +275,11 @@ class DefaultNetAppStub : public NetAppStub {
       override;
 
   StatusOr<google::cloud::netapp::v1::ListVolumesResponse> ListVolumes(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::netapp::v1::ListVolumesRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::Volume> GetVolume(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::netapp::v1::GetVolumeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateVolume(
@@ -303,11 +303,11 @@ class DefaultNetAppStub : public NetAppStub {
       google::cloud::netapp::v1::RevertVolumeRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::netapp::v1::ListSnapshotsRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::netapp::v1::GetSnapshotRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSnapshot(
@@ -327,12 +327,12 @@ class DefaultNetAppStub : public NetAppStub {
 
   StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
   ListActiveDirectories(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::netapp::v1::ListActiveDirectoriesRequest const& request)
       override;
 
   StatusOr<google::cloud::netapp::v1::ActiveDirectory> GetActiveDirectory(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::netapp::v1::GetActiveDirectoryRequest const& request)
       override;
 
@@ -355,7 +355,7 @@ class DefaultNetAppStub : public NetAppStub {
       override;
 
   StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse> ListKmsConfigs(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::netapp::v1::ListKmsConfigsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateKmsConfig(
@@ -365,7 +365,7 @@ class DefaultNetAppStub : public NetAppStub {
       override;
 
   StatusOr<google::cloud::netapp::v1::KmsConfig> GetKmsConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::netapp::v1::GetKmsConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateKmsConfig(
@@ -380,7 +380,7 @@ class DefaultNetAppStub : public NetAppStub {
       google::cloud::netapp::v1::EncryptVolumesRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse> VerifyKmsConfig(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::netapp::v1::VerifyKmsConfigRequest const& request)
       override;
 
@@ -391,12 +391,12 @@ class DefaultNetAppStub : public NetAppStub {
       override;
 
   StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
-  ListReplications(grpc::ClientContext& client_context,
+  ListReplications(grpc::ClientContext& context,
                    google::cloud::netapp::v1::ListReplicationsRequest const&
                        request) override;
 
   StatusOr<google::cloud::netapp::v1::Replication> GetReplication(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::netapp::v1::GetReplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateReplication(

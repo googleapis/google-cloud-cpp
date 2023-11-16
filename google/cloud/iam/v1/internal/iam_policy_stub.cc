@@ -30,10 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IAMPolicyStub::~IAMPolicyStub() = default;
 
 StatusOr<google::iam::v1::Policy> DefaultIAMPolicyStub::SetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -41,10 +41,10 @@ StatusOr<google::iam::v1::Policy> DefaultIAMPolicyStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultIAMPolicyStub::GetIamPolicy(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -53,11 +53,10 @@ StatusOr<google::iam::v1::Policy> DefaultIAMPolicyStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultIAMPolicyStub::TestIamPermissions(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

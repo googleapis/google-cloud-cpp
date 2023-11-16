@@ -80,11 +80,11 @@ class DefaultPoliciesStub : public PoliciesStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::iam::v2::ListPoliciesResponse> ListPolicies(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v2::ListPoliciesRequest const& request) override;
 
   StatusOr<google::iam::v2::Policy> GetPolicy(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::iam::v2::GetPolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePolicy(

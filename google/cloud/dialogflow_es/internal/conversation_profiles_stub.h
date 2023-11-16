@@ -104,30 +104,30 @@ class DefaultConversationProfilesStub : public ConversationProfilesStub {
 
   StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
   ListConversationProfiles(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::ListConversationProfilesRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
   GetConversationProfile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GetConversationProfileRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
   CreateConversationProfile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
   UpdateConversationProfile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
           request) override;
 
   Status DeleteConversationProfile(
-      grpc::ClientContext& client_context,
+      grpc::ClientContext& context,
       google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
           request) override;
 

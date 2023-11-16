@@ -138,11 +138,12 @@ $tracing_stub_class_name$::$tracing_stub_class_name$(
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
 std::unique_ptr<internal::StreamingWriteRpc<$request_type$, $response_type$>>
 $tracing_stub_class_name$::$method_name$(
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->$method_name$(context);
+  auto stream = child_->$method_name$(context, options);
   return std::make_unique<
       internal::StreamingWriteRpcTracing<$request_type$, $response_type$>>(
       std::move(context), std::move(stream), std::move(span));

@@ -48,10 +48,10 @@ DefaultApiKeysStub::AsyncCreateKey(
 
 StatusOr<google::api::apikeys::v2::ListKeysResponse>
 DefaultApiKeysStub::ListKeys(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::apikeys::v2::ListKeysRequest const& request) {
   google::api::apikeys::v2::ListKeysResponse response;
-  auto status = grpc_stub_->ListKeys(&client_context, request, &response);
+  auto status = grpc_stub_->ListKeys(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -59,10 +59,10 @@ DefaultApiKeysStub::ListKeys(
 }
 
 StatusOr<google::api::apikeys::v2::Key> DefaultApiKeysStub::GetKey(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::apikeys::v2::GetKeyRequest const& request) {
   google::api::apikeys::v2::Key response;
-  auto status = grpc_stub_->GetKey(&client_context, request, &response);
+  auto status = grpc_stub_->GetKey(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -71,10 +71,10 @@ StatusOr<google::api::apikeys::v2::Key> DefaultApiKeysStub::GetKey(
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 DefaultApiKeysStub::GetKeyString(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
   google::api::apikeys::v2::GetKeyStringResponse response;
-  auto status = grpc_stub_->GetKeyString(&client_context, request, &response);
+  auto status = grpc_stub_->GetKeyString(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -132,10 +132,10 @@ DefaultApiKeysStub::AsyncUndeleteKey(
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>
 DefaultApiKeysStub::LookupKey(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::api::apikeys::v2::LookupKeyRequest const& request) {
   google::api::apikeys::v2::LookupKeyResponse response;
-  auto status = grpc_stub_->LookupKey(&client_context, request, &response);
+  auto status = grpc_stub_->LookupKey(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -31,11 +31,10 @@ EnvironmentsStub::~EnvironmentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListEnvironmentsResponse>
 DefaultEnvironmentsStub::ListEnvironments(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListEnvironmentsRequest const& request) {
   google::cloud::dialogflow::v2::ListEnvironmentsResponse response;
-  auto status =
-      grpc_stub_->ListEnvironments(&client_context, request, &response);
+  auto status = grpc_stub_->ListEnvironments(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -44,10 +43,10 @@ DefaultEnvironmentsStub::ListEnvironments(
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 DefaultEnvironmentsStub::GetEnvironment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) {
   google::cloud::dialogflow::v2::Environment response;
-  auto status = grpc_stub_->GetEnvironment(&client_context, request, &response);
+  auto status = grpc_stub_->GetEnvironment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -56,11 +55,10 @@ DefaultEnvironmentsStub::GetEnvironment(
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 DefaultEnvironmentsStub::CreateEnvironment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request) {
   google::cloud::dialogflow::v2::Environment response;
-  auto status =
-      grpc_stub_->CreateEnvironment(&client_context, request, &response);
+  auto status = grpc_stub_->CreateEnvironment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -69,11 +67,10 @@ DefaultEnvironmentsStub::CreateEnvironment(
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 DefaultEnvironmentsStub::UpdateEnvironment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request) {
   google::cloud::dialogflow::v2::Environment response;
-  auto status =
-      grpc_stub_->UpdateEnvironment(&client_context, request, &response);
+  auto status = grpc_stub_->UpdateEnvironment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -81,11 +78,10 @@ DefaultEnvironmentsStub::UpdateEnvironment(
 }
 
 Status DefaultEnvironmentsStub::DeleteEnvironment(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request) {
   google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteEnvironment(&client_context, request, &response);
+  auto status = grpc_stub_->DeleteEnvironment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -94,12 +90,11 @@ Status DefaultEnvironmentsStub::DeleteEnvironment(
 
 StatusOr<google::cloud::dialogflow::v2::EnvironmentHistory>
 DefaultEnvironmentsStub::GetEnvironmentHistory(
-    grpc::ClientContext& client_context,
+    grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest const&
         request) {
   google::cloud::dialogflow::v2::EnvironmentHistory response;
-  auto status =
-      grpc_stub_->GetEnvironmentHistory(&client_context, request, &response);
+  auto status = grpc_stub_->GetEnvironmentHistory(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
