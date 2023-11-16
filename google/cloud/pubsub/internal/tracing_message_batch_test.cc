@@ -153,9 +153,7 @@ TEST(TracingMessageBatch, PublishSpanHasThreadIdAttribute) {
   auto message_span = MakeSpan("test span");
   auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
   EXPECT_CALL(*mock, SaveMessage(_));
-  EXPECT_CALL(*mock, Flush).WillOnce([] {
-    return [](auto) { };
-  });
+  EXPECT_CALL(*mock, Flush).WillOnce([] { return [](auto) {}; });
   auto message_batch =
       MakeTracingMessageBatch(std::move(mock), MakeTestOptions());
   auto initial_spans = {message_span};
