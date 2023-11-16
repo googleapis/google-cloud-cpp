@@ -36,23 +36,19 @@ using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryRequest;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
-auto static const kMin = std::chrono::system_clock::now();
-auto static const kMax = kMin + std::chrono::milliseconds(100);
-auto static const kMinInt =
-    std::chrono::duration_cast<std::chrono::milliseconds>(
-        kMin.time_since_epoch())
-        .count();
-auto static const kMaxInt =
-    std::chrono::duration_cast<std::chrono::milliseconds>(
-        kMax.time_since_epoch())
-        .count();
+auto static const kMinCreationTime = 1111111111111;
+auto static const kMaxCreationTime = 1111111111211;
+std::chrono::system_clock::time_point static const kMinTime{
+    std::chrono::milliseconds{kMinCreationTime}};
+std::chrono::system_clock::time_point static const kMaxTime{
+    std::chrono::milliseconds{kMaxCreationTime}};
 
 ListJobsRequest GetListJobsRequest() {
   ListJobsRequest request("1");
   request.set_all_users(true)
       .set_max_results(10)
-      .set_min_creation_time(kMin)
-      .set_max_creation_time(kMax)
+      .set_min_creation_time(kMinTime)
+      .set_max_creation_time(kMaxTime)
       .set_parent_job_id("1")
       .set_page_token("123")
       .set_projection(Projection::Full())
@@ -167,8 +163,10 @@ TEST(ListJobsRequestTest, Success) {
       "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs");
   expected.AddQueryParameter("allUsers", "true");
   expected.AddQueryParameter("maxResults", "10");
-  expected.AddQueryParameter("minCreationTime", std::to_string(kMinInt));
-  expected.AddQueryParameter("maxCreationTime", std::to_string(kMaxInt));
+  expected.AddQueryParameter("minCreationTime",
+                             std::to_string(kMinCreationTime));
+  expected.AddQueryParameter("maxCreationTime",
+                             std::to_string(kMaxCreationTime));
   expected.AddQueryParameter("pageToken", "123");
   expected.AddQueryParameter("projection", "FULL");
   expected.AddQueryParameter("stateFilter", "RUNNING");
