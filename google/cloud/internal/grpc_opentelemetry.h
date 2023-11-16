@@ -108,14 +108,16 @@ template <typename Rep, typename Period>
 future<StatusOr<std::chrono::system_clock::time_point>> TracedAsyncBackoff(
     CompletionQueue& cq, Options const& options,
     std::chrono::duration<Rep, Period> duration) {
-  auto timer = cq.MakeRelativeTimer(duration);
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (TracingEnabled(options)) {
-    timer = EndSpan(MakeSpan("Async Backoff"), std::move(timer));
+    auto span = MakeSpan("Async Backoff");
+    OTelScope scope(span);
+    auto timer = cq.MakeRelativeTimer(duration);
+    return EndSpan(span, std::move(timer));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   (void)options;
-  return timer;
+  return cq.MakeRelativeTimer(duration);
 }
 
 }  // namespace internal
