@@ -51,7 +51,7 @@ class PgOid {
 
   /**
    * Construction from an OID unsigned four-byte integer.
-  */
+   */
   explicit PgOid(std::uint64_t value) : rep_(absl::StrCat(value)) {}
 
   /// @name Conversion to an OID string.
