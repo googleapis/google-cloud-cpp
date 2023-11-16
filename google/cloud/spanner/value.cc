@@ -586,7 +586,7 @@ StatusOr<PgOid> Value::GetValue(PgOid const&, google::protobuf::Value const& pv,
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
     return Status(StatusCode::kUnknown, "missing OID");
   }
-  return PgOid(pv.string_value());
+  return PgOid(std::stoull(pv.string_value()));
 }
 
 StatusOr<Timestamp> Value::GetValue(Timestamp,

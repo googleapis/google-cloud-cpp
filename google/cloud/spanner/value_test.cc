@@ -247,7 +247,7 @@ TEST(Value, Equality) {
       {Value(JsonB("42")), Value(JsonB("true"))},
       {Value(MakeNumeric(0).value()), Value(MakeNumeric(1).value())},
       {Value(MakePgNumeric(0).value()), Value(MakePgNumeric(1).value())},
-      {Value(PgOid("200")), Value(PgOid("999"))},
+      {Value(PgOid(200)), Value(PgOid(999))},
       {Value(absl::CivilDay(1970, 1, 1)), Value(absl::CivilDay(2020, 3, 15))},
       {Value(std::vector<double>{1.2, 3.4}),
        Value(std::vector<double>{4.5, 6.7})},
@@ -756,16 +756,15 @@ TEST(Value, ProtoConversionNumeric) {
 
 TEST(Value, ProtoConversionPgOid) {
   for (auto const& x : std::vector<PgOid>{
-           PgOid("0"),
-           PgOid("200"),
-           PgOid("999"),
+           PgOid(0),
+           PgOid(200),
+           PgOid(999),
        }) {
     Value const v(x);
     auto const p = spanner_internal::ToProto(v);
     EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
     EXPECT_EQ(p.first.code(), google::spanner::v1::TypeCode::INT64);
-    EXPECT_EQ(p.first.type_annotation(),
-              google::spanner::v1::TypeAnnotationCode::PG_OID);
+    EXPECT_EQ(p.first.type_annotation(), google::spanner::v1::TypeAnnotationCode::PG_OID);
     EXPECT_EQ(std::string(x), p.second.string_value());
   }
 }
@@ -993,13 +992,9 @@ TEST(Value, GetBadNumeric) {
 }
 
 TEST(Value, GetBadPgOid) {
-  Value v(PgOid("1"));
+  Value v(PgOid(1));
   ClearProtoKind(v);
   EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
-
-  Value v2(PgOid(2));
-  ClearProtoKind(v);
-  EXPECT_THAT(v2.get<std::string>(), Not(IsOk()));
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
   EXPECT_THAT(v.get<PgOid>(), Not(IsOk()));
@@ -1200,8 +1195,7 @@ TEST(Value, OutputStream) {
       {Value(JsonB("true")), "true", normal},
       {Value(MakeNumeric(1234567890).value()), "1234567890", normal},
       {Value(MakePgNumeric(1234567890).value()), "1234567890", normal},
-      {Value(PgOid("1234567890")), "1234567890", normal},
-      {Value(PgOid(42)), "42", normal},
+      {Value(PgOid(1234567890)), "1234567890", normal},
       {Value(absl::CivilDay()), "1970-01-01", normal},
       {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
 
@@ -1383,9 +1377,9 @@ TEST(Value, OutputStreamMatchesT) {
   StreamMatchesValueStream(MakePgNumeric("NaN").value());
 
   // PgOid
-  StreamMatchesValueStream(PgOid("999"));
+  StreamMatchesValueStream(PgOid(999));
   StreamMatchesValueStream(PgOid(42));
-  StreamMatchesValueStream(PgOid("0"));
+  StreamMatchesValueStream(PgOid(0));
 
   // Date
   StreamMatchesValueStream(absl::CivilDay(1, 1, 1));

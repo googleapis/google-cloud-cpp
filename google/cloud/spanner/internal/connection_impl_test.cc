@@ -1108,8 +1108,8 @@ TEST(ConnectionImplTest, ExecuteQueryPgOidResult) {
   EXPECT_THAT(
       actual,
       ElementsAre(
-          IsOkAndHolds(RowType(spanner::PgOid("42"), absl::nullopt)),
-          IsOkAndHolds(RowType(spanner::PgOid("0"), spanner::PgOid("999")))));
+          IsOkAndHolds(RowType(spanner::PgOid(42), absl::nullopt)),
+          IsOkAndHolds(RowType(spanner::PgOid(0), spanner::PgOid(999)))));
 }
 
 /// @test Verify implicit "begin transaction" in ExecuteQuery() works.

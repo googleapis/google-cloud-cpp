@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PgOid {
  public:
   /// Default construction yields OID 0.
-  PgOid() : rep_("0") {}
+  PgOid() : rep_(0) {}
 
   /// @name Regular value type, supporting copy, assign, move.
   ///@{
@@ -43,42 +43,29 @@ class PgOid {
   ///@}
 
   /**
-   * Construction from an OID string. Note that there is no check here that the
-   * argument string is indeed well-formatted. Error detection will be delayed
-   * until the value is passed to Spanner.
-   */
-  explicit PgOid(std::string value) : rep_(std::move(value)) {}
-
-  /**
    * Construction from an OID unsigned four-byte integer.
    */
-  explicit PgOid(std::uint64_t value) : rep_(absl::StrCat(value)) {}
+  explicit PgOid(std::uint64_t value) : rep_(value) {}
 
   /// @name Conversion to an OID string.
   ///@{
-  explicit operator std::string() const& { return rep_; }
-  explicit operator std::string() && { return std::move(rep_); }
+  explicit operator std::string() const& { return absl::StrCat(rep_); }
+  explicit operator std::string() && { return absl::StrCat(rep_); }
   ///@}
 
-  /// @name Conversion to an OID unsigned four-byte integer.
+  /// @name Relational operators
   ///@{
-  explicit operator std::uint64_t() const& { return std::stoull(rep_); }
-  explicit operator std::uint64_t() && { return std::move(std::stoull(rep_)); }
+  friend bool operator==(PgOid const& lhs, PgOid const& rhs) {
+    return lhs.rep_ == rhs.rep_;
+  }
+  friend bool operator!=(PgOid const& lhs, PgOid const& rhs) {
+    return !(lhs == rhs);
+  }
   ///@}
 
  private:
-  std::string rep_;
+  std::uint64_t rep_;
 };
-
-/// @name Relational operators
-///@{
-inline bool operator==(PgOid const& lhs, PgOid const& rhs) {
-  return std::string(lhs) == std::string(rhs);
-}
-inline bool operator!=(PgOid const& lhs, PgOid const& rhs) {
-  return !(lhs == rhs);
-}
-///@}
 
 /// Outputs an OID formatted string to the provided stream.
 inline std::ostream& operator<<(std::ostream& os, PgOid const& oid) {
