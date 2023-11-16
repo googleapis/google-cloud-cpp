@@ -52,7 +52,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
       {{sc::kMessagingSystem, "gcp_pubsub"},
        {sc::kMessagingDestinationName, topic},
        {sc::kMessagingDestinationTemplate, "topic"},
-       {sc::kMessagingMessageEnvelopeSize,
+       {/*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
         static_cast<std::int64_t>(MessageSize(m))},
        {sc::kCodeFunction, "pubsub::PublisherConnection::Publish"}},
       options);
