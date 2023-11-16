@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include <cstdint>
 #include <ostream>
 #include <string>
 
