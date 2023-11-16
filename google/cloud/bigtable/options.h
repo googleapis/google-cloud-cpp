@@ -189,7 +189,7 @@ namespace experimental {
  * https://cloud.google.com/bigtable/docs/routing#single-cluster
  */
 struct BulkApplyThrottlingOption {
-  using Type = absl::monostate;
+  using Type = absl::variant<absl::monostate>;
 };
 
 }  // namespace experimental
