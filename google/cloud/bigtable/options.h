@@ -157,6 +157,42 @@ struct MaxConnectionRefreshOption {
   using Type = std::chrono::milliseconds;
 };
 
+namespace experimental {
+
+/**
+ * If set, the client will throttle mutations in batch write jobs.
+ *
+ * This option is for batch write jobs where the goal is to avoid cluster
+ * overload and prevent job failure more than it is to minimize latency or
+ * maximize throughput.
+ *
+ * With this option set, the server rate-limits traffic to avoid overloading
+ * your Bigtable cluster, while ensuring the cluster is under enough load to
+ * trigger Bigtable [autoscaling] (if enabled).
+ *
+ * The [app profile] associated with these requests must be configured for
+ * [single-cluster routing]. See #google::cloud::bigtable::AppProfileIdOption.
+ *
+ * @note This option must be supplied to `MakeDataConnection()` in order to take
+ * effect.
+ *
+ * @note This feature has only been implemented for the synchronous
+ * `Table::BulkApply()`. It does not have an effect on `Table::AsyncBulkApply()`
+ * or `MutationBatcher::AsyncApply()`.
+ *
+ * @see https://cloud.google.com/bigtable/docs/writes#flow-control
+ *
+ * [autoscaling]: https://cloud.google.com/bigtable/docs/autoscaling
+ * [app profile]: https://cloud.google.com/bigtable/docs/app-profiles
+ * [single-cluster routing]:
+ * https://cloud.google.com/bigtable/docs/routing#single-cluster
+ */
+struct BulkApplyThrottlingOption {
+  using Type = bool;
+};
+
+}  // namespace experimental
+
 /// The complete list of options accepted by `bigtable::*Client`
 using ClientOptionList =
     OptionList<DataEndpointOption, AdminEndpointOption,
@@ -182,7 +218,7 @@ struct DataBackoffPolicyOption {
 };
 
 /**
- *  Option to configure the idempotency policy used by `Table`.
+ * Option to configure the idempotency policy used by `Table`.
  *
  * @ingroup bigtable-options
  */

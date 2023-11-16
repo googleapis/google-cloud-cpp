@@ -190,7 +190,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L317}
-  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L37}
+  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
@@ -220,7 +220,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L317}
-  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L37}
+  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
@@ -256,7 +256,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListModelsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L340}
-  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L37}
+  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Model> ListModels(
@@ -295,7 +295,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListModelsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L340}
-  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L37}
+  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Model> ListModels(
@@ -330,7 +330,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListModelVersionsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L410}
-  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L37}
+  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Model> ListModelVersions(
@@ -369,7 +369,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListModelVersionsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L410}
-  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L37}
+  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Model> ListModelVersions(
@@ -414,7 +414,7 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L37}
+  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   /// [google.cloud.aiplatform.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L474}
   ///
   // clang-format on
@@ -445,7 +445,7 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L37}
+  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   /// [google.cloud.aiplatform.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L474}
   ///
   // clang-format on
@@ -735,7 +735,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.MergeVersionAliasesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L555}
-  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L37}
+  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Model> MergeVersionAliases(
@@ -766,7 +766,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.MergeVersionAliasesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L555}
-  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L37}
+  /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Model> MergeVersionAliases(
@@ -806,7 +806,7 @@ class ModelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ExportModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L584}
   /// [google.cloud.aiplatform.v1.ExportModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L658}
-  /// [google.cloud.aiplatform.v1.Model.supported_export_formats]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L195}
+  /// [google.cloud.aiplatform.v1.Model.supported_export_formats]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L196}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
@@ -851,7 +851,7 @@ class ModelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ExportModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L584}
   /// [google.cloud.aiplatform.v1.ExportModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L658}
-  /// [google.cloud.aiplatform.v1.Model.supported_export_formats]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L195}
+  /// [google.cloud.aiplatform.v1.Model.supported_export_formats]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L196}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
@@ -894,7 +894,7 @@ class ModelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CopyModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L662}
   /// [google.cloud.aiplatform.v1.CopyModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L718}
-  /// [google.cloud.aiplatform.v1.Model.metadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L191}
+  /// [google.cloud.aiplatform.v1.Model.metadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L192}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>> CopyModel(
@@ -938,7 +938,7 @@ class ModelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CopyModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L662}
   /// [google.cloud.aiplatform.v1.CopyModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L718}
-  /// [google.cloud.aiplatform.v1.Model.metadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L191}
+  /// [google.cloud.aiplatform.v1.Model.metadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L192}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>> CopyModel(

@@ -28,6 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::bigtable::testing::TableIntegrationTest;
+using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using ::std::chrono::duration_cast;
 using ::std::chrono::microseconds;
@@ -120,6 +121,35 @@ TEST_P(DataIntegrationTest, TableBulkApply) {
 
   auto actual = ReadRows(table, Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
+}
+
+TEST_P(DataIntegrationTest, TableBulkApplyThrottling) {
+  if (GetParam() == "with-data-client") GTEST_SKIP();
+
+  // Make a custom table with throttling enabled.
+  auto table =
+      Table(MakeDataConnection(
+                Options{}.set<experimental::BulkApplyThrottlingOption>(true)),
+            TableResource(TableTestEnvironment::project_id(),
+                          TableTestEnvironment::instance_id(),
+                          TableTestEnvironment::table_id()));
+
+  // This test should take around 10 queries / (20 QPS) = 500ms.
+  //
+  // While this behavior is observable, we don't want to put strict expectations
+  // on it. The server might tell us to go faster. We might change the initial
+  // period.
+  //
+  // The purpose of the integration test is more to verify that our rate
+  // limiting implementation does not crash and burn in production.
+  for (auto i = 0; i != 10; ++i) {
+    Cell cell{"row-key-5", kFamily1, "c0", 0, "v" + std::to_string(i)};
+    BulkApply(table, {cell});
+  }
+
+  Cell expected{"row-key-5", kFamily1, "c0", 0, "v9"};
+  auto actual = ReadRows(table, Filter::PassAllFilter());
+  CheckEqualUnordered({expected}, actual);
 }
 
 TEST_P(DataIntegrationTest, TableSingleRow) {

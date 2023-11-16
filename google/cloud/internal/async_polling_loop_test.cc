@@ -742,7 +742,7 @@ TEST(AsyncPollingLoopTest, TracedAsyncBackoff) {
   EXPECT_THAT(spans, AllOf(SizeIs(4), Each(SpanNamed("Async Backoff"))));
 }
 
-TEST(AsyncPollingLoopTest, SpanActiveThroughout) {
+TEST(AsyncPollingLoopTest, SpanActiveDuringCancel) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto span = MakeSpan("span");
@@ -751,23 +751,16 @@ TEST(AsyncPollingLoopTest, SpanActiveThroughout) {
 
   AsyncSequencer<TimerType> timer_sequencer;
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
-      .Times(AtLeast(1))
-      .WillRepeatedly([&](std::chrono::nanoseconds) {
-        EXPECT_THAT(span, IsActive());
-        return timer_sequencer.PushBack();
-      });
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).Times(2).WillRepeatedly([&] {
+    return timer_sequencer.PushBack();
+  });
   CompletionQueue cq(mock_cq);
 
   AsyncSequencer<StatusOr<google::longrunning::Operation>> get_sequencer;
   auto mock = std::make_shared<MockStub>();
-  EXPECT_CALL(*mock, AsyncGetOperation)
-      .Times(AtLeast(1))
-      .WillRepeatedly([&](CompletionQueue&, auto, Options const&,
-                          google::longrunning::GetOperationRequest const&) {
-        EXPECT_THAT(span, IsActive());
-        return get_sequencer.PushBack();
-      });
+  EXPECT_CALL(*mock, AsyncGetOperation).Times(2).WillRepeatedly([&] {
+    return get_sequencer.PushBack();
+  });
   EXPECT_CALL(*mock, AsyncCancelOperation)
       .WillOnce([&](CompletionQueue&, auto, Options const&,
                     google::longrunning::CancelOperationRequest const&) {
@@ -786,7 +779,7 @@ TEST(AsyncPollingLoopTest, SpanActiveThroughout) {
 
   OTelScope scope(span);
   auto pending = AsyncPollingLoop(
-      cq, internal::MakeImmutableOptions(EnableTracing({})),
+      cq, MakeImmutableOptions(EnableTracing({})),
       make_ready_future(make_status_or(starting_op)), MakePoll(mock),
       MakeCancel(mock), std::move(policy), "test-function");
 

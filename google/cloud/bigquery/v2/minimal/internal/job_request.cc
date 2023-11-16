@@ -139,11 +139,9 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r) {
   return request;
 }
 
-// Assuming that std::chrono::system_clock epoch is the Unix Time epoch.
-// It's not guaranteed, but de-facto works for most of the platforms
-auto CastTimeToMilliseconds(std::chrono::system_clock::time_point time) {
+auto TimePointToUnixMilliseconds(std::chrono::system_clock::time_point tp) {
   return std::chrono::duration_cast<std::chrono::milliseconds>(
-             time.time_since_epoch())
+             tp - std::chrono::system_clock::from_time_t(0))
       .count();
 }
 
@@ -173,12 +171,12 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   if (r.min_creation_time()) {
     request.AddQueryParameter(
         "minCreationTime",
-        std::to_string(CastTimeToMilliseconds(*r.min_creation_time())));
+        std::to_string(TimePointToUnixMilliseconds(*r.min_creation_time())));
   }
   if (r.max_creation_time()) {
     request.AddQueryParameter(
         "maxCreationTime",
-        std::to_string(CastTimeToMilliseconds(*r.max_creation_time())));
+        std::to_string(TimePointToUnixMilliseconds(*r.max_creation_time())));
   }
 
   auto if_not_empty_add = [&](char const* key, auto const& v) {
