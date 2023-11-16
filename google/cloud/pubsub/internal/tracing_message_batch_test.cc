@@ -415,8 +415,8 @@ TEST(TracingMessageBatch, FlushAddsSpanIdAndTraceIdAttribute) {
           SpanHasEvents(AllOf(
               EventNamed("gl-cpp.batch_flushed"),
               SpanEventAttributesAre(
-                  OTelAttribute<std::string>("pubsub.batch_sink.trace_id", _),
-                  OTelAttribute<std::string>("pubsub.batch_sink.span_id",
+                  OTelAttribute<std::string>("gcp_pubsub.publish.trace_id", _),
+                  OTelAttribute<std::string>("gcp_pubsub.publish.span_id",
                                              _)))))));
 }
 #endif

@@ -79,8 +79,8 @@ auto MakeParent(Links const& links, Spans const& message_spans) {
     message_span->AddLink(context, {{}});
 #else
     message_span->AddEvent("gl-cpp.batch_flushed",
-                           Attributes{{"pubsub.batch_sink.trace_id", trace_id},
-                                      {"pubsub.batch_sink.span_id", span_id}});
+                           Attributes{{"gcp_pubsub.publish.trace_id", trace_id},
+                                      {"gcp_pubsub.publish.span_id", span_id}});
 #endif
   }
   return batch_sink_parent;
