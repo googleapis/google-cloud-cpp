@@ -164,9 +164,13 @@ RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.3.tar.gz | \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
+# We need to patch opentelemetry-cpp to work around a compiler bug in (at least)
+# GCC 7.x. See https://github.com/open-telemetry/opentelemetry-cpp/issues/1014
+# for more details.
 WORKDIR /var/tmp/build/
 RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    sed -i 's/Stack &GetStack()/Stack \&GetStack() __attribute__((noinline, noclone))/' "api/include/opentelemetry/context/runtime_context.h" && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
         -DCMAKE_BUILD_TYPE=Release \
