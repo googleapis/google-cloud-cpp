@@ -75,7 +75,8 @@ std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(
     std::function<void(duration)> sleeper = [](duration d) {
       std::this_thread::sleep_for(d);
     };
-    // TODO(#12959) - tracing for the sleep
+    sleeper = internal::MakeTracedSleeper(
+        options, std::move(sleeper), "gl-cpp.bigtable.bulk_apply_throttling");
     return std::make_shared<ThrottlingMutateRowsLimiter>(
         std::make_shared<internal::SteadyClock>(), std::move(sleeper),
         kInitialPeriod, kMinPeriod, kMaxPeriod, kMinFactor, kMaxFactor);

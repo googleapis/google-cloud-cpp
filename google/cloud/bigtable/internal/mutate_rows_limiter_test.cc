@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/fake_clock.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -26,6 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using Clock = ThrottlingMutateRowsLimiter::Clock;
+using ::google::cloud::bigtable::experimental::BulkApplyThrottlingOption;
 using ::google::cloud::testing_util::FakeSteadyClock;
 using ::testing::MockFunction;
 using ::testing::NotNull;
@@ -198,7 +200,6 @@ TEST(MutateRowsLimiter, UpdateRespectsResponsePeriod) {
 }
 
 TEST(MutateRowsLimiter, MakeMutateRowsLimiter) {
-  using ::google::cloud::bigtable::experimental::BulkApplyThrottlingOption;
   auto noop =
       MakeMutateRowsLimiter(Options{}.set<BulkApplyThrottlingOption>(false));
   EXPECT_THAT(dynamic_cast<NoopMutateRowsLimiter*>(noop.get()), NotNull());
@@ -208,6 +209,44 @@ TEST(MutateRowsLimiter, MakeMutateRowsLimiter) {
   EXPECT_THAT(dynamic_cast<ThrottlingMutateRowsLimiter*>(throttling.get()),
               NotNull());
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::Contains;
+using ::testing::IsEmpty;
+
+TEST(MakeMutateRowsLimiter, TracingEnabled) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto limiter = MakeMutateRowsLimiter(
+      EnableTracing(Options{}.set<BulkApplyThrottlingOption>(true)));
+  // With the default settings, we should expect throttling by the second
+  // request. Still, go up to 100 in case instructions are slow.
+  for (auto i = 0; i != 100; ++i) {
+    limiter->Acquire();
+    auto spans = span_catcher->GetSpans();
+    if (spans.empty()) continue;
+    EXPECT_THAT(spans,
+                Contains(SpanNamed("gl-cpp.bigtable.bulk_apply_throttling")));
+    break;
+  }
+}
+
+TEST(MakeMutateRowsLimiter, TracingDisabled) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto limiter = MakeMutateRowsLimiter(
+      DisableTracing(Options{}.set<BulkApplyThrottlingOption>(true)));
+  // We generally expect throttling by the second response. Still, go up to 5 to
+  // be a little bit more conclusive.
+  for (auto i = 0; i != 5; ++i) {
+    limiter->Acquire();
+    EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
+  }
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
