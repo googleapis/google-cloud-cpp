@@ -31,6 +31,8 @@ using ::google::cloud::bigtable_mocks::MockDataConnection;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::OTelContextCaptured;
+using ::google::cloud::testing_util::PromiseWithOTelContext;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -55,6 +57,21 @@ bigtable::SingleRowMutation Mutation() {
   return bigtable::SingleRowMutation(
       "row", {bigtable::SetCell("fam", "col", ms(0), "val")});
 }
+
+auto expect_context = [](auto& p) {
+  return [&p] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
+    return p.get_future();
+  };
+};
+
+auto expect_no_context = [](auto f) {
+  auto t = f.get();
+  EXPECT_FALSE(ThereIsAnActiveSpan());
+  EXPECT_FALSE(OTelContextCaptured());
+  return t;
+};
 
 TEST(DataTracingConnection, Options) {
   struct TestOption {
@@ -94,15 +111,15 @@ TEST(DataTracingConnection, Apply) {
 
 TEST(DataTracingConnection, AsyncApply) {
   auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<Status> p;
 
   auto mock = std::make_shared<MockDataConnection>();
-  EXPECT_CALL(*mock, AsyncApply).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future(internal::AbortedError("fail"));
-  });
+  EXPECT_CALL(*mock, AsyncApply).WillOnce(expect_context(p));
 
   auto under_test = MakeDataTracingConnection(mock);
-  auto status = under_test->AsyncApply(kTableName, Mutation());
+  auto status =
+      under_test->AsyncApply(kTableName, Mutation()).then(expect_no_context);
+  p.set_value(internal::AbortedError("fail"));
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(
@@ -171,15 +188,15 @@ TEST(DataTracingConnection, BulkApplyFailure) {
 
 TEST(DataTracingConnection, AsyncBulkApplySuccess) {
   auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<std::vector<bigtable::FailedMutation>> p;
 
   auto mock = std::make_shared<MockDataConnection>();
-  EXPECT_CALL(*mock, AsyncBulkApply).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future(std::vector<bigtable::FailedMutation>{});
-  });
+  EXPECT_CALL(*mock, AsyncBulkApply).WillOnce(expect_context(p));
 
   auto under_test = MakeDataTracingConnection(mock);
-  auto failures = under_test->AsyncBulkApply(kTableName, Mutation());
+  auto failures = under_test->AsyncBulkApply(kTableName, Mutation())
+                      .then(expect_no_context);
+  p.set_value(std::vector<bigtable::FailedMutation>{});
   EXPECT_THAT(failures.get(), IsEmpty());
 
   EXPECT_THAT(
@@ -196,19 +213,19 @@ TEST(DataTracingConnection, AsyncBulkApplySuccess) {
 
 TEST(DataTracingConnection, AsyncBulkApplyFailure) {
   auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<std::vector<bigtable::FailedMutation>> p;
 
   auto mock = std::make_shared<MockDataConnection>();
-  EXPECT_CALL(*mock, AsyncBulkApply).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future(std::vector<bigtable::FailedMutation>{
-        {internal::AbortedError("fail"), 1},
-        {internal::AbortedError("fail"), 2}});
-  });
+  EXPECT_CALL(*mock, AsyncBulkApply).WillOnce(expect_context(p));
 
   bigtable::BulkMutation mut;
   for (auto i = 0; i != 10; ++i) mut.push_back(Mutation());
   auto under_test = MakeDataTracingConnection(mock);
-  auto failures = under_test->AsyncBulkApply(kTableName, std::move(mut));
+  auto failures = under_test->AsyncBulkApply(kTableName, std::move(mut))
+                      .then(expect_no_context);
+  p.set_value(std::vector<bigtable::FailedMutation>{
+      {internal::AbortedError("fail"), 1},
+      {internal::AbortedError("fail"), 2}});
   EXPECT_THAT(failures.get(), SizeIs(2));
 
   EXPECT_THAT(
@@ -376,17 +393,18 @@ TEST(DataTracingConnection, CheckAndMutateRow) {
 
 TEST(DataTracingConnection, AsyncCheckAndMutateRow) {
   auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<StatusOr<bigtable::MutationBranch>> p;
 
   auto mock = std::make_shared<MockDataConnection>();
-  EXPECT_CALL(*mock, AsyncCheckAndMutateRow).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future<StatusOr<bigtable::MutationBranch>>(
-        internal::AbortedError("fail"));
-  });
+  EXPECT_CALL(*mock, AsyncCheckAndMutateRow).WillOnce(expect_context(p));
 
   auto under_test = MakeDataTracingConnection(mock);
-  auto branch = under_test->AsyncCheckAndMutateRow(
-      kTableName, "row", bigtable::Filter::PassAllFilter(), {}, {});
+  auto branch =
+      under_test
+          ->AsyncCheckAndMutateRow(kTableName, "row",
+                                   bigtable::Filter::PassAllFilter(), {}, {})
+          .then(expect_no_context);
+  p.set_value(internal::AbortedError("fail"));
   EXPECT_THAT(branch.get(), StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(
@@ -401,6 +419,7 @@ TEST(DataTracingConnection, AsyncCheckAndMutateRow) {
 
 TEST(DataTracingConnection, SampleRows) {
   auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<StatusOr<bigtable::MutationBranch>> p;
 
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, SampleRows).WillOnce([] {
@@ -424,16 +443,15 @@ TEST(DataTracingConnection, SampleRows) {
 
 TEST(DataTracingConnection, AsyncSampleRows) {
   auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<StatusOr<std::vector<bigtable::RowKeySample>>> p;
 
   auto mock = std::make_shared<MockDataConnection>();
-  EXPECT_CALL(*mock, AsyncSampleRows).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future<StatusOr<std::vector<bigtable::RowKeySample>>>(
-        internal::AbortedError("fail"));
-  });
+  EXPECT_CALL(*mock, AsyncSampleRows).WillOnce(expect_context(p));
 
   auto under_test = MakeDataTracingConnection(mock);
-  auto samples = under_test->AsyncSampleRows(kTableName);
+  auto samples =
+      under_test->AsyncSampleRows(kTableName).then(expect_no_context);
+  p.set_value(internal::AbortedError("fail"));
   EXPECT_THAT(samples.get(), StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(
@@ -471,16 +489,15 @@ TEST(DataTracingConnection, ReadModifyWriteRow) {
 
 TEST(DataTracingConnection, AsyncReadModifyWriteRow) {
   auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<StatusOr<bigtable::Row>> p;
 
   auto mock = std::make_shared<MockDataConnection>();
-  EXPECT_CALL(*mock, AsyncReadModifyWriteRow).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future<StatusOr<bigtable::Row>>(
-        internal::AbortedError("fail"));
-  });
+  EXPECT_CALL(*mock, AsyncReadModifyWriteRow).WillOnce(expect_context(p));
 
   auto under_test = MakeDataTracingConnection(mock);
-  auto samples = under_test->AsyncReadModifyWriteRow({});
+  auto samples =
+      under_test->AsyncReadModifyWriteRow({}).then(expect_no_context);
+  p.set_value(internal::AbortedError("fail"));
   EXPECT_THAT(samples.get(), StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(
@@ -504,6 +521,7 @@ TEST(DataTracingConnection, AsyncReadRows) {
                    bigtable::RowSet const&, std::int64_t,
                    bigtable::Filter const&) {
         EXPECT_TRUE(ThereIsAnActiveSpan());
+        EXPECT_TRUE(OTelContextCaptured());
         // Invoke the callbacks.
         on_row(bigtable::Row("r1", {})).get();
         on_row(bigtable::Row("r2", {})).get();
@@ -523,6 +541,8 @@ TEST(DataTracingConnection, AsyncReadRows) {
 
   MockFunction<void(Status)> on_finish;
   EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_FALSE(ThereIsAnActiveSpan());
+    EXPECT_FALSE(OTelContextCaptured());
     EXPECT_THAT(status, StatusIs(StatusCode::kAborted));
   });
 
@@ -543,17 +563,17 @@ TEST(DataTracingConnection, AsyncReadRows) {
 
 TEST(DataTracingConnection, AsyncReadRowFound) {
   auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<StatusOr<std::pair<bool, bigtable::Row>>> p;
 
   auto mock = std::make_shared<MockDataConnection>();
-  EXPECT_CALL(*mock, AsyncReadRow).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future(
-        make_status_or<std::pair<bool, bigtable::Row>>({true, {"row", {}}}));
-  });
+  EXPECT_CALL(*mock, AsyncReadRow).WillOnce(expect_context(p));
 
   auto under_test = MakeDataTracingConnection(mock);
-  auto row = under_test->AsyncReadRow(kTableName, "row",
-                                      bigtable::Filter::PassAllFilter());
+  auto row =
+      under_test
+          ->AsyncReadRow(kTableName, "row", bigtable::Filter::PassAllFilter())
+          .then(expect_no_context);
+  p.set_value(std::pair<bool, bigtable::Row>({true, {"row", {}}}));
   EXPECT_THAT(row.get(), IsOkAndHolds(Pair(true, _)));
 
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -568,17 +588,17 @@ TEST(DataTracingConnection, AsyncReadRowFound) {
 
 TEST(DataTracingConnection, AsyncReadRowNotFound) {
   auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<StatusOr<std::pair<bool, bigtable::Row>>> p;
 
   auto mock = std::make_shared<MockDataConnection>();
-  EXPECT_CALL(*mock, AsyncReadRow).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future(
-        make_status_or<std::pair<bool, bigtable::Row>>({false, {"row", {}}}));
-  });
+  EXPECT_CALL(*mock, AsyncReadRow).WillOnce(expect_context(p));
 
   auto under_test = MakeDataTracingConnection(mock);
-  auto row = under_test->AsyncReadRow(kTableName, "row",
-                                      bigtable::Filter::PassAllFilter());
+  auto row =
+      under_test
+          ->AsyncReadRow(kTableName, "row", bigtable::Filter::PassAllFilter())
+          .then(expect_no_context);
+  p.set_value(std::pair<bool, bigtable::Row>({false, {"row", {}}}));
   EXPECT_THAT(row.get(), IsOkAndHolds(Pair(false, _)));
 
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -593,17 +613,17 @@ TEST(DataTracingConnection, AsyncReadRowNotFound) {
 
 TEST(DataTracingConnection, AsyncReadRowFailure) {
   auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<StatusOr<std::pair<bool, bigtable::Row>>> p;
 
   auto mock = std::make_shared<MockDataConnection>();
-  EXPECT_CALL(*mock, AsyncReadRow).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return make_ready_future<StatusOr<std::pair<bool, bigtable::Row>>>(
-        internal::AbortedError("fail"));
-  });
+  EXPECT_CALL(*mock, AsyncReadRow).WillOnce(expect_context(p));
 
   auto under_test = MakeDataTracingConnection(mock);
-  auto row = under_test->AsyncReadRow(kTableName, "row",
-                                      bigtable::Filter::PassAllFilter());
+  auto row =
+      under_test
+          ->AsyncReadRow(kTableName, "row", bigtable::Filter::PassAllFilter())
+          .then(expect_no_context);
+  p.set_value(internal::AbortedError("fail"));
   EXPECT_THAT(row.get(), StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(
