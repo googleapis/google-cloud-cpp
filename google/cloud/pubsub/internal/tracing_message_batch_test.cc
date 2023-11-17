@@ -335,10 +335,11 @@ TEST(TracingMessageBatch, FlushSpanAddsEvent) {
 
   EndSpans(message_spans);
 
-  EXPECT_THAT(
-      span_catcher->GetSpans(),
-      Contains(AllOf(SpanNamed("test span 0"),
-                     SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
+  EXPECT_THAT(span_catcher->GetSpans(),
+              Contains(AllOf(SpanNamed("test span 0"),
+                             SpanHasEvents(EventNamed("gl-cpp.publish_start"),
+                                           EventNamed("gl-cpp.added_to_batch"),
+                                           EventNamed("gl-cpp.publish_end")))));
 }
 
 TEST(TracingMessageBatch, FlushAddsEventForMultipleMessages) {
@@ -360,10 +361,10 @@ TEST(TracingMessageBatch, FlushAddsEventForMultipleMessages) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanNamed("test span 0"),
-                         SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
+                         SpanHasEvents(EventNamed("gl-cpp.publish_start")))));
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanNamed("test span 1"),
-                         SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
+                         SpanHasEvents(EventNamed("gl-cpp.publish_start")))));
 }
 
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
@@ -387,7 +388,7 @@ TEST(TracingMessageBatch, FlushAddsLink) {
   EXPECT_THAT(span_catcher->GetSpans(),
               Contains(AllOf(SpanNamed("test span 0"),
                              SpanHasLinks(AllOf(LinkHasSpanContext(_)),
-                     SpanHasEvents(EventNamed("gl-cpp.batch_flushed")))));
+                     SpanHasEvents(EventNamed("gl-cpp.publish_start")))));
 }
 #else
 
@@ -413,7 +414,7 @@ TEST(TracingMessageBatch, FlushAddsSpanIdAndTraceIdAttribute) {
       Contains(AllOf(
           SpanNamed("test span 0"),
           SpanHasEvents(AllOf(
-              EventNamed("gl-cpp.batch_flushed"),
+              EventNamed("gl-cpp.publish_start"),
               SpanEventAttributesAre(
                   OTelAttribute<std::string>("gcp_pubsub.publish.trace_id", _),
                   OTelAttribute<std::string>("gcp_pubsub.publish.span_id",

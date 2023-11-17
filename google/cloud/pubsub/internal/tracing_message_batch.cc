@@ -75,10 +75,10 @@ auto MakeParent(Links const& links, Spans const& message_spans) {
   auto span_id = internal::ToString(context.span_id());
   for (auto const& message_span : message_spans) {
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
-    message_span->AddEvent("gl-cpp.batch_flushed");
+    message_span->AddEvent("gl-cpp.publish_start");
     message_span->AddLink(context, {{}});
 #else
-    message_span->AddEvent("gl-cpp.batch_flushed",
+    message_span->AddEvent("gl-cpp.publish_start",
                            Attributes{{"gcp_pubsub.publish.trace_id", trace_id},
                                       {"gcp_pubsub.publish.span_id", span_id}});
 #endif
@@ -158,8 +158,7 @@ class TracingMessageBatch : public MessageBatch {
       message_spans.swap(message_spans_);
     }
 
-    auto batch_sink_spans =
-        MakeBatchSinkSpans(std::move(message_spans), options_);
+    auto batch_sink_spans = MakeBatchSinkSpans(message_spans, options_);
 
     // The first span in `batch_sink_spans` is the parent to the other spans in
     // the vector.
@@ -169,8 +168,11 @@ class TracingMessageBatch : public MessageBatch {
     // is called.
     return [scope = std::move(scope),
             oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-            next = child_->Flush(),
-            spans = std::move(batch_sink_spans)](auto f) mutable {
+            next = child_->Flush(), spans = std::move(batch_sink_spans),
+            message_spans = std::move(message_spans)](auto f) mutable {
+      for (auto& span : message_spans) {
+        span->AddEvent("gl-cpp.publish_end");
+      }
       for (auto& span : spans) {
         internal::EndSpan(*span);
       }
