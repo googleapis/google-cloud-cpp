@@ -135,11 +135,11 @@ g::future<Result> BenchmarkWrite(gcs_ex::AsyncClient client,
   using google::cloud::storage_experimental::WritePayload;
   for (auto remaining = config.object_size; remaining != 0;) {
     if (!token.valid()) break;
-    auto const n = std::min(data.size(), remaining);
+    auto const n = std::min(static_cast<std::uint64_t>(data.size()), remaining);
     remaining -= n;
     // This copy is intentional. The benchmark is more realistic if we assume
     // the source data has to be copied into the payload.
-    auto payload = WritePayload(data.substr(0, n));
+    auto payload = WritePayload(data.substr(0, static_cast<std::size_t>(n)));
     token =
         (co_await writer.Write(std::move(token), std::move(payload))).value();
   }
