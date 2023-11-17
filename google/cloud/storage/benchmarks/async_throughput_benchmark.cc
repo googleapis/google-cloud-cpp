@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include <algorithm>
 #include <chrono>
+#include <cstdint>
 #include <iostream>
 #include <random>
 #include <stdexcept>
@@ -38,8 +39,8 @@ The benchmark tries to answer the following questions:
 1) How much CPU is used by the client library for uploads?
 2) How much CPU is used by the client library for downloads?
 
-The answer to these questions depends on many parameters, including the size of
-the the size of the upload, the size of the buffers used for streaming
+The answer to these questions depend on many parameters, including the size of
+the size of the upload/download, the size of the buffers used for streaming
 operations, whether checksums are enabled, etc.
 
 Incidentally this benchmark also provides answers to these questions:
@@ -47,11 +48,11 @@ Incidentally this benchmark also provides answers to these questions:
 3) What kind of throughput one can expect for uploads via AsyncClient?
 4) What kind of throughput one can expect for downloads via AsyncClient?
 
-But we should note that the achieve throughput depends on the VM configuration,
+But we should note that the throughput achieved depends on the VM configuration,
 the location of the VM and the bucket, and may depend on the activity in GCS.
 
-At a high level the benchmark performs N concurrent uploads and measures the CPU
-usage for the program.
+At a high level, the benchmark performs N concurrent uploads and measures the
+CPU usage for the program.
 
 The benchmark then performs N concurrent downloads and measures the CPU usage
 for the program.
@@ -70,24 +71,6 @@ struct Configuration {
   std::uint64_t object_size = 512 * kMiB;
   google::cloud::Options options;
 };
-
-Configuration ParseArgs(std::vector<std::string> argv);
-void RunBenchmark(Configuration const& config);
-
-}  // namespace
-
-int main(int argc, char* argv[]) try {
-  RunBenchmark(ParseArgs({argv, argv + argc}));
-  return 0;
-} catch (google::cloud::Status const& ex) {
-  std::cerr << "Status error caught " << ex << "\n";
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception caught " << ex.what() << "\n";
-  return 1;
-}
-
-namespace {
 
 namespace g = google::cloud;
 
@@ -212,21 +195,24 @@ void Worker(gcs_ex::AsyncClient const& client, Configuration const& config,
 
 void RunBenchmark(Configuration const& config) {
   using ::google::cloud::storage_benchmarks::FormatBandwidthGbPerSecond;
-  using ::google::cloud::storage_benchmarks::FormatBandwidthMiBs;
+  using ::google::cloud::storage_benchmarks::FormatBandwidthMiBPerSecond;
   using ::google::cloud::storage_benchmarks::FormatTimestamp;
   std::mutex mu;
   auto handler = [&mu](std::chrono::system_clock::time_point start,
                        std::string_view name, Result const& r) {
     std::lock_guard lk(mu);
-    std::cout << FormatTimestamp(start)                                       //
-              << ',' << name                                                  //
-              << ',' << r.object_size                                         //
-              << ',' << r.elapsed.count()                                     //
-              << ','                                                          //
-              << ',' << r.object_name                                         //
-              << ',' << r.generation                                          //
-              << ',' << FormatBandwidthGbPerSecond(r.object_size, r.elapsed)  //
-              << ',' << FormatBandwidthMiBs(r.object_size, r.elapsed)         //
+    auto gigabit_per_second =
+        FormatBandwidthGbPerSecond(r.object_size, r.elapsed);
+    auto const mebibyte_per_second =
+        FormatBandwidthMiBPerSecond(r.object_size, r.elapsed);
+    std::cout << FormatTimestamp(start)      //
+              << ',' << name                 //
+              << ',' << r.object_size        //
+              << ',' << r.elapsed.count()    //
+              << ',' << r.object_name        //
+              << ',' << r.generation         //
+              << ',' << gigabit_per_second   //
+              << ',' << mebibyte_per_second  //
               << "\n";
   };
 
@@ -236,7 +222,7 @@ void RunBenchmark(Configuration const& config) {
   };
 
   std::cout << "# START\n";
-  std::cout << "Start,Operation,ObjectSize,ElapsedNanos,Unused,ObjectName,"
+  std::cout << "Start,Operation,ObjectSize,ElapsedNanos,ObjectName,"
                "Generation,Gbps,MiBs\n";
   std::vector<std::future<void>> workers(config.concurrency);
   std::generate(workers.begin(), workers.end(), make_worker);
@@ -285,12 +271,23 @@ Configuration ParseArgs(std::vector<std::string> argv) {
 
 }  // namespace
 
+int main(int argc, char* argv[]) try {
+  RunBenchmark(ParseArgs({argv, argv + argc}));
+  return 0;
+} catch (google::cloud::Status const& ex) {
+  std::cerr << "Status error caught " << ex << "\n";
+  return 1;
+} catch (std::exception const& ex) {
+  std::cerr << "Standard C++ exception caught " << ex.what() << "\n";
+  return 1;
+}
+
 #else
 #include <iostream>
 
 int main() {
-  std::cout
-      << "The storage_experimental::AsyncClient benchmarks require C++20\n";
+  std::cout << "The storage_experimental::AsyncClient benchmarks require"
+            << " C++20 coroutines and the GCS+gRPC plugin\n";
   return 0;
 }
 
