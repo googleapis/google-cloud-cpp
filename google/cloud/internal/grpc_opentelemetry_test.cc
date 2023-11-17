@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
@@ -211,24 +210,6 @@ TEST(OpenTelemetry, TracedAsyncBackoffDisabled) {
 }
 
 TEST(OpenTelemetry, TracedAsyncBackoffPreservesContext) {
-  if (CompilerId() == "GNU" && CompilerVersion() == "7.3.1") {
-    // Skip this test because there is a compiler bug in gcc < ???, where active
-    // spans are not set as the parent of newly created spans.
-    //
-    // This problem exists in opentelemetry-cpp. It is outside of any types used
-    // in our repo. The following test reproduces the bug:
-    //
-    // @code
-    // auto parent = tracer->StartSpan("parent");
-    // opentelemetry::trace::Scope parent_scope(parent);
-    // auto child = tracer->StartSpan("child");
-    // child->End();
-    // parent->End();
-    // EXPECT_THAT(parent, IsParentOf(child));
-    // @endcode
-    GTEST_SKIP();
-  }
-
   auto span_catcher = InstallSpanCatcher();
   auto parent = MakeSpan("parent");
 
