@@ -211,8 +211,6 @@ TEST(OpenTelemetry, TracedAsyncBackoffDisabled) {
 }
 
 TEST(OpenTelemetry, TracedAsyncBackoffPreservesContext) {
-  std::cout << "CompilerId() = " << CompilerId() << std::endl;
-  std::cout << "CompilerVersion() = " << CompilerVersion() << std::endl;
   if (CompilerId() == "GNU" && CompilerVersion() == "7.3.1") {
     // Skip this test because there is a compiler bug in gcc < ???, where active
     // spans are not set as the parent of newly created spans.
