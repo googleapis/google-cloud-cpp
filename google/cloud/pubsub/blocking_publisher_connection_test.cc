@@ -211,7 +211,7 @@ TEST(BlockingPublisherConnectionTest, TracingEnabled) {
 
   EXPECT_THAT(span_catcher->GetSpans(),
               UnorderedElementsAre(
-                  SpanNamed("projects/test-project/topics/test-topic send"),
+                  SpanNamed("projects/test-project/topics/test-topic create"),
                   SpanNamed("google.pubsub.v1.Publisher/Publish")));
 }
 

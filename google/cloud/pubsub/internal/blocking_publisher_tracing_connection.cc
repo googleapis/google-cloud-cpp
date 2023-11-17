@@ -38,7 +38,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kProducer;
   auto span = internal::MakeSpan(
-      topic.FullName() + " send",
+      topic.FullName() + " create",
       {{sc::kMessagingSystem, "gcp_pubsub"},
        {sc::kMessagingDestinationName, topic.FullName()},
        {sc::kMessagingDestinationTemplate, "topic"},
