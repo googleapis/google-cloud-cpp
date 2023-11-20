@@ -216,6 +216,9 @@ std::string ToString(opentelemetry::trace::TraceId const& trace_id);
 
 std::string ToString(opentelemetry::trace::SpanId const& span_id);
 
+/// Gets the current thread id.
+std::string CurrentThreadId();
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 bool TracingEnabled(Options const& options);

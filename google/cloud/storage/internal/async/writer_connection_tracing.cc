@@ -30,12 +30,6 @@ namespace {
 
 namespace sc = ::opentelemetry::trace::SemanticConventions;
 
-std::string CurrentThreadId() {
-  std::ostringstream os;
-  os << std::this_thread::get_id();
-  return std::move(os).str();
-}
-
 class AsyncWriterConnectionTracing
     : public storage_experimental::AsyncWriterConnection {
  public:
@@ -46,9 +40,10 @@ class AsyncWriterConnectionTracing
 
   void Cancel() override {
     auto scope = opentelemetry::trace::Scope(span_);
-    span_->AddEvent("gl-cpp.cancel", {
-                                         {sc::kThreadId, CurrentThreadId()},
-                                     });
+    span_->AddEvent("gl-cpp.cancel",
+                    {
+                        {sc::kThreadId, internal::CurrentThreadId()},
+                    });
     return impl_->Cancel();
   }
 

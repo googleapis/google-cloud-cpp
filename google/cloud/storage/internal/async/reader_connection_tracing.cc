@@ -31,12 +31,6 @@ namespace {
 
 namespace sc = ::opentelemetry::trace::SemanticConventions;
 
-std::string CurrentThreadId() {
-  std::ostringstream os;
-  os << std::this_thread::get_id();
-  return std::move(os).str();
-}
-
 class AsyncReaderConnectionTracing
     : public storage_experimental::AsyncReaderConnection {
  public:
@@ -63,7 +57,7 @@ class AsyncReaderConnectionTracing
                            {
                                {sc::kMessageType, "RECEIVED"},
                                {sc::kMessageId, count},
-                               {sc::kThreadId, CurrentThreadId()},
+                               {sc::kThreadId, internal::CurrentThreadId()},
                            });
             return internal::EndSpan(*span, absl::get<Status>(std::move(r)));
           }

@@ -15,6 +15,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/options.h"
+#include <sstream>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/provider.h>
 #include <opentelemetry/trace/span_startoptions.h>
@@ -134,6 +135,12 @@ std::string ToString(opentelemetry::trace::SpanId const& span_id) {
   char span_id_array[kSize];
   span_id.ToLowerBase16(span_id_array);
   return std::string(span_id_array, kSize);
+}
+
+std::string CurrentThreadId() {
+  std::ostringstream os;
+  os << std::this_thread::get_id();
+  return std::move(os).str();
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

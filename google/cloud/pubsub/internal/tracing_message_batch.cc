@@ -44,11 +44,6 @@ using Attributes =
 using Links =
     std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
 
-int64_t GetCurrentThreadId() {
-  return static_cast<std::int64_t>(
-      std::hash<std::thread::id>{}(std::this_thread::get_id()));
-}
-
 /// Creates a link for each sampled span in the range @p begin to @p end.
 auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
   Links links;
@@ -73,7 +68,7 @@ auto MakeParent(Links const& links, Spans const& message_spans) {
                          {{sc::kMessagingBatchMessageCount,
                            static_cast<std::int64_t>(message_spans.size())},
                           {sc::kCodeFunction, "BatchSink::AsyncPublish"},
-                          {sc::kThreadId, GetCurrentThreadId()}},
+                          {sc::kThreadId, internal::CurrentThreadId()}},
                          /*links*/ std::move(links));
 
   // Add metadata to the message spans about the batch sink span.

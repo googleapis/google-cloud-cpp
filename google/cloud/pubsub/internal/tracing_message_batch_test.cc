@@ -163,10 +163,11 @@ TEST(TracingMessageBatch, PublishSpanHasThreadIdAttribute) {
   end_spans(make_ready_future());
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, Contains(AllOf(SpanHasInstrumentationScope(),
-                                    SpanKindIsClient(), SpanNamed("publish"),
-                                    SpanHasAttributes(OTelAttribute<int64_t>(
-                                        sc::kThreadId, _)))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                             SpanNamed("publish"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::kThreadId, _)))));
 }
 
 TEST(TracingMessageBatch, FlushOnlyIncludeSampledLink) {
