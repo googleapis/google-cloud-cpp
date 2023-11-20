@@ -15,10 +15,10 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/options.h"
-#include <sstream>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/provider.h>
 #include <opentelemetry/trace/span_startoptions.h>
+#include <sstream>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
