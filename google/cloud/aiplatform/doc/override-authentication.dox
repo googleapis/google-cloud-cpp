@@ -15,11 +15,14 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c aiplatform_v1::DatasetServiceClient](@ref aiplatform_v1::DatasetServiceClient-service-account-snippet)
 - [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-service-account-snippet)
+- [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref aiplatform_v1::FeatureOnlineStoreAdminServiceClient-service-account-snippet)
+- [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref aiplatform_v1::FeatureOnlineStoreServiceClient-service-account-snippet)
 - [\c aiplatform_v1::FeaturestoreServiceClient](@ref aiplatform_v1::FeaturestoreServiceClient-service-account-snippet)
 - [\c aiplatform_v1::FeaturestoreOnlineServingServiceClient](@ref aiplatform_v1::FeaturestoreOnlineServingServiceClient-service-account-snippet)
 - [\c aiplatform_v1::IndexServiceClient](@ref aiplatform_v1::IndexServiceClient-service-account-snippet)
 - [\c aiplatform_v1::IndexEndpointServiceClient](@ref aiplatform_v1::IndexEndpointServiceClient-service-account-snippet)
 - [\c aiplatform_v1::JobServiceClient](@ref aiplatform_v1::JobServiceClient-service-account-snippet)
+- [\c aiplatform_v1::LlmUtilityServiceClient](@ref aiplatform_v1::LlmUtilityServiceClient-service-account-snippet)
 - [\c aiplatform_v1::MatchServiceClient](@ref aiplatform_v1::MatchServiceClient-service-account-snippet)
 - [\c aiplatform_v1::MetadataServiceClient](@ref aiplatform_v1::MetadataServiceClient-service-account-snippet)
 - [\c aiplatform_v1::MigrationServiceClient](@ref aiplatform_v1::MigrationServiceClient-service-account-snippet)
@@ -27,6 +30,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c aiplatform_v1::ModelGardenServiceClient](@ref aiplatform_v1::ModelGardenServiceClient-service-account-snippet)
 - [\c aiplatform_v1::PipelineServiceClient](@ref aiplatform_v1::PipelineServiceClient-service-account-snippet)
 - [\c aiplatform_v1::PredictionServiceClient](@ref aiplatform_v1::PredictionServiceClient-service-account-snippet)
+- [\c aiplatform_v1::ScheduleServiceClient](@ref aiplatform_v1::ScheduleServiceClient-service-account-snippet)
 - [\c aiplatform_v1::SpecialistPoolServiceClient](@ref aiplatform_v1::SpecialistPoolServiceClient-service-account-snippet)
 - [\c aiplatform_v1::TensorboardServiceClient](@ref aiplatform_v1::TensorboardServiceClient-service-account-snippet)
 - [\c aiplatform_v1::VizierServiceClient](@ref aiplatform_v1::VizierServiceClient-service-account-snippet)
@@ -59,6 +63,18 @@ guide for more details.
 
 */
 
+/*! @page aiplatform_v1::FeatureOnlineStoreAdminServiceClient-service-account-snippet Override aiplatform_v1::FeatureOnlineStoreAdminServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/feature_online_store_admin_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::FeatureOnlineStoreServiceClient-service-account-snippet Override aiplatform_v1::FeatureOnlineStoreServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/feature_online_store_client_samples.cc with-service-account
+
+*/
+
 /*! @page aiplatform_v1::FeaturestoreServiceClient-service-account-snippet Override aiplatform_v1::FeaturestoreServiceClient Authentication Defaults
 
 @snippet google/cloud/aiplatform/v1/samples/featurestore_client_samples.cc with-service-account
@@ -86,6 +102,12 @@ guide for more details.
 /*! @page aiplatform_v1::JobServiceClient-service-account-snippet Override aiplatform_v1::JobServiceClient Authentication Defaults
 
 @snippet google/cloud/aiplatform/v1/samples/job_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::LlmUtilityServiceClient-service-account-snippet Override aiplatform_v1::LlmUtilityServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/llm_utility_client_samples.cc with-service-account
 
 */
 
@@ -128,6 +150,12 @@ guide for more details.
 /*! @page aiplatform_v1::PredictionServiceClient-service-account-snippet Override aiplatform_v1::PredictionServiceClient Authentication Defaults
 
 @snippet google/cloud/aiplatform/v1/samples/prediction_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::ScheduleServiceClient-service-account-snippet Override aiplatform_v1::ScheduleServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/schedule_client_samples.cc with-service-account
 
 */
 

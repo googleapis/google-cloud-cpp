@@ -87,7 +87,8 @@ class OTelScope {
   ~OTelScope();
 
  private:
-  opentelemetry::trace::Scope scope_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
+  opentelemetry::context::Context context_;
 };
 
 /**

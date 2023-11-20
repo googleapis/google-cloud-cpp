@@ -60,15 +60,17 @@ void DetachOTelContext(opentelemetry::context::Context const& context) {
 
 OTelScope::OTelScope(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span)
-    : scope_(span) {
+    : span_(span) {
   auto& v = ThreadLocalOTelContext();
-  v.emplace_back(opentelemetry::context::RuntimeContext::GetCurrent(), nullptr);
+  context_ = opentelemetry::context::RuntimeContext::GetCurrent().SetValue(
+      opentelemetry::trace::kSpanKey, span);
+  // Manually attach the context. We do not use an opentelemetry::trace::Scope,
+  // because we need to own the token.
+  auto token = opentelemetry::context::RuntimeContext::Attach(context_);
+  v.emplace_back(context_, std::move(token));
 }
 
-OTelScope::~OTelScope() {
-  auto current = opentelemetry::context::RuntimeContext::GetCurrent();
-  DetachOTelContext(current);
-}
+OTelScope::~OTelScope() { DetachOTelContext(context_); }
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

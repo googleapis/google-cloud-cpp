@@ -393,7 +393,7 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   EXPECT_THAT(
       spans,
       UnorderedElementsAre(
-          SpanNamed("projects/test-project/topics/test-topic send"),
+          SpanNamed("projects/test-project/topics/test-topic create"),
           SpanNamed("publisher flow control"), SpanNamed("publish scheduler"),
           SpanNamed("publish"), SpanNamed("google.pubsub.v1.Publisher/Publish"),
           SpanNamed("pubsub::BatchingPublisherConnection::Flush"),

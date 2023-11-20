@@ -143,11 +143,11 @@ MATCHER(SpanKindIsProducer,
   return kind == opentelemetry::trace::SpanKind::kProducer;
 }
 
-MATCHER_P(SpanWithParentSpanId, parent_span_id,
-          "has parent span id: " + ToString(parent_span_id)) {
+MATCHER_P(SpanWithParent, span,
+          "has parent span id: " + ToString(span->GetContext().span_id())) {
   auto const& actual = arg->GetParentSpanId();
   *result_listener << "has parent span id: " << ToString(actual);
-  return actual == parent_span_id;
+  return actual == span->GetContext().span_id();
 }
 
 MATCHER_P(SpanNamed, name, "has name: " + std::string{name}) {
