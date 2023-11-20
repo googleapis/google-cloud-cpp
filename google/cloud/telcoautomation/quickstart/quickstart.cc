@@ -29,9 +29,9 @@ int main(int argc, char* argv[]) try {
   auto client = telcoautomation::TelcoAutomationClient(
       telcoautomation::MakeTelcoAutomationConnection());
 
-  for (auto r : client.ListOrchestrationClusters(location.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto c : client.ListOrchestrationClusters(location.FullName())) {
+    if (!c) throw std::move(r).status();
+    std::cout << c->DebugString() << "\n";
   }
 
   return 0;

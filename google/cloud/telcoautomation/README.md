@@ -1,8 +1,8 @@
 # Telco Automation API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Telco Automation API][cloud-service-docs]. APIs to automate 5G deployment and
-management of cloud infrastructure and network functions.
+[Telco Automation API][cloud-service-docs]. Use this API to automate 5G
+deployment and management of cloud infrastructure and network functions.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -33,9 +33,9 @@ int main(int argc, char* argv[]) try {
   auto client = telcoautomation::TelcoAutomationClient(
       telcoautomation::MakeTelcoAutomationConnection());
 
-  for (auto r : client.ListOrchestrationClusters(location.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto c : client.ListOrchestrationClusters(location.FullName())) {
+    if (!c) throw std::move(r).status();
+    std::cout << c->DebugString() << "\n";
   }
 
   return 0;
