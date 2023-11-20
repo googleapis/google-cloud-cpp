@@ -47,11 +47,6 @@ class PgOid {
    */
   explicit PgOid(std::uint64_t value) : rep_(value) {}
 
-  /// @name Conversion to an OID string.
-  ///@{
-  explicit operator std::string() const { return std::to_string(rep_); }
-  ///@}
-
   /// @name Conversion to an OID 4-byte unsigned integer.
   ///@{
   explicit operator std::uint64_t() const { return rep_; }
@@ -73,7 +68,7 @@ class PgOid {
 
 /// Outputs an OID formatted string to the provided stream.
 inline std::ostream& operator<<(std::ostream& os, PgOid const& oid) {
-  return os << std::string(oid);
+  return os << static_cast<std::uint64_t>(oid);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
