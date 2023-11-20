@@ -33,6 +33,22 @@ void PredictionServiceServerStreamingPredictStreamingUpdater(
     google::cloud::aiplatform::v1::StreamingPredictResponse const&,
     google::cloud::aiplatform::v1::StreamingPredictRequest&) {}
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingPredictRequest,
+    google::cloud::aiplatform::v1::StreamingPredictResponse>>
+PredictionServiceConnectionImpl::AsyncStreamingPredict() {
+  return stub_->AsyncStreamingPredict(background_->cq(),
+                                      std::make_shared<grpc::ClientContext>());
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
+PredictionServiceConnectionImpl::AsyncStreamingRawPredict() {
+  return stub_->AsyncStreamingRawPredict(
+      background_->cq(), std::make_shared<grpc::ClientContext>());
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal
 }  // namespace cloud
