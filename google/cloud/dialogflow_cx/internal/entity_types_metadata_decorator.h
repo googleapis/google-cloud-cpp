@@ -38,12 +38,6 @@ class EntityTypesMetadata : public EntityTypesStub {
                       std::multimap<std::string, std::string> fixed_metadata,
                       std::string api_client_header = "");
 
-  StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
-  ListEntityTypes(
-      grpc::ClientContext& context,
-      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request)
-      override;
-
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
       grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request)
@@ -62,6 +56,12 @@ class EntityTypesMetadata : public EntityTypesStub {
   Status DeleteEntityType(
       grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
+  ListEntityTypes(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request)
       override;
 
  private:

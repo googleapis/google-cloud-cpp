@@ -43,6 +43,12 @@ class PredictionServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency RawPredict(
       google::cloud::aiplatform::v1::RawPredictRequest const& request);
 
+  virtual google::cloud::Idempotency DirectPredict(
+      google::cloud::aiplatform::v1::DirectPredictRequest const& request);
+
+  virtual google::cloud::Idempotency DirectRawPredict(
+      google::cloud::aiplatform::v1::DirectRawPredictRequest const& request);
+
   virtual google::cloud::Idempotency Explain(
       google::cloud::aiplatform::v1::ExplainRequest const& request);
 };

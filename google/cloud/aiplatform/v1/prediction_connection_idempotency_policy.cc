@@ -44,6 +44,16 @@ Idempotency PredictionServiceConnectionIdempotencyPolicy::RawPredict(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency PredictionServiceConnectionIdempotencyPolicy::DirectPredict(
+    google::cloud::aiplatform::v1::DirectPredictRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency PredictionServiceConnectionIdempotencyPolicy::DirectRawPredict(
+    google::cloud::aiplatform::v1::DirectRawPredictRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency PredictionServiceConnectionIdempotencyPolicy::Explain(
     google::cloud::aiplatform::v1::ExplainRequest const&) {
   return Idempotency::kNonIdempotent;

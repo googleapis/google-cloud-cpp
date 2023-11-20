@@ -36,14 +36,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EntityTypesConnection::~EntityTypesConnection() = default;
 
-StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
-EntityTypesConnection::ListEntityTypes(
-    google::cloud::dialogflow::cx::v3::
-        ListEntityTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::dialogflow::cx::v3::EntityType>>();
-}
-
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesConnection::GetEntityType(
     google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const&) {
@@ -65,6 +57,14 @@ EntityTypesConnection::UpdateEntityType(
 Status EntityTypesConnection::DeleteEntityType(
     google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
+EntityTypesConnection::ListEntityTypes(
+    google::cloud::dialogflow::cx::v3::
+        ListEntityTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dialogflow::cx::v3::EntityType>>();
 }
 
 std::shared_ptr<EntityTypesConnection> MakeEntityTypesConnection(

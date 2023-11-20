@@ -31,22 +31,6 @@ EntityTypesClient::EntityTypesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 EntityTypesClient::~EntityTypesClient() = default;
 
-StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
-EntityTypesClient::ListEntityTypes(std::string const& parent, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request;
-  request.set_parent(parent);
-  return connection_->ListEntityTypes(request);
-}
-
-StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
-EntityTypesClient::ListEntityTypes(
-    google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ListEntityTypes(std::move(request));
-}
-
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesClient::GetEntityType(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -115,6 +99,22 @@ Status EntityTypesClient::DeleteEntityType(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEntityType(request);
+}
+
+StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
+EntityTypesClient::ListEntityTypes(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request;
+  request.set_parent(parent);
+  return connection_->ListEntityTypes(request);
+}
+
+StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
+EntityTypesClient::ListEntityTypes(
+    google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListEntityTypes(std::move(request));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

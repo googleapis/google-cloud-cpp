@@ -34,17 +34,6 @@ EntityTypesLogging::EntityTypesLogging(std::shared_ptr<EntityTypesStub> child,
       tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
-EntityTypesLogging::ListEntityTypes(
-    grpc::ClientContext& context,
-    google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const&
-                 request) { return child_->ListEntityTypes(context, request); },
-      context, request, __func__, tracing_options_);
-}
-
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesLogging::GetEntityType(
     grpc::ClientContext& context,
@@ -91,6 +80,17 @@ Status EntityTypesLogging::DeleteEntityType(
                  request) {
         return child_->DeleteEntityType(context, request);
       },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
+EntityTypesLogging::ListEntityTypes(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const&
+                 request) { return child_->ListEntityTypes(context, request); },
       context, request, __func__, tracing_options_);
 }
 

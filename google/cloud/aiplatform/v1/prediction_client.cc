@@ -69,12 +69,44 @@ StatusOr<google::api::HttpBody> PredictionServiceClient::RawPredict(
   return connection_->RawPredict(request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
+PredictionServiceClient::DirectPredict(
+    google::cloud::aiplatform::v1::DirectPredictRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DirectPredict(request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
+PredictionServiceClient::DirectRawPredict(
+    google::cloud::aiplatform::v1::DirectRawPredictRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DirectRawPredict(request);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingPredictRequest,
+    google::cloud::aiplatform::v1::StreamingPredictResponse>>
+PredictionServiceClient::AsyncStreamingPredict(Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncStreamingPredict();
+}
+
 StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
 PredictionServiceClient::ServerStreamingPredict(
     google::cloud::aiplatform::v1::StreamingPredictRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ServerStreamingPredict(request);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
+PredictionServiceClient::AsyncStreamingRawPredict(Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncStreamingRawPredict();
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>

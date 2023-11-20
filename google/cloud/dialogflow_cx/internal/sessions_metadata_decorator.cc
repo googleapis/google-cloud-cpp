@@ -81,6 +81,16 @@ SessionsMetadata::FulfillIntent(
   return child_->FulfillIntent(context, request);
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
+SessionsMetadata::SubmitAnswerFeedback(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+        request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("session=", internal::UrlEncode(request.session())));
+  return child_->SubmitAnswerFeedback(context, request);
+}
+
 void SessionsMetadata::SetMetadata(grpc::ClientContext& context,
                                    Options const& options,
                                    std::string const& request_params) {

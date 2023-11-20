@@ -46,6 +46,29 @@ StatusOr<google::api::HttpBody> PredictionServiceConnection::RawPredict(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
+PredictionServiceConnection::DirectPredict(
+    google::cloud::aiplatform::v1::DirectPredictRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
+PredictionServiceConnection::DirectRawPredict(
+    google::cloud::aiplatform::v1::DirectRawPredictRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingPredictRequest,
+    google::cloud::aiplatform::v1::StreamingPredictResponse>>
+PredictionServiceConnection::AsyncStreamingPredict() {
+  return std::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::cloud::aiplatform::v1::StreamingPredictRequest,
+          google::cloud::aiplatform::v1::StreamingPredictResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
 PredictionServiceConnection::ServerStreamingPredict(
     google::cloud::aiplatform::v1::StreamingPredictRequest const&) {
@@ -56,6 +79,17 @@ PredictionServiceConnection::ServerStreamingPredict(
               Status, google::cloud::aiplatform::v1::StreamingPredictResponse> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
+PredictionServiceConnection::AsyncStreamingRawPredict() {
+  return std::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+          google::cloud::aiplatform::v1::StreamingRawPredictResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>

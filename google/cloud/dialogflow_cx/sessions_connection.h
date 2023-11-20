@@ -196,6 +196,11 @@ class SessionsConnection {
   virtual StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
   FulfillIntent(
       google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request);
+
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
+  SubmitAnswerFeedback(
+      google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+          request);
 };
 
 /**
