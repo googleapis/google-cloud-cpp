@@ -428,7 +428,7 @@ google::protobuf::Value Value::MakeValueProto(PgNumeric n) {
 
 google::protobuf::Value Value::MakeValueProto(PgOid n) {
   google::protobuf::Value v;
-  v.set_string_value(std::string(std::move(n)));
+  v.set_string_value(std::to_string(std::uint64_t(n)));
   return v;
 }
 

@@ -49,8 +49,12 @@ class PgOid {
 
   /// @name Conversion to an OID string.
   ///@{
-  explicit operator std::string() const& { return std::to_string(rep_); }
-  explicit operator std::string() && { return std::to_string(rep_); }
+  explicit operator std::string() const { return std::to_string(rep_); }
+  ///@}
+
+  /// @name Conversion to an OID 4-byte unsigned integer.
+  ///@{
+  explicit operator std::uint64_t() const { return rep_; }
   ///@}
 
   /// @name Relational operators
