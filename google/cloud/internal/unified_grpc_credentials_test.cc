@@ -35,6 +35,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsEmpty;
+using ::testing::IsNull;
 
 TEST(UnifiedGrpcCredentialsTest, GrpcCredentialOption) {
   CompletionQueue cq;
@@ -121,7 +122,7 @@ TEST(UnifiedGrpcCredentialsTest, WithErrorCredentials) {
           .get();
   EXPECT_THAT(async_configured_context, StatusIs(error_status.code()));
   auto channel = result->CreateChannel(std::string{}, grpc::ChannelArguments{});
-  EXPECT_EQ(nullptr, channel.get());
+  EXPECT_THAT(channel.get(), Not(IsNull()));
 }
 
 TEST(UnifiedGrpcCredentialsTest, LoadCAInfoNotSet) {
