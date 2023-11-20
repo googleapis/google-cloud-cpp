@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) try {
       telcoautomation::MakeTelcoAutomationConnection());
 
   for (auto c : client.ListOrchestrationClusters(location.FullName())) {
-    if (!c) throw std::move(r).status();
+    if (!c) throw std::move(c).status();
     std::cout << c->DebugString() << "\n";
   }
 
