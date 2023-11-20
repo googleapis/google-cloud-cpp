@@ -47,10 +47,9 @@ class AsyncReaderConnectionTracing
 
   void Cancel() override {
     auto scope = opentelemetry::trace::Scope(span_);
-    span_->AddEvent("gl-cpp.cancel",
-                    {
-                        {sc::kThreadId, internal::CurrentThreadId()},
-                    });
+    span_->AddEvent("gl-cpp.cancel", {
+                                         {sc::kThreadId, CurrentThreadId()},
+                                     });
     return impl_->Cancel();
   }
 
@@ -64,7 +63,7 @@ class AsyncReaderConnectionTracing
                            {
                                {sc::kMessageType, "RECEIVED"},
                                {sc::kMessageId, count},
-                               {sc::kThreadId, internal::CurrentThreadId()},
+                               {sc::kThreadId, CurrentThreadId()},
                            });
             return internal::EndSpan(*span, absl::get<Status>(std::move(r)));
           }
@@ -73,7 +72,7 @@ class AsyncReaderConnectionTracing
                          {
                              {sc::kMessageType, "RECEIVED"},
                              {sc::kMessageId, count},
-                             {sc::kThreadId, internal::CurrentThreadId()},
+                             {sc::kThreadId, CurrentThreadId()},
                              {"message.starting_offset", payload.offset()},
                          });
           return r;
