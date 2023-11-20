@@ -113,7 +113,7 @@ future<StatusOr<std::chrono::system_clock::time_point>> TracedAsyncBackoff(
     auto span = MakeSpan("Async Backoff");
     OTelScope scope(span);
     auto timer = cq.MakeRelativeTimer(duration);
-    return EndSpan(span, std::move(timer));
+    return EndSpan(std::move(span), std::move(timer));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   (void)options;
