@@ -46,12 +46,35 @@ class PredictionServiceLogging : public PredictionServiceStub {
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
 
+  StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse> DirectPredict(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::DirectPredictRequest const& request)
+      override;
+
+  StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
+  DirectRawPredict(grpc::ClientContext& context,
+                   google::cloud::aiplatform::v1::DirectRawPredictRequest const&
+                       request) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::StreamingPredictRequest,
+      google::cloud::aiplatform::v1::StreamingPredictResponse>>
+  AsyncStreamingPredict(google::cloud::CompletionQueue const& cq,
+                        std::shared_ptr<grpc::ClientContext> context) override;
+
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::aiplatform::v1::StreamingPredictResponse>>
   ServerStreamingPredict(
       std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::aiplatform::v1::StreamingPredictRequest const& request)
       override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+      google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
+  AsyncStreamingRawPredict(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       grpc::ClientContext& context,

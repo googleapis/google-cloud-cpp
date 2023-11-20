@@ -47,12 +47,6 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      (StreamRange<google::cloud::dialogflow::cx::v3::EntityType>),
-      ListEntityTypes,
-      (google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request),
-      (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::cx::v3::EntityType>, GetEntityType,
       (google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request),
       (override));
@@ -73,6 +67,12 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
               (google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::dialogflow::cx::v3::EntityType>),
+      ListEntityTypes,
+      (google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

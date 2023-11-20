@@ -60,6 +60,12 @@ class SessionsAuth : public SessionsStub {
                 google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
                     request) override;
 
+  StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
+  SubmitAnswerFeedback(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+          request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<SessionsStub> child_;

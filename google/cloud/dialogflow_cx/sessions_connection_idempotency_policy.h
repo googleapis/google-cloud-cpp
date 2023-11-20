@@ -44,6 +44,10 @@ class SessionsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency FulfillIntent(
       google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request);
+
+  virtual google::cloud::Idempotency SubmitAnswerFeedback(
+      google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+          request);
 };
 
 std::unique_ptr<SessionsConnectionIdempotencyPolicy>

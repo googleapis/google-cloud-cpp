@@ -64,6 +64,12 @@ SessionsConnection::FulfillIntent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
+SessionsConnection::SubmitAnswerFeedback(
+    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<SessionsConnection> MakeSessionsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

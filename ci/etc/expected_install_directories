@@ -1019,6 +1019,10 @@
 ./include/google/cloud/tasks/v2
 ./include/google/cloud/tasks/v2/internal
 ./include/google/cloud/tasks/v2/mocks
+./include/google/cloud/telcoautomation
+./include/google/cloud/telcoautomation/v1
+./include/google/cloud/telcoautomation/v1/internal
+./include/google/cloud/telcoautomation/v1/mocks
 ./include/google/cloud/texttospeech
 ./include/google/cloud/texttospeech/mocks
 ./include/google/cloud/texttospeech/v1
@@ -1274,6 +1278,7 @@
 ./lib64/cmake/google_cloud_cpp_support
 ./lib64/cmake/google_cloud_cpp_talent
 ./lib64/cmake/google_cloud_cpp_tasks
+./lib64/cmake/google_cloud_cpp_telcoautomation
 ./lib64/cmake/google_cloud_cpp_texttospeech
 ./lib64/cmake/google_cloud_cpp_timeseriesinsights
 ./lib64/cmake/google_cloud_cpp_tpu

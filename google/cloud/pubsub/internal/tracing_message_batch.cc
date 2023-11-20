@@ -54,7 +54,7 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
                  [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
                    return std::make_pair(
                        span->GetContext(),
-                       Attributes{{"messaging.pubsub.message.link", i++}});
+                       Attributes{{"messaging.gcp_pubsub.message.link", i++}});
                  });
   return links;
 }
@@ -96,7 +96,7 @@ auto MakeChild(
                             /*links=*/links, options);
 }
 
-Spans MakeBatchSinkSpans(Spans message_spans, Options const& options) {
+Spans MakeBatchSinkSpans(Spans const& message_spans, Options const& options) {
   auto const max_otel_links = options.get<pubsub::MaxOtelLinkCountOption>();
   Spans batch_sink_spans;
   // If the batch size is less than the max size, add the links to a single

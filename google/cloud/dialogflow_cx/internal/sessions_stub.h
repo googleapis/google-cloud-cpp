@@ -55,6 +55,12 @@ class SessionsStub {
   FulfillIntent(grpc::ClientContext& context,
                 google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
                     request) = 0;
+
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
+  SubmitAnswerFeedback(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+          request) = 0;
 };
 
 class DefaultSessionsStub : public SessionsStub {
@@ -86,6 +92,12 @@ class DefaultSessionsStub : public SessionsStub {
   FulfillIntent(grpc::ClientContext& context,
                 google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
                     request) override;
+
+  StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
+  SubmitAnswerFeedback(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::dialogflow::cx::v3::Sessions::StubInterface>

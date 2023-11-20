@@ -69,6 +69,13 @@ class MockSessionsConnection : public dialogflow_cx::SessionsConnection {
       FulfillIntent,
       (google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>,
+      SubmitAnswerFeedback,
+      (google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

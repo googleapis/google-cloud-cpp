@@ -22,6 +22,7 @@
 #include "google/cloud/aiplatform/v1/internal/prediction_retry_traits.h"
 #include "google/cloud/aiplatform/v1/prediction_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -190,9 +191,27 @@ class PredictionServiceConnection {
   virtual StatusOr<google::api::HttpBody> RawPredict(
       google::cloud::aiplatform::v1::RawPredictRequest const& request);
 
+  virtual StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
+  DirectPredict(
+      google::cloud::aiplatform::v1::DirectPredictRequest const& request);
+
+  virtual StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
+  DirectRawPredict(
+      google::cloud::aiplatform::v1::DirectRawPredictRequest const& request);
+
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::StreamingPredictRequest,
+      google::cloud::aiplatform::v1::StreamingPredictResponse>>
+  AsyncStreamingPredict();
+
   virtual StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
   ServerStreamingPredict(
       google::cloud::aiplatform::v1::StreamingPredictRequest const& request);
+
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+      google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
+  AsyncStreamingRawPredict();
 
   virtual StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       google::cloud::aiplatform::v1::ExplainRequest const& request);

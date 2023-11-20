@@ -3264,6 +3264,14 @@ service {
   retryable_status_codes: ["kInternal", "kUnavailable"]
 }
 
+# Telecom Network Automation
+service {
+  service_proto_path: "google/cloud/telcoautomation/v1/telcoautomation.proto"
+  product_path: "google/cloud/telcoautomation/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Text-to-Speech
 service {
   service_proto_path: "google/cloud/texttospeech/v1/cloud_tts.proto"

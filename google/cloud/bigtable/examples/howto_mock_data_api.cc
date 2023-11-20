@@ -58,7 +58,7 @@ TEST(MockTableTest, ReadRowsSuccess) {
 
   // Loop over the rows returned by the `RowReader` and verify the results:
   //! [verify-results]
-  std::vector<std::string> row_keys;
+  std::vector<cbt::RowKeyType> row_keys;
   for (gc::StatusOr<cbt::Row> const& row : reader) {
     ASSERT_TRUE(row.ok());
     row_keys.push_back(row->row_key());

@@ -60,6 +60,12 @@ class SessionsMetadata : public SessionsStub {
                 google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
                     request) override;
 
+  StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
+  SubmitAnswerFeedback(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+          request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);

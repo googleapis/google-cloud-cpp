@@ -48,10 +48,6 @@ class EntityTypesConnectionImpl : public dialogflow_cx::EntityTypesConnection {
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::dialogflow::cx::v3::EntityType> ListEntityTypes(
-      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request)
-      override;
-
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
       google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request)
       override;
@@ -66,6 +62,10 @@ class EntityTypesConnectionImpl : public dialogflow_cx::EntityTypesConnection {
 
   Status DeleteEntityType(
       google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request)
+      override;
+
+  StreamRange<google::cloud::dialogflow::cx::v3::EntityType> ListEntityTypes(
+      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request)
       override;
 
  private:
