@@ -61,6 +61,36 @@ StatusOr<google::api::HttpBody> PredictionServiceMetadata::RawPredict(
   return child_->RawPredict(context, request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
+PredictionServiceMetadata::DirectPredict(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
+  return child_->DirectPredict(context, request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
+PredictionServiceMetadata::DirectRawPredict(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) {
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
+  return child_->DirectRawPredict(context, request);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingPredictRequest,
+    google::cloud::aiplatform::v1::StreamingPredictResponse>>
+PredictionServiceMetadata::AsyncStreamingPredict(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context, internal::CurrentOptions());
+  return child_->AsyncStreamingPredict(cq, std::move(context));
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
 PredictionServiceMetadata::ServerStreamingPredict(
@@ -70,6 +100,16 @@ PredictionServiceMetadata::ServerStreamingPredict(
       *context, options,
       absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
   return child_->ServerStreamingPredict(std::move(context), options, request);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
+PredictionServiceMetadata::AsyncStreamingRawPredict(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context, internal::CurrentOptions());
+  return child_->AsyncStreamingRawPredict(cq, std::move(context));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>

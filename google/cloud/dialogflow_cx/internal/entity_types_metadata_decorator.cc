@@ -42,15 +42,6 @@ EntityTypesMetadata::EntityTypesMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
-EntityTypesMetadata::ListEntityTypes(
-    grpc::ClientContext& context,
-    google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEntityTypes(context, request);
-}
-
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesMetadata::GetEntityType(
     grpc::ClientContext& context,
@@ -85,6 +76,15 @@ Status EntityTypesMetadata::DeleteEntityType(
   SetMetadata(context, internal::CurrentOptions(),
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEntityType(context, request);
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
+EntityTypesMetadata::ListEntityTypes(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListEntityTypes(context, request);
 }
 
 void EntityTypesMetadata::SetMetadata(grpc::ClientContext& context,

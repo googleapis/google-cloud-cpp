@@ -65,6 +65,16 @@ SessionsTracingConnection::FulfillIntent(
   return internal::EndSpan(*span, child_->FulfillIntent(request));
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
+SessionsTracingConnection::SubmitAnswerFeedback(
+    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::SessionsConnection::SubmitAnswerFeedback");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SubmitAnswerFeedback(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<dialogflow_cx::SessionsConnection>

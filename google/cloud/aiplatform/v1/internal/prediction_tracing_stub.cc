@@ -17,6 +17,7 @@
 // source: google/cloud/aiplatform/v1/prediction_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/prediction_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/streaming_read_rpc_tracing.h"
 
@@ -53,6 +54,46 @@ StatusOr<google::api::HttpBody> PredictionServiceTracingStub::RawPredict(
                            child_->RawPredict(context, request));
 }
 
+StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
+PredictionServiceTracingStub::DirectPredict(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PredictionService", "DirectPredict");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DirectPredict(context, request));
+}
+
+StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
+PredictionServiceTracingStub::DirectRawPredict(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PredictionService", "DirectRawPredict");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DirectRawPredict(context, request));
+}
+
+std::unique_ptr<AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingPredictRequest,
+    google::cloud::aiplatform::v1::StreamingPredictResponse>>
+PredictionServiceTracingStub::AsyncStreamingPredict(
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PredictionService", "StreamingPredict");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->AsyncStreamingPredict(cq, context);
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::cloud::aiplatform::v1::StreamingPredictRequest,
+      google::cloud::aiplatform::v1::StreamingPredictResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
 PredictionServiceTracingStub::ServerStreamingPredict(
@@ -65,6 +106,22 @@ PredictionServiceTracingStub::ServerStreamingPredict(
   auto stream = child_->ServerStreamingPredict(context, options, request);
   return std::make_unique<internal::StreamingReadRpcTracing<
       google::cloud::aiplatform::v1::StreamingPredictResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
+std::unique_ptr<AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
+PredictionServiceTracingStub::AsyncStreamingRawPredict(
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PredictionService", "StreamingRawPredict");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->AsyncStreamingRawPredict(cq, context);
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+      google::cloud::aiplatform::v1::StreamingRawPredictResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
 

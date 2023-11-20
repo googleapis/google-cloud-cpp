@@ -76,6 +76,16 @@ SessionsAuth::FulfillIntent(
   return child_->FulfillIntent(context, request);
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
+SessionsAuth::SubmitAnswerFeedback(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SubmitAnswerFeedback(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
 }  // namespace cloud

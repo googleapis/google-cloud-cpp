@@ -88,6 +88,34 @@ StatusOr<google::api::HttpBody> PredictionServiceConnectionImpl::RawPredict(
       request, __func__);
 }
 
+StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
+PredictionServiceConnectionImpl::DirectPredict(
+    google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DirectPredict(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
+        return stub_->DirectPredict(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
+PredictionServiceConnectionImpl::DirectRawPredict(
+    google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DirectRawPredict(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::aiplatform::v1::DirectRawPredictRequest const&
+                 request) { return stub_->DirectRawPredict(context, request); },
+      request, __func__);
+}
+
 StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
 PredictionServiceConnectionImpl::ServerStreamingPredict(
     google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {

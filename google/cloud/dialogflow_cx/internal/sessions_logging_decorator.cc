@@ -89,6 +89,21 @@ SessionsLogging::FulfillIntent(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
+SessionsLogging::SubmitAnswerFeedback(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+              request) {
+        return child_->SubmitAnswerFeedback(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
 }  // namespace cloud

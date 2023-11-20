@@ -95,6 +95,23 @@ SessionsConnectionImpl::FulfillIntent(
       request, __func__);
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
+SessionsConnectionImpl::SubmitAnswerFeedback(
+    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SubmitAnswerFeedback(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+              request) {
+        return stub_->SubmitAnswerFeedback(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
 }  // namespace cloud

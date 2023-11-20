@@ -56,10 +56,33 @@ class MockPredictionServiceConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>,
+      DirectPredict,
+      (google::cloud::aiplatform::v1::DirectPredictRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>,
+      DirectRawPredict,
+      (google::cloud::aiplatform::v1::DirectRawPredictRequest const& request),
+      (override));
+
+  MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+                   google::cloud::aiplatform::v1::StreamingPredictRequest,
+                   google::cloud::aiplatform::v1::StreamingPredictResponse>>),
+              AsyncStreamingPredict, (), (override));
+
+  MOCK_METHOD(
       StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>,
       ServerStreamingPredict,
       (google::cloud::aiplatform::v1::StreamingPredictRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      (std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+           google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+           google::cloud::aiplatform::v1::StreamingRawPredictResponse>>),
+      AsyncStreamingRawPredict, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::ExplainResponse>, Explain,
               (google::cloud::aiplatform::v1::ExplainRequest const& request),

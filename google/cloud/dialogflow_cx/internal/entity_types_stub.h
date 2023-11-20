@@ -33,12 +33,6 @@ class EntityTypesStub {
  public:
   virtual ~EntityTypesStub() = 0;
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
-  ListEntityTypes(
-      grpc::ClientContext& context,
-      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const&
-          request) = 0;
-
   virtual StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
       grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const&
@@ -60,6 +54,12 @@ class EntityTypesStub {
       grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&
           request) = 0;
+
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
+  ListEntityTypes(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const&
+          request) = 0;
 };
 
 class DefaultEntityTypesStub : public EntityTypesStub {
@@ -69,12 +69,6 @@ class DefaultEntityTypesStub : public EntityTypesStub {
           google::cloud::dialogflow::cx::v3::EntityTypes::StubInterface>
           grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
-
-  StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
-  ListEntityTypes(
-      grpc::ClientContext& context,
-      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request)
-      override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
       grpc::ClientContext& context,
@@ -94,6 +88,12 @@ class DefaultEntityTypesStub : public EntityTypesStub {
   Status DeleteEntityType(
       grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
+  ListEntityTypes(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request)
       override;
 
  private:
