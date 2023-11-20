@@ -145,7 +145,7 @@ TEST(TracingMessageBatch, Flush) {
               OTelAttribute<std::string>(sc::kMessagingOperation, "publish")),
           SpanHasLinks(AllOf(LinkHasSpanContext(message_span->GetContext()),
                              SpanLinkAttributesAre(OTelAttribute<int64_t>(
-                                 "messaging.pubsub.message.link", 0)))))));
+                                 "messaging.gcp_pubsub.message.link", 0)))))));
 }
 
 TEST(TracingMessageBatch, FlushOnlyIncludeSampledLink) {
@@ -183,7 +183,7 @@ TEST(TracingMessageBatch, FlushOnlyIncludeSampledLink) {
               OTelAttribute<std::string>(sc::kMessagingOperation, "publish")),
           SpanLinksAre(AllOf(LinkHasSpanContext(message_span->GetContext()),
                              SpanLinkAttributesAre(OTelAttribute<int64_t>(
-                                 "messaging.pubsub.message.link", 0)))))));
+                                 "messaging.gcp_pubsub.message.link", 0)))))));
 }
 
 TEST(TracingMessageBatch, FlushSmallBatch) {
@@ -218,10 +218,10 @@ TEST(TracingMessageBatch, FlushSmallBatch) {
               OTelAttribute<std::string>(sc::kMessagingOperation, "publish")),
           SpanHasLinks(AllOf(LinkHasSpanContext(message_span1->GetContext()),
                              SpanLinkAttributesAre(OTelAttribute<int64_t>(
-                                 "messaging.pubsub.message.link", 0))),
+                                 "messaging.gcp_pubsub.message.link", 0))),
                        AllOf(LinkHasSpanContext(message_span2->GetContext()),
                              SpanLinkAttributesAre(OTelAttribute<int64_t>(
-                                 "messaging.pubsub.message.link", 1)))))));
+                                 "messaging.gcp_pubsub.message.link", 1)))))));
 }
 
 TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {

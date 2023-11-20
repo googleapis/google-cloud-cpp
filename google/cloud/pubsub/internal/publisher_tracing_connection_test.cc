@@ -96,6 +96,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
               OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
                                           "messaging.message.envelope.size",
                                           45),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "create"),
               OTelAttribute<std::string>("messaging.message_id", "test-id-0"),
               OTelAttribute<std::string>(
                   sc::kCodeFunction,
@@ -138,6 +139,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
                                          "topic"),
               OTelAttribute<std::string>("messaging.pubsub.ordering_key",
                                          "ordering-key-0"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "create"),
               OTelAttribute<int>("gl-cpp.status_code", kErrorCode),
               OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
                                           "messaging.message.envelope.size",

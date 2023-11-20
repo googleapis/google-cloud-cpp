@@ -54,7 +54,7 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
                  [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
                    return std::make_pair(
                        span->GetContext(),
-                       Attributes{{"messaging.pubsub.message.link", i++}});
+                       Attributes{{"messaging.gcp_pubsub.message.link", i++}});
                  });
   return links;
 }
