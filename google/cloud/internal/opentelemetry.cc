@@ -19,6 +19,8 @@
 #include <opentelemetry/trace/provider.h>
 #include <opentelemetry/trace/span_startoptions.h>
 #include <sstream>
+#include <string>
+#include <thread>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {

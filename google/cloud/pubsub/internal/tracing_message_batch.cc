@@ -24,7 +24,6 @@
 #include "opentelemetry/trace/span.h"
 #include <algorithm>
 #include <string>
-#include <thread>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {

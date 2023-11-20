@@ -18,9 +18,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include <opentelemetry/trace/semantic_conventions.h>
 #include <cstdint>
-#include <sstream>
 #include <string>
-#include <thread>
 #include <utility>
 
 namespace google {
@@ -41,9 +39,10 @@ class AsyncReaderConnectionTracing
 
   void Cancel() override {
     auto scope = opentelemetry::trace::Scope(span_);
-    span_->AddEvent("gl-cpp.cancel", {
-                                         {sc::kThreadId, CurrentThreadId()},
-                                     });
+    span_->AddEvent("gl-cpp.cancel",
+                    {
+                        {sc::kThreadId, internal::CurrentThreadId()},
+                    });
     return impl_->Cancel();
   }
 
@@ -66,7 +65,7 @@ class AsyncReaderConnectionTracing
                          {
                              {sc::kMessageType, "RECEIVED"},
                              {sc::kMessageId, count},
-                             {sc::kThreadId, CurrentThreadId()},
+                             {sc::kThreadId, internal::CurrentThreadId()},
                              {"message.starting_offset", payload.offset()},
                          });
           return r;

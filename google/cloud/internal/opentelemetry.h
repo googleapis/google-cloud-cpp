@@ -27,6 +27,7 @@
 #include <opentelemetry/nostd/string_view.h>
 #include <opentelemetry/trace/span.h>
 #include <opentelemetry/trace/tracer.h>
+#include <string>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <chrono>
 #include <functional>
