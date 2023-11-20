@@ -11,6 +11,7 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Distributed Cloud Edge Network API](/google/cloud/edgenetwork/README.md)
 - [Cloud SQL Admin API](/google/cloud/sql/README.md)
+- [Telecom Network Automation API](google/cloud/telcoautomation/README.md)
 
 ## v2.18.0 - 2023-11
 
