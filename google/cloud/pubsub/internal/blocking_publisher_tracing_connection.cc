@@ -48,7 +48,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
        {sc::kCodeFunction, "pubsub::BlockingPublisher::Publish"}},
       options);
   if (!m.ordering_key().empty()) {
-    span->SetAttribute("messaging.pubsub.ordering_key", m.ordering_key());
+    span->SetAttribute("messaging.gcp_pubsub.message.ordering_key",
+                       m.ordering_key());
   }
   return span;
 }

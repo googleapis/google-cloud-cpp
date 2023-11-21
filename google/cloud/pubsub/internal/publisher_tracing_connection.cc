@@ -58,7 +58,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
        {sc::kCodeFunction, "pubsub::PublisherConnection::Publish"}},
       options);
   if (!m.ordering_key().empty()) {
-    span->SetAttribute("messaging.pubsub.ordering_key", m.ordering_key());
+    span->SetAttribute("messaging.gcp_pubsub.message.ordering_key",
+                       m.ordering_key());
   }
   return span;
 }
@@ -66,9 +67,10 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
 future<StatusOr<std::string>> EndPublishSpan(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
     future<StatusOr<std::string>> f) {
+  namespace sc = opentelemetry::trace::SemanticConventions;
   return f.then([span = std::move(span)](auto fut) {
     auto message_id = fut.get();
-    if (message_id) span->SetAttribute("messaging.message_id", *message_id);
+    if (message_id) span->SetAttribute(sc::kMessagingMessageId, *message_id);
     return internal::EndSpan(*span, std::move(message_id));
   });
 }

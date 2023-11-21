@@ -299,7 +299,7 @@ The following steps will install libraries and tools in `/usr/local`. By
 default, pkg-config does not search in these directories.
 
 ```bash
-export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig
+export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
 ```
 
 #### nlohmann_json library

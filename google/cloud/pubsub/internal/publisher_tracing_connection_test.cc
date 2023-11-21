@@ -90,14 +90,14 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
               OTelAttribute<std::string>(
                   sc::kMessagingDestinationTemplate,
                   "projects/test-project/topics/test-topic"),
-              OTelAttribute<std::string>("messaging.pubsub.ordering_key",
+              OTelAttribute<std::string>("messaging.gcp_pubsub.message.ordering_key",
                                          "ordering-key-0"),
               OTelAttribute<int>("gl-cpp.status_code", 0),
               OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
                                           "messaging.message.envelope.size",
                                           45),
               OTelAttribute<std::string>(sc::kMessagingOperation, "create"),
-              OTelAttribute<std::string>("messaging.message_id", "test-id-0"),
+              OTelAttribute<std::string>(sc::kMessagingMessageId, "test-id-0"),
               OTelAttribute<std::string>(
                   sc::kCodeFunction,
                   "pubsub::PublisherConnection::Publish")))));
@@ -137,7 +137,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
               OTelAttribute<std::string>(
                   sc::kMessagingDestinationTemplate,
                   "projects/test-project/topics/test-topic"),
-              OTelAttribute<std::string>("messaging.pubsub.ordering_key",
+              OTelAttribute<std::string>( "messaging.gcp_pubsub.message.ordering_key",
                                          "ordering-key-0"),
               OTelAttribute<std::string>(sc::kMessagingOperation, "create"),
               OTelAttribute<int>("gl-cpp.status_code", kErrorCode),
@@ -194,7 +194,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOmitsOrderingKey) {
                         SpanNamed("test-topic create"),
                         SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                         Not(SpanHasAttributes(OTelAttribute<std::string>(
-                            "messaging.pubsub.ordering_key", _))))));
+                             "messaging.gcp_pubsub.message.ordering_key", _))))));
 }
 
 TEST(PublisherTracingConnectionTest, FlushSpan) {

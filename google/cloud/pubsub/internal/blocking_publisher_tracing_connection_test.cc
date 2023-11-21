@@ -86,8 +86,9 @@ TEST(BlockingPublisherTracingConnectionTest, PublishSpanOnSuccess) {
               OTelAttribute<std::string>(
                   sc::kMessagingDestinationTemplate,
                   "projects/test-project/topics/test-topic"),
-              OTelAttribute<std::string>("messaging.pubsub.ordering_key",
-                                         "ordering-key-0"),
+              OTelAttribute<std::string>(
+                  "messaging.gcp_pubsub.message.ordering_key",
+                  "ordering-key-0"),
               OTelAttribute<int>("gl-cpp.status_code", 0),
               OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
                                           "messaging.message.envelope.size",
@@ -130,8 +131,9 @@ TEST(BlockingPublisherTracingConnectionTest, PublishSpanOnError) {
               OTelAttribute<std::string>(
                   sc::kMessagingDestinationTemplate,
                   "projects/test-project/topics/test-topic"),
-              OTelAttribute<std::string>("messaging.pubsub.ordering_key",
-                                         "ordering-key-0"),
+              OTelAttribute<std::string>(
+                  "messaging.gcp_pubsub.message.ordering_key",
+                  "ordering-key-0"),
               OTelAttribute<int>("gl-cpp.status_code", kErrorCode),
               OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
                                           "messaging.message.envelope.size",
@@ -161,7 +163,7 @@ TEST(BlockingPublisherTracingConnectionTest, PublishSpanOmitsOrderingKey) {
                         SpanNamed("test-topic create"),
                         SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                         Not(SpanHasAttributes(OTelAttribute<std::string>(
-                            "messaging.pubsub.ordering_key", _))))));
+                             "messaging.gcp_pubsub.message.ordering_key", _))))));
 }
 
 TEST(BlockingPublisherTracingConnectionTest, OptionsSpan) {
