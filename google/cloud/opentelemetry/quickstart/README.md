@@ -125,10 +125,6 @@ is good practice to explicitly set the language standard.
 While OpenTelemetry supports C++>=11, `google-cloud-cpp` requires C++>=14. So
 you can use `-DCMAKE_CXX_STANDARD=14`, `-DCMAKE_CXX_STANDARD=17`, or higher.
 
-OpenTelemetry only works when installed in a location that is on the
-[`find_package()`][find-package] search path. Also, `opentelemetry-cpp` does not
-install `*.pc` files, so it is not yet usable with `make`.
-
 ### Package Managers
 
 #### [`vcpkg`](https://github.com/Microsoft/vcpkg.git)
@@ -197,7 +193,6 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
 [exporter]: https://opentelemetry.io/docs/concepts/signals/traces/#trace-exporters
 [find and view traces]: https://cloud.google.com/trace/docs/trace-overview
-[find-package]: https://cmake.org/cmake/help/latest/command/find_package.html
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [opentelemetry]: https://opentelemetry.io
 [opentelemetry-cpp]: https://github.com/open-telemetry/opentelemetry-cpp
