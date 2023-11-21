@@ -23,6 +23,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
+#include "absl/base/attributes.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/match.h"
 #include "absl/strings/string_view.h"
@@ -346,11 +347,13 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-inline bool StartsWith(absl::Cord const& text, absl::string_view prefix) {
+ABSL_ATTRIBUTE_UNUSED
+bool StartsWith(absl::Cord const& text, absl::string_view prefix) {
   return text.StartsWith(prefix);
 }
 
-inline bool StartsWith(absl::string_view text, absl::string_view prefix) {
+ABSL_ATTRIBUTE_UNUSED
+bool StartsWith(absl::string_view text, absl::string_view prefix) {
   return absl::StartsWith(text, prefix);
 }
 
