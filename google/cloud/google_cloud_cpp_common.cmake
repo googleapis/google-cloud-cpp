@@ -159,6 +159,7 @@ add_library(
     status.h
     status_or.h
     stream_range.h
+    streaming_rpc_metadata.h
     terminate_handler.cc
     terminate_handler.h
     tracing_options.cc

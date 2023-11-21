@@ -20,6 +20,7 @@
 #include "google/cloud/internal/async_streaming_write_rpc.h"
 #include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
 #include "absl/types/optional.h"

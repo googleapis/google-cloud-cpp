@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_WRITE_RPC_LOGGING_H
 
 #include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/log.h"
 #include "google/cloud/tracing_options.h"

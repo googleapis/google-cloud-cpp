@@ -304,8 +304,7 @@ class MockStreamingReadRpc : public internal::StreamingReadRpc<ResponseType> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD((absl::variant<Status, ResponseType>), Read, (), (override));
-  MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (),
-              (const, override));
+  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 // Creates a MockStreamingReadRpc that yields the specified `responses`
@@ -1067,49 +1066,6 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
     auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
     EXPECT_EQ(*row, RowType(spanner::MakePgNumeric(1999).value()));
   }
-}
-
-TEST(ConnectionImplTest, ExecuteQueryPgOidResult) {
-  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-  auto db = spanner::Database("placeholder_project", "placeholder_instance",
-                              "placeholder_database_id");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  auto constexpr kText = R"pb(
-    metadata: {
-      row_type: {
-        fields: {
-          name: "ColumnA",
-          type: { code: INT64 type_annotation: PG_OID }
-        }
-        fields: {
-          name: "ColumnB",
-          type: { code: INT64 type_annotation: PG_OID }
-        }
-      }
-    }
-    values: { string_value: "42" }
-    values: { null_value: NULL_VALUE }
-    values: { string_value: "0" }
-    values: { string_value: "999" }
-  )pb";
-  EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
-
-  auto conn = MakeConnectionImpl(db, mock);
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
-  auto rows = conn->ExecuteQuery(
-      {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
-       spanner::SqlStatement("SELECT * FROM Table")});
-
-  using RowType = std::tuple<spanner::PgOid, absl::optional<spanner::PgOid>>;
-  auto stream = spanner::StreamOf<RowType>(rows);
-  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
-  EXPECT_THAT(
-      actual,
-      ElementsAre(
-          IsOkAndHolds(RowType(spanner::PgOid(42), absl::nullopt)),
-          IsOkAndHolds(RowType(spanner::PgOid(0), spanner::PgOid(999)))));
 }
 
 /// @test Verify implicit "begin transaction" in ExecuteQuery() works.

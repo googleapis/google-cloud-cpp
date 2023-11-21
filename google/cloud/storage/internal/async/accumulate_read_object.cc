@@ -79,7 +79,7 @@ class AsyncAccumulateReadObjectPartialHandle
  public:
   using Response = ::google::storage::v2::ReadObjectResponse;
   using Stream = ::google::cloud::internal::AsyncStreamingReadRpc<Response>;
-  using StreamingRpcMetadata = ::google::cloud::internal::StreamingRpcMetadata;
+  using StreamingRpcMetadata = ::google::cloud::StreamingRpcMetadata;
   using Result = AsyncAccumulateReadObjectResult;
 
   AsyncAccumulateReadObjectPartialHandle(CompletionQueue cq,
@@ -177,8 +177,7 @@ class AsyncAccumulateReadObjectPartialHandle
     auto finish = stream_->Finish();
     finish.then(WaitForFinish{std::move(stream_)});
     promise_.set_value(
-        Result{std::move(accumulator_),
-               google::cloud::internal::StreamingRpcMetadata{},
+        Result{std::move(accumulator_), google::cloud::StreamingRpcMetadata{},
                Status(StatusCode::kDeadlineExceeded,
                       std::string{"Timeout waiting for "} + where)});
   }

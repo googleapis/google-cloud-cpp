@@ -104,6 +104,7 @@ google_cloud_cpp_common_hdrs = [
     "status.h",
     "status_or.h",
     "stream_range.h",
+    "streaming_rpc_metadata.h",
     "terminate_handler.h",
     "tracing_options.h",
     "universe_domain_options.h",

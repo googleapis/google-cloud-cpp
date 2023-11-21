@@ -18,6 +18,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/status.h"
+#include "google/cloud/streaming_rpc_metadata.h"
 #include "google/cloud/version.h"
 #include "absl/types/variant.h"
 #include <grpcpp/grpcpp.h>

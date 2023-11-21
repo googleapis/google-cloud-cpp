@@ -130,8 +130,7 @@ class MockStreamingReadRpc
   MOCK_METHOD(
       (absl::variant<Status, ::google::test::admin::database::v1::Response>),
       Read, (), (override));
-  MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (),
-              (const, override));
+  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 class MockStreamingWriteRpc
@@ -146,8 +145,7 @@ class MockStreamingWriteRpc
               (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::Response>, Close,
               (), (override));
-  MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (),
-              (const, override));
+  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 using MockAsyncStreamingReadWriteRpc =

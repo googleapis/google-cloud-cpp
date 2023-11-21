@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,30 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAMING_RPC_METADATA_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAMING_RPC_METADATA_H
 
-#include "google/cloud/streaming_rpc_metadata.h"
 #include "google/cloud/version.h"
-#include <grpcpp/grpcpp.h>
 #include <map>
 #include <string>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-/// Return interesting bits of metadata stored in the client context.
-StreamingRpcMetadata GetRequestMetadataFromContext(
-    grpc::ClientContext const& context);
+/**
+ * RPC request metadata.
+ *
+ * Once a RPC completes the underlying transport (gRPC or HTTP) may make some
+ * metadata attributes about the request available. You can think of these as
+ * the headers (and maybe trailers) returned by the RPC. Typically these
+ * attributes are used for troubleshooting, and are not necessary to handle the
+ * response.
+ */
+using StreamingRpcMetadata = std::multimap<std::string, std::string>;
 
-/// Format metadata for logging decorators.
-std::string FormatForLoggingDecorator(StreamingRpcMetadata const& metadata);
-
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAMING_RPC_METADATA_H

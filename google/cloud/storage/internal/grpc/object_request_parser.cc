@@ -538,7 +538,7 @@ StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
 
 storage::internal::QueryResumableUploadResponse FromProto(
     google::storage::v2::WriteObjectResponse const& p, Options const& options,
-    google::cloud::internal::StreamingRpcMetadata metadata) {
+    google::cloud::StreamingRpcMetadata metadata) {
   storage::internal::QueryResumableUploadResponse response;
   if (p.has_persisted_size()) {
     response.committed_size = static_cast<std::uint64_t>(p.persisted_size());

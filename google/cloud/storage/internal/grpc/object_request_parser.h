@@ -18,8 +18,9 @@
 #include "google/cloud/storage/async_object_requests.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/grpc_request_metadata.h"
+#include "google/cloud/streaming_rpc_metadata.h"
 #include <google/storage/v2/storage.pb.h>
+#include <grpcpp/grpcpp.h>
 
 namespace google {
 namespace cloud {
@@ -49,7 +50,7 @@ StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
     storage::internal::InsertObjectMediaRequest const& request);
 storage::internal::QueryResumableUploadResponse FromProto(
     google::storage::v2::WriteObjectResponse const& p, Options const& options,
-    google::cloud::internal::StreamingRpcMetadata metadata);
+    google::cloud::StreamingRpcMetadata metadata);
 
 google::storage::v2::ListObjectsRequest ToProto(
     storage::internal::ListObjectsRequest const& request);

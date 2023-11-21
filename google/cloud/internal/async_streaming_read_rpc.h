@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_STREAMING_READ_RPC_H
 
 #include "google/cloud/future.h"
-#include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/status.h"
+#include "google/cloud/streaming_rpc_metadata.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <grpcpp/support/async_stream.h>

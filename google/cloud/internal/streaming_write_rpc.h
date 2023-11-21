@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_WRITE_RPC_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_WRITE_RPC_H
 
-#include "google/cloud/internal/grpc_request_metadata.h"
+#include "google/cloud/streaming_rpc_metadata.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>
