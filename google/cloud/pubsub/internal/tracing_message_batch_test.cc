@@ -40,6 +40,7 @@ using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
+using ::google::cloud::testing_util::SpanKindIsProducer;
 using ::google::cloud::testing_util::SpanLinkAttributesAre;
 using ::google::cloud::testing_util::SpanLinksSizeIs;
 using ::google::cloud::testing_util::SpanNamed;
@@ -136,7 +137,7 @@ TEST(TracingMessageBatch, Flush) {
   EXPECT_THAT(
       spans,
       Contains(AllOf(
-          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanHasInstrumentationScope(), SpanKindIsProducer(),
           SpanNamed("publish"),
           SpanHasAttributes(
               OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 1)),
@@ -217,7 +218,7 @@ TEST(TracingMessageBatch, FlushOnlyIncludeSampledLink) {
   EXPECT_THAT(
       spans,
       Contains(AllOf(
-          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanHasInstrumentationScope(), SpanKindIsProducer(),
           SpanNamed("publish"),
           SpanHasAttributes(
               OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 2)),
@@ -249,7 +250,7 @@ TEST(TracingMessageBatch, FlushSmallBatch) {
   EXPECT_THAT(
       spans,
       Contains(AllOf(
-          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanHasInstrumentationScope(), SpanKindIsProducer(),
           SpanNamed("publish"),
           SpanHasAttributes(
               OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 2)),
@@ -281,7 +282,7 @@ TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {
   EXPECT_THAT(
       spans,
       Contains(AllOf(
-          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanHasInstrumentationScope(), SpanKindIsProducer(),
           SpanNamed("publish"),
           SpanHasAttributes(
               OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount,
@@ -321,10 +322,10 @@ TEST(TracingMessageBatch, FlushLargeBatch) {
                                 sc::kCodeFunction, "BatchSink::AsyncPublish"),
                             OTelAttribute<std::string>(sc::kMessagingOperation,
                                                        "publish")))));
-  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("publish #0"),
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("publish #0"), SpanKindIsClient(),
                                     SpanLinksSizeIs(kDefaultMaxLinks))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("publish #1"), SpanLinksSizeIs(1))));
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("publish #1"), SpanKindIsClient(),
+                                    SpanLinksSizeIs(1))));
 }
 
 TEST(TracingMessageBatch, FlushBatchWithCustomLimit) {
@@ -349,17 +350,17 @@ TEST(TracingMessageBatch, FlushBatchWithCustomLimit) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+      Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsProducer(),
                      SpanNamed("publish"),
                      SpanHasAttributes(
                          OTelAttribute<std::int64_t>(
                              sc::kMessagingBatchMessageCount, kBatchSize),
                          OTelAttribute<std::string>(
                              sc::kCodeFunction, "BatchSink::AsyncPublish")))));
-  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("publish #0"),
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("publish #0"), SpanKindIsClient(),
                                     SpanLinksSizeIs(kMaxLinks))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("publish #1"), SpanLinksSizeIs(1))));
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("publish #1"), SpanKindIsClient(),
+                                    SpanLinksSizeIs(1))));
 }
 
 TEST(TracingMessageBatch, FlushSpanAddsEvent) {

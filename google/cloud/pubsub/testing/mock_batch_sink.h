@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_BATCH_SINK_H
 
 #include "google/cloud/pubsub/internal/batch_sink.h"
+#include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/version.h"
 #include <gmock/gmock.h>
 #include <string>
@@ -32,6 +33,7 @@ class MockBatchSink : public pubsub_internal::BatchSink {
  public:
   ~MockBatchSink() override = default;
 
+  MOCK_METHOD(void, AddMessage, (pubsub::Message const&), (override));
   MOCK_METHOD(future<StatusOr<google::pubsub::v1::PublishResponse>>,
               AsyncPublish, (google::pubsub::v1::PublishRequest), (override));
   MOCK_METHOD(void, ResumePublish, (std::string const&), (override));
