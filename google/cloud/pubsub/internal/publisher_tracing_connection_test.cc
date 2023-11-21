@@ -97,7 +97,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
                                           "messaging.message.envelope.size",
                                           45),
               OTelAttribute<std::string>(sc::kMessagingOperation, "create"),
-              OTelAttribute<std::string>("messaging.message_id", "test-id-0"),
+              OTelAttribute<std::string>(sc::kMessagingMessageId, "test-id-0"),
               OTelAttribute<std::string>(
                   sc::kCodeFunction,
                   "pubsub::PublisherConnection::Publish")))));
