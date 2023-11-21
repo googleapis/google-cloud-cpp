@@ -146,7 +146,7 @@ class TracingMessageBatch : public MessageBatch {
 
   ~TracingMessageBatch() override = default;
 
-  void SaveMessage(pubsub::Message m) override {
+  void AddMessage(pubsub::Message m) override {
     auto active_span = opentelemetry::trace::GetSpan(
         opentelemetry::context::RuntimeContext::GetCurrent());
     active_span->AddEvent("gl-cpp.added_to_batch");
@@ -154,7 +154,7 @@ class TracingMessageBatch : public MessageBatch {
       std::lock_guard<std::mutex> lk(mu_);
       message_spans_.push_back(std::move(active_span));
     }
-    child_->SaveMessage(std::move(m));
+    child_->AddMessage(std::move(m));
   }
 
   std::function<void(future<void>)> Flush() override {

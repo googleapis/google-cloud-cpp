@@ -32,7 +32,7 @@ class NoOpMessageBatch : public MessageBatch {
 
   ~NoOpMessageBatch() override = default;
 
-  void SaveMessage(pubsub::Message) override{};
+  void AddMessage(pubsub::Message) override{};
 
   std::function<void(future<void>)> Flush() override {
     return [](auto) {};
