@@ -34,7 +34,7 @@ class MockMessageBatch : public pubsub_internal::MessageBatch {
  public:
   ~MockMessageBatch() override = default;
 
-  MOCK_METHOD(void, SaveMessage, (pubsub::Message), (override));
+  MOCK_METHOD(void, AddMessage, (pubsub::Message const&), (override));
   MOCK_METHOD(std::function<void(future<void>)>, Flush, (), (override));
 };
 

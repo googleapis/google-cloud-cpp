@@ -39,7 +39,7 @@ class MessageBatch {
 
   // Saves the message from the Publish call. Invoked in
   // `BatchingPublisherConnection::Publish(...)`.
-  virtual void AddMessage(pubsub::Message m) = 0;
+  virtual void AddMessage(pubsub::Message const& m) = 0;
 
   // Captures information about a batch of messages before it's flushed. Invoked
   // in `BatchingPublisherConnection::FlushImpl(...)`. Returns a task to invoke

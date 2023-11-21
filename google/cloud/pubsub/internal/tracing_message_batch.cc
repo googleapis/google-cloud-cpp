@@ -146,7 +146,7 @@ class TracingMessageBatch : public MessageBatch {
 
   ~TracingMessageBatch() override = default;
 
-  void AddMessage(pubsub::Message m) override {
+  void AddMessage(pubsub::Message const& m) override {
     auto active_span = opentelemetry::trace::GetSpan(
         opentelemetry::context::RuntimeContext::GetCurrent());
     active_span->AddEvent("gl-cpp.added_to_batch");
