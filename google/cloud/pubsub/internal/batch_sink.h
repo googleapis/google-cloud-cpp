@@ -39,8 +39,8 @@ class BatchSink {
  public:
   virtual ~BatchSink() = default;
 
-  /// Adds the message to the batch the message.
-  virtual void AddMessage(pubsub::Message m) = 0;
+  /// Adds the message to the batch.
+  virtual void AddMessage(pubsub::Message const& m) = 0;
 
   /// Asynchronously publishes a batch of messages.
   virtual future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
