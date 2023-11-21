@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
-     pubsub::Topic const& topic, pubsub::Message const& m) {
+    pubsub::Topic const& topic, pubsub::Message const& m) {
   namespace sc = opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kProducer;
