@@ -18,7 +18,6 @@
 #include "google/cloud/spanner/version.h"
 #include <cstdint>
 #include <ostream>
-#include <string>
 
 namespace google {
 namespace cloud {
@@ -47,7 +46,7 @@ class PgOid {
    */
   explicit PgOid(std::uint64_t value) : rep_(value) {}
 
-  /// @name Conversion to an OID 4-byte unsigned integer.
+  /// @name Conversion to an OID unsigned four-byte integer.
   ///@{
   explicit operator std::uint64_t() const { return rep_; }
   ///@}
@@ -66,7 +65,7 @@ class PgOid {
   std::uint64_t rep_;
 };
 
-/// Outputs an OID formatted string to the provided stream.
+/// Outputs an OID to the provided stream.
 inline std::ostream& operator<<(std::ostream& os, PgOid const& oid) {
   return os << static_cast<std::uint64_t>(oid);
 }
