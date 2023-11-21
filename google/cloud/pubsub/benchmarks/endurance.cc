@@ -23,7 +23,10 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
+#include "absl/base/attributes.h"
+#include "absl/strings/cord.h"
 #include "absl/strings/match.h"
+#include "absl/strings/string_view.h"
 #include <chrono>
 #include <iostream>
 #include <limits>
@@ -344,6 +347,16 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
+ABSL_ATTRIBUTE_UNUSED
+bool StartsWith(absl::Cord const& text, absl::string_view prefix) {
+  return text.StartsWith(prefix);
+}
+
+ABSL_ATTRIBUTE_UNUSED
+bool StartsWith(absl::string_view text, absl::string_view prefix) {
+  return absl::StartsWith(text, prefix);
+}
+
 pubsub::Message ExperimentFlowControl::GenerateMessage(int task) {
   std::unique_lock<std::mutex> lk(mu_);
   cv_.wait(lk, [&] { return shutdown_ || !overflow_; });
@@ -440,7 +453,7 @@ void PublisherTask(Config const& config, ExperimentFlowControl& flow_control,
       publisher = make_publisher();
     }
     auto message = flow_control.GenerateMessage(task);
-    auto const shutdown = absl::StartsWith(message.data(), "shutdown:");
+    auto const shutdown = StartsWith(message.data(), "shutdown:");
     last_publish = publisher.Publish(std::move(message))
                        .then([&flow_control](future<StatusOr<std::string>> f) {
                          flow_control.Published(f.get().ok());
