@@ -95,6 +95,7 @@ auto MakeChild(
     int count, Links const& links) {
   opentelemetry::trace::StartSpanOptions options;
   options.parent = parent->GetContext();
+  options.kind = opentelemetry::trace::SpanKind::kClient;
   return internal::MakeSpan("publish #" + std::to_string(count),
                             /*attributes=*/{{}},
                             /*links=*/links, options);
