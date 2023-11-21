@@ -19,7 +19,6 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/features.sh
-source module ci/cloudbuild/builds/lib/quickstart.sh
 source module ci/lib/io.sh
 
 read -r ENABLED_FEATURES < <(features::list_full_cmake)
