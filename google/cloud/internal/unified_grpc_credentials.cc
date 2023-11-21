@@ -55,7 +55,8 @@ class GrpcErrorCredentialsAuthentication : public GrpcAuthenticationStrategy {
 
   std::shared_ptr<grpc::Channel> CreateChannel(
       std::string const&, grpc::ChannelArguments const&) override {
-    return {};
+    return grpc::CreateCustomChannel("error:///",
+                                     grpc::InsecureChannelCredentials(), {});
   }
   bool RequiresConfigureContext() const override { return true; }
   Status ConfigureContext(grpc::ClientContext&) override {
