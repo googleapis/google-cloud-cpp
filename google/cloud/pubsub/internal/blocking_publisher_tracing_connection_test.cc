@@ -156,14 +156,14 @@ TEST(BlockingPublisherTracingConnectionTest, PublishSpanOmitsOrderingKey) {
                                                   .Build()});
 
   EXPECT_STATUS_OK(response);
-  EXPECT_THAT(
-      span_catcher->GetSpans(),
-      ElementsAre(AllOf(SpanHasInstrumentationScope(), SpanKindIsProducer(),
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsProducer(),
 
-                        SpanNamed("test-topic create"),
-                        SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                        Not(SpanHasAttributes(OTelAttribute<std::string>(
-                             "messaging.gcp_pubsub.message.ordering_key", _))))));
+                  SpanNamed("test-topic create"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  Not(SpanHasAttributes(OTelAttribute<std::string>(
+                      "messaging.gcp_pubsub.message.ordering_key", _))))));
 }
 
 TEST(BlockingPublisherTracingConnectionTest, OptionsSpan) {
