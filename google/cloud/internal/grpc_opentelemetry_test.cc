@@ -44,6 +44,7 @@ using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanWithParent;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
@@ -206,6 +207,34 @@ TEST(OpenTelemetry, TracedAsyncBackoffDisabled) {
   // Verify that no spans were made.
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, IsEmpty());
+}
+
+TEST(OpenTelemetry, TracedAsyncBackoffPreservesContext) {
+  auto span_catcher = InstallSpanCatcher();
+  auto parent = MakeSpan("parent");
+
+  OTelScope scope(parent);
+  ASSERT_THAT(CurrentOTelContext(), Not(IsEmpty()));
+  auto oc = CurrentOTelContext().back();
+
+  auto const duration = std::chrono::nanoseconds(100);
+  auto mock_cq = std::make_shared<testing_util::MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer(duration))
+      .WillOnce(Return(ByMove(make_ready_future(
+          make_status_or(std::chrono::system_clock::now())))));
+
+  CompletionQueue cq(mock_cq);
+
+  auto f = TracedAsyncBackoff(cq, EnableTracing(Options{}), duration);
+  EXPECT_STATUS_OK(f.get());
+
+  EXPECT_THAT(CurrentOTelContext(), ElementsAre(oc));
+  parent->End();
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(SpanNamed("Async Backoff"), SpanWithParent(parent)),
+                  SpanNamed("parent")));
 }
 
 #else
