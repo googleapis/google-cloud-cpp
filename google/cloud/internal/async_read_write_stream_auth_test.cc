@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_read_write_stream_auth.h"
+#include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -41,17 +42,9 @@ struct FakeResponse {
 
 using BaseStream = AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>;
 using AuthStream = AsyncStreamingReadWriteRpcAuth<FakeRequest, FakeResponse>;
-
-class MockStream : public BaseStream {
- public:
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<FakeResponse>>, Read, (), (override));
-  MOCK_METHOD(future<bool>, Write, (FakeRequest const&, grpc::WriteOptions),
-              (override));
-  MOCK_METHOD(future<bool>, WritesDone, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-};
+using MockStream =
+    ::google::cloud::mocks::MockAsyncStreamingReadWriteRpc<FakeRequest,
+                                                           FakeResponse>;
 
 TEST(AsyncStreamReadWriteAuth, Start) {
   auto factory = AuthStream::StreamFactory([](auto) {
