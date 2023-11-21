@@ -79,7 +79,7 @@ class AsyncAccumulateReadObjectPartialHandle
  public:
   using Response = ::google::storage::v2::ReadObjectResponse;
   using Stream = ::google::cloud::internal::AsyncStreamingReadRpc<Response>;
-  using StreamingRpcMetadata = ::google::cloud::internal::StreamingRpcMetadata;
+  using RpcMetadata = ::google::cloud::RpcMetadata;
   using Result = AsyncAccumulateReadObjectResult;
 
   AsyncAccumulateReadObjectPartialHandle(CompletionQueue cq,
@@ -177,8 +177,7 @@ class AsyncAccumulateReadObjectPartialHandle
     auto finish = stream_->Finish();
     finish.then(WaitForFinish{std::move(stream_)});
     promise_.set_value(
-        Result{std::move(accumulator_),
-               google::cloud::internal::StreamingRpcMetadata{},
+        Result{std::move(accumulator_), RpcMetadata{},
                Status(StatusCode::kDeadlineExceeded,
                       std::string{"Timeout waiting for "} + where)});
   }
@@ -246,9 +245,12 @@ class AsyncAccumulateReadObjectFullHandle
         accumulator_.payload.end(),
         std::make_move_iterator(partial.payload.begin()),
         std::make_move_iterator(partial.payload.end()));
-    accumulator_.metadata.insert(
-        std::make_move_iterator(partial.metadata.begin()),
-        std::make_move_iterator(partial.metadata.end()));
+    accumulator_.metadata.headers.insert(
+        std::make_move_iterator(partial.metadata.headers.begin()),
+        std::make_move_iterator(partial.metadata.headers.end()));
+    accumulator_.metadata.trailers.insert(
+        std::make_move_iterator(partial.metadata.trailers.begin()),
+        std::make_move_iterator(partial.metadata.trailers.end()));
     // We need to make sure the next read is from the same object, not a new
     // version of the object we just read.
     auto const generation = [this] {
@@ -329,7 +331,10 @@ storage_experimental::AsyncReadObjectRangeResponse ToResponse(
     AsyncAccumulateReadObjectResult accumulated, Options const& options) {
   storage_experimental::AsyncReadObjectRangeResponse response;
   response.status = std::move(accumulated.status);
-  response.request_metadata = std::move(accumulated.metadata);
+  response.request_metadata = std::move(accumulated.metadata.headers);
+  response.request_metadata.insert(
+      std::make_move_iterator(accumulated.metadata.trailers.begin()),
+      std::make_move_iterator(accumulated.metadata.trailers.end()));
   response.contents.reserve(accumulated.payload.size());
   for (auto& r : accumulated.payload) {
     if (!r.has_checksummed_data()) continue;

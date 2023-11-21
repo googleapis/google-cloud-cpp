@@ -46,7 +46,7 @@ class MockStreamingWriteRpc
   MOCK_METHOD(bool, Write, (RequestType const&, grpc::WriteOptions),
               (override));
   MOCK_METHOD(StatusOr<ResponseType>, Close, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
+  MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 using MockStream = MockStreamingWriteRpc<int, int>;
@@ -145,13 +145,14 @@ TEST(StreamingWriteRpcTracingTest, Close) {
 TEST(StreamingWriteRpcTracingTest, GetRequestMetadata) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, GetRequestMetadata)
-      .WillOnce(Return(StreamingRpcMetadata{{"key", "value"}}));
+      .WillOnce(Return(RpcMetadata{{{"key", "value"}}, {{"tk", "tv"}}}));
 
   auto span = MakeSpan("span");
   TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
                       span);
   auto md = stream.GetRequestMetadata();
-  EXPECT_THAT(md, ElementsAre(Pair("key", "value")));
+  EXPECT_THAT(md.headers, ElementsAre(Pair("key", "value")));
+  EXPECT_THAT(md.trailers, ElementsAre(Pair("tk", "tv")));
 }
 
 TEST(StreamingWriteRpcTracingTest, SpanEndsOnDestruction) {

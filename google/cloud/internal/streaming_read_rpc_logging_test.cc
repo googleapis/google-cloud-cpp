@@ -35,7 +35,7 @@ class MockStreamingReadRpc : public StreamingReadRpc<ResponseType> {
   ~MockStreamingReadRpc() override = default;
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD((absl::variant<Status, ResponseType>), Read, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
+  MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 class StreamingReadRpcLoggingTest : public ::testing::Test {

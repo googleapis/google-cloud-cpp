@@ -17,6 +17,7 @@
 
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
+#include "google/cloud/rpc_metadata.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include "absl/types/variant.h"
@@ -60,7 +61,7 @@ class StreamingReadRpc {
    * expensive to extract.  Library developers should avoid this function in
    * the critical path.
    */
-  virtual StreamingRpcMetadata GetRequestMetadata() const = 0;
+  virtual RpcMetadata GetRequestMetadata() const = 0;
 };
 
 /// Report the errors in a standalone function to minimize includes
@@ -96,7 +97,7 @@ class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
     return Finish();
   }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     if (!context_) return {};
     return GetRequestMetadataFromContext(*context_);
   }
@@ -133,7 +134,7 @@ class StreamingReadRpcError : public StreamingReadRpc<ResponseType> {
 
   absl::variant<Status, ResponseType> Read() override { return status_; }
 
-  StreamingRpcMetadata GetRequestMetadata() const override { return {}; }
+  RpcMetadata GetRequestMetadata() const override { return {}; }
 
  private:
   Status status_;

@@ -197,13 +197,13 @@ TEST(AsyncStreamingWriteRpcTracing, Finish) {
 TEST(AsyncStreamingWriteRpcTracing, GetRequestMetadata) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, GetRequestMetadata)
-      .WillOnce(Return(StreamingRpcMetadata{{"key", "value"}}));
+      .WillOnce(Return(RpcMetadata{{{"key", "value"}}, {}}));
 
   auto span = MakeSpan("span");
   TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
                       span);
   auto md = stream.GetRequestMetadata();
-  EXPECT_THAT(md, ElementsAre(Pair("key", "value")));
+  EXPECT_THAT(md.headers, ElementsAre(Pair("key", "value")));
 }
 
 TEST(AsyncStreamingWriteRpcTracing, SpanEndsOnDestruction) {

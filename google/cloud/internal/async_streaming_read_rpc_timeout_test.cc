@@ -206,7 +206,8 @@ TEST(AsyncStreamingReadRpcTimeout, Finish) {
 }
 
 TEST(AsyncStreamingReadRpcTimeout, GetRequestMetadata) {
-  auto const expected = StreamingRpcMetadata{{"k1", "v1"}, {"k2", "v2"}};
+  auto const expected =
+      RpcMetadata{{{"k1", "v1"}, {"k2", "v2"}}, {{"t1", "tv1"}}};
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(expected));
@@ -218,7 +219,8 @@ TEST(AsyncStreamingReadRpcTimeout, GetRequestMetadata) {
 
   TestedStream uut(cq, kStartTimeout, kReadTimeout, std::move(mock));
   auto const actual = uut.GetRequestMetadata();
-  EXPECT_THAT(actual, ElementsAreArray(expected));
+  EXPECT_THAT(actual.headers, ElementsAreArray(expected.headers));
+  EXPECT_THAT(actual.trailers, ElementsAreArray(expected.trailers));
 }
 
 }  // namespace

@@ -23,6 +23,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/log.h"
+#include <iterator>
 
 namespace google {
 namespace cloud {
@@ -538,7 +539,7 @@ StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
 
 storage::internal::QueryResumableUploadResponse FromProto(
     google::storage::v2::WriteObjectResponse const& p, Options const& options,
-    google::cloud::internal::StreamingRpcMetadata metadata) {
+    google::cloud::RpcMetadata metadata) {
   storage::internal::QueryResumableUploadResponse response;
   if (p.has_persisted_size()) {
     response.committed_size = static_cast<std::uint64_t>(p.persisted_size());
@@ -546,7 +547,10 @@ storage::internal::QueryResumableUploadResponse FromProto(
   if (p.has_resource()) {
     response.payload = storage_internal::FromProto(p.resource(), options);
   }
-  response.request_metadata = std::move(metadata);
+  response.request_metadata = std::move(metadata.headers);
+  response.request_metadata.insert(
+      std::make_move_iterator(metadata.trailers.begin()),
+      std::make_move_iterator(metadata.trailers.end()));
   return response;
 }
 

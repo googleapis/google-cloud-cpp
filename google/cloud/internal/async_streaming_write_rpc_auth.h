@@ -69,7 +69,7 @@ class AsyncStreamingWriteRpcAuth
 
   future<StatusOr<Response>> Finish() override { return state_->Finish(); }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     return state_->GetRequestMetadata();
   }
 
@@ -109,7 +109,7 @@ class AsyncStreamingWriteRpcAuth
       return stream->Finish();
     }
 
-    StreamingRpcMetadata GetRequestMetadata() {
+    RpcMetadata GetRequestMetadata() {
       std::lock_guard<std::mutex> g{mu};
       return stream->GetRequestMetadata();
     }

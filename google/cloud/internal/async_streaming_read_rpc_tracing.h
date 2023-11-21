@@ -74,7 +74,7 @@ class AsyncStreamingReadRpcTracing : public AsyncStreamingReadRpc<Response> {
         });
   }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     return impl_->GetRequestMetadata();
   }
 

@@ -127,8 +127,8 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
     return last_status;
   }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
-    return impl_ ? impl_->GetRequestMetadata() : StreamingRpcMetadata{};
+  RpcMetadata GetRequestMetadata() const override {
+    return impl_ ? impl_->GetRequestMetadata() : RpcMetadata{};
   }
 
  private:

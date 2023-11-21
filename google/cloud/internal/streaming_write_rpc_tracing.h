@@ -67,7 +67,7 @@ class StreamingWriteRpcTracing
     return EndSpan(*std::move(context_), *std::move(span_), impl_->Close());
   }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     return impl_->GetRequestMetadata();
   }
 

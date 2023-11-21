@@ -64,7 +64,10 @@ StatusOr<storage::internal::ReadSourceResult> GrpcObjectReadSource::Read(
     if (absl::holds_alternative<Status>(data)) {
       status_ = absl::get<Status>(std::move(data));
       auto metadata = stream_->GetRequestMetadata();
-      result.response.headers.insert(metadata.begin(), metadata.end());
+      result.response.headers.insert(metadata.headers.begin(),
+                                     metadata.headers.end());
+      result.response.headers.insert(metadata.trailers.begin(),
+                                     metadata.trailers.end());
       stream_.reset();
       if (!status_.ok()) return status_;
       return result;

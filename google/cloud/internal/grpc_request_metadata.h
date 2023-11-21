@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
 
+#include "google/cloud/rpc_metadata.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>
 #include <map>
@@ -25,15 +26,11 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-/// A simple representation of request metadata.
-using StreamingRpcMetadata = std::multimap<std::string, std::string>;
-
 /// Return interesting bits of metadata stored in the client context.
-StreamingRpcMetadata GetRequestMetadataFromContext(
-    grpc::ClientContext const& context);
+RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context);
 
 /// Format metadata for logging decorators.
-std::string FormatForLoggingDecorator(StreamingRpcMetadata const& metadata);
+std::string FormatForLoggingDecorator(RpcMetadata const& metadata);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
