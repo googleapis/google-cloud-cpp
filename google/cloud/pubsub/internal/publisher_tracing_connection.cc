@@ -43,15 +43,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
-    std::string const& topic, pubsub::Message const& m) {
+     pubsub::Topic const& topic, pubsub::Message const& m) {
   namespace sc = opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kProducer;
   auto span = internal::MakeSpan(
-      topic + " create",
+      topic.topic_id() + " create",
       {{sc::kMessagingSystem, "gcp_pubsub"},
-       {sc::kMessagingDestinationName, topic},
-       {sc::kMessagingDestinationTemplate, "topic"},
+       {sc::kMessagingDestinationName, topic.topic_id()},
+       {sc::kMessagingDestinationTemplate, topic.FullName()},
        {sc::kMessagingOperation, "create"},
        {/*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
         static_cast<std::int64_t>(MessageSize(m))},
@@ -88,7 +88,7 @@ class PublisherTracingConnection : public pubsub::PublisherConnection {
   ~PublisherTracingConnection() override = default;
 
   future<StatusOr<std::string>> Publish(PublishParams p) override {
-    auto span = StartPublishSpan(topic_.FullName(), p.message);
+    auto span = StartPublishSpan(topic_, p.message);
     auto scope = opentelemetry::trace::Scope(span);
 
     InjectTraceContext(p.message, *propagator_);
