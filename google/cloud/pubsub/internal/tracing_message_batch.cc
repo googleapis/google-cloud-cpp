@@ -70,7 +70,8 @@ auto MakeParent(Links const& links, Spans const& message_spans) {
                            static_cast<std::int64_t>(message_spans.size())},
                           {sc::kCodeFunction, "BatchSink::AsyncPublish"},
                           {/*sc::kMessagingOperation=*/
-                           "messaging.operation", "publish"}},
+                           "messaging.operation", "publish"},
+                          {sc::kThreadId, internal::CurrentThreadId()}},
                          /*links*/ std::move(links), options);
 
   // Add metadata to the message spans about the batch sink span.
