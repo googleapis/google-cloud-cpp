@@ -54,7 +54,7 @@ BatchingPublisherConnection::~BatchingPublisherConnection() {
 
 future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     PublishParams p) {
-  batch_->SaveMessage(p.message);
+  batch_->AddMessage(p.message);
   auto const bytes = MessageSize(p.message);
   std::unique_lock<std::mutex> lk(mu_);
   do {
