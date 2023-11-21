@@ -111,3 +111,26 @@ endforeach ()
 # Export the list of unit tests so the Bazel BUILD file can pick it up.
 export_list_to_bazel("storage_benchmarks_unit_tests.bzl"
                      "storage_benchmarks_unit_tests" YEAR "2019")
+
+# We reduce the effort required to implement benchmarks for asynchronous APIs by
+# using C++20 coroutines, exceptions, and newer compilers.  The rest of this
+# file contains only these benchmarks, so return early if the features are not
+# available.
+if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    return()
+endif ()
+if ((CMAKE_CXX_COMPILER_ID STREQUAL "GNU") AND (CMAKE_CXX_COMPILER_VERSION
+                                                VERSION_LESS 10))
+    return()
+endif ()
+
+add_executable(async_throughput_benchmark async_throughput_benchmark.cc)
+target_compile_features(async_throughput_benchmark PRIVATE cxx_std_20)
+# Skip clang-tidy because it will make recommendations based on C++20 and/or
+# C++17. Some of these recommendations will be about header files in
+# `google/cloud/*`. We cannot apply those recommendations because the headers
+# are also used with C++14.
+set_target_properties(async_throughput_benchmark PROPERTIES CXX_CLANG_TIDY "")
+target_link_libraries(
+    async_throughput_benchmark
+    PRIVATE storage_benchmarks google-cloud-cpp::experimental-storage_grpc)

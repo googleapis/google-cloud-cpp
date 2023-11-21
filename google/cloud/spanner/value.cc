@@ -259,6 +259,12 @@ bool Value::TypeProtoIs(PgNumeric const&,
              google::spanner::v1::TypeAnnotationCode::PG_NUMERIC;
 }
 
+bool Value::TypeProtoIs(PgOid const&, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::INT64 &&
+         type.type_annotation() ==
+             google::spanner::v1::TypeAnnotationCode::PG_OID;
+}
+
 //
 // Value::MakeTypeProto
 //
@@ -320,6 +326,13 @@ google::spanner::v1::Type Value::MakeTypeProto(PgNumeric const&) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::NUMERIC);
   t.set_type_annotation(google::spanner::v1::TypeAnnotationCode::PG_NUMERIC);
+  return t;
+}
+
+google::spanner::v1::Type Value::MakeTypeProto(PgOid const&) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::INT64);
+  t.set_type_annotation(google::spanner::v1::TypeAnnotationCode::PG_OID);
   return t;
 }
 
@@ -410,6 +423,12 @@ google::protobuf::Value Value::MakeValueProto(Numeric n) {
 google::protobuf::Value Value::MakeValueProto(PgNumeric n) {
   google::protobuf::Value v;
   v.set_string_value(std::move(n).ToString());
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(PgOid n) {
+  google::protobuf::Value v;
+  v.set_string_value(std::to_string(static_cast<std::uint64_t>(n)));
   return v;
 }
 
@@ -560,6 +579,14 @@ StatusOr<PgNumeric> Value::GetValue(PgNumeric const&,
   auto decoded = MakePgNumeric(pv.string_value());
   if (!decoded) return decoded.status();
   return *decoded;
+}
+
+StatusOr<PgOid> Value::GetValue(PgOid const&, google::protobuf::Value const& pv,
+                                google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing OID");
+  }
+  return PgOid(std::stoull(pv.string_value()));
 }
 
 StatusOr<Timestamp> Value::GetValue(Timestamp,

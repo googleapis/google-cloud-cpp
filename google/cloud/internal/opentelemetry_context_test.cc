@@ -15,6 +15,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry_context.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/context/context.h>
 #include <opentelemetry/context/runtime_context.h>
@@ -26,6 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 
@@ -117,6 +120,41 @@ TEST_F(OTelContextTest, ScopeNoopWhenContextIsAlreadyActive) {
     EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
   }
   EXPECT_THAT(CurrentOTelContext(), ElementsAre(c1, c2));
+}
+
+TEST_F(OTelContextTest, OTelScopeCanBeDetachedBeforeObjectIsDestroyed) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto span = MakeSpan("span");
+  OTelScope scope(span);
+  EXPECT_TRUE(ThereIsAnActiveSpan());
+  ASSERT_THAT(CurrentOTelContext(), Not(IsEmpty()));
+
+  DetachOTelContext(CurrentOTelContext().back());
+  EXPECT_THAT(CurrentOTelContext(), IsEmpty());
+  EXPECT_FALSE(ThereIsAnActiveSpan());
+}
+
+TEST_F(OTelContextTest, OTelScopeDestructorOnlyDetachesItsOwnContext) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto parent = MakeSpan("parent");
+  auto span = MakeSpan("span");
+
+  OTelScope parent_scope(parent);
+  ASSERT_THAT(CurrentOTelContext(), Not(IsEmpty()));
+  auto oc = CurrentOTelContext().back();
+  {
+    OTelScope scope(span);
+
+    // Detach the context associated with `scope`.
+    ASSERT_THAT(CurrentOTelContext(), ElementsAre(oc, _));
+    DetachOTelContext(CurrentOTelContext().back());
+    EXPECT_THAT(CurrentOTelContext(), ElementsAre(oc));
+  }
+  // `scope` has been destroyed. None of this should affect `parent_scope`,
+  // which is associated with `oc`.
+  EXPECT_THAT(CurrentOTelContext(), ElementsAre(oc));
 }
 
 TEST_F(OTelContextTest, ThreadLocalStorage) {

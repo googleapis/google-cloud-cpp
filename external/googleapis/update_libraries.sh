@@ -265,6 +265,7 @@ declare -A -r LIBRARIES=(
   ["support"]="@com_google_googleapis//google/cloud/support/v2:support_cc_grpc"
   ["talent"]="@com_google_googleapis//google/cloud/talent/v4:talent_cc_grpc"
   ["tasks"]="@com_google_googleapis//google/cloud/tasks/v2:tasks_cc_grpc"
+  ["telcoautomation"]="@com_google_googleapis//google/cloud/telcoautomation/v1:telcoautomation_cc_grpc"
   ["texttospeech"]="@com_google_googleapis//google/cloud/texttospeech/v1:texttospeech_cc_grpc"
   ["timeseriesinsights"]="@com_google_googleapis//google/cloud/timeseriesinsights/v1:timeseriesinsights_cc_grpc"
   ["tpu"]="$(

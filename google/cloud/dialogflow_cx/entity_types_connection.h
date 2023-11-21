@@ -182,10 +182,6 @@ class EntityTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
-  ListEntityTypes(
-      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request);
-
   virtual StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
       google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request);
 
@@ -202,6 +198,10 @@ class EntityTypesConnection {
   virtual Status DeleteEntityType(
       google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&
           request);
+
+  virtual StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
+  ListEntityTypes(
+      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request);
 };
 
 /**

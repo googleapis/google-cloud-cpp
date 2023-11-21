@@ -30,15 +30,6 @@ EntityTypesAuth::EntityTypesAuth(
     std::shared_ptr<EntityTypesStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
-EntityTypesAuth::ListEntityTypes(
-    grpc::ClientContext& context,
-    google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->ListEntityTypes(context, request);
-}
-
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesAuth::GetEntityType(
     grpc::ClientContext& context,
@@ -72,6 +63,15 @@ Status EntityTypesAuth::DeleteEntityType(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteEntityType(context, request);
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
+EntityTypesAuth::ListEntityTypes(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListEntityTypes(context, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

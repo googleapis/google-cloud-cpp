@@ -58,40 +58,6 @@ EntityTypesConnectionImpl::EntityTypesConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       EntityTypesConnection::options())) {}
 
-StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
-EntityTypesConnectionImpl::ListEntityTypes(
-    google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request) {
-  request.clear_page_token();
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListEntityTypes(request);
-  char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dialogflow::cx::v3::EntityType>>(
-      std::move(request),
-      [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::EntityTypesRetryPolicy>(
-           retry_policy(*current)),
-       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& r) {
-        return google::cloud::internal::RetryLoop(
-            retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context,
-                google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const&
-                    request) {
-              return stub->ListEntityTypes(context, request);
-            },
-            r, function_name);
-      },
-      [](google::cloud::dialogflow::cx::v3::ListEntityTypesResponse r) {
-        std::vector<google::cloud::dialogflow::cx::v3::EntityType> result(
-            r.entity_types().size());
-        auto& messages = *r.mutable_entity_types();
-        std::move(messages.begin(), messages.end(), result.begin());
-        return result;
-      });
-}
-
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesConnectionImpl::GetEntityType(
     google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) {
@@ -141,6 +107,40 @@ Status EntityTypesConnectionImpl::DeleteEntityType(
              google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&
                  request) { return stub_->DeleteEntityType(context, request); },
       request, __func__);
+}
+
+StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
+EntityTypesConnectionImpl::ListEntityTypes(
+    google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListEntityTypes(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dialogflow::cx::v3::EntityType>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_cx::EntityTypesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const&
+                    request) {
+              return stub->ListEntityTypes(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::dialogflow::cx::v3::ListEntityTypesResponse r) {
+        std::vector<google::cloud::dialogflow::cx::v3::EntityType> result(
+            r.entity_types().size());
+        auto& messages = *r.mutable_entity_types();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

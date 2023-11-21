@@ -15,11 +15,14 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c aiplatform_v1::DatasetServiceClient](@ref aiplatform_v1::DatasetServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref aiplatform_v1::FeatureOnlineStoreAdminServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref aiplatform_v1::FeatureOnlineStoreServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::FeaturestoreServiceClient](@ref aiplatform_v1::FeaturestoreServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::FeaturestoreOnlineServingServiceClient](@ref aiplatform_v1::FeaturestoreOnlineServingServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::IndexServiceClient](@ref aiplatform_v1::IndexServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::IndexEndpointServiceClient](@ref aiplatform_v1::IndexEndpointServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::JobServiceClient](@ref aiplatform_v1::JobServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::LlmUtilityServiceClient](@ref aiplatform_v1::LlmUtilityServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::MatchServiceClient](@ref aiplatform_v1::MatchServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::MetadataServiceClient](@ref aiplatform_v1::MetadataServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::MigrationServiceClient](@ref aiplatform_v1::MigrationServiceClient-endpoint-snippet)
@@ -27,6 +30,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c aiplatform_v1::ModelGardenServiceClient](@ref aiplatform_v1::ModelGardenServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::PipelineServiceClient](@ref aiplatform_v1::PipelineServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::PredictionServiceClient](@ref aiplatform_v1::PredictionServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::ScheduleServiceClient](@ref aiplatform_v1::ScheduleServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::SpecialistPoolServiceClient](@ref aiplatform_v1::SpecialistPoolServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::TensorboardServiceClient](@ref aiplatform_v1::TensorboardServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::VizierServiceClient](@ref aiplatform_v1::VizierServiceClient-endpoint-snippet)
@@ -46,6 +50,18 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page aiplatform_v1::EndpointServiceClient-endpoint-snippet Override aiplatform_v1::EndpointServiceClient Endpoint Configuration
 
 @snippet google/cloud/aiplatform/v1/samples/endpoint_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::FeatureOnlineStoreAdminServiceClient-endpoint-snippet Override aiplatform_v1::FeatureOnlineStoreAdminServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/feature_online_store_admin_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::FeatureOnlineStoreServiceClient-endpoint-snippet Override aiplatform_v1::FeatureOnlineStoreServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/feature_online_store_client_samples.cc set-client-endpoint
 
 */
 
@@ -76,6 +92,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page aiplatform_v1::JobServiceClient-endpoint-snippet Override aiplatform_v1::JobServiceClient Endpoint Configuration
 
 @snippet google/cloud/aiplatform/v1/samples/job_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::LlmUtilityServiceClient-endpoint-snippet Override aiplatform_v1::LlmUtilityServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/llm_utility_client_samples.cc set-client-endpoint
 
 */
 
@@ -118,6 +140,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page aiplatform_v1::PredictionServiceClient-endpoint-snippet Override aiplatform_v1::PredictionServiceClient Endpoint Configuration
 
 @snippet google/cloud/aiplatform/v1/samples/prediction_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::ScheduleServiceClient-endpoint-snippet Override aiplatform_v1::ScheduleServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/schedule_client_samples.cc set-client-endpoint
 
 */
 

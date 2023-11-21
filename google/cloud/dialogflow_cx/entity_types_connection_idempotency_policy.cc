@@ -34,11 +34,6 @@ EntityTypesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<EntityTypesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::ListEntityTypes(
-    google::cloud::dialogflow::cx::v3::ListEntityTypesRequest) {  // NOLINT
-  return Idempotency::kIdempotent;
-}
-
 Idempotency EntityTypesConnectionIdempotencyPolicy::GetEntityType(
     google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const&) {
   return Idempotency::kIdempotent;
@@ -57,6 +52,11 @@ Idempotency EntityTypesConnectionIdempotencyPolicy::UpdateEntityType(
 Idempotency EntityTypesConnectionIdempotencyPolicy::DeleteEntityType(
     google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency EntityTypesConnectionIdempotencyPolicy::ListEntityTypes(
+    google::cloud::dialogflow::cx::v3::ListEntityTypesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<EntityTypesConnectionIdempotencyPolicy>

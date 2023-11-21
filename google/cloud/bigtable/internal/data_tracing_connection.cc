@@ -65,7 +65,7 @@ class DataTracingConnection : public bigtable::DataConnection {
   future<Status> AsyncApply(std::string const& table_name,
                             bigtable::SingleRowMutation mut) override {
     auto span = internal::MakeSpan("bigtable::Table::AsyncApply");
-    auto scope = opentelemetry::trace::Scope(span);
+    internal::OTelScope scope(span);
     return internal::EndSpan(std::move(span),
                              child_->AsyncApply(table_name, std::move(mut)));
   }
@@ -82,12 +82,18 @@ class DataTracingConnection : public bigtable::DataConnection {
   future<std::vector<bigtable::FailedMutation>> AsyncBulkApply(
       std::string const& table_name, bigtable::BulkMutation mut) override {
     auto span = internal::MakeSpan("bigtable::Table::AsyncBulkApply");
-    auto scope = opentelemetry::trace::Scope(span);
+    internal::OTelScope scope(span);
     auto total_mutations = mut.size();
-    auto failures = child_->AsyncBulkApply(table_name, std::move(mut));
-    return failures.then([s = std::move(span), total_mutations](auto f) {
-      return EndBulkApplySpan(*s, total_mutations, f.get());
-    });
+    return child_->AsyncBulkApply(table_name, std::move(mut))
+        .then([s = std::move(span), total_mutations](auto f) {
+          return EndBulkApplySpan(*s, total_mutations, f.get());
+        })
+        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent()](
+                  auto f) {
+          auto t = f.get();
+          internal::DetachOTelContext(oc);
+          return t;
+        });
   }
 
   bigtable::RowReader ReadRowsFull(bigtable::ReadRowsParams params) override {
@@ -123,7 +129,7 @@ class DataTracingConnection : public bigtable::DataConnection {
       bigtable::Filter filter, std::vector<bigtable::Mutation> true_mutations,
       std::vector<bigtable::Mutation> false_mutations) override {
     auto span = internal::MakeSpan("bigtable::Table::AsyncCheckAndMutateRow");
-    auto scope = opentelemetry::trace::Scope(span);
+    internal::OTelScope scope(span);
     return internal::EndSpan(
         std::move(span),
         child_->AsyncCheckAndMutateRow(
@@ -141,7 +147,7 @@ class DataTracingConnection : public bigtable::DataConnection {
   future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows(
       std::string const& table_name) override {
     auto span = internal::MakeSpan("bigtable::Table::AsyncSampleRows");
-    auto scope = opentelemetry::trace::Scope(span);
+    internal::OTelScope scope(span);
     return internal::EndSpan(std::move(span),
                              child_->AsyncSampleRows(table_name));
   }
@@ -157,7 +163,7 @@ class DataTracingConnection : public bigtable::DataConnection {
   future<StatusOr<bigtable::Row>> AsyncReadModifyWriteRow(
       google::bigtable::v2::ReadModifyWriteRowRequest request) override {
     auto span = internal::MakeSpan("bigtable::Table::AsyncReadModifyWriteRow");
-    auto scope = opentelemetry::trace::Scope(span);
+    internal::OTelScope scope(span);
     return internal::EndSpan(
         std::move(span), child_->AsyncReadModifyWriteRow(std::move(request)));
   }
@@ -168,10 +174,14 @@ class DataTracingConnection : public bigtable::DataConnection {
                      bigtable::RowSet row_set, std::int64_t rows_limit,
                      bigtable::Filter filter) override {
     auto span = internal::MakeSpan("bigtable::Table::AsyncReadRows");
-    auto scope = opentelemetry::trace::Scope(span);
-    auto traced_on_finish = [span, on_finish](Status const& status) {
-      return on_finish(internal::EndSpan(*span, status));
-    };
+    internal::OTelScope scope(span);
+    auto traced_on_finish =
+        [span, on_finish,
+         oc = opentelemetry::context::RuntimeContext::GetCurrent()](
+            Status const& status) {
+          internal::DetachOTelContext(oc);
+          return on_finish(internal::EndSpan(*span, status));
+        };
     child_->AsyncReadRows(table_name, std::move(on_row),
                           std::move(traced_on_finish), std::move(row_set),
                           std::move(rows_limit), std::move(filter));
@@ -181,11 +191,17 @@ class DataTracingConnection : public bigtable::DataConnection {
       std::string const& table_name, std::string row_key,
       bigtable::Filter filter) override {
     auto span = internal::MakeSpan("bigtable::Table::AsyncReadRow");
-    auto scope = opentelemetry::trace::Scope(span);
+    internal::OTelScope scope(span);
     return child_
         ->AsyncReadRow(table_name, std::move(row_key), std::move(filter))
         .then([s = std::move(span)](auto f) {
           return EndReadRowSpan(*s, f.get());
+        })
+        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent()](
+                  auto f) {
+          auto t = f.get();
+          internal::DetachOTelContext(oc);
+          return t;
         });
   }
 

@@ -17,6 +17,7 @@
 // source: google/cloud/aiplatform/v1/prediction_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/prediction_auth_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <google/cloud/aiplatform/v1/prediction_service.grpc.pb.h>
 #include <memory>
 
@@ -47,6 +48,42 @@ StatusOr<google::api::HttpBody> PredictionServiceAuth::RawPredict(
   return child_->RawPredict(context, request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
+PredictionServiceAuth::DirectPredict(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DirectPredict(context, request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
+PredictionServiceAuth::DirectRawPredict(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DirectRawPredict(context, request);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingPredictRequest,
+    google::cloud::aiplatform::v1::StreamingPredictResponse>>
+PredictionServiceAuth::AsyncStreamingPredict(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+      google::cloud::aiplatform::v1::StreamingPredictRequest,
+      google::cloud::aiplatform::v1::StreamingPredictResponse>;
+
+  auto& child = child_;
+  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncStreamingPredict(cq, std::move(ctx));
+  };
+  return std::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
 PredictionServiceAuth::ServerStreamingPredict(
@@ -57,6 +94,24 @@ PredictionServiceAuth::ServerStreamingPredict(
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->ServerStreamingPredict(std::move(context), options, request);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
+PredictionServiceAuth::AsyncStreamingRawPredict(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+      google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+      google::cloud::aiplatform::v1::StreamingRawPredictResponse>;
+
+  auto& child = child_;
+  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncStreamingRawPredict(cq, std::move(ctx));
+  };
+  return std::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>

@@ -36,9 +36,6 @@ class EntityTypesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<EntityTypesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListEntityTypes(
-      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request);
-
   virtual google::cloud::Idempotency GetEntityType(
       google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request);
 
@@ -53,6 +50,9 @@ class EntityTypesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteEntityType(
       google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&
           request);
+
+  virtual google::cloud::Idempotency ListEntityTypes(
+      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request);
 };
 
 std::unique_ptr<EntityTypesConnectionIdempotencyPolicy>

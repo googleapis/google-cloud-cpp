@@ -49,6 +49,11 @@ Idempotency SessionsConnectionIdempotencyPolicy::FulfillIntent(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SessionsConnectionIdempotencyPolicy::SubmitAnswerFeedback(
+    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<SessionsConnectionIdempotencyPolicy>
 MakeDefaultSessionsConnectionIdempotencyPolicy() {
   return std::make_unique<SessionsConnectionIdempotencyPolicy>();

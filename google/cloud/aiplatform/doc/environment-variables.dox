@@ -26,6 +26,14 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeFeaturestoreServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_FEATURE_ONLINE_STORE_ADMIN_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
+  used by `MakeFeatureOnlineStoreAdminServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_FEATURE_ONLINE_STORE_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
+  used by `MakeFeatureOnlineStoreServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_INDEX_ENDPOINT_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeIndexEndpointServiceConnection()`.
@@ -37,6 +45,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_JOB_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeJobServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_LLM_UTILITY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
+  used by `MakeLlmUtilityServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_MATCH_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
@@ -65,6 +77,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_PREDICTION_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakePredictionServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SCHEDULE_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
+  used by `MakeScheduleServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_SPECIALIST_POOL_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")

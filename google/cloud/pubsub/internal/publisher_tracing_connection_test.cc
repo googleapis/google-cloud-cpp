@@ -81,7 +81,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
       span_catcher->GetSpans(),
       ElementsAre(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsProducer(),
-          SpanNamed("projects/test-project/topics/test-topic send"),
+          SpanNamed("projects/test-project/topics/test-topic create"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
               OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
@@ -93,8 +93,10 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
               OTelAttribute<std::string>("messaging.pubsub.ordering_key",
                                          "ordering-key-0"),
               OTelAttribute<int>("gl-cpp.status_code", 0),
-              OTelAttribute<std::int64_t>("messaging.message.total_size_bytes",
+              OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
+                                          "messaging.message.envelope.size",
                                           45),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "create"),
               OTelAttribute<std::string>("messaging.message_id", "test-id-0"),
               OTelAttribute<std::string>(
                   sc::kCodeFunction,
@@ -126,7 +128,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
       span_catcher->GetSpans(),
       ElementsAre(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsProducer(),
-          SpanNamed("projects/test-project/topics/test-topic send"),
+          SpanNamed("projects/test-project/topics/test-topic create"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError),
           SpanHasAttributes(
               OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
@@ -137,8 +139,10 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
                                          "topic"),
               OTelAttribute<std::string>("messaging.pubsub.ordering_key",
                                          "ordering-key-0"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "create"),
               OTelAttribute<int>("gl-cpp.status_code", kErrorCode),
-              OTelAttribute<std::int64_t>("messaging.message.total_size_bytes",
+              OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
+                                          "messaging.message.envelope.size",
                                           45)))));
 }
 
@@ -187,7 +191,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOmitsOrderingKey) {
   EXPECT_THAT(span_catcher->GetSpans(),
               ElementsAre(AllOf(
                   SpanHasInstrumentationScope(), SpanKindIsProducer(),
-                  SpanNamed("projects/test-project/topics/test-topic send"),
+                  SpanNamed("projects/test-project/topics/test-topic create"),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                   Not(SpanHasAttributes(OTelAttribute<std::string>(
                       "messaging.pubsub.ordering_key", _))))));

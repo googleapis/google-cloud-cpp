@@ -209,6 +209,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "support",
     "talent",
     "tasks",
+    "telcoautomation",
     "texttospeech",
     "timeseriesinsights",
     "tpu",

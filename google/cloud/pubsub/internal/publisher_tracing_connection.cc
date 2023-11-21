@@ -48,11 +48,12 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kProducer;
   auto span = internal::MakeSpan(
-      topic + " send",
+      topic + " create",
       {{sc::kMessagingSystem, "gcp_pubsub"},
        {sc::kMessagingDestinationName, topic},
        {sc::kMessagingDestinationTemplate, "topic"},
-       {"messaging.message.total_size_bytes",
+       {sc::kMessagingOperation, "create"},
+       {/*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
         static_cast<std::int64_t>(MessageSize(m))},
        {sc::kCodeFunction, "pubsub::PublisherConnection::Publish"}},
       options);
