@@ -141,7 +141,8 @@ TEST(TracingMessageBatch, Flush) {
           SpanHasAttributes(
               OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 1),
               OTelAttribute<std::string>(sc::kCodeFunction,
-                                         "BatchSink::AsyncPublish")),
+                                         "BatchSink::AsyncPublish"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "publish")),
           SpanHasLinks(AllOf(LinkHasSpanContext(message_span->GetContext()),
                              SpanLinkAttributesAre(OTelAttribute<int64_t>(
                                  "messaging.gcp_pubsub.message.link", 0)))))));
@@ -178,7 +179,8 @@ TEST(TracingMessageBatch, FlushOnlyIncludeSampledLink) {
           SpanHasAttributes(
               OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 2),
               OTelAttribute<std::string>(sc::kCodeFunction,
-                                         "BatchSink::AsyncPublish")),
+                                         "BatchSink::AsyncPublish"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "publish")),
           SpanLinksAre(AllOf(LinkHasSpanContext(message_span->GetContext()),
                              SpanLinkAttributesAre(OTelAttribute<int64_t>(
                                  "messaging.gcp_pubsub.message.link", 0)))))));
@@ -212,7 +214,8 @@ TEST(TracingMessageBatch, FlushSmallBatch) {
           SpanHasAttributes(
               OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 2),
               OTelAttribute<std::string>(sc::kCodeFunction,
-                                         "BatchSink::AsyncPublish")),
+                                         "BatchSink::AsyncPublish"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "publish")),
           SpanHasLinks(AllOf(LinkHasSpanContext(message_span1->GetContext()),
                              SpanLinkAttributesAre(OTelAttribute<int64_t>(
                                  "messaging.gcp_pubsub.message.link", 0))),
@@ -240,14 +243,16 @@ TEST(TracingMessageBatch, FlushBatchWithOtelLimit) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
-                     SpanNamed("publish"),
-                     SpanHasAttributes(
-                         OTelAttribute<std::int64_t>(
-                             sc::kMessagingBatchMessageCount, kDefaultMaxLinks),
-                         OTelAttribute<std::string>(sc::kCodeFunction,
-                                                    "BatchSink::AsyncPublish")),
-                     SpanLinksSizeIs(128))));
+      Contains(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("publish"),
+          SpanHasAttributes(
+              OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount,
+                                          kDefaultMaxLinks),
+              OTelAttribute<std::string>(sc::kCodeFunction,
+                                         "BatchSink::AsyncPublish"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "publish")),
+          SpanLinksSizeIs(128))));
 }
 
 TEST(TracingMessageBatch, FlushLargeBatch) {
@@ -271,12 +276,14 @@ TEST(TracingMessageBatch, FlushLargeBatch) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      Contains(AllOf(SpanNamed("publish"),
-                     SpanHasAttributes(
-                         OTelAttribute<std::int64_t>(
-                             sc::kMessagingBatchMessageCount, batch_size),
-                         OTelAttribute<std::string>(
-                             sc::kCodeFunction, "BatchSink::AsyncPublish")))));
+      Contains(AllOf(
+          SpanNamed("publish"),
+          SpanHasAttributes(OTelAttribute<std::int64_t>(
+                                sc::kMessagingBatchMessageCount, batch_size),
+                            OTelAttribute<std::string>(
+                                sc::kCodeFunction, "BatchSink::AsyncPublish"),
+                            OTelAttribute<std::string>(sc::kMessagingOperation,
+                                                       "publish")))));
   EXPECT_THAT(spans, Contains(AllOf(SpanNamed("publish #0"),
                                     SpanLinksSizeIs(kDefaultMaxLinks))));
   EXPECT_THAT(spans,
