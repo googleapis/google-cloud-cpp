@@ -40,6 +40,9 @@ class SequentialBatchSink
 
   ~SequentialBatchSink() override = default;
 
+  /// No-op implementation.
+  void AddMessage(pubsub::Message) override{};
+
   future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
       google::pubsub::v1::PublishRequest request) override;
   void ResumePublish(std::string const& ordering_key) override;
