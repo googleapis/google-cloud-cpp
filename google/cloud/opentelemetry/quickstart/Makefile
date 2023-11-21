@@ -27,10 +27,10 @@ all: $(BIN)/quickstart
 
 # Configuration variables to compile and link against the Google Cloud
 # OpenTelemetry Exporter library and the Google Cloud Storage client.
-CLIENT_MODULE     := google_cloud_cpp_opentelemetry google_cloud_cpp_storage
-CLIENT_CXXFLAGS   := $(shell pkg-config $(CLIENT_MODULE) --cflags)
-CLIENT_CXXLDFLAGS := $(shell pkg-config $(CLIENT_MODULE) --libs-only-L)
-CLIENT_LIBS       := $(shell pkg-config $(CLIENT_MODULE) --libs-only-l)
+EXAMPLE_MODULES    := google_cloud_cpp_opentelemetry google_cloud_cpp_storage
+EXAMPLE_CXXFLAGS   := $(shell pkg-config $(EXAMPLE_MODULES) --cflags)
+EXAMPLE_CXXLDFLAGS := $(shell pkg-config $(EXAMPLE_MODULES) --libs-only-L)
+EXAMPLE_LIBS       := $(shell pkg-config $(EXAMPLE_MODULES) --libs-only-l)
 
 $(BIN)/quickstart: quickstart.cc
-	$(CXXLD) $(CXXFLAGS) $(CLIENT_CXXFLAGS) $(CLIENT_CXXLDFLAGS) -o $@ $^ $(CLIENT_LIBS)
+	$(CXXLD) $(CXXFLAGS) $(EXAMPLE_CXXFLAGS) $(EXAMPLE_CXXLDFLAGS) -o $@ $^ $(EXAMPLE_LIBS)
