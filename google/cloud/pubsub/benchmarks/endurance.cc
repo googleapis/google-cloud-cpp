@@ -25,6 +25,7 @@
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/match.h"
+#include "absl/strings/string_view.h"
 #include <chrono>
 #include <iostream>
 #include <limits>
@@ -345,11 +346,11 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-bool StartsWith(absl::Cord const& text, absl::string_view prefix) {
+inline bool StartsWith(absl::Cord const& text, absl::string_view prefix) {
   return text.StartsWith(prefix);
 }
 
-bool StartsWith(absl::string_view text, absl::string_view prefix) {
+inline bool StartsWith(absl::string_view text, absl::string_view prefix) {
   return absl::StartsWith(text, prefix);
 }
 
