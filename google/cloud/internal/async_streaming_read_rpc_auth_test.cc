@@ -55,7 +55,7 @@ TEST(AsyncStreamReadWriteAuth, Start) {
       return make_ready_future(Status{});
     });
     EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
-      return StreamingRpcMetadata({{"test-only", "value"}});
+      return RpcMetadata({{"test-only", "value"}});
     });
     return std::unique_ptr<BaseStream>(std::move(mock));
   });

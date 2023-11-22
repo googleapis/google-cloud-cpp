@@ -21,7 +21,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_streaming_read_rpc.h"
-#include "google/cloud/streaming_rpc_metadata.h"
+#include "google/cloud/rpc_metadata.h"
 #include "google/cloud/version.h"
 #include <google/storage/v2/storage.pb.h>
 #include <chrono>
@@ -46,7 +46,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 struct AsyncAccumulateReadObjectResult {
   std::vector<google::storage::v2::ReadObjectResponse> payload;
-  google::cloud::StreamingRpcMetadata metadata;
+  google::cloud::RpcMetadata metadata;
   Status status;
 };
 

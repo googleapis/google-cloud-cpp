@@ -130,7 +130,7 @@ class AsyncStreamingWriteRpcImpl
     return op->p.get_future();
   }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     return GetRequestMetadataFromContext(*context_);
   }
 
@@ -195,7 +195,7 @@ class AsyncStreamingWriteRpcError
   future<StatusOr<Response>> Finish() override {
     return make_ready_future(StatusOr<Response>(status_));
   }
-  StreamingRpcMetadata GetRequestMetadata() const override { return {}; }
+  RpcMetadata GetRequestMetadata() const override { return {}; }
 
  private:
   Status status_;

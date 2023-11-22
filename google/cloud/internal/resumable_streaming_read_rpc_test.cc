@@ -47,7 +47,7 @@ class MockStreamingReadRpc : public StreamingReadRpc<FakeResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(ReadReturn, Read, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
+  MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 struct TestRetryablePolicy {

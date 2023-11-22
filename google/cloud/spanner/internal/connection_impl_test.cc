@@ -304,7 +304,7 @@ class MockStreamingReadRpc : public internal::StreamingReadRpc<ResponseType> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD((absl::variant<Status, ResponseType>), Read, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
+  MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 // Creates a MockStreamingReadRpc that yields the specified `responses`

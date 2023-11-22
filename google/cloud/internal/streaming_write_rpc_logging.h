@@ -74,7 +74,7 @@ class StreamingWriteRpcLogging
     return result;
   }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     auto prefix = std::string(__func__) + "(" + request_id_ + ")";
     GCP_LOG(DEBUG) << prefix << " <<";
     auto metadata = stream_->GetRequestMetadata();

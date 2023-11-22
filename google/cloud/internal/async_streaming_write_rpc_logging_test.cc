@@ -126,7 +126,7 @@ TEST(StreamingWriteRpcLoggingTest, GetRequestMetadata) {
 
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
-    return StreamingRpcMetadata({{":test-only", "value"}});
+    return RpcMetadata({{":test-only", "value"}});
   });
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   EXPECT_THAT(stream.GetRequestMetadata(),

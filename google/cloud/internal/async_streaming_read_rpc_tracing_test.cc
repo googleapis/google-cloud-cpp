@@ -170,7 +170,7 @@ TEST(AsyncStreamingReadRpcTracing, Finish) {
 TEST(AsyncStreamingReadRpcTracing, GetRequestMetadata) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, GetRequestMetadata)
-      .WillOnce(Return(StreamingRpcMetadata{{"key", "value"}}));
+      .WillOnce(Return(RpcMetadata{{"key", "value"}}));
 
   auto span = MakeSpan("span");
   TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),

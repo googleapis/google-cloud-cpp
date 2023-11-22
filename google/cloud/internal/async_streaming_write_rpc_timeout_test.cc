@@ -261,7 +261,7 @@ TEST(AsyncStreamingWriteRpcTimeout, Finish) {
 }
 
 TEST(AsyncStreamingWriteRpcTimeout, GetRequestMetadata) {
-  auto const expected = StreamingRpcMetadata{{"k1", "v1"}, {"k2", "v2"}};
+  auto const expected = RpcMetadata{{"k1", "v1"}, {"k2", "v2"}};
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(expected));

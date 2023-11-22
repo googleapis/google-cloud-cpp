@@ -34,9 +34,8 @@ std::string ToString(grpc_compression_algorithm algo) {
 }
 }  // namespace
 
-StreamingRpcMetadata GetRequestMetadataFromContext(
-    grpc::ClientContext const& context) {
-  StreamingRpcMetadata metadata{
+RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context) {
+  RpcMetadata metadata{
       // Use invalid header names (starting with ':') to store the
       // grpc::ClientContext metadata.
       {":grpc-context-peer", context.peer()},
@@ -65,9 +64,8 @@ StreamingRpcMetadata GetRequestMetadataFromContext(
   return metadata;
 }
 
-std::string FormatForLoggingDecorator(StreamingRpcMetadata const& metadata) {
-  auto formatter = [](std::string* output,
-                      StreamingRpcMetadata::value_type const& p) {
+std::string FormatForLoggingDecorator(RpcMetadata const& metadata) {
+  auto formatter = [](std::string* output, RpcMetadata::value_type const& p) {
     *output += absl::StrCat("{", p.first, ": ", p.second, "}");
   };
   return absl::StrJoin(metadata.begin(), metadata.end(), ", ", formatter);

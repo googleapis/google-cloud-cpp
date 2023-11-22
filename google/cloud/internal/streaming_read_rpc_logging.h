@@ -62,7 +62,7 @@ class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
                    << absl::visit(ResultVisitor(tracing_options_), result);
     return result;
   }
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     auto metadata = reader_->GetRequestMetadata();
     GCP_LOG(DEBUG) << __func__ << "() >> metadata={"
                    << FormatForLoggingDecorator(metadata) << "}";

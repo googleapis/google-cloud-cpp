@@ -24,7 +24,7 @@ namespace {
 
 TEST(GrpcRequestMetadata, FormatForLoggingDecorator) {
   struct Test {
-    StreamingRpcMetadata metadata;
+    RpcMetadata metadata;
     std::string expected;
   } cases[] = {
       {{}, ""},

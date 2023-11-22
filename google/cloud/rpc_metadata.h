@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAMING_RPC_METADATA_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAMING_RPC_METADATA_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RPC_METADATA_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RPC_METADATA_H
 
 #include "google/cloud/version.h"
 #include <map>
@@ -32,10 +32,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * attributes are used for troubleshooting, and are not necessary to handle the
  * response.
  */
-using StreamingRpcMetadata = std::multimap<std::string, std::string>;
+using RpcMetadata = std::multimap<std::string, std::string>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAMING_RPC_METADATA_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RPC_METADATA_H

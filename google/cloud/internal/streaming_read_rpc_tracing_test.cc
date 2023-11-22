@@ -43,7 +43,7 @@ class MockStreamingReadRpc : public StreamingReadRpc<ResponseType> {
   ~MockStreamingReadRpc() override = default;
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD((absl::variant<Status, ResponseType>), Read, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
+  MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 void VerifyStream(StreamingReadRpc<int>& stream,
@@ -127,7 +127,7 @@ TEST(StreamingReadRpcTracingTest, Read) {
 TEST(StreamingReadRpcTracingTest, GetRequestMetadata) {
   auto mock = std::make_unique<MockStreamingReadRpc<int>>();
   EXPECT_CALL(*mock, GetRequestMetadata)
-      .WillOnce(Return(StreamingRpcMetadata{{"key", "value"}}));
+      .WillOnce(Return(RpcMetadata{{"key", "value"}}));
 
   auto span = MakeSpan("span");
   StreamingReadRpcTracing<int> stream(std::make_shared<grpc::ClientContext>(),

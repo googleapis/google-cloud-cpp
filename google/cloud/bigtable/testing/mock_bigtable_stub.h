@@ -110,7 +110,7 @@ class MockMutateRowsStream : public google::cloud::internal::StreamingReadRpc<
   using MutateRowsResultType =
       absl::variant<Status, google::bigtable::v2::MutateRowsResponse>;
   MOCK_METHOD(MutateRowsResultType, Read, (), (override));
-  MOCK_METHOD(google::cloud::StreamingRpcMetadata, GetRequestMetadata, (),
+  MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));
 };
 
@@ -121,7 +121,7 @@ class MockReadRowsStream : public google::cloud::internal::StreamingReadRpc<
   using ReadRowsResultType =
       absl::variant<Status, google::bigtable::v2::ReadRowsResponse>;
   MOCK_METHOD(ReadRowsResultType, Read, (), (override));
-  MOCK_METHOD(google::cloud::StreamingRpcMetadata, GetRequestMetadata, (),
+  MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));
 };
 
@@ -133,7 +133,7 @@ class MockSampleRowKeysStream
   using SampleRowKeysResultType =
       absl::variant<Status, google::bigtable::v2::SampleRowKeysResponse>;
   MOCK_METHOD(SampleRowKeysResultType, Read, (), (override));
-  MOCK_METHOD(google::cloud::StreamingRpcMetadata, GetRequestMetadata, (),
+  MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));
 };
 

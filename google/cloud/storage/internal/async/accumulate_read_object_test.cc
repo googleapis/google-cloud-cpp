@@ -28,7 +28,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::StreamingRpcMetadata;
+using ::google::cloud::RpcMetadata;
 using ::google::cloud::storage::testing::MockAsyncObjectMediaStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::AsyncSequencer;
@@ -82,8 +82,7 @@ MakeMockStreamPartial(int id, ReadObjectResponse response,
   EXPECT_CALL(*stream, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status(code, "")))));
   EXPECT_CALL(*stream, GetRequestMetadata)
-      .WillOnce(
-          Return(StreamingRpcMetadata{{"key", "value-" + std::to_string(id)}}));
+      .WillOnce(Return(RpcMetadata{{"key", "value-" + std::to_string(id)}}));
   return stream;
 }
 
@@ -121,7 +120,7 @@ TEST(AsyncAccumulateReadObjectTest, PartialSimple) {
       .WillOnce(Return(ByMove(
           make_ready_future(Status(StatusCode::kUnavailable, "interrupted")))));
   EXPECT_CALL(*mock, GetRequestMetadata)
-      .WillOnce(Return(StreamingRpcMetadata{{"key", "value"}}));
+      .WillOnce(Return(RpcMetadata{{"key", "value"}}));
 
   CompletionQueue cq;
   auto runner = std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
@@ -268,7 +267,7 @@ TEST(AsyncAccumulateReadObjectTest, PartialFinishTimeout) {
     });
   });
   EXPECT_CALL(*mock, GetRequestMetadata)
-      .WillOnce(Return(StreamingRpcMetadata{{"k0", "v0"}, {"k1", "v1"}}));
+      .WillOnce(Return(RpcMetadata{{"k0", "v0"}, {"k1", "v1"}}));
 
   int cancel_count = 0;
   EXPECT_CALL(*mock, Cancel).WillOnce([&] { ++cancel_count; });

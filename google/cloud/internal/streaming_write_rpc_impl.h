@@ -74,7 +74,7 @@ class StreamingWriteRpcImpl
     return std::move(*response_);
   }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     return GetRequestMetadataFromContext(*context_);
   }
 
@@ -114,7 +114,7 @@ class StreamingWriteRpcError
 
   StatusOr<ResponseType> Close() override { return status_; }
 
-  StreamingRpcMetadata GetRequestMetadata() const override { return {}; }
+  RpcMetadata GetRequestMetadata() const override { return {}; }
 
  private:
   Status status_;
