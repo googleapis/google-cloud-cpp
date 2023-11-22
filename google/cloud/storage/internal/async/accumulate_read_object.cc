@@ -177,7 +177,7 @@ class AsyncAccumulateReadObjectPartialHandle
     auto finish = stream_->Finish();
     finish.then(WaitForFinish{std::move(stream_)});
     promise_.set_value(
-        Result{std::move(accumulator_), google::cloud::StreamingRpcMetadata{},
+        Result{std::move(accumulator_), StreamingRpcMetadata{},
                Status(StatusCode::kDeadlineExceeded,
                       std::string{"Timeout waiting for "} + where)});
   }
