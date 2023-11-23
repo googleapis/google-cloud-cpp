@@ -92,6 +92,10 @@ class SqlInstancesServiceTracingConnection
       google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request)
       override;
 
+  StatusOr<google::cloud::sql::v1::Operation> Switchover(
+      google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request)
+      override;
+
   StatusOr<google::cloud::sql::v1::Operation> ResetSslConfig(
       google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request)
       override;

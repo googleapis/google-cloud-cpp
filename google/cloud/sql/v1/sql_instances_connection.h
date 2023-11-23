@@ -228,6 +228,9 @@ class SqlInstancesServiceConnection {
   virtual StatusOr<google::cloud::sql::v1::Operation> PromoteReplica(
       google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request);
 
+  virtual StatusOr<google::cloud::sql::v1::Operation> Switchover(
+      google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request);
+
   virtual StatusOr<google::cloud::sql::v1::Operation> ResetSslConfig(
       google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request);
 

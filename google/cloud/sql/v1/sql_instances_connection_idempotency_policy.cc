@@ -105,6 +105,11 @@ Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::PromoteReplica(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Switchover(
+    google::cloud::sql::v1::SqlInstancesSwitchoverRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ResetSslConfig(
     google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const&) {
   return Idempotency::kNonIdempotent;

@@ -207,7 +207,21 @@ DefaultSqlInstancesServiceRestStub::PromoteReplica(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "promoteReplica"));
+                   request.instance(), "/", "promoteReplica"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("failover", request.failover() ? "1" : "0")}));
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+DefaultSqlInstancesServiceRestStub::Switchover(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) {
+  return rest_internal::Post<google::cloud::sql::v1::Operation>(
+      *service_, rest_context, request, true,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "switchover"));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
