@@ -136,6 +136,14 @@ SqlInstancesServiceClient::PromoteReplica(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceClient::Switchover(
+    google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Switchover(request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceClient::ResetSslConfig(
     google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request,
     Options opts) {

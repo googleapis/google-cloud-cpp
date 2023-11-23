@@ -79,6 +79,9 @@ class SqlInstancesServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency PromoteReplica(
       google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request);
 
+  virtual google::cloud::Idempotency Switchover(
+      google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request);
+
   virtual google::cloud::Idempotency ResetSslConfig(
       google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request);
 

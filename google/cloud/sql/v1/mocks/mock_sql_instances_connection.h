@@ -114,6 +114,11 @@ class MockSqlInstancesServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::sql::v1::Operation>, Switchover,
+      (google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, ResetSslConfig,
               (google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const&
                    request),

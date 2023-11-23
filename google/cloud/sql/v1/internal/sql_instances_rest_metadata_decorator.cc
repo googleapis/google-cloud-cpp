@@ -153,6 +153,14 @@ SqlInstancesServiceRestMetadata::PromoteReplica(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestMetadata::Switchover(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Switchover(rest_context, options, request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::ResetSslConfig(
     rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) {

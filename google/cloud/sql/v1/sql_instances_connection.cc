@@ -121,6 +121,12 @@ SqlInstancesServiceConnection::PromoteReplica(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceConnection::Switchover(
+    google::cloud::sql::v1::SqlInstancesSwitchoverRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceConnection::ResetSslConfig(
     google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
