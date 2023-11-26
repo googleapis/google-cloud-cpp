@@ -38,7 +38,6 @@ namespace cloud {
 namespace golden_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-
 /// The retry policy for `GoldenKitchenSinkConnection`.
 class GoldenKitchenSinkRetryPolicy : public ::google::cloud::RetryPolicy {
  public:

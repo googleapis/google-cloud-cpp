@@ -39,7 +39,6 @@ namespace cloud {
 namespace golden_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-
 /// The retry policy for `GoldenThingAdminConnection`.
 class GoldenThingAdminRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
