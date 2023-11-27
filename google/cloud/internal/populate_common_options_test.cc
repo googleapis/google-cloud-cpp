@@ -49,6 +49,62 @@ TEST(PopulateCommonOptions, Simple) {
               Contains(UserAgentPrefix()));
 }
 
+TEST(PopulateCommonOptions, EmptyEndpointOption) {
+  // Unset all the relevant environment variables.
+  ScopedEnvironment user("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
+  auto actual = PopulateCommonOptions(Options{}.set<EndpointOption>(""), {}, {},
+                                      {}, "default");
+  EXPECT_TRUE(actual.has<EndpointOption>());
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default"));
+  EXPECT_TRUE(actual.has<AuthorityOption>());
+  EXPECT_THAT(actual.get<AuthorityOption>(), Eq("default"));
+  EXPECT_FALSE(actual.has<UserProjectOption>());
+  EXPECT_TRUE(actual.has<TracingComponentsOption>());
+  EXPECT_THAT(actual.get<TracingComponentsOption>(), IsEmpty());
+  EXPECT_TRUE(actual.has<UserAgentProductsOption>());
+  EXPECT_THAT(actual.get<UserAgentProductsOption>(),
+              Contains(UserAgentPrefix()));
+}
+
+TEST(PopulateCommonOptions, EmptyEndpointEnvVar) {
+  // Unset all the relevant environment variables.
+  ScopedEnvironment user("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment endpoint("GOOGLE_CLOUD_CPP_SERVICE_ENDPOINT", "");
+  auto actual = PopulateCommonOptions(
+      Options{}, "GOOGLE_CLOUD_CPP_SERVICE_ENDPOINT", {}, {}, "default");
+  EXPECT_TRUE(actual.has<EndpointOption>());
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default"));
+  EXPECT_TRUE(actual.has<AuthorityOption>());
+  EXPECT_THAT(actual.get<AuthorityOption>(), Eq("default"));
+  EXPECT_FALSE(actual.has<UserProjectOption>());
+  EXPECT_TRUE(actual.has<TracingComponentsOption>());
+  EXPECT_THAT(actual.get<TracingComponentsOption>(), IsEmpty());
+  EXPECT_TRUE(actual.has<UserAgentProductsOption>());
+  EXPECT_THAT(actual.get<UserAgentProductsOption>(),
+              Contains(UserAgentPrefix()));
+}
+
+TEST(PopulateCommonOptions, EmptyEmulatorEnvVar) {
+  // Unset all the relevant environment variables.
+  ScopedEnvironment user("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment endpoint("GOOGLE_CLOUD_CPP_EMULATOR_ENDPOINT", "");
+  auto actual = PopulateCommonOptions(
+      Options{}, {}, "GOOGLE_CLOUD_CPP_EMULATOR_ENDPOINT", {}, "default");
+  EXPECT_TRUE(actual.has<EndpointOption>());
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default"));
+  EXPECT_TRUE(actual.has<AuthorityOption>());
+  EXPECT_THAT(actual.get<AuthorityOption>(), Eq("default"));
+  EXPECT_FALSE(actual.has<UserProjectOption>());
+  EXPECT_TRUE(actual.has<TracingComponentsOption>());
+  EXPECT_THAT(actual.get<TracingComponentsOption>(), IsEmpty());
+  EXPECT_TRUE(actual.has<UserAgentProductsOption>());
+  EXPECT_THAT(actual.get<UserAgentProductsOption>(),
+              Contains(UserAgentPrefix()));
+}
+
 TEST(PopulateCommonOptions, EndpointAuthority) {
   Options optionses[] = {
       Options{},
