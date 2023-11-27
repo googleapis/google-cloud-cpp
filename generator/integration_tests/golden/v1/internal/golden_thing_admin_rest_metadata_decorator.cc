@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
-
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_metadata_decorator.h"
 #include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"

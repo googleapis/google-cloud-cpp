@@ -84,7 +84,6 @@ Status ConnectionGenerator::GenerateHeader() {
   if (!result.ok()) return result;
 
   HeaderPrint(R"""(
-
 /// The retry policy for `$connection_class_name$`.
 class $retry_policy_name$ : public ::google::cloud::RetryPolicy {
  public:
