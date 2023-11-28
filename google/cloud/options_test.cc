@@ -328,6 +328,28 @@ TEST(OptionsSpan, Basics) {
   EXPECT_FALSE(internal::CurrentOptions().has<IntOption>());
 }
 
+TEST(FetchOption, Basics) {
+  auto opts = Options{}.set<StringOption>("foo").set<IntOption>(42);
+
+  auto b = internal::FetchOption<BoolOption>(opts);
+  EXPECT_FALSE(opts.has<BoolOption>());
+  EXPECT_TRUE(opts.has<IntOption>());
+  EXPECT_TRUE(opts.has<StringOption>());
+  EXPECT_FALSE(b.has_value());
+
+  auto i = internal::FetchOption<IntOption>(opts);
+  EXPECT_FALSE(opts.has<BoolOption>());
+  EXPECT_TRUE(opts.has<IntOption>());
+  EXPECT_TRUE(opts.has<StringOption>());
+  EXPECT_THAT(i, Optional(42));
+
+  auto s = internal::FetchOption<StringOption>(opts);
+  EXPECT_FALSE(opts.has<BoolOption>());
+  EXPECT_TRUE(opts.has<IntOption>());
+  EXPECT_TRUE(opts.has<StringOption>());
+  EXPECT_THAT(s, Optional(StrEq("foo")));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
