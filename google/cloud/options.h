@@ -386,8 +386,8 @@ template <typename T>
 absl::optional<typename T::Type> FetchOption(Options const& opts) {
   auto const it = opts.m_.find(typeid(T));
   if (it == opts.m_.end()) return absl::nullopt;
-  auto const* value = it->second->data_address();
-  return *reinterpret_cast<typename T::Type const*>(value);
+  auto const* v = it->second->data_address();
+  return *reinterpret_cast<typename T::Type const*>(v);
 }
 
 /**

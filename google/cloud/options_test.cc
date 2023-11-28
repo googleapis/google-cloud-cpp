@@ -330,11 +330,11 @@ TEST(OptionsSpan, Basics) {
 
 TEST(FetchOption, Basics) {
   auto opts = Options{}.set<StringOption>("foo").set<IntOption>(42);
-
-  auto b = internal::FetchOption<BoolOption>(opts);
   EXPECT_FALSE(opts.has<BoolOption>());
   EXPECT_TRUE(opts.has<IntOption>());
   EXPECT_TRUE(opts.has<StringOption>());
+
+  auto b = internal::FetchOption<BoolOption>(opts);
   EXPECT_FALSE(b.has_value());
 
   auto i = internal::FetchOption<IntOption>(opts);
