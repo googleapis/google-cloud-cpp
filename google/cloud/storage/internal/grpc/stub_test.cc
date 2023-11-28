@@ -150,11 +150,9 @@ TEST_F(GrpcClientTest, QueryResumableUpload) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::QueryWriteStatusRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata,
-                    UnorderedElementsAre(
-                        Pair("x-goog-quota-user", "test-quota-user"),
-                        // Map JSON names to the `resource` subobject
-                        Pair("x-goog-fieldmask", "resource(field1,field2)")));
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_EQ(request.upload_id(), "test-only-upload-id");
         return PermanentError();
       });
@@ -202,8 +200,7 @@ TEST_F(GrpcClientTest, UploadChunk) {
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
                         Pair("x-goog-quota-user", "test-quota-user"),
-                        // Map JSON names to the `resource` subobject
-                        Pair("x-goog-fieldmask", "resource(field1,field2)"),
+                        Pair("x-goog-fieldmask", "field1,field2"),
                         Pair("x-goog-request-params",
                              "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
         ::testing::InSequence sequence;
@@ -510,8 +507,7 @@ TEST_F(GrpcClientTest, InsertObjectMedia) {
                     UnorderedElementsAre(
                         Pair(kIdempotencyTokenHeader, "test-token-1234"),
                         Pair("x-goog-quota-user", "test-quota-user"),
-                        // Map JSON names to the `resource` subobject
-                        Pair("x-goog-fieldmask", "resource(field1,field2)"),
+                        Pair("x-goog-fieldmask", "field1,field2"),
                         Pair("x-goog-request-params",
                              "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
         ::testing::InSequence sequence;
@@ -541,8 +537,7 @@ TEST_F(GrpcClientTest, CopyObject) {
                     UnorderedElementsAre(
                         Pair(kIdempotencyTokenHeader, "test-token-1234"),
                         Pair("x-goog-quota-user", "test-quota-user"),
-                        // Map JSON names to the `resource` subobject
-                        Pair("x-goog-fieldmask", "resource(field1,field2)")));
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.source_bucket(),
                     "projects/_/buckets/test-source-bucket");
         EXPECT_THAT(request.source_object(), "test-source-object");
@@ -573,8 +568,7 @@ TEST_F(GrpcClientTest, CopyObjectTooLarge) {
                     UnorderedElementsAre(
                         Pair(kIdempotencyTokenHeader, "test-token-1234"),
                         Pair("x-goog-quota-user", "test-quota-user"),
-                        // Map JSON names to the `resource` subobject
-                        Pair("x-goog-fieldmask", "resource(field1,field2)")));
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.source_bucket(),
                     "projects/_/buckets/test-source-bucket");
         EXPECT_THAT(request.source_object(), "test-source-object");
@@ -796,8 +790,7 @@ TEST_F(GrpcClientTest, RewriteObject) {
                     UnorderedElementsAre(
                         Pair(kIdempotencyTokenHeader, "test-token-1234"),
                         Pair("x-goog-quota-user", "test-quota-user"),
-                        // Map JSON names to the `resource` subobject
-                        Pair("x-goog-fieldmask", "resource(field1,field2)")));
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.source_bucket(),
                     "projects/_/buckets/test-source-bucket");
         EXPECT_THAT(request.source_object(), "test-source-object");
@@ -828,8 +821,7 @@ TEST_F(GrpcClientTest, CreateResumableUpload) {
                     UnorderedElementsAre(
                         Pair(kIdempotencyTokenHeader, "test-token-1234"),
                         Pair("x-goog-quota-user", "test-quota-user"),
-                        // Map the JSON field names to the `resource` subobject
-                        Pair("x-goog-fieldmask", "resource(field1,field2)")));
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.write_object_spec().resource().bucket(),
                     "projects/_/buckets/test-bucket");
         EXPECT_THAT(request.write_object_spec().resource().name(),

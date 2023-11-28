@@ -217,8 +217,10 @@ TEST_P(GrpcIntegrationTest, QuotaUser) {
 }
 
 TEST_P(GrpcIntegrationTest, FieldFilter) {
-  // TODO(#10991) - using `Fields()` is not working in GCS+gRPC production
-  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
+  if (UsingEmulator()) GTEST_SKIP();
+  auto const* fields = UsingGrpc() ? "resource.bucket,resource.name,resource."
+                                     "generation,resource.content_type"
+                                   : "bucket,name,generation,contentType";
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -226,8 +228,7 @@ TEST_P(GrpcIntegrationTest, FieldFilter) {
 
   auto metadata = client->InsertObject(
       bucket_name(), object_name, LoremIpsum(), IfGenerationMatch(0),
-      ContentType("text/plain"), ContentEncoding("utf-8"),
-      Fields("bucket,name,generation,contentType"));
+      ContentType("text/plain"), ContentEncoding("utf-8"), Fields(fields));
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 

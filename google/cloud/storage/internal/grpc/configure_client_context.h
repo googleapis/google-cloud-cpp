@@ -43,8 +43,7 @@ void AddIdempotencyToken(grpc::ClientContext& ctx,
  */
 template <typename Request>
 void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
-                          Request const& request,
-                          std::string const& prefix = std::string{}) {
+                          Request const& request) {
   // The gRPC API has a single field for the `QuotaUser` parameter, while the
   // JSON API has two:
   //    https://cloud.google.com/storage/docs/json_api/v1/parameters#quotaUser
@@ -61,9 +60,8 @@ void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
   }
 
   if (request.template HasOption<storage::Fields>()) {
-    auto field_mask = request.template GetOption<storage::Fields>().value();
-    if (!prefix.empty()) field_mask = prefix + "(" + field_mask + ")";
-    ctx.AddMetadata("x-goog-fieldmask", std::move(field_mask));
+    ctx.AddMetadata("x-goog-fieldmask",
+                    request.template GetOption<storage::Fields>().value());
   }
   google::cloud::internal::ConfigureContext(ctx, options);
 }
