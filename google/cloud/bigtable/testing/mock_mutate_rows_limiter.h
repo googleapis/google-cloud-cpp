@@ -27,6 +27,7 @@ namespace testing {
 class MockMutateRowsLimiter : public bigtable_internal::MutateRowsLimiter {
  public:
   MOCK_METHOD(void, Acquire, (), (override));
+  MOCK_METHOD(future<void>, AsyncAcquire, (), (override));
   MOCK_METHOD(void, Update, (google::bigtable::v2::MutateRowsResponse const&),
               (override));
 };
