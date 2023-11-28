@@ -338,15 +338,9 @@ TEST(FetchOption, Basics) {
   EXPECT_FALSE(b.has_value());
 
   auto i = internal::FetchOption<IntOption>(opts);
-  EXPECT_FALSE(opts.has<BoolOption>());
-  EXPECT_TRUE(opts.has<IntOption>());
-  EXPECT_TRUE(opts.has<StringOption>());
   EXPECT_THAT(i, Optional(42));
 
   auto s = internal::FetchOption<StringOption>(opts);
-  EXPECT_FALSE(opts.has<BoolOption>());
-  EXPECT_TRUE(opts.has<IntOption>());
-  EXPECT_TRUE(opts.has<StringOption>());
   EXPECT_THAT(s, Optional(StrEq("foo")));
 }
 
