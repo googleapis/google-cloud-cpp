@@ -49,6 +49,30 @@ TEST(PopulateCommonOptions, Simple) {
               Contains(UserAgentPrefix()));
 }
 
+TEST(PopulateCommonOptions, EmptyEndpointOption) {
+  auto actual = PopulateCommonOptions(Options{}.set<EndpointOption>(""), {}, {},
+                                      {}, "default");
+  EXPECT_TRUE(actual.has<EndpointOption>());
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default"));
+}
+
+TEST(PopulateCommonOptions, EmptyEndpointEnvVar) {
+  ScopedEnvironment endpoint("GOOGLE_CLOUD_CPP_SERVICE_ENDPOINT", "");
+  auto actual = PopulateCommonOptions(
+      Options{}, "GOOGLE_CLOUD_CPP_SERVICE_ENDPOINT", {}, {}, "default");
+  EXPECT_TRUE(actual.has<EndpointOption>());
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default"));
+}
+
+TEST(PopulateCommonOptions, EmptyEmulatorEnvVar) {
+  ScopedEnvironment endpoint("GOOGLE_CLOUD_CPP_EMULATOR_ENDPOINT", "");
+  auto actual = PopulateCommonOptions(
+      Options{}, {}, "GOOGLE_CLOUD_CPP_EMULATOR_ENDPOINT", {}, "default");
+  EXPECT_TRUE(actual.has<EndpointOption>());
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default"));
+}
+
+// TODO(#13191): Simplify into multiple tests.
 TEST(PopulateCommonOptions, EndpointAuthority) {
   Options optionses[] = {
       Options{},
