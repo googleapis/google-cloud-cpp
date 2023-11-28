@@ -206,11 +206,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.59.2.tar.gz",
-            "https://github.com/grpc/grpc/archive/v1.59.2.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.60.0.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.60.0.tar.gz",
         ],
-        sha256 = "a3a65f0129c4922c5d7f4c11dcd40083a12ca54076fd3a927bcd63c53b7e44a5",
-        strip_prefix = "grpc-1.59.2",
+        sha256 = "437068b8b777d3b339da94d3498f1dc20642ac9bfa76db43abdd522186b1542b",
+        strip_prefix = "grpc-1.60.0",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
