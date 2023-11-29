@@ -27,8 +27,8 @@
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_084.pb.h>
-#include <google/cloud/compute/v1/internal/common_132.pb.h>
+#include <google/cloud/compute/v1/internal/common_083.pb.h>
+#include <google/cloud/compute/v1/internal/common_131.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PACKET_MIRRORINGS_V1_PACKET_MIRRORINGS_PROTO_EXPORT_H

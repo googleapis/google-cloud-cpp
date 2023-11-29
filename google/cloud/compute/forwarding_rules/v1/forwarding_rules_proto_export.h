@@ -29,9 +29,9 @@
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
 #include <google/cloud/compute/v1/internal/common_040.pb.h>
 #include <google/cloud/compute/v1/internal/common_041.pb.h>
-#include <google/cloud/compute/v1/internal/common_074.pb.h>
-#include <google/cloud/compute/v1/internal/common_098.pb.h>
-#include <google/cloud/compute/v1/internal/common_127.pb.h>
+#include <google/cloud/compute/v1/internal/common_073.pb.h>
+#include <google/cloud/compute/v1/internal/common_097.pb.h>
+#include <google/cloud/compute/v1/internal/common_126.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FORWARDING_RULES_V1_FORWARDING_RULES_PROTO_EXPORT_H
