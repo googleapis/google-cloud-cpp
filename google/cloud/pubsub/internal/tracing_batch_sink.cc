@@ -184,7 +184,9 @@ class TracingBatchSink : public BatchSink {
         });
   }
 
-  void ResumePublish(std::string const& ordering_key) override{};
+  void ResumePublish(std::string const& ordering_key) override{
+      child_->ResumePublish(ordering_key);
+  };
 
  private:
   std::shared_ptr<BatchSink> child_;
