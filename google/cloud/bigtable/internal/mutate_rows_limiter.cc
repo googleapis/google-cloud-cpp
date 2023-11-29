@@ -87,7 +87,7 @@ std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(
   };
   sleeper = internal::MakeTracedSleeper(
       options, std::move(sleeper), "gl-cpp.bigtable.bulk_apply_throttling");
-  auto async_sleeper = [&cq, options](duration d) {
+  auto async_sleeper = [cq = std::move(cq), options](duration d) mutable {
     // Capture `options` by value because the source `options` gets moved from.
     return internal::TracedAsyncBackoff(cq, options, d,
                                         "gl-cpp.bigtable.bulk_apply_throttling")
