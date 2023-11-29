@@ -210,8 +210,7 @@ class Options {
   ValueTypeT<T> const& get() const {
     auto const it = m_.find(typeid(T));
     if (it == m_.end()) return internal::DefaultValue<ValueTypeT<T>>();
-    auto const* value = it->second->data_address();
-    return *reinterpret_cast<ValueTypeT<T> const*>(value);
+    return *reinterpret_cast<ValueTypeT<T> const*>(it->second->data_address());
   }
 
   /**
@@ -241,8 +240,7 @@ class Options {
       p = m_.emplace(typeid(T), std::make_unique<Data<T>>(std::move(value)))
               .first;
     }
-    auto* v = p->second->data_address();
-    return *reinterpret_cast<ValueTypeT<T>*>(v);
+    return *reinterpret_cast<ValueTypeT<T>*>(p->second->data_address());
   }
 
  private:
@@ -386,8 +384,7 @@ template <typename T>
 absl::optional<typename T::Type> FetchOption(Options const& opts) {
   auto const it = opts.m_.find(typeid(T));
   if (it == opts.m_.end()) return absl::nullopt;
-  auto const* v = it->second->data_address();
-  return *reinterpret_cast<typename T::Type const*>(v);
+  return *reinterpret_cast<typename T::Type const*>(it->second->data_address());
 }
 
 /**
