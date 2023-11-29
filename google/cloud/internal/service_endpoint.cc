@@ -29,8 +29,12 @@ StatusOr<std::string> DetermineServiceEndpoint(
     absl::optional<std::string> endpoint_env_var,
     absl::optional<std::string> endpoint_option, std::string default_endpoint,
     Options const& options) {
-  if (endpoint_env_var.has_value()) return *endpoint_env_var;
-  if (endpoint_option.has_value()) return *endpoint_option;
+  if (endpoint_env_var.has_value() && !endpoint_env_var->empty()) {
+    return *endpoint_env_var;
+  }
+  if (endpoint_option.has_value() && !endpoint_option->empty()) {
+    return *endpoint_option;
+  }
   if (!absl::EndsWith(default_endpoint, ".")) {
     absl::StrAppend(&default_endpoint, ".");
   }
