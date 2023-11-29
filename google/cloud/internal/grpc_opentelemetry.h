@@ -117,6 +117,7 @@ future<StatusOr<std::chrono::system_clock::time_point>> TracedAsyncBackoff(
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   (void)options;
+  (void)name;
   return cq.MakeRelativeTimer(duration);
 }
 
