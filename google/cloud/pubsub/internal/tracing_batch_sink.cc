@@ -140,8 +140,7 @@ Spans MakeBatchSinkSpans(Spans const& message_spans, Options const& options) {
  */
 class TracingBatchSink : public BatchSink {
  public:
-  explicit TracingBatchSink(std::shared_ptr<BatchSink> child,
-                               Options opts)
+  explicit TracingBatchSink(std::shared_ptr<BatchSink> child, Options opts)
       : child_(std::move(child)), options_(std::move(opts)) {}
 
   ~TracingBatchSink() override = default;
@@ -157,7 +156,8 @@ class TracingBatchSink : public BatchSink {
     child_->AddMessage(std::move(m));
   }
 
-  std::function<void(future<void>)> Flush() override {
+  future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
+      google::pubsub::v1::PublishRequest request) override {
     decltype(message_spans_) message_spans;
     {
       std::lock_guard<std::mutex> lk(mu_);
@@ -172,20 +172,22 @@ class TracingBatchSink : public BatchSink {
         std::make_shared<internal::OTelScope>(batch_sink_spans.front());
     // Capture the scope so it stays alive until the returned function
     // is called.
-    return [scope = std::move(scope),
-            oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-            next = child_->Flush(), spans = std::move(batch_sink_spans),
-            message_spans = std::move(message_spans)](auto f) mutable {
-      for (auto& span : message_spans) {
-        span->AddEvent("gl-cpp.publish_end");
-      }
-      for (auto& span : spans) {
-        internal::EndSpan(*span);
-      }
-      internal::DetachOTelContext(oc);
-      next(std::move(f));
-    };
+    return child_->AsyncPublish(std::move(request))
+        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+               spans = std::move(batch_sink_spans),
+               message_spans = std::move(message_spans)](auto f) mutable {
+          for (auto& span : message_spans) {
+            span->AddEvent("gl-cpp.publish_end");
+          }
+          for (auto& span : spans) {
+            internal::EndSpan(*span);
+          }
+          internal::DetachOTelContext(oc);
+          return f;
+        });
   }
+
+  void ResumePublish(std::string const& ordering_key) override{};
 
  private:
   std::shared_ptr<BatchSink> child_;
@@ -198,7 +200,7 @@ class TracingBatchSink : public BatchSink {
 std::shared_ptr<BatchSink> MakeTracingBatchSink(
     std::shared_ptr<BatchSink> batch_sink, Options opts) {
   return std::make_shared<TracingBatchSink>(std::move(batch_sink),
-                                               std::move(opts));
+                                            std::move(opts));
 }
 
 #else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
