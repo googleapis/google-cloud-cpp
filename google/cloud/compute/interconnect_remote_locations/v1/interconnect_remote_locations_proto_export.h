@@ -26,8 +26,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_REMOTE_LOCATIONS_V1_INTERCONNECT_REMOTE_LOCATIONS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_065.pb.h>
-#include <google/cloud/compute/v1/internal/common_067.pb.h>
+#include <google/cloud/compute/v1/internal/common_064.pb.h>
+#include <google/cloud/compute/v1/internal/common_066.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_REMOTE_LOCATIONS_V1_INTERCONNECT_REMOTE_LOCATIONS_PROTO_EXPORT_H

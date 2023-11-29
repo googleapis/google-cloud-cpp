@@ -29,9 +29,9 @@
 #include <google/cloud/compute/v1/internal/common_007.pb.h>
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
 #include <google/cloud/compute/v1/internal/common_031.pb.h>
-#include <google/cloud/compute/v1/internal/common_099.pb.h>
-#include <google/cloud/compute/v1/internal/common_119.pb.h>
-#include <google/cloud/compute/v1/internal/common_132.pb.h>
+#include <google/cloud/compute/v1/internal/common_098.pb.h>
+#include <google/cloud/compute/v1/internal/common_118.pb.h>
+#include <google/cloud/compute/v1/internal/common_131.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SUBNETWORKS_V1_SUBNETWORKS_PROTO_EXPORT_H

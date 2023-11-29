@@ -113,7 +113,7 @@ class NodeTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_types.v1.AggregatedListNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L70}
-  /// [google.cloud.cpp.compute.v1.NodeTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L290}
+  /// [google.cloud.cpp.compute.v1.NodeTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_079.proto#L290}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -154,7 +154,7 @@ class NodeTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_types.v1.AggregatedListNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L70}
-  /// [google.cloud.cpp.compute.v1.NodeTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L290}
+  /// [google.cloud.cpp.compute.v1.NodeTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_079.proto#L290}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -185,7 +185,7 @@ class NodeTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L148}
-  /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L31}
+  /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_079.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
@@ -217,7 +217,7 @@ class NodeTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L148}
-  /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L31}
+  /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_079.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
@@ -255,7 +255,7 @@ class NodeTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L162}
-  /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L31}
+  /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_079.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(
@@ -295,7 +295,7 @@ class NodeTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L162}
-  /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L31}
+  /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_079.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(

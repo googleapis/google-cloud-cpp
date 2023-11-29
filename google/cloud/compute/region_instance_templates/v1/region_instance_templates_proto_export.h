@@ -33,8 +33,7 @@
 #include <google/cloud/compute/v1/internal/common_024.pb.h>
 #include <google/cloud/compute/v1/internal/common_029.pb.h>
 #include <google/cloud/compute/v1/internal/common_033.pb.h>
-#include <google/cloud/compute/v1/internal/common_047.pb.h>
-#include <google/cloud/compute/v1/internal/common_073.pb.h>
+#include <google/cloud/compute/v1/internal/common_072.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCE_TEMPLATES_V1_REGION_INSTANCE_TEMPLATES_PROTO_EXPORT_H
