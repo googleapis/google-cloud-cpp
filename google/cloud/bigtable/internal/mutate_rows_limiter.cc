@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <algorithm>
 #include <thread>
@@ -76,7 +77,7 @@ void ThrottlingMutateRowsLimiter::Update(
 }
 
 std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(
-    Options const& options) {
+    CompletionQueue cq, Options const& options) {
   if (!options.get<bigtable::experimental::BulkApplyThrottlingOption>()) {
     return std::make_shared<NoopMutateRowsLimiter>();
   }
@@ -86,8 +87,12 @@ std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(
   };
   sleeper = internal::MakeTracedSleeper(
       options, std::move(sleeper), "gl-cpp.bigtable.bulk_apply_throttling");
-  // TODO(#12959) - use a real sleeper.
-  auto async_sleeper = [](duration) { return make_ready_future(); };
+  auto async_sleeper = [&cq, options](duration d) {
+    // Capture `options` by value because the source `options` gets moved from.
+    return internal::TracedAsyncBackoff(cq, options, d,
+                                        "gl-cpp.bigtable.bulk_apply_throttling")
+        .then([](auto f) { (void)f.get(); });
+  };
   return std::make_shared<ThrottlingMutateRowsLimiter>(
       std::make_shared<internal::SteadyClock>(), std::move(sleeper),
       std::move(async_sleeper), kInitialPeriod, kMinPeriod, kMaxPeriod,

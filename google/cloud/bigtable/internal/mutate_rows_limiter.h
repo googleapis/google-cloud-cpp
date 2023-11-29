@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_MUTATE_ROWS_LIMITER_H
 
 #include "google/cloud/bigtable/internal/rate_limiter.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/clock.h"
 #include "google/cloud/options.h"
@@ -98,7 +99,7 @@ class ThrottlingMutateRowsLimiter : public MutateRowsLimiter {
 };
 
 std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(
-    Options const& options);
+    CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

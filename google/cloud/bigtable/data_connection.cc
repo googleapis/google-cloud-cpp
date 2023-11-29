@@ -164,7 +164,8 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
   auto background =
       google::cloud::internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigtable_internal::CreateBigtableStub(background->cq(), options);
-  auto limiter = bigtable_internal::MakeMutateRowsLimiter(options);
+  auto limiter =
+      bigtable_internal::MakeMutateRowsLimiter(background->cq(), options);
   std::shared_ptr<DataConnection> conn =
       std::make_shared<bigtable_internal::DataConnectionImpl>(
           std::move(background), std::move(stub), std::move(limiter),
