@@ -178,11 +178,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_protobuf/v25.0.tar.gz",
-            "https://github.com/protocolbuffers/protobuf/archive/v25.0.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_protobuf/v25.1.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v25.1.tar.gz",
         ],
-        sha256 = "7beed9c511d632cff7c22ac0094dd7720e550153039d5da7e059bcceb488474a",
-        strip_prefix = "protobuf-25.0",
+        sha256 = "9bd87b8280ef720d3240514f884e56a712f2218f0d693b48050c836028940a42",
+        strip_prefix = "protobuf-25.1",
     )
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
