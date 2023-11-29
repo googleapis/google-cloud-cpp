@@ -41,13 +41,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<AutoMlStub> CreateDefaultAutoMlStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  auto endpoint_option = [&]() -> absl::optional<std::string> {
-    if (!options.has<EndpointOption>()) return absl::nullopt;
-    return options.get<EndpointOption>();
-  }();
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_ML_ENDPOINT"),
-      std::move(endpoint_option), "automl.googleapis.com", options);
+      internal::FetchOption<EndpointOption>(options), "automl.googleapis.com",
+      options);
 
   std::shared_ptr<AutoMlStub> stub;
   std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;

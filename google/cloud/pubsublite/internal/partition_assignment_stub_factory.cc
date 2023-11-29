@@ -42,14 +42,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<PartitionAssignmentServiceStub>
 CreateDefaultPartitionAssignmentServiceStub(google::cloud::CompletionQueue cq,
                                             Options const& options) {
-  auto endpoint_option = [&]() -> absl::optional<std::string> {
-    if (!options.has<EndpointOption>()) return absl::nullopt;
-    return options.get<EndpointOption>();
-  }();
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv(
           "GOOGLE_CLOUD_CPP_PARTITION_ASSIGNMENT_SERVICE_ENDPOINT"),
-      std::move(endpoint_option), "pubsublite.googleapis.com", options);
+      internal::FetchOption<EndpointOption>(options),
+      "pubsublite.googleapis.com", options);
 
   std::shared_ptr<PartitionAssignmentServiceStub> stub;
   std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;

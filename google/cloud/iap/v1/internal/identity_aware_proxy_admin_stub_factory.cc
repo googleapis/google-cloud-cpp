@@ -42,14 +42,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<IdentityAwareProxyAdminServiceStub>
 CreateDefaultIdentityAwareProxyAdminServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  auto endpoint_option = [&]() -> absl::optional<std::string> {
-    if (!options.has<EndpointOption>()) return absl::nullopt;
-    return options.get<EndpointOption>();
-  }();
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv(
           "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_ADMIN_SERVICE_ENDPOINT"),
-      std::move(endpoint_option), "iap.googleapis.com", options);
+      internal::FetchOption<EndpointOption>(options), "iap.googleapis.com",
+      options);
 
   std::shared_ptr<IdentityAwareProxyAdminServiceStub> stub;
   std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;

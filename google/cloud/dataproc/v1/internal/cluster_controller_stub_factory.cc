@@ -41,13 +41,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ClusterControllerStub> CreateDefaultClusterControllerStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  auto endpoint_option = [&]() -> absl::optional<std::string> {
-    if (!options.has<EndpointOption>()) return absl::nullopt;
-    return options.get<EndpointOption>();
-  }();
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv("GOOGLE_CLOUD_CPP_CLUSTER_CONTROLLER_ENDPOINT"),
-      std::move(endpoint_option), "dataproc.googleapis.com", options);
+      internal::FetchOption<EndpointOption>(options), "dataproc.googleapis.com",
+      options);
 
   std::shared_ptr<ClusterControllerStub> stub;
   std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;

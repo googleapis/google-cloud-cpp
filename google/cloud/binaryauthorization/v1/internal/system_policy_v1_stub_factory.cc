@@ -41,14 +41,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<SystemPolicyV1Stub> CreateDefaultSystemPolicyV1Stub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  auto endpoint_option = [&]() -> absl::optional<std::string> {
-    if (!options.has<EndpointOption>()) return absl::nullopt;
-    return options.get<EndpointOption>();
-  }();
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv("GOOGLE_CLOUD_CPP_SYSTEM_POLICY_V1_ENDPOINT"),
-      std::move(endpoint_option), "binaryauthorization.googleapis.com",
-      options);
+      internal::FetchOption<EndpointOption>(options),
+      "binaryauthorization.googleapis.com", options);
 
   std::shared_ptr<SystemPolicyV1Stub> stub;
   std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;

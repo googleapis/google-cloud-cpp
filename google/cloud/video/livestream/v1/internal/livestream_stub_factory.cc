@@ -41,13 +41,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<LivestreamServiceStub> CreateDefaultLivestreamServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  auto endpoint_option = [&]() -> absl::optional<std::string> {
-    if (!options.has<EndpointOption>()) return absl::nullopt;
-    return options.get<EndpointOption>();
-  }();
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv("GOOGLE_CLOUD_CPP_LIVESTREAM_SERVICE_ENDPOINT"),
-      std::move(endpoint_option), "livestream.googleapis.com", options);
+      internal::FetchOption<EndpointOption>(options),
+      "livestream.googleapis.com", options);
 
   std::shared_ptr<LivestreamServiceStub> stub;
   std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;

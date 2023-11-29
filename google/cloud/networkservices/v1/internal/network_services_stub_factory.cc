@@ -41,13 +41,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<NetworkServicesStub> CreateDefaultNetworkServicesStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  auto endpoint_option = [&]() -> absl::optional<std::string> {
-    if (!options.has<EndpointOption>()) return absl::nullopt;
-    return options.get<EndpointOption>();
-  }();
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv("GOOGLE_CLOUD_CPP_NETWORK_SERVICES_ENDPOINT"),
-      std::move(endpoint_option), "networkservices.googleapis.com", options);
+      internal::FetchOption<EndpointOption>(options),
+      "networkservices.googleapis.com", options);
 
   std::shared_ptr<NetworkServicesStub> stub;
   std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;

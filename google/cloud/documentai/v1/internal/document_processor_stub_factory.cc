@@ -42,13 +42,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<DocumentProcessorServiceStub>
 CreateDefaultDocumentProcessorServiceStub(google::cloud::CompletionQueue cq,
                                           Options const& options) {
-  auto endpoint_option = [&]() -> absl::optional<std::string> {
-    if (!options.has<EndpointOption>()) return absl::nullopt;
-    return options.get<EndpointOption>();
-  }();
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv("GOOGLE_CLOUD_CPP_DOCUMENT_PROCESSOR_SERVICE_ENDPOINT"),
-      std::move(endpoint_option), "documentai.googleapis.com", options);
+      internal::FetchOption<EndpointOption>(options),
+      "documentai.googleapis.com", options);
 
   std::shared_ptr<DocumentProcessorServiceStub> stub;
   std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;
