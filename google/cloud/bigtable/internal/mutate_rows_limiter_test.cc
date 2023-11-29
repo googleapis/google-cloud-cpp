@@ -250,21 +250,19 @@ using ::testing::IsEmpty;
 
 TEST(MakeMutateRowsLimiter, TracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
+  std::vector<std::unique_ptr<opentelemetry::sdk::trace::SpanData>> spans;
 
   auto limiter = MakeMutateRowsLimiter(
       CompletionQueue{},
       EnableTracing(Options{}.set<BulkApplyThrottlingOption>(true)));
   // With the default settings, we should expect throttling by the second
   // request. Still, go up to 100 in case instructions are slow.
-  for (auto i = 0; i != 100; ++i) {
+  for (auto i = 0; i != 100 && spans.empty(); ++i) {
     limiter->Acquire();
-    auto spans = span_catcher->GetSpans();
-    if (spans.empty()) continue;
-    EXPECT_THAT(spans,
-                Contains(SpanNamed("gl-cpp.bigtable.bulk_apply_throttling")));
-    return;
+    spans = span_catcher->GetSpans();
   }
-  GTEST_FAIL() << "No spans created when tracing is enabled.";
+  EXPECT_THAT(spans,
+              Contains(SpanNamed("gl-cpp.bigtable.bulk_apply_throttling")));
 }
 
 TEST(MakeMutateRowsLimiter, TracingDisabled) {
@@ -283,6 +281,7 @@ TEST(MakeMutateRowsLimiter, TracingDisabled) {
 
 TEST(MakeMutateRowsLimiter, TracingEnabledAsync) {
   auto span_catcher = testing_util::InstallSpanCatcher();
+  std::vector<std::unique_ptr<opentelemetry::sdk::trace::SpanData>> spans;
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillRepeatedly([] {
@@ -293,15 +292,12 @@ TEST(MakeMutateRowsLimiter, TracingEnabledAsync) {
       cq, EnableTracing(Options{}.set<BulkApplyThrottlingOption>(true)));
   // With the default settings, we should expect throttling by the second
   // request. Still, go up to 100 in case instructions are slow.
-  for (auto i = 0; i != 100; ++i) {
+  for (auto i = 0; i != 100 && spans.empty(); ++i) {
     limiter->AsyncAcquire().get();
-    auto spans = span_catcher->GetSpans();
-    if (spans.empty()) continue;
-    EXPECT_THAT(spans,
-                Contains(SpanNamed("gl-cpp.bigtable.bulk_apply_throttling")));
-    return;
+    spans = span_catcher->GetSpans();
   }
-  GTEST_FAIL() << "No spans created when tracing is enabled.";
+  EXPECT_THAT(spans,
+              Contains(SpanNamed("gl-cpp.bigtable.bulk_apply_throttling")));
 }
 
 TEST(MakeMutateRowsLimiter, TracingDisabledAsync) {
