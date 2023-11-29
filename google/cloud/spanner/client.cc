@@ -35,15 +35,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-// Returns an option value as an `absl::optional`. If `OptionType` is
-// not present in `opts`, the returned optional is empty (disengaged).
-template <typename OptionType>
-absl::optional<typename OptionType::Type> OptOpt(Options const& opts) {
-  absl::optional<typename OptionType::Type> optopt;
-  if (opts.has<OptionType>()) optopt = opts.get<OptionType>();
-  return optopt;
-}
-
 // Extracts (removes and returns) an option value from `opts`. If
 // `OptionType` is not present, returns a default-constructed value.
 template <typename OptionType>
@@ -241,7 +232,7 @@ StatusOr<CommitResult> Client::Commit(
   using RerunnablePolicy = spanner_internal::SafeTransactionRerun;
 
   auto const txn_opts = Transaction::ReadWriteOptions().WithTag(
-      OptOpt<TransactionTagOption>(internal::CurrentOptions()));
+      internal::FetchOption<TransactionTagOption>(internal::CurrentOptions()));
   Transaction txn = MakeReadWriteTransaction(txn_opts);
   for (;;) {
     StatusOr<Mutations> mutations;
