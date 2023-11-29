@@ -46,7 +46,7 @@ RUN dnf makecache && dnf install -y libxslt doxygen
 RUN echo 'root:' | chpasswd
 
 WORKDIR /var/tmp/build/json
-RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
