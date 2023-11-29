@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/fake_clock.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -29,6 +30,7 @@ namespace {
 using Clock = ThrottlingMutateRowsLimiter::Clock;
 using ::google::cloud::bigtable::experimental::BulkApplyThrottlingOption;
 using ::google::cloud::testing_util::FakeSteadyClock;
+using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::testing::MockFunction;
 using ::testing::NotNull;
 
@@ -229,12 +231,12 @@ TEST(MutateRowsLimiter, AsyncBasicRateLimiting) {
 }
 
 TEST(MutateRowsLimiter, MakeMutateRowsLimiter) {
-  auto noop =
-      MakeMutateRowsLimiter(Options{}.set<BulkApplyThrottlingOption>(false));
+  auto noop = MakeMutateRowsLimiter(
+      CompletionQueue{}, Options{}.set<BulkApplyThrottlingOption>(false));
   EXPECT_THAT(dynamic_cast<NoopMutateRowsLimiter*>(noop.get()), NotNull());
 
-  auto throttling =
-      MakeMutateRowsLimiter(Options{}.set<BulkApplyThrottlingOption>(true));
+  auto throttling = MakeMutateRowsLimiter(
+      CompletionQueue{}, Options{}.set<BulkApplyThrottlingOption>(true));
   EXPECT_THAT(dynamic_cast<ThrottlingMutateRowsLimiter*>(throttling.get()),
               NotNull());
 }
@@ -248,30 +250,70 @@ using ::testing::IsEmpty;
 
 TEST(MakeMutateRowsLimiter, TracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
+  std::vector<std::unique_ptr<opentelemetry::sdk::trace::SpanData>> spans;
 
   auto limiter = MakeMutateRowsLimiter(
+      CompletionQueue{},
       EnableTracing(Options{}.set<BulkApplyThrottlingOption>(true)));
   // With the default settings, we should expect throttling by the second
   // request. Still, go up to 100 in case instructions are slow.
-  for (auto i = 0; i != 100; ++i) {
+  for (auto i = 0; i != 100 && spans.empty(); ++i) {
     limiter->Acquire();
-    auto spans = span_catcher->GetSpans();
-    if (spans.empty()) continue;
-    EXPECT_THAT(spans,
-                Contains(SpanNamed("gl-cpp.bigtable.bulk_apply_throttling")));
-    break;
+    spans = span_catcher->GetSpans();
   }
+  EXPECT_THAT(spans,
+              Contains(SpanNamed("gl-cpp.bigtable.bulk_apply_throttling")));
 }
 
 TEST(MakeMutateRowsLimiter, TracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto limiter = MakeMutateRowsLimiter(
+      CompletionQueue{},
       DisableTracing(Options{}.set<BulkApplyThrottlingOption>(true)));
   // We generally expect throttling by the second response. Still, go up to 5 to
   // be a little bit more conclusive.
   for (auto i = 0; i != 5; ++i) {
     limiter->Acquire();
+    EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
+  }
+}
+
+TEST(MakeMutateRowsLimiter, TracingEnabledAsync) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  std::vector<std::unique_ptr<opentelemetry::sdk::trace::SpanData>> spans;
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillRepeatedly([] {
+    return make_ready_future(make_status_or(std::chrono::system_clock::now()));
+  });
+  CompletionQueue cq(mock_cq);
+  auto limiter = MakeMutateRowsLimiter(
+      cq, EnableTracing(Options{}.set<BulkApplyThrottlingOption>(true)));
+  // With the default settings, we should expect throttling by the second
+  // request. Still, go up to 100 in case instructions are slow.
+  for (auto i = 0; i != 100 && spans.empty(); ++i) {
+    limiter->AsyncAcquire().get();
+    spans = span_catcher->GetSpans();
+  }
+  EXPECT_THAT(spans,
+              Contains(SpanNamed("gl-cpp.bigtable.bulk_apply_throttling")));
+}
+
+TEST(MakeMutateRowsLimiter, TracingDisabledAsync) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillRepeatedly([] {
+    return make_ready_future(make_status_or(std::chrono::system_clock::now()));
+  });
+  CompletionQueue cq(mock_cq);
+  auto limiter = MakeMutateRowsLimiter(
+      cq, DisableTracing(Options{}.set<BulkApplyThrottlingOption>(true)));
+  // We generally expect throttling by the second response. Still, go up to 5 to
+  // be a little bit more conclusive.
+  for (auto i = 0; i != 5; ++i) {
+    limiter->AsyncAcquire().get();
     EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
   }
 }

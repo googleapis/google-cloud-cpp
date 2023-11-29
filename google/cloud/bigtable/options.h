@@ -176,10 +176,6 @@ namespace experimental {
  * @note This option must be supplied to `MakeDataConnection()` in order to take
  * effect.
  *
- * @note This feature has only been implemented for the synchronous
- * `Table::BulkApply()`. It does not have an effect on `Table::AsyncBulkApply()`
- * or `MutationBatcher::AsyncApply()`.
- *
  * @see https://cloud.google.com/bigtable/docs/writes#flow-control
  *
  * [autoscaling]: https://cloud.google.com/bigtable/docs/autoscaling
