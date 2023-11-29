@@ -340,7 +340,7 @@ AsyncConnectionImpl::WriteObjectImpl(
   auto configure = [current, request = std::move(request),
                     upload =
                         response->upload_id()](grpc::ClientContext& context) {
-    ApplyQueryParameters(context, *current, request, "resource");
+    ApplyQueryParameters(context, *current, request);
     ApplyResumableUploadRoutingHeader(context, upload);
   };
 
@@ -379,7 +379,7 @@ AsyncConnectionImpl::WriteObjectImpl(
           : storage::internal::CreateNullHashFunction();
   auto configure = [current, request = std::move(request),
                     upload = id](grpc::ClientContext& context) {
-    ApplyQueryParameters(context, *current, request, "resource");
+    ApplyQueryParameters(context, *current, request);
     ApplyResumableUploadRoutingHeader(context, upload);
   };
   return WriteObjectImpl(std::move(current), std::move(configure),
