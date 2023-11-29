@@ -98,13 +98,10 @@ Status StubFactoryGenerator::GenerateCc() {
 std::shared_ptr<$stub_class_name$>
 CreateDefault$stub_class_name$(
     google::cloud::CompletionQueue cq, Options const& options) {
-  auto endpoint_option = [&]() -> absl::optional<std::string> {
-    if (!options.has<EndpointOption>()) return absl::nullopt;
-    return options.get<EndpointOption>();
-  }();
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv("$service_endpoint_env_var$"),
-      std::move(endpoint_option), "$service_endpoint$", options);
+      internal::FetchOption<EndpointOption>(options), "$service_endpoint$",
+      options);
 
   std::shared_ptr<$stub_class_name$> stub;
   std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;
