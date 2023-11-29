@@ -40,6 +40,15 @@ TEST(DetermineServiceEndpoint, EnvVarSet) {
   EXPECT_THAT(result, IsOkAndHolds(kEnvVarEndpoint));
 }
 
+TEST(DetermineServiceEndpoint, EnvVarEmpty) {
+  auto constexpr kEnvVarEndpoint = "";
+  Options options;
+  auto result = DetermineServiceEndpoint(kEnvVarEndpoint,
+                                         ExtractOption<EndpointOption>(options),
+                                         kDefaultEndpoint, options);
+  EXPECT_THAT(result, IsOkAndHolds(absl::StrCat(kDefaultEndpoint, ".")));
+}
+
 TEST(DetermineServiceEndpoint, EndpointOptionSet) {
   auto constexpr kOptionEndpoint = "option.testing.net";
   auto options = Options{}.set<EndpointOption>(kOptionEndpoint);
@@ -47,6 +56,15 @@ TEST(DetermineServiceEndpoint, EndpointOptionSet) {
                                          ExtractOption<EndpointOption>(options),
                                          kDefaultEndpoint, options);
   EXPECT_THAT(result, IsOkAndHolds(kOptionEndpoint));
+}
+
+TEST(DetermineServiceEndpoint, EndpointOptionEmpty) {
+  auto constexpr kOptionEndpoint = "";
+  auto options = Options{}.set<EndpointOption>(kOptionEndpoint);
+  auto result = DetermineServiceEndpoint(absl::nullopt,
+                                         ExtractOption<EndpointOption>(options),
+                                         kDefaultEndpoint, options);
+  EXPECT_THAT(result, IsOkAndHolds(absl::StrCat(kDefaultEndpoint, ".")));
 }
 
 TEST(DetermineServiceEndpoint, UniverseDomainSetWithNonEmptyValue) {
