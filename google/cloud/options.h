@@ -40,6 +40,8 @@ bool IsEmpty(Options const&);
 template <typename T>
 absl::optional<typename T::Type> ExtractOption(Options&);
 template <typename T>
+absl::optional<typename T::Type> FetchOption(Options const&);
+template <typename T>
 inline T const& DefaultValue() {
   static auto const* const kDefaultValue = new T{};
   return *kDefaultValue;
@@ -250,6 +252,8 @@ class Options {
   friend bool internal::IsEmpty(Options const&);
   template <typename T>
   friend absl::optional<typename T::Type> internal::ExtractOption(Options&);
+  template <typename T>
+  friend absl::optional<typename T::Type> internal::FetchOption(Options const&);
 
   // The type-erased data holder of all the option values.
   class DataHolder {
@@ -370,6 +374,20 @@ absl::optional<typename T::Type> ExtractOption(Options& opts) {
   auto dh = std::move(it->second);
   opts.m_.erase(it);
   return std::move(*reinterpret_cast<typename T::Type*>(dh->data_address()));
+}
+
+/**
+ * Returns the value for `T` from @p opts, or nullopt if `T` was
+ * not set.  This is intended for code paths that do not want to consume an
+ * option, but still want to know if the option was set or not, along with its
+ * value.
+ */
+template <typename T>
+absl::optional<typename T::Type> FetchOption(Options const& opts) {
+  auto const it = opts.m_.find(typeid(T));
+  if (it == opts.m_.end()) return absl::nullopt;
+  auto const* v = it->second->data_address();
+  return *reinterpret_cast<typename T::Type const*>(v);
 }
 
 /**
