@@ -98,8 +98,8 @@ class ThrottlingMutateRowsLimiter : public MutateRowsLimiter {
   double max_factor_;
 };
 
-std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(
-    CompletionQueue cq, Options const& options);
+std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(CompletionQueue cq,
+                                                         Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
