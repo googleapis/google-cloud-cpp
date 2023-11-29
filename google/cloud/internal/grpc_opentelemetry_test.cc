@@ -179,7 +179,8 @@ TEST(OpenTelemetry, TracedAsyncBackoffEnabled) {
           make_status_or(std::chrono::system_clock::now())))));
   CompletionQueue cq(mock_cq);
 
-  auto f = TracedAsyncBackoff(cq, EnableTracing(Options{}), duration);
+  auto f = TracedAsyncBackoff(cq, EnableTracing(Options{}), duration,
+                              "Async Backoff");
   EXPECT_STATUS_OK(f.get());
 
   // Verify that a span was made.
@@ -201,7 +202,8 @@ TEST(OpenTelemetry, TracedAsyncBackoffDisabled) {
               CancelledError("cancelled")))));
   CompletionQueue cq(mock_cq);
 
-  auto f = TracedAsyncBackoff(cq, DisableTracing(Options{}), duration);
+  auto f = TracedAsyncBackoff(cq, DisableTracing(Options{}), duration,
+                              "Async Backoff");
   EXPECT_THAT(f.get(), StatusIs(StatusCode::kCancelled, "cancelled"));
 
   // Verify that no spans were made.
@@ -225,7 +227,8 @@ TEST(OpenTelemetry, TracedAsyncBackoffPreservesContext) {
 
   CompletionQueue cq(mock_cq);
 
-  auto f = TracedAsyncBackoff(cq, EnableTracing(Options{}), duration);
+  auto f = TracedAsyncBackoff(cq, EnableTracing(Options{}), duration,
+                              "Async Backoff");
   EXPECT_STATUS_OK(f.get());
 
   EXPECT_THAT(CurrentOTelContext(), ElementsAre(oc));
@@ -247,7 +250,7 @@ TEST(NoOpenTelemetry, TracedAsyncBackoff) {
           make_status_or(std::chrono::system_clock::now())))));
   CompletionQueue cq(mock_cq);
 
-  auto f = TracedAsyncBackoff(cq, Options{}, duration);
+  auto f = TracedAsyncBackoff(cq, Options{}, duration, "Async Backoff");
   EXPECT_STATUS_OK(f.get());
 }
 

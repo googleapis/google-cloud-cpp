@@ -251,7 +251,8 @@ class AsyncRestRetryLoopImpl
     if (state.cancelled) return;
     SetPending(state.operation,
                internal::TracedAsyncBackoff(cq_, *call_context_.options,
-                                            backoff_policy_->OnCompletion())
+                                            backoff_policy_->OnCompletion(),
+                                            "Async Backoff")
                    .then([self](future<TimerArgType> f) {
                      self->OnBackoff(f.get());
                    }));
