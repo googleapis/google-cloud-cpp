@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/tracing_message_batch.h"
+#include "google/cloud/pubsub/internal/tracing_batch_sink.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/options.h"
@@ -138,13 +138,13 @@ Spans MakeBatchSinkSpans(Spans const& message_spans, Options const& options) {
  * Records spans related to a batch messages across calls and
  * callbacks in the `BatchingPublisherConnection`.
  */
-class TracingMessageBatch : public MessageBatch {
+class TracingBatchSink : public BatchSink {
  public:
-  explicit TracingMessageBatch(std::shared_ptr<MessageBatch> child,
+  explicit TracingBatchSink(std::shared_ptr<BatchSink> child,
                                Options opts)
       : child_(std::move(child)), options_(std::move(opts)) {}
 
-  ~TracingMessageBatch() override = default;
+  ~TracingBatchSink() override = default;
 
   void AddMessage(pubsub::Message const& m) override {
     auto active_span = opentelemetry::trace::GetSpan(
@@ -188,24 +188,24 @@ class TracingMessageBatch : public MessageBatch {
   }
 
  private:
-  std::shared_ptr<MessageBatch> child_;
+  std::shared_ptr<BatchSink> child_;
   std::mutex mu_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       message_spans_;  // ABSL_GUARDED_BY(mu_)
   Options options_;
 };
 
-std::shared_ptr<MessageBatch> MakeTracingMessageBatch(
-    std::shared_ptr<MessageBatch> message_batch, Options opts) {
-  return std::make_shared<TracingMessageBatch>(std::move(message_batch),
+std::shared_ptr<BatchSink> MakeTracingBatchSink(
+    std::shared_ptr<BatchSink> batch_sink, Options opts) {
+  return std::make_shared<TracingBatchSink>(std::move(batch_sink),
                                                std::move(opts));
 }
 
 #else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<MessageBatch> MakeTracingMessageBatch(
-    std::shared_ptr<MessageBatch> message_batch, Options) {
-  return message_batch;
+std::shared_ptr<BatchSink> MakeTracingBatchSink(
+    std::shared_ptr<BatchSink> batch_sink, Options) {
+  return batch_sink;
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
