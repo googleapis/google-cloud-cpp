@@ -151,8 +151,6 @@ TEST(TracingBatchSink, AsyncPublish) {
   EXPECT_CALL(*mock, AddMessage(_));
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_TRUE(OTelContextCaptured());
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(1)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
@@ -163,7 +161,7 @@ TEST(TracingBatchSink, AsyncPublish) {
   AddMessages(initial_spans, batch_sink);
 
   auto response = batch_sink->AsyncPublish(MakeRequest(1)).get();
-  ASSERT_THAT(response, IsOk());
+  EXPECT_THAT(response, IsOk());
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
@@ -186,8 +184,6 @@ TEST(TracingBatchSink, PublishSpanHasAttributes) {
   EXPECT_CALL(*mock, AddMessage(_));
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_TRUE(OTelContextCaptured());
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(1)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
@@ -196,7 +192,7 @@ TEST(TracingBatchSink, PublishSpanHasAttributes) {
   AddMessages(initial_spans, batch_sink);
 
   auto response = batch_sink->AsyncPublish(MakeRequest(1)).get();
-  ASSERT_THAT(response, IsOk());
+  EXPECT_THAT(response, IsOk());
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,
@@ -224,8 +220,6 @@ TEST(TracingBatchSink, AsyncPublishOnlyIncludeSampledLink) {
   EXPECT_CALL(*mock, AddMessage(_)).Times(2);
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_TRUE(OTelContextCaptured());
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(2)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
@@ -234,7 +228,7 @@ TEST(TracingBatchSink, AsyncPublishOnlyIncludeSampledLink) {
   auto initial_spans = {message_span, unsampled_span};
   AddMessages(initial_spans, batch_sink);
   auto response = batch_sink->AsyncPublish(MakeRequest(2)).get();
-  ASSERT_THAT(response, IsOk());
+  EXPECT_THAT(response, IsOk());
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
@@ -258,8 +252,6 @@ TEST(TracingBatchSink, AsyncPublishSmallBatch) {
   EXPECT_CALL(*mock, AddMessage(_)).Times(2);
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_TRUE(OTelContextCaptured());
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(2)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
@@ -267,7 +259,7 @@ TEST(TracingBatchSink, AsyncPublishSmallBatch) {
   auto initial_spans = {message_span1, message_span2};
   AddMessages(initial_spans, batch_sink);
   auto response = batch_sink->AsyncPublish(MakeRequest(2)).get();
-  ASSERT_THAT(response, IsOk());
+  EXPECT_THAT(response, IsOk());
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
@@ -291,8 +283,6 @@ TEST(TracingBatchSink, AsyncPublishBatchWithOtelLimit) {
   EXPECT_CALL(*mock, AddMessage(_)).Times(kDefaultMaxLinks);
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_TRUE(OTelContextCaptured());
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(kDefaultMaxLinks)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
@@ -300,7 +290,7 @@ TEST(TracingBatchSink, AsyncPublishBatchWithOtelLimit) {
   auto batch_sink = MakeTestBatchSink(std::move(mock));
   AddMessages(CreateSpans(kDefaultMaxLinks), batch_sink);
   auto response = batch_sink->AsyncPublish(MakeRequest(kDefaultMaxLinks)).get();
-  ASSERT_THAT(response, IsOk());
+  EXPECT_THAT(response, IsOk());
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
@@ -319,8 +309,6 @@ TEST(TracingBatchSink, AsyncPublishLargeBatch) {
   EXPECT_CALL(*mock, AddMessage(_)).Times(batch_size);
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_TRUE(OTelContextCaptured());
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(batch_size)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
@@ -329,7 +317,7 @@ TEST(TracingBatchSink, AsyncPublishLargeBatch) {
 
   AddMessages(CreateSpans(batch_size), batch_sink);
   auto response = batch_sink->AsyncPublish(MakeRequest(batch_size)).get();
-  ASSERT_THAT(response, IsOk());
+  EXPECT_THAT(response, IsOk());
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, Contains(AllOf(
@@ -350,8 +338,6 @@ TEST(TracingBatchSink, AsyncPublishBatchWithCustomLimit) {
   EXPECT_CALL(*mock, AddMessage(_)).Times(kBatchSize);
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_TRUE(OTelContextCaptured());
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(kBatchSize)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
@@ -361,7 +347,7 @@ TEST(TracingBatchSink, AsyncPublishBatchWithCustomLimit) {
   auto span_catcher = InstallSpanCatcher();
   AddMessages(CreateSpans(kBatchSize), batch_sink);
   auto response = batch_sink->AsyncPublish(MakeRequest(kBatchSize)).get();
-  ASSERT_THAT(response, IsOk());
+  EXPECT_THAT(response, IsOk());
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, Contains(AllOf(
@@ -381,8 +367,6 @@ TEST(TracingBatchSink, AsyncPublishSpanAddsEvent) {
   auto mock = std::make_unique<pubsub_testing::MockBatchSink>();
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_TRUE(OTelContextCaptured());
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(1)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
@@ -392,7 +376,7 @@ TEST(TracingBatchSink, AsyncPublishSpanAddsEvent) {
   auto message_spans = CreateSpans(1);
   AddMessages(message_spans, batch_sink, /*end_spans=*/false);
   auto response = batch_sink->AsyncPublish(MakeRequest(1)).get();
-  ASSERT_THAT(response, IsOk());
+  EXPECT_THAT(response, IsOk());
 
   EndSpans(message_spans);
 
@@ -409,8 +393,6 @@ TEST(TracingBatchSink, AsyncPublishAddsEventForMultipleMessages) {
   auto mock = std::make_unique<pubsub_testing::MockBatchSink>();
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_TRUE(OTelContextCaptured());
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(2)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
@@ -420,7 +402,7 @@ TEST(TracingBatchSink, AsyncPublishAddsEventForMultipleMessages) {
   auto message_spans = CreateSpans(2);
   AddMessages(message_spans, batch_sink, /*end_spans=*/false);
   auto response = batch_sink->AsyncPublish(MakeRequest(2)).get();
-  ASSERT_THAT(response, IsOk());
+  EXPECT_THAT(response, IsOk());
 
   EndSpans(message_spans);
   auto spans = span_catcher->GetSpans();
@@ -430,6 +412,47 @@ TEST(TracingBatchSink, AsyncPublishAddsEventForMultipleMessages) {
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanNamed("test span 1"),
                          SpanHasEvents(EventNamed("gl-cpp.publish_start")))));
+}
+
+TEST(TracingBatchSink, Scope) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+  auto message_span = MakeSpan("test span");
+  auto mock = std::make_unique<pubsub_testing::MockBatchSink>();
+  EXPECT_CALL(*mock, AddMessage(_));
+  EXPECT_CALL(*mock, AsyncPublish)
+      .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        EXPECT_TRUE(OTelContextCaptured());
+        EXPECT_THAT(request, IsProtoEqual(MakeRequest(1)));
+        return make_ready_future(make_status_or(MakeResponse(request)));
+      });
+
+  auto batch_sink = MakeTestBatchSink(std::move(mock));
+
+  auto initial_spans = {message_span};
+  AddMessages(initial_spans, batch_sink);
+
+  auto response = batch_sink->AsyncPublish(MakeRequest(1))
+                      .then([](auto f) {
+                        EXPECT_FALSE(ThereIsAnActiveSpan());
+                        EXPECT_FALSE(OTelContextCaptured());
+                        return f;
+                      })
+                      .get();
+  EXPECT_THAT(response, IsOk());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsProducer(),
+          SpanNamed("publish"),
+          SpanHasAttributes(
+              OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 1)),
+          SpanHasLinks(AllOf(LinkHasSpanContext(message_span->GetContext()),
+                             SpanLinkAttributesAre(OTelAttribute<int64_t>(
+                                 "messaging.gcp_pubsub.message.link", 0)))))));
 }
 
 TEST(TracingBatchSink, ResumePublish) {
@@ -448,8 +471,6 @@ TEST(TracingBatchSink, AsyncPublishAddsLink) {
   EXPECT_CALL(*mock, AddMessage(_));
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_TRUE(OTelContextCaptured());
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(1)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
@@ -458,7 +479,7 @@ TEST(TracingBatchSink, AsyncPublishAddsLink) {
   auto message_spans = CreateSpans(1);
   AddMessages(message_spans, batch_sink, /*end_spans=*/false);
   auto response = batch_sink->AsyncPublish(MakeRequest(1)).get();
-  ASSERT_THAT(response, IsOk());
+  EXPECT_THAT(response, IsOk());
 
   EndSpans(message_spans);
 
@@ -476,8 +497,6 @@ TEST(TracingBatchSink, AsyncPublishAddsSpanIdAndTraceIdAttribute) {
   EXPECT_CALL(*mock, AddMessage(_));
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_TRUE(OTelContextCaptured());
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(1)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
@@ -486,7 +505,7 @@ TEST(TracingBatchSink, AsyncPublishAddsSpanIdAndTraceIdAttribute) {
   auto message_spans = CreateSpans(1);
   AddMessages(message_spans, batch_sink, /*end_spans=*/false);
   auto response = batch_sink->AsyncPublish(MakeRequest(1)).get();
-  ASSERT_THAT(response, IsOk());
+  EXPECT_THAT(response, IsOk());
 
   EndSpans(message_spans);
 
