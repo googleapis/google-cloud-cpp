@@ -132,8 +132,6 @@ Spans MakeBatchSinkSpans(Spans const& message_spans, Options const& options) {
   return batch_sink_spans;
 }
 
-}  // namespace
-
 /**
  * Records spans related to a batch messages across calls and
  * callbacks in the `BatchingPublisherConnection`.
@@ -195,6 +193,8 @@ class TracingBatchSink : public BatchSink {
       message_spans_;  // ABSL_GUARDED_BY(mu_)
   Options options_;
 };
+
+}  // namespace
 
 std::shared_ptr<BatchSink> MakeTracingBatchSink(
     std::shared_ptr<BatchSink> batch_sink, Options opts) {
