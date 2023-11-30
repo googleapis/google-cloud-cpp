@@ -1,0 +1,3 @@
+@com_google_googleapis//google/cloud/apigeeregistry/v1:provisioning_service.proto
+@com_google_googleapis//google/cloud/apigeeregistry/v1:registry_models.proto
+@com_google_googleapis//google/cloud/apigeeregistry/v1:registry_service.proto

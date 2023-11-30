@@ -50,6 +50,10 @@
 ./include/google/cloud/apigeeconnect/v1
 ./include/google/cloud/apigeeconnect/v1/internal
 ./include/google/cloud/apigeeconnect/v1/mocks
+./include/google/cloud/apigeeregistry
+./include/google/cloud/apigeeregistry/v1
+./include/google/cloud/apigeeregistry/v1/internal
+./include/google/cloud/apigeeregistry/v1/mocks
 ./include/google/cloud/apikeys
 ./include/google/cloud/apikeys/mocks
 ./include/google/cloud/apikeys/v2
@@ -1176,6 +1180,7 @@
 ./lib64/cmake/google_cloud_cpp_alloydb
 ./lib64/cmake/google_cloud_cpp_apigateway
 ./lib64/cmake/google_cloud_cpp_apigeeconnect
+./lib64/cmake/google_cloud_cpp_apigeeregistry
 ./lib64/cmake/google_cloud_cpp_apikeys
 ./lib64/cmake/google_cloud_cpp_appengine
 ./lib64/cmake/google_cloud_cpp_artifactregistry
