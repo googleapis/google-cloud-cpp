@@ -236,6 +236,23 @@ service {
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
+# Apigee Registry
+service {
+  service_proto_path: "google/cloud/apigeeregistry/v1/provisioning_service.proto"
+  product_path: "google/cloud/apigeeregistry/v1"
+  initial_copyright_year: "2023"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_APIGEE_REGISTRY_SERVICE_ENDPOINT"
+  retryable_status_codes: ["kAborted", "kCancelled", "kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/apigeeregistry/v1/registry_service.proto"
+  product_path: "google/cloud/apigeeregistry/v1"
+  initial_copyright_year: "2023"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_APIGEE_REGISTRY_SERVICE_ENDPOINT"
+  retryable_status_codes: ["kAborted", "kCancelled", "kUnavailable"]
+}
+
 # API Keys
 service {
   service_proto_path: "google/api/apikeys/v2/apikeys.proto"
