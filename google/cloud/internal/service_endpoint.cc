@@ -42,7 +42,7 @@ StatusOr<std::string> DetermineServiceEndpoint(
     std::string universe_domain_option = options.get<UniverseDomainOption>();
     if (universe_domain_option.empty()) {
       return internal::InvalidArgumentError(
-          "UniverseDomainOption can not be empty");
+          "UniverseDomainOption cannot be empty");
     }
     if (!absl::StartsWith(universe_domain_option, ".")) {
       universe_domain_option = absl::StrCat(".", universe_domain_option);

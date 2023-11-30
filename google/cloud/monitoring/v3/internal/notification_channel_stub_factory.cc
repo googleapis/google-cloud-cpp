@@ -25,7 +25,10 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/monitoring/v3/notification_service.grpc.pb.h>
@@ -39,16 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<NotificationChannelServiceStub>
 CreateDefaultNotificationChannelServiceStub(google::cloud::CompletionQueue cq,
                                             Options const& options) {
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      std::move(cq), options);
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::monitoring::v3::NotificationChannelService::NewStub(channel);
-  std::shared_ptr<NotificationChannelServiceStub> stub =
-      std::make_shared<DefaultNotificationChannelServiceStub>(
-          std::move(service_grpc_stub));
+  auto endpoint = internal::DetermineServiceEndpoint(
+      internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_NOTIFICATION_CHANNEL_SERVICE_ENDPOINT"),
+      internal::FetchOption<EndpointOption>(options),
+      "monitoring.googleapis.com", options);
 
+  std::shared_ptr<NotificationChannelServiceStub> stub;
+  std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;
+  if (!endpoint.ok()) {
+    Options error_options = options;
+    error_options.set<google::cloud::UnifiedCredentialsOption>(
+        internal::MakeErrorCredentials(endpoint.status()));
+    auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
+                                                  error_options);
+  } else {
+    auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
+    auto channel =
+        auth->CreateChannel(*endpoint, internal::MakeChannelArguments(options));
+    auto service_grpc_stub =
+        google::monitoring::v3::NotificationChannelService::NewStub(channel);
+    stub = std::make_shared<DefaultNotificationChannelServiceStub>(
+        std::move(service_grpc_stub));
+  }
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<NotificationChannelServiceAuth>(std::move(auth),
                                                             std::move(stub));

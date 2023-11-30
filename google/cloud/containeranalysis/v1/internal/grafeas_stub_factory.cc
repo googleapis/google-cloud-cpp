@@ -25,7 +25,10 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <grafeas/v1/grafeas.grpc.pb.h>
@@ -38,14 +41,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<GrafeasStub> CreateDefaultGrafeasStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      std::move(cq), options);
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub = grafeas::v1::Grafeas::NewStub(channel);
-  std::shared_ptr<GrafeasStub> stub =
-      std::make_shared<DefaultGrafeasStub>(std::move(service_grpc_stub));
+  auto endpoint = internal::DetermineServiceEndpoint(
+      internal::GetEnv("GOOGLE_CLOUD_CPP_GRAFEAS_ENDPOINT"),
+      internal::FetchOption<EndpointOption>(options),
+      "containeranalysis.googleapis.com", options);
 
+  std::shared_ptr<GrafeasStub> stub;
+  std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;
+  if (!endpoint.ok()) {
+    Options error_options = options;
+    error_options.set<google::cloud::UnifiedCredentialsOption>(
+        internal::MakeErrorCredentials(endpoint.status()));
+    auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
+                                                  error_options);
+  } else {
+    auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
+    auto channel =
+        auth->CreateChannel(*endpoint, internal::MakeChannelArguments(options));
+    auto service_grpc_stub = grafeas::v1::Grafeas::NewStub(channel);
+    stub = std::make_shared<DefaultGrafeasStub>(std::move(service_grpc_stub));
+  }
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<GrafeasAuth>(std::move(auth), std::move(stub));
   }

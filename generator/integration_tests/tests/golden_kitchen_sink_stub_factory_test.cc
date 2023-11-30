@@ -17,6 +17,7 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -27,6 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::test::admin::database::v1::GenerateIdTokenRequest;
 using ::testing::Contains;
 using ::testing::HasSubstr;
@@ -66,6 +68,45 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithAuth) {
       default_stub->GenerateIdToken(context, GenerateIdTokenRequest{});
   EXPECT_THAT(response, Not(IsOk()));
   EXPECT_THAT(context.credentials(), Not(IsNull()));
+}
+
+TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithUniverseDomainOption) {
+  Options options;
+  options.set<EndpointOption>("localhost:1")
+      .set<internal::UniverseDomainOption>("not empty")
+      .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+          "invalid-access-token",
+          std::chrono::system_clock::now() + std::chrono::minutes(15)));
+  auto default_stub =
+      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
+  grpc::ClientContext context;
+  auto response =
+      default_stub->GenerateIdToken(context, GenerateIdTokenRequest{});
+  EXPECT_THAT(
+      response,
+      Not(AnyOf(IsOk(),
+                StatusIs(StatusCode::kInvalidArgument,
+                         HasSubstr("UniverseDomainOption cannot be empty")))));
+  EXPECT_THAT(context.credentials(), Not(IsNull()));
+}
+
+TEST_F(GoldenKitchenSinkStubFactoryTest,
+       DefaultStubWithEmptyUniverseDomainOption) {
+  Options options;
+  options.set<internal::UniverseDomainOption>("").set<UnifiedCredentialsOption>(
+      MakeAccessTokenCredentials(
+          "invalid-access-token",
+          std::chrono::system_clock::now() + std::chrono::minutes(15)));
+  auto default_stub =
+      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
+
+  grpc::ClientContext context;
+  auto response =
+      default_stub->GenerateIdToken(context, GenerateIdTokenRequest{});
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("UniverseDomainOption cannot be empty")));
+  EXPECT_THAT(context.credentials(), IsNull());
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

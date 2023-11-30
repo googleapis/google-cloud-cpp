@@ -25,7 +25,10 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/workstations/v1/workstations.grpc.pb.h>
@@ -38,17 +41,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<WorkstationsStub> CreateDefaultWorkstationsStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      std::move(cq), options);
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::workstations::v1::Workstations::NewStub(channel);
-  std::shared_ptr<WorkstationsStub> stub =
-      std::make_shared<DefaultWorkstationsStub>(
-          std::move(service_grpc_stub),
-          google::longrunning::Operations::NewStub(channel));
+  auto endpoint = internal::DetermineServiceEndpoint(
+      internal::GetEnv("GOOGLE_CLOUD_CPP_WORKSTATIONS_ENDPOINT"),
+      internal::FetchOption<EndpointOption>(options),
+      "workstations.googleapis.com", options);
 
+  std::shared_ptr<WorkstationsStub> stub;
+  std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;
+  if (!endpoint.ok()) {
+    Options error_options = options;
+    error_options.set<google::cloud::UnifiedCredentialsOption>(
+        internal::MakeErrorCredentials(endpoint.status()));
+    auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
+                                                  error_options);
+  } else {
+    auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
+    auto channel =
+        auth->CreateChannel(*endpoint, internal::MakeChannelArguments(options));
+    auto service_grpc_stub =
+        google::cloud::workstations::v1::Workstations::NewStub(channel);
+    stub = std::make_shared<DefaultWorkstationsStub>(
+        std::move(service_grpc_stub),
+        google::longrunning::Operations::NewStub(channel));
+  }
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<WorkstationsAuth>(std::move(auth), std::move(stub));
   }
