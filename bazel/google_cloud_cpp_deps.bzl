@@ -243,11 +243,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_github_nlohmann_json",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_nlohmann_json/v3.11.2.tar.gz",
-            "https://github.com/nlohmann/json/archive/v3.11.2.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_nlohmann_json/v3.11.3.tar.gz",
+            "https://github.com/nlohmann/json/archive/v3.11.3.tar.gz",
         ],
-        sha256 = "d69f9deb6a75e2580465c6c4c5111b89c4dc2fa94e3a85fcd2ffcd9a143d9273",
-        strip_prefix = "json-3.11.2",
+        sha256 = "0d8ef5af7f9794e3263480193c491549b2ba6cc74bb018906202ada498a79406",
+        strip_prefix = "json-3.11.3",
         build_file = Label("//bazel:nlohmann_json.BUILD"),
     )
 
