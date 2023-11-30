@@ -133,7 +133,7 @@ Spans MakeBatchSinkSpans(Spans const& message_spans, Options const& options) {
 }
 
 /**
- * Records spans related to a batch messages across calls and
+ * Records spans related to a batch of messages across calls and
  * callbacks in the `BatchingPublisherConnection`.
  */
 class TracingBatchSink : public BatchSink {

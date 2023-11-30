@@ -309,7 +309,7 @@ TEST(TracingBatchSink, AsyncPublishBatchWithOtelLimit) {
                      SpanNamed("publish"),
                      SpanHasAttributes(OTelAttribute<std::int64_t>(
                          sc::kMessagingBatchMessageCount, kDefaultMaxLinks)),
-                     SpanLinksSizeIs(128))));
+                     SpanLinksSizeIs(kDefaultMaxLinks))));
 }
 
 TEST(TracingBatchSink, AsyncPublishLargeBatch) {
@@ -430,6 +430,14 @@ TEST(TracingBatchSink, AsyncPublishAddsEventForMultipleMessages) {
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanNamed("test span 1"),
                          SpanHasEvents(EventNamed("gl-cpp.publish_start")))));
+}
+
+TEST(TracingBatchSink, ResumePublish) {
+  auto mock = std::make_unique<pubsub_testing::MockBatchSink>();
+  EXPECT_CALL(*mock, ResumePublish);
+  auto batch_sink = MakeTestBatchSink(std::move(mock));
+
+  batch_sink->ResumePublish("unused");
 }
 
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
