@@ -167,6 +167,7 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12
         -DWITH_EXAMPLES=OFF \
         -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
+        -DWITH_ABI_VERSION=2 \
         -DOPENTELEMETRY_INSTALL=ON \
         -S . -B cmake-out -GNinja && \
     cmake --build cmake-out --target install && \
