@@ -56,8 +56,7 @@ CreateDefaultResourceSettingsServiceStub(google::cloud::CompletionQueue cq,
     auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
                                                   error_options);
   } else {
-    auth = google::cloud::internal::CreateAuthenticationStrategy(std::move(cq),
-                                                                 options);
+    auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
     auto channel =
         auth->CreateChannel(*endpoint, internal::MakeChannelArguments(options));
     auto service_grpc_stub =
