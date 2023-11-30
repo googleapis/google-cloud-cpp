@@ -92,7 +92,7 @@ TEST(DetermineServiceEndpoint, UniverseDomainSetWithEmptyValue) {
                                          kDefaultEndpoint, options);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("UniverseDomainOption can not be empty")));
+                       HasSubstr("UniverseDomainOption cannot be empty")));
 }
 
 TEST(DetermineServiceEndpoint, DefaultHost) {
