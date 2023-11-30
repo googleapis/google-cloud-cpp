@@ -53,6 +53,7 @@ using ::google::cloud::bigtable::testing::MockSampleRowKeysStream;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::An;
+using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::Eq;
@@ -694,18 +695,24 @@ TEST(DataConnectionTest, AsyncBulkApply) {
   std::vector<bigtable::FailedMutation> expected = {{PermanentError(), 0}};
   bigtable::BulkMutation mut(IdempotentMutation("row"));
 
-  auto mock = std::make_shared<MockBigtableStub>();
-  EXPECT_CALL(*mock, AsyncMutateRows)
-      .WillOnce([](CompletionQueue const&, auto,
-                   v2::MutateRowsRequest const& request) {
-        EXPECT_EQ(kAppProfile, request.app_profile_id());
-        EXPECT_EQ(kTableName, request.table_name());
-        using ErrorStream =
-            internal::AsyncStreamingReadRpcError<v2::MutateRowsResponse>;
-        return std::make_unique<ErrorStream>(PermanentError());
-      });
+  auto mock_limiter = std::make_shared<MockMutateRowsLimiter>();
+  auto mock_stub = std::make_shared<MockBigtableStub>();
+  {
+    ::testing::InSequence seq;
+    EXPECT_CALL(*mock_limiter, AsyncAcquire)
+        .WillOnce(Return(ByMove(make_ready_future())));
+    EXPECT_CALL(*mock_stub, AsyncMutateRows)
+        .WillOnce([](CompletionQueue const&, auto,
+                     v2::MutateRowsRequest const& request) {
+          EXPECT_EQ(kAppProfile, request.app_profile_id());
+          EXPECT_EQ(kTableName, request.table_name());
+          using ErrorStream =
+              internal::AsyncStreamingReadRpcError<v2::MutateRowsResponse>;
+          return std::make_unique<ErrorStream>(PermanentError());
+        });
+  }
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock_stub), std::move(mock_limiter));
   internal::OptionsSpan span(CallOptions());
   auto actual = conn->AsyncBulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual.get(), expected);

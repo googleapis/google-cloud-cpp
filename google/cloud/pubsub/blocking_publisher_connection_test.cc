@@ -209,10 +209,10 @@ TEST(BlockingPublisherConnectionTest, TracingEnabled) {
   auto response = publisher->Publish(
       {topic, MessageBuilder{}.SetData("test-data-0").Build()});
 
-  EXPECT_THAT(span_catcher->GetSpans(),
-              UnorderedElementsAre(
-                  SpanNamed("projects/test-project/topics/test-topic create"),
-                  SpanNamed("google.pubsub.v1.Publisher/Publish")));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      UnorderedElementsAre(SpanNamed("test-topic create"),
+                           SpanNamed("google.pubsub.v1.Publisher/Publish")));
 }
 
 TEST(BlockingPublisherConnectionTest, TracingDisabled) {

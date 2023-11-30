@@ -114,7 +114,7 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnGatewaysScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L399}
+  /// [google.cloud.cpp.compute.v1.VpnGatewaysScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L399}
   /// [google.cloud.cpp.compute.vpn_gateways.v1.AggregatedListVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L136}
   ///
   // clang-format on
@@ -155,7 +155,7 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnGatewaysScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L399}
+  /// [google.cloud.cpp.compute.v1.VpnGatewaysScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L399}
   /// [google.cloud.cpp.compute.vpn_gateways.v1.AggregatedListVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L136}
   ///
   // clang-format on
@@ -260,7 +260,7 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
+  /// [google.cloud.cpp.compute.v1.VpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L29}
   /// [google.cloud.cpp.compute.vpn_gateways.v1.GetVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L262}
   ///
   // clang-format on
@@ -292,7 +292,7 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
+  /// [google.cloud.cpp.compute.v1.VpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L29}
   /// [google.cloud.cpp.compute.vpn_gateways.v1.GetVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L262}
   ///
   // clang-format on
@@ -322,7 +322,7 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnGatewaysGetStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L395}
+  /// [google.cloud.cpp.compute.v1.VpnGatewaysGetStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L395}
   /// [google.cloud.cpp.compute.vpn_gateways.v1.GetStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L247}
   ///
   // clang-format on
@@ -354,7 +354,7 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnGatewaysGetStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L395}
+  /// [google.cloud.cpp.compute.v1.VpnGatewaysGetStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L395}
   /// [google.cloud.cpp.compute.vpn_gateways.v1.GetStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L247}
   ///
   // clang-format on
@@ -471,7 +471,7 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
+  /// [google.cloud.cpp.compute.v1.VpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L29}
   /// [google.cloud.cpp.compute.vpn_gateways.v1.ListVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L310}
   ///
   // clang-format on
@@ -512,7 +512,7 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
+  /// [google.cloud.cpp.compute.v1.VpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L29}
   /// [google.cloud.cpp.compute.vpn_gateways.v1.ListVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L310}
   ///
   // clang-format on
@@ -623,7 +623,7 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_132.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L30}
   /// [google.cloud.cpp.compute.vpn_gateways.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L418}
   ///
   // clang-format on
@@ -659,7 +659,7 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_132.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L30}
   /// [google.cloud.cpp.compute.vpn_gateways.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L418}
   ///
   // clang-format on

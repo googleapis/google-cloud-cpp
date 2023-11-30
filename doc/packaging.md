@@ -299,7 +299,7 @@ The following steps will install libraries and tools in `/usr/local`. By
 default, pkg-config does not search in these directories.
 
 ```bash
-export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig
+export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
 ```
 
 #### nlohmann_json library
@@ -311,7 +311,7 @@ without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -431,7 +431,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v24.4.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -465,7 +465,7 @@ Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.59.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.60.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -513,7 +513,7 @@ without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -625,7 +625,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v24.4.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -645,7 +645,7 @@ Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.59.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.60.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -693,7 +693,7 @@ without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -799,7 +799,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v24.4.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -838,7 +838,7 @@ Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.59.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.60.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -886,7 +886,7 @@ without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1132,7 +1132,7 @@ to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v24.4.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1169,7 +1169,7 @@ Finally, we build gRPC from source:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.59.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.60.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1302,7 +1302,7 @@ without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1323,7 +1323,7 @@ to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v24.4.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1360,7 +1360,7 @@ Finally, we build gRPC from source:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.59.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.60.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1501,7 +1501,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v24.4.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1540,7 +1540,7 @@ Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.59.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.60.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1588,7 +1588,7 @@ without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1726,7 +1726,7 @@ install Protobuf (and any downstream packages) from source.
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v24.4.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1767,7 +1767,7 @@ install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.59.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.60.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \
@@ -1816,7 +1816,7 @@ without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1963,7 +1963,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v24.4.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1997,7 +1997,7 @@ Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.59.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.60.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -2045,7 +2045,7 @@ without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \

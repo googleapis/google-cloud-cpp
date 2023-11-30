@@ -157,11 +157,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/0e925c3fecad7fcd6f549895078c5749fd5a9b70.tar.gz",
-            "https://github.com/googleapis/googleapis/archive/0e925c3fecad7fcd6f549895078c5749fd5a9b70.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/0e3b813b0d0da539eacbe86b8716feeed00943c5.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/0e3b813b0d0da539eacbe86b8716feeed00943c5.tar.gz",
         ],
-        sha256 = "42da6db4969684d8707570a976e9cf40118435128a31d602b10bfdb9567f08f1",
-        strip_prefix = "googleapis-0e925c3fecad7fcd6f549895078c5749fd5a9b70",
+        sha256 = "44f3b9c73a5df760c4fad3cf0c5cc54732b881f00708308f7635ff75a13dcaa5",
+        strip_prefix = "googleapis-0e3b813b0d0da539eacbe86b8716feeed00943c5",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]
@@ -178,11 +178,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_protobuf/v24.4.tar.gz",
-            "https://github.com/protocolbuffers/protobuf/archive/v24.4.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_protobuf/v25.1.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v25.1.tar.gz",
         ],
-        sha256 = "616bb3536ac1fff3fb1a141450fa28b875e985712170ea7f1bfe5e5fc41e2cd8",
-        strip_prefix = "protobuf-24.4",
+        sha256 = "9bd87b8280ef720d3240514f884e56a712f2218f0d693b48050c836028940a42",
+        strip_prefix = "protobuf-25.1",
     )
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
@@ -206,11 +206,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.59.2.tar.gz",
-            "https://github.com/grpc/grpc/archive/v1.59.2.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.60.0.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.60.0.tar.gz",
         ],
-        sha256 = "a3a65f0129c4922c5d7f4c11dcd40083a12ca54076fd3a927bcd63c53b7e44a5",
-        strip_prefix = "grpc-1.59.2",
+        sha256 = "437068b8b777d3b339da94d3498f1dc20642ac9bfa76db43abdd522186b1542b",
+        strip_prefix = "grpc-1.60.0",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
@@ -243,11 +243,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_github_nlohmann_json",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_nlohmann_json/v3.11.2.tar.gz",
-            "https://github.com/nlohmann/json/archive/v3.11.2.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_nlohmann_json/v3.11.3.tar.gz",
+            "https://github.com/nlohmann/json/archive/v3.11.3.tar.gz",
         ],
-        sha256 = "d69f9deb6a75e2580465c6c4c5111b89c4dc2fa94e3a85fcd2ffcd9a143d9273",
-        strip_prefix = "json-3.11.2",
+        sha256 = "0d8ef5af7f9794e3263480193c491549b2ba6cc74bb018906202ada498a79406",
+        strip_prefix = "json-3.11.3",
         build_file = Label("//bazel:nlohmann_json.BUILD"),
     )
 

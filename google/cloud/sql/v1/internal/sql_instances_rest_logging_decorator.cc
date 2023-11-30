@@ -208,6 +208,19 @@ SqlInstancesServiceRestLogging::PromoteReplica(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestLogging::Switchover(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlInstancesSwitchoverRequest const&
+                 request) {
+        return child_->Switchover(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestLogging::ResetSslConfig(
     rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) {

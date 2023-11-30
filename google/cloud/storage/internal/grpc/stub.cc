@@ -404,11 +404,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::InsertObjectMedia(
   };
 
   auto ctx = std::make_shared<grpc::ClientContext>();
-  // The REST response is just the object metadata (aka the "resource"). In the
-  // gRPC response the object metadata is in a "resource" field. Passing an
-  // extra prefix to ApplyQueryParameters sends the right
-  // filtering instructions to the gRPC API.
-  ApplyQueryParameters(*ctx, options, request, "resource");
+  ApplyQueryParameters(*ctx, options, request);
   AddIdempotencyToken(*ctx, context);
   ApplyRoutingHeaders(*ctx, request);
   auto stream = stub_->WriteObject(std::move(ctx), options);
@@ -464,7 +460,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::CopyObject(
     storage::internal::CopyObjectRequest const& request) {
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request, "resource");
+  ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
   auto response = stub_->RewriteObject(ctx, *proto);
   if (!response) return std::move(response).status();
@@ -579,7 +575,7 @@ StatusOr<storage::internal::RewriteObjectResponse> GrpcStub::RewriteObject(
   auto proto = ToProto(request);
   if (!proto) return std::move(proto).status();
   grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request, "resource");
+  ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
   auto response = stub_->RewriteObject(ctx, *proto);
   if (!response) return std::move(response).status();
@@ -594,7 +590,7 @@ GrpcStub::CreateResumableUpload(
   if (!proto_request) return std::move(proto_request).status();
 
   grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request, "resource");
+  ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
   auto const timeout = options.get<storage::TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
@@ -612,7 +608,7 @@ GrpcStub::QueryResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::QueryResumableUploadRequest const& request) {
   grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request, "resource");
+  ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
   auto const timeout = options.get<storage::TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
@@ -627,7 +623,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::DeleteResumableUploadRequest const& request) {
   grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request, "");
+  ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
   auto const timeout = options.get<storage::TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
@@ -658,11 +654,7 @@ StatusOr<storage::internal::QueryResumableUploadResponse> GrpcStub::UploadChunk(
   };
 
   auto ctx = std::make_shared<grpc::ClientContext>();
-  // The REST response is just the object metadata (aka the "resource"). In the
-  // gRPC response the object metadata is in a "resource" field. Passing an
-  // extra prefix to ApplyQueryParameters sends the right
-  // filtering instructions to the gRPC API.
-  ApplyQueryParameters(*ctx, options, request, "resource");
+  ApplyQueryParameters(*ctx, options, request);
   AddIdempotencyToken(*ctx, context);
   ApplyRoutingHeaders(*ctx, request);
   auto stream = stub_->WriteObject(std::move(ctx), options);

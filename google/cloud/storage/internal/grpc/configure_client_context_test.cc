@@ -77,16 +77,15 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersWithFields) {
 
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersWithFieldsAndPrefix) {
   grpc::ClientContext ctx;
-  ApplyQueryParameters(
-      ctx, Options{},
-      storage::internal::InsertObjectMediaRequest("test-bucket", "test-object",
-                                                  "content")
-          .set_option(storage::Fields("bucket,name,generation,contentType")),
-      "resource");
+  ApplyQueryParameters(ctx, Options{},
+                       storage::internal::InsertObjectMediaRequest(
+                           "test-bucket", "test-object", "content")
+                           .set_option(storage::Fields(
+                               "resource.bucket,resource.content_type")));
   auto metadata = GetMetadata(ctx);
   EXPECT_THAT(metadata,
               Contains(Pair("x-goog-fieldmask",
-                            "resource(bucket,name,generation,contentType)")));
+                            "resource.bucket,resource.content_type")));
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersQuotaUserAndUserIp) {

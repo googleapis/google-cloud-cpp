@@ -54,20 +54,25 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
                  [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
                    return std::make_pair(
                        span->GetContext(),
-                       Attributes{{"messaging.pubsub.message.link", i++}});
+                       Attributes{{"messaging.gcp_pubsub.message.link", i++}});
                  });
   return links;
 }
 
 auto MakeParent(Links const& links, Spans const& message_spans) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
+  opentelemetry::trace::StartSpanOptions options;
+  options.kind = opentelemetry::trace::SpanKind::kProducer;
   auto batch_sink_parent =
       internal::MakeSpan("publish",
                          /*attributes=*/
                          {{sc::kMessagingBatchMessageCount,
                            static_cast<std::int64_t>(message_spans.size())},
-                          {sc::kCodeFunction, "BatchSink::AsyncPublish"}},
-                         /*links*/ std::move(links));
+                          {sc::kCodeFunction, "BatchSink::AsyncPublish"},
+                          {/*sc::kMessagingOperation=*/
+                           "messaging.operation", "publish"},
+                          {sc::kThreadId, internal::CurrentThreadId()}},
+                         /*links*/ std::move(links), options);
 
   // Add metadata to the message spans about the batch sink span.
   auto context = batch_sink_parent->GetContext();
@@ -91,6 +96,7 @@ auto MakeChild(
     int count, Links const& links) {
   opentelemetry::trace::StartSpanOptions options;
   options.parent = parent->GetContext();
+  options.kind = opentelemetry::trace::SpanKind::kClient;
   return internal::MakeSpan("publish #" + std::to_string(count),
                             /*attributes=*/{{}},
                             /*links=*/links, options);
@@ -140,7 +146,7 @@ class TracingMessageBatch : public MessageBatch {
 
   ~TracingMessageBatch() override = default;
 
-  void SaveMessage(pubsub::Message m) override {
+  void AddMessage(pubsub::Message const& m) override {
     auto active_span = opentelemetry::trace::GetSpan(
         opentelemetry::context::RuntimeContext::GetCurrent());
     active_span->AddEvent("gl-cpp.added_to_batch");
@@ -148,7 +154,7 @@ class TracingMessageBatch : public MessageBatch {
       std::lock_guard<std::mutex> lk(mu_);
       message_spans_.push_back(std::move(active_span));
     }
-    child_->SaveMessage(std::move(m));
+    child_->AddMessage(std::move(m));
   }
 
   std::function<void(future<void>)> Flush() override {

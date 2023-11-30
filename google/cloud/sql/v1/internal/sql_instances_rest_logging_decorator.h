@@ -121,6 +121,12 @@ class SqlInstancesServiceRestLogging : public SqlInstancesServiceRestStub {
       google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request)
       override;
 
+  StatusOr<google::cloud::sql::v1::Operation> Switchover(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request)
+      override;
+
   StatusOr<google::cloud::sql::v1::Operation> ResetSslConfig(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,

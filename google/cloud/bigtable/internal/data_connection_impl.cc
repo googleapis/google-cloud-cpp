@@ -171,7 +171,7 @@ DataConnectionImpl::AsyncBulkApply(std::string const& table_name,
                                    bigtable::BulkMutation mut) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return AsyncBulkApplier::Create(
-      background_->cq(), stub_, retry_policy(*current),
+      background_->cq(), stub_, limiter_, retry_policy(*current),
       backoff_policy(*current), *idempotency_policy(*current),
       app_profile_id(*current), table_name, std::move(mut));
 }

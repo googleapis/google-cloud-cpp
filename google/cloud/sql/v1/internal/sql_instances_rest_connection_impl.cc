@@ -263,6 +263,21 @@ SqlInstancesServiceRestConnectionImpl::PromoteReplica(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestConnectionImpl::Switchover(
+    google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Switchover(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlInstancesSwitchoverRequest const&
+                 request) {
+        return stub_->Switchover(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::ResetSslConfig(
     google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

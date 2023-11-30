@@ -159,6 +159,15 @@ SqlInstancesServiceTracingConnection::PromoteReplica(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceTracingConnection::Switchover(
+    google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Switchover");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Switchover(request));
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceTracingConnection::ResetSslConfig(
     google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) {
   auto span = internal::MakeSpan(

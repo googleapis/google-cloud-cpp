@@ -85,9 +85,13 @@ google_cloud_cpp_install_headers(google_cloud_cpp_opentelemetry
                                  include/google/cloud/opentelemetry)
 
 google_cloud_cpp_add_pkgconfig(
-    opentelemetry "OpenTelemetry Exporters for Google Cloud"
+    opentelemetry
+    "OpenTelemetry Exporters for Google Cloud"
     "Provides exporters for sending telemetry to Google Cloud services."
-    "google_cloud_cpp_rest_internal" " google_cloud_cpp_trace")
+    "google_cloud_cpp_rest_internal"
+    "google_cloud_cpp_trace"
+    "opentelemetry_resources"
+    "opentelemetry_trace")
 
 # Create and install the CMake configuration files.
 configure_file("config.cmake.in" "google_cloud_cpp_opentelemetry-config.cmake"

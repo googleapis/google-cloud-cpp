@@ -215,7 +215,7 @@ void AsyncRowReader::OnStreamFinished(Status status) {
   }
   auto self = this->shared_from_this();
   internal::TracedAsyncBackoff(cq_, internal::CurrentOptions(),
-                               backoff_policy_->OnCompletion())
+                               backoff_policy_->OnCompletion(), "Async Backoff")
       .then(
           [self](
               future<StatusOr<std::chrono::system_clock::time_point>> result) {

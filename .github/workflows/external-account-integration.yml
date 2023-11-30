@@ -30,7 +30,7 @@ jobs:
       with:
         ref: ${{ inputs.checkout-ref }}
     - id: auth
-      uses: google-github-actions/auth@v1
+      uses: google-github-actions/auth@v2
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
@@ -64,7 +64,7 @@ jobs:
     - id: byoid-auth
       if: '!github.event.pull_request.head.repo.fork'
       name: 'Authenticate to GCP'
-      uses: 'google-github-actions/auth@v1'
+      uses: 'google-github-actions/auth@v2'
       with:
         create_credentials_file: true
         workload_identity_provider: 'projects/49427430084/locations/global/workloadIdentityPools/github-wif-pool/providers/github-wif-provider'

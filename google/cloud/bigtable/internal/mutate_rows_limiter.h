@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_MUTATE_ROWS_LIMITER_H
 
 #include "google/cloud/bigtable/internal/rate_limiter.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/clock.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
@@ -34,6 +36,7 @@ class MutateRowsLimiter {
  public:
   virtual ~MutateRowsLimiter() = default;
   virtual void Acquire() = 0;
+  virtual future<void> AsyncAcquire() = 0;
   virtual void Update(
       google::bigtable::v2::MutateRowsResponse const& response) = 0;
 };
@@ -41,6 +44,7 @@ class MutateRowsLimiter {
 class NoopMutateRowsLimiter : public MutateRowsLimiter {
  public:
   void Acquire() override {}
+  future<void> AsyncAcquire() override { return make_ready_future(); }
   void Update(google::bigtable::v2::MutateRowsResponse const&) override {}
 };
 
@@ -52,6 +56,7 @@ class ThrottlingMutateRowsLimiter : public MutateRowsLimiter {
   explicit ThrottlingMutateRowsLimiter(
       std::shared_ptr<Clock> clock,
       std::function<void(Clock::duration)> on_wait,
+      std::function<future<void>(Clock::duration)> async_on_wait,
       std::chrono::duration<Rep1, Period1> initial_period,
       std::chrono::duration<Rep2, Period2> min_period,
       std::chrono::duration<Rep3, Period3> max_period, double min_factor,
@@ -59,6 +64,7 @@ class ThrottlingMutateRowsLimiter : public MutateRowsLimiter {
       : clock_(std::move(clock)),
         limiter_(clock_, initial_period),
         on_wait_(std::move(on_wait)),
+        async_on_wait_(std::move(async_on_wait)),
         next_update_(clock_->Now()),
         min_period_(std::chrono::duration_cast<Clock::duration>(min_period)),
         max_period_(std::chrono::duration_cast<Clock::duration>(max_period)),
@@ -66,6 +72,8 @@ class ThrottlingMutateRowsLimiter : public MutateRowsLimiter {
         max_factor_(max_factor) {}
 
   void Acquire() override;
+
+  future<void> AsyncAcquire() override;
 
   /**
    * As specified in:
@@ -81,6 +89,7 @@ class ThrottlingMutateRowsLimiter : public MutateRowsLimiter {
   std::shared_ptr<Clock> clock_;
   RateLimiter limiter_;
   std::function<void(Clock::duration)> on_wait_;
+  std::function<future<void>(Clock::duration)> async_on_wait_;
   bool throttled_since_last_update_ = false;
   Clock::time_point next_update_;
   Clock::duration min_period_;
@@ -89,8 +98,8 @@ class ThrottlingMutateRowsLimiter : public MutateRowsLimiter {
   double max_factor_;
 };
 
-std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(
-    Options const& options);
+std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(CompletionQueue cq,
+                                                         Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

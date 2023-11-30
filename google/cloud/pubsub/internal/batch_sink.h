@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_SINK_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_SINK_H
 
+#include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
@@ -37,6 +38,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BatchSink {
  public:
   virtual ~BatchSink() = default;
+
+  /// Adds the message to the batch.
+  virtual void AddMessage(pubsub::Message const& m) = 0;
 
   /// Asynchronously publishes a batch of messages.
   virtual future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(

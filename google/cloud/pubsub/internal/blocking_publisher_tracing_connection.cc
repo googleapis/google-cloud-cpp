@@ -38,16 +38,18 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kProducer;
   auto span = internal::MakeSpan(
-      topic.FullName() + " create",
+      topic.topic_id() + " create",
       {{sc::kMessagingSystem, "gcp_pubsub"},
-       {sc::kMessagingDestinationName, topic.FullName()},
-       {sc::kMessagingDestinationTemplate, "topic"},
+       {sc::kMessagingDestinationName, topic.topic_id()},
+       {sc::kMessagingDestinationTemplate, topic.FullName()},
+       {sc::kMessagingOperation, "create"},
        {/*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
         static_cast<std::int64_t>(MessageSize(m))},
        {sc::kCodeFunction, "pubsub::BlockingPublisher::Publish"}},
       options);
   if (!m.ordering_key().empty()) {
-    span->SetAttribute("messaging.pubsub.ordering_key", m.ordering_key());
+    span->SetAttribute("messaging.gcp_pubsub.message.ordering_key",
+                       m.ordering_key());
   }
   return span;
 }

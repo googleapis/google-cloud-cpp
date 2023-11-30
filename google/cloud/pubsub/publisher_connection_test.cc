@@ -360,7 +360,7 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   auto mock_message_batch =
       std::make_shared<pubsub_testing::MockMessageBatch>();
   std::promise<void> is_publish_complete;
-  EXPECT_CALL(*mock_message_batch, SaveMessage(_)).Times(1);
+  EXPECT_CALL(*mock_message_batch, AddMessage(_)).Times(1);
   EXPECT_CALL(*mock_message_batch, Flush).WillOnce([&] {
     // Batch sink span should still be active when Flush is called.
     EXPECT_TRUE(ThereIsAnActiveSpan());
@@ -393,9 +393,9 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   EXPECT_THAT(
       spans,
       UnorderedElementsAre(
-          SpanNamed("projects/test-project/topics/test-topic create"),
-          SpanNamed("publisher flow control"), SpanNamed("publish scheduler"),
-          SpanNamed("publish"), SpanNamed("google.pubsub.v1.Publisher/Publish"),
+          SpanNamed("test-topic create"), SpanNamed("publisher flow control"),
+          SpanNamed("publish scheduler"), SpanNamed("publish"),
+          SpanNamed("google.pubsub.v1.Publisher/Publish"),
           SpanNamed("pubsub::BatchingPublisherConnection::Flush"),
           SpanNamed("pubsub::FlowControlledPublisherConnection::Flush"),
           SpanNamed("pubsub::Publisher::Flush")));

@@ -30,8 +30,8 @@
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
 #include <google/cloud/compute/v1/internal/common_031.pb.h>
 #include <google/cloud/compute/v1/internal/common_046.pb.h>
-#include <google/cloud/compute/v1/internal/common_068.pb.h>
-#include <google/cloud/compute/v1/internal/common_132.pb.h>
+#include <google/cloud/compute/v1/internal/common_067.pb.h>
+#include <google/cloud/compute/v1/internal/common_131.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_LICENSES_PROTO_EXPORT_H

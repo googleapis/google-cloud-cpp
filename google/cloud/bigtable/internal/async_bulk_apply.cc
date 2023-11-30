@@ -23,6 +23,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
     CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
+    std::shared_ptr<MutateRowsLimiter> limiter,
     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
@@ -33,15 +34,16 @@ future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
   }
 
   std::shared_ptr<AsyncBulkApplier> bulk_apply(new AsyncBulkApplier(
-      std::move(cq), std::move(stub), std::move(retry_policy),
-      std::move(backoff_policy), idempotent_policy, app_profile_id, table_name,
-      std::move(mut)));
+      std::move(cq), std::move(stub), std::move(limiter),
+      std::move(retry_policy), std::move(backoff_policy), idempotent_policy,
+      app_profile_id, table_name, std::move(mut)));
   bulk_apply->StartIteration();
   return bulk_apply->promise_.get_future();
 }
 
 AsyncBulkApplier::AsyncBulkApplier(
     CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
+    std::shared_ptr<MutateRowsLimiter> limiter,
     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
@@ -49,12 +51,21 @@ AsyncBulkApplier::AsyncBulkApplier(
     bigtable::BulkMutation mut)
     : cq_(std::move(cq)),
       stub_(std::move(stub)),
+      limiter_(std::move(limiter)),
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)),
       state_(app_profile_id, table_name, idempotent_policy, std::move(mut)),
       promise_([this] { keep_reading_ = false; }) {}
 
 void AsyncBulkApplier::StartIteration() {
+  auto self = this->shared_from_this();
+  limiter_->AsyncAcquire().then([self](auto f) {
+    f.get();
+    self->MakeRequest();
+  });
+}
+
+void AsyncBulkApplier::MakeRequest() {
   internal::ScopedCallContext scope(call_context_);
   auto context = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context, internal::CurrentOptions());
@@ -71,6 +82,7 @@ void AsyncBulkApplier::StartIteration() {
 
 void AsyncBulkApplier::OnRead(
     google::bigtable::v2::MutateRowsResponse response) {
+  limiter_->Update(response);
   state_.OnRead(std::move(response));
 }
 
@@ -83,7 +95,7 @@ void AsyncBulkApplier::OnFinish(Status const& status) {
 
   auto self = this->shared_from_this();
   internal::TracedAsyncBackoff(cq_, internal::CurrentOptions(),
-                               backoff_policy_->OnCompletion())
+                               backoff_policy_->OnCompletion(), "Async Backoff")
       .then([self](auto result) {
         if (result.get()) {
           self->StartIteration();

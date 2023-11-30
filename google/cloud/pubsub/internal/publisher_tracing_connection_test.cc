@@ -81,22 +81,24 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
       span_catcher->GetSpans(),
       ElementsAre(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsProducer(),
-          SpanNamed("projects/test-project/topics/test-topic create"),
+          SpanNamed("test-topic create"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
               OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>(sc::kMessagingDestinationName,
+                                         "test-topic"),
               OTelAttribute<std::string>(
-                  sc::kMessagingDestinationName,
+                  sc::kMessagingDestinationTemplate,
                   "projects/test-project/topics/test-topic"),
-              OTelAttribute<std::string>(sc::kMessagingDestinationTemplate,
-                                         "topic"),
-              OTelAttribute<std::string>("messaging.pubsub.ordering_key",
-                                         "ordering-key-0"),
+              OTelAttribute<std::string>(
+                  "messaging.gcp_pubsub.message.ordering_key",
+                  "ordering-key-0"),
               OTelAttribute<int>("gl-cpp.status_code", 0),
               OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
                                           "messaging.message.envelope.size",
                                           45),
-              OTelAttribute<std::string>("messaging.message_id", "test-id-0"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "create"),
+              OTelAttribute<std::string>(sc::kMessagingMessageId, "test-id-0"),
               OTelAttribute<std::string>(
                   sc::kCodeFunction,
                   "pubsub::PublisherConnection::Publish")))));
@@ -127,17 +129,19 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
       span_catcher->GetSpans(),
       ElementsAre(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsProducer(),
-          SpanNamed("projects/test-project/topics/test-topic create"),
+          SpanNamed("test-topic create"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError),
           SpanHasAttributes(
               OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>(sc::kMessagingDestinationName,
+                                         "test-topic"),
               OTelAttribute<std::string>(
-                  sc::kMessagingDestinationName,
+                  sc::kMessagingDestinationTemplate,
                   "projects/test-project/topics/test-topic"),
-              OTelAttribute<std::string>(sc::kMessagingDestinationTemplate,
-                                         "topic"),
-              OTelAttribute<std::string>("messaging.pubsub.ordering_key",
-                                         "ordering-key-0"),
+              OTelAttribute<std::string>(
+                  "messaging.gcp_pubsub.message.ordering_key",
+                  "ordering-key-0"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "create"),
               OTelAttribute<int>("gl-cpp.status_code", kErrorCode),
               OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
                                           "messaging.message.envelope.size",
@@ -189,10 +193,10 @@ TEST(PublisherTracingConnectionTest, PublishSpanOmitsOrderingKey) {
   EXPECT_THAT(span_catcher->GetSpans(),
               ElementsAre(AllOf(
                   SpanHasInstrumentationScope(), SpanKindIsProducer(),
-                  SpanNamed("projects/test-project/topics/test-topic create"),
+                  SpanNamed("test-topic create"),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                   Not(SpanHasAttributes(OTelAttribute<std::string>(
-                      "messaging.pubsub.ordering_key", _))))));
+                      "messaging.gcp_pubsub.message.ordering_key", _))))));
 }
 
 TEST(PublisherTracingConnectionTest, FlushSpan) {
