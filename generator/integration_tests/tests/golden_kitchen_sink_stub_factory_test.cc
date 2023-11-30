@@ -83,10 +83,9 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithUniverseDomainOption) {
   auto response =
       default_stub->GenerateIdToken(context, GenerateIdTokenRequest{});
   EXPECT_THAT(response, Not(IsOk()));
-  EXPECT_THAT(
-      response,
-      Not(StatusIs(StatusCode::kInvalidArgument,
-                   HasSubstr("UniverseDomainOption can not be empty"))));
+  EXPECT_THAT(response,
+              Not(StatusIs(StatusCode::kInvalidArgument,
+                           HasSubstr("UniverseDomainOption cannot be empty"))));
   EXPECT_THAT(context.credentials(), Not(IsNull()));
 }
 
@@ -105,7 +104,7 @@ TEST_F(GoldenKitchenSinkStubFactoryTest,
       default_stub->GenerateIdToken(context, GenerateIdTokenRequest{});
   EXPECT_THAT(response,
               StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("UniverseDomainOption can not be empty")));
+                       HasSubstr("UniverseDomainOption cannot be empty")));
   EXPECT_THAT(context.credentials(), IsNull());
 }
 
