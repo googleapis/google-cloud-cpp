@@ -67,6 +67,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section apigeeregistry-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `apigeeregistry_v1::ProvisioningClient`:
+
+@snippet provisioning_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet provisioning_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c apigeeregistry_v1::ProvisioningClient](@ref apigeeregistry_v1::ProvisioningClient-retry-snippet)
+- [\c apigeeregistry_v1::RegistryClient](@ref apigeeregistry_v1::RegistryClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section apigeeregistry-override-retry-more-information More Information
@@ -80,4 +94,28 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
+
+/*! @page apigeeregistry_v1::ProvisioningClient-retry-snippet Override apigeeregistry_v1::ProvisioningClient Retry Policies
+
+This shows how to override the retry policies for apigeeregistry_v1::ProvisioningClient:
+
+@snippet google/cloud/apigeeregistry/v1/samples/provisioning_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/apigeeregistry/v1/samples/provisioning_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page apigeeregistry_v1::RegistryClient-retry-snippet Override apigeeregistry_v1::RegistryClient Retry Policies
+
+This shows how to override the retry policies for apigeeregistry_v1::RegistryClient:
+
+@snippet google/cloud/apigeeregistry/v1/samples/registry_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/apigeeregistry/v1/samples/registry_client_samples.cc custom-idempotency-policy
+
+*/
 // <!-- inject-retry-pages-end -->

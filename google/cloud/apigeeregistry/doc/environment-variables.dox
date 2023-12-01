@@ -9,6 +9,15 @@ environment variables are convenient when troubleshooting problems.
 @section apigeeregistry-env-endpoint Endpoint Overrides
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_APIGEE_REGISTRY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "apigeeregistry.googleapis.com")
+  used by `MakeProvisioningConnection()`.
+
+- `GOOGLE_CLOUD_CPP_APIGEE_REGISTRY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "apigeeregistry.googleapis.com")
+  used by `MakeRegistryConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption

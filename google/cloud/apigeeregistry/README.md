@@ -1,8 +1,9 @@
 # Apigee Registry API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Apigee Registry API][cloud-service-docs], a service to \<UNKNOWN - NO SERVICE
-CONFIG DOCUMENTATION SUMMARY>
+[Apigee Registry API][cloud-service-docs], a service that allows teams to upload
+and share machine-readable descriptions of APIs that are in use and in
+development.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,6 +17,34 @@ this library.
 
 <!-- inject-quickstart-start -->
 
+```cc
+#include "google/cloud/apigeeregistry/v1/registry_client.h"
+#include "google/cloud/location.h"
+#include <iostream>
+
+int main(int argc, char* argv[]) try {
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+    return 1;
+  }
+
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
+  namespace apigeeregistry = ::google::cloud::apigeeregistry_v1;
+  auto client =
+      apigeeregistry::RegistryClient(apigeeregistry::MakeRegistryConnection());
+  for (auto r : client.ListApis(location.FullName())) {
+    if (!r) throw std::move(r).status();
+    std::cout << r->DebugString() << "\n";
+  }
+
+  return 0;
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
+  return 1;
+}
+```
+
 <!-- inject-quickstart-end -->
 
 ## More Information
@@ -26,6 +55,6 @@ this library.
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/apigeeregistry
+[cloud-service-docs]: https://cloud.google.com/apigee/docs
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/apigeeregistry/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/apigeeregistry

@@ -2,8 +2,10 @@
 
 @mainpage Apigee Registry API C++ Client Library
 
-An idiomatic C++ client library for the [Apigee Registry API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+An idiomatic C++ client library for the
+[Apigee Registry API][cloud-service-docs], a service that allows teams to upload
+and share machine-readable descriptions of APIs that are in use and in
+development.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -21,6 +23,18 @@ which should give you a taste of the Apigee Registry API C++ client library API.
 ## Main classes
 
 <!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each one
+of these classes exposes all the RPCs for a service as member functions of the
+class. This library groups multiple services because they are part of the same
+product or are often used together. A typical example may be the administrative
+and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
+
+- [\c apigeeregistry_v1::ProvisioningClient](@ref google::cloud::apigeeregistry_v1::ProvisioningClient)
+- [\c apigeeregistry_v1::RegistryClient](@ref google::cloud::apigeeregistry_v1::RegistryClient)
 <!-- inject-client-list-end -->
 
 ## More Information
@@ -35,6 +49,6 @@ which should give you a taste of the Apigee Registry API C++ client library API.
 - @ref apigeeregistry-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/apigeeregistry
+[cloud-service-docs]: https://cloud.google.com/apigee/docs
 
 */

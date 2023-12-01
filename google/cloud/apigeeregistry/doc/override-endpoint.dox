@@ -7,9 +7,30 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `apigeeregistry_v1::ProvisioningClient`:
+
+@snippet provisioning_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c apigeeregistry_v1::ProvisioningClient](@ref apigeeregistry_v1::ProvisioningClient-endpoint-snippet)
+- [\c apigeeregistry_v1::RegistryClient](@ref apigeeregistry_v1::RegistryClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page apigeeregistry_v1::ProvisioningClient-endpoint-snippet Override apigeeregistry_v1::ProvisioningClient Endpoint Configuration
+
+@snippet google/cloud/apigeeregistry/v1/samples/provisioning_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page apigeeregistry_v1::RegistryClient-endpoint-snippet Override apigeeregistry_v1::RegistryClient Endpoint Configuration
+
+@snippet google/cloud/apigeeregistry/v1/samples/registry_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

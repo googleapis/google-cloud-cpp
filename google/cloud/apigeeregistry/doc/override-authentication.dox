@@ -9,6 +9,13 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet provisioning_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c apigeeregistry_v1::ProvisioningClient](@ref apigeeregistry_v1::ProvisioningClient-service-account-snippet)
+- [\c apigeeregistry_v1::RegistryClient](@ref apigeeregistry_v1::RegistryClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +31,16 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page apigeeregistry_v1::ProvisioningClient-service-account-snippet Override apigeeregistry_v1::ProvisioningClient Authentication Defaults
+
+@snippet google/cloud/apigeeregistry/v1/samples/provisioning_client_samples.cc with-service-account
+
+*/
+
+/*! @page apigeeregistry_v1::RegistryClient-service-account-snippet Override apigeeregistry_v1::RegistryClient Authentication Defaults
+
+@snippet google/cloud/apigeeregistry/v1/samples/registry_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

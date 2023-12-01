@@ -9,6 +9,7 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
+- [Apigee Registry API](/google/cloud/apigeeregistry/README.md)
 - [Distributed Cloud Edge Network API](/google/cloud/edgenetwork/README.md)
 - [Cloud SQL Admin API](/google/cloud/sql/README.md)
 - [Telecom Network Automation API](google/cloud/telcoautomation/README.md)
