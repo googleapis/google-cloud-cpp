@@ -41,7 +41,6 @@ using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
-using ::testing::NiceMock;
 
 google::pubsub::v1::PublishResponse MakeResponse(
     google::pubsub::v1::PublishRequest const& request) {
