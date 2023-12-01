@@ -4,7 +4,9 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.19.0 - TBD
+## v2.19.0 - 2023-12
+
+### New Libraries
 
 We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
@@ -12,6 +14,33 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Distributed Cloud Edge Network API](/google/cloud/edgenetwork/README.md)
 - [Cloud SQL Admin API](/google/cloud/sql/README.md)
 - [Telecom Network Automation API](google/cloud/telcoautomation/README.md)
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- feat(bigtable): throttling for AsyncBulkApply ([#13203](https://github.com/googleapis/google-cloud-cpp/pull/13203))
+- fix(bigtable): async context propagation for tracing ([#13156](https://github.com/googleapis/google-cloud-cpp/pull/13156))
+- feat(bigtable): support BulkApply throttling ([#13124](https://github.com/googleapis/google-cloud-cpp/pull/13124))
+
+### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
+
+- feat(otel): add Makefile ([#13177](https://github.com/googleapis/google-cloud-cpp/pull/13177))
+- fix(otel): detach context when single-threaded ([#13154](https://github.com/googleapis/google-cloud-cpp/pull/13154))
+- fix(otel): reconnect async traces (e.g. LROs) ([#13147](https://github.com/googleapis/google-cloud-cpp/pull/13147))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat: add PG.OID type ([#13127](https://github.com/googleapis/google-cloud-cpp/pull/13127))
+- feat(spanner): control replicas/regions used in non-transactional reads ([#13031](https://github.com/googleapis/google-cloud-cpp/pull/13031))
+
+### [Vertex AI](/google/cloud/aiplatform/README.md)
+
+- feat(aiplatform): generate new services ([#13150](https://github.com/googleapis/google-cloud-cpp/pull/13150))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix(common): use FQDN for the metadata service ([#13139](https://github.com/googleapis/google-cloud-cpp/pull/13139))
+- feat(common): add GrpcCompressionAlgorithmOption ([#13108](https://github.com/googleapis/google-cloud-cpp/pull/13108))
+- doc: fix cliffhanger ([#13033](https://github.com/googleapis/google-cloud-cpp/pull/13033))
 
 ## v2.18.0 - 2023-11
 
