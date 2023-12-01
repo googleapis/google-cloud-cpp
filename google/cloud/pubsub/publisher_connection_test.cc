@@ -38,7 +38,6 @@ namespace {
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::HasSubstr;
@@ -345,7 +344,6 @@ using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanNamed;
-using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::IsEmpty;
 using ::testing::UnorderedElementsAre;
 
