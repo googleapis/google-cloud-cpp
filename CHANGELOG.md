@@ -4,7 +4,9 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.19.0 - TBD
+## v2.19.0 - 2023-12
+
+### New Libraries
 
 We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
@@ -12,6 +14,50 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Distributed Cloud Edge Network API](/google/cloud/edgenetwork/README.md)
 - [Cloud SQL Admin API](/google/cloud/sql/README.md)
 - [Telecom Network Automation API](google/cloud/telcoautomation/README.md)
+
+### [BigQuery](/google/cloud/bigquery/README.md)
+
+- fix(bigquery): use int for creationTime ([#13103](https://github.com/googleapis/google-cloud-cpp/pull/13103))
+- fix(bigquery): remove requirement to have `configuration` field ([#13102](https://github.com/googleapis/google-cloud-cpp/pull/13102))
+- fix(bigquery): use STRING for statementByteBudget field ([#13069](https://github.com/googleapis/google-cloud-cpp/pull/13069))
+- fix: leave arrays in json ([#13052](https://github.com/googleapis/google-cloud-cpp/pull/13052))
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- feat(bigtable): throttling for AsyncBulkApply ([#13203](https://github.com/googleapis/google-cloud-cpp/pull/13203))
+- fix(bigtable): async context propagation for tracing ([#13156](https://github.com/googleapis/google-cloud-cpp/pull/13156))
+- feat(bigtable): support BulkApply throttling ([#13124](https://github.com/googleapis/google-cloud-cpp/pull/13124))
+
+### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
+
+- feat(otel): add Makefile ([#13177](https://github.com/googleapis/google-cloud-cpp/pull/13177))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- feat(pubsub): add generated admin api ([#13066](https://github.com/googleapis/google-cloud-cpp/pull/13066))
+- fix(pubsub): fix merge conflict causing bad unit test ([#13046](https://github.com/googleapis/google-cloud-cpp/pull/13046))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat: add PG.OID type ([#13127](https://github.com/googleapis/google-cloud-cpp/pull/13127))
+- feat(spanner): control replicas/regions used in non-transactional reads ([#13031](https://github.com/googleapis/google-cloud-cpp/pull/13031))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix: upstream fix for missing copybara deps ([#13067](https://github.com/googleapis/google-cloud-cpp/pull/13067))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix(otel): reconnect async traces (e.g. LROs) ([#13147](https://github.com/googleapis/google-cloud-cpp/pull/13147))
+- feat(otel): add Makefile ([#13177](https://github.com/googleapis/google-cloud-cpp/pull/13177))
+- feat(telcoautomation): generate library ([#13158](https://github.com/googleapis/google-cloud-cpp/pull/13158))
+- feat(aiplatform): generate new services ([#13150](https://github.com/googleapis/google-cloud-cpp/pull/13150))
+- fix(otel): detach context when single-threaded ([#13154](https://github.com/googleapis/google-cloud-cpp/pull/13154))
+- fix(common): use FQDN for the metadata service ([#13139](https://github.com/googleapis/google-cloud-cpp/pull/13139))
+- docs(sql): this library is now GA ([#13134](https://github.com/googleapis/google-cloud-cpp/pull/13134))
+- feat(common): add GrpcCompressionAlgorithmOption ([#13108](https://github.com/googleapis/google-cloud-cpp/pull/13108))
+- feat(edgenetwork/v1): generate library ([#13089](https://github.com/googleapis/google-cloud-cpp/pull/13089))
+- doc: fix cliffhanger ([#13033](https://github.com/googleapis/google-cloud-cpp/pull/13033))
 
 ## v2.18.0 - 2023-11
 
