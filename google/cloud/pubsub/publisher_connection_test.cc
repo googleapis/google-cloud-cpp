@@ -16,7 +16,7 @@
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/options.h"
-#include "google/cloud/pubsub/testing/mock_message_batch.h"
+#include "google/cloud/pubsub/testing/mock_batch_sink.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/api_client_header.h"
@@ -45,14 +45,11 @@ using ::testing::HasSubstr;
 
 std::shared_ptr<PublisherConnection> MakeTestPublisherConnection(
     Topic topic, std::shared_ptr<pubsub_internal::PublisherStub> mock,
-    Options opts = {},
-    std::shared_ptr<pubsub_internal::MessageBatch> message_batch =
-        std::make_shared<pubsub_internal::NoOpMessageBatch>()) {
+    Options opts = {}) {
   opts = pubsub_internal::DefaultPublisherOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
   return pubsub_internal::MakeTestPublisherConnection(
-      std::move(topic), std::move(opts), {std::move(mock)},
-      std::move(message_batch));
+      std::move(topic), std::move(opts), {std::move(mock)});
 }
 
 TEST(PublisherConnectionTest, Basic) {
@@ -357,20 +354,6 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
 
-  auto mock_message_batch =
-      std::make_shared<pubsub_testing::MockMessageBatch>();
-  std::promise<void> is_publish_complete;
-  EXPECT_CALL(*mock_message_batch, AddMessage(_)).Times(1);
-  EXPECT_CALL(*mock_message_batch, Flush).WillOnce([&] {
-    // Batch sink span should still be active when Flush is called.
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return [&](auto) {
-      // Batch sink span should no longer be active. Wait until the lambda
-      // returned from Flush is executed to GetSpans.
-      is_publish_complete.set_value();
-    };
-  });
-
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::cloud::CompletionQueue&, auto,
                     google::pubsub::v1::PublishRequest const&) {
@@ -378,16 +361,13 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
         response.add_message_ids("test-message-id-0");
         return make_ready_future(make_status_or(response));
       });
-  auto publisher = MakeTestPublisherConnection(
-      topic, mock, EnableTracing(Options{}), mock_message_batch);
+  auto publisher =
+      MakeTestPublisherConnection(topic, mock, EnableTracing(Options{}));
 
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
   publisher->Flush({});
-
-  // Wait until the BatchSink span ends before calling `GetSpans`.
-  is_publish_complete.get_future().get();
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
