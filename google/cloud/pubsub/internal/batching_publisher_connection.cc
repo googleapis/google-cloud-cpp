@@ -54,7 +54,7 @@ BatchingPublisherConnection::~BatchingPublisherConnection() {
 
 future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     PublishParams p) {
-  batch_->AddMessage(p.message);
+  sink_->AddMessage(p.message);
   auto const bytes = MessageSize(p.message);
   std::unique_lock<std::mutex> lk(mu_);
   do {
@@ -198,10 +198,7 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   batch.weak = shared_from_this();
   request.set_topic(topic_full_name_);
 
-  auto handler = batch_->Flush();
-  sink_->AsyncPublish(std::move(request))
-      .then(std::move(batch))
-      .then(std::move(handler));
+  sink_->AsyncPublish(std::move(request)).then(std::move(batch));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

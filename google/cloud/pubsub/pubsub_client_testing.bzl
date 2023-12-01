@@ -19,7 +19,6 @@
 pubsub_client_testing_hdrs = [
     "testing/fake_streaming_pull.h",
     "testing/mock_batch_sink.h",
-    "testing/mock_message_batch.h",
     "testing/mock_publisher_stub.h",
     "testing/mock_subscriber_stub.h",
     "testing/mock_subscription_batch_source.h",
