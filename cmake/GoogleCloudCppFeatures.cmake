@@ -37,7 +37,6 @@ set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES
     # cmake-format: sort
-    "sql" # TODO(#12120) - move to GA list
 )
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
@@ -144,6 +143,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "shell"
     "spanner"
     "speech"
+    "sql"
     "storage"
     "storageinsights"
     "storagetransfer"
