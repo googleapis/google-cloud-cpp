@@ -308,7 +308,7 @@ TEST(TracingBatchSink, AsyncPublishLargeBatch) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   EXPECT_CALL(*mock, AddMessage(_)).Times(batch_size);
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
+      .WillOnce([kDefaultMaxLinks](google::pubsub::v1::PublishRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(kDefaultMaxLinks + 1)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
@@ -337,7 +337,7 @@ TEST(TracingBatchSink, AsyncPublishBatchWithCustomLimit) {
   auto mock = std::make_unique<pubsub_testing::MockBatchSink>();
   EXPECT_CALL(*mock, AddMessage(_)).Times(kBatchSize);
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
+      .WillOnce([kBatchSize](google::pubsub::v1::PublishRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(kBatchSize)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
