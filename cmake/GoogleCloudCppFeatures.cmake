@@ -35,9 +35,7 @@ set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     "pubsublite" # This is WIP, it needs a number of hand-crafted APIs.
 )
 
-set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES
-    # cmake-format: sort
-    "sql" # TODO(#12120) - move to GA list
+set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sort
 )
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
@@ -144,6 +142,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "shell"
     "spanner"
     "speech"
+    "sql"
     "storage"
     "storageinsights"
     "storagetransfer"

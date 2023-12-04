@@ -21,7 +21,6 @@ GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
 ]
 
 GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [
-    "sql",
 ]
 
 GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
@@ -203,6 +202,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "shell",
     "spanner",
     "speech",
+    "sql",
     "storage",
     "storageinsights",
     "storagetransfer",
