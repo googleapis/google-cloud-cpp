@@ -308,10 +308,11 @@ TEST(TracingBatchSink, AsyncPublishLargeBatch) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   EXPECT_CALL(*mock, AddMessage(_)).Times(batch_size);
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_THAT(request, IsProtoEqual(MakeRequest(batch_size)));
-        return make_ready_future(make_status_or(MakeResponse(request)));
-      });
+      .WillOnce(
+          [&batch_size](google::pubsub::v1::PublishRequest const& request) {
+            EXPECT_THAT(request, IsProtoEqual(MakeRequest(batch_size)));
+            return make_ready_future(make_status_or(MakeResponse(request)));
+          });
   auto span_catcher = InstallSpanCatcher();
   auto batch_sink = MakeTestBatchSink(std::move(mock));
 
