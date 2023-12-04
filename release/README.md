@@ -126,9 +126,8 @@ Watch for this PR to come through, kick off the builds, approve, and merge it.
 *merged*.
 
 We want to create the release from a stable point in the default branch
-(`main`), and we want this point to include the updated release notes.
-There may be exceptions to this guideline, you are encouraged to use
-your own judgment.
+(`main`), and we want this point to include the updated release notes. There may
+be exceptions to this guideline, you are encouraged to use your own judgment.
 
 ### a. Run the release script
 
