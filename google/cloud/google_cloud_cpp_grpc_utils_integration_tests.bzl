@@ -17,5 +17,5 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_grpc_utils_integration_tests = [
-    "internal/grpc_impersonate_service_account_integration_test.cc",
+    "internal/grpc/grpc_impersonate_service_account_integration_test.cc",
 ]
