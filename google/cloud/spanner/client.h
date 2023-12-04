@@ -249,15 +249,8 @@ class Client {
       std::vector<std::string> columns, Options opts = {});
 
   /**
-   * Executes a SQL query.
-   *
-   * Operations inside read-write transactions might return `ABORTED`. If this
-   * occurs, the application should restart the transaction from the beginning.
-   *
-   * Callers can optionally supply a `Transaction` or
-   * `Transaction::SingleUseOptions` used to create a single-use transaction -
-   * or neither, in which case a single-use transaction with default options
-   * is used.
+   * Executes a SQL query in a single-use transaction created with the
+   * default options.
    *
    * `SELECT * ...` queries are supported, but there's no guarantee about the
    * order, nor number, of returned columns. Therefore, the caller must look up
@@ -266,9 +259,6 @@ class Client {
    * query's SELECT statement, so that unnecessary values are not
    * returned/ignored, and the column order is known. This enables more
    * efficient and simpler code.
-   *
-   * Can also execute a DML statement with a returning clause in a read/write
-   * transaction.
    *
    * @note No individual row in the `RowStream` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
@@ -281,10 +271,6 @@ class Client {
    * Using `SELECT *`.
    * @snippet samples.cc spanner-query-data-select-star
    *
-   * @par Example
-   * Using a DML statement with `THEN RETURN`.
-   * @snippet samples.cc spanner-update-dml-returning
-   *
    * @param statement The SQL statement to execute.
    * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
@@ -293,18 +279,37 @@ class Client {
   RowStream ExecuteQuery(SqlStatement statement, Options opts = {});
 
   /**
-   * @copydoc ExecuteQuery(SqlStatement, Options)
+   * Executes a SQL query in a single-use transaction created with the
+   * @p transaction_options.
    *
    * @param transaction_options Execute this query in a single-use transaction
    *     with these options.
+   * @param statement The SQL statement to execute.
+   * @param opts (optional) The `Options` to use for this call. If given,
+   *     these will take precedence over the options set at the client and
+   *     environment levels.
    */
   RowStream ExecuteQuery(Transaction::SingleUseOptions transaction_options,
                          SqlStatement statement, Options opts = {});
 
   /**
-   * @copydoc ExecuteQuery(SqlStatement, Options)
+   * Executes a SQL query in an existing transaction.
+   *
+   * Operations inside read-write transactions might return `ABORTED`. If this
+   * occurs, the application should restart the transaction from the beginning.
+   *
+   * Can execute a DML statement with a returning clause in a read/write
+   * transaction.
+   *
+   * @par Example
+   * Using a DML statement with `THEN RETURN`.
+   * @snippet samples.cc spanner-update-dml-returning
    *
    * @param transaction Execute this query as part of an existing transaction.
+   * @param statement The SQL statement to execute.
+   * @param opts (optional) The `Options` to use for this call. If given,
+   *     these will take precedence over the options set at the client and
+   *     environment levels.
    */
   RowStream ExecuteQuery(Transaction transaction, SqlStatement statement,
                          Options opts = {});
