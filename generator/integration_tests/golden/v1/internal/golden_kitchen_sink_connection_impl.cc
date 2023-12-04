@@ -22,10 +22,10 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/grpc/async_retry_loop.h"
-#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/grpc/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/grpc/retry_loop.h"
 #include "google/cloud/internal/grpc/streaming_read_rpc_logging.h"
+#include "google/cloud/internal/pagination_range.h"
 #include <memory>
 
 namespace google {

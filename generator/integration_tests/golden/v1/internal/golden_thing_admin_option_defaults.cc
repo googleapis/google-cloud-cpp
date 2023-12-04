@@ -19,8 +19,8 @@
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
 #include "generator/integration_tests/golden/v1/golden_thing_admin_connection.h"
 #include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
-#include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/grpc/populate_grpc_options.h"
+#include "google/cloud/internal/populate_common_options.h"
 #include <memory>
 
 namespace google {
