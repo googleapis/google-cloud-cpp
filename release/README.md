@@ -53,7 +53,10 @@ release. Paste that output below the release header updated above, and manually
 tweak as needed.
 
 **NOTE:** If you can, add the script output into the PR description so that
-reviewers know what you removed.
+reviewers know what you removed. Or, better yet, leave the description alone,
+and use the script output verbatim in the PR (except, perhaps, for obvious
+duplications), and then let the normal review/edit/push cycle deal with any
+cleanups.
 
 - A change in an existing library warrants its own library section.
 - Library sections should be listed in alphabetical order (Update `sections` in
@@ -123,8 +126,8 @@ Watch for this PR to come through, kick off the builds, approve, and merge it.
 *merged*.
 
 We want to create the release from a stable point in the default branch
-(`main`), and we want this point to include the updated release notes and API
-baselines. There may be exceptions to this guideline, you are encouraged to use
+(`main`), and we want this point to include the updated release notes.
+There may be exceptions to this guideline, you are encouraged to use
 your own judgment.
 
 ### a. Run the release script
@@ -246,6 +249,7 @@ In `ports/google-cloud-cpp/vcpkg.json`
 - d. Format the changes
 
 ```shell
+./bootstrap-vcpkg.sh
 ./vcpkg format-manifest ports/google-cloud-cpp/vcpkg.json
 ```
 
@@ -260,7 +264,7 @@ In `ports/google-cloud-cpp/portfile.cmake`, use the generated SHA.
 #### Commit the changes
 
 ```shell
-git commit -m"[google-cloud-cpp] update to the latest release (${VERSION})"
+git commit -m"[google-cloud-cpp] update to the latest release (${VERSION})" ports
 ```
 
 #### Update the version information (you really do need two commits)
@@ -275,7 +279,6 @@ git commit --amend --no-edit .
 ##### Remove any older versions
 
 ```shell
-./bootstrap-vcpkg.sh
 ./vcpkg remove --outdated --recurse
 ```
 
@@ -293,7 +296,7 @@ for feature in <new_features>; do ./vcpkg remove google-cloud-cpp; ./vcpkg insta
 
 #### Push the branch to your fork
 
-```shelll
+```shell
 git push origin
 ```
 
