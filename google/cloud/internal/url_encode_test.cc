@@ -44,6 +44,15 @@ TEST(UrlEncode, MultipleReplacements) {
   EXPECT_THAT(result, encoded_string);
 }
 
+TEST(UrlEncode, NotStdIsPrint) {
+  auto const* unencoded_string = "\t";
+
+  auto result = UrlEncode(unencoded_string);
+
+  auto const* encoded_string = "%09";
+  EXPECT_THAT(result, encoded_string);
+}
+
 TEST(UrlDecode, Simple) {
   auto const* encoded_string = "projects%2F*%2Fresource%2F*";
 
