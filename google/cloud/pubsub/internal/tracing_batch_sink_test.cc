@@ -106,7 +106,7 @@ std::shared_ptr<BatchSink> MakeTestBatchSink(std::shared_ptr<BatchSink> mock,
                                              Options options = {}) {
   return MakeTracingBatchSink(
       TestTopic(), std::move(mock),
-      internal::MergeOptions(options, MakeTestOptions()));
+      internal::MergeOptions(std::move(options), MakeTestOptions()));
 }
 
 google::pubsub::v1::PublishRequest MakeRequest(int n) {
