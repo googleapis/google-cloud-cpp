@@ -156,7 +156,7 @@ function integration::bazel_with_emulators() {
 
   production_integration_tests=(
     # gRPC Utils integration tests
-    "google/cloud:internal_grpc_impersonate_service_account_integration_test"
+    "google/cloud:internal_grpc_grpc_impersonate_service_account_integration_test"
     # Generator integration tests
     "generator/..."
     # BigQuery integration tests
