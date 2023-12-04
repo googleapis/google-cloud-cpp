@@ -17,7 +17,7 @@
 // source: google/cloud/networkconnectivity/v1/hub.proto
 
 #include "google/cloud/networkconnectivity/v1/internal/hub_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

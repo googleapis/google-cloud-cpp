@@ -14,8 +14,8 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_logging_decorator.h"
 #include "generator/integration_tests/tests/mock_golden_kitchen_sink_stub.h"
-#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
-#include "google/cloud/internal/async_streaming_write_rpc_impl.h"
+#include "google/cloud/internal/grpc/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/grpc/async_streaming_write_rpc_impl.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"

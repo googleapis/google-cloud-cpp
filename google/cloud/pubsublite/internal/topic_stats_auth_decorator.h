@@ -20,7 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_STATS_AUTH_DECORATOR_H
 
 #include "google/cloud/pubsublite/internal/topic_stats_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/internal/grpc/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>

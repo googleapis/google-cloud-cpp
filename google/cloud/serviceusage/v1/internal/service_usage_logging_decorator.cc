@@ -17,7 +17,7 @@
 // source: google/api/serviceusage/v1/serviceusage.proto
 
 #include "google/cloud/serviceusage/v1/internal/service_usage_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/api/serviceusage/v1/serviceusage.grpc.pb.h>
 #include <memory>

@@ -22,8 +22,8 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/grpc/unified_grpc_credentials.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
 #include <grpcpp/grpcpp.h>
 

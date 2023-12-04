@@ -17,8 +17,8 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
-#include "google/cloud/internal/streaming_read_rpc_logging.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
+#include "google/cloud/internal/grpc/streaming_read_rpc_logging.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
 #include <memory>

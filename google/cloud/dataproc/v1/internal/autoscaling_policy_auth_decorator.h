@@ -20,7 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_AUTOSCALING_POLICY_AUTH_DECORATOR_H
 
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/internal/grpc/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>

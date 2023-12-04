@@ -17,7 +17,7 @@
 // source: google/iam/v1/iam_policy.proto
 
 #include "google/cloud/iam/v1/internal/iam_policy_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

@@ -19,8 +19,8 @@
 #include "google/cloud/orgpolicy/v2/internal/org_policy_option_defaults.h"
 #include "google/cloud/orgpolicy/v2/org_policy_connection.h"
 #include "google/cloud/orgpolicy/v2/org_policy_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

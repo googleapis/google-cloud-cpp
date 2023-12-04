@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/recordable.h"
-#include "google/cloud/internal/time_utils.h"
+#include "google/cloud/internal/grpc/time_utils.h"
 #include "google/cloud/version.h"
 #include "absl/time/clock.h"
 #include <gmock/gmock.h>

@@ -17,7 +17,7 @@
 // source: google/cloud/run/v2/task.proto
 
 #include "google/cloud/run/v2/internal/tasks_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

@@ -98,21 +98,21 @@ Status LoggingDecoratorGenerator::GenerateCc() {
   // includes
   CcPrint("\n");
   CcLocalIncludes(
-      {vars("logging_header_path"), "google/cloud/internal/log_wrapper.h",
+      {vars("logging_header_path"), "google/cloud/internal/grpc/log_wrapper.h",
        HasStreamingReadMethod()
-           ? "google/cloud/internal/streaming_read_rpc_logging.h"
+           ? "google/cloud/internal/grpc/streaming_read_rpc_logging.h"
            : "",
        HasStreamingWriteMethod()
-           ? "google/cloud/internal/streaming_write_rpc_logging.h"
+           ? "google/cloud/internal/grpc/streaming_write_rpc_logging.h"
            : "",
        HasBidirStreamingMethod()
-           ? "google/cloud/internal/async_read_write_stream_logging.h"
+           ? "google/cloud/internal/grpc/async_read_write_stream_logging.h"
            : "",
        HasAsynchronousStreamingReadMethod()
-           ? "google/cloud/internal/async_streaming_read_rpc_logging.h"
+           ? "google/cloud/internal/grpc/async_streaming_read_rpc_logging.h"
            : "",
        HasAsynchronousStreamingWriteMethod()
-           ? "google/cloud/internal/async_streaming_write_rpc_logging.h"
+           ? "google/cloud/internal/grpc/async_streaming_write_rpc_logging.h"
            : "",
        "google/cloud/status_or.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});

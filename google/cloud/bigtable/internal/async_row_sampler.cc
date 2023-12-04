@@ -15,7 +15,7 @@
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 #include <chrono>
 
 namespace google {

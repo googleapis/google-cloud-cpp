@@ -22,8 +22,8 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/async_retry_loop.h"
-#include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/grpc/async_retry_loop.h"
+#include "google/cloud/internal/grpc/retry_loop.h"
 #include <memory>
 #include <string>
 

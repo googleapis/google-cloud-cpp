@@ -19,8 +19,8 @@
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_option_defaults.h"
 #include "google/cloud/datacatalog/v1/policy_tag_manager_connection.h"
 #include "google/cloud/datacatalog/v1/policy_tag_manager_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

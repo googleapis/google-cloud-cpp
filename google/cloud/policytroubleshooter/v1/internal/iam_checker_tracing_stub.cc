@@ -17,7 +17,7 @@
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

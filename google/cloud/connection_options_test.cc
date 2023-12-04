@@ -14,8 +14,8 @@
 
 #include "google/cloud/connection_options.h"
 #include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/compiler_info.h"
+#include "google/cloud/internal/grpc/background_threads_impl.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>

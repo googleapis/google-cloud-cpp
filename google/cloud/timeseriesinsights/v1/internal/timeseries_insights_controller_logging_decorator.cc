@@ -17,7 +17,7 @@
 // source: google/cloud/timeseriesinsights/v1/timeseries_insights.proto
 
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/timeseriesinsights/v1/timeseries_insights.grpc.pb.h>
 #include <memory>

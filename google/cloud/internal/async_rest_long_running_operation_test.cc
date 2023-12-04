@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_rest_long_running_operation.h"
-#include "google/cloud/internal/extract_long_running_result.h"
+#include "google/cloud/internal/grpc/extract_long_running_result.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/async_sequencer.h"

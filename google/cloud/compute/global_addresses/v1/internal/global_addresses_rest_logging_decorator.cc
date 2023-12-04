@@ -17,7 +17,7 @@
 // source: google/cloud/compute/global_addresses/v1/global_addresses.proto
 
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

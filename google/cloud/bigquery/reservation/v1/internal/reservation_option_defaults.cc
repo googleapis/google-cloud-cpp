@@ -19,8 +19,8 @@
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_option_defaults.h"
 #include "google/cloud/bigquery/reservation/v1/reservation_connection.h"
 #include "google/cloud/bigquery/reservation/v1/reservation_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

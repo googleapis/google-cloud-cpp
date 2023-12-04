@@ -20,7 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_DATABASE_ADMIN_AUTH_DECORATOR_H
 
 #include "google/cloud/spanner/admin/internal/database_admin_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/internal/grpc/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>

@@ -17,7 +17,7 @@
 // source: google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto
 
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

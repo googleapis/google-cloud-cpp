@@ -20,7 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_COMPLETION_AUTH_DECORATOR_H
 
 #include "google/cloud/retail/v2/internal/completion_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/internal/grpc/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>

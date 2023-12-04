@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPLETION_QUEUE_H
 
 #include "google/cloud/future.h"
-#include "google/cloud/internal/async_read_stream_impl.h"
-#include "google/cloud/internal/async_rpc_details.h"
-#include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/grpc/async_read_stream_impl.h"
+#include "google/cloud/internal/grpc/async_rpc_details.h"
+#include "google/cloud/internal/grpc/completion_queue_impl.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/meta/type_traits.h"

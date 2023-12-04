@@ -19,8 +19,8 @@
 #include "google/cloud/edgecontainer/v1/internal/edge_container_option_defaults.h"
 #include "google/cloud/edgecontainer/v1/edge_container_connection.h"
 #include "google/cloud/edgecontainer/v1/edge_container_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

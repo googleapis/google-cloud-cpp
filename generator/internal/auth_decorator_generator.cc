@@ -48,7 +48,7 @@ Status AuthDecoratorGenerator::GenerateHeader() {
   // includes
   HeaderPrint("\n");
   HeaderLocalIncludes({vars("stub_header_path"),
-                       "google/cloud/internal/unified_grpc_credentials.h",
+                       "google/cloud/internal/grpc/unified_grpc_credentials.h",
                        "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
@@ -97,16 +97,16 @@ Status AuthDecoratorGenerator::GenerateCc() {
   CcLocalIncludes({
       vars("auth_header_path"),
       HasBidirStreamingMethod()
-          ? "google/cloud/internal/async_read_write_stream_auth.h"
+          ? "google/cloud/internal/grpc/async_read_write_stream_auth.h"
           : "",
       HasAsynchronousStreamingReadMethod()
-          ? "google/cloud/internal/async_streaming_read_rpc_auth.h"
+          ? "google/cloud/internal/grpc/async_streaming_read_rpc_auth.h"
           : "",
       HasAsynchronousStreamingWriteMethod()
-          ? "google/cloud/internal/async_streaming_write_rpc_auth.h"
+          ? "google/cloud/internal/grpc/async_streaming_write_rpc_auth.h"
           : "",
       HasStreamingWriteMethod()
-          ? "google/cloud/internal/streaming_write_rpc_impl.h"
+          ? "google/cloud/internal/grpc/streaming_write_rpc_impl.h"
           : "",
   });
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});

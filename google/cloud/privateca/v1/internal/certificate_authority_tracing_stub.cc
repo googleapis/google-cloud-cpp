@@ -17,7 +17,7 @@
 // source: google/cloud/security/privateca/v1/service.proto
 
 #include "google/cloud/privateca/v1/internal/certificate_authority_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

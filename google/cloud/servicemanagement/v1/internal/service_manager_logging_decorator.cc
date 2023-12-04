@@ -17,7 +17,7 @@
 // source: google/api/servicemanagement/v1/servicemanager.proto
 
 #include "google/cloud/servicemanagement/v1/internal/service_manager_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/api/servicemanagement/v1/servicemanager.grpc.pb.h>
 #include <memory>

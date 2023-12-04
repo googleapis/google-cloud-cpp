@@ -17,7 +17,7 @@
 // source: google/monitoring/v3/group_service.proto
 
 #include "google/cloud/monitoring/v3/internal/group_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/group_service.grpc.pb.h>
 #include <memory>

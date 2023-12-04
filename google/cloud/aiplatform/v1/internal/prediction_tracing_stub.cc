@@ -17,9 +17,9 @@
 // source: google/cloud/aiplatform/v1/prediction_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/prediction_tracing_stub.h"
-#include "google/cloud/internal/async_read_write_stream_tracing.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/internal/streaming_read_rpc_tracing.h"
+#include "google/cloud/internal/grpc/async_read_write_stream_tracing.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/streaming_read_rpc_tracing.h"
 
 namespace google {
 namespace cloud {

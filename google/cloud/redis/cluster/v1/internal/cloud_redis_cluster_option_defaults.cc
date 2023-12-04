@@ -19,8 +19,8 @@
 #include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_option_defaults.h"
 #include "google/cloud/redis/cluster/v1/cloud_redis_cluster_connection.h"
 #include "google/cloud/redis/cluster/v1/cloud_redis_cluster_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

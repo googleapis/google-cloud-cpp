@@ -20,8 +20,8 @@
 #include "google/cloud/compute/region_health_check_services/v1/internal/region_health_check_services_option_defaults.h"
 #include "google/cloud/compute/region_health_check_services/v1/region_health_check_services_connection.h"
 #include "google/cloud/compute/region_health_check_services/v1/region_health_check_services_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

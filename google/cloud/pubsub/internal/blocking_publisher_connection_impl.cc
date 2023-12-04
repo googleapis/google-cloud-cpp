@@ -14,7 +14,7 @@
 
 #include "google/cloud/pubsub/internal/blocking_publisher_connection_impl.h"
 #include "google/cloud/pubsub/internal/publisher_stub_factory.h"
-#include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/grpc/retry_loop.h"
 
 namespace google {
 namespace cloud {

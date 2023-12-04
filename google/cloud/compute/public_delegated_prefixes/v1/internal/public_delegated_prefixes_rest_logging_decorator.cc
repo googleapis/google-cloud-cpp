@@ -18,7 +18,7 @@
 // google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto
 
 #include "google/cloud/compute/public_delegated_prefixes/v1/internal/public_delegated_prefixes_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

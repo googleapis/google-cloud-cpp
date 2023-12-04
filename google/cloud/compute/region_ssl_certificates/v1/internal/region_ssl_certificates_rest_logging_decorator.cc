@@ -18,7 +18,7 @@
 // google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto
 
 #include "google/cloud/compute/region_ssl_certificates/v1/internal/region_ssl_certificates_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

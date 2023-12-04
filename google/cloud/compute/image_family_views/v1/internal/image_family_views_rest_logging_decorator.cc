@@ -17,7 +17,7 @@
 // source: google/cloud/compute/image_family_views/v1/image_family_views.proto
 
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

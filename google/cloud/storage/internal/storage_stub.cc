@@ -18,10 +18,10 @@
 
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/internal/async_read_write_stream_impl.h"
-#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
-#include "google/cloud/internal/async_streaming_write_rpc_impl.h"
-#include "google/cloud/internal/streaming_write_rpc_impl.h"
+#include "google/cloud/internal/grpc/async_read_write_stream_impl.h"
+#include "google/cloud/internal/grpc/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/grpc/async_streaming_write_rpc_impl.h"
+#include "google/cloud/internal/grpc/streaming_write_rpc_impl.h"
 #include "google/cloud/status_or.h"
 #include <google/storage/v2/storage.grpc.pb.h>
 #include <memory>

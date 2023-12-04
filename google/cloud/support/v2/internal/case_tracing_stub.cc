@@ -17,7 +17,7 @@
 // source: google/cloud/support/v2/case_service.proto
 
 #include "google/cloud/support/v2/internal/case_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

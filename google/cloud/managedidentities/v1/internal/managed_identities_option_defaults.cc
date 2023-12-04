@@ -19,8 +19,8 @@
 #include "google/cloud/managedidentities/v1/internal/managed_identities_option_defaults.h"
 #include "google/cloud/managedidentities/v1/managed_identities_connection.h"
 #include "google/cloud/managedidentities/v1/managed_identities_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

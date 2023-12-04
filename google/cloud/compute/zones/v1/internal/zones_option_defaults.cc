@@ -19,8 +19,8 @@
 #include "google/cloud/compute/zones/v1/internal/zones_option_defaults.h"
 #include "google/cloud/compute/zones/v1/zones_connection.h"
 #include "google/cloud/compute/zones/v1/zones_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

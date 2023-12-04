@@ -19,8 +19,8 @@
 #include "google/cloud/compute/networks/v1/internal/networks_option_defaults.h"
 #include "google/cloud/compute/networks/v1/networks_connection.h"
 #include "google/cloud/compute/networks/v1/networks_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

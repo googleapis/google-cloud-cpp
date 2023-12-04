@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/sequential_batch_sink.h"
-#include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/grpc/async_retry_loop.h"
 
 namespace google {
 namespace cloud {

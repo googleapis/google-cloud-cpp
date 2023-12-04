@@ -17,7 +17,7 @@
 // source: google/cloud/compute/node_groups/v1/node_groups.proto
 
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

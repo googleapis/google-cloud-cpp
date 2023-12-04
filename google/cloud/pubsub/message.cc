@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/message.h"
-#include "google/cloud/internal/time_utils.h"
+#include "google/cloud/internal/grpc/time_utils.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <iostream>

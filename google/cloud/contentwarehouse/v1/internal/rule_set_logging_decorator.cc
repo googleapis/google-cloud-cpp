@@ -17,7 +17,7 @@
 // source: google/cloud/contentwarehouse/v1/ruleset_service.proto
 
 #include "google/cloud/contentwarehouse/v1/internal/rule_set_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/ruleset_service.grpc.pb.h>
 #include <memory>

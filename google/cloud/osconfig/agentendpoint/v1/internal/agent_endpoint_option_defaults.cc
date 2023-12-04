@@ -19,8 +19,8 @@
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_option_defaults.h"
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection.h"
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

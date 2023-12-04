@@ -20,7 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_BINAUTHZ_MANAGEMENT_SERVICE_V1_AUTH_DECORATOR_H
 
 #include "google/cloud/binaryauthorization/v1/internal/binauthz_management_service_v1_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/internal/grpc/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>

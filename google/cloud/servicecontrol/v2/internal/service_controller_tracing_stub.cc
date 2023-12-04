@@ -17,7 +17,7 @@
 // source: google/api/servicecontrol/v2/service_controller.proto
 
 #include "google/cloud/servicecontrol/v2/internal/service_controller_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

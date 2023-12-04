@@ -23,7 +23,7 @@
 #include "google/cloud/speech/v1/speech_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/async_read_write_stream_impl.h"
+#include "google/cloud/internal/grpc/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

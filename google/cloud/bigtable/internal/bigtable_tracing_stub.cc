@@ -17,9 +17,9 @@
 // source: google/bigtable/v2/bigtable.proto
 
 #include "google/cloud/bigtable/internal/bigtable_tracing_stub.h"
-#include "google/cloud/internal/async_streaming_read_rpc_tracing.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/internal/streaming_read_rpc_tracing.h"
+#include "google/cloud/internal/grpc/async_streaming_read_rpc_tracing.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/streaming_read_rpc_tracing.h"
 
 namespace google {
 namespace cloud {

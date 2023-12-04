@@ -22,7 +22,7 @@
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/grpc/retry_loop.h"
 #include "google/cloud/log.h"
 #include <memory>
 

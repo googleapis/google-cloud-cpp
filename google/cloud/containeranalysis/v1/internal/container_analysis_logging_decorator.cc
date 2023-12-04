@@ -17,7 +17,7 @@
 // source: google/devtools/containeranalysis/v1/containeranalysis.proto
 
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/devtools/containeranalysis/v1/containeranalysis.grpc.pb.h>
 #include <memory>

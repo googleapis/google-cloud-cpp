@@ -19,8 +19,8 @@
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_option_defaults.h"
 #include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_connection.h"
 #include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

@@ -17,7 +17,7 @@
 // source: google/cloud/policysimulator/v1/simulator.proto
 
 #include "google/cloud/policysimulator/v1/internal/simulator_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/policysimulator/v1/simulator.grpc.pb.h>
 #include <memory>

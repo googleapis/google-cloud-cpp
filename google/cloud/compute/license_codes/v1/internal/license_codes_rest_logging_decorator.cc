@@ -17,7 +17,7 @@
 // source: google/cloud/compute/license_codes/v1/license_codes.proto
 
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

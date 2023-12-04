@@ -22,7 +22,7 @@
 #include "google/cloud/dataproc/v1/internal/node_group_controller_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/internal/grpc/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 

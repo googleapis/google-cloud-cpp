@@ -18,7 +18,7 @@
 // google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto
 
 #include "google/cloud/compute/network_edge_security_services/v1/internal/network_edge_security_services_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

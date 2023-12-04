@@ -17,7 +17,7 @@
 // source: google/cloud/discoveryengine/v1/conversational_search_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

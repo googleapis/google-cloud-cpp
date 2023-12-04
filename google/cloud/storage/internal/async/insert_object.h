@@ -19,7 +19,7 @@
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/async_streaming_write_rpc.h"
+#include "google/cloud/internal/grpc/async_streaming_write_rpc.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"

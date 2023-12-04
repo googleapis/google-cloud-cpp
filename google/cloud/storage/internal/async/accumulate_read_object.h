@@ -20,7 +20,7 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/async_streaming_read_rpc.h"
+#include "google/cloud/internal/grpc/async_streaming_read_rpc.h"
 #include "google/cloud/rpc_metadata.h"
 #include "google/cloud/version.h"
 #include <google/storage/v2/storage.pb.h>

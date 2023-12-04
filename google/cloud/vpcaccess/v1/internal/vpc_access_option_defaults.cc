@@ -19,8 +19,8 @@
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_option_defaults.h"
 #include "google/cloud/vpcaccess/v1/vpc_access_connection.h"
 #include "google/cloud/vpcaccess/v1/vpc_access_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

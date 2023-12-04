@@ -17,7 +17,7 @@
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/filestore/v1/cloud_filestore_service.grpc.pb.h>
 #include <memory>

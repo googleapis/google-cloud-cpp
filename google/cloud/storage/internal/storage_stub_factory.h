@@ -18,7 +18,7 @@
 #include "google/cloud/storage/internal/grpc/channel_refresh.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/completion_queue.h"
-#include "google/cloud/internal/minimal_iam_credentials_stub.h"
+#include "google/cloud/internal/grpc/minimal_iam_credentials_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>

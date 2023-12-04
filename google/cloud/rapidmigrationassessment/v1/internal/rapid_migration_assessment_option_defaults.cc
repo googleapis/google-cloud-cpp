@@ -20,8 +20,8 @@
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_option_defaults.h"
 #include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_connection.h"
 #include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

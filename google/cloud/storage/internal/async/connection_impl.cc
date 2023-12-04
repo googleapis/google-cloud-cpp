@@ -31,7 +31,7 @@
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/options.h"
-#include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/grpc/async_retry_loop.h"
 #include "google/cloud/internal/make_status.h"
 #include <memory>
 

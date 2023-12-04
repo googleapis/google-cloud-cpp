@@ -17,7 +17,7 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/v1/internal/authorized_certificates_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

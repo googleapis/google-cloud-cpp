@@ -21,9 +21,9 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/resumable_streaming_read_rpc.h"
-#include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/internal/streaming_read_rpc_logging.h"
+#include "google/cloud/internal/grpc/resumable_streaming_read_rpc.h"
+#include "google/cloud/internal/grpc/retry_loop.h"
+#include "google/cloud/internal/grpc/streaming_read_rpc_logging.h"
 #include <memory>
 
 namespace google {

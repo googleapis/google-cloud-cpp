@@ -19,8 +19,8 @@
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_option_defaults.h"
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_connection.h"
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

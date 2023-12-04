@@ -17,7 +17,7 @@
 // source: google/iam/v1/iam_policy.proto
 
 #include "google/cloud/iam/v1/internal/iam_policy_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <memory>

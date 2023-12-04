@@ -17,7 +17,7 @@
 // source: google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto
 
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

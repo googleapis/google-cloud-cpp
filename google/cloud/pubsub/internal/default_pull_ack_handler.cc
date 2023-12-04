@@ -16,7 +16,7 @@
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
 #include "google/cloud/pubsub/internal/pull_lease_manager.h"
 #include "google/cloud/pubsub/options.h"
-#include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/grpc/async_retry_loop.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 
 namespace google {

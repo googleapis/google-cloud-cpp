@@ -17,7 +17,7 @@
 // source: google/devtools/cloudtrace/v2/tracing.proto
 
 #include "google/cloud/trace/v2/internal/trace_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

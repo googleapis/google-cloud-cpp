@@ -14,8 +14,8 @@
 
 #include "google/cloud/bigtable/internal/logging_data_client.h"
 #include "google/cloud/bigtable/internal/common_client.h"
-#include "google/cloud/internal/debug_string_protobuf.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/debug_string_protobuf.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/log.h"
 #include "google/cloud/tracing_options.h"
 #include <google/longrunning/operations.grpc.pb.h>

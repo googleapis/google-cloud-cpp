@@ -19,8 +19,8 @@
 #include "google/cloud/policysimulator/v1/internal/simulator_option_defaults.h"
 #include "google/cloud/policysimulator/v1/simulator_connection.h"
 #include "google/cloud/policysimulator/v1/simulator_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

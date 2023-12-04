@@ -158,7 +158,7 @@ Status LoggingDecoratorRestGenerator::GenerateCc() {
 
   // includes
   CcLocalIncludes({vars("logging_rest_header_path"),
-                   "google/cloud/internal/log_wrapper.h",
+                   "google/cloud/internal/grpc/log_wrapper.h",
                    "google/cloud/status_or.h"});
   CcSystemIncludes({"memory"});
 

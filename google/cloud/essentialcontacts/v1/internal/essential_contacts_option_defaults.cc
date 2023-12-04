@@ -19,8 +19,8 @@
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_option_defaults.h"
 #include "google/cloud/essentialcontacts/v1/essential_contacts_connection.h"
 #include "google/cloud/essentialcontacts/v1/essential_contacts_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

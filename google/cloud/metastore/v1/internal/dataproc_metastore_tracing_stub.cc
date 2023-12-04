@@ -17,7 +17,7 @@
 // source: google/cloud/metastore/v1/metastore.proto
 
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

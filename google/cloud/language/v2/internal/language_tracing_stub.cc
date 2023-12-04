@@ -17,7 +17,7 @@
 // source: google/cloud/language/v2/language_service.proto
 
 #include "google/cloud/language/v2/internal/language_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

@@ -17,7 +17,7 @@
 // source: google/cloud/channel/v1/reports_service.proto
 
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

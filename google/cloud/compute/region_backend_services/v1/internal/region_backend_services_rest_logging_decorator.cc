@@ -18,7 +18,7 @@
 // google/cloud/compute/region_backend_services/v1/region_backend_services.proto
 
 #include "google/cloud/compute/region_backend_services/v1/internal/region_backend_services_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

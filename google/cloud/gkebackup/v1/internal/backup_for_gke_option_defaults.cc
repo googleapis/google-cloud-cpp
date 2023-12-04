@@ -19,8 +19,8 @@
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_option_defaults.h"
 #include "google/cloud/gkebackup/v1/backup_for_gke_connection.h"
 #include "google/cloud/gkebackup/v1/backup_for_gke_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

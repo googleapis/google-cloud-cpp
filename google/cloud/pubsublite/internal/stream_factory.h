@@ -19,7 +19,7 @@
 #include "google/cloud/pubsublite/internal/partition_assignment_stub.h"
 #include "google/cloud/pubsublite/internal/publisher_stub.h"
 #include "google/cloud/pubsublite/internal/subscriber_stub.h"
-#include "google/cloud/internal/async_read_write_stream_impl.h"
+#include "google/cloud/internal/grpc/async_read_write_stream_impl.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/cursor.grpc.pb.h>
 #include <google/cloud/pubsublite/v1/publisher.grpc.pb.h>

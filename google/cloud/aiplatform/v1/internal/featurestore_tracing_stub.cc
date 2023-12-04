@@ -17,7 +17,7 @@
 // source: google/cloud/aiplatform/v1/featurestore_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/featurestore_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

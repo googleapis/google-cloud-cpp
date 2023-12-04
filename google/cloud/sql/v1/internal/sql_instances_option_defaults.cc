@@ -19,8 +19,8 @@
 #include "google/cloud/sql/v1/internal/sql_instances_option_defaults.h"
 #include "google/cloud/sql/v1/sql_instances_connection.h"
 #include "google/cloud/sql/v1/sql_instances_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

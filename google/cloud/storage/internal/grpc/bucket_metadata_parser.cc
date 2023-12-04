@@ -19,7 +19,7 @@
 #include "google/cloud/storage/internal/grpc/owner_parser.h"
 #include "google/cloud/storage/internal/grpc/synthetic_self_link.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/time_utils.h"
+#include "google/cloud/internal/grpc/time_utils.h"
 #include "absl/algorithm/container.h"
 #include "absl/strings/match.h"
 #include "absl/time/civil_time.h"

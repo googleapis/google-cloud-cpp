@@ -18,7 +18,7 @@
 // google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto
 
 #include "google/cloud/compute/network_endpoint_groups/v1/internal/network_endpoint_groups_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

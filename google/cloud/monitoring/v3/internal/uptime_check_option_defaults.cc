@@ -19,8 +19,8 @@
 #include "google/cloud/monitoring/v3/internal/uptime_check_option_defaults.h"
 #include "google/cloud/monitoring/v3/uptime_check_connection.h"
 #include "google/cloud/monitoring/v3/uptime_check_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

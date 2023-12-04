@@ -15,7 +15,7 @@
 #include "google/cloud/pubsub/internal/default_batch_sink.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/options.h"
-#include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/grpc/async_retry_loop.h"
 #include <numeric>
 
 namespace google {

@@ -20,8 +20,8 @@
 #include "google/cloud/compute/region_target_https_proxies/v1/internal/region_target_https_proxies_option_defaults.h"
 #include "google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies_connection.h"
 #include "google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

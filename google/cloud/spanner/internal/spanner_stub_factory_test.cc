@@ -16,7 +16,7 @@
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/grpc/background_threads_impl.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"

@@ -18,8 +18,8 @@
 #include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/background_threads.h"
-#include "google/cloud/internal/minimal_iam_credentials_stub.h"
-#include "google/cloud/internal/streaming_write_rpc.h"
+#include "google/cloud/internal/grpc/minimal_iam_credentials_stub.h"
+#include "google/cloud/internal/grpc/streaming_write_rpc.h"
 #include <google/storage/v2/storage.pb.h>
 #include <functional>
 #include <memory>

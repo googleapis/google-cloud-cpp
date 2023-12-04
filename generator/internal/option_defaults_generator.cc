@@ -92,7 +92,7 @@ Status OptionDefaultsGenerator::GenerateCc() {
   CcLocalIncludes({vars("option_defaults_header_path"),
                    vars("connection_header_path"), vars("options_header_path"),
                    "google/cloud/internal/populate_common_options.h",
-                   "google/cloud/internal/populate_grpc_options.h"});
+                   "google/cloud/internal/grpc/populate_grpc_options.h"});
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:

@@ -19,7 +19,7 @@
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/grpc/background_threads_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>

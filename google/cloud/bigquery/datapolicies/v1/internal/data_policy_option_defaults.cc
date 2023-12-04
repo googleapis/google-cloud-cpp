@@ -19,8 +19,8 @@
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_option_defaults.h"
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_connection.h"
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

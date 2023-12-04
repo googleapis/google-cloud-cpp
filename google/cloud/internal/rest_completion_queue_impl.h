@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_COMPLETION_QUEUE_IMPL_H
 
 #include "google/cloud/future.h"
-#include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/grpc/completion_queue_impl.h"
 #include "google/cloud/internal/timer_queue.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"

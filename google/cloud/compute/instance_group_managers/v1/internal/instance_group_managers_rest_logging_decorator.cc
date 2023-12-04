@@ -18,7 +18,7 @@
 // google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto
 
 #include "google/cloud/compute/instance_group_managers/v1/internal/instance_group_managers_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

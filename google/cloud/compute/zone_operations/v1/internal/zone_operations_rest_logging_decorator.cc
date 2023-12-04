@@ -17,7 +17,7 @@
 // source: google/cloud/compute/zone_operations/v1/zone_operations.proto
 
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

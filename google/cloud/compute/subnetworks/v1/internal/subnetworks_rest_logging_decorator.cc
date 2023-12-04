@@ -17,7 +17,7 @@
 // source: google/cloud/compute/subnetworks/v1/subnetworks.proto
 
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

@@ -17,7 +17,7 @@
 // source: google/cloud/bigquery/connection/v1/connection.proto
 
 #include "google/cloud/bigquery/connection/v1/internal/connection_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/connection/v1/connection.grpc.pb.h>
 #include <memory>

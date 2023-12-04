@@ -22,7 +22,7 @@
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/internal/grpc/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 

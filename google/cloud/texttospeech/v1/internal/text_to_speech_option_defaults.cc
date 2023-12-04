@@ -19,8 +19,8 @@
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_option_defaults.h"
 #include "google/cloud/texttospeech/v1/text_to_speech_connection.h"
 #include "google/cloud/texttospeech/v1/text_to_speech_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

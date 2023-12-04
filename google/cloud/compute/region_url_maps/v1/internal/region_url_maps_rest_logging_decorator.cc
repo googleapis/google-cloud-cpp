@@ -17,7 +17,7 @@
 // source: google/cloud/compute/region_url_maps/v1/region_url_maps.proto
 
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

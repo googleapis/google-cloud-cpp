@@ -18,7 +18,7 @@
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/grpc/background_threads_impl.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"

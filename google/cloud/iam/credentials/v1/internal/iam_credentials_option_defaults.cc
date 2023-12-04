@@ -19,8 +19,8 @@
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_option_defaults.h"
 #include "google/cloud/iam/credentials/v1/iam_credentials_connection.h"
 #include "google/cloud/iam/credentials/v1/iam_credentials_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

@@ -19,8 +19,8 @@
 #include "google/cloud/workflows/executions/v1/internal/executions_option_defaults.h"
 #include "google/cloud/workflows/executions/v1/executions_connection.h"
 #include "google/cloud/workflows/executions/v1/executions_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

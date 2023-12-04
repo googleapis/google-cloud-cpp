@@ -17,7 +17,7 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/grpc/background_threads_impl.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"

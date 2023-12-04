@@ -20,8 +20,8 @@
 #include "google/cloud/compute/public_advertised_prefixes/v1/internal/public_advertised_prefixes_option_defaults.h"
 #include "google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes_connection.h"
 #include "google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

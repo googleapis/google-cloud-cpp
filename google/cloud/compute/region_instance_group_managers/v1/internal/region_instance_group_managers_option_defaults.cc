@@ -20,8 +20,8 @@
 #include "google/cloud/compute/region_instance_group_managers/v1/internal/region_instance_group_managers_option_defaults.h"
 #include "google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers_connection.h"
 #include "google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

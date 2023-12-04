@@ -19,8 +19,8 @@
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_option_defaults.h"
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection.h"
 #include "google/cloud/datacatalog/lineage/v1/lineage_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

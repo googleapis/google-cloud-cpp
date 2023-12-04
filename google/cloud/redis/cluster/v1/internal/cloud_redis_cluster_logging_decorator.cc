@@ -17,7 +17,7 @@
 // source: google/cloud/redis/cluster/v1/cloud_redis_cluster.proto
 
 #include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/redis/cluster/v1/cloud_redis_cluster.grpc.pb.h>
 #include <memory>

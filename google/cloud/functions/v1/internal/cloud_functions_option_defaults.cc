@@ -19,8 +19,8 @@
 #include "google/cloud/functions/v1/internal/cloud_functions_option_defaults.h"
 #include "google/cloud/functions/v1/cloud_functions_connection.h"
 #include "google/cloud/functions/v1/cloud_functions_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

@@ -19,8 +19,8 @@
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_option_defaults.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways_connection.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

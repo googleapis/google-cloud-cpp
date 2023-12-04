@@ -17,7 +17,7 @@
 // source: google/devtools/artifactregistry/v1/service.proto
 
 #include "google/cloud/artifactregistry/v1/internal/artifact_registry_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

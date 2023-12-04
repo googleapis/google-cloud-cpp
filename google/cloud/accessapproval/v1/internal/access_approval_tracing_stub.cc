@@ -17,7 +17,7 @@
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
 #include "google/cloud/accessapproval/v1/internal/access_approval_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

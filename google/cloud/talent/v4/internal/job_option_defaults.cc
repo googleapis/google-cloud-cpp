@@ -19,8 +19,8 @@
 #include "google/cloud/talent/v4/internal/job_option_defaults.h"
 #include "google/cloud/talent/v4/job_connection.h"
 #include "google/cloud/talent/v4/job_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

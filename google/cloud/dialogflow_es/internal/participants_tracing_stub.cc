@@ -17,8 +17,8 @@
 // source: google/cloud/dialogflow/v2/participant.proto
 
 #include "google/cloud/dialogflow_es/internal/participants_tracing_stub.h"
-#include "google/cloud/internal/async_read_write_stream_tracing.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/async_read_write_stream_tracing.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

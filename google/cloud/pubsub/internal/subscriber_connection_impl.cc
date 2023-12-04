@@ -18,8 +18,8 @@
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/grpc/retry_loop.h"
 #include "google/cloud/internal/make_status.h"
-#include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 
 namespace google {

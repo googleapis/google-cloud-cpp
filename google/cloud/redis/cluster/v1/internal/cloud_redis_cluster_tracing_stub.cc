@@ -17,7 +17,7 @@
 // source: google/cloud/redis/cluster/v1/cloud_redis_cluster.proto
 
 #include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

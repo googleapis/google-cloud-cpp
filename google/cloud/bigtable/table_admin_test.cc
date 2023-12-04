@@ -17,8 +17,8 @@
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/mocks/mock_bigtable_table_admin_connection.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
-#include "google/cloud/internal/background_threads_impl.h"
-#include "google/cloud/internal/time_utils.h"
+#include "google/cloud/internal/grpc/background_threads_impl.h"
+#include "google/cloud/internal/grpc/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>

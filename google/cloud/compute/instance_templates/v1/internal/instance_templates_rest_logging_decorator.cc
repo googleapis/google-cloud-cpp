@@ -17,7 +17,7 @@
 // source: google/cloud/compute/instance_templates/v1/instance_templates.proto
 
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

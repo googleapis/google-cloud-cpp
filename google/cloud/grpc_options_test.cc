@@ -14,7 +14,7 @@
 
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/grpc/background_threads_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 #include <string>

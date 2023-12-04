@@ -19,8 +19,8 @@
 #include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_option_defaults.h"
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_connection.h"
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

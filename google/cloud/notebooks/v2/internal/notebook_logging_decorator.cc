@@ -17,7 +17,7 @@
 // source: google/cloud/notebooks/v2/service.proto
 
 #include "google/cloud/notebooks/v2/internal/notebook_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/notebooks/v2/service.grpc.pb.h>
 #include <memory>

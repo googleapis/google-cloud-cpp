@@ -19,8 +19,8 @@
 #include "google/cloud/scheduler/v1/internal/cloud_scheduler_option_defaults.h"
 #include "google/cloud/scheduler/v1/cloud_scheduler_connection.h"
 #include "google/cloud/scheduler/v1/cloud_scheduler_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

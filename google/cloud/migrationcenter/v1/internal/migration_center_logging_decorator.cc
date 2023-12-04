@@ -17,7 +17,7 @@
 // source: google/cloud/migrationcenter/v1/migrationcenter.proto
 
 #include "google/cloud/migrationcenter/v1/internal/migration_center_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/migrationcenter/v1/migrationcenter.grpc.pb.h>
 #include <memory>

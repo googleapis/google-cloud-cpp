@@ -19,7 +19,7 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/big_endian.h"
-#include "google/cloud/internal/time_utils.h"
+#include "google/cloud/internal/grpc/time_utils.h"
 
 namespace google {
 namespace cloud {

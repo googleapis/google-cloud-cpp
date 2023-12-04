@@ -19,8 +19,8 @@
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_option_defaults.h"
 #include "google/cloud/cloudbuild/v2/repository_manager_connection.h"
 #include "google/cloud/cloudbuild/v2/repository_manager_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

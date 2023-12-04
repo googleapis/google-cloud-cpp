@@ -17,7 +17,7 @@
 // source: google/cloud/contentwarehouse/v1/document_link_service.proto
 
 #include "google/cloud/contentwarehouse/v1/internal/document_link_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/document_link_service.grpc.pb.h>
 #include <memory>

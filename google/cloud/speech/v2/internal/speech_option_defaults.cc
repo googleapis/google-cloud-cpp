@@ -19,8 +19,8 @@
 #include "google/cloud/speech/v2/internal/speech_option_defaults.h"
 #include "google/cloud/speech/v2/speech_connection.h"
 #include "google/cloud/speech/v2/speech_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

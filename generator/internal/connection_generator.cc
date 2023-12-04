@@ -62,7 +62,7 @@ Status ConnectionGenerator::GenerateHeader() {
            ? "google/cloud/stream_range.h"
            : "",
        HasBidirStreamingMethod()
-           ? "google/cloud/internal/async_read_write_stream_impl.h"
+           ? "google/cloud/internal/grpc/async_read_write_stream_impl.h"
            : "",
        IsExperimental() ? "google/cloud/experimental_tag.h" : "",
        "google/cloud/version.h"});

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_COMPLETION_QUEUE_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_COMPLETION_QUEUE_IMPL_H
 
-#include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/grpc/completion_queue_impl.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <chrono>

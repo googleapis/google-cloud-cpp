@@ -47,7 +47,7 @@ Status StubFactoryGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("stub_header_path"),
                        "google/cloud/completion_queue.h",
                        "google/cloud/credentials.h",
-                       "google/cloud/internal/unified_grpc_credentials.h",
+                       "google/cloud/internal/grpc/unified_grpc_credentials.h",
                        "google/cloud/version.h"});
   HeaderSystemIncludes({"memory"});
 

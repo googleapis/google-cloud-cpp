@@ -19,8 +19,8 @@
 #include "google/cloud/translate/v3/internal/translation_option_defaults.h"
 #include "google/cloud/translate/v3/translation_connection.h"
 #include "google/cloud/translate/v3/translation_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

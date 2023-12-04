@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/channel_refresh.h"
-#include "google/cloud/internal/async_connection_ready.h"
+#include "google/cloud/internal/grpc/async_connection_ready.h"
 #include "google/cloud/log.h"
 
 namespace google {

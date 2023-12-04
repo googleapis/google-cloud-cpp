@@ -20,8 +20,8 @@
 #include "google/cloud/compute/region_instance_templates/v1/internal/region_instance_templates_option_defaults.h"
 #include "google/cloud/compute/region_instance_templates/v1/region_instance_templates_connection.h"
 #include "google/cloud/compute/region_instance_templates/v1/region_instance_templates_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

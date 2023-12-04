@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/grpc/background_threads_impl.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <google/protobuf/text_format.h>
 

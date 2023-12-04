@@ -17,7 +17,7 @@
 // source: google/cloud/speech/v1/cloud_speech_adaptation.proto
 
 #include "google/cloud/speech/v1/internal/adaptation_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

@@ -14,7 +14,7 @@
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/default_completion_queue_impl.h"
+#include "google/cloud/internal/grpc/default_completion_queue_impl.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"

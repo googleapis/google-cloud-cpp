@@ -17,7 +17,7 @@
 // source: generator/integration_tests/test2.proto
 
 #include "generator/integration_tests/golden/v1/internal/golden_rest_only_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

@@ -19,8 +19,8 @@
 #include "google/cloud/compute/region_instances/v1/internal/region_instances_option_defaults.h"
 #include "google/cloud/compute/region_instances/v1/region_instances_connection.h"
 #include "google/cloud/compute/region_instances/v1/region_instances_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

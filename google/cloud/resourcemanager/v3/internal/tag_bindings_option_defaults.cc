@@ -19,8 +19,8 @@
 #include "google/cloud/resourcemanager/v3/internal/tag_bindings_option_defaults.h"
 #include "google/cloud/resourcemanager/v3/tag_bindings_connection.h"
 #include "google/cloud/resourcemanager/v3/tag_bindings_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

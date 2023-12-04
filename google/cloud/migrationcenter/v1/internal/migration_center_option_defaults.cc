@@ -19,8 +19,8 @@
 #include "google/cloud/migrationcenter/v1/internal/migration_center_option_defaults.h"
 #include "google/cloud/migrationcenter/v1/migration_center_connection.h"
 #include "google/cloud/migrationcenter/v1/migration_center_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

@@ -19,8 +19,8 @@
 #include "google/cloud/gkehub/v1/internal/gke_hub_option_defaults.h"
 #include "google/cloud/gkehub/v1/gke_hub_connection.h"
 #include "google/cloud/gkehub/v1/gke_hub_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

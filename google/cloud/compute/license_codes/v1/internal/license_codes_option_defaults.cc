@@ -19,8 +19,8 @@
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_option_defaults.h"
 #include "google/cloud/compute/license_codes/v1/license_codes_connection.h"
 #include "google/cloud/compute/license_codes/v1/license_codes_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

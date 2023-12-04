@@ -17,7 +17,7 @@
 // source: google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto
 
 #include "google/cloud/beyondcorp/appconnectors/v1/internal/app_connectors_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.grpc.pb.h>
 #include <memory>

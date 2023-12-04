@@ -18,7 +18,7 @@
 #include "google/cloud/pubsub/internal/publisher_stub_factory.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/grpc/retry_loop.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include <initializer_list>

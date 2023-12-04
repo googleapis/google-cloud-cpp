@@ -19,8 +19,8 @@
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_option_defaults.h"
 #include "google/cloud/kms/inventory/v1/key_tracking_connection.h"
 #include "google/cloud/kms/inventory/v1/key_tracking_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

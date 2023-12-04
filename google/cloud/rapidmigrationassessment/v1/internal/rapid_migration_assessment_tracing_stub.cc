@@ -18,7 +18,7 @@
 // google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto
 
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

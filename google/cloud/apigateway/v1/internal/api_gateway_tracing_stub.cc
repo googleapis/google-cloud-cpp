@@ -17,7 +17,7 @@
 // source: google/cloud/apigateway/v1/apigateway_service.proto
 
 #include "google/cloud/apigateway/v1/internal/api_gateway_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

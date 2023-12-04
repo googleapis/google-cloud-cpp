@@ -17,7 +17,7 @@
 // source: google/cloud/resourcemanager/v3/organizations.proto
 
 #include "google/cloud/resourcemanager/v3/internal/organizations_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

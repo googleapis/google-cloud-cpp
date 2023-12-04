@@ -19,8 +19,8 @@
 #include "google/cloud/compute/disk_types/v1/internal/disk_types_option_defaults.h"
 #include "google/cloud/compute/disk_types/v1/disk_types_connection.h"
 #include "google/cloud/compute/disk_types/v1/disk_types_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

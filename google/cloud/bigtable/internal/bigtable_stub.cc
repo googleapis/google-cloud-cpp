@@ -18,7 +18,7 @@
 
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/grpc/async_streaming_read_rpc_impl.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <memory>

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/hmac_key_metadata_parser.h"
-#include "google/cloud/internal/time_utils.h"
+#include "google/cloud/internal/grpc/time_utils.h"
 #include "absl/strings/string_view.h"
 #include "absl/strings/strip.h"
 

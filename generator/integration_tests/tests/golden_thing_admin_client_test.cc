@@ -18,8 +18,8 @@
 #include "generator/integration_tests/golden/v1/mocks/mock_golden_thing_admin_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/grpc/time_utils.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/iam/v1/policy.pb.h>

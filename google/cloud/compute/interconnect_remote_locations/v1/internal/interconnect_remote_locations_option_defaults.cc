@@ -20,8 +20,8 @@
 #include "google/cloud/compute/interconnect_remote_locations/v1/internal/interconnect_remote_locations_option_defaults.h"
 #include "google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations_connection.h"
 #include "google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

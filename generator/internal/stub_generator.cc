@@ -61,15 +61,17 @@ Status StubGenerator::GenerateHeader() {
        needs_completion_queue ? "google/cloud/completion_queue.h" : "",
        HasAsyncMethod() ? "google/cloud/future.h" : "",
        HasAsynchronousStreamingReadMethod()
-           ? "google/cloud/internal/async_streaming_read_rpc.h"
+           ? "google/cloud/internal/grpc/async_streaming_read_rpc.h"
            : "",
        HasAsynchronousStreamingWriteMethod()
-           ? "google/cloud/internal/async_streaming_write_rpc.h"
+           ? "google/cloud/internal/grpc/async_streaming_write_rpc.h"
            : "",
-       HasStreamingReadMethod() ? "google/cloud/internal/streaming_read_rpc.h"
-                                : "",
-       HasStreamingWriteMethod() ? "google/cloud/internal/streaming_write_rpc.h"
-                                 : "",
+       HasStreamingReadMethod()
+           ? "google/cloud/internal/grpc/streaming_read_rpc.h"
+           : "",
+       HasStreamingWriteMethod()
+           ? "google/cloud/internal/grpc/streaming_write_rpc.h"
+           : "",
        needs_options ? "google/cloud/options.h" : "",
        "google/cloud/status_or.h", "google/cloud/version.h"});
   std::vector<std::string> additional_pb_header_paths =
@@ -273,16 +275,16 @@ Status StubGenerator::GenerateCc() {
   CcLocalIncludes(
       {vars("stub_header_path"),
        HasBidirStreamingMethod()
-           ? "google/cloud/internal/async_read_write_stream_impl.h"
+           ? "google/cloud/internal/grpc/async_read_write_stream_impl.h"
            : "",
        HasAsynchronousStreamingReadMethod()
-           ? "google/cloud/internal/async_streaming_read_rpc_impl.h"
+           ? "google/cloud/internal/grpc/async_streaming_read_rpc_impl.h"
            : "",
        HasAsynchronousStreamingWriteMethod()
-           ? "google/cloud/internal/async_streaming_write_rpc_impl.h"
+           ? "google/cloud/internal/grpc/async_streaming_write_rpc_impl.h"
            : "",
        HasStreamingWriteMethod()
-           ? "google/cloud/internal/streaming_write_rpc_impl.h"
+           ? "google/cloud/internal/grpc/streaming_write_rpc_impl.h"
            : "",
        "google/cloud/grpc_error_delegate.h", "google/cloud/status_or.h"});
   CcSystemIncludes(

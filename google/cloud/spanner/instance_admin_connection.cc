@@ -18,8 +18,8 @@
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/options.h"
-#include "google/cloud/internal/async_long_running_operation.h"
-#include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/grpc/async_long_running_operation.h"
+#include "google/cloud/internal/grpc/retry_loop.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 

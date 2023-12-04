@@ -19,8 +19,8 @@
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_option_defaults.h"
 #include "google/cloud/compute/backend_services/v1/backend_services_connection.h"
 #include "google/cloud/compute/backend_services/v1/backend_services_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

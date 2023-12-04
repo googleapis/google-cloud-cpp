@@ -17,7 +17,7 @@
 
 #include "google/cloud/storage/internal/sign_blob_requests.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/minimal_iam_credentials_stub.h"
+#include "google/cloud/internal/grpc/minimal_iam_credentials_stub.h"
 
 namespace google {
 namespace cloud {

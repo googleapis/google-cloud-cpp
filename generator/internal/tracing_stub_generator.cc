@@ -103,21 +103,21 @@ Status TracingStubGenerator::GenerateCc() {
   CcLocalIncludes(
       {vars("tracing_stub_header_path"),
        HasAsynchronousStreamingReadMethod()
-           ? "google/cloud/internal/async_streaming_read_rpc_tracing.h"
+           ? "google/cloud/internal/grpc/async_streaming_read_rpc_tracing.h"
            : "",
        HasAsynchronousStreamingWriteMethod()
-           ? "google/cloud/internal/async_streaming_write_rpc_tracing.h"
+           ? "google/cloud/internal/grpc/async_streaming_write_rpc_tracing.h"
            : "",
        HasBidirStreamingMethod()
-           ? "google/cloud/internal/async_read_write_stream_tracing.h"
+           ? "google/cloud/internal/grpc/async_read_write_stream_tracing.h"
            : "",
        HasStreamingReadMethod()
-           ? "google/cloud/internal/streaming_read_rpc_tracing.h"
+           ? "google/cloud/internal/grpc/streaming_read_rpc_tracing.h"
            : "",
        HasStreamingWriteMethod()
-           ? "google/cloud/internal/streaming_write_rpc_tracing.h"
+           ? "google/cloud/internal/grpc/streaming_write_rpc_tracing.h"
            : "",
-       "google/cloud/internal/grpc_opentelemetry.h"});
+       "google/cloud/internal/grpc/grpc_opentelemetry.h"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

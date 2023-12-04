@@ -19,8 +19,8 @@
 #include "google/cloud/spanner/admin/internal/database_admin_option_defaults.h"
 #include "google/cloud/spanner/admin/database_admin_connection.h"
 #include "google/cloud/spanner/admin/database_admin_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

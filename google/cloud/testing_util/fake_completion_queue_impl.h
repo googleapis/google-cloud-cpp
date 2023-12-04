@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_COMPLETION_QUEUE_IMPL_H
 
 #include "google/cloud/future.h"
-#include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/grpc/completion_queue_impl.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>

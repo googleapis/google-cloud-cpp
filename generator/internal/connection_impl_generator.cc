@@ -147,15 +147,16 @@ Status ConnectionImplGenerator::GenerateCc() {
        "google/cloud/grpc_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
        HasLongrunningMethod()
-           ? "google/cloud/internal/async_long_running_operation.h"
+           ? "google/cloud/internal/grpc/async_long_running_operation.h"
            : "",
-       needs_async_retry_loop ? "google/cloud/internal/async_retry_loop.h" : "",
+       needs_async_retry_loop ? "google/cloud/internal/grpc/async_retry_loop.h"
+                              : "",
        HasStreamingReadMethod()
-           ? "google/cloud/internal/resumable_streaming_read_rpc.h"
+           ? "google/cloud/internal/grpc/resumable_streaming_read_rpc.h"
            : "",
-       "google/cloud/internal/retry_loop.h",
+       "google/cloud/internal/grpc/retry_loop.h",
        HasStreamingReadMethod()
-           ? "google/cloud/internal/streaming_read_rpc_logging.h"
+           ? "google/cloud/internal/grpc/streaming_read_rpc_logging.h"
            : ""});
   CcSystemIncludes({"memory"});
 

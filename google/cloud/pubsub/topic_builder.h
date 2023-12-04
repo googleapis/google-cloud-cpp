@@ -18,7 +18,7 @@
 #include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/internal/time_utils.h"
+#include "google/cloud/internal/grpc/time_utils.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <set>
 #include <string>

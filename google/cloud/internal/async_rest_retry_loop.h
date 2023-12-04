@@ -20,7 +20,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/call_context.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/retry_loop_helpers.h"

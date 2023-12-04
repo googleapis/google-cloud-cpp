@@ -19,8 +19,8 @@
 #include "google/cloud/oslogin/v1/internal/os_login_option_defaults.h"
 #include "google/cloud/oslogin/v1/os_login_connection.h"
 #include "google/cloud/oslogin/v1/os_login_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

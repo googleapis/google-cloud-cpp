@@ -18,7 +18,7 @@
 // google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto
 
 #include "google/cloud/compute/external_vpn_gateways/v1/internal/external_vpn_gateways_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

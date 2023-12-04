@@ -19,8 +19,8 @@
 #include "google/cloud/run/v2/internal/services_option_defaults.h"
 #include "google/cloud/run/v2/services_connection.h"
 #include "google/cloud/run/v2/services_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

@@ -19,8 +19,8 @@
 #include "google/cloud/contentwarehouse/v1/internal/document_link_option_defaults.h"
 #include "google/cloud/contentwarehouse/v1/document_link_connection.h"
 #include "google/cloud/contentwarehouse/v1/document_link_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

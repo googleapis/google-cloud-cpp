@@ -20,8 +20,8 @@
 #include "google/cloud/compute/global_forwarding_rules/v1/internal/global_forwarding_rules_option_defaults.h"
 #include "google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules_connection.h"
 #include "google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

@@ -19,8 +19,8 @@
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_option_defaults.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_connection.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

@@ -22,7 +22,7 @@
 #include "google/cloud/oslogin/v1/internal/os_login_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/internal/grpc/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 

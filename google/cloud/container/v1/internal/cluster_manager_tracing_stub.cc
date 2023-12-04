@@ -17,7 +17,7 @@
 // source: google/container/v1/cluster_service.proto
 
 #include "google/cloud/container/v1/internal/cluster_manager_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

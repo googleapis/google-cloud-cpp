@@ -17,7 +17,7 @@
 // source: google/cloud/bigquery/datatransfer/v1/datatransfer.proto
 
 #include "google/cloud/bigquery/datatransfer/v1/internal/data_transfer_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h>
 #include <memory>

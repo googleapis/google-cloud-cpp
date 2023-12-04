@@ -19,8 +19,8 @@
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_option_defaults.h"
 #include "google/cloud/compute/region_commitments/v1/region_commitments_connection.h"
 #include "google/cloud/compute/region_commitments/v1/region_commitments_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

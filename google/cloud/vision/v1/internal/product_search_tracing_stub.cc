@@ -17,7 +17,7 @@
 // source: google/cloud/vision/v1/product_search_service.proto
 
 #include "google/cloud/vision/v1/internal/product_search_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

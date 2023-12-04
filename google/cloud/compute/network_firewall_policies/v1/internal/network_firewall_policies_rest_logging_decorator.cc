@@ -18,7 +18,7 @@
 // google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto
 
 #include "google/cloud/compute/network_firewall_policies/v1/internal/network_firewall_policies_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

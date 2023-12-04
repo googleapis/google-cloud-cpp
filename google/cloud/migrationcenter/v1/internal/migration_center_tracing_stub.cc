@@ -17,7 +17,7 @@
 // source: google/cloud/migrationcenter/v1/migrationcenter.proto
 
 #include "google/cloud/migrationcenter/v1/internal/migration_center_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

@@ -19,8 +19,8 @@
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_option_defaults.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_read_connection.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_read_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

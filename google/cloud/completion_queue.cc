@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/completion_queue.h"
-#include "google/cloud/internal/async_connection_ready.h"
-#include "google/cloud/internal/default_completion_queue_impl.h"
+#include "google/cloud/internal/grpc/async_connection_ready.h"
+#include "google/cloud/internal/grpc/default_completion_queue_impl.h"
 
 namespace google {
 namespace cloud {

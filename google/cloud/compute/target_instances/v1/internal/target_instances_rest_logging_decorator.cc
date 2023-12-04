@@ -17,7 +17,7 @@
 // source: google/cloud/compute/target_instances/v1/target_instances.proto
 
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

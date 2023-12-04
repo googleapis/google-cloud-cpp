@@ -20,8 +20,8 @@
 #include "google/cloud/commerce/consumer/procurement/v1/internal/consumer_procurement_option_defaults.h"
 #include "google/cloud/commerce/consumer/procurement/v1/consumer_procurement_connection.h"
 #include "google/cloud/commerce/consumer/procurement/v1/consumer_procurement_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

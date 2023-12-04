@@ -17,7 +17,7 @@
 // source: google/cloud/compute/networks/v1/networks.proto
 
 #include "google/cloud/compute/networks/v1/internal/networks_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

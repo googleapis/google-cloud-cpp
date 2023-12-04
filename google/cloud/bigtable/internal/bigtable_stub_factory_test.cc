@@ -19,7 +19,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/grpc/async_streaming_read_rpc_impl.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"

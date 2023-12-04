@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_MINIMAL_IAM_CREDENTIALS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_MINIMAL_IAM_CREDENTIALS_STUB_H
 
-#include "google/cloud/internal/minimal_iam_credentials_stub.h"
+#include "google/cloud/internal/grpc/minimal_iam_credentials_stub.h"
 #include <gmock/gmock.h>
 
 namespace google {

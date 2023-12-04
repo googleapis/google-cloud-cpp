@@ -19,8 +19,8 @@
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_option_defaults.h"
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection.h"
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

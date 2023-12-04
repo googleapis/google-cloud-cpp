@@ -19,8 +19,8 @@
 #include "google/cloud/dataplex/v1/internal/content_option_defaults.h"
 #include "google/cloud/dataplex/v1/content_connection.h"
 #include "google/cloud/dataplex/v1/content_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

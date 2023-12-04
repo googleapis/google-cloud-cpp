@@ -17,7 +17,7 @@
 // source: google/cloud/storageinsights/v1/storageinsights.proto
 
 #include "google/cloud/storageinsights/v1/internal/storage_insights_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

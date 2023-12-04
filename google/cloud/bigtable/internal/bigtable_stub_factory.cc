@@ -26,8 +26,8 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/base64_transforms.h"
+#include "google/cloud/internal/grpc/unified_grpc_credentials.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
 #include <google/bigtable/v2/feature_flags.pb.h>
 #include <grpcpp/grpcpp.h>

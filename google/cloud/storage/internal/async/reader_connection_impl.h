@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_READER_CONNECTION_IMPL_H
 
 #include "google/cloud/storage/async_reader_connection.h"
-#include "google/cloud/internal/async_streaming_read_rpc.h"
+#include "google/cloud/internal/grpc/async_streaming_read_rpc.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/storage/v2/storage.pb.h>

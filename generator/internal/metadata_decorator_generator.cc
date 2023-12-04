@@ -184,7 +184,7 @@ Status MetadataDecoratorGenerator::GenerateCc() {
                        : "",
                    "google/cloud/internal/api_client_header.h",
                    HasExplicitRoutingMethod()
-                       ? "google/cloud/internal/routing_matcher.h"
+                       ? "google/cloud/internal/grpc/routing_matcher.h"
                        : "",
                    "google/cloud/common_options.h", "google/cloud/status_or.h",
                    "google/cloud/internal/url_encode.h"});

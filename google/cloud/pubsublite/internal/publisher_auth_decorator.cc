@@ -17,7 +17,7 @@
 // source: google/cloud/pubsublite/v1/publisher.proto
 
 #include "google/cloud/pubsublite/internal/publisher_auth_decorator.h"
-#include "google/cloud/internal/async_read_write_stream_auth.h"
+#include "google/cloud/internal/grpc/async_read_write_stream_auth.h"
 #include <google/cloud/pubsublite/v1/publisher.grpc.pb.h>
 #include <memory>
 

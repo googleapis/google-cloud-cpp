@@ -18,7 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/sessions_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/internal/async_read_write_stream_impl.h"
+#include "google/cloud/internal/grpc/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/session.grpc.pb.h>
 #include <memory>

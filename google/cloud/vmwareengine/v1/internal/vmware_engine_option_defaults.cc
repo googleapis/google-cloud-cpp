@@ -19,8 +19,8 @@
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_option_defaults.h"
 #include "google/cloud/vmwareengine/v1/vmware_engine_connection.h"
 #include "google/cloud/vmwareengine/v1/vmware_engine_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

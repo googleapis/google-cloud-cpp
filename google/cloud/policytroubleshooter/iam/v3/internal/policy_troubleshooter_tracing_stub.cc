@@ -17,7 +17,7 @@
 // source: google/cloud/policytroubleshooter/iam/v3/troubleshooter.proto
 
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

@@ -17,7 +17,7 @@
 // source: google/cloud/compute/regions/v1/regions.proto
 
 #include "google/cloud/compute/regions/v1/internal/regions_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

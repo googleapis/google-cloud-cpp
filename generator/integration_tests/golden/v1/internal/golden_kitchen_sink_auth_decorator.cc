@@ -17,10 +17,10 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_auth_decorator.h"
-#include "google/cloud/internal/async_read_write_stream_auth.h"
-#include "google/cloud/internal/async_streaming_read_rpc_auth.h"
-#include "google/cloud/internal/async_streaming_write_rpc_auth.h"
-#include "google/cloud/internal/streaming_write_rpc_impl.h"
+#include "google/cloud/internal/grpc/async_read_write_stream_auth.h"
+#include "google/cloud/internal/grpc/async_streaming_read_rpc_auth.h"
+#include "google/cloud/internal/grpc/async_streaming_write_rpc_auth.h"
+#include "google/cloud/internal/grpc/streaming_write_rpc_impl.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
 

@@ -17,7 +17,7 @@
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h>
 #include <memory>

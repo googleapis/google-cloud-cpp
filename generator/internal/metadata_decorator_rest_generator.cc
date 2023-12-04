@@ -228,7 +228,7 @@ Status MetadataDecoratorRestGenerator::GenerateCc() {
   CcLocalIncludes({vars("metadata_rest_header_path"),
                    "google/cloud/internal/api_client_header.h",
                    HasExplicitRoutingMethod()
-                       ? "google/cloud/internal/routing_matcher.h"
+                       ? "google/cloud/internal/grpc/routing_matcher.h"
                        : "",
                    "google/cloud/common_options.h", "google/cloud/status_or.h",
                    "google/cloud/internal/absl_str_cat_quiet.h",

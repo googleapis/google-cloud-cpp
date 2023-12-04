@@ -17,7 +17,7 @@
 // source: google/cloud/discoveryengine/v1/user_event_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/user_event_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/discoveryengine/v1/user_event_service.grpc.pb.h>
 #include <memory>

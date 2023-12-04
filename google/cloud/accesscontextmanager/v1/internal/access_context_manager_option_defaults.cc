@@ -19,8 +19,8 @@
 #include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_option_defaults.h"
 #include "google/cloud/accesscontextmanager/v1/access_context_manager_connection.h"
 #include "google/cloud/accesscontextmanager/v1/access_context_manager_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

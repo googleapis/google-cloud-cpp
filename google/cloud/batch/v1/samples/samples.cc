@@ -37,8 +37,8 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/grpc/time_utils.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include "absl/strings/match.h"
 #include <google/protobuf/text_format.h>

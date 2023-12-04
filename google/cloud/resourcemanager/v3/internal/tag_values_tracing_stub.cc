@@ -17,7 +17,7 @@
 // source: google/cloud/resourcemanager/v3/tag_values.proto
 
 #include "google/cloud/resourcemanager/v3/internal/tag_values_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

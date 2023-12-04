@@ -22,7 +22,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/grpc/retry_loop.h"
 #include "google/cloud/log.h"
 #include "absl/types/optional.h"
 #include <grpcpp/grpcpp.h>

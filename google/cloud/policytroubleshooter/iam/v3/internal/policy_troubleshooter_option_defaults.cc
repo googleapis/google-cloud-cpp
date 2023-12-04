@@ -19,8 +19,8 @@
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_option_defaults.h"
 #include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_connection.h"
 #include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {

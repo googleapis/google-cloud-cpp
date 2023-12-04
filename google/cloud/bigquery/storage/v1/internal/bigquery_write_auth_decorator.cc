@@ -17,7 +17,7 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_auth_decorator.h"
-#include "google/cloud/internal/async_read_write_stream_auth.h"
+#include "google/cloud/internal/grpc/async_read_write_stream_auth.h"
 #include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
 #include <memory>
 

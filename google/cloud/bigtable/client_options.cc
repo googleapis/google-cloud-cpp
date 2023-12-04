@@ -14,8 +14,8 @@
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/bigtable/internal/defaults.h"
-#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/grpc/background_threads_impl.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "absl/strings/str_split.h"
 #include <limits>

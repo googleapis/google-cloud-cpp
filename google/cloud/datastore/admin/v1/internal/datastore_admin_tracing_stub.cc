@@ -17,7 +17,7 @@
 // source: google/datastore/admin/v1/datastore_admin.proto
 
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

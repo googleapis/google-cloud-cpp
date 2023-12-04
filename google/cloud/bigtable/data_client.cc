@@ -15,7 +15,7 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/internal/common_client.h"
 #include "google/cloud/bigtable/internal/logging_data_client.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/log.h"
 
 namespace google {

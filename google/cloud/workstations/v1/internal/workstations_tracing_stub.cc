@@ -17,7 +17,7 @@
 // source: google/cloud/workstations/v1/workstations.proto
 
 #include "google/cloud/workstations/v1/internal/workstations_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

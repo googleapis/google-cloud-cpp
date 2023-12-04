@@ -17,7 +17,7 @@
 // source: google/cloud/pubsublite/v1/cursor.proto
 
 #include "google/cloud/pubsublite/internal/cursor_auth_decorator.h"
-#include "google/cloud/internal/async_read_write_stream_auth.h"
+#include "google/cloud/internal/grpc/async_read_write_stream_auth.h"
 #include <google/cloud/pubsublite/v1/cursor.grpc.pb.h>
 #include <memory>
 

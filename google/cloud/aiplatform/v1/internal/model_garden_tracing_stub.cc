@@ -17,7 +17,7 @@
 // source: google/cloud/aiplatform/v1/model_garden_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/model_garden_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/grpc/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {

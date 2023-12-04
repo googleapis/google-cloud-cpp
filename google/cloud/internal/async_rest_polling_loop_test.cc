@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_rest_polling_loop.h"
-#include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/grpc/completion_queue_impl.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/async_sequencer.h"

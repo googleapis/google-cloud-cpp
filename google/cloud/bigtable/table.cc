@@ -19,7 +19,7 @@
 #include "google/cloud/bigtable/internal/legacy_async_row_sampler.h"
 #include "google/cloud/bigtable/internal/legacy_row_reader.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
-#include "google/cloud/internal/async_retry_unary_rpc.h"
+#include "google/cloud/internal/grpc/async_retry_unary_rpc.h"
 #include <thread>
 #include <type_traits>
 

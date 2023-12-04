@@ -18,7 +18,7 @@
 // google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto
 
 #include "google/cloud/compute/region_target_https_proxies/v1/internal/region_target_https_proxies_rest_logging_decorator.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/grpc/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 

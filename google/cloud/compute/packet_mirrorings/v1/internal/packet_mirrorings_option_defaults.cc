@@ -19,8 +19,8 @@
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_option_defaults.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_connection.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_options.h"
+#include "google/cloud/internal/grpc/populate_grpc_options.h"
 #include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
