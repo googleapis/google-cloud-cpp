@@ -155,6 +155,7 @@ add_library(
     project.cc
     project.h
     retry_policy.h
+    rpc_metadata.h
     status.cc
     status.h
     status_or.h

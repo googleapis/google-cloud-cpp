@@ -221,8 +221,8 @@ class MockInsertStream : public google::cloud::internal::StreamingWriteRpc<
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::WriteObjectResponse>, Close, (),
               (override));
-  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
-              (), (const, override));
+  MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
+              (const, override));
 };
 
 class MockObjectMediaStream : public google::cloud::internal::StreamingReadRpc<
@@ -231,8 +231,8 @@ class MockObjectMediaStream : public google::cloud::internal::StreamingReadRpc<
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD((absl::variant<Status, google::storage::v2::ReadObjectResponse>),
               Read, (), (override));
-  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
-              (), (const, override));
+  MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
+              (const, override));
 };
 
 class MockAsyncInsertStream
@@ -249,8 +249,8 @@ class MockAsyncInsertStream
   MOCK_METHOD(future<bool>, WritesDone, (), (override));
   MOCK_METHOD(future<StatusOr<google::storage::v2::WriteObjectResponse>>,
               Finish, (), (override));
-  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
-              (), (const, override));
+  MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
+              (const, override));
 };
 
 using MockAsyncObjectMediaStream =

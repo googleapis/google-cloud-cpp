@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_READ_RPC_LOGGING_H
 
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/status.h"
@@ -61,7 +62,7 @@ class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
                    << absl::visit(ResultVisitor(tracing_options_), result);
     return result;
   }
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     auto metadata = reader_->GetRequestMetadata();
     GCP_LOG(DEBUG) << __func__ << "() >> metadata={"
                    << FormatForLoggingDecorator(metadata) << "}";

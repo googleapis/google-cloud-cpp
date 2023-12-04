@@ -57,7 +57,7 @@ class StreamingReadRpcTracing : public StreamingReadRpc<ResponseType> {
     return result;
   }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     return impl_->GetRequestMetadata();
   }
 

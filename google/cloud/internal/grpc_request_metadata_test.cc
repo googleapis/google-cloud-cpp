@@ -24,12 +24,14 @@ namespace {
 
 TEST(GrpcRequestMetadata, FormatForLoggingDecorator) {
   struct Test {
-    StreamingRpcMetadata metadata;
+    RpcMetadata metadata;
     std::string expected;
-  } cases[] = {
-      {{}, ""},
-      {{{"a", "b"}}, "{a: b}"},
-      {{{"a", "b"}, {"k", "v"}}, "{a: b}, {k: v}"},
+  } const cases[] = {
+      {RpcMetadata{{}, {}}, "headers={}, trailers={}"},
+      {RpcMetadata{{{"a", "b"}}, {}}, "headers={{a: b}}, trailers={}"},
+      {RpcMetadata{{}, {{"a", "b"}}}, "headers={}, trailers={{a: b}}"},
+      {RpcMetadata{{{"a", "b"}, {"k", "v"}}, {{"d", "e"}, {"h", "f"}}},
+       "headers={{a: b}, {k: v}}, trailers={{d: e}, {h: f}}"},
   };
   for (auto const& test : cases) {
     auto const actual = FormatForLoggingDecorator(test.metadata);

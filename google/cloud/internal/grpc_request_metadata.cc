@@ -34,43 +34,50 @@ std::string ToString(grpc_compression_algorithm algo) {
 }
 }  // namespace
 
-StreamingRpcMetadata GetRequestMetadataFromContext(
-    grpc::ClientContext const& context) {
-  StreamingRpcMetadata metadata{
-      // Use invalid header names (starting with ':') to store the
-      // grpc::ClientContext metadata.
-      {":grpc-context-peer", context.peer()},
-      {":grpc-context-compression-algorithm",
-       ToString(context.compression_algorithm())},
+RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context) {
+  RpcMetadata metadata{
+      /*.headers=*/{
+          // Use invalid header names (starting with ':') to store the
+          // grpc::ClientContext metadata.
+          {":grpc-context-peer", context.peer()},
+          {":grpc-context-compression-algorithm",
+           ToString(context.compression_algorithm())},
+
+      },
+      /*.trailers=*/{},
   };
-  auto hint = metadata.end();
+  auto hint = metadata.headers.end();
   for (auto const& kv : context.GetServerInitialMetadata()) {
     // gRPC metadata is stored in `grpc::string_ref`, a type inspired by
     // `std::string_view`. We need to explicitly convert these to `std::string`.
     // In addition, we use a prefix to distinguish initial vs. trailing headers.
-    auto key = ":grpc-initial-" + std::string{kv.first.data(), kv.first.size()};
+    auto key = std::string{kv.first.data(), kv.first.size()};
     auto value = std::string{kv.second.data(), kv.second.size()};
     hint = std::next(
-        metadata.emplace_hint(hint, std::move(key), std::move(value)));
+        metadata.headers.emplace_hint(hint, std::move(key), std::move(value)));
   }
-  hint = metadata.end();
+  hint = metadata.trailers.end();
   for (auto const& kv : context.GetServerTrailingMetadata()) {
     // Same as above, convert `grpc::string_ref` to `std::string`:
-    auto key =
-        ":grpc-trailing-" + std::string{kv.first.data(), kv.first.size()};
+    auto key = std::string{kv.first.data(), kv.first.size()};
     auto value = std::string{kv.second.data(), kv.second.size()};
     hint = std::next(
-        metadata.emplace_hint(hint, std::move(key), std::move(value)));
+        metadata.trailers.emplace_hint(hint, std::move(key), std::move(value)));
   }
   return metadata;
 }
 
-std::string FormatForLoggingDecorator(StreamingRpcMetadata const& metadata) {
-  auto formatter = [](std::string* output,
-                      StreamingRpcMetadata::value_type const& p) {
+std::string FormatForLoggingDecorator(RpcMetadata const& metadata) {
+  auto formatter = [](std::string* output, auto const& p) {
     *output += absl::StrCat("{", p.first, ": ", p.second, "}");
   };
-  return absl::StrJoin(metadata.begin(), metadata.end(), ", ", formatter);
+  return absl::StrCat("headers={",
+                      absl::StrJoin(metadata.headers.begin(),
+                                    metadata.headers.end(), ", ", formatter),
+                      "}, trailers={",
+                      absl::StrJoin(metadata.trailers.begin(),
+                                    metadata.trailers.end(), ", ", formatter),
+                      "}");
 }
 
 }  // namespace internal
