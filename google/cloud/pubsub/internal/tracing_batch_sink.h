@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_TRACING_BATCH_SINK_H
 
 #include "google/cloud/pubsub/internal/batch_sink.h"
+#include "google/cloud/pubsub/topic.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -25,7 +26,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<BatchSink> MakeTracingBatchSink(
-    std::shared_ptr<BatchSink> batch_sink, Options opts);
+    pubsub::Topic topic, std::shared_ptr<BatchSink> batch_sink, Options opts);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

@@ -59,12 +59,13 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
   return links;
 }
 
-auto MakeParent(Links const& links, Spans const& message_spans) {
+auto MakeParent(Links const& links, Spans const& message_spans,
+                std::string const& topic) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kProducer;
   auto batch_sink_parent =
-      internal::MakeSpan("publish",
+      internal::MakeSpan(topic + " publish",
                          /*attributes=*/
                          {{sc::kMessagingBatchMessageCount,
                            static_cast<std::int64_t>(message_spans.size())},
@@ -102,18 +103,20 @@ auto MakeChild(
                             /*links=*/links, options);
 }
 
-Spans MakeBatchSinkSpans(Spans const& message_spans, Options const& options) {
+Spans MakeBatchSinkSpans(Spans const& message_spans, std::string const& topic,
+                         Options const& options) {
   auto const max_otel_links = options.get<pubsub::MaxOtelLinkCountOption>();
   Spans batch_sink_spans;
   // If the batch size is less than the max size, add the links to a single
   // span. If the batch size is greater than the max size, create a parent
   // span with no links and each child spans will contain links.
   if (message_spans.size() <= max_otel_links) {
-    batch_sink_spans.push_back(MakeParent(
-        MakeLinks(message_spans.begin(), message_spans.end()), message_spans));
+    batch_sink_spans.push_back(
+        MakeParent(MakeLinks(message_spans.begin(), message_spans.end()),
+                   message_spans, topic));
     return batch_sink_spans;
   }
-  batch_sink_spans.push_back(MakeParent({{}}, message_spans));
+  batch_sink_spans.push_back(MakeParent({{}}, message_spans, topic));
   auto batch_sink_parent = batch_sink_spans.front();
 
   auto cut = [&message_spans, max_otel_links](auto i) {
@@ -138,8 +141,11 @@ Spans MakeBatchSinkSpans(Spans const& message_spans, Options const& options) {
  */
 class TracingBatchSink : public BatchSink {
  public:
-  explicit TracingBatchSink(std::shared_ptr<BatchSink> child, Options opts)
-      : child_(std::move(child)), options_(std::move(opts)) {}
+  explicit TracingBatchSink(pubsub::Topic topic,
+                            std::shared_ptr<BatchSink> child, Options opts)
+      : topic_(std::move(topic)),
+        child_(std::move(child)),
+        options_(std::move(opts)) {}
 
   ~TracingBatchSink() override = default;
 
@@ -162,7 +168,8 @@ class TracingBatchSink : public BatchSink {
       message_spans.swap(message_spans_);
     }
 
-    auto batch_sink_spans = MakeBatchSinkSpans(message_spans, options_);
+    auto batch_sink_spans =
+        MakeBatchSinkSpans(message_spans, topic_.topic_id(), options_);
 
     // The first span in `batch_sink_spans` is the parent to the other spans in
     // the vector.
@@ -187,6 +194,7 @@ class TracingBatchSink : public BatchSink {
   };
 
  private:
+  pubsub::Topic topic_;
   std::shared_ptr<BatchSink> child_;
   std::mutex mu_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
@@ -197,15 +205,15 @@ class TracingBatchSink : public BatchSink {
 }  // namespace
 
 std::shared_ptr<BatchSink> MakeTracingBatchSink(
-    std::shared_ptr<BatchSink> batch_sink, Options opts) {
-  return std::make_shared<TracingBatchSink>(std::move(batch_sink),
-                                            std::move(opts));
+    pubsub::Topic topic, std::shared_ptr<BatchSink> batch_sink, Options opts) {
+  return std::make_shared<TracingBatchSink>(
+      std::move(topic), std::move(batch_sink), std::move(opts));
 }
 
 #else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<BatchSink> MakeTracingBatchSink(
-    std::shared_ptr<BatchSink> batch_sink, Options) {
+    pubsub::Topic, std::shared_ptr<BatchSink> batch_sink, Options) {
   return batch_sink;
 }
 
