@@ -33,6 +33,7 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::testing::_;
+using ::testing::IsEmpty;
 using ::testing::Return;
 using ::testing::SizeIs;
 
@@ -176,6 +177,9 @@ TEST(AsyncReadWriteStreamingRpcTest, Error) {
   EXPECT_FALSE(stream.WritesDone().get());
   EXPECT_EQ(Status(StatusCode::kPermissionDenied, "uh-oh"),
             stream.Finish().get());
+  auto const metadata = stream.GetRequestMetadata();
+  EXPECT_THAT(metadata.headers, IsEmpty());
+  EXPECT_THAT(metadata.trailers, IsEmpty());
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

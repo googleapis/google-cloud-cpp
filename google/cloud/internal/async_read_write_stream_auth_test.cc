@@ -29,7 +29,9 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockAuthenticationStrategy;
+using ::testing::Pair;
 using ::testing::StrictMock;
+using ::testing::UnorderedElementsAre;
 
 struct FakeRequest {
   std::string key;
@@ -63,6 +65,10 @@ TEST(AsyncStreamReadWriteAuth, Start) {
     EXPECT_CALL(*mock, Finish).WillOnce([] {
       return make_ready_future(Status{});
     });
+    EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
+      return RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
+                         {{"tk0", "v0"}, {"tk1", "v1"}}};
+    });
     return std::unique_ptr<BaseStream>(std::move(mock));
   });
   auto strategy = std::make_shared<StrictMock<MockAuthenticationStrategy>>();
@@ -79,6 +85,11 @@ TEST(AsyncStreamReadWriteAuth, Start) {
   EXPECT_EQ(response->value, "v0");
   EXPECT_TRUE(uut->WritesDone().get());
   EXPECT_THAT(uut->Finish().get(), IsOk());
+  auto const metadata = uut->GetRequestMetadata();
+  EXPECT_THAT(metadata.headers,
+              UnorderedElementsAre(Pair("hk0", "v0"), Pair("hk1", "v1")));
+  EXPECT_THAT(metadata.trailers,
+              UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
 }
 
 }  // namespace

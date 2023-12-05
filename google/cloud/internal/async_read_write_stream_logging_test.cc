@@ -32,6 +32,8 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Pair;
+using ::testing::UnorderedElementsAre;
 
 class StreamingReadRpcLoggingTest : public ::testing::Test {
  protected:
@@ -121,6 +123,28 @@ TEST_F(StreamingReadRpcLoggingTest, Finish) {
   EXPECT_THAT(log_.ExtractLines(),
               Contains(AllOf(HasSubstr("Finish"), HasSubstr("test-id"),
                              HasSubstr("try-again"))));
+}
+
+TEST_F(StreamingReadRpcLoggingTest, GetRequestMetadata) {
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Finish).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
+    return RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
+                       {{"tk0", "v0"}, {"tk1", "v1"}}};
+  });
+
+  TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
+  EXPECT_STATUS_OK(stream.Finish().get());
+  auto const metadata = stream.GetRequestMetadata();
+  EXPECT_THAT(metadata.headers,
+              UnorderedElementsAre(Pair("hk0", "v0"), Pair("hk1", "v1")));
+  EXPECT_THAT(metadata.trailers,
+              UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
+
+  EXPECT_THAT(log_.ExtractLines(),
+              Contains(AllOf(HasSubstr("Finish"), HasSubstr("test-id"))));
 }
 
 }  // namespace
