@@ -19,6 +19,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
@@ -144,6 +145,10 @@ class AsyncStreamingReadWriteRpcImpl
     return op->p.get_future();
   }
 
+  RpcMetadata GetRequestMetadata() const override {
+    return GetRequestMetadataFromContext(*context_);
+  }
+
  private:
   std::shared_ptr<CompletionQueueImpl> cq_;
   std::shared_ptr<grpc::ClientContext> context_;
@@ -204,6 +209,7 @@ class AsyncStreamingReadWriteRpcError
   }
   future<bool> WritesDone() override { return make_ready_future(false); }
   future<Status> Finish() override { return make_ready_future(status_); }
+  RpcMetadata GetRequestMetadata() const override { return {}; }
 
  private:
   Status status_;

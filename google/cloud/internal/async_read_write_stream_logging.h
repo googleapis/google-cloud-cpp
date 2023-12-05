@@ -101,6 +101,10 @@ class AsyncStreamingReadWriteRpcLogging
     });
   }
 
+  RpcMetadata GetRequestMetadata() const override {
+    return child_->GetRequestMetadata();
+  }
+
  private:
   std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> child_;
   TracingOptions tracing_options_;
