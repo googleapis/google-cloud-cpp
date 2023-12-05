@@ -146,7 +146,7 @@ class AsyncStreamingReadWriteRpcImpl
   }
 
   RpcMetadata GetRequestMetadata() const override {
-    return google::cloud::internal::GetRequestMetadataFromContext(*context_);
+    return GetRequestMetadataFromContext(*context_);
   }
 
  private:
