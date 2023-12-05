@@ -65,6 +65,8 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionFinalized::Query() {
   return make_ready_future(StatusOr<std::int64_t>(MakeError(GCP_ERROR_INFO())));
 }
 
+RpcMetadata AsyncWriterConnectionFinalized::GetRequestMetadata() { return {}; }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

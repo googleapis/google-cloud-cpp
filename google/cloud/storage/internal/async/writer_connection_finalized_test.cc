@@ -23,6 +23,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::IsEmpty;
 using ::testing::VariantWith;
 
 auto MakeTestObject() {
@@ -55,6 +56,8 @@ TEST(AsyncWriterConnectionFinalized, Basic) {
   EXPECT_THAT(tested.Flush({}).get(),
               StatusIs(StatusCode::kFailedPrecondition));
   EXPECT_THAT(tested.Query().get(), StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(tested.GetRequestMetadata().headers, IsEmpty());
+  EXPECT_THAT(tested.GetRequestMetadata().trailers, IsEmpty());
 }
 
 }  // namespace
