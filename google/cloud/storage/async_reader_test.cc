@@ -30,6 +30,10 @@ using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
+using ::testing::IsEmpty;
+using ::testing::Pair;
+using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 
 using ReadResponse =
     ::google::cloud::storage_experimental::AsyncReaderConnection::ReadResponse;
@@ -44,6 +48,9 @@ TEST(AsyncReader, Basic) {
         return make_ready_future(ReadResponse(ReadPayload("test-message-2")));
       })
       .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
+                                   {{"tk0", "v0"}, {"tk1", "v1"}}}));
 
   ReadPayload payload;
   auto token = storage_internal::MakeAsyncToken(mock.get());
@@ -61,10 +68,18 @@ TEST(AsyncReader, Basic) {
   ASSERT_TRUE(token.valid());
   EXPECT_THAT(payload.contents(), ElementsAre("test-message-2"));
 
+  EXPECT_THAT(reader.GetRequestMetadata().headers, IsEmpty());
+
   p = reader.Read(std::move(token)).get();
   ASSERT_STATUS_OK(p);
   std::tie(payload, token) = *std::move(p);
   ASSERT_FALSE(token.valid());
+
+  auto const metadata = reader.GetRequestMetadata();
+  EXPECT_THAT(metadata.headers,
+              UnorderedElementsAre(Pair("hk0", "v0"), Pair("hk1", "v1")));
+  EXPECT_THAT(metadata.trailers,
+              UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
 }
 
 TEST(AsyncReader, ErrorDuringRead) {

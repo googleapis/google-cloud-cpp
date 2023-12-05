@@ -44,6 +44,7 @@ class AsyncReaderConnectionImpl
   void Cancel() override { return impl_->Cancel(); }
 
   future<ReadResponse> Read() override;
+  RpcMetadata GetRequestMetadata() override;
 
  private:
   future<ReadResponse> OnRead(absl::optional<ProtoPayload> r);

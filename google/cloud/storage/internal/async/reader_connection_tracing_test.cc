@@ -51,6 +51,9 @@ using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::Pair;
+using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 
 auto expect_context = [](auto& p) {
   return [&p] {
@@ -127,6 +130,9 @@ TEST(ReaderConnectionTracing, WithSuccess) {
       .WillOnce(expect_context(p1))
       .WillOnce(expect_context(p2))
       .WillOnce(expect_context(p3));
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
+                                   {{"tk0", "v0"}, {"tk1", "v1"}}}));
   auto actual = MakeTracingReaderConnection(
       internal::MakeSpan("test-span-name"), std::move(mock));
 
@@ -171,6 +177,12 @@ TEST(ReaderConnectionTracing, WithSuccess) {
                       OTelAttribute<std::int64_t>(sc::kMessageId, 3),
                       OTelAttribute<std::string>(sc::kMessageType, "RECEIVED"),
                       OTelAttribute<std::string>(sc::kThreadId, _)))))));
+
+  auto const metadata = actual->GetRequestMetadata();
+  EXPECT_THAT(metadata.headers,
+              UnorderedElementsAre(Pair("hk0", "v0"), Pair("hk1", "v1")));
+  EXPECT_THAT(metadata.trailers,
+              UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
 }
 
 }  // namespace

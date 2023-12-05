@@ -90,8 +90,12 @@ class AsyncReader {
    */
   future<StatusOr<std::pair<ReadPayload, AsyncToken>>> Read(AsyncToken);
 
+  /// Returns request metadata for troubleshooting / debugging purposes.
+  RpcMetadata GetRequestMetadata();
+
  private:
   std::unique_ptr<AsyncReaderConnection> impl_;
+  bool finished_ = false;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
