@@ -36,6 +36,9 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::An;
+using ::testing::Pair;
+using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 using ::testing::VariantWith;
 
 using Request = google::storage::v2::BidiWriteObjectRequest;
@@ -90,6 +93,9 @@ TEST(AsyncWriterConnectionTest, Basic) {
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(Status{});
   });
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
+                                   {{"tk0", "v0"}, {"tk1", "v1"}}}));
   auto hash = std::make_shared<MockHash>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
   EXPECT_CALL(*hash, Finish).Times(0);
@@ -98,6 +104,12 @@ TEST(AsyncWriterConnectionTest, Basic) {
                                    "test-upload-id", hash, 1024);
   EXPECT_EQ(tested.UploadId(), "test-upload-id");
   EXPECT_THAT(tested.PersistedState(), VariantWith<std::int64_t>(1024));
+
+  auto const metadata = tested.GetRequestMetadata();
+  EXPECT_THAT(metadata.headers,
+              UnorderedElementsAre(Pair("hk0", "v0"), Pair("hk1", "v1")));
+  EXPECT_THAT(metadata.trailers,
+              UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
 }
 
 TEST(AsyncWriterConnectionTest, ResumeFinalized) {

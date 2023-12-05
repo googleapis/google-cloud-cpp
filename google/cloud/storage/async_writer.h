@@ -117,6 +117,17 @@ class AsyncWriter {
   future<StatusOr<storage::ObjectMetadata>> Finalize(AsyncToken token,
                                                      WritePayload payload);
 
+  /**
+   * The headers (if any) returned by the service. For debugging only.
+   *
+   * @warning The contents of these headers may change without notice. Unless
+   *     documented in the API, headers may be removed or added by the service.
+   *     Furthermore, the headers may change from one version of the library to
+   *     the next, as we find more (or different) opportunities for
+   *     optimization.
+   */
+  RpcMetadata GetRequestMetadata() const;
+
  private:
   std::shared_ptr<AsyncWriterConnection> impl_;
 };

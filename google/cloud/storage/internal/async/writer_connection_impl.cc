@@ -138,6 +138,10 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::Query() {
   return impl_->Read().then([this](auto f) { return OnQuery(f.get()); });
 }
 
+RpcMetadata AsyncWriterConnectionImpl::GetRequestMetadata() {
+  return impl_->GetRequestMetadata();
+}
+
 google::storage::v2::BidiWriteObjectRequest
 AsyncWriterConnectionImpl::MakeRequest() {
   auto request = google::storage::v2::BidiWriteObjectRequest{};

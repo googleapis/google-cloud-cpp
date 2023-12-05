@@ -81,6 +81,10 @@ future<StatusOr<storage::ObjectMetadata>> AsyncWriter::Finalize(
   return Finalize(std::move(token), WritePayload{});
 }
 
+RpcMetadata AsyncWriter::GetRequestMetadata() const {
+  return impl_->GetRequestMetadata();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud
