@@ -14,7 +14,6 @@
 
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include <set>
 
 namespace google {
 namespace cloud {
@@ -23,16 +22,40 @@ namespace internal {
 
 namespace {
 
-bool WeNeedToEscape(unsigned char c) {
-  static auto const* const kSet = new std::set<char>{
-      ' ', '\"', '#', '$', '%', '&',  '+', ',', '/', ':', ';', '<',
-      '=', '>',  '?', '@', '[', '\\', ']', '^', '`', '{', '|', '}',
-  };
-  return std::isprint(c) == 0 || kSet->find(c) != kSet->end();
+bool ShouldEscape(unsigned char c) {
+  switch (c) {
+    case ' ':
+    case '\"':
+    case '#':
+    case '$':
+    case '%':
+    case '&':
+    case '+':
+    case ',':
+    case '/':
+    case ':':
+    case ';':
+    case '<':
+    case '=':
+    case '>':
+    case '?':
+    case '@':
+    case '[':
+    case '\\':
+    case ']':
+    case '^':
+    case '`':
+    case '{':
+    case '|':
+    case '}':
+      return true;
+    default:
+      return std::isprint(c) == 0;
+  }
 }
 
 // Returns 0-15 if c is in [0-9A-Fa-f], and -1 otherwise.
-int ParseDigitHex(char c) {
+int ParseHexDigit(char c) {
   if ('0' <= c && c <= '9') return c - '0';
   if ('A' <= c && c <= 'F') return c - 'A' + 0xA;
   if ('a' <= c && c <= 'f') return c - 'a' + 0xa;
@@ -45,7 +68,7 @@ std::string UrlEncode(absl::string_view value) {
   std::string s;
   auto constexpr kDigits = "0123456789ABCDEF";
   for (unsigned char c : value) {
-    if (WeNeedToEscape(c)) {
+    if (ShouldEscape(c)) {
       s.push_back('%');
       s.push_back(kDigits[(c >> 4) & 0xf]);
       s.push_back(kDigits[c & 0xf]);
@@ -60,15 +83,15 @@ std::string UrlDecode(absl::string_view value) {
   std::string s;
   for (std::size_t i = 0; i < value.size(); ++i) {
     if (value[i] == '%' && value.size() - i > 2) {
-      auto b1 = ParseDigitHex(value[i + 1]);
-      auto b0 = ParseDigitHex(value[i + 2]);
-      if (b1 != -1 && b0 != -1) {
-        s += static_cast<char>((b1 << 4) + b0);
+      auto upper = ParseHexDigit(value[i + 1]);
+      auto lower = ParseHexDigit(value[i + 2]);
+      if (upper != -1 && lower != -1) {
+        s.push_back(static_cast<char>((upper << 4) + lower));
         i += 2;
         continue;
       }
     }
-    s += value[i];
+    s.push_back(value[i]);
   }
   return s;
 }
