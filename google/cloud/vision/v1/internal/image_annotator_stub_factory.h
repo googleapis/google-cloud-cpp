@@ -32,7 +32,7 @@ namespace vision_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ImageAnnotatorStub> CreateDefaultImageAnnotatorStub(
-    google::cloud::CompletionQueue cq, Options const& options);
+    google::cloud::CompletionQueue cq, Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_v1_internal

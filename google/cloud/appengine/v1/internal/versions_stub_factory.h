@@ -32,7 +32,7 @@ namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<VersionsStub> CreateDefaultVersionsStub(
-    google::cloud::CompletionQueue cq, Options const& options);
+    google::cloud::CompletionQueue cq, Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_v1_internal

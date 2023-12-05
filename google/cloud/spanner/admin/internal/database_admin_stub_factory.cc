@@ -40,7 +40,7 @@ namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
-    google::cloud::CompletionQueue cq, Options const& options) {
+    google::cloud::CompletionQueue cq, Options& options) {
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"),
       internal::FetchOption<EndpointOption>(options), "spanner.googleapis.com",
@@ -55,6 +55,7 @@ std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
     auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
                                                   error_options);
   } else {
+    options.set<EndpointOption>(*endpoint);
     auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
     auto channel =
         auth->CreateChannel(*endpoint, internal::MakeChannelArguments(options));

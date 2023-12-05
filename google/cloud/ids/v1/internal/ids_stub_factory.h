@@ -32,7 +32,7 @@ namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<IDSStub> CreateDefaultIDSStub(google::cloud::CompletionQueue cq,
-                                              Options const& options);
+                                              Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_v1_internal

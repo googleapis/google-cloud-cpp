@@ -32,7 +32,7 @@ namespace policytroubleshooter_iam_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<PolicyTroubleshooterStub> CreateDefaultPolicyTroubleshooterStub(
-    google::cloud::CompletionQueue cq, Options const& options);
+    google::cloud::CompletionQueue cq, Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_iam_v3_internal

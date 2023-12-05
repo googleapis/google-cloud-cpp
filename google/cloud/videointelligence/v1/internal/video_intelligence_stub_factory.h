@@ -33,7 +33,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<VideoIntelligenceServiceStub>
 CreateDefaultVideoIntelligenceServiceStub(google::cloud::CompletionQueue cq,
-                                          Options const& options);
+                                          Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_v1_internal
