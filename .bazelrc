@@ -119,3 +119,6 @@ build:msan --linkopt=-fsanitize=memory
 build:msan --action_env=LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:/usr/lib64:/usr/lib:/lib64:/lib
 build:msan --action_env=MSAN_OPTIONS=poison_in_dtor=1
 build:msan --linkopt=-L/usr/lib/x86_64-unknown-linux-gnu
+
+# --config otel2: Open Telemetery ABI version 2
+build:otel2 --cxxopt=-DOPENTELEMETRY_ABI_VERSION_NO=2
