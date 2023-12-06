@@ -949,6 +949,10 @@
 ./include/google/cloud/securitycenter/v1
 ./include/google/cloud/securitycenter/v1/internal
 ./include/google/cloud/securitycenter/v1/mocks
+./include/google/cloud/securitycentermanagement
+./include/google/cloud/securitycentermanagement/v1
+./include/google/cloud/securitycentermanagement/v1/internal
+./include/google/cloud/securitycentermanagement/v1/mocks
 ./include/google/cloud/servicecontrol
 ./include/google/cloud/servicecontrol/mocks
 ./include/google/cloud/servicecontrol/v1
@@ -1264,6 +1268,7 @@
 ./lib64/cmake/google_cloud_cpp_secretmanager
 ./lib64/cmake/google_cloud_cpp_securesourcemanager
 ./lib64/cmake/google_cloud_cpp_securitycenter
+./lib64/cmake/google_cloud_cpp_securitycentermanagement
 ./lib64/cmake/google_cloud_cpp_servicecontrol
 ./lib64/cmake/google_cloud_cpp_servicedirectory
 ./lib64/cmake/google_cloud_cpp_servicemanagement
