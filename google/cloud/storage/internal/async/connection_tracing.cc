@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/connection_tracing.h"
-#include "google/cloud/storage/async_writer_connection.h"
+#include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/async/reader_connection_tracing.h"
 #include "google/cloud/storage/internal/async/writer_connection_tracing.h"
 #include "google/cloud/internal/opentelemetry.h"

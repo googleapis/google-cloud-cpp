@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/async_reader.h"
+#include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/testing_util/async_sequencer.h"

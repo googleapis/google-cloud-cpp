@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CLIENT_H
 
-#include "google/cloud/storage/async_connection.h"
-#include "google/cloud/storage/async_reader.h"
-#include "google/cloud/storage/async_token.h"
-#include "google/cloud/storage/async_writer.h"
+#include "google/cloud/storage/async/connection.h"
+#include "google/cloud/storage/async/reader.h"
+#include "google/cloud/storage/async/token.h"
+#include "google/cloud/storage/async/writer.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"

@@ -15,7 +15,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 #include "google/cloud/storage/internal/async/connection_tracing.h"
-#include "google/cloud/storage/async_reader_connection.h"
+#include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/mocks/mock_async_connection.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_ACCUMULATE_READ_OBJECT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_ACCUMULATE_READ_OBJECT_H
 
-#include "google/cloud/storage/async_object_responses.h"
+#include "google/cloud/storage/async/object_responses.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/completion_queue.h"

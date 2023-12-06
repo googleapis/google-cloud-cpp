@@ -14,7 +14,7 @@
 
 #include "google/cloud/internal/port_platform.h"
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC && GOOGLE_CLOUD_CPP_HAVE_COROUTINES
-#include "google/cloud/storage/async_client.h"
+#include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"

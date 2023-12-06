@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_WRITER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_WRITER_H
 
-#include "google/cloud/storage/async_object_requests.h"
-#include "google/cloud/storage/async_token.h"
-#include "google/cloud/storage/async_writer_connection.h"
+#include "google/cloud/storage/async/object_requests.h"
+#include "google/cloud/storage/async/token.h"
+#include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"

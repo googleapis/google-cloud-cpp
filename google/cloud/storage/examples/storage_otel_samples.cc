@@ -18,7 +18,7 @@
 // in the final rendering.
 //! [instrumented-client-includes]
 #include "google/cloud/opentelemetry/configure_basic_tracing.h"
-#include "google/cloud/storage/async_client.h"
+#include "google/cloud/storage/async/client.h"
 #include "google/cloud/opentelemetry_options.h"
 
 //! [instrumented-client-includes]

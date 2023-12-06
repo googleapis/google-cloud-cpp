@@ -16,7 +16,7 @@
 // The final blank line in this section separates the includes from the function
 // in the final rendering.
 //! [async-includes]
-#include "google/cloud/storage/async_client.h"
+#include "google/cloud/storage/async/client.h"
 
 //! [async-includes]
 #include "google/cloud/storage/examples/storage_examples_common.h"

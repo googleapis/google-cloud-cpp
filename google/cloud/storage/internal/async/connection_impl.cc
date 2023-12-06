@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/connection_impl.h"
-#include "google/cloud/storage/async_reader_connection.h"
+#include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/internal/async/accumulate_read_object.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
