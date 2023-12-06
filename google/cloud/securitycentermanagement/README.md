@@ -4,7 +4,6 @@ This directory contains an idiomatic C++ client library for the
 [Security Center Management API][cloud-service-docs], a service to manage
 Security Command Center (SCC).
 
-
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
@@ -16,6 +15,37 @@ to get started using this client library in a larger project. The following
 this library.
 
 <!-- inject-quickstart-start -->
+
+```cc
+#include "google/cloud/securitycentermanagement/v1/security_center_management_client.h"
+#include "google/cloud/location.h"
+#include <iostream>
+
+int main(int argc, char* argv[]) try {
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    return 1;
+  }
+
+  auto const location = google::cloud::Location(argv[1], "global");
+
+  namespace securitycentermanagement =
+      ::google::cloud::securitycentermanagement_v1;
+  auto client = securitycentermanagement::SecurityCenterManagementClient(
+      securitycentermanagement::MakeSecurityCenterManagementConnection());
+
+  for (auto m :
+       client.ListEventThreatDetectionCustomModules(location.FullName())) {
+    if (!m) throw std::move(m).status();
+    std::cout << m->DebugString() << "\n";
+  }
+
+  return 0;
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
+  return 1;
+}
+```
 
 <!-- inject-quickstart-end -->
 

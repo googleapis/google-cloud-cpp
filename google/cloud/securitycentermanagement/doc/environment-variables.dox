@@ -9,6 +9,11 @@ environment variables are convenient when troubleshooting problems.
 @section securitycentermanagement-env-endpoint Endpoint Overrides
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_SECURITY_CENTER_MANAGEMENT_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "securitycentermanagement.googleapis.com")
+  used by `MakeSecurityCenterManagementConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption
