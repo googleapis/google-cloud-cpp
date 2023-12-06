@@ -13,9 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/url_encode.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
-#include <array>
-#include <utility>
+#include <cctype>
 
 namespace google {
 namespace cloud {
@@ -24,35 +22,78 @@ namespace internal {
 
 namespace {
 
-using UrlMappings =
-    std::array<std::pair<absl::string_view, absl::string_view>, 25>;
+bool ShouldEscape(unsigned char c) {
+  switch (c) {
+    case ' ':
+    case '\"':
+    case '#':
+    case '$':
+    case '%':
+    case '&':
+    case '+':
+    case ',':
+    case '/':
+    case ':':
+    case ';':
+    case '<':
+    case '=':
+    case '>':
+    case '?':
+    case '@':
+    case '[':
+    case '\\':
+    case ']':
+    case '^':
+    case '`':
+    case '{':
+    case '|':
+    case '}':
+      return true;
+    default:
+      return std::isprint(c) == 0;
+  }
+}
 
-constexpr auto kEncodeMappings = UrlMappings{{
-    {" ", "%20"}, {"\"", "%22"}, {"#", "%23"},  {"$", "%24"}, {"%", "%25"},
-    {"&", "%26"}, {"+", "%2B"},  {",", "%2C"},  {"/", "%2F"}, {":", "%3A"},
-    {";", "%3B"}, {"<", "%3C"},  {"=", "%3D"},  {">", "%3E"}, {"?", "%3F"},
-    {"@", "%40"}, {"[", "%5B"},  {"\\", "%5C"}, {"]", "%5D"}, {"^", "%5E"},
-    {"`", "%60"}, {"{", "%7B"},  {"|", "%7C"},  {"}", "%7D"}, {"\177", "%7F"},
-}};
-
-// Until we require C++17, it isn't worth trying to eliminate the duplication
-// using a constexpr function to produce kDecodeMappings from kEncodeMappings.
-constexpr auto kDecodeMappings = UrlMappings{{
-    {"%20", " "}, {"%22", "\""}, {"%23", "#"},  {"%24", "$"}, {"%25", "%"},
-    {"%26", "&"}, {"%2B", "+"},  {"%2C", ","},  {"%2F", "/"}, {"%3A", ":"},
-    {"%3B", ";"}, {"%3C", "<"},  {"%3D", "="},  {"%3E", ">"}, {"%3F", "?"},
-    {"%40", "@"}, {"%5B", "["},  {"%5C", "\\"}, {"%5D", "]"}, {"%5E", "^"},
-    {"%60", "`"}, {"%7B", "{"},  {"%7C", "|"},  {"%7D", "}"}, {"%7F", "\177"},
-}};
+// Returns 0-15 if c is in [0-9A-Fa-f], and -1 otherwise.
+int ParseHexDigit(char c) {
+  if ('0' <= c && c <= '9') return c - '0';
+  if ('A' <= c && c <= 'F') return c - 'A' + 0xA;
+  if ('a' <= c && c <= 'f') return c - 'a' + 0xa;
+  return -1;
+}
 
 }  // namespace
 
 std::string UrlEncode(absl::string_view value) {
-  return absl::StrReplaceAll(value, kEncodeMappings);
+  std::string s;
+  auto constexpr kDigits = "0123456789ABCDEF";
+  for (unsigned char c : value) {
+    if (ShouldEscape(c)) {
+      s.push_back('%');
+      s.push_back(kDigits[(c >> 4) & 0xf]);
+      s.push_back(kDigits[c & 0xf]);
+    } else {
+      s.push_back(c);
+    }
+  }
+  return s;
 }
 
 std::string UrlDecode(absl::string_view value) {
-  return absl::StrReplaceAll(value, kDecodeMappings);
+  std::string s;
+  for (std::size_t i = 0; i < value.size(); ++i) {
+    if (value[i] == '%' && value.size() - i > 2) {
+      auto upper = ParseHexDigit(value[i + 1]);
+      auto lower = ParseHexDigit(value[i + 2]);
+      if (upper != -1 && lower != -1) {
+        s.push_back(static_cast<char>((upper << 4) + lower));
+        i += 2;
+        continue;
+      }
+    }
+    s.push_back(value[i]);
+  }
+  return s;
 }
 
 }  // namespace internal
