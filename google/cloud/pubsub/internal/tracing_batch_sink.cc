@@ -178,7 +178,7 @@ class TracingBatchSink : public BatchSink {
             internal::EndSpan(*span);
           }
           internal::DetachOTelContext(oc);
-          return f;
+          return f.get();
         });
   }
 
