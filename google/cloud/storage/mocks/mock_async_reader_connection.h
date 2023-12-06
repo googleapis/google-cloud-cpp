@@ -29,6 +29,7 @@ class MockAsyncReaderConnection
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(future<ReadResponse>, Read, (), (override));
+  MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/async_object_responses.h"
 #include "google/cloud/future.h"
+#include "google/cloud/rpc_metadata.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include "absl/types/variant.h"
@@ -77,6 +78,9 @@ class AsyncReaderConnection {
    * complicated.
    */
   virtual future<ReadResponse> Read() = 0;
+
+  /// Return the request metadata.
+  virtual RpcMetadata GetRequestMetadata() = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
