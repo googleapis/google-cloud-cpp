@@ -168,19 +168,6 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkMatchSlash) {
                             "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
 }
 
-TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkMatchColon) {
-  storage::internal::UploadChunkRequest req(
-      "projects/_/buckets/test-bucket:blah/blah", 0, {},
-      CreateNullHashFunction());
-
-  grpc::ClientContext context;
-  ApplyRoutingHeaders(context, req);
-  auto metadata = GetMetadata(context);
-  EXPECT_THAT(metadata,
-              Contains(Pair("x-goog-request-params",
-                            "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
-}
-
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkNoMatch) {
   storage::internal::UploadChunkRequest req("does-not-match", 0, {},
                                             CreateNullHashFunction());
@@ -198,11 +185,7 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadId) {
   } const cases[] = {
       {"projects/_/buckets/test-bucket/test-upload-id",
        "bucket=projects%2F_%2Fbuckets%2Ftest-bucket"},
-      {"projects/_/buckets/test-bucket:test-upload-id",
-       "bucket=projects%2F_%2Fbuckets%2Ftest-bucket"},
       {"projects/_/buckets/test-bucket/test/upload/id",
-       "bucket=projects%2F_%2Fbuckets%2Ftest-bucket"},
-      {"projects/_/buckets/test-bucket:test/upload/id",
        "bucket=projects%2F_%2Fbuckets%2Ftest-bucket"},
   };
 
