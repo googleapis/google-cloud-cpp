@@ -1,8 +1,9 @@
 # Security Center Management API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Security Center Management API][cloud-service-docs], a service to \<UNKNOWN -
-NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Security Center Management API][cloud-service-docs], a service to manage
+Security Command Center (SCC).
+
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).

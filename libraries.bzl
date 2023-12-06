@@ -195,6 +195,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "secretmanager",
     "securesourcemanager",
     "securitycenter",
+    "securitycentermanagement",
     "servicecontrol",
     "servicedirectory",
     "servicemanagement",
