@@ -59,17 +59,13 @@ void ApplyRoutingHeaders(grpc::ClientContext& context,
 
 void ApplyResumableUploadRoutingHeader(grpc::ClientContext& context,
                                        std::string const& upload_id) {
-  static auto* slash_format =
+  static auto* re =
       new std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize};
-  static auto* colon_format =
-      new std::regex{"(projects/[^/]+/buckets/[^:]+):.*", std::regex::optimize};
-  for (auto const* re : {slash_format, colon_format}) {
-    std::smatch match;
-    if (!std::regex_match(upload_id, match, *re)) continue;
-    context.AddMetadata(
-        "x-goog-request-params",
-        "bucket=" + google::cloud::internal::UrlEncode(match[1].str()));
-  }
+  std::smatch match;
+  if (!std::regex_match(upload_id, match, *re)) return;
+  context.AddMetadata(
+      "x-goog-request-params",
+      "bucket=" + google::cloud::internal::UrlEncode(match[1].str()));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
