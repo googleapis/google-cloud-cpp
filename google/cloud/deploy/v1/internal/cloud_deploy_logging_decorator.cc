@@ -194,6 +194,83 @@ CloudDeployLogging::AsyncDeleteTarget(
       cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse>
+CloudDeployLogging::ListCustomTargetTypes(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::ListCustomTargetTypesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::ListCustomTargetTypesRequest const&
+                 request) {
+        return child_->ListCustomTargetTypes(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployLogging::GetCustomTargetType(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::GetCustomTargetTypeRequest const&
+                 request) {
+        return child_->GetCustomTargetType(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployLogging::AsyncCreateCustomTargetType(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::deploy::v1::CreateCustomTargetTypeRequest const&
+                 request) {
+        return child_->AsyncCreateCustomTargetType(cq, std::move(context),
+                                                   options, request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployLogging::AsyncUpdateCustomTargetType(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const&
+                 request) {
+        return child_->AsyncUpdateCustomTargetType(cq, std::move(context),
+                                                   options, request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployLogging::AsyncDeleteCustomTargetType(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const&
+                 request) {
+        return child_->AsyncDeleteCustomTargetType(cq, std::move(context),
+                                                   options, request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::deploy::v1::ListReleasesResponse>
 CloudDeployLogging::ListReleases(
     grpc::ClientContext& context,

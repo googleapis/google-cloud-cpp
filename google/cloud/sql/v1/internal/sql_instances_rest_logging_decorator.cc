@@ -84,6 +84,18 @@ SqlInstancesServiceRestLogging::DemoteMaster(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestLogging::Demote(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) {
+        return child_->Demote(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestLogging::Export(
     rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlInstancesExportRequest const& request) {

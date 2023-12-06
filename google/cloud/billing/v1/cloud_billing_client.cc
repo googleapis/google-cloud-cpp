@@ -57,6 +57,15 @@ CloudBillingClient::ListBillingAccounts(Options opts) {
 }
 
 StreamRange<google::cloud::billing::v1::BillingAccount>
+CloudBillingClient::ListBillingAccounts(std::string const& parent,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::billing::v1::ListBillingAccountsRequest request;
+  request.set_parent(parent);
+  return connection_->ListBillingAccounts(request);
+}
+
+StreamRange<google::cloud::billing::v1::BillingAccount>
 CloudBillingClient::ListBillingAccounts(
     google::cloud::billing::v1::ListBillingAccountsRequest request,
     Options opts) {
@@ -90,6 +99,17 @@ CloudBillingClient::CreateBillingAccount(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::v1::CreateBillingAccountRequest request;
   *request.mutable_billing_account() = billing_account;
+  return connection_->CreateBillingAccount(request);
+}
+
+StatusOr<google::cloud::billing::v1::BillingAccount>
+CloudBillingClient::CreateBillingAccount(
+    google::cloud::billing::v1::BillingAccount const& billing_account,
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::billing::v1::CreateBillingAccountRequest request;
+  *request.mutable_billing_account() = billing_account;
+  request.set_parent(parent);
   return connection_->CreateBillingAccount(request);
 }
 
@@ -234,6 +254,14 @@ CloudBillingClient::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
+}
+
+StatusOr<google::cloud::billing::v1::BillingAccount>
+CloudBillingClient::MoveBillingAccount(
+    google::cloud::billing::v1::MoveBillingAccountRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MoveBillingAccount(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

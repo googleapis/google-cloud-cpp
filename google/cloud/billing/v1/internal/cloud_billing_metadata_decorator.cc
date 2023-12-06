@@ -132,6 +132,15 @@ CloudBillingMetadata::TestIamPermissions(
   return child_->TestIamPermissions(context, request);
 }
 
+StatusOr<google::cloud::billing::v1::BillingAccount>
+CloudBillingMetadata::MoveBillingAccount(
+    grpc::ClientContext& context,
+    google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->MoveBillingAccount(context, request);
+}
+
 void CloudBillingMetadata::SetMetadata(grpc::ClientContext& context,
                                        Options const& options,
                                        std::string const& request_params) {

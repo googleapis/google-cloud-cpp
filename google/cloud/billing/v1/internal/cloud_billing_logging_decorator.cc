@@ -160,6 +160,19 @@ CloudBillingLogging::TestIamPermissions(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::billing::v1::BillingAccount>
+CloudBillingLogging::MoveBillingAccount(
+    grpc::ClientContext& context,
+    google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::billing::v1::MoveBillingAccountRequest const&
+                 request) {
+        return child_->MoveBillingAccount(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_v1_internal
 }  // namespace cloud

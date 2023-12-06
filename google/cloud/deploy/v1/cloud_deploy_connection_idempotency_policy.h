@@ -69,6 +69,21 @@ class CloudDeployConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteTarget(
       google::cloud::deploy::v1::DeleteTargetRequest const& request);
 
+  virtual google::cloud::Idempotency ListCustomTargetTypes(
+      google::cloud::deploy::v1::ListCustomTargetTypesRequest request);
+
+  virtual google::cloud::Idempotency GetCustomTargetType(
+      google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request);
+
+  virtual google::cloud::Idempotency CreateCustomTargetType(
+      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateCustomTargetType(
+      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteCustomTargetType(
+      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request);
+
   virtual google::cloud::Idempotency ListReleases(
       google::cloud::deploy::v1::ListReleasesRequest request);
 

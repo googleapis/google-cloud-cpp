@@ -73,6 +73,14 @@ SqlInstancesServiceRestMetadata::DemoteMaster(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestMetadata::Demote(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Demote(rest_context, options, request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Export(
     rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlInstancesExportRequest const& request) {

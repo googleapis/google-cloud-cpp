@@ -98,6 +98,12 @@ CloudBillingConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::billing::v1::BillingAccount>
+CloudBillingConnection::MoveBillingAccount(
+    google::cloud::billing::v1::MoveBillingAccountRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<CloudBillingConnection> MakeCloudBillingConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

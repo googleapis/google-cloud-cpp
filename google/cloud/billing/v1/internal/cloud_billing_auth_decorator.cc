@@ -119,6 +119,15 @@ CloudBillingAuth::TestIamPermissions(
   return child_->TestIamPermissions(context, request);
 }
 
+StatusOr<google::cloud::billing::v1::BillingAccount>
+CloudBillingAuth::MoveBillingAccount(
+    grpc::ClientContext& context,
+    google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->MoveBillingAccount(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_v1_internal
 }  // namespace cloud

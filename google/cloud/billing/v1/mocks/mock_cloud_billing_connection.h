@@ -99,6 +99,11 @@ class MockCloudBillingConnection : public billing_v1::CloudBillingConnection {
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::billing::v1::BillingAccount>, MoveBillingAccount,
+      (google::cloud::billing::v1::MoveBillingAccountRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

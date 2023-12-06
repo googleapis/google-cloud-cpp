@@ -89,6 +89,11 @@ class CloudBillingMetadata : public CloudBillingStub {
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::cloud::billing::v1::BillingAccount> MoveBillingAccount(
+      grpc::ClientContext& context,
+      google::cloud::billing::v1::MoveBillingAccountRequest const& request)
+      override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);

@@ -385,6 +385,164 @@ CloudDeployConnectionImpl::DeleteTarget(
       polling_policy(*current), __func__);
 }
 
+StreamRange<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployConnectionImpl::ListCustomTargetTypes(
+    google::cloud::deploy::v1::ListCustomTargetTypesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListCustomTargetTypes(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::deploy::v1::CustomTargetType>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::deploy::v1::ListCustomTargetTypesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::deploy::v1::ListCustomTargetTypesRequest const&
+                    request) {
+              return stub->ListCustomTargetTypes(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::deploy::v1::ListCustomTargetTypesResponse r) {
+        std::vector<google::cloud::deploy::v1::CustomTargetType> result(
+            r.custom_target_types().size());
+        auto& messages = *r.mutable_custom_target_types();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployConnectionImpl::GetCustomTargetType(
+    google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetCustomTargetType(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::GetCustomTargetTypeRequest const&
+                 request) {
+        return stub_->GetCustomTargetType(context, request);
+      },
+      request, __func__);
+}
+
+future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+CloudDeployConnectionImpl::CreateCustomTargetType(
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::deploy::v1::CustomTargetType>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::deploy::v1::CreateCustomTargetTypeRequest const&
+              request) {
+        return stub->AsyncCreateCustomTargetType(cq, std::move(context),
+                                                 options, request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::deploy::v1::CustomTargetType>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCustomTargetType(request),
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+CloudDeployConnectionImpl::UpdateCustomTargetType(
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::deploy::v1::CustomTargetType>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const&
+              request) {
+        return stub->AsyncUpdateCustomTargetType(cq, std::move(context),
+                                                 options, request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::deploy::v1::CustomTargetType>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCustomTargetType(request),
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployConnectionImpl::DeleteCustomTargetType(
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::deploy::v1::OperationMetadata>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const&
+              request) {
+        return stub->AsyncDeleteCustomTargetType(cq, std::move(context),
+                                                 options, request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::deploy::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCustomTargetType(request),
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::deploy::v1::Release>
 CloudDeployConnectionImpl::ListReleases(
     google::cloud::deploy::v1::ListReleasesRequest request) {

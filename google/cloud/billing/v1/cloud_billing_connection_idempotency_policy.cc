@@ -85,6 +85,11 @@ Idempotency CloudBillingConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency CloudBillingConnectionIdempotencyPolicy::MoveBillingAccount(
+    google::cloud::billing::v1::MoveBillingAccountRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<CloudBillingConnectionIdempotencyPolicy>
 MakeDefaultCloudBillingConnectionIdempotencyPolicy() {
   return std::make_unique<CloudBillingConnectionIdempotencyPolicy>();

@@ -67,6 +67,9 @@ class CloudBillingConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual google::cloud::Idempotency MoveBillingAccount(
+      google::cloud::billing::v1::MoveBillingAccountRequest const& request);
 };
 
 std::unique_ptr<CloudBillingConnectionIdempotencyPolicy>
