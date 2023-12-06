@@ -117,6 +117,44 @@ CloudDeployConnection::DeleteTarget(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployConnection::ListCustomTargetTypes(
+    google::cloud::deploy::v1::
+        ListCustomTargetTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::deploy::v1::CustomTargetType>>();
+}
+
+StatusOr<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployConnection::GetCustomTargetType(
+    google::cloud::deploy::v1::GetCustomTargetTypeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+CloudDeployConnection::CreateCustomTargetType(
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::deploy::v1::CustomTargetType>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+CloudDeployConnection::UpdateCustomTargetType(
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::deploy::v1::CustomTargetType>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployConnection::DeleteCustomTargetType(
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::deploy::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::deploy::v1::Release>
 CloudDeployConnection::ListReleases(
     google::cloud::deploy::v1::

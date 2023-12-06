@@ -150,6 +150,18 @@ DefaultCloudBillingStub::TestIamPermissions(
   return response;
 }
 
+StatusOr<google::cloud::billing::v1::BillingAccount>
+DefaultCloudBillingStub::MoveBillingAccount(
+    grpc::ClientContext& context,
+    google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
+  google::cloud::billing::v1::BillingAccount response;
+  auto status = grpc_stub_->MoveBillingAccount(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_v1_internal
 }  // namespace cloud

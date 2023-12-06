@@ -194,6 +194,84 @@ DefaultCloudDeployStub::AsyncDeleteTarget(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse>
+DefaultCloudDeployStub::ListCustomTargetTypes(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::ListCustomTargetTypesRequest const& request) {
+  google::cloud::deploy::v1::ListCustomTargetTypesResponse response;
+  auto status = grpc_stub_->ListCustomTargetTypes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::deploy::v1::CustomTargetType>
+DefaultCloudDeployStub::GetCustomTargetType(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request) {
+  google::cloud::deploy::v1::CustomTargetType response;
+  auto status = grpc_stub_->GetCustomTargetType(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudDeployStub::AsyncCreateCustomTargetType(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::deploy::v1::CreateCustomTargetTypeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::deploy::v1::CreateCustomTargetTypeRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateCustomTargetType(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudDeployStub::AsyncUpdateCustomTargetType(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateCustomTargetType(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudDeployStub::AsyncDeleteCustomTargetType(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteCustomTargetType(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::cloud::deploy::v1::ListReleasesResponse>
 DefaultCloudDeployStub::ListReleases(
     grpc::ClientContext& context,

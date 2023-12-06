@@ -188,6 +188,81 @@ CloudDeployAuth::AsyncDeleteTarget(
       });
 }
 
+StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse>
+CloudDeployAuth::ListCustomTargetTypes(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::ListCustomTargetTypesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListCustomTargetTypes(context, request);
+}
+
+StatusOr<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployAuth::GetCustomTargetType(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetCustomTargetType(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployAuth::AsyncCreateCustomTargetType(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateCustomTargetType(cq, *std::move(context),
+                                                  options, request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployAuth::AsyncUpdateCustomTargetType(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateCustomTargetType(cq, *std::move(context),
+                                                  options, request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployAuth::AsyncDeleteCustomTargetType(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteCustomTargetType(cq, *std::move(context),
+                                                  options, request);
+      });
+}
+
 StatusOr<google::cloud::deploy::v1::ListReleasesResponse>
 CloudDeployAuth::ListReleases(
     grpc::ClientContext& context,

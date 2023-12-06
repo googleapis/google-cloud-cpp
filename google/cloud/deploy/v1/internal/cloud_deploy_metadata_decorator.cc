@@ -152,6 +152,59 @@ CloudDeployMetadata::AsyncDeleteTarget(
   return child_->AsyncDeleteTarget(cq, std::move(context), options, request);
 }
 
+StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse>
+CloudDeployMetadata::ListCustomTargetTypes(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::ListCustomTargetTypesRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListCustomTargetTypes(context, request);
+}
+
+StatusOr<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployMetadata::GetCustomTargetType(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetCustomTargetType(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployMetadata::AsyncCreateCustomTargetType(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
+  SetMetadata(*context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateCustomTargetType(cq, std::move(context), options,
+                                             request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployMetadata::AsyncUpdateCustomTargetType(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
+  SetMetadata(
+      *context, options,
+      absl::StrCat("custom_target_type.name=",
+                   internal::UrlEncode(request.custom_target_type().name())));
+  return child_->AsyncUpdateCustomTargetType(cq, std::move(context), options,
+                                             request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployMetadata::AsyncDeleteCustomTargetType(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
+  SetMetadata(*context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteCustomTargetType(cq, std::move(context), options,
+                                             request);
+}
+
 StatusOr<google::cloud::deploy::v1::ListReleasesResponse>
 CloudDeployMetadata::ListReleases(
     grpc::ClientContext& context,

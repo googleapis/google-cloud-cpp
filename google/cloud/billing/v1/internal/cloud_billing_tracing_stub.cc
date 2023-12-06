@@ -149,6 +149,18 @@ CloudBillingTracingStub::TestIamPermissions(
                            child_->TestIamPermissions(context, request));
 }
 
+StatusOr<google::cloud::billing::v1::BillingAccount>
+CloudBillingTracingStub::MoveBillingAccount(
+    grpc::ClientContext& context,
+    google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudBilling",
+                                     "MoveBillingAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->MoveBillingAccount(context, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<CloudBillingStub> MakeCloudBillingTracingStub(

@@ -11,6 +11,7 @@
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:fulfillment.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:gcs.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:generative_settings.proto
+@com_google_googleapis//google/cloud/dialogflow/cx/v3:generator.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:import_strategy.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:inline.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:intent.proto

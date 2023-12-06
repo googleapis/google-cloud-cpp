@@ -79,6 +79,10 @@ class CloudBillingTracingConnection
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::cloud::billing::v1::BillingAccount> MoveBillingAccount(
+      google::cloud::billing::v1::MoveBillingAccountRequest const& request)
+      override;
+
  private:
   std::shared_ptr<billing_v1::CloudBillingConnection> child_;
 };

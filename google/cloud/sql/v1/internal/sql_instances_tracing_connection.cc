@@ -69,6 +69,15 @@ SqlInstancesServiceTracingConnection::DemoteMaster(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceTracingConnection::Demote(
+    google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Demote");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Demote(request));
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceTracingConnection::Export(
     google::cloud::sql::v1::SqlInstancesExportRequest const& request) {
   auto span =

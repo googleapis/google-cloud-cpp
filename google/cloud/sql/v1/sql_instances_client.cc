@@ -61,6 +61,13 @@ SqlInstancesServiceClient::DemoteMaster(
   return connection_->DemoteMaster(request);
 }
 
+StatusOr<google::cloud::sql::v1::Operation> SqlInstancesServiceClient::Demote(
+    google::cloud::sql::v1::SqlInstancesDemoteRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Demote(request);
+}
+
 StatusOr<google::cloud::sql::v1::Operation> SqlInstancesServiceClient::Export(
     google::cloud::sql::v1::SqlInstancesExportRequest const& request,
     Options opts) {
