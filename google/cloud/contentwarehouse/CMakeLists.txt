@@ -17,7 +17,8 @@
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
-    contentwarehouse "Document AI Warehouse API" SERVICE_DIRS "v1/"
+    contentwarehouse "Document AI Warehouse API"
+    SERVICE_DIRS "v1/"
     CROSS_LIB_DEPS "documentai")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)

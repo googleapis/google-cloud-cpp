@@ -17,19 +17,16 @@
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
-    asset
-    "Cloud Asset API"
+    asset "Cloud Asset API"
     SERVICE_DIRS
-    "__EMPTY__"
-    "v1/"
-    # orgpolicy/v**1** is used *indirectly* by google/cloud/asset, therefore it
-    # does not appear in protolists/asset.list. In addition, it is not compiled
-    # by any other library. So, added manually.
+        "__EMPTY__"
+        "v1/"
+        # orgpolicy/v**1** is used *indirectly* by google/cloud/asset, therefore
+        # it does not appear in protolists/asset.list. In addition, it is not
+        # compiled by any other library. So, added manually.
     ADDITIONAL_PROTO_LISTS
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/orgpolicy/v1/orgpolicy.proto"
-    CROSS_LIB_DEPS
-    "accesscontextmanager"
-    "osconfig")
+        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/orgpolicy/v1/orgpolicy.proto"
+    CROSS_LIB_DEPS "accesscontextmanager" "osconfig")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(asset_quickstart "quickstart/quickstart.cc")

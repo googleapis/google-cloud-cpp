@@ -17,14 +17,9 @@
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
-    policytroubleshooter
-    "Policy Troubleshooter API"
-    SERVICE_DIRS
-    "__EMPTY__"
-    "v1/"
-    "iam/v3/"
-    SHARED_PROTO_DEPS
-    "iam_v2")
+    policytroubleshooter "Policy Troubleshooter API"
+    SERVICE_DIRS "__EMPTY__" "v1/" "iam/v3/"
+    SHARED_PROTO_DEPS "iam_v2")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(policytroubleshooter_quickstart "quickstart/quickstart.cc")

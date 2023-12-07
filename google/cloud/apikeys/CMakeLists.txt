@@ -16,8 +16,8 @@
 
 include(GoogleCloudCppLibrary)
 
-google_cloud_cpp_add_gapic_library(apikeys "API Keys API" SERVICE_DIRS
-                                   "__EMPTY__" "v2/")
+google_cloud_cpp_add_gapic_library(apikeys "API Keys API"
+                                   SERVICE_DIRS "__EMPTY__" "v2/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(apikeys_quickstart "quickstart/quickstart.cc")

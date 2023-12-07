@@ -17,13 +17,8 @@
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
-    monitoring
-    "Cloud Monitoring API"
-    SERVICE_DIRS
-    "__EMPTY__"
-    "dashboard/v1/"
-    "metricsscope/v1/"
-    "v3/")
+    monitoring "Cloud Monitoring API" SERVICE_DIRS "__EMPTY__" "dashboard/v1/"
+                                                   "metricsscope/v1/" "v3/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(monitoring_quickstart "quickstart/quickstart.cc")

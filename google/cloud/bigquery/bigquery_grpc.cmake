@@ -17,20 +17,18 @@
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
-    bigquery
-    "Google Cloud BigQuery API"
+    bigquery "Google Cloud BigQuery API"
     SERVICE_DIRS
-    "__EMPTY__"
-    "analyticshub/v1/"
-    "biglake/v1/"
-    "connection/v1/"
-    "datapolicies/v1/"
-    "datatransfer/v1/"
-    "migration/v2/"
-    "reservation/v1/"
-    "storage/v1/"
-    BACKWARDS_COMPAT_PROTO_TARGETS
-    "cloud_bigquery_protos")
+        "__EMPTY__"
+        "analyticshub/v1/"
+        "biglake/v1/"
+        "connection/v1/"
+        "datapolicies/v1/"
+        "datatransfer/v1/"
+        "migration/v2/"
+        "reservation/v1/"
+        "storage/v1/"
+    BACKWARDS_COMPAT_PROTO_TARGETS "cloud_bigquery_protos")
 
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.

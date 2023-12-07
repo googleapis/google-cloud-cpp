@@ -47,6 +47,16 @@ additional_commands = {
             "BINARY_DIR": 1,
         },
     },
+    "google_cloud_cpp_add_gapic_library": {
+        "flags": ["EXPERIMENTAL", "TRANSITION"],
+        "kwargs": {
+            "SERVICE_DIRS": "+",
+            "CROSS_LIB_DEPS": "+",
+            "SHARED_PROTO_DEPS": "+",
+            "ADDITIONAL_PROTO_LISTS": "+",
+            "BACKWARDS_COMPAT_PROTO_TARGETS": "+",
+        },
+    },
     "google_cloud_cpp_doxygen_targets": {
         "flags": ["RECURSIVE"],
         "kwargs": {
