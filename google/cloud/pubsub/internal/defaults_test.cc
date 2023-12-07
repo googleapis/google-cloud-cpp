@@ -60,7 +60,7 @@ TEST(OptionsTest, UnsetEmulatorEnv) {
 
 TEST(OptionsTest, CommonDefaults) {
   auto opts = DefaultCommonOptions(Options{});
-  EXPECT_EQ("pubsub.googleapis.com", opts.get<EndpointOption>());
+  EXPECT_EQ("pubsub.googleapis.com.", opts.get<EndpointOption>());
   EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
             typeid(opts.get<GrpcCredentialOption>()));
   EXPECT_EQ(static_cast<int>(DefaultThreadCount()),

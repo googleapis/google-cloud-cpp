@@ -34,7 +34,7 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 TEST(GoldenThingAdminDefaultOptions, DefaultEndpoint) {
   Options options;
   auto updated_options = GoldenThingAdminDefaultOptions(options);
-  EXPECT_EQ("test.googleapis.com", updated_options.get<EndpointOption>());
+  EXPECT_EQ("test.googleapis.com.", updated_options.get<EndpointOption>());
 }
 
 TEST(GoldenThingAdminDefaultOptions, EnvVarEndpoint) {
