@@ -1889,6 +1889,7 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.ConfigServiceV2.UpdateSettings]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L747}
   /// [google.logging.v2.Settings]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L2086}
   /// [google.logging.v2.UpdateSettingsRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L2052}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
   StatusOr<google::logging::v2::Settings> UpdateSettings(

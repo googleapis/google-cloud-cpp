@@ -322,6 +322,7 @@ class IndexServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L36}
   /// [google.cloud.aiplatform.v1.UpdateIndexRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L205}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Index>> UpdateIndex(

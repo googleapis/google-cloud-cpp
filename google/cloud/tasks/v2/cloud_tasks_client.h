@@ -259,6 +259,7 @@ class CloudTasksClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.tasks.v2.CreateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L393}
   /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.Queue.name]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L95}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
@@ -349,6 +350,7 @@ class CloudTasksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.Queue.name]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L95}
   /// [google.cloud.tasks.v2.UpdateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L416}
   ///
   // clang-format on

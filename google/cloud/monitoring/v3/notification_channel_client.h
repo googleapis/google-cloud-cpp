@@ -131,6 +131,7 @@ class NotificationChannelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.ListNotificationChannelDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L193}
   /// [google.monitoring.v3.NotificationChannelDescriptor]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L37}
+  /// [google.monitoring.v3.NotificationChannelService.GetNotificationChannelDescriptor]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L58}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
@@ -283,6 +284,7 @@ class NotificationChannelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.ListNotificationChannelsRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L274}
   /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.NotificationChannelService.GetNotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L82}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::NotificationChannel>

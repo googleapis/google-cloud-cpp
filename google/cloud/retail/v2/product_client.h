@@ -126,7 +126,9 @@ class ProductServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.CreateProductRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L337}
+  /// [google.cloud.retail.v2.CreateProductRequest.parent]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L340}
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.Product.name]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L161}
   ///
   // clang-format on
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
@@ -352,6 +354,7 @@ class ProductServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   /// [google.cloud.retail.v2.UpdateProductRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L389}
+  /// [google.cloud.retail.v2.UpdateProductRequest.allow_missing]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L419}
   ///
   // clang-format on
   StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
@@ -427,6 +430,9 @@ class ProductServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.DeleteProductRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L425}
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.Product.Type.COLLECTION]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L81}
+  /// [google.cloud.retail.v2.Product.Type.PRIMARY]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L63}
+  /// [google.cloud.retail.v2.Product.Type.VARIANT]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L73}
   ///
   // clang-format on
   Status DeleteProduct(std::string const& name, Options opts = {});

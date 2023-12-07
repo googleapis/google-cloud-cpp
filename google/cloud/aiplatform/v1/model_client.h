@@ -416,6 +416,7 @@ class ModelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   /// [google.cloud.aiplatform.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L474}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(

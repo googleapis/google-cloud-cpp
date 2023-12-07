@@ -319,6 +319,7 @@ class IndexEndpointServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L36}
   /// [google.cloud.aiplatform.v1.UpdateIndexEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L241}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> UpdateIndexEndpoint(

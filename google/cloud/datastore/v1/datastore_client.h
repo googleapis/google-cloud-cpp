@@ -303,6 +303,7 @@ class DatastoreClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.datastore.v1.CommitRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L351}
   /// [google.datastore.v1.CommitResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L409}
+  /// [google.datastore.v1.Datastore.BeginTransaction]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L88}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::CommitResponse> Commit(
@@ -406,6 +407,7 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
+  /// [google.datastore.v1.Datastore.BeginTransaction]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L88}
   /// [google.datastore.v1.RollbackRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L330}
   /// [google.datastore.v1.RollbackResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L348}
   ///

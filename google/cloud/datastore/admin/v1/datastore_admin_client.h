@@ -186,6 +186,7 @@ class DatastoreAdminClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.datastore.admin.v1.ExportEntitiesRequest]: @googleapis_reference_link{google/datastore/admin/v1/datastore_admin.proto#L254}
   /// [google.datastore.admin.v1.ExportEntitiesResponse]: @googleapis_reference_link{google/datastore/admin/v1/datastore_admin.proto#L319}
+  /// [google.datastore.admin.v1.ExportEntitiesResponse.output_url]: @googleapis_reference_link{google/datastore/admin/v1/datastore_admin.proto#L324}
   ///
   // clang-format on
   future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
@@ -289,6 +290,7 @@ class DatastoreAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
+  /// [google.datastore.admin.v1.ExportEntitiesResponse.output_url]: @googleapis_reference_link{google/datastore/admin/v1/datastore_admin.proto#L324}
   /// [google.datastore.admin.v1.ImportEntitiesMetadata]: @googleapis_reference_link{google/datastore/admin/v1/datastore_admin.proto#L350}
   /// [google.datastore.admin.v1.ImportEntitiesRequest]: @googleapis_reference_link{google/datastore/admin/v1/datastore_admin.proto#L287}
   ///

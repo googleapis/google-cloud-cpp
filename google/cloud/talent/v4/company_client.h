@@ -236,6 +236,8 @@ class CompanyServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.talent.v4.Company]: @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
   /// [google.cloud.talent.v4.UpdateCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L114}
+  /// [google.cloud.talent.v4.UpdateCompanyRequest.company]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L117}
+  /// [google.cloud.talent.v4.UpdateCompanyRequest.update_mask]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L129}
   ///
   // clang-format on
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
