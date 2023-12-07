@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <numeric>
 
 namespace google {
 namespace cloud {
@@ -509,9 +510,13 @@ TEST(AsyncAccumulateReadObjectTest, ToResponse) {
       ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
                                   "https://storage.googleapis.com"));
   ASSERT_STATUS_OK(actual);
-  EXPECT_THAT(actual->contents(),
-              ElementsAre("The quick brown fox jumps over the lazy dog",
-                          "How vexingly quick daft zebras jump!"));
+  auto const contents = actual->contents();
+  auto const merged =
+      std::accumulate(contents.begin(), contents.end(), std::string{},
+                      [](auto a, auto b) { return a + std::string(b); });
+  EXPECT_EQ(merged,
+            "The quick brown fox jumps over the lazy dog"
+            "How vexingly quick daft zebras jump!");
   EXPECT_THAT(actual->headers(),
               UnorderedElementsAre(Pair("key", "v0"), Pair("key", "v1"),
                                    Pair("tk", "v0"), Pair("tk", "v1")));
