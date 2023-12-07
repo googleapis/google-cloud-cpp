@@ -45,12 +45,12 @@ class PublisherIntegrationTest
     ASSERT_FALSE(project_id.empty());
     generator_ = google::cloud::internal::DefaultPRNG(std::random_device{}());
     topic_ = Topic(project_id, pubsub_testing::RandomTopicId(generator_));
-    auto options =
+    options_ =
         Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
     auto const using_emulator =
         internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
     if (using_emulator) {
-      options = Options{}
+      options_ = Options{}
                     .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                     .set<internal::UseInsecureChannelOption>(true);
     }
