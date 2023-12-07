@@ -16,12 +16,11 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/" "v2/")
-
-google_cloud_cpp_add_ga_grpc_library(
-    trace "Cloud Trace API" BACKWARDS_COMPAT_PROTO_TARGETS
-    "devtools_cloudtrace_v2_trace_protos"
-    "devtools_cloudtrace_v2_tracing_protos")
+google_cloud_cpp_add_gapic_library(
+    trace "Cloud Trace API"
+    SERVICE_DIRS "__EMPTY__" "v1/" "v2/"
+    BACKWARDS_COMPAT_PROTO_TARGETS "devtools_cloudtrace_v2_trace_protos"
+                                   "devtools_cloudtrace_v2_tracing_protos")
 
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     add_executable(trace_quickstart "quickstart/quickstart.cc")

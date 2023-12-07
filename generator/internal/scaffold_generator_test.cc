@@ -229,9 +229,8 @@ TEST_F(ScaffoldGenerator, CMakeLists) {
   EXPECT_THAT(actual, Not(HasSubstr("$experimental$")));
   EXPECT_THAT(actual, HasSubstr(R"""(include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "v1/")
-
-google_cloud_cpp_add_ga_grpc_library(test "Test Only API")
+google_cloud_cpp_add_gapic_library(test "Test Only API"
+    SERVICE_DIRS "v1/")
 )"""));
 
   EXPECT_THAT(actual, HasSubstr(R"""(add_executable(test_quickstart)"""));

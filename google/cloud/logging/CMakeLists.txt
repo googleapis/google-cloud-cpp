@@ -16,10 +16,10 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v2/")
-
-google_cloud_cpp_add_ga_grpc_library(
-    logging "Cloud Logging API" SHARED_PROTO_DEPS "logging_type"
+google_cloud_cpp_add_gapic_library(
+    logging "Cloud Logging API"
+    SERVICE_DIRS "__EMPTY__" "v2/"
+    SHARED_PROTO_DEPS "logging_type"
     BACKWARDS_COMPAT_PROTO_TARGETS "logging_type_type_protos")
 
 add_subdirectory(integration_tests)

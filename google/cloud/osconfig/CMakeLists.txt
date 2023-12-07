@@ -16,9 +16,8 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "agentendpoint/v1/" "v1/")
-
-google_cloud_cpp_add_ga_grpc_library(osconfig "OS Config API")
+google_cloud_cpp_add_gapic_library(
+    osconfig "OS Config API" SERVICE_DIRS "__EMPTY__" "agentendpoint/v1/" "v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(osconfig_quickstart "quickstart/quickstart.cc")

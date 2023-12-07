@@ -16,20 +16,19 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS
-    ""
-    "analyticshub/v1/"
-    "biglake/v1/"
-    "connection/v1/"
-    "datapolicies/v1/"
-    "datatransfer/v1/"
-    "migration/v2/"
-    "reservation/v1/"
-    "storage/v1/")
-
-google_cloud_cpp_add_ga_grpc_library(
-    bigquery "Google Cloud BigQuery API" BACKWARDS_COMPAT_PROTO_TARGETS
-    "cloud_bigquery_protos")
+google_cloud_cpp_add_gapic_library(
+    bigquery "Google Cloud BigQuery API"
+    SERVICE_DIRS
+        "__EMPTY__"
+        "analyticshub/v1/"
+        "biglake/v1/"
+        "connection/v1/"
+        "datapolicies/v1/"
+        "datatransfer/v1/"
+        "migration/v2/"
+        "reservation/v1/"
+        "storage/v1/"
+    BACKWARDS_COMPAT_PROTO_TARGETS "cloud_bigquery_protos")
 
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
@@ -49,7 +48,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
 endif ()
 
 # BigQuery has a handwritten sample that demonstrates mocking. The executable is
-# added by `google_cloud_cpp_add_ga_grpc_library()`. We need to manually link it
+# added by `google_cloud_cpp_add_gapic_library()`. We need to manually link it
 # against Google Mock.
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     target_link_libraries(bigquery_samples_mock_bigquery_read
