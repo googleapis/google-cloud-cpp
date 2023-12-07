@@ -47,11 +47,11 @@ Storage (GCS) using the `google::cloud::storage_experimental::AsyncClient APIs.
 The benchmark tries to answer the following questions:
 
 1) What kind of throughput can we expect when performing N uploads concurrently?
-2) What kind of throughput can we expect when performance N downloads
+2) What kind of throughput can we expect when performing N downloads
    concurrently?
 3) How is the throughput affected by the object size, the value of N, and the
    number of background threads?
-4) How do the difference `storage*Client` classes compare w.r.t. throughput or
+4) How do the different `storage*Client` classes compare w.r.t. throughput or
    CPU usage.
 5) Can we saturate the GCE VM bandwidth for uploads and/or downloads?
 6) How much CPU is required to saturate the GCE VM bandwidth?
@@ -171,7 +171,7 @@ auto constexpr kSyncClientName = "SyncClient";
 auto constexpr kJson = "JSON";
 auto constexpr kGrpc = "GRPC";
 auto constexpr kMissingPeer = "missing-peer";
-auto constexpr kMissingUploadid = "missing-uploadid";
+auto constexpr kMissingUploadId = "missing-upload-id";
 
 struct Configuration {
   std::string labels;
@@ -364,7 +364,7 @@ std::string GetPeer(ClientConfig const& cc,
                     std::multimap<std::string, std::string> const& headers) {
   auto l =
       headers.find(cc.transport == kJson ? ":curl-peer" : ":grpc-context-peer");
-  if (l == headers.end()) return kMissingUploadid;
+  if (l == headers.end()) return kMissingUploadId;
   return l->second;
 }
 
@@ -377,7 +377,7 @@ std::string GetTransferId(
     ClientConfig const& cc,
     std::multimap<std::string, std::string> const& headers) {
   auto l = headers.find("x-guploader-uploadid");
-  if (l == headers.end()) return kMissingUploadid;
+  if (l == headers.end()) return kMissingUploadId;
   return l->second;
 }
 
@@ -409,7 +409,7 @@ IterationResult AppendSummary(std::chrono::steady_clock::time_point start,
                      /*object_name=*/"",
                      /*generation=*/0,
                      /*peer=*/kMissingPeer,
-                     /*transfer_id=*/kMissingUploadid,
+                     /*transfer_id=*/kMissingUploadId,
                      /*status=*/std::move(status));
   return batch;
 }
@@ -481,7 +481,7 @@ Result MakeErrorResult(Configuration const& cfg, IterationConfig iteration,
                 object_name,
                 /*.generation=*/0,
                 /*.peer=*/kMissingPeer,
-                /*.transfer_id=*/kMissingUploadid,
+                /*.transfer_id=*/kMissingUploadId,
                 std::move(status)};
 }
 
@@ -786,7 +786,6 @@ void RunBenchmark(Configuration const& cfg) {
         MakeAsyncClients(cfg, client_configs, background_threads);
 
     for (int w = 0; w != write_count; ++w) {
-      ;
       std::vector<g::future<IterationResult>> uploads;
       for (auto const& [cc, client] : async_clients) {
         uploads.push_back(
