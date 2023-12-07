@@ -272,11 +272,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "io_opentelemetry_cpp",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/io_opentelemetry_cpp/v1.12.0.tar.gz",
-            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.12.0.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/io_opentelemetry_cpp/v1.13.0.tar.gz",
+            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.13.0.tar.gz",
         ],
-        sha256 = "09c208a21fb1159d114a3ea15dc1bcc5dee28eb39907ba72a6012d2c7b7564a0",
-        strip_prefix = "opentelemetry-cpp-1.12.0",
+        sha256 = "7735cc56507149686e6019e06f588317099d4522480be5f38a2a09ec69af1706",
+        strip_prefix = "opentelemetry-cpp-1.13.0",
         repo_mapping = {
             "@curl": "@com_github_curl_curl",
             "@com_github_google_benchmark": "@com_github_benchmark",
