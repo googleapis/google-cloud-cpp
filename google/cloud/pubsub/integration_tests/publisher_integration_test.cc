@@ -44,11 +44,19 @@ class PublisherIntegrationTest
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     ASSERT_FALSE(project_id.empty());
     generator_ = google::cloud::internal::DefaultPRNG(std::random_device{}());
-    topic_ = Topic(project_id, "my-topic");
     topic_ = Topic(project_id, pubsub_testing::RandomTopicId(generator_));
+    auto options =
+        Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+    auto const using_emulator =
+        internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
+    if (using_emulator) {
+      options = Options{}
+                    .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                    .set<internal::UseInsecureChannelOption>(true);
+    }
 
     auto topic_admin = pubsub_admin::TopicAdminClient(
-        pubsub_admin::MakeTopicAdminConnection());
+        pubsub_admin::MakeTopicAdminConnection(options_));
 
     auto topic_metadata = topic_admin.CreateTopic(topic_.FullName());
     ASSERT_THAT(topic_metadata,
@@ -57,27 +65,19 @@ class PublisherIntegrationTest
 
   void TearDown() override {
     auto topic_admin = pubsub_admin::TopicAdminClient(
-        pubsub_admin::MakeTopicAdminConnection());
+        pubsub_admin::MakeTopicAdminConnection(options_));
 
     auto delete_topic = topic_admin.DeleteTopic(topic_.FullName());
     EXPECT_THAT(delete_topic, AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
   }
 
+  google::cloud::Options options_;
   google::cloud::internal::DefaultPRNG generator_;
   Topic topic_ = Topic("unused", "unused");
 };
 
 TEST_F(PublisherIntegrationTest, Basic) {
-  auto options =
-      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
-  auto const using_emulator =
-      internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
-  if (using_emulator) {
-    options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                  .set<internal::UseInsecureChannelOption>(true);
-  }
-  auto publisher = Publisher(MakePublisherConnection(topic_, options));
+  auto publisher = Publisher(MakePublisherConnection(topic_, options_));
   auto publish =
       publisher.Publish(MessageBuilder().SetData("test data").Build()).get();
   ASSERT_STATUS_OK(publish);
@@ -88,34 +88,16 @@ using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 
 TEST_F(PublisherIntegrationTest, TracingEnabled) {
-  auto options =
-      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
-  auto const using_emulator =
-      internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
-  if (using_emulator) {
-    options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                  .set<internal::UseInsecureChannelOption>(true);
-  }
   auto publisher =
-      Publisher(MakePublisherConnection(topic_, EnableTracing(options)));
+      Publisher(MakePublisherConnection(topic_, EnableTracing(options_)));
   auto publish =
       publisher.Publish(MessageBuilder().SetData("test data").Build()).get();
   ASSERT_STATUS_OK(publish);
 }
 
 TEST_F(PublisherIntegrationTest, TracingDisabled) {
-  auto options =
-      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
-  auto const using_emulator =
-      internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
-  if (using_emulator) {
-    options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                  .set<internal::UseInsecureChannelOption>(true);
-  }
   auto publisher =
-      Publisher(MakePublisherConnection(topic_, DisableTracing(options)));
+      Publisher(MakePublisherConnection(topic_, DisableTracing(options_)));
   auto publish =
       publisher.Publish(MessageBuilder().SetData("test data").Build()).get();
   ASSERT_STATUS_OK(publish);
