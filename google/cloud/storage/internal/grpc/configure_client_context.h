@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CONFIGURE_CLIENT_CONTEXT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CONFIGURE_CLIENT_CONTEXT_H
 
-#include "google/cloud/storage/async_object_requests.h"
+#include "google/cloud/storage/async/object_requests.h"
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_READER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_READER_CONNECTION_H
 
-#include "google/cloud/storage/async_object_responses.h"
+#include "google/cloud/storage/async/object_responses.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rpc_metadata.h"
 #include "google/cloud/status.h"

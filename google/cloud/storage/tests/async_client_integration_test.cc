@@ -14,7 +14,7 @@
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
-#include "google/cloud/storage/async_client.h"
+#include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"

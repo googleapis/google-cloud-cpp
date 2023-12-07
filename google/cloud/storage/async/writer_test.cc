@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/async_writer.h"
+#include "google/cloud/storage/async/writer.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/testing_util/status_matchers.h"

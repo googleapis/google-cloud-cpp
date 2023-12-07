@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/async_reader.h"
-#include "google/cloud/storage/async_reader_connection.h"
+#include "google/cloud/storage/async/reader.h"
+#include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/internal/make_status.h"
 #include <utility>
 

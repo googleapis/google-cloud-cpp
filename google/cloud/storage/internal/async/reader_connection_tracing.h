@@ -17,7 +17,7 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-#include "google/cloud/storage/async_reader_connection.h"
+#include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"

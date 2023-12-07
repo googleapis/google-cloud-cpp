@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITER_CONNECTION_FINALIZED_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITER_CONNECTION_FINALIZED_H
 
-#include "google/cloud/storage/async_writer_connection.h"
+#include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/version.h"
 
 namespace google {
