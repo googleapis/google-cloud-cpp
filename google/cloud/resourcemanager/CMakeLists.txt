@@ -16,10 +16,8 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v3/")
-
-google_cloud_cpp_add_ga_grpc_library(resourcemanager
-                                     "Cloud Resource Manager API")
+google_cloud_cpp_add_gapic_library(resourcemanager "Cloud Resource Manager API"
+                                   SERVICE_DIRS "__EMPTY__" "v3/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(resourcemanager_quickstart "quickstart/quickstart.cc")

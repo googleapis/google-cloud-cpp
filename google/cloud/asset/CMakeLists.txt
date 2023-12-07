@@ -16,11 +16,12 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
-
-google_cloud_cpp_add_ga_grpc_library(
+google_cloud_cpp_add_gapic_library(
     asset
     "Cloud Asset API"
+    SERVICE_DIRS
+    "__EMPTY__"
+    "v1/"
     # orgpolicy/v**1** is used *indirectly* by google/cloud/asset, therefore it
     # does not appear in protolists/asset.list. In addition, it is not compiled
     # by any other library. So, added manually.
