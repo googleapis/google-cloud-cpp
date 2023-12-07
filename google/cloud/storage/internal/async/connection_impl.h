@@ -60,8 +60,8 @@ class AsyncConnectionImpl
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
   AsyncReadObject(ReadObjectParams p) override;
 
-  future<storage_experimental::AsyncReadObjectRangeResponse>
-  AsyncReadObjectRange(ReadObjectParams p) override;
+  future<StatusOr<storage_experimental::ReadPayload>> AsyncReadObjectRange(
+      ReadObjectParams p) override;
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
   AsyncWriteObject(WriteObjectParams p) override;

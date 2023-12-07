@@ -90,7 +90,7 @@ class AsyncConnection {
   AsyncReadObject(ReadObjectParams p) = 0;
 
   /// Read a range from an object returning all the contents.
-  virtual future<AsyncReadObjectRangeResponse> AsyncReadObjectRange(
+  virtual future<StatusOr<ReadPayload>> AsyncReadObjectRange(
       ReadObjectParams p) = 0;
 
   /**

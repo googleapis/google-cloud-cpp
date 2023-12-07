@@ -13,9 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/accumulate_read_object.h"
+#include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
+#include "google/cloud/storage/internal/grpc/make_cord.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
+#include "google/cloud/internal/make_status.h"
 #include <iterator>
 #include <numeric>
 #include <sstream>
@@ -327,32 +330,38 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
   return handle->Invoke();
 }
 
-storage_experimental::AsyncReadObjectRangeResponse ToResponse(
+StatusOr<storage_experimental::ReadPayload> ToResponse(
     AsyncAccumulateReadObjectResult accumulated, Options const& options) {
-  storage_experimental::AsyncReadObjectRangeResponse response;
-  response.status = std::move(accumulated.status);
-  response.request_metadata = std::move(accumulated.metadata.headers);
-  response.request_metadata.insert(
-      std::make_move_iterator(accumulated.metadata.trailers.begin()),
-      std::make_move_iterator(accumulated.metadata.trailers.end()));
-  response.contents.reserve(accumulated.payload.size());
+  if (!accumulated.status.ok()) return std::move(accumulated.status);
+  absl::Cord contents;
   for (auto& r : accumulated.payload) {
     if (!r.has_checksummed_data()) continue;
     auto& data = *r.mutable_checksummed_data();
     if (data.has_crc32c() && Crc32c(GetContent(data)) != data.crc32c()) {
-      response.status = Status(StatusCode::kDataLoss,
-                               "Mismatched CRC32C checksum in downloaded data");
-      return response;
+      return internal::DataLossError(
+          "Mismatched CRC32C checksum in downloaded data", GCP_ERROR_INFO());
     }
-    response.contents.emplace_back(StealMutableContent(data));
+    contents.Append(StealMutableContent(data));
   }
-  response.object_metadata = [&] {
-    for (auto& r : accumulated.payload) {
-      if (!r.has_metadata()) continue;
-      return absl::make_optional(FromProto(*r.mutable_metadata(), options));
-    }
-    return absl::optional<storage::ObjectMetadata>{};
-  }();
+
+  storage_experimental::ReadPayload response(
+      ReadPayloadImpl::Make(std::move(contents)));
+  auto const r =
+      std::find_if(accumulated.payload.begin(), accumulated.payload.end(),
+                   [](auto const& r) { return r.has_metadata(); });
+  if (r != accumulated.payload.end()) {
+    response.set_metadata(FromProto(*r->mutable_metadata(), options));
+  }
+
+  storage::HeadersMap headers = std::move(accumulated.metadata.headers);
+  headers.insert(std::make_move_iterator(accumulated.metadata.trailers.begin()),
+                 std::make_move_iterator(accumulated.metadata.trailers.end()));
+  response.set_headers(std::move(headers));
+
+  if (!accumulated.payload.empty()) {
+    response.set_offset(accumulated.payload.front().content_range().start());
+  }
+
   return response;
 }
 
