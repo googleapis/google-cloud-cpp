@@ -139,18 +139,18 @@ endfunction ()
 #   libraries for these, which link to the desired proto library. See #8022 for
 #   more details.
 # * CROSS_LIB_DEPS: a list of client libraries which this library depends on.
+# * SERVICE_DIRS: a list of service directories within the library. Use
+#   "__EMPTY__" to represent the empty string in the list.
 # * SHARED_PROTO_DEPS: a list of proto libraries which this library depends on,
 #   e.g. `grafeas`. This function will define the proto library targets if they
 #   do not already exist.
-# * SERVICE_DIRS: a list of service directories within the library. Use
-#   "__EMPTY__" to represent the empty string in the list.
 #
 function (google_cloud_cpp_add_gapic_library library display_name)
     cmake_parse_arguments(
         _opt
         "EXPERIMENTAL;TRANSITION"
         ""
-        "ADDITIONAL_PROTO_LISTS;BACKWARDS_COMPAT_PROTO_TARGETS;CROSS_LIB_DEPS;SHARED_PROTO_DEPS;SERVICE_DIRS"
+        "ADDITIONAL_PROTO_LISTS;BACKWARDS_COMPAT_PROTO_TARGETS;CROSS_LIB_DEPS;SERVICE_DIRS;SHARED_PROTO_DEPS"
         ${ARGN})
     if (_opt_EXPERIMENTAL AND _opt_TRANSITION)
         message(
