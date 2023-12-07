@@ -38,7 +38,7 @@ class MockAsyncConnection : public storage_experimental::AsyncConnection {
       future<StatusOr<
           std::unique_ptr<storage_experimental::AsyncReaderConnection>>>,
       AsyncReadObject, (ReadObjectParams), (override));
-  MOCK_METHOD(future<storage_experimental::AsyncReadObjectRangeResponse>,
+  MOCK_METHOD(future<StatusOr<storage_experimental::ReadPayload>>,
               AsyncReadObjectRange, (ReadObjectParams), (override));
   MOCK_METHOD(
       future<StatusOr<

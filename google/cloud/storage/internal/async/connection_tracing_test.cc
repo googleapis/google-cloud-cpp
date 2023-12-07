@@ -170,7 +170,7 @@ TEST(ConnectionTracing, AsyncReadObjectSuccess) {
 
 TEST(ConnectionTracing, AsyncReadObjectRange) {
   auto span_catcher = InstallSpanCatcher();
-  PromiseWithOTelContext<storage_experimental::AsyncReadObjectRangeResponse> p;
+  PromiseWithOTelContext<StatusOr<storage_experimental::ReadPayload>> p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
   EXPECT_CALL(*mock, options).WillOnce(Return(TracingEnabled()));
@@ -179,8 +179,8 @@ TEST(ConnectionTracing, AsyncReadObjectRange) {
   auto result =
       actual->AsyncReadObjectRange(AsyncConnection::ReadObjectParams{})
           .then(expect_no_context);
-  p.set_value(storage_experimental::AsyncReadObjectRangeResponse{});
-  ASSERT_STATUS_OK(result.get().status);
+  p.set_value(storage_experimental::ReadPayload{});
+  ASSERT_STATUS_OK(result.get());
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,

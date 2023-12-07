@@ -172,7 +172,7 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
     google::storage::v2::ReadObjectRequest request, Options const& options);
 
 /// Convert the proto into a representation more familiar to our customers.
-storage_experimental::AsyncReadObjectRangeResponse ToResponse(
+StatusOr<storage_experimental::ReadPayload> ToResponse(
     AsyncAccumulateReadObjectResult accumulated, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

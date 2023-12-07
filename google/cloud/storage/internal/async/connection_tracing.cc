@@ -62,8 +62,8 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
     return impl_->AsyncReadObject(std::move(p)).then(std::move(wrap));
   }
 
-  future<storage_experimental::AsyncReadObjectRangeResponse>
-  AsyncReadObjectRange(ReadObjectParams p) override {
+  future<StatusOr<storage_experimental::ReadPayload>> AsyncReadObjectRange(
+      ReadObjectParams p) override {
     auto span =
         internal::MakeSpan("storage::AsyncConnection::AsyncReadObjectRange");
     internal::OTelScope scope(span);
@@ -72,8 +72,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
                span = std::move(span)](auto f) {
           auto result = f.get();
           internal::DetachOTelContext(oc);
-          internal::EndSpan(*span, result.status);
-          return result;
+          return internal::EndSpan(*span, std::move(result));
         });
   }
 

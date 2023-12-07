@@ -159,13 +159,12 @@ AsyncConnectionImpl::AsyncReadObject(ReadObjectParams p) {
       .then(std::move(transform));
 }
 
-future<storage_experimental::AsyncReadObjectRangeResponse>
+future<StatusOr<storage_experimental::ReadPayload>>
 AsyncConnectionImpl::AsyncReadObjectRange(ReadObjectParams p) {
   auto proto = ToProto(p.request.impl_);
   if (!proto) {
-    auto response = storage_experimental::AsyncReadObjectRangeResponse{};
-    response.status = std::move(proto).status();
-    return make_ready_future(std::move(response));
+    return make_ready_future(
+        StatusOr<storage_experimental::ReadPayload>(std::move(proto).status()));
   }
 
   auto const current = internal::MakeImmutableOptions(std::move(p.options));

@@ -38,11 +38,14 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::google::storage::v2::ReadObjectRequest;
 using ::google::storage::v2::ReadObjectResponse;
+using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::MockFunction;
+using ::testing::Optional;
 using ::testing::Pair;
+using ::testing::ResultOf;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 using ::testing::Unused;
@@ -484,7 +487,7 @@ TEST(AsyncAccumulateReadObjectTest, ToResponse) {
       crc32c: 0x4ad67f80
     }
     object_checksums { crc32c: 2345 md5_hash: "test-only-invalid" }
-    content_range { start: 1024 end: 2048 complete_length: 8192 }
+    content_range { start: 2048 end: 4096 complete_length: 8192 }
     metadata { bucket: "projects/_/buckets/bucket-name" name: "object-name" }
   )pb";
 
@@ -494,7 +497,7 @@ TEST(AsyncAccumulateReadObjectTest, ToResponse) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText1, &r1));
 
   AsyncAccumulateReadObjectResult accumulated;
-  accumulated.status = Status(StatusCode::kUnavailable, "try-again");
+  accumulated.status = Status{};
   accumulated.payload.push_back(r0);
   accumulated.payload.push_back(r1);
   accumulated.metadata.headers.emplace("key", "v0");
@@ -505,16 +508,22 @@ TEST(AsyncAccumulateReadObjectTest, ToResponse) {
   auto const actual =
       ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
                                   "https://storage.googleapis.com"));
-  EXPECT_THAT(actual.status, StatusIs(StatusCode::kUnavailable, "try-again"));
-  EXPECT_THAT(actual.contents,
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(actual->contents(),
               ElementsAre("The quick brown fox jumps over the lazy dog",
                           "How vexingly quick daft zebras jump!"));
-  EXPECT_THAT(actual.request_metadata,
+  EXPECT_THAT(actual->headers(),
               UnorderedElementsAre(Pair("key", "v0"), Pair("key", "v1"),
                                    Pair("tk", "v0"), Pair("tk", "v1")));
-  ASSERT_TRUE(actual.object_metadata.has_value());
-  EXPECT_EQ(actual.object_metadata->bucket(), "bucket-name");
-  EXPECT_EQ(actual.object_metadata->name(), "object-name");
+  EXPECT_THAT(actual->metadata(),
+              Optional(AllOf(
+                  ResultOf(
+                      "metadata bucket value",
+                      [](auto const& m) { return m.bucket(); }, "bucket-name"),
+                  ResultOf(
+                      "metadata bucket value",
+                      [](auto const& m) { return m.name(); }, "object-name"))));
+  EXPECT_THAT(actual->offset(), 1024);
 }
 
 TEST(AsyncAccumulateReadObjectTest, ToResponseDataLoss) {
@@ -542,12 +551,7 @@ TEST(AsyncAccumulateReadObjectTest, ToResponseDataLoss) {
   auto const actual =
       ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
                                   "https://storage.googleapis.com"));
-  EXPECT_THAT(actual.status, StatusIs(StatusCode::kDataLoss));
-  EXPECT_THAT(actual.contents, IsEmpty());
-  EXPECT_FALSE(actual.object_metadata.has_value());
-  EXPECT_THAT(actual.request_metadata,
-              UnorderedElementsAre(Pair("key", "v0"), Pair("key", "v1"),
-                                   Pair("tk0", "v0"), Pair("tk1", "v1")));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kDataLoss));
 }
 
 TEST(AsyncAccumulateReadObjectTest, ToResponseError) {
@@ -561,12 +565,7 @@ TEST(AsyncAccumulateReadObjectTest, ToResponseError) {
   auto const actual =
       ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
                                   "https://storage.googleapis.com"));
-  EXPECT_THAT(actual.status, StatusIs(StatusCode::kNotFound, "not found"));
-  EXPECT_THAT(actual.contents, IsEmpty());
-  EXPECT_FALSE(actual.object_metadata.has_value());
-  EXPECT_THAT(actual.request_metadata,
-              UnorderedElementsAre(Pair("key", "v0"), Pair("key", "v1"),
-                                   Pair("tk0", "v0"), Pair("tk1", "v1")));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kNotFound, "not found"));
 }
 
 }  // namespace

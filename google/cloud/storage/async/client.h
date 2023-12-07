@@ -216,11 +216,11 @@ class AsyncClient {
    * This is a read-only operation and is always idempotent.
    */
   template <typename... Args>
-  future<AsyncReadObjectRangeResponse> ReadObjectRange(std::string bucket_name,
-                                                       std::string object_name,
-                                                       std::int64_t offset,
-                                                       std::int64_t limit,
-                                                       Args&&... args) {
+  future<StatusOr<ReadPayload>> ReadObjectRange(std::string bucket_name,
+                                                std::string object_name,
+                                                std::int64_t offset,
+                                                std::int64_t limit,
+                                                Args&&... args) {
     struct HasReadRange
         : public absl::disjunction<
               std::is_same<storage::ReadRange, std::decay_t<Args>>...> {};
