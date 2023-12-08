@@ -814,6 +814,33 @@ TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessDuration) {
   });
 }
 
+/// @test Test that a directed read within a read-write transaction fails.
+TEST_F(ClientIntegrationTest, DirectedReadWithinReadWriteTransaction) {
+  auto& client = *client_;
+  auto commit =
+      client_->Commit([&client](Transaction const& txn) -> StatusOr<Mutations> {
+        auto rows =
+            client.Read(txn, "Singers", KeySet::All(),
+                        {"SingerId", "FirstName", "LastName"},
+                        Options{}.set<DirectedReadOption>(IncludeReplicas(
+                            {ReplicaSelection(ReplicaType::kReadOnly)},
+                            /*auto_failover_disabled=*/true)));
+        using RowType = std::tuple<std::int64_t, std::string, std::string>;
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (!row) return row.status();
+        }
+        return Mutations{};
+      });
+  if (UsingEmulator()) {
+    EXPECT_THAT(commit, IsOk());  // The emulator doesn't diagnose the error.
+  } else {
+    EXPECT_THAT(commit,
+                StatusIs(StatusCode::kInvalidArgument,
+                         HasSubstr("Directed reads can only be performed "
+                                   "in a read-only transaction")));
+  }
+}
+
 StatusOr<std::vector<std::vector<Value>>> AddSingerDataToTable(Client client) {
   std::vector<std::vector<Value>> expected_rows;
   auto commit = client.Commit(
