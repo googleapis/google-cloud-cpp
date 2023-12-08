@@ -298,7 +298,7 @@ TEST(FutureTestVoid, conform_2_3_3_d) {
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       unwrapped.get(),
-      "future<void>::get\\(\\) had an exception but exceptions are disabled");
+      "future<T>::get\\(\\) had an exception but exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -563,7 +563,7 @@ TEST(FutureTestVoid, conform_2_3_9_d) {
   EXPECT_DEATH_IF_SUPPORTED(
       p.set_exception(
           std::make_exception_ptr(std::runtime_error("test message"))),
-      "future<void>::get\\(\\) had an exception but exceptions are disabled");
+      "future<T>::get\\(\\) had an exception but exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 

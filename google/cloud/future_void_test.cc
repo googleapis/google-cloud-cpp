@@ -124,7 +124,7 @@ TEST(FutureTestVoid, conform_30_6_5_7) {
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       f0.get(),
-      "future<void>::get\\(\\) had an exception but exceptions are disabled");
+      "future<T>::get\\(\\) had an exception but exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -248,7 +248,7 @@ TEST(FutureTestVoid, conform_30_6_5_18) {
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       f0.get(),
-      "future<void>::get\\(\\) had an exception but exceptions are disabled");
+      "future<T>::get\\(\\) had an exception but exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -495,7 +495,7 @@ TEST(FutureTestVoid, conform_30_6_6_17) {
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       f.get(),
-      "future<void>::get\\(\\) had an exception but exceptions are disabled");
+      "future<T>::get\\(\\) had an exception but exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -523,7 +523,7 @@ TEST(FutureTestVoid, conform_30_6_6_18_b) {
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       f.get(),
-      "future<void>::get\\(\\) had an exception but exceptions are disabled");
+      "future<T>::get\\(\\) had an exception but exceptions are disabled");
   // Cannot evaluate side effects with EXPECT_DEATH*()
   //     EXPECT_FALSE(f.valid());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
