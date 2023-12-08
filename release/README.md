@@ -324,80 +324,8 @@ next 24 hours.
 
 ## 8. \[optional\] Push the release to Conan
 
-Create a PR to update the `google-cloud-cpp` package in
-[Conan](https://conan.io). These PRs are more involved.
-
-This package manager uses CMake, but ignores the library and target definitions
-exported by our CMake files. It reimplements the library definitions and
-dependencies in Python code. The recipes do this for every package (gRPC,
-Protobuf, Boost, etc.), not just for `google-cloud-cpp`. For most packages,
-where there are only a handful of libraries, this is trivial. But
-`google-cloud-cpp` has about 240 libraries (including the `*_protos` libraries),
-so we use a helper script to automatically generate the Python data structures
-that describe the libraries in each of our versions.
-
-This package manager requires patches to our code. These patches need to be
-updated on each release. Package management systems tend to apply patches with
-very strict settings, so even small changes around the patches break them.
-Sometimes one can use `patch(1)` manually, with looser settings, and use that to
-update the patches.
-
-[PR#17988] is probably a good example of the changes you will need to make.
-
-- We will use `TAG=2.15.1` and `UTAG=2_15_1` in these examples.
-- Start by creating a git repository based on the release, for example:
-  ```shell
-  curl -sSL https://github.com/googleapis/google-cloud-cpp/archive/v${TAG}.tar.gz | tar -C $HOME -zxf -
-  git -C $HOME/google-cloud-cpp-${TAG}/ init
-  git -C $HOME/google-cloud-cpp-${TAG}/ add .
-  git -C $HOME/google-cloud-cpp-${TAG}/ commit -q -m"Prepare for conan patches"
-  ```
-- Create a fork of
-  [conan-center-index](https://github.com/conan-io/conan-center-index.git)
-- Clone the fork:
-  ```shell
-  git clone git@github.com:${GITHUB_USERNAME}/conan-center-index
-  cd conan-center-index
-  ```
-- Apply the existing patch:
-  ```shell
-  env -C $HOME/google-cloud-cpp-${TAG}/ patch -p1 \
-      <recipes/google-cloud-cpp/2.x/patches/2.12.0/001-use-conan-msvc-runtime.patch
-  ```
-- If that fails, manually fix the problems.
-- Generate a new version of the patch:
-  ```shell
-  mkdir -p recipes/google-cloud-cpp/2.x/patches/${TAG}
-  git -C $HOME/google-cloud-cpp-${TAG}/ diff \
-      >recipes/google-cloud-cpp/2.x/patches/${TAG}/001-use-conan-msvc-runtime.patch
-  git -C $HOME/google-cloud-cpp-${TAG}/ commit -m"001-use-conan-msvc-runtime.patch" .
-  ```
-- Create the support files:
-  ```shell
-  recipes/google-cloud-cpp/2.x/extract_dependencies.py \
-      --source-folder=$HOME/google-cloud-cpp-${TAG} \
-      >recipes/google-cloud-cpp/2.x/components_${UTAG}.py
-  ```
-- Manually patch these files:
-  ```shell
-  recipes/google-cloud-cpp/config.yml
-  recipes/google-cloud-cpp/2.x/conandata.yml
-  recipes/google-cloud-cpp/2.x/conanfile.py
-  ```
-- Install conan and the tools to test conan recipes:
-  ```shell
-  python3 -m venv ~/.venv/conan2
-  source ~/.venv/conan2/bin/activate
-  pip install -U conan
-  conan config install https://github.com/conan-io/hooks.git
-  conan config install https://github.com/conan-io/hooks.git -sf hooks -tf hooks
-  conan profile detect
-  ```
-- Test the recipe. This may fail due to timeouts reaching
-  https://center.conan.io. Run the command agan if needed.
-  ```shell
-  conan create --build missing  --build-require  --version ${TAG} recipes/google-cloud-cpp/2.x
-  ```
+The documentation has moved to the
+[How-To Guide: Update Conan Package](/release/howto-update-conan.md).
 
 # Creating a patch release of google-cloud-cpp on an existing release branch
 
@@ -467,7 +395,6 @@ ______________________________________________________________________
 [github-branch-settings]: https://github.com/googleapis/google-cloud-cpp/settings/branches
 [github-guides]: https://guides.github.com/
 [pr#138]: https://github.com/conda-forge/google-cloud-cpp-feedstock/pull/138
-[pr#17988]: https://github.com/conan-io/conan-center-index/pull/17988
 [pr#32391]: https://github.com/microsoft/vcpkg/pull/32391
 [sha512]: https://learn.microsoft.com/en-us/vcpkg/maintainers/functions/vcpkg_from_github#sha512
 [vcpkg port]: https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp
