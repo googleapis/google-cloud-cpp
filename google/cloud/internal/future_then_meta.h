@@ -34,10 +34,10 @@ template <typename T>
 class future_shared_state;
 
 /**
- * A monostate for future<void>.
+ * A monostate for `future<void>`.
  *
- * The implementation already uses `absl::monotstate` to represent "future<void>
- * is **not** set", we need a distinct type to represent "`future<void>` value
+ * The implementation already uses `absl::monostate` to represent "future<void>
+ * is **not** set". We need a distinct type to represent "`future<void>` value
  * is set".
  */
 struct FutureVoid {};
