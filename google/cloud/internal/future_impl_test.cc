@@ -30,13 +30,13 @@ using testing_util::ExpectFutureError;
 using testing_util::NoDefaultConstructor;
 using testing_util::Observable;
 
-TEST(FutureImplBaseTest, Basic) {
-  future_shared_state_base shared_state;
+TEST(FutureImplInt, Basic) {
+  future_shared_state<int> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
 }
 
-TEST(FutureImplBaseTest, WaitFor) {
-  future_shared_state_base shared_state;
+TEST(FutureImplInt, WaitFor) {
+  future_shared_state<int> shared_state;
   auto start = std::chrono::steady_clock::now();
   auto s = shared_state.wait_for(100_us);
   auto elapsed = std::chrono::steady_clock::now() - start;
@@ -45,8 +45,8 @@ TEST(FutureImplBaseTest, WaitFor) {
   EXPECT_FALSE(shared_state.is_ready());
 }
 
-TEST(FutureImplBaseTest, WaitForReady) {
-  future_shared_state_base shared_state;
+TEST(FutureImplInt, WaitForReady) {
+  future_shared_state<int> shared_state;
   shared_state.set_exception(
       std::make_exception_ptr(std::runtime_error("test_message")));
   auto s = shared_state.wait_for(100_us);
@@ -54,8 +54,8 @@ TEST(FutureImplBaseTest, WaitForReady) {
   EXPECT_TRUE(shared_state.is_ready());
 }
 
-TEST(FutureImplBaseTest, WaitUntil) {
-  future_shared_state_base shared_state;
+TEST(FutureImplInt, WaitUntil) {
+  future_shared_state<int> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
   auto start = std::chrono::steady_clock::now();
   auto s = shared_state.wait_until(std::chrono::system_clock::now() + 100_us);
@@ -65,8 +65,8 @@ TEST(FutureImplBaseTest, WaitUntil) {
   EXPECT_FALSE(shared_state.is_ready());
 }
 
-TEST(FutureImplBaseTest, WaitUntilReady) {
-  future_shared_state_base shared_state;
+TEST(FutureImplInt, WaitUntilReady) {
+  future_shared_state<int> shared_state;
   shared_state.set_exception(
       std::make_exception_ptr(std::runtime_error("test message")));
   auto s = shared_state.wait_until(std::chrono::system_clock::now() + 100_us);
@@ -74,8 +74,8 @@ TEST(FutureImplBaseTest, WaitUntilReady) {
   EXPECT_TRUE(shared_state.is_ready());
 }
 
-TEST(FutureImplBaseTest, SetExceptionCanBeCalledOnlyOnce) {
-  future_shared_state_base shared_state;
+TEST(FutureImplInt, SetExceptionCanBeCalledOnlyOnce) {
+  future_shared_state<int> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
 
   shared_state.set_exception(
@@ -91,86 +91,19 @@ TEST(FutureImplBaseTest, SetExceptionCanBeCalledOnlyOnce) {
   EXPECT_TRUE(shared_state.is_ready());
 }
 
-TEST(FutureImplBaseTest, Abandon) {
-  future_shared_state_base shared_state;
+TEST(FutureImplInt, Abandon) {
+  future_shared_state<int> shared_state;
   shared_state.abandon();
   EXPECT_TRUE(shared_state.is_ready());
 }
 
-TEST(FutureImplBaseTest, AbandonReady) {
-  future_shared_state_base shared_state;
+TEST(FutureImplInt, AbandonReady) {
+  future_shared_state<int> shared_state;
   shared_state.set_exception(
       std::make_exception_ptr(std::runtime_error("test message")));
   shared_state.abandon();
   SUCCEED();
   EXPECT_TRUE(shared_state.is_ready());
-}
-
-// @test Verify that we can create continuations.
-TEST(ContinuationVoidTest, Constructor) {
-  auto functor = [](std::shared_ptr<future_shared_state<void>> const&) {};
-
-  using tested_type = continuation<decltype(functor), void>;
-
-  auto input = std::make_shared<future_shared_state<void>>();
-  auto cont = std::make_shared<tested_type>(std::move(functor), input);
-
-  auto current = cont->input.lock();
-  EXPECT_EQ(input.get(), current.get());
-}
-
-/// @test Verify that satisfying the shared state with an exception calls the
-/// continuation.
-TEST(ContinuationVoidTest, SetExceptionCallsContinuation) {
-  bool called = false;
-  auto functor =
-      [&called](std::shared_ptr<future_shared_state<void>> const& state) {
-        called = true;
-        state->get();
-      };
-
-  auto input = std::make_shared<future_shared_state<void>>();
-  std::shared_ptr<future_shared_state<void>> output =
-      input->make_continuation(input, std::move(functor));
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  input->set_exception(
-      std::make_exception_ptr(std::runtime_error("test message")));
-  EXPECT_TRUE(called);
-  EXPECT_TRUE(output->is_ready());
-  EXPECT_THROW(
-      try { output->get(); } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("test message"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      input->set_exception(
-          std::make_exception_ptr(std::runtime_error("test message"))),
-      "future<void>::get\\(\\) had an exception but exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-/// @test Verify that satisfying the shared state with a value calls the
-/// continuation.
-TEST(ContinuationVoidTest, SetValueCallsContinuation) {
-  bool called = false;
-  auto functor =
-      [&called](std::shared_ptr<future_shared_state<void>> const& state) {
-        called = true;
-        state->get();
-      };
-
-  auto input = std::make_shared<future_shared_state<void>>();
-  std::shared_ptr<future_shared_state<void>> output =
-      input->make_continuation(input, std::move(functor));
-
-  input->set_value();
-  EXPECT_TRUE(called);
-  EXPECT_TRUE(output->is_ready());
-  output->get();
-  SUCCEED();
 }
 
 class TestContinuation : public continuation_base {
@@ -180,131 +113,6 @@ class TestContinuation : public continuation_base {
 
   int* execute_counter;
 };
-
-TEST(FutureImplVoid, SetValue) {
-  future_shared_state<void> shared_state;
-  EXPECT_FALSE(shared_state.is_ready());
-  shared_state.set_value();
-  EXPECT_TRUE(shared_state.is_ready());
-  shared_state.get();
-  SUCCEED();
-}
-
-TEST(FutureImplVoid, SetValueCanBeCalledOnlyOnce) {
-  future_shared_state<void> shared_state;
-  EXPECT_FALSE(shared_state.is_ready());
-
-  shared_state.set_value();
-  ExpectFutureError([&] { shared_state.set_value(); },
-                    std::future_errc::promise_already_satisfied);
-
-  shared_state.get();
-  SUCCEED();
-}
-
-TEST(FutureImplVoid, GetException) {
-  future_shared_state<void> shared_state;
-  EXPECT_FALSE(shared_state.is_ready());
-  shared_state.set_exception(
-      std::make_exception_ptr(std::runtime_error("test message")));
-  EXPECT_TRUE(shared_state.is_ready());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { shared_state.get(); } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("test message"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      shared_state.get(),
-      "future<void>::get\\(\\) had an exception but exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-TEST(FutureImplVoid, Abandon) {
-  future_shared_state<void> shared_state;
-  shared_state.abandon();
-  EXPECT_TRUE(shared_state.is_ready());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { shared_state.get(); } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::broken_promise, ex.code());
-        throw;
-      },
-      std::future_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      shared_state.get(),
-      "future<void>::get\\(\\) had an exception but exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-TEST(FutureImplVoid, SetContinuation) {
-  future_shared_state<void> shared_state;
-  EXPECT_FALSE(shared_state.is_ready());
-
-  int execute_counter = 0;
-  shared_state.set_continuation(
-      std::make_unique<TestContinuation>(&execute_counter));
-  EXPECT_EQ(0, execute_counter);
-  EXPECT_FALSE(shared_state.is_ready());
-  shared_state.set_value();
-  EXPECT_EQ(1, execute_counter);
-
-  shared_state.get();
-  SUCCEED();
-}
-
-TEST(FutureImplVoid, SetContinuationAlreadySet) {
-  future_shared_state<void> shared_state;
-  EXPECT_FALSE(shared_state.is_ready());
-
-  int execute_counter = 0;
-  shared_state.set_continuation(
-      std::make_unique<TestContinuation>(&execute_counter));
-
-  ExpectFutureError(
-      [&] {
-        shared_state.set_continuation(
-            std::make_unique<TestContinuation>(&execute_counter));
-      },
-      std::future_errc::future_already_retrieved);
-}
-
-TEST(FutureImplVoid, SetContinuationAlreadySatisfied) {
-  future_shared_state<void> shared_state;
-  EXPECT_FALSE(shared_state.is_ready());
-
-  int execute_counter = 0;
-  shared_state.set_value();
-  EXPECT_EQ(0, execute_counter);
-  shared_state.set_continuation(
-      std::make_unique<TestContinuation>(&execute_counter));
-  EXPECT_EQ(1, execute_counter);
-
-  shared_state.get();
-  SUCCEED();
-}
-
-TEST(FutureImplVoid, MarkRetrieved) {
-  auto sh = std::make_shared<future_shared_state<void>>();
-  future_shared_state<void>::mark_retrieved(sh);
-  SUCCEED();
-}
-
-TEST(FutureImplVoid, MarkRetrievedCanBeCalledOnlyOnce) {
-  auto sh = std::make_shared<future_shared_state<void>>();
-  future_shared_state<void>::mark_retrieved(sh);
-  ExpectFutureError([&] { future_shared_state<void>::mark_retrieved(sh); },
-                    std::future_errc::future_already_retrieved);
-}
-
-TEST(FutureImplVoid, MarkRetrievedFailure) {
-  std::shared_ptr<future_shared_state<void>> sh;
-  ExpectFutureError([&] { future_shared_state<void>::mark_retrieved(sh); },
-                    std::future_errc::no_state);
-}
 
 TEST(FutureImplInt, SetException) {
   future_shared_state<int> shared_state;
@@ -360,24 +168,6 @@ TEST(FutureImplInt, GetException) {
         throw;
       },
       std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      shared_state.get(),
-      "future<T>::get\\(\\) had an exception but exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-TEST(FutureImplInt, Abandon) {
-  future_shared_state<int> shared_state;
-  shared_state.abandon();
-  EXPECT_TRUE(shared_state.is_ready());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { shared_state.get(); } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::broken_promise, ex.code());
-        throw;
-      },
-      std::future_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       shared_state.get(),
