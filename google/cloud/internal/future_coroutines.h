@@ -118,9 +118,8 @@ auto operator co_await(future<T> f) noexcept
       // coroutines expect the future to remain unchanged.  We reach into the
       // future's internals to set up a callback without invalidating the
       // future.
-      auto shared_state = internal::CoroutineSupport::get_shared_state(impl);
-      shared_state->set_continuation(
-          std::make_unique<Continuation>(std::move(h)));
+      internal::CoroutineSupport::set_continuation(
+          impl, std::make_unique<Continuation>(std::move(h)));
     }
 
     // Get the value (or exception) from the future.

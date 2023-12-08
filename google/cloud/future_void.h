@@ -36,10 +36,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Specialize ISO/IEC TS 19571:2016 future for void.
  */
 template <>
-class future<void> final : private internal::future_base<void> {
+class future<void> final : private internal::future_base<internal::FutureVoid> {
  public:
   using shared_state_type =
-      typename internal::future_base<void>::shared_state_type;
+      typename internal::future_base<internal::FutureVoid>::shared_state_type;
 
   // workaround Apple Clang-7xx series bug, if we use `= default` here, the
   // compiler believes there is no default constructor defined. :shrug:
@@ -82,7 +82,7 @@ class future<void> final : private internal::future_base<void> {
     check_valid();
     std::shared_ptr<shared_state_type> tmp;
     tmp.swap(shared_state_);
-    return tmp->get();
+    (void)tmp->get();
   }
 
   using future_base::cancel;
@@ -117,7 +117,7 @@ class future<void> final : private internal::future_base<void> {
   }
 
   explicit future(std::shared_ptr<shared_state_type> state)
-      : future_base<void>(std::move(state)) {}
+      : future_base<internal::FutureVoid>(std::move(state)) {}
 
  private:
   /// Implement `then()` if the result does not require unwrapping.
@@ -140,7 +140,8 @@ class future<void> final : private internal::future_base<void> {
  * Specialize ISO/IEC TS 19571:2016 promise for void.
  */
 template <>
-class promise<void> final : private internal::promise_base<void> {
+class promise<void> final
+    : private internal::promise_base<internal::FutureVoid> {
  public:
   /// Creates a promise with an unsatisfied shared state.
   promise() : promise_base([] {}) {}
@@ -200,10 +201,10 @@ class promise<void> final : private internal::promise_base<void> {
     if (!shared_state_) {
       internal::ThrowFutureError(std::future_errc::no_state, __func__);
     }
-    shared_state_->set_value();
+    shared_state_->set_value(internal::FutureVoid{});
   }
 
-  using promise_base<void>::set_exception;
+  using promise_base<internal::FutureVoid>::set_exception;
 };
 
 /// Create a future<void> that is immediately ready.

@@ -14,8 +14,6 @@
 
 #include "google/cloud/internal/future_impl.h"
 #include "google/cloud/terminate_handler.h"
-#include <iostream>
-#include <sstream>
 #include <stdexcept>
 
 namespace google {
