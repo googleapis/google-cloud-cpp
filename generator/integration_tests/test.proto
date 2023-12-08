@@ -1080,7 +1080,7 @@ message WriteLogEntriesRequest {
   // Optional. Default labels that are added to the `labels` field of all log
   // entries in `entries`. If a log entry already has a label with the same key
   // as a label in this parameter, then the log entry's label is not changed.
-  // See [LogEntry][google.logging.v2.LogEntry]. Test delimiter$
+  // See [LogEntry][google.test.admin.database.v1.LogEntry]. Test delimiter$
   map<string, string> labels = 3 [(google.api.field_behavior) = OPTIONAL];
 }
 
