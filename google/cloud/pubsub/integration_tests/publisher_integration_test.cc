@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -51,8 +51,8 @@ class PublisherIntegrationTest
         internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
     if (using_emulator) {
       options_ = Options{}
-                    .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                    .set<internal::UseInsecureChannelOption>(true);
+                     .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                     .set<internal::UseInsecureChannelOption>(true);
     }
 
     auto topic_admin =
