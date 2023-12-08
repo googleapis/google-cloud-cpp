@@ -1,8 +1,8 @@
 # How-to Guide: Update Conan Package
 
-Updating the Conan packages is relatively involved and typically takes weeks for
-the PRs to go through reviews. Check with coryan@ or dbolduc@ before embarking
-on this quest.
+Updating the Conan packages is relatively involved and it typically takes weeks
+for the PRs to go through reviews. Check with coryan@ or dbolduc@ before
+embarking on this quest.
 
 This package manager uses CMake, but ignores the library and target definitions
 exported by our CMake files. It reimplements the library definitions and
@@ -36,9 +36,9 @@ cd conan-center-index
 ## Verify your environment is able to build the current Conan package
 
 We will use `TAG=2.15.1` and `UTAG=2_15_1` and `LATEST=2.12.0` in these
-examples. `LATEST` represents the latest version in Conan, `TAG` represents the
-version we want to add to Conan. It is common to skip several `google-cloud-cpp`
-releases as it may take months to complete one update.
+examples. `LATEST` represents the latest version in Conan, and `TAG` represents
+the version we want to add to Conan. It is common to skip several
+`google-cloud-cpp` releases as it may take months to complete one update.
 
 If you have not used Conan in a while, you may want to remove any stale
 directories:
@@ -55,14 +55,14 @@ Conan package development:
 python3 -m venv ~/.venv/conan2
 # Activate the environment
 . ~/.venv/conan2/bin/activate
-# Install conan, it is a Python package
+# Install conan (it is a Python package)
 pip install -U conan
 # These hooks validate packages and create warnings
 conan config install https://github.com/conan-io/hooks.git
 conan config install https://github.com/conan-io/hooks.git -sf hooks -tf hooks
 ```
 
-The Conan CI system compiles the code with GCC 11, we will use the same:
+The Conan CI system compiles the code with GCC 11, so we will use the same:
 
 ```shell
 sudo apt install -y gcc-11 g++-11
@@ -128,8 +128,13 @@ env CC=gcc-11 CXX=g++-11 conan create --build missing  --build-require  --versio
 ```
 
 Review \[Conan's policy\]\[conan-old-version-policy\] with respect to old
-versions. Remove the oldest minor version of `google-cloud-cpp` of the current
-major version if the policy permits it.
+versions. The policy only requires to keep 3 minor versions of the current
+major release series. Take advantage of the policy to clean up old versions
+**and** the code to support them.
+
+For example, if you are updating Conan to support v2.19.0 and Conan already
+supports v2.5.0, v2.12.0, v2.15.1, and v1.40.1 you can remove v2.5.0. You cannot
+remove support for v1.40.1.
 
 ## Testing with Conan v1
 
@@ -154,7 +159,7 @@ env CC=gcc-11 CXX=g++-11 conan test recipes/google-cloud-cpp/2.x/test_v1_package
 
 Using `conan create` can be relatively slow. Sometimes you need to just
 troubleshoot the component definitions. It is possible to skip the build step
-and getting a quicker cycle.
+and get a quicker edit+test cycle.
 
 Put the package in
 [editable mode](https://docs.conan.io/2/tutorial/developing_packages/editable_packages.html)
@@ -184,4 +189,5 @@ Remember to clear all the version of the package and test the final version:
 ```shell
 conan remove -c google-cloud-cpp/*
 conan editable remove recipes/google-cloud-cpp/2.x
+env CC=gcc-11 CXX=g++-11 conan create --build missing  --build-require  --version ${TAG} recipes/google-cloud-cpp/2.x 2>&1 | tee create.log
 ```
