@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/blocking_publisher.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -55,17 +55,17 @@ class BlockingPublisherIntegrationTest
                      .set<internal::UseInsecureChannelOption>(true);
     }
 
-    auto topic_admin = pubsub_admin::TopicAdminClient(
-        pubsub_admin::MakeTopicAdminConnection(options_));
-    auto topic_metadata = topic_admin.CreateTopic(topic_.FullName());
+    auto topic_admin =
+        pubsub::TopicAdminClient(pubsub::MakeTopicAdminConnection());
+    auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic_));
     ASSERT_THAT(topic_metadata,
                 AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
   }
 
   void TearDown() override {
-    auto topic_admin = pubsub_admin::TopicAdminClient(
-        pubsub_admin::MakeTopicAdminConnection(options_));
-    auto delete_topic = topic_admin.DeleteTopic(topic_.FullName());
+    auto topic_admin =
+        pubsub::TopicAdminClient(pubsub::MakeTopicAdminConnection());
+    auto delete_topic = topic_admin.DeleteTopic(topic_);
     EXPECT_THAT(delete_topic, AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
   }
 
