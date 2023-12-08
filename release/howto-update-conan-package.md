@@ -128,7 +128,7 @@ env CC=gcc-11 CXX=g++-11 conan create --build missing  --build-require  --versio
 ```
 
 Review \[Conan's policy\]\[conan-old-version-policy\] with respect to old
-versions. The policy only requires to keep 3 minor versions of the current major
+versions. The policy only requires keeping 3 minor versions of the current major
 release series. Take advantage of the policy to clean up old versions **and**
 the code to support them.
 
