@@ -93,7 +93,7 @@ TEST_F(PublisherIntegrationTest, TracingEnabled) {
 }
 
 TEST_F(PublisherIntegrationTest, TracingDisabled) {
-  options_.set<OpenTelemetryTracingOption>(true);
+  options_.set<OpenTelemetryTracingOption>(false);
   auto publisher = Publisher(MakePublisherConnection(topic_, options_));
   auto publish =
       publisher.Publish(MessageBuilder().SetData("test data").Build()).get();
