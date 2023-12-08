@@ -58,6 +58,11 @@ class SqlInstancesServiceRestStub {
       google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::sql::v1::Operation> Demote(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::sql::v1::Operation> Export(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -245,6 +250,12 @@ class DefaultSqlInstancesServiceRestStub : public SqlInstancesServiceRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request)
+      override;
+
+  StatusOr<google::cloud::sql::v1::Operation> Demote(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::SqlInstancesDemoteRequest const& request)
       override;
 
   StatusOr<google::cloud::sql::v1::Operation> Export(

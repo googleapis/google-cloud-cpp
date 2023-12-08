@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASYNC_STREAMING_READ_WRITE_RPC_H
 
 #include "google/cloud/future.h"
+#include "google/cloud/rpc_metadata.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
@@ -122,6 +123,17 @@ class AsyncStreamingReadWriteRpc {
    * operations have completed before calling `Finish()`.
    */
   virtual future<Status> Finish() = 0;
+
+  /**
+   * Return the request metadata.
+   *
+   * Request metadata is useful for troubleshooting, but may be relatively
+   * expensive to extract.  Application developers should avoid this function in
+   * the critical path.
+   *
+   * @note Only call this function once, and only after `Finish()` completes.
+   */
+  virtual RpcMetadata GetRequestMetadata() const { return {}; }
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

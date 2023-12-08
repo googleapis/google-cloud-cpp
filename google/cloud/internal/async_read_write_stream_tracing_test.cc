@@ -40,7 +40,9 @@ using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::Optional;
+using ::testing::Pair;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 
 using MockStream =
     google::cloud::mocks::MockAsyncStreamingReadWriteRpc<int, int>;
@@ -278,6 +280,29 @@ TEST(AsyncStreamingReadWriteRpcTracing, Finish) {
               SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)),
               SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail")),
           SpanNamed("Finish")));
+}
+
+TEST(AsyncStreamingReadWriteRpcTracing, GetRequestMetadata) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto span = MakeSpan("span");
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(make_ready_future(internal::AbortedError("fail"))));
+  EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
+    return RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
+                       {{"tk0", "v0"}, {"tk1", "v1"}}};
+  });
+
+  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
+                      span);
+  (void)stream.Finish().get();
+
+  auto const metadata = stream.GetRequestMetadata();
+  EXPECT_THAT(metadata.headers,
+              UnorderedElementsAre(Pair("hk0", "v0"), Pair("hk1", "v1")));
+  EXPECT_THAT(metadata.trailers,
+              UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, SpanEndsOnDestruction) {

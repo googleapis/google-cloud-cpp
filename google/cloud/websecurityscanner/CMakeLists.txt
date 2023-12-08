@@ -16,10 +16,8 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
-
-google_cloud_cpp_add_ga_grpc_library(websecurityscanner
-                                     "Web Security Scanner API")
+google_cloud_cpp_add_gapic_library(websecurityscanner "Web Security Scanner API"
+                                   SERVICE_DIRS "__EMPTY__" "v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(websecurityscanner_quickstart "quickstart/quickstart.cc")

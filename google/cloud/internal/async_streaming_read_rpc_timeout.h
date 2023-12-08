@@ -66,7 +66,7 @@ class AsyncStreamingReadRpcTimeout : public AsyncStreamingReadRpc<Response> {
 
   future<Status> Finish() override { return state_->child->Finish(); }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     return state_->child->GetRequestMetadata();
   }
 

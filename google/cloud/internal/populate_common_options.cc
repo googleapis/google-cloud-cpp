@@ -28,9 +28,7 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
                               std::string const& emulator_env_var,
                               std::string const& authority_env_var,
                               std::string default_endpoint) {
-  // This check relies on Options::get<std::string> returning an empty string as
-  // a default value.
-  if (opts.get<EndpointOption>().empty()) {
+  if (!opts.has<EndpointOption>()) {
     opts.set<EndpointOption>(default_endpoint);
   }
   if (!endpoint_env_var.empty()) {

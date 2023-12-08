@@ -291,7 +291,7 @@ class GoldenKitchenSinkClient {
   /// @param labels  Optional. Default labels that are added to the `labels` field of all log
   ///  entries in `entries`. If a log entry already has a label with the same key
   ///  as a label in this parameter, then the log entry's label is not changed.
-  ///  See [LogEntry][google.logging.v2.LogEntry]. Test delimiter$
+  ///  See [LogEntry][google.test.admin.database.v1.LogEntry]. Test delimiter$
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -305,6 +305,7 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
+  /// [google.test.admin.database.v1.LogEntry]: @googleapis_reference_link{generator/integration_tests/test.proto#L1146}
   /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1057}
   /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1088}
   ///

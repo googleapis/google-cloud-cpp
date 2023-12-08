@@ -49,6 +49,9 @@ class SqlInstancesServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DemoteMaster(
       google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request);
 
+  virtual google::cloud::Idempotency Demote(
+      google::cloud::sql::v1::SqlInstancesDemoteRequest const& request);
+
   virtual google::cloud::Idempotency Export(
       google::cloud::sql::v1::SqlInstancesExportRequest const& request);
 

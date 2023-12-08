@@ -197,6 +197,9 @@ class SqlInstancesServiceConnection {
   virtual StatusOr<google::cloud::sql::v1::Operation> DemoteMaster(
       google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request);
 
+  virtual StatusOr<google::cloud::sql::v1::Operation> Demote(
+      google::cloud::sql::v1::SqlInstancesDemoteRequest const& request);
+
   virtual StatusOr<google::cloud::sql::v1::Operation> Export(
       google::cloud::sql::v1::SqlInstancesExportRequest const& request);
 

@@ -2372,6 +2372,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.channel.v1.ChannelPartnerLink]: @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L66}
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig.update_time]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L90}
   /// [google.cloud.channel.v1.ListChannelPartnerRepricingConfigsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2050}

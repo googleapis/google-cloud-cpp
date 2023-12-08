@@ -257,6 +257,7 @@ class SchemaServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CreateSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L177}
   /// [google.cloud.discoveryengine.v1.Schema]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema.proto#L33}
+  /// [google.cloud.discoveryengine.v1.Schema.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema.proto#L57}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> CreateSchema(

@@ -80,6 +80,29 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
       google::cloud::deploy::v1::DeleteTargetRequest const& request) override;
 
+  StreamRange<google::cloud::deploy::v1::CustomTargetType>
+  ListCustomTargetTypes(
+      google::cloud::deploy::v1::ListCustomTargetTypesRequest request) override;
+
+  StatusOr<google::cloud::deploy::v1::CustomTargetType> GetCustomTargetType(
+      google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+  CreateCustomTargetType(
+      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+  UpdateCustomTargetType(
+      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+  DeleteCustomTargetType(
+      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request)
+      override;
+
   StreamRange<google::cloud::deploy::v1::Release> ListReleases(
       google::cloud::deploy::v1::ListReleasesRequest request) override;
 

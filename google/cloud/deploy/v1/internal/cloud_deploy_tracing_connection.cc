@@ -138,6 +138,57 @@ CloudDeployTracingConnection::DeleteTarget(
   return internal::EndSpan(std::move(span), child_->DeleteTarget(request));
 }
 
+StreamRange<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployTracingConnection::ListCustomTargetTypes(
+    google::cloud::deploy::v1::ListCustomTargetTypesRequest request) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::ListCustomTargetTypes");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListCustomTargetTypes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::deploy::v1::CustomTargetType>(std::move(span),
+                                                   std::move(sr));
+}
+
+StatusOr<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployTracingConnection::GetCustomTargetType(
+    google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::GetCustomTargetType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCustomTargetType(request));
+}
+
+future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+CloudDeployTracingConnection::CreateCustomTargetType(
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::CreateCustomTargetType");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCustomTargetType(request));
+}
+
+future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+CloudDeployTracingConnection::UpdateCustomTargetType(
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::UpdateCustomTargetType");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCustomTargetType(request));
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployTracingConnection::DeleteCustomTargetType(
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::DeleteCustomTargetType");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCustomTargetType(request));
+}
+
 StreamRange<google::cloud::deploy::v1::Release>
 CloudDeployTracingConnection::ListReleases(
     google::cloud::deploy::v1::ListReleasesRequest request) {

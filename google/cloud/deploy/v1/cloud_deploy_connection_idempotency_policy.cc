@@ -89,6 +89,31 @@ Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteTarget(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListCustomTargetTypes(
+    google::cloud::deploy::v1::ListCustomTargetTypesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetCustomTargetType(
+    google::cloud::deploy::v1::GetCustomTargetTypeRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::CreateCustomTargetType(
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateCustomTargetType(
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteCustomTargetType(
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency CloudDeployConnectionIdempotencyPolicy::ListReleases(
     google::cloud::deploy::v1::ListReleasesRequest) {  // NOLINT
   return Idempotency::kIdempotent;

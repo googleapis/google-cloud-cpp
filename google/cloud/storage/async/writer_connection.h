@@ -15,9 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_WRITER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_WRITER_CONNECTION_H
 
-#include "google/cloud/storage/async_object_requests.h"
+#include "google/cloud/storage/async/object_requests.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/future.h"
+#include "google/cloud/rpc_metadata.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -115,6 +116,9 @@ class AsyncWriterConnection {
 
   /// Wait for the result of a `Flush()` call.
   virtual future<StatusOr<std::int64_t>> Query() = 0;
+
+  /// Return the request metadata.
+  virtual RpcMetadata GetRequestMetadata() = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

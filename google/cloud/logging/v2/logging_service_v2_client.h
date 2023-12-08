@@ -118,6 +118,7 @@ class LoggingServiceV2Client {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.logging.v2.DeleteLogRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L136}
+  /// [google.logging.v2.LogEntry]: @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
   ///
   // clang-format on
   Status DeleteLog(std::string const& log_name, Options opts = {});
@@ -211,6 +212,7 @@ class LoggingServiceV2Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.LogEntry]: @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
   /// [google.logging.v2.WriteLogEntriesRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L157}
   /// [google.logging.v2.WriteLogEntriesResponse]: @googleapis_reference_link{google/logging/v2/logging.proto#L239}
   ///
@@ -571,6 +573,7 @@ class LoggingServiceV2Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.LogEntry]: @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
   /// [google.logging.v2.WriteLogEntriesRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L157}
   /// [google.logging.v2.WriteLogEntriesResponse]: @googleapis_reference_link{google/logging/v2/logging.proto#L239}
   ///

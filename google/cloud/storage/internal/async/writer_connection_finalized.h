@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITER_CONNECTION_FINALIZED_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITER_CONNECTION_FINALIZED_H
 
-#include "google/cloud/storage/async_writer_connection.h"
+#include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -60,6 +60,7 @@ class AsyncWriterConnectionFinalized
       storage_experimental::WritePayload) override;
   future<Status> Flush(storage_experimental::WritePayload payload) override;
   future<StatusOr<std::int64_t>> Query() override;
+  RpcMetadata GetRequestMetadata() override;
 
  private:
   std::string upload_id_;

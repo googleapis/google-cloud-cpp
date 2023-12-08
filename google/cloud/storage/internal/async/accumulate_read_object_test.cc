@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <numeric>
 
 namespace google {
 namespace cloud {
@@ -28,7 +29,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::internal::StreamingRpcMetadata;
+using ::google::cloud::RpcMetadata;
 using ::google::cloud::storage::testing::MockAsyncObjectMediaStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::AsyncSequencer;
@@ -38,11 +39,14 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::google::storage::v2::ReadObjectRequest;
 using ::google::storage::v2::ReadObjectResponse;
+using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::MockFunction;
+using ::testing::Optional;
 using ::testing::Pair;
+using ::testing::ResultOf;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 using ::testing::Unused;
@@ -83,7 +87,7 @@ MakeMockStreamPartial(int id, ReadObjectResponse response,
       .WillOnce(Return(ByMove(make_ready_future(Status(code, "")))));
   EXPECT_CALL(*stream, GetRequestMetadata)
       .WillOnce(
-          Return(StreamingRpcMetadata{{"key", "value-" + std::to_string(id)}}));
+          Return(RpcMetadata{{{"key", "value-" + std::to_string(id)}}, {}}));
   return stream;
 }
 
@@ -121,7 +125,7 @@ TEST(AsyncAccumulateReadObjectTest, PartialSimple) {
       .WillOnce(Return(ByMove(
           make_ready_future(Status(StatusCode::kUnavailable, "interrupted")))));
   EXPECT_CALL(*mock, GetRequestMetadata)
-      .WillOnce(Return(StreamingRpcMetadata{{"key", "value"}}));
+      .WillOnce(Return(RpcMetadata{{{"key", "value"}}, {{"tk", "v"}}}));
 
   CompletionQueue cq;
   auto runner = std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
@@ -131,7 +135,10 @@ TEST(AsyncAccumulateReadObjectTest, PartialSimple) {
   EXPECT_THAT(response.status, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(response.payload,
               ElementsAre(IsProtoEqual(r0), IsProtoEqual(r1)));
-  EXPECT_THAT(response.metadata, UnorderedElementsAre(Pair("key", "value")));
+  EXPECT_THAT(response.metadata.headers,
+              UnorderedElementsAre(Pair("key", "value")));
+  EXPECT_THAT(response.metadata.trailers,
+              UnorderedElementsAre(Pair("tk", "v")));
   cq.Shutdown();
   runner.join();
 }
@@ -183,7 +190,8 @@ TEST(AsyncAccumulateReadObjectTest, PartialStartTimeout) {
   auto response = pending.get();
   EXPECT_THAT(response.status, StatusIs(StatusCode::kDeadlineExceeded));
   EXPECT_THAT(response.payload, IsEmpty());
-  EXPECT_THAT(response.metadata, IsEmpty());
+  EXPECT_THAT(response.metadata.headers, IsEmpty());
+  EXPECT_THAT(response.metadata.trailers, IsEmpty());
 }
 
 TEST(AsyncAccumulateReadObjectTest, PartialReadTimeout) {
@@ -243,7 +251,8 @@ TEST(AsyncAccumulateReadObjectTest, PartialReadTimeout) {
   auto response = pending.get();
   EXPECT_THAT(response.status, StatusIs(StatusCode::kDeadlineExceeded));
   EXPECT_THAT(response.payload, IsEmpty());
-  EXPECT_THAT(response.metadata, IsEmpty());
+  EXPECT_THAT(response.metadata.headers, IsEmpty());
+  EXPECT_THAT(response.metadata.trailers, IsEmpty());
 }
 
 TEST(AsyncAccumulateReadObjectTest, PartialFinishTimeout) {
@@ -268,7 +277,8 @@ TEST(AsyncAccumulateReadObjectTest, PartialFinishTimeout) {
     });
   });
   EXPECT_CALL(*mock, GetRequestMetadata)
-      .WillOnce(Return(StreamingRpcMetadata{{"k0", "v0"}, {"k1", "v1"}}));
+      .WillOnce(
+          Return(RpcMetadata{{{"k0", "v0"}, {"k1", "v1"}}, {{"tk", "tv"}}}));
 
   int cancel_count = 0;
   EXPECT_CALL(*mock, Cancel).WillOnce([&] { ++cancel_count; });
@@ -313,8 +323,10 @@ TEST(AsyncAccumulateReadObjectTest, PartialFinishTimeout) {
   auto response = pending.get();
   EXPECT_THAT(response.status, StatusIs(StatusCode::kCancelled, "cancel"));
   EXPECT_THAT(response.payload, IsEmpty());
-  EXPECT_THAT(response.metadata,
+  EXPECT_THAT(response.metadata.headers,
               UnorderedElementsAre(Pair("k0", "v0"), Pair("k1", "v1")));
+  EXPECT_THAT(response.metadata.trailers,
+              UnorderedElementsAre(Pair("tk", "tv")));
 }
 
 TEST(AsyncAccumulateReadObjectTest, FullSimple) {
@@ -388,8 +400,9 @@ TEST(AsyncAccumulateReadObjectTest, FullSimple) {
   EXPECT_STATUS_OK(response.status);
   EXPECT_THAT(response.payload,
               ElementsAre(IsProtoEqual(r0), IsProtoEqual(r1)));
-  EXPECT_THAT(response.metadata, UnorderedElementsAre(Pair("key", "value-0"),
-                                                      Pair("key", "value-1")));
+  EXPECT_THAT(
+      response.metadata.headers,
+      UnorderedElementsAre(Pair("key", "value-0"), Pair("key", "value-1")));
   cq.Shutdown();
   runner.join();
 }
@@ -475,7 +488,7 @@ TEST(AsyncAccumulateReadObjectTest, ToResponse) {
       crc32c: 0x4ad67f80
     }
     object_checksums { crc32c: 2345 md5_hash: "test-only-invalid" }
-    content_range { start: 1024 end: 2048 complete_length: 8192 }
+    content_range { start: 2048 end: 4096 complete_length: 8192 }
     metadata { bucket: "projects/_/buckets/bucket-name" name: "object-name" }
   )pb";
 
@@ -485,24 +498,37 @@ TEST(AsyncAccumulateReadObjectTest, ToResponse) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText1, &r1));
 
   AsyncAccumulateReadObjectResult accumulated;
-  accumulated.status = Status(StatusCode::kUnavailable, "try-again");
+  accumulated.status = Status{};
   accumulated.payload.push_back(r0);
   accumulated.payload.push_back(r1);
-  accumulated.metadata.emplace("key", "v0");
-  accumulated.metadata.emplace("key", "v1");
+  accumulated.metadata.headers.emplace("key", "v0");
+  accumulated.metadata.headers.emplace("key", "v1");
+  accumulated.metadata.trailers.emplace("tk", "v0");
+  accumulated.metadata.trailers.emplace("tk", "v1");
 
   auto const actual =
       ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
                                   "https://storage.googleapis.com"));
-  EXPECT_THAT(actual.status, StatusIs(StatusCode::kUnavailable, "try-again"));
-  EXPECT_THAT(actual.contents,
-              ElementsAre("The quick brown fox jumps over the lazy dog",
-                          "How vexingly quick daft zebras jump!"));
-  EXPECT_THAT(actual.request_metadata,
-              UnorderedElementsAre(Pair("key", "v0"), Pair("key", "v1")));
-  ASSERT_TRUE(actual.object_metadata.has_value());
-  EXPECT_EQ(actual.object_metadata->bucket(), "bucket-name");
-  EXPECT_EQ(actual.object_metadata->name(), "object-name");
+  ASSERT_STATUS_OK(actual);
+  auto const contents = actual->contents();
+  auto const merged =
+      std::accumulate(contents.begin(), contents.end(), std::string{},
+                      [](auto a, auto b) { return a + std::string(b); });
+  EXPECT_EQ(merged,
+            "The quick brown fox jumps over the lazy dog"
+            "How vexingly quick daft zebras jump!");
+  EXPECT_THAT(actual->headers(),
+              UnorderedElementsAre(Pair("key", "v0"), Pair("key", "v1"),
+                                   Pair("tk", "v0"), Pair("tk", "v1")));
+  EXPECT_THAT(actual->metadata(),
+              Optional(AllOf(
+                  ResultOf(
+                      "metadata bucket value",
+                      [](auto const& m) { return m.bucket(); }, "bucket-name"),
+                  ResultOf(
+                      "metadata bucket value",
+                      [](auto const& m) { return m.name(); }, "object-name"))));
+  EXPECT_THAT(actual->offset(), 1024);
 }
 
 TEST(AsyncAccumulateReadObjectTest, ToResponseDataLoss) {
@@ -522,33 +548,29 @@ TEST(AsyncAccumulateReadObjectTest, ToResponseDataLoss) {
   AsyncAccumulateReadObjectResult accumulated;
   accumulated.status = Status{};
   accumulated.payload.push_back(r0);
-  accumulated.metadata.emplace("key", "v0");
-  accumulated.metadata.emplace("key", "v1");
+  accumulated.metadata.headers.emplace("key", "v0");
+  accumulated.metadata.headers.emplace("key", "v1");
+  accumulated.metadata.trailers.emplace("tk0", "v0");
+  accumulated.metadata.trailers.emplace("tk1", "v1");
 
   auto const actual =
       ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
                                   "https://storage.googleapis.com"));
-  EXPECT_THAT(actual.status, StatusIs(StatusCode::kDataLoss));
-  EXPECT_THAT(actual.contents, IsEmpty());
-  EXPECT_FALSE(actual.object_metadata.has_value());
-  EXPECT_THAT(actual.request_metadata,
-              UnorderedElementsAre(Pair("key", "v0"), Pair("key", "v1")));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kDataLoss));
 }
 
 TEST(AsyncAccumulateReadObjectTest, ToResponseError) {
   AsyncAccumulateReadObjectResult accumulated;
   accumulated.status = Status(StatusCode::kNotFound, "not found");
-  accumulated.metadata.emplace("key", "v0");
-  accumulated.metadata.emplace("key", "v1");
+  accumulated.metadata.headers.emplace("key", "v0");
+  accumulated.metadata.headers.emplace("key", "v1");
+  accumulated.metadata.trailers.emplace("tk0", "v0");
+  accumulated.metadata.trailers.emplace("tk1", "v1");
 
   auto const actual =
       ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
                                   "https://storage.googleapis.com"));
-  EXPECT_THAT(actual.status, StatusIs(StatusCode::kNotFound, "not found"));
-  EXPECT_THAT(actual.contents, IsEmpty());
-  EXPECT_FALSE(actual.object_metadata.has_value());
-  EXPECT_THAT(actual.request_metadata,
-              UnorderedElementsAre(Pair("key", "v0"), Pair("key", "v1")));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kNotFound, "not found"));
 }
 
 }  // namespace

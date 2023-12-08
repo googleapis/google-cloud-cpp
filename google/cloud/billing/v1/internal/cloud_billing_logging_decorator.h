@@ -89,6 +89,11 @@ class CloudBillingLogging : public CloudBillingStub {
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::cloud::billing::v1::BillingAccount> MoveBillingAccount(
+      grpc::ClientContext& context,
+      google::cloud::billing::v1::MoveBillingAccountRequest const& request)
+      override;
+
  private:
   std::shared_ptr<CloudBillingStub> child_;
   TracingOptions tracing_options_;

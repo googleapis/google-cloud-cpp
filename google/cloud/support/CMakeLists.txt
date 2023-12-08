@@ -16,9 +16,8 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "v2/")
-
-google_cloud_cpp_add_ga_grpc_library(support "Google Cloud Support API")
+google_cloud_cpp_add_gapic_library(support "Google Cloud Support API"
+                                   SERVICE_DIRS "v2/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(support_quickstart "quickstart/quickstart.cc")

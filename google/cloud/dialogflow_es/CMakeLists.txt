@@ -28,11 +28,10 @@ endif ()
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "__EMPTY__")
-
-google_cloud_cpp_add_ga_grpc_library(
-    dialogflow_es "Dialogflow API" BACKWARDS_COMPAT_PROTO_TARGETS
-    "cloud_dialogflow_v2_protos")
+google_cloud_cpp_add_gapic_library(
+    dialogflow_es "Dialogflow API"
+    SERVICE_DIRS "__EMPTY__"
+    BACKWARDS_COMPAT_PROTO_TARGETS "cloud_dialogflow_v2_protos")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(dialogflow_es_quickstart "quickstart/quickstart.cc")

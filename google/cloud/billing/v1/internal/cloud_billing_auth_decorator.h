@@ -89,6 +89,11 @@ class CloudBillingAuth : public CloudBillingStub {
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::cloud::billing::v1::BillingAccount> MoveBillingAccount(
+      grpc::ClientContext& context,
+      google::cloud::billing::v1::MoveBillingAccountRequest const& request)
+      override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<CloudBillingStub> child_;

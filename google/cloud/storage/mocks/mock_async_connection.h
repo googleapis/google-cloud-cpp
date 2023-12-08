@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_MOCKS_MOCK_ASYNC_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_MOCKS_MOCK_ASYNC_CONNECTION_H
 
-#include "google/cloud/storage/async_connection.h"
+#include "google/cloud/storage/async/connection.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
@@ -38,7 +38,7 @@ class MockAsyncConnection : public storage_experimental::AsyncConnection {
       future<StatusOr<
           std::unique_ptr<storage_experimental::AsyncReaderConnection>>>,
       AsyncReadObject, (ReadObjectParams), (override));
-  MOCK_METHOD(future<storage_experimental::AsyncReadObjectRangeResponse>,
+  MOCK_METHOD(future<StatusOr<storage_experimental::ReadPayload>>,
               AsyncReadObjectRange, (ReadObjectParams), (override));
   MOCK_METHOD(
       future<StatusOr<

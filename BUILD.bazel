@@ -202,6 +202,20 @@ cc_library(
 )
 
 cc_library(
+    name = "compute",
+    hdrs = [
+        "//google/cloud/compute:{}_public_hdrs".format(l.replace("compute_", ""))
+        for l in GOOGLE_CLOUD_CPP_GA_LIBRARIES
+        if l.startswith("compute_")
+    ],
+    deps = [
+        "//google/cloud/compute:google_cloud_cpp_{}".format(l)
+        for l in GOOGLE_CLOUD_CPP_GA_LIBRARIES
+        if l.startswith("compute_")
+    ],
+)
+
+cc_library(
     name = "experimental-bigquery-rest",
     deps = [
         "//google/cloud/bigquery:google_cloud_cpp_bigquery_rest",

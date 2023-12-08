@@ -16,10 +16,10 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "admin/v1/" "credentials/v1/" "v1/" "v2/")
-
-google_cloud_cpp_add_ga_grpc_library(iam "Google Cloud IAM API"
-                                     SHARED_PROTO_DEPS "iam_v2")
+google_cloud_cpp_add_gapic_library(
+    iam "Google Cloud IAM API"
+    SERVICE_DIRS "__EMPTY__" "admin/v1/" "credentials/v1/" "v1/" "v2/"
+    SHARED_PROTO_DEPS "iam_v2")
 
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
@@ -36,8 +36,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
 endif ()
 
 # IAM has some handwritten samples that demonstrate mocking. The executables are
-# added by `google_cloud_cpp_add_ga_grpc_library()`. We need to manually link
-# them against Google Mock.
+# added by `google_cloud_cpp_add_gapic_library()`. We need to manually link them
+# against Google Mock.
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     target_link_libraries(iam_samples_mock_iam PRIVATE GTest::gmock_main)
     target_link_libraries(iam_samples_mock_iam_credentials

@@ -608,6 +608,7 @@ class MetadataServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Artifact]: @googleapis_reference_link{google/cloud/aiplatform/v1/artifact.proto#L33}
+  /// [google.cloud.aiplatform.v1.Artifact.name]: @googleapis_reference_link{google/cloud/aiplatform/v1/artifact.proto#L54}
   /// [google.cloud.aiplatform.v1.UpdateArtifactRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L626}
   ///
   // clang-format on
@@ -1017,6 +1018,7 @@ class MetadataServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Context]: @googleapis_reference_link{google/cloud/aiplatform/v1/context.proto#L33}
+  /// [google.cloud.aiplatform.v1.Context.name]: @googleapis_reference_link{google/cloud/aiplatform/v1/context.proto#L40}
   /// [google.cloud.aiplatform.v1.UpdateContextRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L834}
   ///
   // clang-format on
@@ -1712,6 +1714,7 @@ class MetadataServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Execution]: @googleapis_reference_link{google/cloud/aiplatform/v1/execution.proto#L33}
+  /// [google.cloud.aiplatform.v1.Execution.name]: @googleapis_reference_link{google/cloud/aiplatform/v1/execution.proto#L64}
   /// [google.cloud.aiplatform.v1.UpdateExecutionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L1145}
   ///
   // clang-format on

@@ -243,6 +243,7 @@ class CloudSchedulerClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.scheduler.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L204}
   /// [google.cloud.scheduler.v1.Job]: @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L32}
+  /// [google.cloud.scheduler.v1.Job.name]: @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L81}
   ///
   // clang-format on
   StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
@@ -314,6 +315,7 @@ class CloudSchedulerClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.scheduler.v1.Job]: @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L32}
   /// [google.cloud.scheduler.v1.Job.State.UPDATE_FAILED]: @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L60}
+  /// [google.cloud.scheduler.v1.Job.name]: @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L81}
   /// [google.cloud.scheduler.v1.UpdateJobRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L225}
   ///
   // clang-format on

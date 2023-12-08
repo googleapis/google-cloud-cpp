@@ -55,7 +55,7 @@ TEST(AsyncStreamReadWriteAuth, Start) {
       return make_ready_future(Status{});
     });
     EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
-      return StreamingRpcMetadata({{"test-only", "value"}});
+      return RpcMetadata{{{"test-only", "value"}}, {{"t2", "v2"}}};
     });
     return std::unique_ptr<BaseStream>(std::move(mock));
   });
@@ -71,7 +71,9 @@ TEST(AsyncStreamReadWriteAuth, Start) {
   EXPECT_EQ(response->key, "k0");
   EXPECT_EQ(response->value, "v0");
   EXPECT_THAT(uut->Finish().get(), IsOk());
-  EXPECT_THAT(uut->GetRequestMetadata(), Contains(Pair("test-only", "value")));
+  auto metadata = uut->GetRequestMetadata();
+  EXPECT_THAT(metadata.headers, Contains(Pair("test-only", "value")));
+  EXPECT_THAT(metadata.trailers, Contains(Pair("t2", "v2")));
 }
 
 TEST(AsyncStreamReadWriteAuth, AuthFails) {

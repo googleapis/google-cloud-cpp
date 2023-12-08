@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_MOCKS_MOCK_ASYNC_READER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_MOCKS_MOCK_ASYNC_READER_CONNECTION_H
 
-#include "google/cloud/storage/async_reader_connection.h"
+#include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 
@@ -29,6 +29,7 @@ class MockAsyncReaderConnection
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(future<ReadResponse>, Read, (), (override));
+  MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

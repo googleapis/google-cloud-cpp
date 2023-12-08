@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/async_streaming_read_rpc.h"
+#include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
@@ -78,7 +79,7 @@ class AsyncStreamingReadRpcLogging : public AsyncStreamingReadRpc<Response> {
     });
   }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     auto prefix = std::string(__func__) + "(" + request_id_ + ")";
     GCP_LOG(DEBUG) << prefix << " <<";
     auto metadata = child_->GetRequestMetadata();

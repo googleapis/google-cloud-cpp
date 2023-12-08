@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_TRACING_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_TRACING_H
 
-#include "google/cloud/storage/async_connection.h"
+#include "google/cloud/storage/async/connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

@@ -98,12 +98,15 @@ auto MakeTestOptions(size_t max_otel_link_count = kDefaultMaxLinks) {
   return options;
 }
 
-std::shared_ptr<BatchSink> MakeTestBatchSink(std::shared_ptr<BatchSink> mock) {
-  return MakeTracingBatchSink(std::move(mock), MakeTestOptions());
-}
-
 pubsub::Topic TestTopic() {
   return pubsub::Topic("test-project", "test-topic");
+}
+
+std::shared_ptr<BatchSink> MakeTestBatchSink(std::shared_ptr<BatchSink> mock,
+                                             Options options = {}) {
+  return MakeTracingBatchSink(
+      TestTopic(), std::move(mock),
+      internal::MergeOptions(std::move(options), MakeTestOptions()));
 }
 
 google::pubsub::v1::PublishRequest MakeRequest(int n) {
@@ -168,7 +171,7 @@ TEST(TracingBatchSink, AsyncPublish) {
       spans,
       Contains(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsProducer(),
-          SpanNamed("publish"),
+          SpanNamed("test-topic publish"),
           SpanHasAttributes(
               OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 1)),
           SpanHasLinks(AllOf(LinkHasSpanContext(message_span->GetContext()),
@@ -196,16 +199,15 @@ TEST(TracingBatchSink, PublishSpanHasAttributes) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("publish"),
+              Contains(AllOf(SpanNamed("test-topic publish"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::kThreadId, _)))));
   EXPECT_THAT(spans, Contains(AllOf(
-
-                         SpanNamed("publish"),
+                         SpanNamed("test-topic publish"),
                          SpanHasAttributes(OTelAttribute<std::string>(
                              sc::kCodeFunction, "BatchSink::AsyncPublish")))));
   EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("publish"),
+              Contains(AllOf(SpanNamed("test-topic publish"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::kMessagingOperation, "publish")))));
 }
@@ -235,7 +237,7 @@ TEST(TracingBatchSink, AsyncPublishOnlyIncludeSampledLink) {
       spans,
       Contains(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsProducer(),
-          SpanNamed("publish"),
+          SpanNamed("test-topic publish"),
           SpanHasAttributes(
               OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 2)),
           SpanLinksAre(AllOf(LinkHasSpanContext(message_span->GetContext()),
@@ -266,7 +268,7 @@ TEST(TracingBatchSink, AsyncPublishSmallBatch) {
       spans,
       Contains(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsProducer(),
-          SpanNamed("publish"),
+          SpanNamed("test-topic publish"),
           SpanHasAttributes(
               OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 2)),
           SpanHasLinks(AllOf(LinkHasSpanContext(message_span1->GetContext()),
@@ -296,7 +298,7 @@ TEST(TracingBatchSink, AsyncPublishBatchWithOtelLimit) {
   EXPECT_THAT(
       spans,
       Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsProducer(),
-                     SpanNamed("publish"),
+                     SpanNamed("test-topic publish"),
                      SpanHasAttributes(OTelAttribute<std::int64_t>(
                          sc::kMessagingBatchMessageCount, kDefaultMaxLinks)),
                      SpanLinksSizeIs(kDefaultMaxLinks))));
@@ -309,7 +311,7 @@ TEST(TracingBatchSink, AsyncPublishLargeBatch) {
   EXPECT_CALL(*mock, AddMessage(_)).Times(batch_size);
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_THAT(request, IsProtoEqual(MakeRequest(batch_size)));
+        EXPECT_THAT(request, IsProtoEqual(MakeRequest(kDefaultMaxLinks + 1)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
   auto span_catcher = InstallSpanCatcher();
@@ -321,7 +323,7 @@ TEST(TracingBatchSink, AsyncPublishLargeBatch) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, Contains(AllOf(
-                         SpanNamed("publish"),
+                         SpanNamed("test-topic publish"),
                          SpanHasAttributes(OTelAttribute<std::int64_t>(
                              sc::kMessagingBatchMessageCount, batch_size)))));
   EXPECT_THAT(spans, Contains(AllOf(SpanNamed("publish #0"), SpanKindIsClient(),
@@ -337,12 +339,13 @@ TEST(TracingBatchSink, AsyncPublishBatchWithCustomLimit) {
   auto mock = std::make_unique<pubsub_testing::MockBatchSink>();
   EXPECT_CALL(*mock, AddMessage(_)).Times(kBatchSize);
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_THAT(request, IsProtoEqual(MakeRequest(kBatchSize)));
+      .WillOnce([batch_size = kBatchSize](
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_THAT(request, IsProtoEqual(MakeRequest(batch_size)));
         return make_ready_future(make_status_or(MakeResponse(request)));
       });
   auto batch_sink =
-      MakeTracingBatchSink(std::move(mock), MakeTestOptions(kMaxLinks));
+      MakeTestBatchSink(std::move(mock), MakeTestOptions(kMaxLinks));
 
   auto span_catcher = InstallSpanCatcher();
   AddMessages(CreateSpans(kBatchSize), batch_sink);
@@ -352,7 +355,7 @@ TEST(TracingBatchSink, AsyncPublishBatchWithCustomLimit) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanHasInstrumentationScope(), SpanKindIsProducer(),
-                         SpanNamed("publish"),
+                         SpanNamed("test-topic publish"),
                          SpanHasAttributes(OTelAttribute<std::int64_t>(
                              sc::kMessagingBatchMessageCount, kBatchSize)))));
   EXPECT_THAT(spans, Contains(AllOf(SpanNamed("publish #0"), SpanKindIsClient(),
@@ -447,7 +450,7 @@ TEST(TracingBatchSink, Scope) {
       spans,
       Contains(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsProducer(),
-          SpanNamed("publish"),
+          SpanNamed("test-topic publish"),
           SpanHasAttributes(
               OTelAttribute<std::int64_t>(sc::kMessagingBatchMessageCount, 1)),
           SpanHasLinks(AllOf(LinkHasSpanContext(message_span->GetContext()),

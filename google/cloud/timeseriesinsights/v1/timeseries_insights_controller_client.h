@@ -338,6 +338,8 @@ class TimeseriesInsightsControllerClient {
   /// [google.cloud.timeseriesinsights.v1.AppendEventsRequest]: @googleapis_reference_link{google/cloud/timeseriesinsights/v1/timeseries_insights.proto#L300}
   /// [google.cloud.timeseriesinsights.v1.AppendEventsResponse]: @googleapis_reference_link{google/cloud/timeseriesinsights/v1/timeseries_insights.proto#L330}
   /// [google.cloud.timeseriesinsights.v1.DataSet]: @googleapis_reference_link{google/cloud/timeseriesinsights/v1/timeseries_insights.proto#L173}
+  /// [google.cloud.timeseriesinsights.v1.DataSet.ttl]: @googleapis_reference_link{google/cloud/timeseriesinsights/v1/timeseries_insights.proto#L230}
+  /// [google.cloud.timeseriesinsights.v1.Event.group_id]: @googleapis_reference_link{google/cloud/timeseriesinsights/v1/timeseries_insights.proto#L293}
   ///
   // clang-format on
   StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>

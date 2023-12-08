@@ -509,6 +509,7 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1146}
   /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1156}
   /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L826}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest.update_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L841}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
@@ -1139,6 +1140,7 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1111}
   /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1123}
   /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1060}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest.field_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1072}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>

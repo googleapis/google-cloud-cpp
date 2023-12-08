@@ -107,10 +107,10 @@ TEST(StreamingReadRpcLoggingTest, GetRequestMetadata) {
 
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
-    return StreamingRpcMetadata({{":test-only", "value"}});
+    return RpcMetadata{{{":test-only", "value"}}, {}};
   });
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
-  EXPECT_THAT(stream.GetRequestMetadata(),
+  EXPECT_THAT(stream.GetRequestMetadata().headers,
               Contains(Pair(":test-only", "value")));
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr("GetRequestMetadata(test-id)"),

@@ -36,6 +36,7 @@ class MockAsyncStreamingReadWriteRpc
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(future<Status>, Finish, (), (override));
   MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

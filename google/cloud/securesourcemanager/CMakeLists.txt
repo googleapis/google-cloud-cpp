@@ -16,10 +16,8 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "v1/")
-
-google_cloud_cpp_add_ga_grpc_library(securesourcemanager
-                                     "Secure Source Manager API")
+google_cloud_cpp_add_gapic_library(
+    securesourcemanager "Secure Source Manager API" SERVICE_DIRS "v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(securesourcemanager_quickstart "quickstart/quickstart.cc")

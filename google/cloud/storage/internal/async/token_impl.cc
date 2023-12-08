@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/token_impl.h"
-#include "google/cloud/storage/async_token.h"
+#include "google/cloud/storage/async/token.h"
 
 namespace google {
 namespace cloud {

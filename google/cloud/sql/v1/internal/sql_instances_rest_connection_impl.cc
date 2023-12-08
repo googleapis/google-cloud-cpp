@@ -98,6 +98,20 @@ SqlInstancesServiceRestConnectionImpl::DemoteMaster(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestConnectionImpl::Demote(
+    google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Demote(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) {
+        return stub_->Demote(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::Export(
     google::cloud::sql::v1::SqlInstancesExportRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

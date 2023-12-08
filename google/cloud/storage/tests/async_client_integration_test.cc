@@ -14,7 +14,7 @@
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
-#include "google/cloud/storage/async_client.h"
+#include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -34,6 +34,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsEmpty;
 using ::testing::Le;
 using ::testing::Not;
+using ::testing::Optional;
 using ::testing::VariantWith;
 
 class AsyncClientIntegrationTest
@@ -73,9 +74,13 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
 
   for (auto* p : {&pending1, &pending0}) {
     auto response = p->get();
-    EXPECT_STATUS_OK(response.status);
-    auto const full = std::accumulate(response.contents.begin(),
-                                      response.contents.end(), std::string{});
+    ASSERT_STATUS_OK(response);
+    auto contents = response->contents();
+    auto const full = std::accumulate(contents.begin(), contents.end(),
+                                      std::string{}, [](auto a, auto b) {
+                                        a += std::string(b);
+                                        return a;
+                                      });
     EXPECT_EQ(full, LoremIpsum());
   }
   auto status = async
@@ -123,12 +128,15 @@ TEST_F(AsyncClientIntegrationTest, ComposeObject) {
                   .ReadObjectRange(bucket_name(), destination, 0,
                                    2 * LoremIpsum().size())
                   .get();
-  ASSERT_STATUS_OK(read.status);
-  auto const full_contents = std::accumulate(
-      read.contents.begin(), read.contents.end(), std::string{});
+  ASSERT_STATUS_OK(read);
+  auto contents = read->contents();
+  auto const full_contents = std::accumulate(contents.begin(), contents.end(),
+                                             std::string{}, [](auto a, auto b) {
+                                               a += std::string(b);
+                                               return a;
+                                             });
   EXPECT_EQ(full_contents, LoremIpsum() + LoremIpsum());
-  ASSERT_TRUE(read.object_metadata.has_value());
-  EXPECT_EQ(*read.object_metadata, *composed);
+  EXPECT_THAT(read->metadata(), Optional(*composed));
 }
 
 TEST_F(AsyncClientIntegrationTest, StreamingRead) {

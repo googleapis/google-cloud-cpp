@@ -47,7 +47,9 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::Pair;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 using ::testing::VariantWith;
 
 auto ExpectSent(std::int64_t id, std::uint64_t size) {
@@ -94,6 +96,9 @@ TEST(WriterConnectionTracing, FullCycle) {
   EXPECT_CALL(*mock, Finalize).WillOnce([] {
     return make_ready_future(make_status_or(storage::ObjectMetadata{}));
   });
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
+                                   {{"tk0", "v0"}, {"tk1", "v1"}}}));
   auto actual = MakeTracingWriterConnection(
       internal::MakeSpan("test-span-name"), std::move(mock));
   EXPECT_EQ(actual->UploadId(), "test-upload-id");
@@ -106,6 +111,12 @@ TEST(WriterConnectionTracing, FullCycle) {
   EXPECT_STATUS_OK(actual->Query().get());
   auto response = actual->Finalize({}).get();
   EXPECT_STATUS_OK(response);
+
+  auto const metadata = actual->GetRequestMetadata();
+  EXPECT_THAT(metadata.headers,
+              UnorderedElementsAre(Pair("hk0", "v0"), Pair("hk1", "v1")));
+  EXPECT_THAT(metadata.trailers,
+              UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(

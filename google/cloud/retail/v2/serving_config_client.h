@@ -239,6 +239,7 @@ class ServingConfigServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.ServingConfig]: @googleapis_reference_link{google/cloud/retail/v2/serving_config.proto#L35}
+  /// [google.cloud.retail.v2.ServingConfig.name]: @googleapis_reference_link{google/cloud/retail/v2/serving_config.proto#L55}
   /// [google.cloud.retail.v2.UpdateServingConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/serving_config_service.proto#L144}
   ///
   // clang-format on

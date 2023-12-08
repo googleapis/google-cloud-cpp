@@ -17,15 +17,15 @@
 """Automatically generated source lists for google_cloud_cpp_storage_grpc - DO NOT EDIT."""
 
 google_cloud_cpp_storage_grpc_hdrs = [
-    "async_client.h",
-    "async_connection.h",
-    "async_object_requests.h",
-    "async_object_responses.h",
-    "async_reader.h",
-    "async_reader_connection.h",
-    "async_token.h",
-    "async_writer.h",
-    "async_writer_connection.h",
+    "async/client.h",
+    "async/connection.h",
+    "async/object_requests.h",
+    "async/object_responses.h",
+    "async/reader.h",
+    "async/reader_connection.h",
+    "async/token.h",
+    "async/writer.h",
+    "async/writer_connection.h",
     "grpc_plugin.h",
     "internal/async/accumulate_read_object.h",
     "internal/async/connection_fwd.h",
@@ -77,10 +77,10 @@ google_cloud_cpp_storage_grpc_hdrs = [
 ]
 
 google_cloud_cpp_storage_grpc_srcs = [
-    "async_client.cc",
-    "async_object_responses.cc",
-    "async_reader.cc",
-    "async_writer.cc",
+    "async/client.cc",
+    "async/object_responses.cc",
+    "async/reader.cc",
+    "async/writer.cc",
     "grpc_plugin.cc",
     "internal/async/accumulate_read_object.cc",
     "internal/async/connection_impl.cc",

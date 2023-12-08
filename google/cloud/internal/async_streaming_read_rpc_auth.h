@@ -62,7 +62,7 @@ class AsyncStreamingReadRpcAuth : public AsyncStreamingReadRpc<Response> {
 
   future<Status> Finish() override { return state_->Finish(); }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     return state_->GetRequestMetadata();
   }
 
@@ -99,7 +99,7 @@ class AsyncStreamingReadRpcAuth : public AsyncStreamingReadRpc<Response> {
       return stream->Finish();
     }
 
-    StreamingRpcMetadata GetRequestMetadata() {
+    RpcMetadata GetRequestMetadata() {
       std::lock_guard<std::mutex> g{mu};
       return stream->GetRequestMetadata();
     }

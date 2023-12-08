@@ -224,6 +224,96 @@ CloudDeployClient::DeleteTarget(
   return connection_->DeleteTarget(request);
 }
 
+StreamRange<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployClient::ListCustomTargetTypes(std::string const& parent,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::ListCustomTargetTypesRequest request;
+  request.set_parent(parent);
+  return connection_->ListCustomTargetTypes(request);
+}
+
+StreamRange<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployClient::ListCustomTargetTypes(
+    google::cloud::deploy::v1::ListCustomTargetTypesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListCustomTargetTypes(std::move(request));
+}
+
+StatusOr<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployClient::GetCustomTargetType(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::GetCustomTargetTypeRequest request;
+  request.set_name(name);
+  return connection_->GetCustomTargetType(request);
+}
+
+StatusOr<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployClient::GetCustomTargetType(
+    google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetCustomTargetType(request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+CloudDeployClient::CreateCustomTargetType(
+    std::string const& parent,
+    google::cloud::deploy::v1::CustomTargetType const& custom_target_type,
+    std::string const& custom_target_type_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::CreateCustomTargetTypeRequest request;
+  request.set_parent(parent);
+  *request.mutable_custom_target_type() = custom_target_type;
+  request.set_custom_target_type_id(custom_target_type_id);
+  return connection_->CreateCustomTargetType(request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+CloudDeployClient::CreateCustomTargetType(
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateCustomTargetType(request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+CloudDeployClient::UpdateCustomTargetType(
+    google::cloud::deploy::v1::CustomTargetType const& custom_target_type,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::UpdateCustomTargetTypeRequest request;
+  *request.mutable_custom_target_type() = custom_target_type;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateCustomTargetType(request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+CloudDeployClient::UpdateCustomTargetType(
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateCustomTargetType(request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployClient::DeleteCustomTargetType(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::DeleteCustomTargetTypeRequest request;
+  request.set_name(name);
+  return connection_->DeleteCustomTargetType(request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployClient::DeleteCustomTargetType(
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCustomTargetType(request);
+}
+
 StreamRange<google::cloud::deploy::v1::Release> CloudDeployClient::ListReleases(
     std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

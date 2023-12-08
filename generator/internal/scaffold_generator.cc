@@ -473,9 +473,8 @@ void GenerateCMakeLists(std::ostream& os,
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "$service_subdirectory$")
-
-google_cloud_cpp_add_ga_grpc_library($library$ "$title$"$experimental$)
+google_cloud_cpp_add_gapic_library($library$ "$title$"$experimental$
+    SERVICE_DIRS "$service_subdirectory$")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable($library$_quickstart "quickstart/quickstart.cc")

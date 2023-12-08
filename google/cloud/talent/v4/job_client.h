@@ -324,6 +324,8 @@ class JobServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
   /// [google.cloud.talent.v4.UpdateJobRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L203}
+  /// [google.cloud.talent.v4.UpdateJobRequest.job]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L205}
+  /// [google.cloud.talent.v4.UpdateJobRequest.update_mask]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L216}
   ///
   // clang-format on
   StatusOr<google::cloud::talent::v4::Job> UpdateJob(

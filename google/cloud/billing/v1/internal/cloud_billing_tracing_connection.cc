@@ -127,6 +127,15 @@ CloudBillingTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
+StatusOr<google::cloud::billing::v1::BillingAccount>
+CloudBillingTracingConnection::MoveBillingAccount(
+    google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
+  auto span = internal::MakeSpan(
+      "billing_v1::CloudBillingConnection::MoveBillingAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->MoveBillingAccount(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<billing_v1::CloudBillingConnection>

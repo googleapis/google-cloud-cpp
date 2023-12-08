@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/async_reader.h"
-#include "google/cloud/storage/async_reader_connection.h"
+#include "google/cloud/storage/async/reader.h"
+#include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/internal/make_status.h"
 #include <utility>
 
@@ -55,7 +55,7 @@ class Discard : public std::enable_shared_from_this<Discard> {
 }  // namespace
 
 AsyncReader::~AsyncReader() {
-  if (!impl_) return;
+  if (!impl_ || finished_) return;
   impl_->Cancel();
   auto discard = std::make_shared<Discard>(std::move(impl_));
   discard->Loop();
@@ -80,9 +80,14 @@ future<StatusOr<std::pair<ReadPayload, AsyncToken>>> AsyncReader::Read(
   };
   return impl_->Read().then([this, v = Visitor{std::move(t)}](auto f) mutable {
     auto response = f.get();
-    if (absl::holds_alternative<Status>(response)) impl_.reset();
+    if (absl::holds_alternative<Status>(response)) finished_ = true;
     return absl::visit(std::move(v), std::move(response));
   });
+}
+
+RpcMetadata AsyncReader::GetRequestMetadata() {
+  if (!finished_) return {};
+  return impl_->GetRequestMetadata();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

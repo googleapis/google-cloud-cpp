@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/async_object_responses.h"
+#include "google/cloud/storage/async/object_responses.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 
 namespace google {

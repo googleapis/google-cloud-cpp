@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/async_writer.h"
+#include "google/cloud/storage/async/writer.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -30,8 +30,10 @@ using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
+using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 using ::testing::VariantWith;
 
 template <typename Matcher>
@@ -55,6 +57,9 @@ TEST(AsyncWriterTest, Basic) {
       .WillOnce([] {
         return make_ready_future(make_status_or(storage::ObjectMetadata()));
       });
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
+                                   {{"tk0", "v0"}, {"tk1", "v1"}}}));
 
   auto token = storage_internal::MakeAsyncToken(mock.get());
   AsyncWriter writer(std::move(mock));
@@ -69,6 +74,12 @@ TEST(AsyncWriterTest, Basic) {
   auto const actual =
       writer.Finalize(std::move(token), WritePayload{std::string("ccc")}).get();
   EXPECT_STATUS_OK(actual);
+
+  auto const metadata = writer.GetRequestMetadata();
+  EXPECT_THAT(metadata.headers,
+              UnorderedElementsAre(Pair("hk0", "v0"), Pair("hk1", "v1")));
+  EXPECT_THAT(metadata.trailers,
+              UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
 }
 
 TEST(AsyncWriterTest, FinalizeEmpty) {

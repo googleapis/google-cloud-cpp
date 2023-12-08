@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/async_writer.h"
+#include "google/cloud/storage/async/writer.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {
@@ -79,6 +79,10 @@ future<StatusOr<storage::ObjectMetadata>> AsyncWriter::Finalize(
 future<StatusOr<storage::ObjectMetadata>> AsyncWriter::Finalize(
     AsyncToken token) {
   return Finalize(std::move(token), WritePayload{});
+}
+
+RpcMetadata AsyncWriter::GetRequestMetadata() const {
+  return impl_->GetRequestMetadata();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

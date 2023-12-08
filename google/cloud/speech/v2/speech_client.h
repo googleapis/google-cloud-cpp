@@ -564,8 +564,12 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.RecognitionConfig]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L894}
   /// [google.cloud.speech.v2.RecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L950}
+  /// [google.cloud.speech.v2.RecognizeRequest.config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L968}
+  /// [google.cloud.speech.v2.RecognizeRequest.config_mask]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L983}
   /// [google.cloud.speech.v2.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1098}
+  /// [google.cloud.speech.v2.Recognizer.default_recognition_config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L627}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
@@ -689,7 +693,10 @@ class SpeechClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.speech.v2.BatchRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1214}
+  /// [google.cloud.speech.v2.BatchRecognizeRequest.config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1243}
+  /// [google.cloud.speech.v2.BatchRecognizeRequest.config_mask]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1258}
   /// [google.cloud.speech.v2.BatchRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1300}
+  /// [google.cloud.speech.v2.Recognizer.default_recognition_config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L627}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>

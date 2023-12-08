@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_WRITER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_WRITER_H
 
-#include "google/cloud/storage/async_object_requests.h"
-#include "google/cloud/storage/async_token.h"
-#include "google/cloud/storage/async_writer_connection.h"
+#include "google/cloud/storage/async/object_requests.h"
+#include "google/cloud/storage/async/token.h"
+#include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -116,6 +116,17 @@ class AsyncWriter {
    */
   future<StatusOr<storage::ObjectMetadata>> Finalize(AsyncToken token,
                                                      WritePayload payload);
+
+  /**
+   * The headers (if any) returned by the service. For debugging only.
+   *
+   * @warning The contents of these headers may change without notice. Unless
+   *     documented in the API, headers may be removed or added by the service.
+   *     Furthermore, the headers may change from one version of the library to
+   *     the next, as we find more (or different) opportunities for
+   *     optimization.
+   */
+  RpcMetadata GetRequestMetadata() const;
 
  private:
   std::shared_ptr<AsyncWriterConnection> impl_;

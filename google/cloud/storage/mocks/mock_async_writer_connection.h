@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_MOCKS_MOCK_ASYNC_WRITER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_MOCKS_MOCK_ASYNC_WRITER_CONNECTION_H
 
-#include "google/cloud/storage/async_writer_connection.h"
+#include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 
@@ -38,6 +38,7 @@ class MockAsyncWriterConnection
   MOCK_METHOD(future<Status>, Flush, (storage_experimental::WritePayload),
               (override));
   MOCK_METHOD(future<StatusOr<std::int64_t>>, Query, (), (override));
+  MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

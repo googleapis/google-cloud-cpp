@@ -20,6 +20,7 @@
 #include "google/cloud/internal/async_streaming_write_rpc.h"
 #include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
 #include "absl/types/optional.h"
@@ -129,7 +130,7 @@ class AsyncStreamingWriteRpcImpl
     return op->p.get_future();
   }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     return GetRequestMetadataFromContext(*context_);
   }
 
@@ -194,7 +195,7 @@ class AsyncStreamingWriteRpcError
   future<StatusOr<Response>> Finish() override {
     return make_ready_future(StatusOr<Response>(status_));
   }
-  StreamingRpcMetadata GetRequestMetadata() const override { return {}; }
+  RpcMetadata GetRequestMetadata() const override { return {}; }
 
  private:
   Status status_;

@@ -242,6 +242,21 @@ CloudBillingConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
+StatusOr<google::cloud::billing::v1::BillingAccount>
+CloudBillingConnectionImpl::MoveBillingAccount(
+    google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MoveBillingAccount(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::billing::v1::MoveBillingAccountRequest const&
+                 request) {
+        return stub_->MoveBillingAccount(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_v1_internal
 }  // namespace cloud

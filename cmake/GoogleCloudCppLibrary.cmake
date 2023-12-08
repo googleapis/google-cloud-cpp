@@ -124,20 +124,13 @@ function (google_cloud_cpp_add_library_protos library)
 endfunction ()
 
 #
-# A function to add targets for GA libraries that use gRPC for transport.
+# A function to add targets for GAPICS - libraries that use gRPC for transport.
 #
 # * library:      the short name of the library, e.g. `kms`.
 # * display_name: the display name of the library, e.g. "Cloud Key Management
 #   Service (KMS) API"
 #
-# Additionally, we must set the following **variable** in the parent scope. We
-# cannot use a `cmake_parse_arguments()` keyword because it will skip the empty
-# string when provided in a list. We often need to use the empty string.
-#
-# * GOOGLE_CLOUD_CPP_SERVICE_DIRS: a list of service directories within the
-#   library.
-#
-# The following **keywords** can be optionally supplied to handle edge cases:
+# The function respects the following keywords:
 #
 # * ADDITIONAL_PROTO_LISTS: a list of proto files that may be used indirectly.
 #   `asset` sets this.
@@ -146,16 +139,18 @@ endfunction ()
 #   libraries for these, which link to the desired proto library. See #8022 for
 #   more details.
 # * CROSS_LIB_DEPS: a list of client libraries which this library depends on.
+# * SERVICE_DIRS: a list of service directories within the library. Use
+#   "__EMPTY__" to represent the empty string in the list.
 # * SHARED_PROTO_DEPS: a list of proto libraries which this library depends on,
 #   e.g. `grafeas`. This function will define the proto library targets if they
 #   do not already exist.
 #
-function (google_cloud_cpp_add_ga_grpc_library library display_name)
+function (google_cloud_cpp_add_gapic_library library display_name)
     cmake_parse_arguments(
         _opt
         "EXPERIMENTAL;TRANSITION"
         ""
-        "ADDITIONAL_PROTO_LISTS;BACKWARDS_COMPAT_PROTO_TARGETS;CROSS_LIB_DEPS;SHARED_PROTO_DEPS"
+        "ADDITIONAL_PROTO_LISTS;BACKWARDS_COMPAT_PROTO_TARGETS;CROSS_LIB_DEPS;SERVICE_DIRS;SHARED_PROTO_DEPS"
         ${ARGN})
     if (_opt_EXPERIMENTAL AND _opt_TRANSITION)
         message(
@@ -188,7 +183,7 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
 
     unset(mocks_globs)
     unset(source_globs)
-    foreach (dir IN LISTS GOOGLE_CLOUD_CPP_SERVICE_DIRS)
+    foreach (dir IN LISTS _opt_SERVICE_DIRS)
         if ("${dir}" STREQUAL "__EMPTY__")
             set(dir "")
         endif ()
@@ -355,7 +350,7 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
 
     # ${library_alias} must be defined before we can add the samples.
     if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-        foreach (dir IN LISTS GOOGLE_CLOUD_CPP_SERVICE_DIRS)
+        foreach (dir IN LISTS _opt_SERVICE_DIRS)
             if ("${dir}" STREQUAL "__EMPTY__")
                 set(dir "")
             endif ()

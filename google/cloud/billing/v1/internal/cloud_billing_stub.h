@@ -86,6 +86,11 @@ class CloudBillingStub {
   TestIamPermissions(
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::billing::v1::BillingAccount>
+  MoveBillingAccount(
+      grpc::ClientContext& context,
+      google::cloud::billing::v1::MoveBillingAccountRequest const& request) = 0;
 };
 
 class DefaultCloudBillingStub : public CloudBillingStub {
@@ -145,6 +150,11 @@ class DefaultCloudBillingStub : public CloudBillingStub {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StatusOr<google::cloud::billing::v1::BillingAccount> MoveBillingAccount(
+      grpc::ClientContext& context,
+      google::cloud::billing::v1::MoveBillingAccountRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::billing::v1::CloudBilling::StubInterface>

@@ -53,7 +53,7 @@ TEST(PopulateCommonOptions, EmptyEndpointOption) {
   auto actual = PopulateCommonOptions(Options{}.set<EndpointOption>(""), {}, {},
                                       {}, "default");
   EXPECT_TRUE(actual.has<EndpointOption>());
-  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default"));
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq(""));
 }
 
 TEST(PopulateCommonOptions, EmptyEndpointEnvVar) {

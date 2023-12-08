@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_READER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_READER_CONNECTION_IMPL_H
 
-#include "google/cloud/storage/async_reader_connection.h"
+#include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
@@ -44,6 +44,7 @@ class AsyncReaderConnectionImpl
   void Cancel() override { return impl_->Cancel(); }
 
   future<ReadResponse> Read() override;
+  RpcMetadata GetRequestMetadata() override;
 
  private:
   future<ReadResponse> OnRead(absl::optional<ProtoPayload> r);

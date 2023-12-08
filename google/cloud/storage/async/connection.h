@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CONNECTION_H
 
-#include "google/cloud/storage/async_object_requests.h"
-#include "google/cloud/storage/async_object_responses.h"
+#include "google/cloud/storage/async/object_requests.h"
+#include "google/cloud/storage/async/object_responses.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
@@ -90,7 +90,7 @@ class AsyncConnection {
   AsyncReadObject(ReadObjectParams p) = 0;
 
   /// Read a range from an object returning all the contents.
-  virtual future<AsyncReadObjectRangeResponse> AsyncReadObjectRange(
+  virtual future<StatusOr<ReadPayload>> AsyncReadObjectRange(
       ReadObjectParams p) = 0;
 
   /**

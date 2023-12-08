@@ -64,7 +64,7 @@ TEST(DetermineServiceEndpoint, EndpointOptionEmpty) {
   auto result = DetermineServiceEndpoint(absl::nullopt,
                                          ExtractOption<EndpointOption>(options),
                                          kDefaultEndpoint, options);
-  EXPECT_THAT(result, IsOkAndHolds(absl::StrCat(kDefaultEndpoint, ".")));
+  EXPECT_THAT(result, IsOkAndHolds(kOptionEndpoint));
 }
 
 TEST(DetermineServiceEndpoint, UniverseDomainSetWithNonEmptyValue) {

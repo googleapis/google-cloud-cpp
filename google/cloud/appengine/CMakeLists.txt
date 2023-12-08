@@ -16,10 +16,10 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
-
-google_cloud_cpp_add_ga_grpc_library(appengine "App Engine Admin API"
-                                     SHARED_PROTO_DEPS "logging_type")
+google_cloud_cpp_add_gapic_library(
+    appengine "App Engine Admin API"
+    SERVICE_DIRS "__EMPTY__" "v1/"
+    SHARED_PROTO_DEPS "logging_type")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(appengine_quickstart "quickstart/quickstart.cc")

@@ -16,11 +16,10 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
-
-google_cloud_cpp_add_ga_grpc_library(
-    texttospeech "Cloud Text-to-Speech API" BACKWARDS_COMPAT_PROTO_TARGETS
-    "cloud_texttospeech_protos")
+google_cloud_cpp_add_gapic_library(
+    texttospeech "Cloud Text-to-Speech API"
+    SERVICE_DIRS "__EMPTY__" "v1/"
+    BACKWARDS_COMPAT_PROTO_TARGETS "cloud_texttospeech_protos")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(texttospeech_quickstart "quickstart/quickstart.cc")

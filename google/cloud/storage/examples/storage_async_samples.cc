@@ -16,7 +16,7 @@
 // The final blank line in this section separates the includes from the function
 // in the final rendering.
 //! [async-includes]
-#include "google/cloud/storage/async_client.h"
+#include "google/cloud/storage/async/client.h"
 
 //! [async-includes]
 #include "google/cloud/storage/examples/storage_examples_common.h"
@@ -317,13 +317,13 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "Retrieving object metadata" << std::endl;
   auto response = client.ReadObjectRange(bucket_name, object_name, 0, 1).get();
-  if (!response.status.ok()) throw std::move(response.status);
+  if (!response.ok()) throw std::move(response).status();
 
-  if (!response.object_metadata.has_value()) {
+  auto const metadata = response->metadata();
+  if (!metadata.has_value()) {
     std::cout << "Running the ReadObjectWithOptions() example" << std::endl;
-    ReadObjectWithOptions(
-        client, {bucket_name, object_name,
-                 std::to_string(response.object_metadata->generation())});
+    ReadObjectWithOptions(client, {bucket_name, object_name,
+                                   std::to_string(metadata->generation())});
   }
 
   std::cout << "Running DeleteObject() example" << std::endl;

@@ -67,6 +67,11 @@ class MockSqlInstancesServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::sql::v1::Operation>, Demote,
+      (google::cloud::sql::v1::SqlInstancesDemoteRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::sql::v1::Operation>, Export,
       (google::cloud::sql::v1::SqlInstancesExportRequest const& request),
       (override));

@@ -97,6 +97,38 @@ class CloudDeployStub {
       std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::DeleteTargetRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse>
+  ListCustomTargetTypes(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::ListCustomTargetTypesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::deploy::v1::CustomTargetType>
+  GetCustomTargetType(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateCustomTargetType(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateCustomTargetType(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteCustomTargetType(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::deploy::v1::ListReleasesResponse>
   ListReleases(
       grpc::ClientContext& context,
@@ -286,6 +318,35 @@ class DefaultCloudDeployStub : public CloudDeployStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::deploy::v1::DeleteTargetRequest const& request) override;
+
+  StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse>
+  ListCustomTargetTypes(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::ListCustomTargetTypesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::deploy::v1::CustomTargetType> GetCustomTargetType(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateCustomTargetType(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateCustomTargetType(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteCustomTargetType(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request)
+      override;
 
   StatusOr<google::cloud::deploy::v1::ListReleasesResponse> ListReleases(
       grpc::ClientContext& context,

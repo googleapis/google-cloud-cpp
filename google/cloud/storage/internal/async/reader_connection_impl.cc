@@ -27,6 +27,10 @@ AsyncReaderConnectionImpl::Read() {
   return impl_->Read().then([this](auto f) { return OnRead(f.get()); });
 }
 
+RpcMetadata AsyncReaderConnectionImpl::GetRequestMetadata() {
+  return impl_->GetRequestMetadata();
+}
+
 future<AsyncReaderConnectionImpl::ReadResponse>
 AsyncReaderConnectionImpl::OnRead(absl::optional<ProtoPayload> r) {
   if (!r) return DoFinish();

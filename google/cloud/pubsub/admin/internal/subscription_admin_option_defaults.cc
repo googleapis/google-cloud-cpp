@@ -34,10 +34,11 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SubscriptionAdminDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SUBSCRIBER_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SUBSCRIBER_AUTHORITY", "pubsub.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+      std::move(options), "GOOGLE_CLOUD_CPP_SUBSCRIBER_ENDPOINT",
+      "PUBSUB_EMULATOR_HOST", "GOOGLE_CLOUD_CPP_SUBSCRIBER_AUTHORITY",
+      "pubsub.googleapis.com");
+  options = google::cloud::internal::PopulateGrpcOptions(
+      std::move(options), "PUBSUB_EMULATOR_HOST");
   if (!options.has<pubsub_admin::SubscriptionAdminRetryPolicyOption>()) {
     options.set<pubsub_admin::SubscriptionAdminRetryPolicyOption>(
         pubsub_admin::SubscriptionAdminLimitedTimeRetryPolicy(

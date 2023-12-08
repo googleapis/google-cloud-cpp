@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITER_CONNECTION_IMPL_H
 
-#include "google/cloud/storage/async_writer_connection.h"
+#include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/options.h"
@@ -60,6 +60,7 @@ class AsyncWriterConnectionImpl
       storage_experimental::WritePayload) override;
   future<Status> Flush(storage_experimental::WritePayload payload) override;
   future<StatusOr<std::int64_t>> Query() override;
+  RpcMetadata GetRequestMetadata() override;
 
  private:
   google::storage::v2::BidiWriteObjectRequest MakeRequest();

@@ -97,6 +97,10 @@ class AsyncStreamingReadWriteRpcTracing
         });
   }
 
+  RpcMetadata GetRequestMetadata() const override {
+    return impl_->GetRequestMetadata();
+  }
+
  private:
   Status End(Status status) {
     if (!context_) return status;

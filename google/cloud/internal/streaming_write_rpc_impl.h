@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_WRITE_RPC_IMPL_H
 
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
@@ -73,7 +74,7 @@ class StreamingWriteRpcImpl
     return std::move(*response_);
   }
 
-  StreamingRpcMetadata GetRequestMetadata() const override {
+  RpcMetadata GetRequestMetadata() const override {
     return GetRequestMetadataFromContext(*context_);
   }
 
@@ -113,7 +114,7 @@ class StreamingWriteRpcError
 
   StatusOr<ResponseType> Close() override { return status_; }
 
-  StreamingRpcMetadata GetRequestMetadata() const override { return {}; }
+  RpcMetadata GetRequestMetadata() const override { return {}; }
 
  private:
   Status status_;

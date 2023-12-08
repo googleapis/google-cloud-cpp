@@ -15,12 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_ACCUMULATE_READ_OBJECT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_ACCUMULATE_READ_OBJECT_H
 
-#include "google/cloud/storage/async_object_responses.h"
+#include "google/cloud/storage/async/object_responses.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_streaming_read_rpc.h"
+#include "google/cloud/rpc_metadata.h"
 #include "google/cloud/version.h"
 #include <google/storage/v2/storage.pb.h>
 #include <chrono>
@@ -45,7 +46,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 struct AsyncAccumulateReadObjectResult {
   std::vector<google::storage::v2::ReadObjectResponse> payload;
-  google::cloud::internal::StreamingRpcMetadata metadata;
+  google::cloud::RpcMetadata metadata;
   Status status;
 };
 
@@ -171,7 +172,7 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
     google::storage::v2::ReadObjectRequest request, Options const& options);
 
 /// Convert the proto into a representation more familiar to our customers.
-storage_experimental::AsyncReadObjectRangeResponse ToResponse(
+StatusOr<storage_experimental::ReadPayload> ToResponse(
     AsyncAccumulateReadObjectResult accumulated, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

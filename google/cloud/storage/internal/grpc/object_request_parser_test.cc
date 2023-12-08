@@ -859,7 +859,8 @@ TEST(GrpcObjectRequestParser, WriteObjectResponseWithResource) {
       &input));
 
   auto const actual = FromProto(
-      input, Options{}, {{"header", "value"}, {"other-header", "other-value"}});
+      input, Options{},
+      RpcMetadata{{{"header", "value"}, {"other-header", "other-value"}}, {}});
   EXPECT_FALSE(actual.committed_size.has_value());
   ASSERT_TRUE(actual.payload.has_value());
   EXPECT_EQ(actual.payload->name(), "test-object-name");

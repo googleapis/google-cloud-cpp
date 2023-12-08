@@ -53,7 +53,7 @@ class MockStream : public BaseStream {
               (override));
   MOCK_METHOD(future<bool>, WritesDone, (), (override));
   MOCK_METHOD(future<StatusOr<FakeResponse>>, Finish, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
+  MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 TEST(AsyncStreamingWriteRpcAuth, Start) {
@@ -68,7 +68,7 @@ TEST(AsyncStreamingWriteRpcAuth, Start) {
       return make_ready_future(make_status_or(FakeResponse{"key0", "value0"}));
     });
     EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
-      return StreamingRpcMetadata({{"test-only", "value"}});
+      return RpcMetadata{{{"test-only", "value"}}, {}};
     });
     return std::unique_ptr<BaseStream>(std::move(mock));
   });
@@ -86,7 +86,8 @@ TEST(AsyncStreamingWriteRpcAuth, Start) {
   ASSERT_THAT(response, IsOk());
   EXPECT_EQ(response->key, "key0");
   EXPECT_EQ(response->value, "value0");
-  EXPECT_THAT(uut->GetRequestMetadata(), Contains(Pair("test-only", "value")));
+  EXPECT_THAT(uut->GetRequestMetadata().headers,
+              Contains(Pair("test-only", "value")));
 }
 
 TEST(AsyncStreamingWriteRpcAuth, AuthFails) {
