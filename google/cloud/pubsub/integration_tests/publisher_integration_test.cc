@@ -19,9 +19,9 @@
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -47,8 +47,7 @@ class PublisherIntegrationTest
     ASSERT_FALSE(project_id.empty());
     generator_ = google::cloud::internal::DefaultPRNG(std::random_device{}());
     topic_ = Topic(project_id, pubsub_testing::RandomTopicId(generator_));
-    options_ =
-        Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+    options_ = Options{};
     auto const using_emulator =
         internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
     if (using_emulator) {
@@ -87,8 +86,7 @@ TEST_F(PublisherIntegrationTest, Basic) {
 
 TEST_F(PublisherIntegrationTest, TracingEnabled) {
   options_.set<OpenTelemetryTracingOption>(true);
-  auto publisher =
-      Publisher(MakePublisherConnection(topic_, options_));
+  auto publisher = Publisher(MakePublisherConnection(topic_, options_));
   auto publish =
       publisher.Publish(MessageBuilder().SetData("test data").Build()).get();
   ASSERT_STATUS_OK(publish);
@@ -96,8 +94,7 @@ TEST_F(PublisherIntegrationTest, TracingEnabled) {
 
 TEST_F(PublisherIntegrationTest, TracingDisabled) {
   options_.set<OpenTelemetryTracingOption>(true);
-  auto publisher =
-      Publisher(MakePublisherConnection(topic_, options_));
+  auto publisher = Publisher(MakePublisherConnection(topic_, options_));
   auto publish =
       publisher.Publish(MessageBuilder().SetData("test data").Build()).get();
   ASSERT_STATUS_OK(publish);
