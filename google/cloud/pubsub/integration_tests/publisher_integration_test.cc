@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
@@ -84,26 +85,23 @@ TEST_F(PublisherIntegrationTest, Basic) {
   ASSERT_STATUS_OK(publish);
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-using ::google::cloud::testing_util::DisableTracing;
-using ::google::cloud::testing_util::EnableTracing;
-
 TEST_F(PublisherIntegrationTest, TracingEnabled) {
+  options_.set<OpenTelemetryTracingOption>(true);
   auto publisher =
-      Publisher(MakePublisherConnection(topic_, EnableTracing(options_)));
+      Publisher(MakePublisherConnection(topic_, options_));
   auto publish =
       publisher.Publish(MessageBuilder().SetData("test data").Build()).get();
   ASSERT_STATUS_OK(publish);
 }
 
 TEST_F(PublisherIntegrationTest, TracingDisabled) {
+  options_.set<OpenTelemetryTracingOption>(true);
   auto publisher =
-      Publisher(MakePublisherConnection(topic_, DisableTracing(options_)));
+      Publisher(MakePublisherConnection(topic_, options_));
   auto publish =
       publisher.Publish(MessageBuilder().SetData("test data").Build()).get();
   ASSERT_STATUS_OK(publish);
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
