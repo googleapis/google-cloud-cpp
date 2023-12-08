@@ -355,6 +355,8 @@ class TestCasesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L215}
+  /// [google.cloud.dialogflow.cx.v3.TestCase.creation_time]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L249}
+  /// [google.cloud.dialogflow.cx.v3.TestCase.last_test_result]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L253}
   /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L662}
   ///
   // clang-format on

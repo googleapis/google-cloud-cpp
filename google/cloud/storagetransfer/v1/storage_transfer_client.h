@@ -511,7 +511,11 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
+  /// [google.rpc.Code.INVALID_ARGUMENT]: @googleapis_reference_link{google/rpc/code.proto#L58}
   /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L477}
+  /// [google.storagetransfer.v1.AgentPool.bandwidth_limit]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L521}
+  /// [google.storagetransfer.v1.AgentPool.display_name]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L514}
+  /// [google.storagetransfer.v1.AgentPool.name]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L511}
   /// [google.storagetransfer.v1.UpdateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L334}
   ///
   // clang-format on

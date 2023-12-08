@@ -501,6 +501,7 @@ class SecretManagerServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L296}
+  /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   // clang-format on

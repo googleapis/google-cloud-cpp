@@ -363,6 +363,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.DeleteModelRequest]: @googleapis_reference_link{google/cloud/retail/v2/model_service.proto#L214}
+  /// [google.cloud.retail.v2.Model]: @googleapis_reference_link{google/cloud/retail/v2/model.proto#L38}
   ///
   // clang-format on
   Status DeleteModel(std::string const& name, Options opts = {});

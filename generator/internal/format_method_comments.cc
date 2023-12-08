@@ -25,6 +25,7 @@
 #include "google/cloud/log.h"
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/descriptor.h>
+#include <iterator>
 
 namespace google {
 namespace cloud {
@@ -132,6 +133,15 @@ auto constexpr kTrailerEnding =
   /// [`Status`]: @ref google::cloud::Status
 )""";
 
+// std::map::merge() is not available until C++17.
+std::map<std::string, ProtoDefinitionLocation> Merge(
+    std::map<std::string, ProtoDefinitionLocation> preferred,
+    std::map<std::string, ProtoDefinitionLocation> alternatives) {
+  preferred.insert(std::make_move_iterator(alternatives.begin()),
+                   std::make_move_iterator(alternatives.end()));
+  return preferred;
+}
+
 }  // namespace
 
 std::string FormatMethodComments(
@@ -162,8 +172,11 @@ std::string FormatMethodComments(
 
   auto const return_comment_string = ReturnCommentString(method);
 
-  auto references = ResolveCommentReferences(
-      method_source_location.leading_comments, *method.file()->pool());
+  auto references =
+      Merge(ResolveCommentReferences(method_source_location.leading_comments,
+                                     *method.file()->pool()),
+            ResolveCommentReferences(variable_parameter_comments,
+                                     *method.file()->pool()));
   references.emplace(method.input_type()->full_name(),
                      Location(*method.input_type()));
   auto method_return = ResolveMethodReturn(method);

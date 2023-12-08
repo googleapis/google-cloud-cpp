@@ -738,6 +738,7 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L162}
   /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L205}
   ///

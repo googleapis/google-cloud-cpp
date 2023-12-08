@@ -244,6 +244,7 @@ class ControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.Control]: @googleapis_reference_link{google/cloud/retail/v2/control.proto#L35}
+  /// [google.cloud.retail.v2.Control.name]: @googleapis_reference_link{google/cloud/retail/v2/control.proto#L55}
   /// [google.cloud.retail.v2.UpdateControlRequest]: @googleapis_reference_link{google/cloud/retail/v2/control_service.proto#L118}
   ///
   // clang-format on

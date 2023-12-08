@@ -1081,6 +1081,9 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.Service]: @googleapis_reference_link{google/api/service.proto#L80}
+  /// [google.api.servicemanagement.v1.ConfigRef]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L168}
+  /// [google.api.servicemanagement.v1.ConfigSource]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L114}
   /// [google.api.servicemanagement.v1.GenerateConfigReportRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L476}
   /// [google.api.servicemanagement.v1.GenerateConfigReportResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L493}
   ///

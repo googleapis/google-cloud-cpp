@@ -275,7 +275,9 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CreateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L238}
+  /// [google.cloud.discoveryengine.v1.CreateDocumentRequest.parent]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L241}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L34}
+  /// [google.cloud.discoveryengine.v1.Document.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L94}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(

@@ -1775,6 +1775,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L995}
+  /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataRequest.time_series]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1012}
   /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1022}
   ///
   // clang-format on

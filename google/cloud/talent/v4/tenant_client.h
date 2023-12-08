@@ -234,6 +234,8 @@ class TenantServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   /// [google.cloud.talent.v4.UpdateTenantRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L114}
+  /// [google.cloud.talent.v4.UpdateTenantRequest.tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L117}
+  /// [google.cloud.talent.v4.UpdateTenantRequest.update_mask]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L128}
   ///
   // clang-format on
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(

@@ -1326,6 +1326,7 @@ class AssetServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2344}
   /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2379}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.org_policy_results]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2400}
   ///
   // clang-format on
   StreamRange<
