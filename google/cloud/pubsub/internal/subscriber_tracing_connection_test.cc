@@ -53,7 +53,6 @@ using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
-using ::testing::Not;
 using ::testing::Return;
 
 pubsub::Subscription TestSubscription() {
@@ -65,8 +64,8 @@ pubsub::PullResponse MakePullResponse() {
   EXPECT_CALL(*mock, nack())
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   return pubsub::PullResponse{
-      std::move(pubsub::PullAckHandler(std::move(mock))),
-      std::move(pubsub::MessageBuilder{}.SetData("test-data-0").Build())};
+      pubsub::PullAckHandler(std::move(mock)),
+      pubsub::MessageBuilder{}.SetData("test-data-0").Build()};
 }
 
 TEST(SubscriberTracingConnectionTest, PullOnSuccess) {
