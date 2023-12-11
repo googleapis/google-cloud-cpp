@@ -50,30 +50,29 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
   std::copy_if(begin, end, std::back_inserter(sampled_spans),
                [](auto const& span) { return span->GetContext().IsSampled(); });
   std::transform(sampled_spans.begin(), sampled_spans.end(),
-                 std::back_inserter(links),
-                 [i = static_cast<std::int64_t>(0)](auto const& span) mutable {
-                   return std::make_pair(
-                       span->GetContext(),
-                       Attributes{{"messaging.gcp_pubsub.message.link", i++}});
+                 std::back_inserter(links), [](auto const& span) mutable {
+                   return std::make_pair(span->GetContext(), Attributes{});
                  });
   return links;
 }
 
 auto MakeParent(Links const& links, Spans const& message_spans,
-                std::string const& topic) {
+                pubsub::Topic const& topic) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
-  options.kind = opentelemetry::trace::SpanKind::kProducer;
-  auto batch_sink_parent =
-      internal::MakeSpan(topic + " publish",
-                         /*attributes=*/
-                         {{sc::kMessagingBatchMessageCount,
-                           static_cast<std::int64_t>(message_spans.size())},
-                          {sc::kCodeFunction, "BatchSink::AsyncPublish"},
-                          {/*sc::kMessagingOperation=*/
-                           "messaging.operation", "publish"},
-                          {sc::kThreadId, internal::CurrentThreadId()}},
-                         /*links*/ std::move(links), options);
+  options.kind = opentelemetry::trace::SpanKind::kClient;
+  auto batch_sink_parent = internal::MakeSpan(
+      topic.topic_id() + " publish",
+      /*attributes=*/
+      {{sc::kMessagingBatchMessageCount,
+        static_cast<std::int64_t>(message_spans.size())},
+       {sc::kCodeFunction, "BatchSink::AsyncPublish"},
+       {/*sc::kMessagingOperation=*/
+        "messaging.operation", "publish"},
+       {sc::kThreadId, internal::CurrentThreadId()},
+       {sc::kMessagingSystem, "gcp_pubsub"},
+       {sc::kMessagingDestinationTemplate, topic.FullName()}},
+      /*links*/ std::move(links), options);
 
   // Add metadata to the message spans about the batch sink span.
   auto context = batch_sink_parent->GetContext();
@@ -103,7 +102,7 @@ auto MakeChild(
                             /*links=*/links, options);
 }
 
-Spans MakeBatchSinkSpans(Spans const& message_spans, std::string const& topic,
+Spans MakeBatchSinkSpans(Spans const& message_spans, pubsub::Topic const& topic,
                          Options const& options) {
   auto const max_otel_links = options.get<pubsub::MaxOtelLinkCountOption>();
   Spans batch_sink_spans;
@@ -168,8 +167,7 @@ class TracingBatchSink : public BatchSink {
       message_spans.swap(message_spans_);
     }
 
-    auto batch_sink_spans =
-        MakeBatchSinkSpans(message_spans, topic_.topic_id(), options_);
+    auto batch_sink_spans = MakeBatchSinkSpans(message_spans, topic_, options_);
 
     // The first span in `batch_sink_spans` is the parent to the other spans in
     // the vector.
