@@ -45,7 +45,7 @@ jobs:
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
-    - uses: google-github-actions/setup-gcloud@v1
+    - uses: google-github-actions/setup-gcloud@v2
     - name: Dynamic Configuration
       id: dynamic
       shell: bash
