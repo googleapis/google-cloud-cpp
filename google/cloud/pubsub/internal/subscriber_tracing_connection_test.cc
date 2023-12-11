@@ -33,8 +33,6 @@ namespace cloud {
 namespace pubsub_internal {
 namespace {
 
-auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
-
 using ::google::cloud::pubsub::SubscriberConnection;
 using ::google::cloud::pubsub_internal::MakeSubscriberTracingConnection;
 using ::google::cloud::pubsub_mocks::MockPullAckHandler;
