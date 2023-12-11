@@ -59,7 +59,7 @@ TEST(Options, Defaults) {
       "GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER", absl::nullopt);
   auto opts = spanner_internal::DefaultOptions();
 
-  EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
+  EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com.");
   EXPECT_EQ(opts.get<AuthorityOption>(), "spanner.googleapis.com");
   // In Google's testing environment `expected` can be `nullptr`, we just want
   // to verify that both are `nullptr` or neither is `nullptr`.
@@ -103,7 +103,7 @@ TEST(Options, AdminDefaults) {
       "GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
   auto opts = spanner_internal::DefaultAdminOptions();
 
-  EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
+  EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com.");
   EXPECT_EQ(opts.get<AuthorityOption>(), "spanner.googleapis.com");
   // In Google's testing environment `expected` can be `nullptr`, we just want
   // to verify that both are `nullptr` or neither is `nullptr`.

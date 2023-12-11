@@ -38,7 +38,7 @@ TEST(PopulateCommonOptions, Simple) {
   ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
   auto actual = PopulateCommonOptions(Options{}, {}, {}, {}, "default");
   EXPECT_TRUE(actual.has<EndpointOption>());
-  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default"));
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default."));
   EXPECT_TRUE(actual.has<AuthorityOption>());
   EXPECT_THAT(actual.get<AuthorityOption>(), Eq("default"));
   EXPECT_FALSE(actual.has<UserProjectOption>());
@@ -61,7 +61,7 @@ TEST(PopulateCommonOptions, EmptyEndpointEnvVar) {
   auto actual = PopulateCommonOptions(
       Options{}, "GOOGLE_CLOUD_CPP_SERVICE_ENDPOINT", {}, {}, "default");
   EXPECT_TRUE(actual.has<EndpointOption>());
-  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default"));
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default."));
 }
 
 TEST(PopulateCommonOptions, EmptyEmulatorEnvVar) {
@@ -69,7 +69,7 @@ TEST(PopulateCommonOptions, EmptyEmulatorEnvVar) {
   auto actual = PopulateCommonOptions(
       Options{}, {}, "GOOGLE_CLOUD_CPP_EMULATOR_ENDPOINT", {}, "default");
   EXPECT_TRUE(actual.has<EndpointOption>());
-  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default"));
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default."));
 }
 
 // TODO(#13191): Simplify into multiple tests.
@@ -106,7 +106,7 @@ TEST(PopulateCommonOptions, EndpointAuthority) {
           } else if (options.has<EndpointOption>()) {
             EXPECT_THAT(actual_endpoint, Eq(options.get<EndpointOption>()));
           } else {
-            EXPECT_THAT(actual_endpoint, Eq("default"));
+            EXPECT_THAT(actual_endpoint, Eq("default."));
           }
 
           ASSERT_TRUE(actual.has<AuthorityOption>());
