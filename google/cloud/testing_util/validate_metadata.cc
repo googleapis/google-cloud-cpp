@@ -239,6 +239,18 @@ RoutingHeaders ExtractRoutingHeaders(
 
 }  // namespace
 
+/**
+ * Set server metadata on a `ClientContext`.
+ *
+ * @note A `grpc::ClientContext` can be used in only one gRPC. The caller
+ *   cannot reuse @p context for other RPCs or other calls to this function.
+ */
+void SetServerMetadata(grpc::ClientContext& context,
+                       RpcMetadata const& server_metadata) {
+  ValidateMetadataFixture f;
+  f.SetServerMetadata(context, server_metadata);
+}
+
 ValidateMetadataFixture::ValidateMetadataFixture() {
   // Start the generic server.
   grpc::ServerBuilder builder;
@@ -299,6 +311,56 @@ std::multimap<std::string, std::string> ValidateMetadataFixture::GetMetadata(
                  });
 
   return res;
+}
+
+void ValidateMetadataFixture::SetServerMetadata(
+    grpc::ClientContext& context, RpcMetadata const& server_metadata) {
+  void* tag;
+  bool ok;
+
+  // Create an in-process stub to make client calls with.
+  grpc::GenericStub generic_stub(
+      server_->InProcessChannel(grpc::ChannelArguments()));
+
+  // Start a call, the contents of which, do not matter.
+  auto cli_stream =
+      generic_stub.PrepareCall(&context, "made_up_method", &cli_cq_);
+  void* call_tag = new int();
+  cli_stream->StartCall(call_tag);
+  cli_cq_.Next(&tag, &ok);
+  ASSERT_TRUE(ok && tag == call_tag) << "stub.PrepareCall() failed.";
+
+  // Create a server context with the given server metadata.
+  grpc::GenericServerContext server_context;
+  for (auto const& kv : server_metadata.headers) {
+    server_context.AddInitialMetadata(kv.first, kv.second);
+  }
+  for (auto const& kv : server_metadata.trailers) {
+    server_context.AddTrailingMetadata(kv.first, kv.second);
+  }
+  grpc::GenericServerAsyncReaderWriter reader_writer(&server_context);
+
+  // Process the request.
+  void* request_tag = new int();
+  generic_service_.RequestCall(&server_context, &reader_writer, srv_cq_.get(),
+                               srv_cq_.get(), request_tag);
+  srv_cq_->Next(&tag, &ok);
+  ASSERT_TRUE(ok && tag == request_tag) << "service.RequestCall() failed.";
+
+  // Finish the stream on the server-side.
+  void* srv_finish_tag = new int();
+  reader_writer.Finish(
+      grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "unimplemented"),
+      srv_finish_tag);
+  srv_cq_->Next(&tag, &ok);
+  ASSERT_TRUE(ok && tag == srv_finish_tag) << "reader_writer.Finish() failed.";
+
+  // Finish the stream on the client-side.
+  grpc::Status status;
+  void* cli_finish_tag = new int();
+  cli_stream->Finish(&status, cli_finish_tag);
+  cli_cq_.Next(&tag, &ok);
+  ASSERT_TRUE(ok && tag == cli_finish_tag) << "stream.Finish() failed.";
 }
 
 /**
