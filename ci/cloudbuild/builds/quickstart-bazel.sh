@@ -16,6 +16,12 @@
 
 set -euo pipefail
 
+# TODO(#13xxx) - upgrade to Bazel v7 once (1) the last release of
+#     `google-cloud-cpp` supports v7, and (2) the quickstart WORKSPACE files are
+#     updated.
+: "${USE_BAZEL_VERSION:="6.4.0"}"
+export USE_BAZEL_VERSION
+
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/etc/quickstart-config.sh
