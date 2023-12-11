@@ -62,6 +62,10 @@ absl::string_view GetAttribute(std::string const& key, pubsub::Message& m) {
   return absl::string_view{};
 }
 
+void RemoveAttribute(std::string const& key, pubsub::Message& m) {
+  m.proto_.mutable_attributes()->erase(key);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 

@@ -286,6 +286,22 @@ TEST(Message, GetAttributeFriend) {
   EXPECT_THAT(v1, IsEmpty());
 }
 
+TEST(Message, RemoveAttributeFriend) {
+  auto m0 = MessageBuilder{}.SetAttributes({{"k0", "v0"}}).Build();
+
+  pubsub_internal::RemoveAttribute("k0", m0);
+
+  EXPECT_THAT(m0.attributes(), IsEmpty());
+}
+
+TEST(Message, RemoveAttributeFriendDoesNothingIfKeyDoesNotExist) {
+  auto m0 = MessageBuilder{}.SetAttributes({{"k0", "v0"}}).Build();
+
+  pubsub_internal::RemoveAttribute("k1", m0);
+
+  EXPECT_THAT(m0.attributes(), UnorderedElementsAre(Pair("k0", "v0")));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
