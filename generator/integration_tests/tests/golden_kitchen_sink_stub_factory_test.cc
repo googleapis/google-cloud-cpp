@@ -31,6 +31,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::test::admin::database::v1::GenerateIdTokenRequest;
 using ::testing::Contains;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
@@ -41,9 +42,14 @@ class GoldenKitchenSinkStubFactoryTest : public ::testing::Test {
 };
 
 TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithoutLogging) {
-  auto default_stub = CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, {});
+  Options options;
+  auto default_stub =
+      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, IsEmpty());
+  ASSERT_TRUE(options.has<EndpointOption>());
+  EXPECT_THAT(options.get<EndpointOption>(),
+              Eq("goldenkitchensink.googleapis.com."));
 }
 
 TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithLogging) {
@@ -79,6 +85,9 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithUniverseDomainOption) {
           std::chrono::system_clock::now() + std::chrono::minutes(15)));
   auto default_stub =
       CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
+  ASSERT_TRUE(options.has<EndpointOption>());
+  EXPECT_THAT(options.get<EndpointOption>(), Eq("localhost:1"));
+
   grpc::ClientContext context;
   auto response =
       default_stub->GenerateIdToken(context, GenerateIdTokenRequest{});
@@ -99,6 +108,7 @@ TEST_F(GoldenKitchenSinkStubFactoryTest,
           std::chrono::system_clock::now() + std::chrono::minutes(15)));
   auto default_stub =
       CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
+  EXPECT_FALSE(options.has<EndpointOption>());
 
   grpc::ClientContext context;
   auto response =
@@ -119,8 +129,7 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto options = EnableTracing(Options{}.set<EndpointOption>("localhost:1"));
-  auto stub =
-      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, std::move(options));
+  auto stub = CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
   grpc::ClientContext context;
   (void)stub->DoNothing(context, {});
 
@@ -134,8 +143,7 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto options = DisableTracing(Options{}.set<EndpointOption>("localhost:1"));
-  auto stub =
-      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, std::move(options));
+  auto stub = CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
   grpc::ClientContext context;
   (void)stub->DoNothing(context, {});
 

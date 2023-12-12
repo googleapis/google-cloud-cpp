@@ -34,7 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ConsumerProcurementServiceStub>
 CreateDefaultConsumerProcurementServiceStub(google::cloud::CompletionQueue cq,
-                                            Options const& options);
+                                            Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace commerce_consumer_procurement_v1_internal

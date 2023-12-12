@@ -57,7 +57,7 @@ Status StubFactoryGenerator::GenerateHeader() {
   HeaderPrint(
       R"""(
 std::shared_ptr<$stub_class_name$> CreateDefault$stub_class_name$(
-    google::cloud::CompletionQueue cq, Options const& options);
+    google::cloud::CompletionQueue cq, Options& options);
 )""");
 
   HeaderCloseNamespaces();
@@ -97,7 +97,7 @@ Status StubFactoryGenerator::GenerateCc() {
   CcPrint(R"""(
 std::shared_ptr<$stub_class_name$>
 CreateDefault$stub_class_name$(
-    google::cloud::CompletionQueue cq, Options const& options) {
+    google::cloud::CompletionQueue cq, Options& options) {
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv("$service_endpoint_env_var$"),
       internal::FetchOption<EndpointOption>(options), "$service_endpoint$",
@@ -112,6 +112,7 @@ CreateDefault$stub_class_name$(
     auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
                                                   error_options);
   } else {
+    options.set<EndpointOption>(*endpoint);
     auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
     auto channel = auth->CreateChannel(
       *endpoint, internal::MakeChannelArguments(options));

@@ -41,7 +41,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<CloudChannelReportsServiceStub>
 CreateDefaultCloudChannelReportsServiceStub(google::cloud::CompletionQueue cq,
-                                            Options const& options) {
+                                            Options& options) {
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv(
           "GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_REPORTS_SERVICE_ENDPOINT"),
@@ -57,6 +57,7 @@ CreateDefaultCloudChannelReportsServiceStub(google::cloud::CompletionQueue cq,
     auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
                                                   error_options);
   } else {
+    options.set<EndpointOption>(*endpoint);
     auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
     auto channel =
         auth->CreateChannel(*endpoint, internal::MakeChannelArguments(options));

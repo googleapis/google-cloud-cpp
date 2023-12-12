@@ -33,7 +33,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<StorageTransferServiceStub>
 CreateDefaultStorageTransferServiceStub(google::cloud::CompletionQueue cq,
-                                        Options const& options);
+                                        Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_v1_internal
