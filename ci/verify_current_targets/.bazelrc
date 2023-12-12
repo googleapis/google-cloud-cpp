@@ -28,3 +28,5 @@ build:macos --host_cxxopt=-std=c++14
 # runs inside a docker image or if one builds a quickstart and then builds
 # the project separately.
 build --experimental_convenience_symlinks=ignore
+
+common --noenable_bzlmod
