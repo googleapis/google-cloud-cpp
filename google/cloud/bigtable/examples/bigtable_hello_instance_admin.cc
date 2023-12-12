@@ -36,8 +36,7 @@ using ::google::cloud::bigtable::examples::Usage;
 void BigtableHelloInstance(std::vector<std::string> const& argv) {
   if (argv.size() != 4) {
     throw Usage{
-        "bigtable-hello-instance <project-id> <instance-id> <cluster-id> "
-        "<zone>"};
+        "hello-instance <project-id> <instance-id> <cluster-id> <zone>"};
   }
 
   std::string const& project_id = argv[0];
