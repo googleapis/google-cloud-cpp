@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_VALIDATE_METADATA_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_VALIDATE_METADATA_H
 
+#include "google/cloud/rpc_metadata.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
@@ -30,6 +31,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
 /**
+ * Set server metadata on a `ClientContext`.
+ *
+ * @note A `grpc::ClientContext` can be used in only one gRPC. The caller
+ *   cannot reuse @p context for other RPCs or other calls to this function.
+ */
+void SetServerMetadata(grpc::ClientContext& context,
+                       RpcMetadata const& server_metadata);
+
+/**
  * Keep the test required to test metadata contents in a grpc::Context object.
  *
  * Our libraries need to set a number of metadata attributes in the
@@ -41,6 +51,10 @@ namespace testing_util {
  * metadata on this server. Unfortunately, initializing these servers can be
  * slow, particularly on Windows.  It is worthwhile to cache the state and the
  * server in a fixture, so the tests run faster.
+ *
+ * If the code that implements this class is unfamiliar, the gRPC C++
+ * Asynchronous-API tutorial is a good resource:
+ * https://grpc.io/docs/languages/cpp/async/
  */
 class ValidateMetadataFixture {
  public:
@@ -55,6 +69,15 @@ class ValidateMetadataFixture {
    */
   std::multimap<std::string, std::string> GetMetadata(
       grpc::ClientContext& context);
+
+  /**
+   * Set server metadata on a `ClientContext`.
+   *
+   * @note A `grpc::ClientContext` can be used in only one gRPC. The caller
+   *   cannot reuse @p context for other RPCs or other calls to this function.
+   */
+  void SetServerMetadata(grpc::ClientContext& context,
+                         RpcMetadata const& server_metadata = {});
 
   /**
    * Verify that the metadata in the context is appropriate for a gRPC method.
