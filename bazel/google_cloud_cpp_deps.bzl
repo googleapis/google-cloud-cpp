@@ -127,16 +127,7 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "rules_cc-0.0.9",
     )
 
-    # The rules loaded by Protobuf are too old
-    maybe(
-        http_archive,
-        name = "rules_java",
-        urls = [
-            "https://github.com/bazelbuild/rules_java/releases/download/7.3.1/rules_java-7.3.1.tar.gz",
-        ],
-        sha256 = "4018e97c93f97680f1650ffd2a7530245b864ac543fd24fae8c02ba447cb2864",
-    )
-
+    # The version of `rules_apple` loaded by gRPC is too old for Bazel 6 or 7.
     maybe(
         http_archive,
         name = "build_bazel_rules_apple",
