@@ -71,13 +71,6 @@ class continuation_base {  // NOLINT(readability-identifier-naming)
  * impossible to retrieve the continuation stored in a future, calling
  * `future<T>::then()` also invalidates the future, and all operations, such as
  * `.get()` and `.then()` cannot be called again.
- *
- * We rely on these guarantees to simplify the implementation of this class.
- *  * @note While most of the invariants for promises and futures are
- * implemented by this class, not all of them are. Notably, future values can
- * only be retrieved once, but this is enforced because calling `.get()` or
- * `.then()` on a future invalidates the future for further use. The shared
- * state does not record that state change.
  */
 template <typename T>
 class future_shared_state final {  // NOLINT(readability-identifier-naming)
