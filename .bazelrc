@@ -39,6 +39,10 @@ build --experimental_convenience_symlinks=ignore
 # frustrating when they fail and don't give any output. So, remove the limit.
 build --experimental_ui_max_stdouterr_bytes=-1
 
+# Disable bzlmod. This is enabled by default, and it seems to create
+# compatibility
+common --noenable_bzlmod
+
 # Inject ${GTEST_SHUFFLE} and ${GTEST_RANDOM_SEED} into the test environment
 # if they are set in the enclosing environment. This allows for running tests
 # in a random order to help expose undesirable interdependencies.
