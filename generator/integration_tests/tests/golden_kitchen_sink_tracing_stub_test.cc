@@ -467,8 +467,10 @@ TEST(MakeGoldenKitchenSinkTracingStub, OpenTelemetry) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, DoNothing)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, DoNothing).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = MakeGoldenKitchenSinkTracingStub(mock);
   grpc::ClientContext context;

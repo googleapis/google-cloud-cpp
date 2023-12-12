@@ -19,6 +19,7 @@
 #include "google/cloud/testing_util/mock_async_streaming_write_rpc.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -29,6 +30,7 @@ namespace {
 
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::SetServerMetadata;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanNamed;
@@ -45,6 +47,12 @@ using MockStream =
     google::cloud::testing_util::MockAsyncStreamingWriteRpc<int, int>;
 using TestedStream = AsyncStreamingWriteRpcTracing<int, int>;
 
+std::shared_ptr<grpc::ClientContext> context() {
+  auto c = std::make_shared<grpc::ClientContext>();
+  SetServerMetadata(*c, {});
+  return c;
+}
+
 TEST(AsyncStreamingWriteRpcTracing, Cancel) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
@@ -59,8 +67,7 @@ TEST(AsyncStreamingWriteRpcTracing, Cancel) {
       .WillOnce(Return(make_ready_future<StatusOr<int>>(
           internal::CancelledError("cancelled"))));
 
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   stream.Cancel();
   (void)stream.Finish().get();
 
@@ -84,8 +91,7 @@ TEST(AsyncStreamingWriteRpcTracing, Start) {
       .WillOnce(Return(
           make_ready_future<StatusOr<int>>(internal::AbortedError("fail"))));
 
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   EXPECT_TRUE(stream.Start().get());
   (void)stream.Finish().get();
 
@@ -111,8 +117,7 @@ TEST(AsyncStreamingWriteRpcTracing, Write) {
       .WillOnce(Return(
           make_ready_future<StatusOr<int>>(internal::AbortedError("fail"))));
 
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   EXPECT_TRUE(stream.Write(100, grpc::WriteOptions{}).get());
   EXPECT_FALSE(stream.Write(200, grpc::WriteOptions{}).get());
   EXPECT_TRUE(stream.Write(300, grpc::WriteOptions{}.set_last_message()).get());
@@ -157,8 +162,7 @@ TEST(AsyncStreamingWriteRpcTracing, WritesDone) {
       .WillOnce(Return(
           make_ready_future<StatusOr<int>>(internal::AbortedError("fail"))));
 
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   EXPECT_FALSE(stream.WritesDone().get());
   (void)stream.Finish().get();
 
@@ -179,8 +183,7 @@ TEST(AsyncStreamingWriteRpcTracing, Finish) {
       .WillOnce(Return(
           make_ready_future<StatusOr<int>>(internal::AbortedError("fail"))));
 
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   EXPECT_THAT(stream.Finish().get(), StatusIs(StatusCode::kAborted, "fail"));
 
   auto spans = span_catcher->GetSpans();
@@ -200,8 +203,7 @@ TEST(AsyncStreamingWriteRpcTracing, GetRequestMetadata) {
       .WillOnce(Return(RpcMetadata{{{"key", "value"}}, {}}));
 
   auto span = MakeSpan("span");
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   auto md = stream.GetRequestMetadata();
   EXPECT_THAT(md.headers, ElementsAre(Pair("key", "value")));
 }
@@ -212,8 +214,7 @@ TEST(AsyncStreamingWriteRpcTracing, SpanEndsOnDestruction) {
   {
     auto mock = std::make_unique<MockStream>();
     auto span = MakeSpan("span");
-    TestedStream stream(std::make_shared<grpc::ClientContext>(),
-                        std::move(mock), span);
+    TestedStream stream(context(), std::move(mock), span);
 
     auto spans = span_catcher->GetSpans();
     EXPECT_THAT(spans, IsEmpty());

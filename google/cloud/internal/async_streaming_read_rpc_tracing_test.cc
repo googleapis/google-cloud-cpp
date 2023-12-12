@@ -19,6 +19,7 @@
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -30,6 +31,7 @@ namespace {
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::MockAsyncStreamingReadRpc;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::SetServerMetadata;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanNamed;
@@ -46,6 +48,12 @@ using ::testing::Return;
 using MockStream = MockAsyncStreamingReadRpc<int>;
 using TestedStream = AsyncStreamingReadRpcTracing<int>;
 
+std::shared_ptr<grpc::ClientContext> context() {
+  auto c = std::make_shared<grpc::ClientContext>();
+  SetServerMetadata(*c, {});
+  return c;
+}
+
 TEST(AsyncStreamingReadRpcTracing, Cancel) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
@@ -60,8 +68,7 @@ TEST(AsyncStreamingReadRpcTracing, Cancel) {
       .WillOnce(
           Return(make_ready_future(internal::CancelledError("cancelled"))));
 
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   stream.Cancel();
   (void)stream.Finish().get();
 
@@ -84,8 +91,7 @@ TEST(AsyncStreamingReadRpcTracing, Start) {
   EXPECT_CALL(*mock, Finish)
       .WillOnce(Return(make_ready_future(internal::AbortedError("fail"))));
 
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   EXPECT_TRUE(stream.Start().get());
   (void)stream.Finish().get();
 
@@ -112,8 +118,7 @@ TEST(AsyncStreamingReadRpcTracing, Read) {
   EXPECT_CALL(*mock, Finish)
       .WillOnce(Return(make_ready_future(internal::AbortedError("fail"))));
 
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   EXPECT_THAT(stream.Read().get(), Optional(100));
   EXPECT_THAT(stream.Read().get(), Optional(200));
   EXPECT_THAT(stream.Read().get(), Optional(300));
@@ -152,8 +157,7 @@ TEST(AsyncStreamingReadRpcTracing, Finish) {
   EXPECT_CALL(*mock, Finish)
       .WillOnce(Return(make_ready_future(internal::AbortedError("fail"))));
 
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   EXPECT_THAT(stream.Finish().get(), StatusIs(StatusCode::kAborted, "fail"));
 
   auto spans = span_catcher->GetSpans();
@@ -173,8 +177,7 @@ TEST(AsyncStreamingReadRpcTracing, GetRequestMetadata) {
       .WillOnce(Return(RpcMetadata{{{"key", "value"}}, {}}));
 
   auto span = MakeSpan("span");
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   auto md = stream.GetRequestMetadata().headers;
   EXPECT_THAT(md, ElementsAre(Pair("key", "value")));
 }
@@ -185,8 +188,7 @@ TEST(AsyncStreamingReadRpcTracing, SpanEndsOnDestruction) {
   {
     auto mock = std::make_unique<MockStream>();
     auto span = MakeSpan("span");
-    TestedStream stream(std::make_shared<grpc::ClientContext>(),
-                        std::move(mock), span);
+    TestedStream stream(context(), std::move(mock), span);
 
     auto spans = span_catcher->GetSpans();
     EXPECT_THAT(spans, IsEmpty());

@@ -27,6 +27,7 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -344,6 +345,7 @@ using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::ValidatePropagator;
 using ::testing::IsEmpty;
 using ::testing::UnorderedElementsAre;
 
@@ -353,8 +355,9 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto context,
                     google::pubsub::v1::PublishRequest const&) {
+        ValidatePropagator(*context);
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         return make_ready_future(make_status_or(response));
