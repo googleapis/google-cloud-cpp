@@ -136,11 +136,11 @@ void ExtractAttributes(grpc::ClientContext& context,
                        opentelemetry::trace::Span& span) {
   auto md = GetRequestMetadataFromContext(context);
   for (auto& kv : md.headers) {
-    auto p = MakeAttribute({std::move(kv.first), std::move(kv.second)});
+    auto p = MakeAttribute(std::move(kv));
     span.SetAttribute(p.first, p.second);
   }
   for (auto& kv : md.trailers) {
-    auto p = MakeAttribute({std::move(kv.first), std::move(kv.second)});
+    auto p = MakeAttribute(std::move(kv));
     span.SetAttribute(p.first, p.second);
   }
 }
