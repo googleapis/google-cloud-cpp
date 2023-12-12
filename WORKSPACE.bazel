@@ -21,19 +21,23 @@ google_cloud_cpp_development_deps()
 google_cloud_cpp_deps()
 
 load("@rules_cc//cc:repositories.bzl", "rules_cc_dependencies", "rules_cc_toolchains")
+
 rules_cc_dependencies()
+
 rules_cc_toolchains()
 
 load(
     "@build_bazel_rules_apple//apple:repositories.bzl",
     "apple_rules_dependencies",
 )
+
 apple_rules_dependencies()
 
 load(
     "@build_bazel_apple_support//lib:repositories.bzl",
     "apple_support_dependencies",
 )
+
 apple_support_dependencies()
 
 # Configure @com_google_googleapis to only compile C++ and gRPC libraries.
