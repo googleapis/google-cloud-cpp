@@ -34,7 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RapidMigrationAssessmentStub>
 CreateDefaultRapidMigrationAssessmentStub(google::cloud::CompletionQueue cq,
-                                          Options const& options);
+                                          Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rapidmigrationassessment_v1_internal

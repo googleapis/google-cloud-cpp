@@ -40,7 +40,7 @@ namespace cloudbuild_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RepositoryManagerStub> CreateDefaultRepositoryManagerStub(
-    google::cloud::CompletionQueue cq, Options const& options) {
+    google::cloud::CompletionQueue cq, Options& options) {
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv("GOOGLE_CLOUD_CPP_REPOSITORY_MANAGER_ENDPOINT"),
       internal::FetchOption<EndpointOption>(options),
@@ -55,6 +55,7 @@ std::shared_ptr<RepositoryManagerStub> CreateDefaultRepositoryManagerStub(
     auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
                                                   error_options);
   } else {
+    options.set<EndpointOption>(*endpoint);
     auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
     auto channel =
         auth->CreateChannel(*endpoint, internal::MakeChannelArguments(options));

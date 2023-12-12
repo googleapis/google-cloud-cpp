@@ -32,7 +32,7 @@ namespace discoveryengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<DocumentServiceStub> CreateDefaultDocumentServiceStub(
-    google::cloud::CompletionQueue cq, Options const& options);
+    google::cloud::CompletionQueue cq, Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1_internal

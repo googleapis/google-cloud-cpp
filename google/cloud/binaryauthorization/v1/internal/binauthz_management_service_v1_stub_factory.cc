@@ -41,7 +41,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<BinauthzManagementServiceV1Stub>
 CreateDefaultBinauthzManagementServiceV1Stub(google::cloud::CompletionQueue cq,
-                                             Options const& options) {
+                                             Options& options) {
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv(
           "GOOGLE_CLOUD_CPP_BINAUTHZ_MANAGEMENT_SERVICE_V1_ENDPOINT"),
@@ -57,6 +57,7 @@ CreateDefaultBinauthzManagementServiceV1Stub(google::cloud::CompletionQueue cq,
     auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
                                                   error_options);
   } else {
+    options.set<EndpointOption>(*endpoint);
     auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
     auto channel =
         auth->CreateChannel(*endpoint, internal::MakeChannelArguments(options));

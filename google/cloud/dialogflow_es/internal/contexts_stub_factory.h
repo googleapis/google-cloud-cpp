@@ -32,7 +32,7 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ContextsStub> CreateDefaultContextsStub(
-    google::cloud::CompletionQueue cq, Options const& options);
+    google::cloud::CompletionQueue cq, Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

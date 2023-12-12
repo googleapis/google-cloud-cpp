@@ -32,7 +32,7 @@ namespace bigquery_connection_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ConnectionServiceStub> CreateDefaultConnectionServiceStub(
-    google::cloud::CompletionQueue cq, Options const& options);
+    google::cloud::CompletionQueue cq, Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_connection_v1_internal

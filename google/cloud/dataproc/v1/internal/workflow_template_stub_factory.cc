@@ -41,7 +41,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<WorkflowTemplateServiceStub>
 CreateDefaultWorkflowTemplateServiceStub(google::cloud::CompletionQueue cq,
-                                         Options const& options) {
+                                         Options& options) {
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv("GOOGLE_CLOUD_CPP_WORKFLOW_TEMPLATE_SERVICE_ENDPOINT"),
       internal::FetchOption<EndpointOption>(options), "dataproc.googleapis.com",
@@ -56,6 +56,7 @@ CreateDefaultWorkflowTemplateServiceStub(google::cloud::CompletionQueue cq,
     auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
                                                   error_options);
   } else {
+    options.set<EndpointOption>(*endpoint);
     auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
     auto channel =
         auth->CreateChannel(*endpoint, internal::MakeChannelArguments(options));

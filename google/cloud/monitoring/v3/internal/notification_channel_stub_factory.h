@@ -33,7 +33,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<NotificationChannelServiceStub>
 CreateDefaultNotificationChannelServiceStub(google::cloud::CompletionQueue cq,
-                                            Options const& options);
+                                            Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_v3_internal

@@ -40,7 +40,7 @@ namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<QueryServiceStub> CreateDefaultQueryServiceStub(
-    google::cloud::CompletionQueue cq, Options const& options) {
+    google::cloud::CompletionQueue cq, Options& options) {
   auto endpoint = internal::DetermineServiceEndpoint(
       internal::GetEnv("GOOGLE_CLOUD_CPP_QUERY_SERVICE_ENDPOINT"),
       internal::FetchOption<EndpointOption>(options),
@@ -55,6 +55,7 @@ std::shared_ptr<QueryServiceStub> CreateDefaultQueryServiceStub(
     auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
                                                   error_options);
   } else {
+    options.set<EndpointOption>(*endpoint);
     auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
     auto channel =
         auth->CreateChannel(*endpoint, internal::MakeChannelArguments(options));
