@@ -68,7 +68,7 @@ class ValidateMetadataFixture {
    *   cannot reuse @p context for other RPCs or other calls to this function.
    */
   std::multimap<std::string, std::string> GetMetadata(
-      grpc::ClientContext& context);
+      grpc::ClientContext& client_context);
 
   /**
    * Set server metadata on a `ClientContext`.
@@ -76,7 +76,7 @@ class ValidateMetadataFixture {
    * @note A `grpc::ClientContext` can be used in only one gRPC. The caller
    *   cannot reuse @p context for other RPCs or other calls to this function.
    */
-  void SetServerMetadata(grpc::ClientContext& context,
+  void SetServerMetadata(grpc::ClientContext& client_context,
                          RpcMetadata const& server_metadata = {});
 
   /**
@@ -105,6 +105,13 @@ class ValidateMetadataFixture {
       absl::optional<std::string> const& resource_prefix_header = {});
 
  private:
+  /**
+   * Performs a fake call, leaving the client's metadata accessible from the
+   * server context, and vice versa.
+   */
+  void ExchangeMetadata(grpc::ClientContext& client_context,
+                        grpc::GenericServerContext& server_context);
+
   grpc::CompletionQueue cli_cq_;
   grpc::AsyncGenericService generic_service_;
   std::unique_ptr<grpc::ServerCompletionQueue> srv_cq_;
