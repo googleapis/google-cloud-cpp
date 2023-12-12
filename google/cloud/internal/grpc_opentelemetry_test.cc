@@ -18,6 +18,7 @@
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
@@ -40,6 +41,7 @@ using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::SetServerMetadata;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -106,26 +108,43 @@ TEST(OpenTelemetry, EndSpan) {
   auto span_catcher = InstallSpanCatcher();
 
   grpc::ClientContext context;
+  SetServerMetadata(
+      context,
+      RpcMetadata{{{"header1", "value1"}, {"header2", "value2"}},
+                  {{"trailer", "value3"}, {"trailer-bin", "\x09\x85\x75"}}});
+
   auto span = MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar");
   auto status = EndSpan(context, *span, Status());
   EXPECT_STATUS_OK(status);
 
   auto spans = span_catcher->GetSpans();
-  // It is too hard to mock a `grpc::ClientContext`. We will just check that the
-  // expected attribute key is set.
   EXPECT_THAT(
       spans,
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)))));
+          SpanHasAttributes(
+              OTelAttribute<std::string>("rpc.grpc.response.metadata.header1",
+                                         "value1"),
+              OTelAttribute<std::string>("rpc.grpc.response.metadata.header2",
+                                         "value2"),
+              OTelAttribute<std::string>("rpc.grpc.response.metadata.trailer",
+                                         "value3"),
+              OTelAttribute<std::string>(
+                  "rpc.grpc.response.metadata.trailer-bin", R"(\x09\x85\x75)"),
+              OTelAttribute<std::string>("grpc.compression_algorithm",
+                                         "identity"),
+              // It is too hard to mock a `grpc::ClientContext`. We will
+              // just check that the expected attribute key is set.
+              OTelAttribute<std::string>("grpc.peer", _)))));
 }
 
 TEST(OpenTelemetry, EndSpanFuture) {
   auto span_catcher = InstallSpanCatcher();
 
   promise<Status> p;
-  auto f = EndSpan(std::make_shared<grpc::ClientContext>(),
-                   MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar"),
+  auto context = std::make_shared<grpc::ClientContext>();
+  SetServerMetadata(*context, RpcMetadata{});
+  auto f = EndSpan(context, MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar"),
                    p.get_future());
   EXPECT_FALSE(f.is_ready());
   p.set_value(Status());
@@ -151,9 +170,11 @@ TEST(OpenTelemetry, EndSpanFutureDetachesContext) {
   EXPECT_EQ(c, opentelemetry::context::RuntimeContext::GetCurrent());
 
   promise<Status> p;
+  auto context = std::make_shared<grpc::ClientContext>();
+  SetServerMetadata(*context, RpcMetadata{});
   auto f =
-      EndSpan(std::make_shared<grpc::ClientContext>(),
-              MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar"), p.get_future())
+      EndSpan(context, MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar"),
+              p.get_future())
           .then([](auto f) {
             auto s = f.get();
             // The `OTelContext` should be cleared by the time we exit
