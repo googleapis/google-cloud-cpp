@@ -385,36 +385,34 @@ void ValidateMetadataFixture::ExchangeMetadata(
   // Start a call, the contents of which, do not matter.
   auto cli_stream =
       generic_stub.PrepareCall(&client_context, "made_up_method", &cli_cq_);
-  auto call_tag = std::make_unique<int>();
-  cli_stream->StartCall(call_tag.get());
+  int call_tag;
+  cli_stream->StartCall(&call_tag);
   cli_cq_.Next(&tag, &ok);
-  ASSERT_TRUE(ok && tag == call_tag.get()) << "stub.PrepareCall() failed.";
+  ASSERT_TRUE(ok && tag == &call_tag) << "stub.PrepareCall() failed.";
 
   grpc::GenericServerAsyncReaderWriter reader_writer(&server_context);
 
   // Process the request.
-  auto request_tag = std::make_unique<int>();
+  int request_tag;
   generic_service_.RequestCall(&server_context, &reader_writer, srv_cq_.get(),
-                               srv_cq_.get(), request_tag.get());
+                               srv_cq_.get(), &request_tag);
   srv_cq_->Next(&tag, &ok);
-  ASSERT_TRUE(ok && tag == request_tag.get())
-      << "service.RequestCall() failed.";
+  ASSERT_TRUE(ok && tag == &request_tag) << "service.RequestCall() failed.";
 
   // Finish the stream on the server-side.
-  auto srv_finish_tag = std::make_unique<int>();
+  int srv_finish_tag;
   reader_writer.Finish(
       grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "unimplemented"),
-      srv_finish_tag.get());
+      &srv_finish_tag);
   srv_cq_->Next(&tag, &ok);
-  ASSERT_TRUE(ok && tag == srv_finish_tag.get())
-      << "reader_writer.Finish() failed.";
+  ASSERT_TRUE(ok && tag == &srv_finish_tag) << "reader_writer.Finish() failed.";
 
   // Finish the stream on the client-side.
   grpc::Status status;
-  auto cli_finish_tag = std::make_unique<int>();
-  cli_stream->Finish(&status, cli_finish_tag.get());
+  int cli_finish_tag;
+  cli_stream->Finish(&status, &cli_finish_tag);
   cli_cq_.Next(&tag, &ok);
-  ASSERT_TRUE(ok && tag == cli_finish_tag.get()) << "stream.Finish() failed.";
+  ASSERT_TRUE(ok && tag == &cli_finish_tag) << "stream.Finish() failed.";
 }
 
 }  // namespace testing_util
