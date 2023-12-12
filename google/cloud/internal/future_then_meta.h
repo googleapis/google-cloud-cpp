@@ -33,6 +33,15 @@ namespace internal {
 template <typename T>
 class future_shared_state;
 
+/**
+ * A monostate for `future<void>`.
+ *
+ * The implementation already uses `absl::monostate` to represent "future<void>
+ * is **not** set". We need a distinct type to represent "`future<void>` value
+ * is set".
+ */
+struct FutureVoid {};
+
 /// Compute the return type for a `future<T>::then()`
 template <typename FunctorReturn>
 struct unwrap_then {  // NOLINT(readability-identifier-naming)
@@ -59,6 +68,19 @@ struct unwrap_internal<std::shared_ptr<internal::future_shared_state<U>>> {
   using type = U;
   using requires_unwrap_t = std::true_type;
 };
+
+template <typename T>
+struct SharedStateTypeImpl {
+  using type = future_shared_state<T>;
+};
+
+template <>
+struct SharedStateTypeImpl<void> {
+  using type = future_shared_state<FutureVoid>;
+};
+
+template <typename T>
+using SharedStateType = typename SharedStateTypeImpl<T>::type;
 
 /**
  * A metafunction to implement `internal::continuation<Functor,T>`.
@@ -89,15 +111,14 @@ struct unwrap_internal<std::shared_ptr<internal::future_shared_state<U>>> {
  *   its single input parameter.
  * @tparam T the type contained in the input future.
  */
-template <
-    typename Functor, typename T,
-    std::enable_if_t<
-        is_invocable<Functor, std::shared_ptr<future_shared_state<T>>>::value,
-        int> = 0>
+template <typename Functor, typename T,
+          std::enable_if_t<
+              is_invocable<Functor, std::shared_ptr<SharedStateType<T>>>::value,
+              int> = 0>
 struct continuation_helper {  // NOLINT(readability-identifier-naming)
   /// The type returned by calling the functor with the given future type.
   using functor_result_t =
-      invoke_result_t<Functor, std::shared_ptr<future_shared_state<T>>>;
+      invoke_result_t<Functor, std::shared_ptr<SharedStateType<T>>>;
 
   /// The type returned by `.then()`, which is a `future<U>`.
   using result_t = typename unwrap_then<functor_result_t>::type;
@@ -108,7 +129,7 @@ struct continuation_helper {  // NOLINT(readability-identifier-naming)
       typename unwrap_then<functor_result_t>::requires_unwrap_t;
 
   /// The type of the shared state created by `.then()`.
-  using state_t = future_shared_state<result_t>;
+  using state_t = SharedStateType<result_t>;
 };
 
 /**
@@ -140,16 +161,15 @@ struct continuation_helper {  // NOLINT(readability-identifier-naming)
  *   its single input parameter.
  * @tparam T the type contained in the input future.
  */
-template <
-    typename Functor, typename T,
-    std::enable_if_t<
-        is_invocable<Functor, std::shared_ptr<future_shared_state<T>>>::value,
-        int> = 0>
+template <typename Functor, typename T,
+          std::enable_if_t<
+              is_invocable<Functor, std::shared_ptr<SharedStateType<T>>>::value,
+              int> = 0>
 // NOLINTNEXTLINE(readability-identifier-naming)
 struct unwrapping_continuation_helper {
   /// The type returned by calling the functor with the given future type.
   using functor_result_t =
-      invoke_result_t<Functor, std::shared_ptr<future_shared_state<T>>>;
+      invoke_result_t<Functor, std::shared_ptr<SharedStateType<T>>>;
 
   /// The type returned by `.then()`, which is a `future<U>`.
   using result_t = typename unwrap_internal<functor_result_t>::type;
@@ -160,7 +180,7 @@ struct unwrapping_continuation_helper {
       typename unwrap_internal<functor_result_t>::requires_unwrap_t;
 
   /// The type of the shared state created by `.then()`.
-  using state_t = future_shared_state<result_t>;
+  using state_t = SharedStateType<result_t>;
 };
 
 /**
@@ -201,7 +221,7 @@ struct then_helper {  // NOLINT(readability-identifier-naming)
   using future_t = future<result_t>;
 
   /// The type of the shared state created by `.then()`.
-  using state_t = future_shared_state<result_t>;
+  using state_t = SharedStateType<result_t>;
 };
 
 template <typename T, typename U>

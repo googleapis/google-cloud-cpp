@@ -771,7 +771,7 @@ TEST(FutureTestConvertingConstructor, ConvertFuture) {
   future<FromInt> f0{p0.get_future()};
 }
 
-static_assert(!std::is_constructible<future<FromInt>, future<int*>>{},
+static_assert(!std::is_constructible<future<FromInt>, future<int*>>::value,
               "Should not compile.");
 
 }  // namespace
