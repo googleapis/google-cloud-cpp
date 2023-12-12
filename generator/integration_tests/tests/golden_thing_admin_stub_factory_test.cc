@@ -43,7 +43,9 @@ class GoldenStubFactoryTest : public ::testing::Test {
 };
 
 TEST_F(GoldenStubFactoryTest, DefaultStubWithoutLogging) {
-  auto default_stub = CreateDefaultGoldenThingAdminStub(CompletionQueue{}, {});
+  Options options;
+  auto default_stub =
+      CreateDefaultGoldenThingAdminStub(CompletionQueue{}, options);
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, IsEmpty());
 }
@@ -81,8 +83,7 @@ TEST_F(GoldenStubFactoryTest, DefaultStubWithTracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto options = EnableTracing(Options{}.set<EndpointOption>("localhost:1"));
-  auto stub =
-      CreateDefaultGoldenThingAdminStub(CompletionQueue{}, std::move(options));
+  auto stub = CreateDefaultGoldenThingAdminStub(CompletionQueue{}, options);
   grpc::ClientContext context;
   (void)stub->DeleteBackup(context, {});
 
@@ -97,8 +98,7 @@ TEST_F(GoldenStubFactoryTest, DefaultStubWithTracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto options = DisableTracing(Options{}.set<EndpointOption>("localhost:1"));
-  auto stub =
-      CreateDefaultGoldenThingAdminStub(CompletionQueue{}, std::move(options));
+  auto stub = CreateDefaultGoldenThingAdminStub(CompletionQueue{}, options);
   grpc::ClientContext context;
   (void)stub->DeleteBackup(context, {});
 

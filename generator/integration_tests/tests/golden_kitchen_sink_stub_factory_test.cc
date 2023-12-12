@@ -41,7 +41,9 @@ class GoldenKitchenSinkStubFactoryTest : public ::testing::Test {
 };
 
 TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithoutLogging) {
-  auto default_stub = CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, {});
+  Options options;
+  auto default_stub =
+      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, IsEmpty());
 }
@@ -119,8 +121,7 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto options = EnableTracing(Options{}.set<EndpointOption>("localhost:1"));
-  auto stub =
-      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, std::move(options));
+  auto stub = CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
   grpc::ClientContext context;
   (void)stub->DoNothing(context, {});
 
@@ -134,8 +135,7 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto options = DisableTracing(Options{}.set<EndpointOption>("localhost:1"));
-  auto stub =
-      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, std::move(options));
+  auto stub = CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
   grpc::ClientContext context;
   (void)stub->DoNothing(context, {});
 
