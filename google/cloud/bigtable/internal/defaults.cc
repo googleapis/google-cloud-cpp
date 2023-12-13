@@ -168,9 +168,9 @@ Options DefaultOptions(Options opts) {
   // Fill any missing default values.
   auto defaults =
       Options{}
-          .set<DataEndpointOption>("bigtable.googleapis.com")
-          .set<AdminEndpointOption>("bigtableadmin.googleapis.com")
-          .set<InstanceAdminEndpointOption>("bigtableadmin.googleapis.com")
+          .set<DataEndpointOption>("bigtable.googleapis.com.")
+          .set<AdminEndpointOption>("bigtableadmin.googleapis.com.")
+          .set<InstanceAdminEndpointOption>("bigtableadmin.googleapis.com.")
           .set<GrpcCredentialOption>(emulator
                                          ? grpc::InsecureChannelCredentials()
                                          : grpc::GoogleDefaultCredentials())
