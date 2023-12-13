@@ -227,24 +227,6 @@ struct then_helper {  // NOLINT(readability-identifier-naming)
   using state_t = SharedStateType<result_t>;
 };
 
-template <typename T, typename U>
-struct make_ready_helper {  // NOLINT(readability-identifier-naming)
-  using type = std::decay_t<T>;
-};
-
-template <typename T, typename X>
-struct make_ready_helper<T, std::reference_wrapper<X>> {
-  using type = X&;
-};
-
-/**
- * Compute the return type of make_ready_future<T>.
- */
-template <typename T>
-struct make_ready_return {  // NOLINT(readability-identifier-naming)
-  using type = typename make_ready_helper<T, std::decay_t<T>>::type;
-};
-
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
