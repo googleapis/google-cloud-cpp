@@ -53,7 +53,7 @@ Status StubFactoryRestGenerator::GenerateHeader() {
 
   HeaderPrint(R"""(
 std::shared_ptr<$stub_rest_class_name$> CreateDefault$stub_rest_class_name$(
-    Options const& options);
+    Options& options);
 )""");
 
   HeaderCloseNamespaces();
@@ -76,8 +76,12 @@ Status StubFactoryRestGenerator::GenerateCc() {
       {vars("stub_factory_rest_header_path"), vars("logging_rest_header_path"),
        vars("metadata_rest_header_path"), vars("stub_rest_header_path"),
        "google/cloud/common_options.h", "google/cloud/credentials.h",
+       "google/cloud/internal/credentials_impl.h",
+       "google/cloud/internal/getenv.h",
        "google/cloud/internal/populate_common_options.h",
-       "google/cloud/internal/rest_options.h", "google/cloud/rest_options.h",
+       "google/cloud/internal/rest_options.h",
+       "google/cloud/internal/service_endpoint.h",
+       "google/cloud/rest_options.h",
        "google/cloud/internal/absl_str_cat_quiet.h",
        "google/cloud/internal/algorithm.h", "google/cloud/options.h",
        "google/cloud/log.h", "absl/strings/match.h"});
@@ -89,24 +93,54 @@ Status StubFactoryRestGenerator::GenerateCc() {
   // factory function implementation
   CcPrint(R"""(
 std::shared_ptr<$stub_rest_class_name$>
-CreateDefault$stub_rest_class_name$(Options const& options) {
-  Options opts = options;
-  if (!opts.has<UnifiedCredentialsOption>()) {
-    opts.set<UnifiedCredentialsOption>(
+CreateDefault$stub_rest_class_name$(Options& options) {
+  Options stub_creation_opts = options;
+  if (!options.has<UnifiedCredentialsOption>()) {
+    stub_creation_opts.set<UnifiedCredentialsOption>(
         MakeGoogleDefaultCredentials(internal::MakeAuthOptions(options)));
   }
-  if (!opts.has<rest_internal::LongrunningEndpointOption>()) {
-    opts.set<rest_internal::LongrunningEndpointOption>(
-        "https://longrunning.googleapis.com");
-  }
-  if (opts.has<EndpointOption>()) {
-    std::string endpoint = opts.get<EndpointOption>();
-    if (!absl::StartsWithIgnoreCase(endpoint, "http")) {
-      opts.set<EndpointOption>(absl::StrCat("https://", endpoint));
+  auto lro_endpoint = internal::DetermineServiceEndpoint(
+      {},
+      internal::FetchOption<rest_internal::LongrunningEndpointOption>(options),
+      "https://longrunning.googleapis.com",
+      options);
+
+  auto service_endpoint = internal::DetermineServiceEndpoint(
+      internal::GetEnv("$service_endpoint_env_var$"),
+      internal::FetchOption<EndpointOption>(options), "$service_endpoint$",
+      options);
+
+  if (!lro_endpoint.ok() || !service_endpoint.ok()) {
+    if (!service_endpoint.ok()) {
+      options.unset<EndpointOption>();
+      stub_creation_opts.set<UnifiedCredentialsOption>(
+          internal::MakeErrorCredentials(std::move(service_endpoint).status()));
+    } else {
+      options.unset<rest_internal::LongrunningEndpointOption>();
+      stub_creation_opts.set<UnifiedCredentialsOption>(
+          internal::MakeErrorCredentials(std::move(lro_endpoint).status()));
     }
+  } else {
+    if (!absl::StartsWithIgnoreCase(*lro_endpoint, "http")) {
+      stub_creation_opts.set<rest_internal::LongrunningEndpointOption>(
+          absl::StrCat("https://", *lro_endpoint));
+    } else {
+      stub_creation_opts.set<rest_internal::LongrunningEndpointOption>(
+          *lro_endpoint);
+    }
+
+    if (!absl::StartsWithIgnoreCase(*service_endpoint, "http")) {
+      stub_creation_opts.set<EndpointOption>(absl::StrCat(
+          "https://", *service_endpoint));
+    } else {
+      stub_creation_opts.set<EndpointOption>(*service_endpoint);
+    }
+    options.set<EndpointOption>(*service_endpoint);
+    options.set<rest_internal::LongrunningEndpointOption>(*lro_endpoint);
   }
+
   std::shared_ptr<$stub_rest_class_name$> stub =
-      std::make_shared<Default$stub_rest_class_name$>(std::move(opts));
+      std::make_shared<Default$stub_rest_class_name$>(std::move(stub_creation_opts));
   stub = std::make_shared<$metadata_rest_class_name$>(std::move(stub));
   if (internal::Contains(
       options.get<TracingComponentsOption>(), "rpc")) {
