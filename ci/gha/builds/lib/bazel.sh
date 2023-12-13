@@ -25,8 +25,6 @@ source module ci/lib/io.sh
 # Selects a default bazel version, though individual builds can override this.
 : "${USE_BAZEL_VERSION:="7.0.0"}"
 export USE_BAZEL_VERSION
-io::log "Using bazelisk version"
-bazelisk version
 
 # Outputs a list of args that should be given to all bazel invocations. To read
 # this into an array use `mapfile -t my_array < <(bazel::common_args)`
@@ -98,6 +96,18 @@ function bazel::prefetch() {
   mapfile -t os_rules < <(os::prefetch)
   "ci/retry-command.sh" 3 120 bazelisk "${args[@]}" fetch "${common_rules[@]}" "${os_rules[@]}"
 }
+
+if [[ -z "${VCINSTALLDIR}" ]]; then
+  echo "ERROR: Missing VCINSTALLDIR, this is needed to configure Bazel+MSVC"
+  exit 1
+fi
+export BAZEL_VC="${VCINSTALLDIR}"
+
+io::log "Using bazelisk version"
+bazelisk version
+
+io::log "Info"
+bazelisk info
 
 io::log "Prefetching bazel deps..."
 TIMEFORMAT="==> 🕑 prefetching done in %R seconds"

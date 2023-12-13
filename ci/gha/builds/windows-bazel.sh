@@ -44,12 +44,6 @@ if [[ $# -gt 1 ]]; then
   shift
 fi
 
-if [[ -z "${VCINSTALLDIR}" ]]; then
-  echo "ERROR: Missing VCINSTALLDIR, this is needed to configure Bazel+MSVC"
-  exit 1
-fi
-export BAZEL_VC="${VCINSTALLDIR}"
-
 io::log_h1 "Get target list for: " "$@"
 # The output from `bazelisk query` includes \r\n lines as this is running
 # on Windows. We need to clean things up before feeding them through bash.
