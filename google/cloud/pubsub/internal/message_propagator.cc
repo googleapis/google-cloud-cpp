@@ -33,6 +33,14 @@ void InjectTraceContext(
   propagator.Inject(carrier, current);
 }
 
+opentelemetry::context::Context ExtractTraceContext(
+    pubsub::Message& message,
+    opentelemetry::context::propagation::TextMapPropagator& propagator) {
+  auto current = opentelemetry::context::RuntimeContext::GetCurrent();
+  MessageCarrier carrier(message);
+  return propagator.Extract(carrier, current);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud

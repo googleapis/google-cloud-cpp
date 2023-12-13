@@ -70,17 +70,20 @@ struct unwrap_internal<std::shared_ptr<internal::future_shared_state<U>>> {
 };
 
 template <typename T>
-struct SharedStateTypeImpl {
-  using type = future_shared_state<T>;
+struct SharedStateValueImpl {
+  using type = T;
 };
 
 template <>
-struct SharedStateTypeImpl<void> {
-  using type = future_shared_state<FutureVoid>;
+struct SharedStateValueImpl<void> {
+  using type = FutureVoid;
 };
 
 template <typename T>
-using SharedStateType = typename SharedStateTypeImpl<T>::type;
+using SharedStateValue = typename SharedStateValueImpl<T>::type;
+
+template <typename T>
+using SharedStateType = future_shared_state<SharedStateValue<T>>;
 
 /**
  * A metafunction to implement `internal::continuation<Functor,T>`.

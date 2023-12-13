@@ -22,6 +22,3 @@ find_dependency(google_cloud_cpp_rest_protobuf_internal)
 find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_sql-targets.cmake")
-
-# TODO(#12120) - remove once we no longer need backwards compatibility link
-add_library(google-cloud-cpp::experimental-sql ALIAS google-cloud-cpp::sql)

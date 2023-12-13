@@ -252,6 +252,11 @@ MATCHER_P(SpanLinksSizeIs, span_links,
   return actual == span_links;
 }
 
+MATCHER_P(EqualsSpanContext, context, "has context" + ToString(context)) {
+  *result_listener << "has context: " << ToString(arg);
+  return arg == context;
+}
+
 class SpanCatcher {
  public:
   SpanCatcher();
