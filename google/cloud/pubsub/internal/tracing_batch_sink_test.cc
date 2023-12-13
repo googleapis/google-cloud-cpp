@@ -217,8 +217,7 @@ TEST(TracingBatchSink, PublishSpanHasAttributes) {
                                  TestTopic().FullName())))));
 }
 
-TEST(TracingBatchSink, PublishSpanHasIsRoot) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+TEST(TracingBatchSink, PublishSpanParentIsRoot) {
   auto span_catcher = InstallSpanCatcher();
   auto message_span = MakeSpan("test span");
   auto mock = std::make_unique<pubsub_testing::MockBatchSink>();
