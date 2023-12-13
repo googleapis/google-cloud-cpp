@@ -667,8 +667,10 @@ TEST(MakeGoldenThingAdminTracingStub, OpenTelemetry) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, DropDatabase)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, DropDatabase).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = MakeGoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;

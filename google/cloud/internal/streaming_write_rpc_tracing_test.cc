@@ -17,6 +17,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,6 +28,7 @@ namespace {
 
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::SetServerMetadata;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanNamed;
@@ -52,6 +54,12 @@ class MockStreamingWriteRpc
 using MockStream = MockStreamingWriteRpc<int, int>;
 using TestedStream = StreamingWriteRpcTracing<int, int>;
 
+std::shared_ptr<grpc::ClientContext> context() {
+  auto c = std::make_shared<grpc::ClientContext>();
+  SetServerMetadata(*c, {});
+  return c;
+}
+
 TEST(StreamingWriteRpcTracingTest, Cancel) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
@@ -64,8 +72,7 @@ TEST(StreamingWriteRpcTracingTest, Cancel) {
   });
   EXPECT_CALL(*mock, Close).WillOnce(Return(5));
 
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   stream.Cancel();
   stream.Close();
 
@@ -90,8 +97,7 @@ TEST(StreamingWriteRpcTracingTest, Write) {
   EXPECT_CALL(*mock, Close).WillOnce(Return(5));
 
   auto span = MakeSpan("span");
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   EXPECT_TRUE(stream.Write(100, grpc::WriteOptions{}));
   EXPECT_FALSE(stream.Write(200, grpc::WriteOptions{}));
   EXPECT_TRUE(stream.Write(300, grpc::WriteOptions{}.set_last_message()));
@@ -131,8 +137,7 @@ TEST(StreamingWriteRpcTracingTest, Close) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Close).WillOnce(Return(5));
 
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   stream.Close();
 
   auto spans = span_catcher->GetSpans();
@@ -148,8 +153,7 @@ TEST(StreamingWriteRpcTracingTest, GetRequestMetadata) {
       .WillOnce(Return(RpcMetadata{{{"key", "value"}}, {{"tk", "tv"}}}));
 
   auto span = MakeSpan("span");
-  TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
-                      span);
+  TestedStream stream(context(), std::move(mock), span);
   auto md = stream.GetRequestMetadata();
   EXPECT_THAT(md.headers, ElementsAre(Pair("key", "value")));
   EXPECT_THAT(md.trailers, ElementsAre(Pair("tk", "tv")));
@@ -161,8 +165,7 @@ TEST(StreamingWriteRpcTracingTest, SpanEndsOnDestruction) {
   {
     auto mock = std::make_unique<MockStream>();
     auto span = MakeSpan("span");
-    TestedStream stream(std::make_shared<grpc::ClientContext>(),
-                        std::move(mock), span);
+    TestedStream stream(context(), std::move(mock), span);
 
     auto spans = span_catcher->GetSpans();
     EXPECT_THAT(spans, IsEmpty());

@@ -23,6 +23,7 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -184,6 +185,7 @@ using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::ValidatePropagator;
 using ::testing::IsEmpty;
 using ::testing::UnorderedElementsAre;
 
@@ -191,8 +193,9 @@ TEST(BlockingPublisherConnectionTest, TracingEnabled) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
   EXPECT_CALL(*mock, Publish)
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext& context,
                     google::pubsub::v1::PublishRequest const& request) {
+        ValidatePropagator(context);
         EXPECT_EQ(topic.FullName(), request.topic());
         EXPECT_EQ(1, request.messages_size());
         EXPECT_EQ("test-data-0", request.messages(0).data());
