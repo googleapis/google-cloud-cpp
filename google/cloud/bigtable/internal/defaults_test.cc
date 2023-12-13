@@ -49,9 +49,9 @@ TEST(OptionsTest, Defaults) {
       "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", absl::nullopt);
 
   auto opts = DefaultOptions();
-  EXPECT_EQ("bigtable.googleapis.com", opts.get<DataEndpointOption>());
-  EXPECT_EQ("bigtableadmin.googleapis.com", opts.get<AdminEndpointOption>());
-  EXPECT_EQ("bigtableadmin.googleapis.com",
+  EXPECT_EQ("bigtable.googleapis.com.", opts.get<DataEndpointOption>());
+  EXPECT_EQ("bigtableadmin.googleapis.com.", opts.get<AdminEndpointOption>());
+  EXPECT_EQ("bigtableadmin.googleapis.com.",
             opts.get<InstanceAdminEndpointOption>());
   EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
             typeid(opts.get<GrpcCredentialOption>()));
@@ -230,8 +230,8 @@ TEST(EndpointEnvTest, InstanceEmulatorEnvOnly) {
                                       "instance-emulator-host:9000");
 
   auto opts = DefaultOptions();
-  EXPECT_EQ("bigtable.googleapis.com", opts.get<DataEndpointOption>());
-  EXPECT_EQ("bigtableadmin.googleapis.com", opts.get<AdminEndpointOption>());
+  EXPECT_EQ("bigtable.googleapis.com.", opts.get<DataEndpointOption>());
+  EXPECT_EQ("bigtableadmin.googleapis.com.", opts.get<AdminEndpointOption>());
   EXPECT_EQ("instance-emulator-host:9000",
             opts.get<InstanceAdminEndpointOption>());
 }
@@ -304,8 +304,8 @@ TEST(EndpointEnvTest, DirectPathEnabled) {
             opts.get<DataEndpointOption>());
   EXPECT_EQ("directpath-bigtable.googleapis.com", opts.get<AuthorityOption>());
   // Admin endpoints are not affected.
-  EXPECT_EQ("bigtableadmin.googleapis.com", opts.get<AdminEndpointOption>());
-  EXPECT_EQ("bigtableadmin.googleapis.com",
+  EXPECT_EQ("bigtableadmin.googleapis.com.", opts.get<AdminEndpointOption>());
+  EXPECT_EQ("bigtableadmin.googleapis.com.",
             opts.get<InstanceAdminEndpointOption>());
   EXPECT_EQ(1, opts.get<GrpcNumChannelsOption>());
 }
@@ -316,7 +316,7 @@ TEST(EndpointEnvTest, DirectPathNoMatch) {
                                 "bigtable-not,almost-bigtable");
 
   auto opts = DefaultDataOptions(Options{});
-  EXPECT_EQ("bigtable.googleapis.com", opts.get<EndpointOption>());
+  EXPECT_EQ("bigtable.googleapis.com.", opts.get<EndpointOption>());
   EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
 }
 
