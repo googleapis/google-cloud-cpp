@@ -51,12 +51,13 @@ namespace internal {
  * A continuation object will hold both the callable and the state to call it
  * with, the implementation of `.then()` takes care of those details.
  */
-class continuation_base {  // NOLINT(readability-identifier-naming)
+template <typename T>
+class Continuation {  // NOLINT(readability-identifier-naming)
  public:
-  virtual ~continuation_base() = default;
+  virtual ~Continuation() = default;
 
   /// Invoke the continuation.
-  virtual void execute() = 0;
+  virtual void Execute(future_shared_state<T>& state) = 0;
 };
 
 /**
@@ -226,7 +227,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
     cv_.notify_all();
   }
 
-  void set_continuation(std::unique_ptr<continuation_base> c) {
+  void set_continuation(std::unique_ptr<Continuation<T>> c) {
     std::unique_lock<std::mutex> lk(mu_);
     if (continuation_) {
       ThrowFutureError(std::future_errc::future_already_retrieved, __func__);
@@ -236,7 +237,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
       // Release the lock before calling the user's code, holding locks during
       // callbacks is a bad practice.
       lk.unlock();
-      c->execute();
+      c->Execute(*this);
       return;
     }
     continuation_ = std::move(c);
@@ -312,8 +313,6 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
   }
 
  protected:
-  friend struct CoroutineSupport;
-
   bool is_ready_unlocked() const {
     return !absl::holds_alternative<absl::monostate>(state_);
   }
@@ -332,7 +331,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
       // Release the lock before calling the continuation because the
       // continuation will likely call get() to fetch the state of the future.
       lk.unlock();
-      continuation_->execute();
+      continuation_->Execute(*this);
       // If there is a continuation there can be no threads blocked on get() or
       // wait() because then() invalidates the future. Therefore we can return
       // without notifying any other threads.
@@ -365,7 +364,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
    * exception. Setting a continuation does not change the `current_state_`
    * member variable and does not satisfy the shared state.
    */
-  std::unique_ptr<continuation_base> continuation_;
+  std::unique_ptr<Continuation<T>> continuation_;
 
   // Allow users "cancel" the future with the given callback.
   std::atomic<bool> cancelled_ = ATOMIC_VAR_INIT(false);
@@ -456,25 +455,24 @@ void continuation_execute_delegate(
  *   `is_invocable<Functor, future_shared_state<R>>` requirement.
  */
 template <typename Functor, typename R>
-// NOLINTNEXTLINE(readability-identifier-naming)
-struct continuation : public continuation_base {
+struct SimpleContinuation : public Continuation<SharedStateValue<R>> {
   using result_t = typename continuation_helper<Functor, R>::result_t;
   using input_shared_state_t = SharedStateType<R>;
   using output_shared_state_t = SharedStateType<result_t>;
   using requires_unwrap_t =
       typename continuation_helper<Functor, R>::requires_unwrap_t;
 
-  continuation(Functor&& f, std::shared_ptr<input_shared_state_t> s)
+  SimpleContinuation(Functor&& f, std::shared_ptr<input_shared_state_t> s)
       : functor(std::move(f)),
         input(std::move(s)),
         output(std::make_shared<output_shared_state_t>(
             input.lock()->release_cancellation_callback())) {}
 
-  continuation(Functor&& f, std::shared_ptr<input_shared_state_t> s,
-               std::shared_ptr<output_shared_state_t> o)
+  SimpleContinuation(Functor&& f, std::shared_ptr<input_shared_state_t> s,
+                     std::shared_ptr<output_shared_state_t> o)
       : functor(std::move(f)), input(std::move(s)), output(std::move(o)) {}
 
-  void execute() override {
+  void Execute(SharedStateType<R>&) override {
     auto tmp = input.lock();
     if (!tmp) {
       output->set_exception(std::make_exception_ptr(
@@ -513,21 +511,20 @@ struct continuation : public continuation_base {
  *   `is_invocable<Functor, future_shared_state<R>>` requirement.
  */
 template <typename Functor, typename T>
-// NOLINTNEXTLINE(readability-identifier-naming)
-struct unwrapping_continuation : public continuation_base {
+struct UnwrappingContinuation : public Continuation<SharedStateValue<T>> {
   using R = typename unwrapping_continuation_helper<Functor, T>::result_t;
   using input_shared_state_t = SharedStateType<T>;
   using output_shared_state_t = SharedStateType<R>;
   using intermediate_shared_state_t = SharedStateType<R>;
 
-  unwrapping_continuation(Functor&& f, std::shared_ptr<input_shared_state_t> s)
+  UnwrappingContinuation(Functor&& f, std::shared_ptr<input_shared_state_t> s)
       : functor(std::move(f)),
         input(std::move(s)),
         intermediate(),
         output(std::make_shared<output_shared_state_t>(
             input.lock()->release_cancellation_callback())) {}
 
-  void execute() override {
+  void Execute(SharedStateType<T>&) override {
     auto tmp = input.lock();
     if (!tmp) {
       output->set_exception(std::make_exception_ptr(
@@ -556,14 +553,14 @@ struct unwrapping_continuation : public continuation_base {
     auto unwrapper = [](std::shared_ptr<intermediate_shared_state_t> r) {
       return r->get();
     };
-    using continuation_type = internal::continuation<decltype(unwrapper), R>;
+    using continuation_type =
+        internal::SimpleContinuation<decltype(unwrapper), R>;
     auto continuation = std::make_unique<continuation_type>(
         std::move(unwrapper), intermediate, output);
     // assert(intermediate->continuation_ == nullptr)
     // If intermediate has a continuation then the associated future would have
     // been invalid, and we never get here.
-    intermediate->set_continuation(
-        std::unique_ptr<continuation_base>(std::move(continuation)));
+    intermediate->set_continuation(std::move(continuation));
   }
 
   /// The functor called when `input` is satisfied.
@@ -585,12 +582,11 @@ template <typename F>
 std::shared_ptr<typename internal::continuation_helper<F, T>::state_t>
 future_shared_state<T>::make_continuation(
     std::shared_ptr<future_shared_state<T>> self, F&& functor) {
-  using continuation_type = internal::continuation<F, T>;
+  using continuation_type = internal::SimpleContinuation<F, T>;
   auto continuation =
       std::make_unique<continuation_type>(std::forward<F>(functor), self);
   auto result = continuation->output;
-  self->set_continuation(
-      std::unique_ptr<continuation_base>(std::move(continuation)));
+  self->set_continuation(std::move(continuation));
   return result;
 }
 
@@ -602,7 +598,7 @@ std::shared_ptr<
 future_shared_state<T>::make_continuation(
     std::shared_ptr<future_shared_state<T>> self, F&& functor, std::true_type) {
   // The type continuation that executes `F` on `self`:
-  using continuation_type = internal::unwrapping_continuation<F, T>;
+  using continuation_type = internal::UnwrappingContinuation<F, T>;
 
   // First create a continuation that calls the functor, and stores the result
   // in a `future_shared_state<future_shared_state<R>>`
@@ -611,8 +607,7 @@ future_shared_state<T>::make_continuation(
   // Save the value of `continuation->output`, because the move will make it
   // inaccessible.
   auto result = continuation->output;
-  self->set_continuation(
-      std::unique_ptr<continuation_base>(std::move(continuation)));
+  self->set_continuation(std::move(continuation));
   return result;
 }
 
