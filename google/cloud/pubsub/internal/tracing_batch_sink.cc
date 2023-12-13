@@ -61,8 +61,8 @@ auto MakeParent(Links const& links, Spans const& message_spans,
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   opentelemetry::context::Context root_context;
-  root_context =
-      root_context.SetValue(opentelemetry::trace::kIsRootSpanKey, true);
+  // TODO(#13287): Use the constant instead of the string.
+  root_context.SetValue(/*opentelemetry::trace::kIsRootSpanKey=*/"is_root_span", true);
   options.parent = root_context;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   auto batch_sink_parent = internal::MakeSpan(
