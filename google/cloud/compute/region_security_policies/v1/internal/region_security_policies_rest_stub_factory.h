@@ -31,7 +31,7 @@ namespace compute_region_security_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionSecurityPoliciesRestStub>
-CreateDefaultRegionSecurityPoliciesRestStub(Options const& options);
+CreateDefaultRegionSecurityPoliciesRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_security_policies_v1_internal

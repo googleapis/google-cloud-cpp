@@ -31,7 +31,7 @@ namespace compute_instance_group_managers_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<InstanceGroupManagersRestStub>
-CreateDefaultInstanceGroupManagersRestStub(Options const& options);
+CreateDefaultInstanceGroupManagersRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_instance_group_managers_v1_internal

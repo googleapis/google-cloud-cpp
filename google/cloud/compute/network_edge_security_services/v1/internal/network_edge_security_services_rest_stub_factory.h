@@ -31,7 +31,7 @@ namespace compute_network_edge_security_services_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<NetworkEdgeSecurityServicesRestStub>
-CreateDefaultNetworkEdgeSecurityServicesRestStub(Options const& options);
+CreateDefaultNetworkEdgeSecurityServicesRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_network_edge_security_services_v1_internal

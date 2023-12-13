@@ -31,7 +31,7 @@ namespace compute_external_vpn_gateways_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ExternalVpnGatewaysRestStub>
-CreateDefaultExternalVpnGatewaysRestStub(Options const& options);
+CreateDefaultExternalVpnGatewaysRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_external_vpn_gateways_v1_internal

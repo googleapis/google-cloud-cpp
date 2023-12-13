@@ -31,7 +31,7 @@ namespace compute_network_firewall_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<NetworkFirewallPoliciesRestStub>
-CreateDefaultNetworkFirewallPoliciesRestStub(Options const& options);
+CreateDefaultNetworkFirewallPoliciesRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_network_firewall_policies_v1_internal

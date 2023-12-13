@@ -30,7 +30,7 @@ namespace compute_region_commitments_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionCommitmentsRestStub>
-CreateDefaultRegionCommitmentsRestStub(Options const& options);
+CreateDefaultRegionCommitmentsRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_commitments_v1_internal

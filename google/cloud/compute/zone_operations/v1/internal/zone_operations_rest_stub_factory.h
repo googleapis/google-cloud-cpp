@@ -30,7 +30,7 @@ namespace compute_zone_operations_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ZoneOperationsRestStub> CreateDefaultZoneOperationsRestStub(
-    Options const& options);
+    Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_zone_operations_v1_internal

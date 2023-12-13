@@ -30,7 +30,7 @@ namespace compute_addresses_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<AddressesRestStub> CreateDefaultAddressesRestStub(
-    Options const& options);
+    Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_addresses_v1_internal

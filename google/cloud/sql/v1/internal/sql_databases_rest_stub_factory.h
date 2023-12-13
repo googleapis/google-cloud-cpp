@@ -30,7 +30,7 @@ namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<SqlDatabasesServiceRestStub>
-CreateDefaultSqlDatabasesServiceRestStub(Options const& options);
+CreateDefaultSqlDatabasesServiceRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1_internal

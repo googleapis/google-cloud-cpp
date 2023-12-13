@@ -29,8 +29,7 @@ namespace cloud {
 namespace compute_routers_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<RoutersRestStub> CreateDefaultRoutersRestStub(
-    Options const& options);
+std::shared_ptr<RoutersRestStub> CreateDefaultRoutersRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_routers_v1_internal

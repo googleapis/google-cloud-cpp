@@ -29,8 +29,7 @@ namespace cloud {
 namespace compute_images_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ImagesRestStub> CreateDefaultImagesRestStub(
-    Options const& options);
+std::shared_ptr<ImagesRestStub> CreateDefaultImagesRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_images_v1_internal

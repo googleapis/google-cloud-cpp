@@ -31,7 +31,7 @@ namespace compute_interconnect_locations_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<InterconnectLocationsRestStub>
-CreateDefaultInterconnectLocationsRestStub(Options const& options);
+CreateDefaultInterconnectLocationsRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_interconnect_locations_v1_internal

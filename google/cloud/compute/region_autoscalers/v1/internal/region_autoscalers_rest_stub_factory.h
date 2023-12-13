@@ -30,7 +30,7 @@ namespace compute_region_autoscalers_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionAutoscalersRestStub>
-CreateDefaultRegionAutoscalersRestStub(Options const& options);
+CreateDefaultRegionAutoscalersRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_autoscalers_v1_internal

@@ -29,8 +29,7 @@ namespace cloud {
 namespace compute_url_maps_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<UrlMapsRestStub> CreateDefaultUrlMapsRestStub(
-    Options const& options);
+std::shared_ptr<UrlMapsRestStub> CreateDefaultUrlMapsRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_url_maps_v1_internal

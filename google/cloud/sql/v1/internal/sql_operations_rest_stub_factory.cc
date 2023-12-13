@@ -24,8 +24,11 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/rest_options.h"
+#include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/rest_options.h"
@@ -38,24 +41,54 @@ namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<SqlOperationsServiceRestStub>
-CreateDefaultSqlOperationsServiceRestStub(Options const& options) {
-  Options opts = options;
-  if (!opts.has<UnifiedCredentialsOption>()) {
-    opts.set<UnifiedCredentialsOption>(
+CreateDefaultSqlOperationsServiceRestStub(Options& options) {
+  Options stub_creation_opts = options;
+  if (!options.has<UnifiedCredentialsOption>()) {
+    stub_creation_opts.set<UnifiedCredentialsOption>(
         MakeGoogleDefaultCredentials(internal::MakeAuthOptions(options)));
   }
-  if (!opts.has<rest_internal::LongrunningEndpointOption>()) {
-    opts.set<rest_internal::LongrunningEndpointOption>(
-        "https://longrunning.googleapis.com");
-  }
-  if (opts.has<EndpointOption>()) {
-    std::string endpoint = opts.get<EndpointOption>();
-    if (!absl::StartsWithIgnoreCase(endpoint, "http")) {
-      opts.set<EndpointOption>(absl::StrCat("https://", endpoint));
+  auto lro_endpoint = internal::DetermineServiceEndpoint(
+      {},
+      internal::FetchOption<rest_internal::LongrunningEndpointOption>(options),
+      "https://longrunning.googleapis.com", options);
+
+  auto service_endpoint = internal::DetermineServiceEndpoint(
+      internal::GetEnv("GOOGLE_CLOUD_CPP_SQL_OPERATIONS_SERVICE_ENDPOINT"),
+      internal::FetchOption<EndpointOption>(options), "sqladmin.googleapis.com",
+      options);
+
+  if (!lro_endpoint.ok() || !service_endpoint.ok()) {
+    if (!service_endpoint.ok()) {
+      options.unset<EndpointOption>();
+      stub_creation_opts.set<UnifiedCredentialsOption>(
+          internal::MakeErrorCredentials(std::move(service_endpoint).status()));
+    } else {
+      options.unset<rest_internal::LongrunningEndpointOption>();
+      stub_creation_opts.set<UnifiedCredentialsOption>(
+          internal::MakeErrorCredentials(std::move(lro_endpoint).status()));
     }
+  } else {
+    if (!absl::StartsWithIgnoreCase(*lro_endpoint, "http")) {
+      stub_creation_opts.set<rest_internal::LongrunningEndpointOption>(
+          absl::StrCat("https://", *lro_endpoint));
+    } else {
+      stub_creation_opts.set<rest_internal::LongrunningEndpointOption>(
+          *lro_endpoint);
+    }
+
+    if (!absl::StartsWithIgnoreCase(*service_endpoint, "http")) {
+      stub_creation_opts.set<EndpointOption>(
+          absl::StrCat("https://", *service_endpoint));
+    } else {
+      stub_creation_opts.set<EndpointOption>(*service_endpoint);
+    }
+    options.set<EndpointOption>(*service_endpoint);
+    options.set<rest_internal::LongrunningEndpointOption>(*lro_endpoint);
   }
+
   std::shared_ptr<SqlOperationsServiceRestStub> stub =
-      std::make_shared<DefaultSqlOperationsServiceRestStub>(std::move(opts));
+      std::make_shared<DefaultSqlOperationsServiceRestStub>(
+          std::move(stub_creation_opts));
   stub = std::make_shared<SqlOperationsServiceRestMetadata>(std::move(stub));
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";

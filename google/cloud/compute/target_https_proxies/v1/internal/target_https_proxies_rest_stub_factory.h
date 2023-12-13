@@ -31,7 +31,7 @@ namespace compute_target_https_proxies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<TargetHttpsProxiesRestStub>
-CreateDefaultTargetHttpsProxiesRestStub(Options const& options);
+CreateDefaultTargetHttpsProxiesRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_https_proxies_v1_internal

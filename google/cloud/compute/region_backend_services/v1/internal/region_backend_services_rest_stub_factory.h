@@ -31,7 +31,7 @@ namespace compute_region_backend_services_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionBackendServicesRestStub>
-CreateDefaultRegionBackendServicesRestStub(Options const& options);
+CreateDefaultRegionBackendServicesRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_backend_services_v1_internal

@@ -30,7 +30,7 @@ namespace compute_forwarding_rules_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ForwardingRulesRestStub> CreateDefaultForwardingRulesRestStub(
-    Options const& options);
+    Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_forwarding_rules_v1_internal

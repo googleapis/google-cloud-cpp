@@ -31,7 +31,7 @@ namespace compute_region_notification_endpoints_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionNotificationEndpointsRestStub>
-CreateDefaultRegionNotificationEndpointsRestStub(Options const& options);
+CreateDefaultRegionNotificationEndpointsRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_notification_endpoints_v1_internal

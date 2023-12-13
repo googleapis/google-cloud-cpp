@@ -31,7 +31,7 @@ namespace compute_region_instance_templates_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionInstanceTemplatesRestStub>
-CreateDefaultRegionInstanceTemplatesRestStub(Options const& options);
+CreateDefaultRegionInstanceTemplatesRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_instance_templates_v1_internal

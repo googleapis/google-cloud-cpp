@@ -30,7 +30,7 @@ namespace compute_subnetworks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<SubnetworksRestStub> CreateDefaultSubnetworksRestStub(
-    Options const& options);
+    Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_subnetworks_v1_internal

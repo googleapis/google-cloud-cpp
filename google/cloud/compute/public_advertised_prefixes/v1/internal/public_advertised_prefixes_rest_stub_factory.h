@@ -31,7 +31,7 @@ namespace compute_public_advertised_prefixes_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<PublicAdvertisedPrefixesRestStub>
-CreateDefaultPublicAdvertisedPrefixesRestStub(Options const& options);
+CreateDefaultPublicAdvertisedPrefixesRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_public_advertised_prefixes_v1_internal

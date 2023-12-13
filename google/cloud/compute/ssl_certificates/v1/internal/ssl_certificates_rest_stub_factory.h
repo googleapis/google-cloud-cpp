@@ -30,7 +30,7 @@ namespace compute_ssl_certificates_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<SslCertificatesRestStub> CreateDefaultSslCertificatesRestStub(
-    Options const& options);
+    Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_ssl_certificates_v1_internal

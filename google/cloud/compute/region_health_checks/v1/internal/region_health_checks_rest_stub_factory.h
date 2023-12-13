@@ -31,7 +31,7 @@ namespace compute_region_health_checks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionHealthChecksRestStub>
-CreateDefaultRegionHealthChecksRestStub(Options const& options);
+CreateDefaultRegionHealthChecksRestStub(Options& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_health_checks_v1_internal
