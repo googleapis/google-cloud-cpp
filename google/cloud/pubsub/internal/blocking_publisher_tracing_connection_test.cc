@@ -42,7 +42,6 @@ using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
-using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanKindIsProducer;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
