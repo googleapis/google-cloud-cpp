@@ -44,6 +44,7 @@ using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
+using ::google::cloud::testing_util::SpanParentIsRoot;
 using ::google::cloud::testing_util::SpanLinksSizeIs;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
@@ -214,6 +215,29 @@ TEST(TracingBatchSink, PublishSpanHasAttributes) {
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::kMessagingDestinationTemplate,
                                  TestTopic().FullName())))));
+}
+
+TEST(TracingBatchSink, PublishSpanHasIsRoot) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+  auto message_span = MakeSpan("test span");
+  auto mock = std::make_unique<pubsub_testing::MockBatchSink>();
+  EXPECT_CALL(*mock, AddMessage(_));
+  EXPECT_CALL(*mock, AsyncPublish)
+      .WillOnce([](google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_THAT(request, IsProtoEqual(MakeRequest(1)));
+        return make_ready_future(make_status_or(MakeResponse(request)));
+      });
+  auto batch_sink = MakeTestBatchSink(std::move(mock));
+  auto initial_spans = {message_span};
+  AddMessages(initial_spans, batch_sink);
+
+  auto response = batch_sink->AsyncPublish(MakeRequest(1)).get();
+  EXPECT_THAT(response, IsOk());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-topic publish"), SpanParentIsRoot())));
 }
 
 TEST(TracingBatchSink, AsyncPublishOnlyIncludeSampledLink) {

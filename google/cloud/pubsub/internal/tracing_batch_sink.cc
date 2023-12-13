@@ -60,6 +60,9 @@ auto MakeParent(Links const& links, Spans const& message_spans,
                 pubsub::Topic const& topic) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
+  opentelemetry::context::Context root_context;
+  root_context = root_context.SetValue(opentelemetry::trace::kIsRootSpanKey, true);
+  options.parent = root_context;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   auto batch_sink_parent = internal::MakeSpan(
       topic.topic_id() + " publish",
