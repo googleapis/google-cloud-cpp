@@ -179,6 +179,19 @@ TEST(FutureTestVoid, CancelThroughContinuation) {
   EXPECT_EQ(7, f1.get());
 }
 
+/// @test Verify that `.then()` continuations are notified on abandoned futures.
+TEST(FutureTestVoid, AbandonNotifiesContinuation) {
+  future<int> f;
+  {
+    promise<void> p;
+    f = p.get_future().then([](auto g) {
+      ExpectFutureError([&g] { g.get(); }, std::future_errc::broken_promise);
+      return 42;
+    });
+  }
+  EXPECT_EQ(f.get(), 42);
+}
+
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
 // NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestVoid, conform_2_3_2_a) {

@@ -188,6 +188,19 @@ TEST(FutureTestInt, CancelThroughContinuation) {
   EXPECT_EQ(84, f1.get());
 }
 
+/// @test Verify that `.then()` continuations are notified on abandoned futures.
+TEST(FutureTestInt, AbandonNotifiesContinuation) {
+  future<int> f;
+  {
+    promise<int> p;
+    f = p.get_future().then([](auto g) {
+      ExpectFutureError([&g] { g.get(); }, std::future_errc::broken_promise);
+      return 42;
+    });
+  }
+  EXPECT_EQ(f.get(), 42);
+}
+
 // The following tests reference the technical specification:
 //   http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0159r0.html
 // The test names match the section and paragraph from the TS.

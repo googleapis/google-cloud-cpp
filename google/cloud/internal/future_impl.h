@@ -224,7 +224,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
 #else
     set_exception(nullptr, lk);
 #endif
-    cv_.notify_all();
+    notify_now(std::move(lk));
   }
 
   void set_continuation(std::unique_ptr<Continuation<T>> c) {
