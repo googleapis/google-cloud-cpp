@@ -30,7 +30,8 @@ using ::testing::IsEmpty;
 
 TEST(GoldenThingAdminRestStubFactoryTest, DefaultStubWithoutLogging) {
   testing_util::ScopedLog log;
-  auto default_stub = CreateDefaultGoldenThingAdminRestStub({});
+  Options options;
+  auto default_stub = CreateDefaultGoldenThingAdminRestStub(options);
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, IsEmpty());
 }
