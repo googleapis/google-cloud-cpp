@@ -103,15 +103,17 @@ auto operator co_await(future<T> f) noexcept
 
     /// Suspend execution until the future becomes satisfied.
     void await_suspend(std::coroutine_handle<> h) {
-      struct Continuation : public internal::continuation_base {
+      struct AndThen
+          : public internal::Continuation<internal::SharedStateValue<T>> {
         std::coroutine_handle<> handle;
 
-        explicit Continuation(std::coroutine_handle<>&& h)
-            : handle(std::move(h)) {}
+        explicit AndThen(std::coroutine_handle<> h) : handle(std::move(h)) {}
 
         // When the future becomes satisfied we resume the coroutine. At that
         // point the coroutine will call `await_resume()` to get the value.
-        void execute() override { handle.resume(); }
+        void Execute(internal::SharedStateType<T>&) override {
+          handle.resume();
+        }
       };
 
       // We cannot use `impl.then()` because that returns a new future, and
@@ -119,7 +121,7 @@ auto operator co_await(future<T> f) noexcept
       // future's internals to set up a callback without invalidating the
       // future.
       internal::CoroutineSupport::set_continuation(
-          impl, std::make_unique<Continuation>(std::move(h)));
+          impl, std::make_unique<AndThen>(std::move(h)));
     }
 
     // Get the value (or exception) from the future.
