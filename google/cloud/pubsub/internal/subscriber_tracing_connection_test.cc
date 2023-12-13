@@ -15,12 +15,13 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 #include "google/cloud/pubsub/internal/subscriber_tracing_connection.h"
+#include "google/cloud/pubsub/ack_handler.h"
+#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/message.h"
-#include "google/cloud/pubsub/mocks/mock_pull_ack_handler.h"
 #include "google/cloud/pubsub/mocks/mock_exactly_once_ack_handler.h"
+#include "google/cloud/pubsub/mocks/mock_pull_ack_handler.h"
 #include "google/cloud/pubsub/mocks/mock_subscriber_connection.h"
 #include "google/cloud/pubsub/pull_ack_handler.h"
-#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
