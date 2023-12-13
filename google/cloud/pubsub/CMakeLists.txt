@@ -196,6 +196,8 @@ add_library(
     internal/subscriber_stub.h
     internal/subscriber_stub_factory.cc
     internal/subscriber_stub_factory.h
+    internal/subscriber_tracing_connection.cc
+    internal/subscriber_tracing_connection.h
     internal/subscriber_tracing_stub.cc
     internal/subscriber_tracing_stub.h
     internal/subscription_batch_source.h
@@ -390,6 +392,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/streaming_subscription_batch_source_test.cc
         internal/subscriber_connection_impl_test.cc
         internal/subscriber_stub_factory_test.cc
+        internal/subscriber_tracing_connection_test.cc
         internal/subscription_concurrency_control_test.cc
         internal/subscription_lease_management_test.cc
         internal/subscription_message_queue_test.cc

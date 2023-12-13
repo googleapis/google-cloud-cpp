@@ -37,6 +37,7 @@ class MockSubscriberConnection : public pubsub::SubscriberConnection {
   MOCK_METHOD(future<Status>, ExactlyOnceSubscribe,
               (pubsub::SubscriberConnection::ExactlyOnceSubscribeParams),
               (override));
+  MOCK_METHOD(StatusOr<pubsub::PullResponse>, Pull, (), (override));
   MOCK_METHOD(google::cloud::Options, options, (), (override));
 };
 
