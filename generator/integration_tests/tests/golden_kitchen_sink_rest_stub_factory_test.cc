@@ -34,7 +34,6 @@ using ::google::test::admin::database::v1::GenerateIdTokenRequest;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
-using ::testing::IsNull;
 
 TEST(GoldenKitchenSinkRestStubFactoryTest, DefaultStubWithoutLogging) {
   testing_util::ScopedLog log;
