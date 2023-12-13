@@ -44,9 +44,9 @@ using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
-using ::google::cloud::testing_util::SpanParentIsRoot;
 using ::google::cloud::testing_util::SpanLinksSizeIs;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanParentIsRoot;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::_;
 using ::testing::AllOf;
@@ -236,8 +236,8 @@ TEST(TracingBatchSink, PublishSpanHasIsRoot) {
   EXPECT_THAT(response, IsOk());
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-topic publish"), SpanParentIsRoot())));
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-topic publish"),
+                                    SpanParentIsRoot())));
 }
 
 TEST(TracingBatchSink, AsyncPublishOnlyIncludeSampledLink) {
