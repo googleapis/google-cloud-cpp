@@ -31,6 +31,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::EqualsSpanContext;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::testing::_;
 using ::testing::Contains;
@@ -53,6 +54,22 @@ TEST(MessagePropagatorTest, InjectTraceContext) {
 
   EXPECT_THAT(message.attributes(),
               Contains(Pair(StartsWith("googclient_"), _)));
+}
+
+TEST(MessagePropagatorTest, ExtractTraceContext) {
+  auto span_catcher = InstallSpanCatcher();
+  auto test_span = MakeTestSpan();
+  opentelemetry::trace::Scope scope(test_span);
+  auto message = pubsub::MessageBuilder().Build();
+  auto propagator =
+      std::make_shared<opentelemetry::trace::propagation::HttpTraceContext>();
+  InjectTraceContext(message, *propagator);
+
+  auto context = ExtractTraceContext(message, *propagator);
+
+  auto extracted_span = opentelemetry::trace::GetSpan(context);
+  EXPECT_THAT(extracted_span->GetContext(),
+              EqualsSpanContext(test_span->GetContext()));
 }
 
 }  // namespace

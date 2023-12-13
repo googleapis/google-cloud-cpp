@@ -106,10 +106,10 @@ TEST(FutureImplInt, AbandonReady) {
   EXPECT_TRUE(shared_state.is_ready());
 }
 
-class TestContinuation : public continuation_base {
+class TestContinuation : public Continuation<int> {
  public:
   explicit TestContinuation(int* r) : execute_counter(r) {}
-  void execute() override { (*execute_counter)++; }
+  void Execute(SharedStateType<int>&) override { (*execute_counter)++; }
 
   int* execute_counter;
 };
@@ -243,7 +243,7 @@ TEST(FutureImplInt, SetContinuationAlreadySatisfied) {
 TEST(ContinuationIntTest, Constructor) {
   auto functor = [](std::shared_ptr<future_shared_state<int>> const&) {};
 
-  using tested_type = continuation<decltype(functor), int>;
+  using tested_type = SimpleContinuation<decltype(functor), int>;
 
   auto input = std::make_shared<future_shared_state<int>>();
   auto cont = std::make_shared<tested_type>(std::move(functor), input);

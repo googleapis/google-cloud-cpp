@@ -203,9 +203,8 @@ class promise_base {  // NOLINT(readability-identifier-naming)
 };
 
 struct CoroutineSupport {
-  template <typename T>
-  static void set_continuation(future<T>& f,
-                               std::unique_ptr<internal::continuation_base> c) {
+  template <typename T, typename C>
+  static void set_continuation(future<T>& f, std::unique_ptr<C> c) {
     f.shared_state_->set_continuation(std::move(c));
   }
 };
