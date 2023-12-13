@@ -20,6 +20,7 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
 [[noreturn]] void ThrowFutureError(std::future_errc ec, char const* msg) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   (void)msg;  // disable unused argument warning.
@@ -32,6 +33,29 @@ namespace internal {
   google::cloud::Terminate(full_msg.c_str());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+[[noreturn]] void ThrowDelegate(std::exception_ptr ex, char const* msg) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  (void)msg;  // disable unused argument warning.
+  std::rethrow_exception(std::move(ex));
+#else
+  (void)ex;
+  google::cloud::Terminate(msg);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+std::exception_ptr MakeFutureError(std::future_errc ec) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  return std::make_exception_ptr(std::future_error(ec));
+#else
+  (void)ec;
+  // We cannot create a valid `std::exception_ptr` in this case. It does not
+  // matter too: the application can only get to the exception via `.get()`,
+  // which terminates the application via `ThrowDelegate()`.
+  return nullptr;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

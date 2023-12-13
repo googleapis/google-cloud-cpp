@@ -769,6 +769,7 @@ struct FromInt {
 TEST(FutureTestConvertingConstructor, ConvertFuture) {
   promise<int> p0;
   future<FromInt> f0{p0.get_future()};
+  EXPECT_FALSE(f0.is_ready());
 }
 
 static_assert(!std::is_constructible<future<FromInt>, future<int*>>::value,

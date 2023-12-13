@@ -14,11 +14,6 @@
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_BASE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_BASE_H
-/**
- * @file
- *
- * Define the implementation details for `google::cloud::future<T>`.
- */
 
 #include "google/cloud/internal/future_impl.h"
 #include "google/cloud/version.h"

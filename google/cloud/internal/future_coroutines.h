@@ -96,10 +96,7 @@ auto operator co_await(future<T> f) noexcept
     future<T> impl;
 
     /// Return `true` if the future is already satisfied.
-    [[nodiscard]] bool await_ready() const noexcept {
-      using namespace std::chrono_literals;
-      return impl.is_ready();
-    }
+    [[nodiscard]] bool await_ready() const noexcept { return impl.is_ready(); }
 
     /// Suspend execution until the future becomes satisfied.
     void await_suspend(std::coroutine_handle<> h) {

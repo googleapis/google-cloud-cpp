@@ -48,6 +48,10 @@ TEST(FutureTestVoid, ThenSimple) {
   EXPECT_FALSE(next.valid());
 }
 
+// With exceptions disabled this test is not very useful. Yes,
+// `internal::ThrowRuntimeError()` is called and that terminates the
+// application. We knew that already.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST(FutureTestVoid, ThenException) {
   promise<void> p;
   future<void> fut = p.get_future();
@@ -62,7 +66,6 @@ TEST(FutureTestVoid, ThenException) {
   EXPECT_TRUE(next.valid());
   EXPECT_FALSE(called);
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p.set_value();
   EXPECT_TRUE(called);
   EXPECT_TRUE(next.valid());
@@ -75,10 +78,8 @@ TEST(FutureTestVoid, ThenException) {
       },
       std::runtime_error);
   EXPECT_FALSE(next.valid());
-#else
-  EXPECT_DEATH_IF_SUPPORTED(p.set_value(), "test message");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST(FutureTestVoid, ThenUnwrap) {
   promise<void> p;
@@ -179,6 +180,52 @@ TEST(FutureTestVoid, CancelThroughContinuation) {
   EXPECT_EQ(7, f1.get());
 }
 
+/// @test Verify that `.then()` can return its argument.
+TEST(FutureTestVoid, ThenReturnsArgument) {
+  promise<void> p;
+  int counter = 0;
+  auto f = p.get_future().then([&counter](auto g) {
+    ++counter;
+    return g;
+  });
+  p.set_value();
+  EXPECT_TRUE(f.is_ready());
+  EXPECT_EQ(counter, 1);
+  EXPECT_NO_FATAL_FAILURE(f.get());
+}
+
+/// @test Verify that `.then()` can return its argument.
+TEST(FutureTestVoid, ThenAttachesContinuationToArgument) {
+  promise<void> p;
+  auto f = p.get_future().then(
+      [](auto g) { return g.then([](auto) { return 42; }); });
+  p.set_value();
+  EXPECT_TRUE(f.is_ready());
+  EXPECT_EQ(f.get(), 42);
+}
+
+/// @test Verify that `.then()` continuations are notified on abandoned futures.
+TEST(FutureTestVoid, DISABLED_AbandonNotifiesContinuation) {
+  future<int> f;
+  {
+    promise<void> p;
+    f = p.get_future().then([](auto g) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+      EXPECT_THROW(
+          try { g.get(); } catch (std::future_error const& ex) {
+            EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+            throw;
+          },
+          std::future_error);
+#else
+      EXPECT_DEATH_IF_SUPPORTED(g.get(), "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+      return 42;
+    });
+  }
+  EXPECT_EQ(f.get(), 42);
+}
+
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
 // NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestVoid, conform_2_3_2_a) {
@@ -221,9 +268,9 @@ TEST(FutureTestVoid, conform_2_3_3_b) {
   EXPECT_TRUE(unwrapped.valid());
   EXPECT_FALSE(unwrapped.is_ready());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p.set_exception(std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_TRUE(unwrapped.is_ready());
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
       try { unwrapped.get(); } catch (std::runtime_error const& ex) {
         EXPECT_THAT(ex.what(), HasSubstr("test message"));
@@ -232,8 +279,7 @@ TEST(FutureTestVoid, conform_2_3_3_b) {
       std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
-      p.set_exception(
-          std::make_exception_ptr(std::runtime_error("test message"))),
+      unwrapped.get(),
       "future<T>::get\\(\\) had an exception but exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
@@ -421,6 +467,7 @@ TEST(FutureTestVoid, conform_2_3_8_d) {
   EXPECT_EQ(42, next.get());
 }
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
 // NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestVoid, conform_2_3_8_e) {
@@ -434,7 +481,6 @@ TEST(FutureTestVoid, conform_2_3_8_e) {
   });
   EXPECT_TRUE(next.valid());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p.set_value();
   ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
   EXPECT_THROW(
@@ -444,10 +490,8 @@ TEST(FutureTestVoid, conform_2_3_8_e) {
       },
       std::runtime_error);
   EXPECT_FALSE(next.valid());
-#else
-  EXPECT_DEATH_IF_SUPPORTED(p.set_value(), "test exception in functor");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
 // NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
@@ -528,6 +572,7 @@ TEST(FutureTestVoid, conform_2_3_9_c) {
   EXPECT_EQ(42, r.get());
 }
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
 // NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestVoid, conform_2_3_9_d) {
@@ -546,7 +591,6 @@ TEST(FutureTestVoid, conform_2_3_9_d) {
   EXPECT_FALSE(r.is_ready());
   EXPECT_FALSE(f.valid());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p.set_exception(std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_TRUE(called);
   EXPECT_TRUE(r.is_ready());
@@ -557,14 +601,6 @@ TEST(FutureTestVoid, conform_2_3_9_d) {
         throw;
       },
       std::runtime_error);
-#else
-  // With exceptions disabled the program terminates as soon as the exception is
-  // set.
-  EXPECT_DEATH_IF_SUPPORTED(
-      p.set_exception(
-          std::make_exception_ptr(std::runtime_error("test message"))),
-      "future<T>::get\\(\\) had an exception but exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
@@ -588,20 +624,14 @@ TEST(FutureTestVoid, conform_2_3_9_e) {
   p.set_value();
   EXPECT_TRUE(called);
   EXPECT_TRUE(r.is_ready());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
       try { r.get(); } catch (std::future_error const& ex) {
         EXPECT_EQ(std::future_errc::broken_promise, ex.code());
         throw;
       },
       std::future_error);
-#else
-  // With exceptions disabled setting the value immediately terminates.
-  EXPECT_DEATH_IF_SUPPORTED(
-      r.get(),
-      "future<T>::get\\(\\) had an exception but exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
 // NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
