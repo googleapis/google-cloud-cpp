@@ -46,8 +46,6 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPullSpan() {
   return span;
 }
 
-}  // namespace
-
 class SubscriberTracingConnection : public pubsub::SubscriberConnection {
  public:
   explicit SubscriberTracingConnection(
@@ -76,6 +74,8 @@ class SubscriberTracingConnection : public pubsub::SubscriberConnection {
  private:
   std::shared_ptr<pubsub::SubscriberConnection> child_;
 };
+
+}  // namespace
 
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberTracingConnection(
     std::shared_ptr<pubsub::SubscriberConnection> connection) {
