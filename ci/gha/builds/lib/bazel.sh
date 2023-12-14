@@ -94,7 +94,7 @@ function bazel::prefetch() {
   )
   local os_rules
   mapfile -t os_rules < <(os::prefetch)
-  if [[ -n "${VCINSTALLDIR}" ]]; then
+  if [[ -n "${VCINSTALLDIR:-}" ]]; then
     # This is needed by `bazel fetch`
     export BAZEL_VC="${VCINSTALLDIR}"
   fi
