@@ -29,9 +29,6 @@ build:macos --host_cxxopt=-std=c++14
 # the project separately.
 build --experimental_convenience_symlinks=ignore
 
-# TODO(#11485) - enable bzlmod once it works
-common --noenable_bzlmod
-
 # Enable OpenTelemetry tracing instrumentation for google-cloud-cpp.
 build --@io_opentelemetry_cpp//api:with_abseil
 build --@google_cloud_cpp//:enable_opentelemetry
