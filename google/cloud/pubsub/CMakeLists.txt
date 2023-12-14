@@ -121,6 +121,8 @@ add_library(
     internal/default_batch_sink.h
     internal/default_pull_ack_handler.cc
     internal/default_pull_ack_handler.h
+    internal/default_pull_message.cc
+    internal/default_pull_message.h
     internal/defaults.cc
     internal/defaults.h
     internal/exactly_once_policies.cc
@@ -155,6 +157,7 @@ add_library(
     internal/publisher_tracing_stub.h
     internal/pull_lease_manager.cc
     internal/pull_lease_manager.h
+    internal/pull_message.h
     internal/rejects_with_ordering_key.cc
     internal/rejects_with_ordering_key.h
     internal/schema_auth_decorator.cc
@@ -375,6 +378,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/blocking_publisher_tracing_connection_test.cc
         internal/default_batch_sink_test.cc
         internal/default_pull_ack_handler_test.cc
+        internal/default_pull_message_test.cc
         internal/defaults_test.cc
         internal/exactly_once_policies_test.cc
         internal/extend_leases_with_retry_test.cc
