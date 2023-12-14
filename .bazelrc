@@ -42,6 +42,9 @@ build --experimental_ui_max_stdouterr_bytes=-1
 # TODO(#11485) - enable bzlmod once it works
 common --noenable_bzlmod
 
+# TODO(#....) - apparently Bazel on macOS still needs work.
+common:macos --repo_env=BAZEL_NO_APPLE_CPP_TOOLCHAIN=1
+
 # Inject ${GTEST_SHUFFLE} and ${GTEST_RANDOM_SEED} into the test environment
 # if they are set in the enclosing environment. This allows for running tests
 # in a random order to help expose undesirable interdependencies.
