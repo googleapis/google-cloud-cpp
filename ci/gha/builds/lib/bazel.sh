@@ -112,6 +112,8 @@ function bazel::info() {
   bazelisk "${args[@]}" info
 }
 
+bazel::info
+
 io::log "Prefetching bazel deps..."
 TIMEFORMAT="==> 🕑 prefetching done in %R seconds"
 time {
