@@ -40,7 +40,6 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
   auto span = internal::MakeSpan(
       topic.topic_id() + " create",
       {{sc::kMessagingSystem, "gcp_pubsub"},
-       {sc::kMessagingDestinationName, topic.topic_id()},
        {sc::kMessagingDestinationTemplate, topic.FullName()},
        {sc::kMessagingOperation, "create"},
        {/*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
@@ -77,11 +76,7 @@ class BlockingPublisherTracingConnection
     return EndPublishSpan(std::move(span), child_->Publish(std::move(p)));
   }
 
-  Options options() override {
-    auto span = internal::MakeSpan("pubsub::BlockingPublisher::options");
-    auto scope = opentelemetry::trace::Scope(span);
-    return internal::EndSpan(*span, child_->options());
-  };
+  Options options() override { return child_->options(); };
 
  private:
   std::shared_ptr<pubsub::BlockingPublisherConnection> child_;
