@@ -94,14 +94,12 @@ function bazel::prefetch() {
   )
   local os_rules
   mapfile -t os_rules < <(os::prefetch)
+  if [[ -n "${VCINSTALLDIR}" ]]; then
+    # This is needed by `bazel fetch`
+    export BAZEL_VC="${VCINSTALLDIR}"
+  fi
   "ci/retry-command.sh" 3 120 bazelisk "${args[@]}" fetch "${common_rules[@]}" "${os_rules[@]}"
 }
-
-if [[ -z "${VCINSTALLDIR}" ]]; then
-  echo "ERROR: Missing VCINSTALLDIR, this is needed to configure Bazel+MSVC"
-  exit 1
-fi
-export BAZEL_VC="${VCINSTALLDIR}"
 
 io::log "Using bazelisk version"
 bazelisk version
