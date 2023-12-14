@@ -40,7 +40,7 @@ TEST(DefaultPullMessageTest, UnwrapMessage) {
   ::google::pubsub::v1::PubsubMessage proto_message;
   EXPECT_TRUE(
       google::protobuf::TextFormat::ParseFromString(kText, &proto_message));
-  auto under_test DefaultPullMessage();
+  auto under_test = DefaultPullMessage();
 
   auto message = under_test.UnwrapMessagge(proto_message);
 
