@@ -50,7 +50,7 @@ apple_support_dependencies()
 
 load(
     "@rules_cc//cc:repositories.bzl",
-    "rules_cc_dependencies"
+    "rules_cc_dependencies",
 )
 
 rules_cc_dependencies()
