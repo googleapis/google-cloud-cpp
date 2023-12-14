@@ -20,7 +20,10 @@
 #include "google/cloud/pubsub/internal/publisher_round_robin_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_tracing_stub.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -67,8 +70,22 @@ std::shared_ptr<PublisherStub> MakeRoundRobinPublisherStub(
 std::shared_ptr<PublisherStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,
     BasePublisherStubFactory const& base_factory) {
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      std::move(cq), options);
+  auto endpoint = internal::DetermineServiceEndpoint(
+      internal::GetEnv("PUBSUB_ENDPOINT"),
+      internal::FetchOption<EndpointOption>(options), "pubsub.googleapis.com",
+      options);
+
+  std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;
+  if (!endpoint.ok()) {
+    Options error_options = options;
+    error_options.set<google::cloud::UnifiedCredentialsOption>(
+        internal::MakeErrorCredentials(endpoint.status()));
+    auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
+                                                  error_options);
+  } else {
+    auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
+  }
+
   auto child_factory = [base_factory, &auth, options](int id) {
     auto channel = CreateGrpcChannel(*auth, options, id);
     return base_factory(std::move(channel));
