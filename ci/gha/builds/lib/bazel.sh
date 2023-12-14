@@ -101,11 +101,16 @@ function bazel::prefetch() {
   "ci/retry-command.sh" 3 120 bazelisk "${args[@]}" fetch "${common_rules[@]}" "${os_rules[@]}"
 }
 
-io::log "Using bazelisk version"
-bazelisk version
+function bazel::info() {
+  local args
+  mapfile -t args < <(bazel::common_args)
 
-io::log "Info"
-bazelisk info
+  io::log_h1 "Using bazelisk version"
+  bazelisk "${args[@]}" version
+
+  io::log_h1 "Bazel Info"
+  bazelisk "${args[@]}" info
+}
 
 io::log "Prefetching bazel deps..."
 TIMEFORMAT="==> 🕑 prefetching done in %R seconds"
