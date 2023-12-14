@@ -36,7 +36,9 @@ DefaultPullAckHandler::DefaultPullAckHandler(CompletionQueue cq,
       ack_id_(std::move(ack_id)),
       delivery_attempt_(delivery_attempt),
       lease_manager_(std::make_shared<PullLeaseManager>(
-          cq_, stub_, std::move(options), subscription_, ack_id_)) {}
+          cq_, stub_, std::move(options), subscription_, ack_id_)) {
+            lease_manager_.StartLeaseLoop();
+          }
 
 DefaultPullAckHandler::~DefaultPullAckHandler() = default;
 
