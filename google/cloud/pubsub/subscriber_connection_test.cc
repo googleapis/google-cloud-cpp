@@ -246,15 +246,15 @@ TEST(MakeSubscriberConnectionTest, TracingDisabledForUnaryPull) {
   EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
                                    Property(&PullRequest::subscription,
                                             subscription.FullName()))))
-      .WillOnce([&](grpc::ClientContext&,
-                    google::pubsub::v1::PullRequest const&) {
-        google::pubsub::v1::PullResponse response;
-        auto& message = *response.add_received_messages();
-        message.set_delivery_attempt(42);
-        message.set_ack_id("test-ack-id-0");
-        message.mutable_message()->set_data("test-data-0");
-        return response;
-      });
+      .WillOnce(
+          [&](grpc::ClientContext&, google::pubsub::v1::PullRequest const&) {
+            google::pubsub::v1::PullResponse response;
+            auto& message = *response.add_received_messages();
+            message.set_delivery_attempt(42);
+            message.set_ack_id("test-ack-id-0");
+            message.mutable_message()->set_data("test-data-0");
+            return response;
+          });
 
   auto subscriber = MakeTestSubscriberConnection(subscription, mock,
                                                  DisableTracing(Options{}));

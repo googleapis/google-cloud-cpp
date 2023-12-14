@@ -40,7 +40,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 std::shared_ptr<pubsub::SubscriberConnection> ConnectionFromDecoratedStub(
-    std::shared_ptr<pubsub_internal::SubscriberStub> stub, Options const& opts) {
+    std::shared_ptr<pubsub_internal::SubscriberStub> stub,
+    Options const& opts) {
   auto tracing_enabled = google::cloud::internal::TracingEnabled(opts);
   std::shared_ptr<SubscriberConnection> connection =
       std::make_shared<pubsub_internal::SubscriberConnectionImpl>(
@@ -119,7 +120,7 @@ std::shared_ptr<pubsub::SubscriberConnection> MakeTestSubscriberConnection(
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto stub = pubsub_internal::MakeTestSubscriberStub(background->cq(), opts,
                                                       std::move(stubs));
-  opts.set<pubsub::SubscriptionOption>(subscription);
+  opts.set<pubsub::SubscriptionOption>(std::move(subscription));
   return pubsub::ConnectionFromDecoratedStub(std::move(stub), std::move(opts));
 }
 
