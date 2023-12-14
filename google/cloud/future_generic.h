@@ -28,6 +28,7 @@
 #include "google/cloud/version.h"
 #include "absl/meta/type_traits.h"
 #include <future>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -217,11 +218,11 @@ class promise final : private internal::promise_base<T> {
 
 /// Create a future<void> that is immediately ready.
 template <typename T>
-inline future<typename internal::make_ready_return<T>::type> make_ready_future(
-    T&& t) {
-  using V = typename internal::make_ready_return<T>::type;
+inline auto make_ready_future(T&& t) {
   // TODO(#1410) - Implement specializations of future<R&> and promise<R&>.
-  static_assert(!std::is_reference<V>::value, "future<R&> is not implemented");
+  using V = std::decay_t<T>;
+  static_assert(!internal::IsReferenceWrapper<V>::value,
+                "future<R&> is not implemented");
   promise<V> p;
   p.set_value(std::forward<T>(t));
   return p.get_future();

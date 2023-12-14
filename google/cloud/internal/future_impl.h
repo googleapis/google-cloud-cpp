@@ -40,6 +40,13 @@ namespace internal {
 /// Throws `std::future_error` or terminates the program.
 [[noreturn]] void ThrowFutureError(std::future_errc ec, char const* msg);
 
+/// Used in make_ready_future() to determine if a type is
+/// std::reference_wrapper<U>.
+template <typename U>
+struct IsReferenceWrapper : public std::false_type {};
+template <typename U>
+struct IsReferenceWrapper<std::reference_wrapper<U>> : public std::true_type {};
+
 /**
  * Define an interface to type-erased continuations.
  *

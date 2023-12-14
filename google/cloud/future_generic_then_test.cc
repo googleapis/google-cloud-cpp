@@ -679,14 +679,6 @@ TEST(FutureTestString, conform_2_10_4_2_b) {
   EXPECT_EQ("42", f.get());
 }
 
-//// @test Verify conformance with section 2.10 of the Concurrency TS.
-// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
-TEST(FutureTestString, conform_2_10_4_2_c) {
-  using V =
-      internal::make_ready_return<std::reference_wrapper<std::string>>::type;
-  static_assert(std::is_same<V, std::string&>::value, "Expected std::string&");
-}
-
 class MockFunctor {
  public:
   MockFunctor() = default;
