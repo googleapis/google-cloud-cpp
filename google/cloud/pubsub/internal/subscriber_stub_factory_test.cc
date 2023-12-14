@@ -22,8 +22,8 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "google/cloud/testing_util/validate_propagator.h"
-#include <gmock/gmock.h>
 #include "google/cloud/universe_domain_options.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
@@ -32,16 +32,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::pubsub_testing::MockSubscriberStub;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
 using ::testing::HasSubstr;
-using ::testing::NotNull;
-using ::google::cloud::testing_util::IsOk;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
 using ::testing::Not;
+using ::testing::NotNull;
 
 using BaseSubscriberStubFactory = std::function<std::shared_ptr<SubscriberStub>(
     std::shared_ptr<grpc::Channel>)>;
@@ -74,13 +74,13 @@ static_assert(std::is_same<decltype(MockFactory{}.AsStdFunction()),
                            BaseSubscriberStubFactory>::value,
               "Mismatched mock factory type");
 std::shared_ptr<SubscriberStub> CreateTestStub(
-    CompletionQueue cq, BaseSubscriberStubFactory const& factory,google::cloud::Options options = {}) {
+    CompletionQueue cq, BaseSubscriberStubFactory const& factory,
+    google::cloud::Options options = {}) {
   auto credentials = google::cloud::MakeAccessTokenCredentials(
       "test-only-invalid",
       std::chrono::system_clock::now() + std::chrono::minutes(5));
   return CreateDecoratedStubs(std::move(cq),
-                            options
-                                  .set<GrpcNumChannelsOption>(kTestChannels)
+                              options.set<GrpcNumChannelsOption>(kTestChannels)
                                   .set<TracingComponentsOption>({"rpc"})
                                   .set<UnifiedCredentialsOption>(credentials),
                               factory);

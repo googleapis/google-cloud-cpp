@@ -20,11 +20,11 @@
 #include "google/cloud/pubsub/internal/subscriber_round_robin_decorator.h"
 #include "google/cloud/pubsub/internal/subscriber_tracing_stub.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/log.h"
-#include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/service_endpoint.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
