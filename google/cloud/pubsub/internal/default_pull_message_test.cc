@@ -30,19 +30,22 @@ using ::testing::UnorderedElementsAre;
 
 TEST(DefaultPullMessageTest, UnwrapMessage) {
   auto constexpr kText = R"pb(
+    ack_id: "id"
+    message {
     data: "test-data"
     attributes: { key: "key1" value: "label1" }
     attributes: { key: "key0" value: "label0" }
     message_id: "test-message-id"
     publish_time { seconds: 123 nanos: 456000 }
     ordering_key: "test-ordering-key"
+    }
   )pb";
-  ::google::pubsub::v1::PubsubMessage proto_message;
+  ::google::pubsub::v1::ReceivedMessage proto_message;
   EXPECT_TRUE(
       google::protobuf::TextFormat::ParseFromString(kText, &proto_message));
   auto under_test = DefaultPullMessage();
 
-  auto message = under_test.UnwrapMessagge(proto_message);
+  auto message = under_test.UnwrapMessage(proto_message);
 
   EXPECT_EQ("test-data", message.data());
   EXPECT_THAT(
