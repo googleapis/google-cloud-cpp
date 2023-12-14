@@ -23,6 +23,7 @@
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
+#include "google/cloud/universe_domain_options.h"
 
 namespace google {
 namespace cloud {
@@ -37,6 +38,10 @@ using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::NotNull;
+using ::google::cloud::testing_util::IsOk;
+using ::testing::IsEmpty;
+using ::testing::IsNull;
+using ::testing::Not;
 
 using BaseSubscriberStubFactory = std::function<std::shared_ptr<SubscriberStub>(
     std::shared_ptr<grpc::Channel>)>;
@@ -69,12 +74,12 @@ static_assert(std::is_same<decltype(MockFactory{}.AsStdFunction()),
                            BaseSubscriberStubFactory>::value,
               "Mismatched mock factory type");
 std::shared_ptr<SubscriberStub> CreateTestStub(
-    CompletionQueue cq, BaseSubscriberStubFactory const& factory) {
+    CompletionQueue cq, BaseSubscriberStubFactory const& factory,google::cloud::Options options = {}) {
   auto credentials = google::cloud::MakeAccessTokenCredentials(
       "test-only-invalid",
       std::chrono::system_clock::now() + std::chrono::minutes(5));
   return CreateDecoratedStubs(std::move(cq),
-                              google::cloud::Options{}
+                            options
                                   .set<GrpcNumChannelsOption>(kTestChannels)
                                   .set<TracingComponentsOption>({"rpc"})
                                   .set<UnifiedCredentialsOption>(credentials),
@@ -204,6 +209,75 @@ TEST_F(SubscriberStubFactory, Logging) {
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   // Verify the logging decorator is present.
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("CreateSubscription")));
+}
+
+TEST_F(SubscriberStubFactory, DefaultStubWithUniverseDomainOption) {
+  ::testing::InSequence sequence;
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockSubscriberStub>();
+        EXPECT_CALL(*mock, CreateSubscription)
+            .WillOnce([](grpc::ClientContext&,
+                         google::pubsub::v1::Subscription const&) {
+              return StatusOr<google::pubsub::v1::Subscription>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
+        return mock;
+      });
+  EXPECT_CALL(factory, Call)
+      .WillRepeatedly([](std::shared_ptr<grpc::Channel> const&) {
+        return std::make_shared<MockSubscriberStub>();
+      });
+  Options options;
+  options.set<EndpointOption>("localhost:1")
+      .set<internal::UniverseDomainOption>("not empty")
+      .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+          "invalid-access-token",
+          std::chrono::system_clock::now() + std::chrono::minutes(15)));
+
+  CompletionQueue cq;
+  grpc::ClientContext context;
+  google::pubsub::v1::Subscription req;
+  req.set_name("projects/test-project/subscriptions/my-sub");
+  auto stub = CreateTestStub(cq, factory.AsStdFunction());
+  auto response = stub->CreateSubscription(context, req);
+  EXPECT_THAT(
+      response,
+      Not(AnyOf(IsOk(),
+                StatusIs(StatusCode::kInvalidArgument,
+                         HasSubstr("UniverseDomainOption cannot be empty")))));
+  EXPECT_THAT(context.credentials(), Not(IsNull()));
+}
+
+TEST_F(SubscriberStubFactory, DefaultStubWithEmptyUniverseDomainOption) {
+  ::testing::InSequence sequence;
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockSubscriberStub>();
+        return mock;
+      });
+  EXPECT_CALL(factory, Call)
+      .WillRepeatedly([](std::shared_ptr<grpc::Channel> const&) {
+        return std::make_shared<MockSubscriberStub>();
+      });
+  Options options;
+  options.set<internal::UniverseDomainOption>("").set<UnifiedCredentialsOption>(
+      MakeAccessTokenCredentials(
+          "invalid-access-token",
+          std::chrono::system_clock::now() + std::chrono::minutes(15)));
+
+  CompletionQueue cq;
+  grpc::ClientContext context;
+  google::pubsub::v1::Subscription req;
+  req.set_name("projects/test-project/subscriptions/my-sub");
+  auto stub = CreateTestStub(cq, factory.AsStdFunction(), options);
+  auto response = stub->CreateSubscription(context, req);
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("UniverseDomainOption cannot be empty")));
+  EXPECT_THAT(context.credentials(), IsNull());
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
