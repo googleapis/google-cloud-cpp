@@ -23,8 +23,10 @@ fi # include guard
 source module ci/lib/io.sh
 
 # Selects a default bazel version, though individual builds can override this.
-: "${USE_BAZEL_VERSION:="7.0.0"}"
+: "${USE_BAZEL_VERSION:="6.4.0"}"
 export USE_BAZEL_VERSION
+io::log "Using bazelisk version"
+bazelisk version
 
 # Outputs a list of args that should be given to all bazel invocations. To read
 # this into an array use `mapfile -t my_array < <(bazel::common_args)`
@@ -94,25 +96,8 @@ function bazel::prefetch() {
   )
   local os_rules
   mapfile -t os_rules < <(os::prefetch)
-  if [[ -n "${VCINSTALLDIR:-}" ]]; then
-    # This is needed by `bazel fetch`
-    export BAZEL_VC="${VCINSTALLDIR}"
-  fi
   "ci/retry-command.sh" 3 120 bazelisk "${args[@]}" fetch "${common_rules[@]}" "${os_rules[@]}"
 }
-
-function bazel::info() {
-  local args
-  mapfile -t args < <(bazel::common_args)
-
-  io::log_h1 "Using bazelisk version"
-  bazelisk "${args[@]}" version
-
-  io::log_h1 "Bazel Info"
-  bazelisk "${args[@]}" info
-}
-
-bazel::info
 
 io::log "Prefetching bazel deps..."
 TIMEFORMAT="==> 🕑 prefetching done in %R seconds"

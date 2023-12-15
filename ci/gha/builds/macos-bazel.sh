@@ -17,8 +17,8 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module ci/gha/builds/lib/macos.sh
 source module ci/gha/builds/lib/bazel.sh
+source module ci/gha/builds/lib/macos.sh
 source module ci/lib/io.sh
 
 # Usage: macos-bazel.sh [bazel query expression]
