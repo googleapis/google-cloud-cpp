@@ -47,7 +47,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPullSpan() {
 }
 
 StatusOr<pubsub::PullResponse> EndPullSpan(
-    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
     StatusOr<pubsub::PullResponse> response) {
   namespace sc = opentelemetry::trace::SemanticConventions;
   if (response.ok()) {

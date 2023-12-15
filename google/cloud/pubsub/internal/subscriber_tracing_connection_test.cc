@@ -166,7 +166,6 @@ TEST(SubscriberTracingConnectionTest, PullAttributes) {
 }
 
 TEST(SubscriberTracingConnectionTest, PullSetsOrderingKeyAttributeIfExists) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockSubscriberConnection>();
   EXPECT_CALL(*mock, options);
