@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,12 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Load dependencies needed to compile and test the google-cloud-cpp library."""
+"""Load dependencies needed for google-cloud-cpp development / Phase 3."""
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
-load("//bazel:workspace0.bzl", "gl_cpp_workspace0")
-load("//bazel:development0.bzl", "gl_cpp_development0")
+def gl_cpp_workspace3(name = None):
+    """Loads dependencies needed to use the google-cloud-cpp libraries.
 
-google_cloud_cpp_development_deps = gl_cpp_development0
-google_cloud_cpp_deps = gl_cpp_workspace0
+    Call this function after `//bazel/workspace2:workspace2()`.
+
+    Args:
+        name: Unused. It is conventional to provide a `name` argument to all
+            workspace functions.
+    """
+
+    # This is a placeholder, if we ever need more phases the function already
+    # exists.
