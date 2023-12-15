@@ -20,7 +20,7 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-pubsub::Message UnwrapMessage(
+pubsub::Message DefaultPullMessage::UnwrapMessage(
     ::google::pubsub::v1::ReceivedMessage& received_message) {
   return pubsub_internal::FromProto(
       std::move(*received_message.mutable_message()));
