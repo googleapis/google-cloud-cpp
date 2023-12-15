@@ -137,7 +137,7 @@ struct FutureValueRetrieved {};
  * The shared state contains either (1) the value stored by the promise, or (2)
  * the exception stored by the promise, (3) nothing, if the future has not been
  * satisfied, (4) a different kind of nothing, if the future was satisfied and
- * the value or exception was extraced.  It may also contain a continuation to
+ * the value or exception was extracted.  It may also contain a continuation to
  * be called when the shared state is satisfied.
  *
  * The shared state value can be retrieved only once, this is enforced by
@@ -164,7 +164,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
    * The future may be satisfied with an exception, stored as a
    * `std::exception_ptr`.
    *
-   * The future may be satisified with a value, stored as a `T`. For
+   * The future may be satisfied with a value, stored as a `T`. For
    * `future<void>` the type is `FutureVoid`.
    *
    * Finally, the value and/or exception may be retrieved as part of invoking
