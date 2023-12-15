@@ -49,6 +49,7 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -148,6 +149,51 @@ TEST(SubscriberTracingConnectionTest, PullAttributes) {
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::kMessagingDestinationTemplate,
                                  TestSubscription().FullName())))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-subscription receive"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::kMessagingDestinationTemplate,
+                                 TestSubscription().FullName())))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-subscription receive"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::kMessagingMessageId, _)))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-subscription receive"),
+                             SpanHasAttributes(OTelAttribute<std::int64_t>(
+                                 /*sc::kMessagingMessageEnvelopeSize=*/
+                                 "messaging.message.envelope.size", 31)))));
+}
+
+TEST(SubscriberTracingConnectionTest, PullSetsOrderingKeyAttributeIfExists) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockSubscriberConnection>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, Pull).WillOnce([&]() {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    auto mock = std::make_unique<MockPullAckHandler>();
+    EXPECT_CALL(*mock, nack())
+        .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+    return pubsub::PullResponse{pubsub::PullAckHandler(std::move(mock)),
+                                pubsub::MessageBuilder{}
+                                    .SetData("test-data-0")
+                                    .SetOrderingKey("a")
+                                    .Build()};
+  });
+  auto connection = MakeSubscriberTracingConnection(std::move(mock));
+  google::cloud::internal::OptionsSpan span(
+      connection->options().set<pubsub::SubscriptionOption>(
+          TestSubscription()));
+
+  auto response = connection->Pull();
+  EXPECT_STATUS_OK(response);
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(SpanNamed("test-subscription receive"),
+                     SpanHasAttributes(OTelAttribute<std::string>(
+                         "messaging.gcp_pubsub.message.ordering_key", "a")))));
 }
 
 TEST(SubscriberTracingConnectionTest, Subscribe) {

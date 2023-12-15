@@ -46,6 +46,24 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPullSpan() {
   return span;
 }
 
+StatusOr<pubsub::PullResponse> EndPullSpan(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
+    StatusOr<pubsub::PullResponse> response) {
+  namespace sc = opentelemetry::trace::SemanticConventions;
+  if (response.ok()) {
+    auto message = response.value().message;
+    span->SetAttribute(sc::kMessagingMessageId, message.message_id());
+    if (!message.ordering_key().empty()) {
+      span->SetAttribute("messaging.gcp_pubsub.message.ordering_key",
+                         message.ordering_key());
+    }
+    span->SetAttribute(
+        /*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
+        static_cast<std::int64_t>(MessageSize(message)));
+  }
+  return internal::EndSpan(*span, std::move(response));
+}
+
 class SubscriberTracingConnection : public pubsub::SubscriberConnection {
  public:
   explicit SubscriberTracingConnection(
@@ -66,7 +84,7 @@ class SubscriberTracingConnection : public pubsub::SubscriberConnection {
     auto span = StartPullSpan();
 
     auto scope = opentelemetry::trace::Scope(span);
-    return internal::EndSpan(*span, child_->Pull());
+    return EndPullSpan(std::move(span), child_->Pull());
   };
 
   Options options() override { return child_->options(); };
