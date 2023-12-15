@@ -156,6 +156,11 @@ TEST(PullLeaseManager, SimpleLeaseLoop) {
   pending = aseq.PopFrontWithName();
   EXPECT_EQ(pending.second, "MakeRelativeTimer");
   EXPECT_THAT(manager->current_lease(), current_time + kLastLeaseExtension);
+
+  // Terminate the loop. With exceptions disabled abandoning a future with a
+  // continuation results in a crash. In non-test programs, the completion queue
+  // does this automatically as part of its shutdown.
+  pending.first.set_value(false);
 }
 
 TEST(PullLeaseManager, StartLeaseLoopAlreadyReleased) {
