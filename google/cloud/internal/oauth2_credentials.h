@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_CREDENTIALS_H
 
 #include "google/cloud/access_token.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -75,6 +76,18 @@ class Credentials {
 
   /// Return the account's key_id associated with these credentials, if any.
   virtual std::string KeyId() const { return std::string{}; }
+
+  /// Return the universe domain from the credentials. If no explicit value is
+  /// present, it is assumed to be "googleapis.com". If additional rpc calls are
+  /// required, the default retry policy is used.
+  virtual std::string universe_domain() const;
+
+  /// Return the universe domain from the credentials. If no explicit value is
+  /// present, it is assumed to be "googleapis.com". If additional rpc calls are
+  /// required, the `UniverseDomainRetryPolicyOption`, if present in the
+  /// `Options`, is used. Otherwise the default retry policy is used.
+  virtual std::string universe_domain(
+      google::cloud::Options const& options) const;
 };
 
 /**

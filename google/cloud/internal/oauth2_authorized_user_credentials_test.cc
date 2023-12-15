@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
+#include "google/cloud/internal/oauth2_universe_domain.h"
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
@@ -124,6 +125,51 @@ TEST_F(AuthorizedUserCredentialsTest, ParseSimple) {
   EXPECT_EQ("a-123456ABCDEF", actual->client_secret);
   EXPECT_EQ("1/THETOKEN", actual->refresh_token);
   EXPECT_EQ("https://oauth2.googleapis.com/test_endpoint", actual->token_uri);
+  EXPECT_EQ(actual->universe_domain, GoogleDefaultUniverseDomain());
+}
+
+/// @test Verify that parsing an authorized user account JSON string with a
+/// non-empty universe_domain works.
+TEST_F(AuthorizedUserCredentialsTest, ParseSimpleWithUniverseDomain) {
+  std::string config = R"""({
+      "client_id": "a-client-id.example.com",
+      "client_secret": "a-123456ABCDEF",
+      "refresh_token": "1/THETOKEN",
+      "token_uri": "https://oauth2.googleapis.com/test_endpoint",
+      "type": "magic_type",
+      "universe_domain": "my-ud.net"
+})""";
+
+  auto actual =
+      ParseAuthorizedUserCredentials(config, "test-data", "unused-uri");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ("a-client-id.example.com", actual->client_id);
+  EXPECT_EQ("a-123456ABCDEF", actual->client_secret);
+  EXPECT_EQ("1/THETOKEN", actual->refresh_token);
+  EXPECT_EQ("https://oauth2.googleapis.com/test_endpoint", actual->token_uri);
+  EXPECT_EQ(actual->universe_domain, "my-ud.net");
+}
+
+/// @test Verify that parsing an authorized user account JSON string with a
+/// non-empty universe_domain works.
+TEST_F(AuthorizedUserCredentialsTest, ParseSimpleWithEmptyUniverseDomain) {
+  std::string config = R"""({
+      "client_id": "a-client-id.example.com",
+      "client_secret": "a-123456ABCDEF",
+      "refresh_token": "1/THETOKEN",
+      "token_uri": "https://oauth2.googleapis.com/test_endpoint",
+      "type": "magic_type",
+      "universe_domain": ""
+})""";
+
+  auto actual =
+      ParseAuthorizedUserCredentials(config, "test-data", "unused-uri");
+  EXPECT_THAT(
+      actual,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr(
+              "universe_domain field in credentials file cannot be empty")));
 }
 
 /// @test Verify that parsing an authorized user account JSON string works.
