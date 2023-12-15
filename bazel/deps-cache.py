@@ -18,6 +18,7 @@
 
 import argparse
 import filecmp
+import glob
 import hashlib
 import os.path
 import subprocess
@@ -30,9 +31,9 @@ import urllib.request
 # pylint: disable=exec-used
 # pylint: disable=unused-argument
 
-default_deps_bzl = os.path.join(
-    os.path.dirname(sys.argv[0]), "google_cloud_cpp_deps.bzl"
-)
+DEFAULT_FILES = glob.glob(
+    os.path.join(os.path.dirname(sys.argv[0]), "workspace*.bzl")
+) + glob.glob(os.path.join(os.path.dirname(sys.argv[0]), "development*.bzl"))
 
 parser = argparse.ArgumentParser(description=(__doc__))
 parser.add_argument(
@@ -42,12 +43,12 @@ parser.add_argument(
     help="cache write through on verification failure",
 )
 parser.add_argument(
-    "google_cloud_cpp_deps.bzl",
-    nargs="?",
-    default=default_deps_bzl,
+    "bzls",
+    nargs="*",
+    default=DEFAULT_FILES,
     help=(
-        "path to the .bzl file that lists the cached HTTP archives"
-        f' (default "{default_deps_bzl}")'
+        "paths to the .bzl files that lists the cached HTTP archives"
+        f' (default "{DEFAULT_FILES}")'
     ),
 )
 args = parser.parse_args()
@@ -142,7 +143,6 @@ def verify(tmpdir, name, source, cache, upload, **kwargs):
 
 
 def main():
-    bzl = vars(args)["google_cloud_cpp_deps.bzl"]
     exec_globals = {
         "__builtins__": None,
         "Label": lambda label: None,
@@ -152,17 +152,20 @@ def main():
         "maybe": maybe,
     }
     exec_locals = {}
-    try:
-        with open(bzl) as f:
-            exec(compile(f.read(), bzl, "exec"), exec_globals, exec_locals)
-    except Exception as e:
-        sys.exit(f"{bzl}: {e}")
-    for f in ["google_cloud_cpp_development_deps", "google_cloud_cpp_deps"]:
-        func = exec_locals.get(f)
+    for bzl in args.bzls:
+        try:
+            with open(bzl) as f:
+                exec(compile(f.read(), bzl, "exec"), exec_globals, exec_locals)
+        except Exception as e:
+            sys.exit(f"{bzl}: {e}")
+    for key, func in exec_locals.items():
+        # At the moment only the "gl_cpp_*0" functions load cacheable objects.
+        if not callable(func) or not key.startswith("gl_cpp_") or not key.endswith("0"):
+            continue
         try:
             func(name="deps-cache")  # execute .bzl definitions
         except Exception as e:
-            sys.exit(f"{func}(): {e}")
+            sys.exit(f"{key}(): {e}")
     with tempfile.TemporaryDirectory() as tmpdir:
         for archive in archives:
             download(tmpdir, **archive)
