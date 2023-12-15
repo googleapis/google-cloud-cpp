@@ -32,12 +32,12 @@ TEST(DefaultPullMessageTest, UnwrapMessage) {
   auto constexpr kText = R"pb(
     ack_id: "id"
     message {
-    data: "test-data"
-    attributes: { key: "key1" value: "label1" }
-    attributes: { key: "key0" value: "label0" }
-    message_id: "test-message-id"
-    publish_time { seconds: 123 nanos: 456000 }
-    ordering_key: "test-ordering-key"
+      data: "test-data"
+      attributes: { key: "key1" value: "label1" }
+      attributes: { key: "key0" value: "label0" }
+      message_id: "test-message-id"
+      publish_time { seconds: 123 nanos: 456000 }
+      ordering_key: "test-ordering-key"
     }
   )pb";
   ::google::pubsub::v1::ReceivedMessage proto_message;
