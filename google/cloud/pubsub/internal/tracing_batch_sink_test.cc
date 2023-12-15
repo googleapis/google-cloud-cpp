@@ -43,10 +43,10 @@ using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
+using ::google::cloud::testing_util::SpanIsRoot;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanLinksSizeIs;
 using ::google::cloud::testing_util::SpanNamed;
-using ::google::cloud::testing_util::SpanParentIsRoot;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::_;
 using ::testing::AllOf;
@@ -217,7 +217,9 @@ TEST(TracingBatchSink, PublishSpanHasAttributes) {
                                  TestTopic().FullName())))));
 }
 
-TEST(TracingBatchSink, PublishSpanParentIsRoot) {
+#if OPENTELEMETRY_VERSION_MAJOR >= 1
+#if OPENTELEMETRY_VERSION_MINOR >= 13
+TEST(TracingBatchSink, PublishSpanIsRoot) {
   auto span_catcher = InstallSpanCatcher();
   auto message_span = MakeSpan("test span");
   auto mock = std::make_unique<pubsub_testing::MockBatchSink>();
@@ -235,9 +237,12 @@ TEST(TracingBatchSink, PublishSpanParentIsRoot) {
   EXPECT_THAT(response, IsOk());
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-topic publish"),
-                                    SpanParentIsRoot())));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-topic publish"), SpanIsRoot())));
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test span"), SpanIsRoot())));
 }
+#endif
+#endif
 
 TEST(TracingBatchSink, AsyncPublishOnlyIncludeSampledLink) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
