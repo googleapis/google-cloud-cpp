@@ -164,9 +164,6 @@ TEST(FutureTestVoid, ThenByCopy) {
   next.get();
   EXPECT_FALSE(next.valid());
 }
-// The following tests reference the technical specification:
-//   http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0159r0.html
-// The test names match the section and paragraph from the TS.
 
 /// @test Verify the behavior around cancellation.
 TEST(FutureTestVoid, CancelThroughContinuation) {
@@ -174,6 +171,28 @@ TEST(FutureTestVoid, CancelThroughContinuation) {
   promise<void> p0([&cancelled] { cancelled = true; });
   auto f0 = p0.get_future();
   auto f1 = f0.then([](future<void>) { return 7; });
+  EXPECT_TRUE(f1.cancel());
+  EXPECT_TRUE(cancelled);
+  p0.set_value();
+  EXPECT_EQ(7, f1.get());
+}
+
+TEST(FutureTestVoid, CancelThroughUnwrappingContinuation) {
+  bool cancelled = false;
+  promise<void> p0([&cancelled] { cancelled = true; });
+  auto f0 = p0.get_future();
+  auto f1 =
+      f0.then([](future<void> g) { return g.then([](auto) { return 7; }); });
+  EXPECT_TRUE(f1.cancel());
+  EXPECT_TRUE(cancelled);
+  p0.set_value();
+  EXPECT_EQ(7, f1.get());
+}
+
+TEST(FutureTestVoid, CancelThroughConverted) {
+  bool cancelled = false;
+  promise<void> p0([&cancelled] { cancelled = true; });
+  future<std::int64_t> f1(p0.get_future().then([](auto) { return 7; }));
   EXPECT_TRUE(f1.cancel());
   EXPECT_TRUE(cancelled);
   p0.set_value();
@@ -225,6 +244,10 @@ TEST(FutureTestVoid, DISABLED_AbandonNotifiesContinuation) {
   }
   EXPECT_EQ(f.get(), 42);
 }
+
+// The following tests reference the technical specification:
+//   http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0159r0.html
+// The test names match the section and paragraph from the TS.
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
 // NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
