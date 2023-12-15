@@ -65,7 +65,8 @@ def gl_cpp_development0(name = None):
         strip_prefix = "benchmark-1.8.3",
     )
 
-    # PugiXML, this is only used in the docfx internal tool.
+    # An XML parser and generator, this is only used in //docfx.
+    # This is an internal tool used to generate the reference documentation.
     maybe(
         http_archive,
         name = "com_github_zeux_pugixml",
@@ -78,6 +79,8 @@ def gl_cpp_development0(name = None):
         build_file = Label("//bazel:pugixml.BUILD"),
     )
 
+    # A YAML parser and generator, this is only used in //docfx and //generator.
+    # Both are internal tools used for development only.
     maybe(
         http_archive,
         name = "com_github_jbeder_yaml_cpp",
