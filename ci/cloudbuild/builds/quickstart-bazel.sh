@@ -16,6 +16,10 @@
 
 set -euo pipefail
 
+# TODO(#13313) - upgrade to Bazel v7.
+: "${USE_BAZEL_VERSION:="6.4.0"}"
+export USE_BAZEL_VERSION
+
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/etc/quickstart-config.sh
