@@ -21,6 +21,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
+#include "google/cloud/internal/oauth2_universe_domain.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/rest_client.h"
 #include <nlohmann/json.hpp>
@@ -75,6 +76,8 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
   auto token_url =
       ValidateStringField(json, "token_url", "credentials-file", ec);
   if (!token_url) return std::move(token_url).status();
+  auto universe_domain = GetUniverseDomainFromCredentialsJson(json);
+  if (!universe_domain) return std::move(universe_domain).status();
 
   auto credential_source = json.find("credential_source");
   if (credential_source == json.end()) {
@@ -93,11 +96,10 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
       MakeExternalAccountTokenSource(*credential_source, *audience, ec);
   if (!source) return std::move(source).status();
 
-  auto info = ExternalAccountInfo{
-      *std::move(audience),  *std::move(subject_token_type),
-      *std::move(token_url), *std::move(source),
-      absl::nullopt,
-  };
+  auto info =
+      ExternalAccountInfo{*std::move(audience),  *std::move(subject_token_type),
+                          *std::move(token_url), *std::move(source),
+                          absl::nullopt,         *std::move(universe_domain)};
 
   auto it = json.find("service_account_impersonation_url");
   if (it == json.end()) return info;

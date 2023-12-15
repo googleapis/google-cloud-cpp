@@ -48,6 +48,7 @@ struct AuthorizedUserCredentialsInfo {
   std::string client_secret;
   std::string refresh_token;
   std::string token_uri;
+  std::string universe_domain;
 };
 
 /**

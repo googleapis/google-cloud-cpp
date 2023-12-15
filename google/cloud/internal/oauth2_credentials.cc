@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/oauth2_universe_domain.h"
 
 namespace google {
 namespace cloud {
@@ -24,6 +25,14 @@ StatusOr<std::vector<std::uint8_t>> Credentials::SignBlob(
     absl::optional<std::string> const&, std::string const&) const {
   return Status(StatusCode::kUnimplemented,
                 "The current credentials cannot sign blobs locally");
+}
+
+std::string Credentials::universe_domain() const {
+  return GoogleDefaultUniverseDomain();
+}
+
+std::string Credentials::universe_domain(google::cloud::Options const&) const {
+  return universe_domain();
 }
 
 StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(

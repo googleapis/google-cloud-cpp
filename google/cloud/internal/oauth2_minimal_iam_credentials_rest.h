@@ -54,6 +54,8 @@ class MinimalIamCredentialsRest {
 
   virtual StatusOr<google::cloud::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) = 0;
+
+  virtual std::string universe_domain(Options const& options) const = 0;
 };
 
 /**
@@ -75,6 +77,10 @@ class MinimalIamCredentialsRestStub : public MinimalIamCredentialsRest {
   StatusOr<google::cloud::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) override;
 
+  std::string universe_domain(Options const& options) const override {
+    return credentials_->universe_domain(options);
+  }
+
  private:
   static std::string MakeRequestPath(GenerateAccessTokenRequest const& request);
 
@@ -93,6 +99,10 @@ class MinimalIamCredentialsRestLogging : public MinimalIamCredentialsRest {
 
   StatusOr<google::cloud::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) override;
+
+  std::string universe_domain(Options const& options) const override {
+    return child_->universe_domain(options);
+  }
 
  private:
   std::shared_ptr<MinimalIamCredentialsRest> child_;

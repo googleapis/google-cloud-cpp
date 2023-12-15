@@ -70,7 +70,7 @@ AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
     : AuthorizedUserCredentials(
           google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo{
               info.client_id, info.client_secret, info.refresh_token,
-              info.token_uri},
+              info.token_uri, info.universe_domain},
           channel_options) {}
 
 AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,

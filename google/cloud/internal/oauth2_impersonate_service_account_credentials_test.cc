@@ -29,22 +29,27 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::std::chrono::minutes;
 using ::std::chrono::seconds;
+using ::testing::Eq;
 using ::testing::Return;
 
 class MockMinimalIamCredentialsRest : public MinimalIamCredentialsRest {
  public:
   MOCK_METHOD(StatusOr<google::cloud::AccessToken>, GenerateAccessToken,
               (GenerateAccessTokenRequest const&), (override));
+  MOCK_METHOD(std::string, universe_domain, (Options const& options),
+              (override, const));
 };
 
 TEST(ImpersonateServiceAccountCredentialsTest, Basic) {
   auto const now = std::chrono::system_clock::now();
 
+  auto constexpr kExpectedUniverseDomain = "my-ud.net";
   auto mock = std::make_shared<MockMinimalIamCredentialsRest>();
   EXPECT_CALL(*mock, GenerateAccessToken)
       .WillOnce(
           Return(make_status_or(AccessToken{"token1", now + minutes(30)})))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "")));
+  EXPECT_CALL(*mock, universe_domain).WillOnce(Return(kExpectedUniverseDomain));
 
   auto config = google::cloud::internal::ImpersonateServiceAccountConfig(
       google::cloud::MakeGoogleDefaultCredentials(),
@@ -52,6 +57,9 @@ TEST(ImpersonateServiceAccountCredentialsTest, Basic) {
       Options{}.set<AccessTokenLifetimeOption>(std::chrono::minutes(15)));
 
   ImpersonateServiceAccountCredentials under_test(config, mock);
+
+  auto universe_domain = under_test.universe_domain({});
+  EXPECT_THAT(universe_domain, Eq(kExpectedUniverseDomain));
 
   auto token = under_test.GetToken(now + minutes(1));
   ASSERT_THAT(token, IsOk());

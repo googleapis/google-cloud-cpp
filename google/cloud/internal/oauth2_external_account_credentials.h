@@ -67,6 +67,7 @@ struct ExternalAccountInfo {
   std::string token_url;
   ExternalAccountTokenSource token_source;
   absl::optional<ExternalAccountImpersonationConfig> impersonation_config;
+  std::string universe_domain;
 };
 
 /// Parse a JSON string with an external account configuration.
@@ -82,6 +83,10 @@ class ExternalAccountCredentials : public oauth2_internal::Credentials {
 
   StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
+
+  std::string universe_domain(Options const&) const override {
+    return info_.universe_domain;
+  }
 
  private:
   StatusOr<AccessToken> GetTokenImpersonation(std::string const& access_token,

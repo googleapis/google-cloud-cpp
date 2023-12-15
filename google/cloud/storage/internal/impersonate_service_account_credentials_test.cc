@@ -37,6 +37,8 @@ class MockMinimalIamCredentialsRest
  public:
   MOCK_METHOD(StatusOr<google::cloud::AccessToken>, GenerateAccessToken,
               (oauth2_internal::GenerateAccessTokenRequest const&), (override));
+  MOCK_METHOD(std::string, universe_domain, (Options const& options),
+              (override, const));
 };
 
 TEST(ImpersonateServiceAccountCredentialsTest, Basic) {

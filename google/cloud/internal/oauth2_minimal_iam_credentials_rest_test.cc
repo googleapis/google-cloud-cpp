@@ -50,6 +50,8 @@ class MockCredentials : public google::cloud::oauth2_internal::Credentials {
  public:
   MOCK_METHOD(StatusOr<AccessToken>, GetToken,
               (std::chrono::system_clock::time_point), (override));
+  MOCK_METHOD(std::string, universe_domain, (Options const&),
+              (const, override));
 };
 
 using MockHttpClientFactory =
@@ -277,6 +279,18 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenCredentialFailure) {
   GenerateAccessTokenRequest request;
   auto access_token = stub.GenerateAccessToken(request);
   EXPECT_THAT(access_token, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(MinimalIamCredentialsRestTest, GetUniverseDomainFromCredentials) {
+  auto constexpr kExpectedUniverseDomain = "my-ud.net";
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, universe_domain).WillOnce([&](Options const&) {
+    return kExpectedUniverseDomain;
+  });
+
+  auto stub =
+      MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{}, {});
+  EXPECT_THAT(stub.universe_domain(Options{}), Eq(kExpectedUniverseDomain));
 }
 
 }  // namespace
