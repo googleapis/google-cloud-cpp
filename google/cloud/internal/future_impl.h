@@ -173,7 +173,8 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
   using ValueType = absl::variant<absl::monostate, std::exception_ptr, T,
                                   FutureValueRetrieved>;
 
-#if __GNUC__
+#if __clang__
+#elif __GNUC__
 // With some versions of Abseil and GCC the compiler emits spurious warnings.
 // This diagnostic is useful in other places, so let's just silence it here.
 #pragma GCC diagnostic push
@@ -190,7 +191,8 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
                                ValueType value = {})
       : value_(std::move(value)),
         cancellation_callback_(std::move(cancellation_callback)) {}
-#if __GNUC__
+#if __clang__
+#elif __GNUC__
 #pragma GCC diagnostic pop
 #endif
 
