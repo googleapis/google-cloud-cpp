@@ -160,8 +160,10 @@ class promise_base {  // NOLINT(readability-identifier-naming)
   explicit promise_base(std::function<void()> cancellation_callback)
       : shared_state_(
             std::make_shared<shared_state_type>(cancellation_callback)) {}
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  promise_base(promise_base&&) = default;
+  promise_base(promise_base&& rhs) noexcept
+      : shared_state_(std::move(rhs.shared_state_)) {
+    rhs.shared_state_.reset();
+  }
 
   ~promise_base() {
     if (shared_state_) {

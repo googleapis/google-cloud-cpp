@@ -204,7 +204,8 @@ TEST(FutureTestInt, CancelThroughUnwrappingContinuation) {
 TEST(FutureTestInt, CancelThroughConverted) {
   bool cancelled = false;
   promise<int> p0([&cancelled] { cancelled = true; });
-  future<std::int64_t> f1(p0.get_future().then([](auto h) { return h.get() * 2; }));
+  future<std::int64_t> f1(
+      p0.get_future().then([](auto h) { return h.get() * 2; }));
   EXPECT_TRUE(f1.cancel());
   EXPECT_TRUE(cancelled);
   p0.set_value(42);
@@ -236,7 +237,7 @@ TEST(FutureTestInt, ThenAttachesContinuationToArgument) {
 }
 
 /// @test Verify that `.then()` continuations are notified on abandoned futures.
-TEST(FutureTestInt, DISABLED_AbandonNotifiesContinuation) {
+TEST(FutureTestInt, AbandonNotifiesContinuation) {
   future<int> f;
   {
     promise<int> p;

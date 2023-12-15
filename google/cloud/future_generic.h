@@ -145,8 +145,7 @@ class promise final : private internal::promise_base<T> {
       : internal::promise_base<T>(std::move(x)) {}
 
   /// Constructs a new promise and transfer any shared state from @p rhs.
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  promise(promise&&) = default;
+  promise(promise&&) noexcept = default;
 
   /// Abandons the shared state in `*this`, if any, and transfers the shared
   /// state from @p rhs.

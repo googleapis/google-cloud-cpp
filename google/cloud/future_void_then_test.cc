@@ -224,7 +224,7 @@ TEST(FutureTestVoid, ThenAttachesContinuationToArgument) {
 }
 
 /// @test Verify that `.then()` continuations are notified on abandoned futures.
-TEST(FutureTestVoid, DISABLED_AbandonNotifiesContinuation) {
+TEST(FutureTestVoid, AbandonNotifiesContinuation) {
   future<int> f;
   {
     promise<void> p;

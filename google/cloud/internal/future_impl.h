@@ -175,8 +175,8 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
 
 #if __clang__
 #elif __GNUC__
-// With some versions of Abseil and GCC the compiler emits spurious warnings.
-// This diagnostic is useful in other places, so let's just silence it here.
+  // With some versions of Abseil and GCC the compiler emits spurious warnings.
+  // This diagnostic is useful in other places, so let's just silence it here.
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
@@ -340,10 +340,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
     std::unique_lock<std::mutex> lk(mu_);
     if (is_ready_unlocked()) return;
     set_exception(MakeFutureError(std::future_errc::broken_promise), lk);
-    lk.unlock();
-    // TODO(#13314) - we should call `notify_now()`, but some tests (and maybe)
-    //   some of the code depends on the broken behavior.
-    cv_.notify_all();
+    notify_now(std::move(lk));
   }
 
   void set_continuation(std::unique_ptr<Continuation<T>> c) {
