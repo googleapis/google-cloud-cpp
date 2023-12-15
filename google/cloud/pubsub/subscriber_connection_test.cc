@@ -48,8 +48,6 @@ using ::testing::UnorderedElementsAre;
 std::shared_ptr<SubscriberConnection> MakeTestSubscriberConnection(
     Subscription subscription,
     std::shared_ptr<pubsub_internal::SubscriberStub> mock, Options opts = {}) {
-  opts.set<google::cloud::UnifiedCredentialsOption>(MakeInsecureCredentials());
-
   opts.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
   opts = pubsub_internal::DefaultSubscriberOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
