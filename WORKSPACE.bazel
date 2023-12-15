@@ -14,38 +14,34 @@
 
 workspace(name = "google_cloud_cpp")
 
-load("//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps", "google_cloud_cpp_development_deps")
+load("//bazel:workspace0.bzl", "gl_cpp_workspace0")
 
-google_cloud_cpp_development_deps()
+gl_cpp_workspace0()
 
-google_cloud_cpp_deps()
+load("//bazel:workspace1.bzl", "gl_cpp_workspace1")
 
-# Configure @com_google_googleapis to only compile C++ and gRPC libraries.
-load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
+gl_cpp_workspace1()
 
-switched_rules_by_language(
-    name = "com_google_googleapis_imports",
-    cc = True,  # C++ support is only "Partially implemented", roll our own.
-    grpc = True,
-)
+load("//bazel:workspace2.bzl", "gl_cpp_workspace2")
 
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+gl_cpp_workspace2()
 
-grpc_deps()
+load("//bazel:workspace3.bzl", "gl_cpp_workspace3")
 
-load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
+gl_cpp_workspace3()
 
-grpc_extra_deps()
+load("//bazel:workspace4.bzl", "gl_cpp_workspace4")
 
-# Protobuf dependencies cannot be loaded before the gRPC dependencies.
-load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+gl_cpp_workspace4()
 
-protobuf_deps()
+load("//bazel:workspace5.bzl", "gl_cpp_workspace5")
 
-load("@io_opentelemetry_cpp//bazel:repository.bzl", "opentelemetry_cpp_deps")
+gl_cpp_workspace5()
 
-opentelemetry_cpp_deps()
+load("//bazel:development0.bzl", "gl_cpp_development0")
 
-load("@com_google_benchmark//:bazel/benchmark_deps.bzl", "benchmark_deps")
+gl_cpp_development0()
 
-benchmark_deps()
+load("//bazel:development1.bzl", "gl_cpp_development1")
+
+gl_cpp_development1()

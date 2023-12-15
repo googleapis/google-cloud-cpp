@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,12 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Load dependencies needed to compile and test the google-cloud-cpp library."""
+"""Load dependencies needed for google-cloud-cpp development / Phase 1."""
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
-load("//bazel:workspace0.bzl", "gl_cpp_workspace0")
-load("//bazel:development0.bzl", "gl_cpp_development0")
+load("@com_google_benchmark//:bazel/benchmark_deps.bzl", "benchmark_deps")
 
-google_cloud_cpp_development_deps = gl_cpp_development0
-google_cloud_cpp_deps = gl_cpp_workspace0
+def gl_cpp_development1(name = None):
+    """Loads dependencies needed to develop the google-cloud-cpp libraries.
+
+    This function assumes the repositories needed by our dependencies are loaded
+
+
+    Args:
+        name: Unused. It is conventional to provide a `name` argument to all
+            workspace functions.
+    """
+    benchmark_deps()
