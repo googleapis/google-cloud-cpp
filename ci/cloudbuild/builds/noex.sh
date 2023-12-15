@@ -32,8 +32,7 @@ readonly ENABLED_FEATURES
 
 io::run cmake "${cmake_args[@]}" \
   -DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=NO \
-  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" \
-  -DCMAKE_BUILD_TYPE=Debug
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 io::run cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
 io::run env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
