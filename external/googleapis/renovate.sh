@@ -36,7 +36,7 @@ SHA256=$(sha256sum "${DOWNLOAD}" | sed "s/ .*//")
 rm -f "${DOWNLOAD}"
 
 banner "Updating Bazel/CMake dependencies"
-sed -i -f - bazel/google_cloud_cpp_deps.bzl <<EOT
+sed -i -f - bazel/workspace0.bzl <<EOT
   /name = "com_google_googleapis",/,/strip_prefix = "/ {
     s;/com_google_googleapis/.*.tar.gz",;/com_google_googleapis/${COMMIT}.tar.gz",;
     s;/${REPO}/archive/.*.tar.gz",;/${REPO}/archive/${COMMIT}.tar.gz",;
