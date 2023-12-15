@@ -127,17 +127,6 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "rules_cc-0.0.9",
     )
 
-    # The version of `rules_apple` loaded by gRPC is too old for Bazel 6 or 7.
-    maybe(
-        http_archive,
-        name = "build_bazel_rules_apple",
-        urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/build_bazel_rules_apple/rules_apple.3.1.1.tar.gz",
-            "https://github.com/bazelbuild/rules_apple/releases/download/3.1.1/rules_apple.3.1.1.tar.gz",
-        ],
-        sha256 = "34c41bfb59cdaea29ac2df5a2fa79e5add609c71bb303b2ebb10985f93fa20e7",
-    )
-
     # Load Abseil
     maybe(
         http_archive,
