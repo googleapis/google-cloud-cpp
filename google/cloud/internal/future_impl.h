@@ -173,6 +173,12 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
   using ValueType = absl::variant<absl::monostate, std::exception_ptr, T,
                                   FutureValueRetrieved>;
 
+#if __GNUC__
+// With some versions of Abseil and GCC the compiler emits spurious warnings.
+// This diagnostic is useful in other places, so let's just silence it here.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
   future_shared_state() : future_shared_state([] {}, ValueType{}) {}
 
   // Used in the implementation of `.then()` to transfer the value from one
@@ -184,6 +190,9 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
                                ValueType value = {})
       : value_(std::move(value)),
         cancellation_callback_(std::move(cancellation_callback)) {}
+#if __GNUC__
+#pragma GCC diagnostic pop
+#endif
 
   /// The implementation details for `future<T>::get()`
   T get() {
