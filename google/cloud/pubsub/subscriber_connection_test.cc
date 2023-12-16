@@ -19,11 +19,15 @@
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/url_encode.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
 #include <atomic>
 
@@ -158,6 +162,112 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
   response.cancel();
   ASSERT_STATUS_OK(response.get());
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::SetServerMetadata;
+using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::ValidatePropagator;
+using ::google::pubsub::v1::PullRequest;
+using ::testing::_;
+using ::testing::AllOf;
+using ::testing::IsEmpty;
+using ::testing::Property;
+using ::testing::UnorderedElementsAre;
+
+TEST(MakeSubscriberConnectionTest, TracingEnabledForUnaryPull) {
+  auto span_catcher = InstallSpanCatcher();
+  auto const subscription = Subscription("test-project", "test-subscription");
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto context,
+                         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        SetServerMetadata(*context, {});
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .WillOnce([](google::cloud::CompletionQueue&, auto context,
+                   google::pubsub::v1::AcknowledgeRequest const& request) {
+        SetServerMetadata(*context, {});
+        EXPECT_THAT(request.ack_ids(), Contains("test-ack-id-0"));
+        return make_ready_future(
+            Status{StatusCode::kUnknown, "test-only-unknown"});
+      });
+  EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
+                                   Property(&PullRequest::subscription,
+                                            subscription.FullName()))))
+      .WillOnce([&](grpc::ClientContext& context,
+                    google::pubsub::v1::PullRequest const&) {
+        ValidatePropagator(context);
+        google::pubsub::v1::PullResponse response;
+        auto& message = *response.add_received_messages();
+        message.set_delivery_attempt(42);
+        message.set_ack_id("test-ack-id-0");
+        message.mutable_message()->set_data("test-data-0");
+        return response;
+      });
+
+  auto subscriber = MakeTestSubscriberConnection(subscription, mock,
+                                                 EnableTracing(Options{}));
+
+  google::cloud::internal::OptionsSpan span(subscriber->options());
+  auto response = subscriber->Pull();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->message.data(), "test-data-0");
+  std::move(response->handler).ack();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, UnorderedElementsAre(
+                         SpanNamed("test-subscription receive"),
+                         SpanNamed("google.pubsub.v1.Subscriber/Pull"),
+                         SpanNamed("google.pubsub.v1.Subscriber/Acknowledge")));
+}
+
+TEST(MakeSubscriberConnectionTest, TracingDisabledForUnaryPull) {
+  auto span_catcher = InstallSpanCatcher();
+  auto const subscription = Subscription("test-project", "test-subscription");
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+                         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .WillOnce([](google::cloud::CompletionQueue&, auto,
+                   google::pubsub::v1::AcknowledgeRequest const& request) {
+        EXPECT_THAT(request.ack_ids(), Contains("test-ack-id-0"));
+        return make_ready_future(
+            Status{StatusCode::kUnknown, "test-only-unknown"});
+      });
+  EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
+                                   Property(&PullRequest::subscription,
+                                            subscription.FullName()))))
+      .WillOnce(
+          [&](grpc::ClientContext&, google::pubsub::v1::PullRequest const&) {
+            google::pubsub::v1::PullResponse response;
+            auto& message = *response.add_received_messages();
+            message.set_delivery_attempt(42);
+            message.set_ack_id("test-ack-id-0");
+            message.mutable_message()->set_data("test-data-0");
+            return response;
+          });
+
+  auto subscriber = MakeTestSubscriberConnection(subscription, mock,
+                                                 DisableTracing(Options{}));
+
+  google::cloud::internal::OptionsSpan span(subscriber->options());
+  auto response = subscriber->Pull();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->message.data(), "test-data-0");
+  std::move(response->handler).ack();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

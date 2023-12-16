@@ -21,11 +21,13 @@
 #include "google/cloud/pubsub/internal/subscriber_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/subscriber_round_robin_decorator.h"
 #include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
+#include "google/cloud/pubsub/internal/subscriber_tracing_connection.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include <algorithm>
@@ -35,6 +37,23 @@ namespace google {
 namespace cloud {
 namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::shared_ptr<pubsub::SubscriberConnection> ConnectionFromDecoratedStub(
+    std::shared_ptr<pubsub_internal::SubscriberStub> stub,
+    Options const& opts) {
+  auto tracing_enabled = google::cloud::internal::TracingEnabled(opts);
+  std::shared_ptr<SubscriberConnection> connection =
+      std::make_shared<pubsub_internal::SubscriberConnectionImpl>(
+          opts, std::move(stub));
+  if (tracing_enabled) {
+    connection =
+        pubsub_internal::MakeSubscriberTracingConnection(std::move(connection));
+  }
+  return connection;
+}
+
+}  // namespace
 
 SubscriberConnection::~SubscriberConnection() = default;
 
@@ -73,8 +92,7 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto stub =
       pubsub_internal::MakeRoundRobinSubscriberStub(background->cq(), opts);
-  return std::make_shared<pubsub_internal::SubscriberConnectionImpl>(
-      std::move(opts), std::move(stub));
+  return ConnectionFromDecoratedStub(std::move(stub), std::move(opts));
 }
 
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
@@ -103,8 +121,7 @@ std::shared_ptr<pubsub::SubscriberConnection> MakeTestSubscriberConnection(
   auto stub = pubsub_internal::MakeTestSubscriberStub(background->cq(), opts,
                                                       std::move(stubs));
   opts.set<pubsub::SubscriptionOption>(std::move(subscription));
-  return std::make_shared<SubscriberConnectionImpl>(std::move(opts),
-                                                    std::move(stub));
+  return pubsub::ConnectionFromDecoratedStub(std::move(stub), std::move(opts));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
