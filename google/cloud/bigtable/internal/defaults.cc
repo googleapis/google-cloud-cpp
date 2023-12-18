@@ -183,7 +183,7 @@ Options DefaultOptions(Options opts) {
   opts = google::cloud::internal::MergeOptions(std::move(opts),
                                                std::move(defaults));
 
-  opts = DefaultConnectionRefreshOptions(std::move(opts));
+  if (!emulator) opts = DefaultConnectionRefreshOptions(std::move(opts));
   opts = DefaultChannelArgumentOptions(std::move(opts));
 
   // Inserts our user-agent string at the front.

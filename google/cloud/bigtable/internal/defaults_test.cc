@@ -340,6 +340,7 @@ TEST(EndpointEnvTest, EmulatorOverridesDirectPath) {
 }
 
 TEST(ConnectionRefreshRange, BothUnset) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
   auto opts = DefaultOptions();
 
   // See `kDefaultMinRefreshPeriod`
@@ -351,6 +352,7 @@ TEST(ConnectionRefreshRange, BothUnset) {
 }
 
 TEST(ConnectionRefreshRange, MinSetAboveMaxDefault) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
   auto opts =
       DefaultOptions(Options{}.set<MinConnectionRefreshOption>(mins(10)));
 
@@ -361,6 +363,7 @@ TEST(ConnectionRefreshRange, MinSetAboveMaxDefault) {
 }
 
 TEST(ConnectionRefreshRange, MaxSetBelowMinDefault) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
   auto opts =
       DefaultOptions(Options{}.set<MaxConnectionRefreshOption>(secs(1)));
 
@@ -371,6 +374,7 @@ TEST(ConnectionRefreshRange, MaxSetBelowMinDefault) {
 }
 
 TEST(ConnectionRefreshRange, BothSetValid) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
   auto opts = DefaultOptions(Options{}
                                  .set<MinConnectionRefreshOption>(secs(30))
                                  .set<MaxConnectionRefreshOption>(mins(2)));
@@ -382,6 +386,7 @@ TEST(ConnectionRefreshRange, BothSetValid) {
 }
 
 TEST(ConnectionRefreshRange, BothSetInvalidUsesMax) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
   auto opts = DefaultOptions(Options{}
                                  .set<MinConnectionRefreshOption>(mins(2))
                                  .set<MaxConnectionRefreshOption>(secs(30)));
@@ -389,6 +394,15 @@ TEST(ConnectionRefreshRange, BothSetInvalidUsesMax) {
   EXPECT_EQ(absl::FromChrono(mins(2)),
             absl::FromChrono(opts.get<MinConnectionRefreshOption>()));
   EXPECT_EQ(absl::FromChrono(mins(2)),
+            absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
+}
+
+TEST(ConnectionRefreshRange, DisabledIfEmulator) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
+  auto opts = DefaultOptions();
+
+  // Zero duration means connection refreshing is disabled.
+  EXPECT_EQ(absl::ZeroDuration(),
             absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
 }
 
