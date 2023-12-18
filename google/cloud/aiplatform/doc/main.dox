@@ -33,6 +33,7 @@ parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
 - [\c aiplatform_v1::DatasetServiceClient](@ref google::cloud::aiplatform_v1::DatasetServiceClient)
+- [\c aiplatform_v1::DeploymentResourcePoolServiceClient](@ref google::cloud::aiplatform_v1::DeploymentResourcePoolServiceClient)
 - [\c aiplatform_v1::EndpointServiceClient](@ref google::cloud::aiplatform_v1::EndpointServiceClient)
 - [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref google::cloud::aiplatform_v1::FeatureOnlineStoreAdminServiceClient)
 - [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref google::cloud::aiplatform_v1::FeatureOnlineStoreServiceClient)
