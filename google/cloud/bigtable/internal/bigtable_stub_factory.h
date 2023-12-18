@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <functional>
@@ -36,12 +37,14 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
 
 /// Used in testing to create decorated mocks.
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
-    google::cloud::CompletionQueue cq, Options const& options,
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    CompletionQueue const& cq, Options const& options,
     BaseBigtableStubFactory const& base_factory);
 
 /// Default function used by `DataConnectionImpl`.
 std::shared_ptr<BigtableStub> CreateBigtableStub(
-    google::cloud::CompletionQueue cq, Options const& options);
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    CompletionQueue const& cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

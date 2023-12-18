@@ -21,6 +21,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -37,15 +38,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::bigtable::testing::MockBigtableStub;
+using ::google::cloud::testing_util::MockAuthenticationStrategy;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::testing::_;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
-using ::testing::NotNull;
+using ::testing::Optional;
 using ::testing::Pair;
+using ::testing::ResultOf;
 using ::testing::Return;
 
 MATCHER(IsWebSafeBase64, "") {
@@ -72,9 +76,24 @@ TEST(BigtableStubFactory, RoundRobin) {
         return mock;
       });
 
+  auto expect_channel_id = [](int id) {
+    return ResultOf(
+        "channel ID",
+        [](grpc::ChannelArguments const& args) {
+          return internal::GetIntChannelArgument(args, "grpc.channel_id");
+        },
+        Optional(id));
+  };
+
+  auto auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*auth, CreateChannel("localhost:1", expect_channel_id(0)));
+  EXPECT_CALL(*auth, CreateChannel("localhost:1", expect_channel_id(1)));
+  EXPECT_CALL(*auth, CreateChannel("localhost:1", expect_channel_id(2)));
+  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
+
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
-      cq,
+      std::move(auth), cq,
       Options{}
           .set<GrpcNumChannelsOption>(kTestChannels)
           .set<EndpointOption>("localhost:1")
@@ -96,27 +115,24 @@ TEST(BigtableStubFactory, Auth) {
   EXPECT_CALL(factory, Call)
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockBigtableStub>();
-        EXPECT_CALL(*mock, MutateRow)
-            .WillOnce([](grpc::ClientContext& context,
-                         google::bigtable::v2::MutateRowRequest const&) {
-              EXPECT_THAT(context.credentials(), NotNull());
-              return internal::AbortedError("fail");
-            });
+        EXPECT_CALL(*mock, MutateRow).Times(0);
         return mock;
       });
 
-  auto credentials = google::cloud::MakeAccessTokenCredentials(
-      "test-only-invalid",
-      std::chrono::system_clock::now() + std::chrono::minutes(5));
+  auto auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(true));
+  EXPECT_CALL(*auth, CreateChannel("localhost:1", _));
+  EXPECT_CALL(*auth, ConfigureContext)
+      .WillOnce(Return(internal::AbortedError("fail")));
 
   CompletionQueue cq;
-  auto stub =
-      CreateDecoratedStubs(cq,
-                           Options{}
-                               .set<GrpcNumChannelsOption>(1)
-                               .set<EndpointOption>("localhost:1")
-                               .set<UnifiedCredentialsOption>(credentials),
-                           factory.AsStdFunction());
+  auto stub = CreateDecoratedStubs(
+      std::move(auth), cq,
+      Options{}
+          .set<GrpcNumChannelsOption>(1)
+          .set<EndpointOption>("localhost:1")
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
+      factory.AsStdFunction());
 
   grpc::ClientContext context;
   auto response = stub->MutateRow(context, {});
@@ -141,9 +157,12 @@ TEST(BigtableStubFactory, Metadata) {
         return mock;
       });
 
+  auto auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
+
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
-      cq,
+      std::move(auth), cq,
       Options{}
           .set<GrpcNumChannelsOption>(1)
           .set<EndpointOption>("localhost:1")
@@ -167,9 +186,12 @@ TEST(BigtableStubFactory, LoggingEnabled) {
         return mock;
       });
 
+  auto auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
+
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
-      cq,
+      std::move(auth), cq,
       Options{}
           .set<GrpcNumChannelsOption>(1)
           .set<TracingComponentsOption>({"rpc"})
@@ -196,9 +218,12 @@ TEST(BigtableStubFactory, LoggingDisabled) {
         return mock;
       });
 
+  auto auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
+
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
-      cq,
+      std::move(auth), cq,
       Options{}
           .set<GrpcNumChannelsOption>(1)
           .set<TracingComponentsOption>({})
@@ -232,9 +257,12 @@ TEST(BigtableStubFactory, FeaturesFlags) {
         return mock;
       });
 
+  auto auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
+
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
-      std::move(cq),
+      std::move(auth), std::move(cq),
       Options{}
           .set<EndpointOption>("localhost:1")
           .set<GrpcNumChannelsOption>(1)
@@ -267,9 +295,12 @@ TEST(BigtableStubFactory, TracingEnabled) {
         return mock;
       });
 
+  auto auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
+
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
-      std::move(cq),
+      std::move(auth), std::move(cq),
       EnableTracing(
           Options{}
               .set<EndpointOption>("localhost:1")
@@ -297,9 +328,12 @@ TEST(BigtableStubFactory, TracingDisabled) {
         return mock;
       });
 
+  auto auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
+
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
-      std::move(cq),
+      std::move(auth), std::move(cq),
       DisableTracing(
           Options{}
               .set<EndpointOption>("localhost:1")
