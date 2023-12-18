@@ -50,6 +50,16 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/aiplatform/v1/deployment_resource_pool_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+  # TODO(#13324) - workaround problems in the response proto message
+  omitted_rpcs: ["QueryDeployedModels"]
+}
+
+service {
   service_proto_path: "google/cloud/aiplatform/v1/endpoint_service.proto"
   product_path: "google/cloud/aiplatform/v1"
   initial_copyright_year: "2023"

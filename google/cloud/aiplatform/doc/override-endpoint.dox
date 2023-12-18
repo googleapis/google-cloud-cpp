@@ -14,6 +14,7 @@ For example, this will override the default endpoint for `aiplatform_v1::Dataset
 Follow these links to find examples for other \c *Client classes:
 
 - [\c aiplatform_v1::DatasetServiceClient](@ref aiplatform_v1::DatasetServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::DeploymentResourcePoolServiceClient](@ref aiplatform_v1::DeploymentResourcePoolServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref aiplatform_v1::FeatureOnlineStoreAdminServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref aiplatform_v1::FeatureOnlineStoreServiceClient-endpoint-snippet)
@@ -44,6 +45,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page aiplatform_v1::DatasetServiceClient-endpoint-snippet Override aiplatform_v1::DatasetServiceClient Endpoint Configuration
 
 @snippet google/cloud/aiplatform/v1/samples/dataset_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::DeploymentResourcePoolServiceClient-endpoint-snippet Override aiplatform_v1::DeploymentResourcePoolServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/deployment_resource_pool_client_samples.cc set-client-endpoint
 
 */
 

@@ -80,6 +80,7 @@ This assumes you have created a custom idempotency policy. Such as:
 Follow these links to find examples for other \c *Client classes:
 
 - [\c aiplatform_v1::DatasetServiceClient](@ref aiplatform_v1::DatasetServiceClient-retry-snippet)
+- [\c aiplatform_v1::DeploymentResourcePoolServiceClient](@ref aiplatform_v1::DeploymentResourcePoolServiceClient-retry-snippet)
 - [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-retry-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref aiplatform_v1::FeatureOnlineStoreAdminServiceClient-retry-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref aiplatform_v1::FeatureOnlineStoreServiceClient-retry-snippet)
@@ -124,6 +125,18 @@ This shows how to override the retry policies for aiplatform_v1::DatasetServiceC
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/aiplatform/v1/samples/dataset_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::DeploymentResourcePoolServiceClient-retry-snippet Override aiplatform_v1::DeploymentResourcePoolServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::DeploymentResourcePoolServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/deployment_resource_pool_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/deployment_resource_pool_client_samples.cc custom-idempotency-policy
 
 */
 

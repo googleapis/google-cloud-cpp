@@ -14,6 +14,7 @@ The following example shows how to explicitly load a service account key file:
 Follow these links to find examples for other \c *Client classes:
 
 - [\c aiplatform_v1::DatasetServiceClient](@ref aiplatform_v1::DatasetServiceClient-service-account-snippet)
+- [\c aiplatform_v1::DeploymentResourcePoolServiceClient](@ref aiplatform_v1::DeploymentResourcePoolServiceClient-service-account-snippet)
 - [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-service-account-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref aiplatform_v1::FeatureOnlineStoreAdminServiceClient-service-account-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref aiplatform_v1::FeatureOnlineStoreServiceClient-service-account-snippet)
@@ -54,6 +55,12 @@ guide for more details.
 /*! @page aiplatform_v1::DatasetServiceClient-service-account-snippet Override aiplatform_v1::DatasetServiceClient Authentication Defaults
 
 @snippet google/cloud/aiplatform/v1/samples/dataset_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::DeploymentResourcePoolServiceClient-service-account-snippet Override aiplatform_v1::DeploymentResourcePoolServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/deployment_resource_pool_client_samples.cc with-service-account
 
 */
 
