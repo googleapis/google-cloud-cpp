@@ -1418,7 +1418,7 @@ class AzureClustersClient {
   ///
   /// @param azure_cluster  Required. The AzureCluster, which owns the OIDC discovery document.
   ///  Format:
-  ///  projects/<project-id>/locations/<region>/azureClusters/<cluster-id>
+  ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -1483,7 +1483,7 @@ class AzureClustersClient {
   ///
   /// @param azure_cluster  Required. The AzureCluster, which owns the JsonWebKeys.
   ///  Format:
-  ///  projects/<project-id>/locations/<region>/azureClusters/<cluster-id>
+  ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
