@@ -33,6 +33,10 @@ void PredictionServiceServerStreamingPredictStreamingUpdater(
     google::cloud::aiplatform::v1::StreamingPredictResponse const&,
     google::cloud::aiplatform::v1::StreamingPredictRequest&) {}
 
+void PredictionServiceStreamGenerateContentStreamingUpdater(
+    google::cloud::aiplatform::v1::GenerateContentResponse const&,
+    google::cloud::aiplatform::v1::GenerateContentRequest&) {}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingPredictRequest,
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
