@@ -128,6 +128,108 @@ TranslationServiceTracingConnection::DeleteGlossary(
   return internal::EndSpan(std::move(span), child_->DeleteGlossary(request));
 }
 
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceTracingConnection::CreateAdaptiveMtDataset(
+    google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::CreateAdaptiveMtDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateAdaptiveMtDataset(request));
+}
+
+Status TranslationServiceTracingConnection::DeleteAdaptiveMtDataset(
+    google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::DeleteAdaptiveMtDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAdaptiveMtDataset(request));
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceTracingConnection::GetAdaptiveMtDataset(
+    google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::GetAdaptiveMtDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAdaptiveMtDataset(request));
+}
+
+StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceTracingConnection::ListAdaptiveMtDatasets(
+    google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ListAdaptiveMtDatasets");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAdaptiveMtDatasets(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::translation::v3::AdaptiveMtDataset>(std::move(span),
+                                                         std::move(sr));
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
+TranslationServiceTracingConnection::AdaptiveMtTranslate(
+    google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::AdaptiveMtTranslate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AdaptiveMtTranslate(request));
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
+TranslationServiceTracingConnection::GetAdaptiveMtFile(
+    google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::GetAdaptiveMtFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAdaptiveMtFile(request));
+}
+
+Status TranslationServiceTracingConnection::DeleteAdaptiveMtFile(
+    google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::DeleteAdaptiveMtFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAdaptiveMtFile(request));
+}
+
+StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
+TranslationServiceTracingConnection::ImportAdaptiveMtFile(
+    google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ImportAdaptiveMtFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ImportAdaptiveMtFile(request));
+}
+
+StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
+TranslationServiceTracingConnection::ListAdaptiveMtFiles(
+    google::cloud::translation::v3::ListAdaptiveMtFilesRequest request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ListAdaptiveMtFiles");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAdaptiveMtFiles(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::translation::v3::AdaptiveMtFile>(std::move(span),
+                                                      std::move(sr));
+}
+
+StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
+TranslationServiceTracingConnection::ListAdaptiveMtSentences(
+    google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ListAdaptiveMtSentences");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAdaptiveMtSentences(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::translation::v3::AdaptiveMtSentence>(std::move(span),
+                                                          std::move(sr));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<translate_v3::TranslationServiceConnection>

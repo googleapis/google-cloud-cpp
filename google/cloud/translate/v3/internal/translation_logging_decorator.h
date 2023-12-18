@@ -95,6 +95,63 @@ class TranslationServiceLogging : public TranslationServiceStub {
       google::cloud::translation::v3::DeleteGlossaryRequest const& request)
       override;
 
+  StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+  CreateAdaptiveMtDataset(
+      grpc::ClientContext& context,
+      google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+          request) override;
+
+  Status DeleteAdaptiveMtDataset(
+      grpc::ClientContext& context,
+      google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+          request) override;
+
+  StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+  GetAdaptiveMtDataset(
+      grpc::ClientContext& context,
+      google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+          request) override;
+
+  StatusOr<google::cloud::translation::v3::ListAdaptiveMtDatasetsResponse>
+  ListAdaptiveMtDatasets(
+      grpc::ClientContext& context,
+      google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
+  AdaptiveMtTranslate(
+      grpc::ClientContext& context,
+      google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::AdaptiveMtFile> GetAdaptiveMtFile(
+      grpc::ClientContext& context,
+      google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request)
+      override;
+
+  Status DeleteAdaptiveMtFile(
+      grpc::ClientContext& context,
+      google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+          request) override;
+
+  StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
+  ImportAdaptiveMtFile(
+      grpc::ClientContext& context,
+      google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+          request) override;
+
+  StatusOr<google::cloud::translation::v3::ListAdaptiveMtFilesResponse>
+  ListAdaptiveMtFiles(
+      grpc::ClientContext& context,
+      google::cloud::translation::v3::ListAdaptiveMtFilesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::ListAdaptiveMtSentencesResponse>
+  ListAdaptiveMtSentences(
+      grpc::ClientContext& context,
+      google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context, Options const& options,

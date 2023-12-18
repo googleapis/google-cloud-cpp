@@ -135,8 +135,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L208}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L257}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -181,8 +181,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L208}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L257}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -221,8 +221,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L244}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L293}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
@@ -260,8 +260,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L244}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L293}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
@@ -296,8 +296,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L284}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L337}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
@@ -327,8 +327,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L284}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L337}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
@@ -369,8 +369,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L303}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L356}
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AwsCluster> ListAwsClusters(
@@ -409,8 +409,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L303}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L356}
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AwsCluster> ListAwsClusters(
@@ -457,10 +457,10 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L345}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L398}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -505,16 +505,50 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L345}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L398}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Generates an access token for a cluster agent.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GenerateAwsClusterAgentTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.GenerateAwsClusterAgentTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.GenerateAwsClusterAgentTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L733}
+  /// [google.cloud.gkemulticloud.v1.GenerateAwsClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L770}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+  GenerateAwsClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAwsClusterAgentTokenRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -541,9 +575,9 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L579}
-  /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L598}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L705}
+  /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L724}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
@@ -600,9 +634,9 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L383}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L442}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -647,9 +681,9 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L383}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L442}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -688,8 +722,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L420}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L479}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
@@ -727,13 +761,103 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L420}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L479}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   UpdateAwsNodePool(
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Rolls back a previously aborted or failed
+  /// [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] update request.
+  /// Makes no changes if the last update request successfully finished.
+  /// If an update request is in progress, you cannot rollback the update.
+  /// You must first cancel or let it finish unsuccessfully before you can
+  /// rollback.
+  ///
+  /// @param name  Required. The name of the
+  ///  [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] resource to
+  ///  rollback.
+  ///  @n
+  ///  `AwsNodePool` names are formatted as
+  ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>/awsNodePools/<node-pool-id>`.
+  ///  @n
+  ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
+  ///  for more details on Google Cloud resource names.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AwsNodePool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.RollbackAwsNodePoolUpdateRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L526}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  RollbackAwsNodePoolUpdate(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Rolls back a previously aborted or failed
+  /// [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] update request.
+  /// Makes no changes if the last update request successfully finished.
+  /// If an update request is in progress, you cannot rollback the update.
+  /// You must first cancel or let it finish unsuccessfully before you can
+  /// rollback.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.RollbackAwsNodePoolUpdateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AwsNodePool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.RollbackAwsNodePoolUpdateRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L526}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  RollbackAwsNodePoolUpdate(
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request,
       Options opts = {});
 
   // clang-format off
@@ -763,8 +887,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L459}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L549}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
@@ -794,8 +918,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L459}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L549}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
@@ -838,9 +962,9 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L478}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L568}
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool> ListAwsNodePools(
@@ -880,9 +1004,9 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L478}
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L568}
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool> ListAwsNodePools(
@@ -926,9 +1050,9 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L521}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L611}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -970,15 +1094,84 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L521}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
+  /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L611}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the OIDC discovery document for the cluster.
+  /// See the
+  /// [OpenID Connect Discovery 1.0
+  /// specification](https://openid.net/specs/openid-connect-discovery-1_0.html)
+  /// for details.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GetAwsOpenIdConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AwsOpenIdConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsOpenIdConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L627}
+  /// [google.cloud.gkemulticloud.v1.GetAwsOpenIdConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L657}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
+  GetAwsOpenIdConfig(
+      google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the public component of the cluster signing keys in
+  /// JSON Web Key format.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GetAwsJsonWebKeysRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AwsJsonWebKeys])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsJsonWebKeys]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L651}
+  /// [google.cloud.gkemulticloud.v1.GetAwsJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L673}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys> GetAwsJsonWebKeys(
+      google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1008,8 +1201,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L529}
-  /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L560}
+  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L658}
+  /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L686}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
@@ -1039,8 +1232,8 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L529}
-  /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L560}
+  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L658}
+  /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L686}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>

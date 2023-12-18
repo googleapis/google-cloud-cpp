@@ -186,6 +186,16 @@ AttachedClustersClient::GenerateAttachedClusterInstallManifest(
   return connection_->GenerateAttachedClusterInstallManifest(request);
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+AttachedClustersClient::GenerateAttachedClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterAgentTokenRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GenerateAttachedClusterAgentToken(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1
 }  // namespace cloud

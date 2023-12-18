@@ -77,6 +77,12 @@ class PredictionServiceStub {
   virtual StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ExplainRequest const& request) = 0;
+
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::aiplatform::v1::GenerateContentResponse>>
+  StreamGenerateContent(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::aiplatform::v1::GenerateContentRequest const& request) = 0;
 };
 
 class DefaultPredictionServiceStub : public PredictionServiceStub {
@@ -128,6 +134,13 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
+
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::aiplatform::v1::GenerateContentResponse>>
+  StreamGenerateContent(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::aiplatform::v1::GenerateContentRequest const& request)
+      override;
 
  private:
   std::unique_ptr<

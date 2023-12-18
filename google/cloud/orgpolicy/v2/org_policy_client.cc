@@ -138,6 +138,92 @@ Status OrgPolicyClient::DeletePolicy(
   return connection_->DeletePolicy(request);
 }
 
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyClient::CreateCustomConstraint(
+    std::string const& parent,
+    google::cloud::orgpolicy::v2::CustomConstraint const& custom_constraint,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orgpolicy::v2::CreateCustomConstraintRequest request;
+  request.set_parent(parent);
+  *request.mutable_custom_constraint() = custom_constraint;
+  return connection_->CreateCustomConstraint(request);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyClient::CreateCustomConstraint(
+    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateCustomConstraint(request);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyClient::UpdateCustomConstraint(
+    google::cloud::orgpolicy::v2::CustomConstraint const& custom_constraint,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest request;
+  *request.mutable_custom_constraint() = custom_constraint;
+  return connection_->UpdateCustomConstraint(request);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyClient::UpdateCustomConstraint(
+    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateCustomConstraint(request);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyClient::GetCustomConstraint(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orgpolicy::v2::GetCustomConstraintRequest request;
+  request.set_name(name);
+  return connection_->GetCustomConstraint(request);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyClient::GetCustomConstraint(
+    google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetCustomConstraint(request);
+}
+
+StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyClient::ListCustomConstraints(std::string const& parent,
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request;
+  request.set_parent(parent);
+  return connection_->ListCustomConstraints(request);
+}
+
+StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyClient::ListCustomConstraints(
+    google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListCustomConstraints(std::move(request));
+}
+
+Status OrgPolicyClient::DeleteCustomConstraint(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest request;
+  request.set_name(name);
+  return connection_->DeleteCustomConstraint(request);
+}
+
+Status OrgPolicyClient::DeleteCustomConstraint(
+    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCustomConstraint(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy_v2
 }  // namespace cloud

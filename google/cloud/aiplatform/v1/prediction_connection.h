@@ -215,6 +215,10 @@ class PredictionServiceConnection {
 
   virtual StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       google::cloud::aiplatform::v1::ExplainRequest const& request);
+
+  virtual StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
+  StreamGenerateContent(
+      google::cloud::aiplatform::v1::GenerateContentRequest const& request);
 };
 
 /**

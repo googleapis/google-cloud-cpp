@@ -67,6 +67,10 @@ class AttachedClustersConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GenerateAttachedClusterInstallManifest(
       google::cloud::gkemulticloud::v1::
           GenerateAttachedClusterInstallManifestRequest const& request);
+
+  virtual google::cloud::Idempotency GenerateAttachedClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAttachedClusterAgentTokenRequest const& request);
 };
 
 std::unique_ptr<AttachedClustersConnectionIdempotencyPolicy>

@@ -80,6 +80,13 @@ class PredictionServiceLogging : public PredictionServiceStub {
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
 
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::aiplatform::v1::GenerateContentResponse>>
+  StreamGenerateContent(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::aiplatform::v1::GenerateContentRequest const& request)
+      override;
+
  private:
   std::shared_ptr<PredictionServiceStub> child_;
   TracingOptions tracing_options_;

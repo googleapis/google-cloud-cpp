@@ -146,6 +146,21 @@ AzureClustersTracingStub::AsyncDeleteAzureCluster(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+AzureClustersTracingStub::GenerateAzureClusterAgentToken(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::
+        GenerateAzureClusterAgentTokenRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkemulticloud.v1.AzureClusters",
+                             "GenerateAzureClusterAgentToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GenerateAzureClusterAgentToken(context, request));
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 AzureClustersTracingStub::GenerateAzureAccessToken(
     grpc::ClientContext& context,
@@ -225,6 +240,32 @@ AzureClustersTracingStub::AsyncDeleteAzureNodePool(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteAzureNodePool(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+AzureClustersTracingStub::GetAzureOpenIdConfig(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AzureClusters", "GetAzureOpenIdConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAzureOpenIdConfig(context, request));
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+AzureClustersTracingStub::GetAzureJsonWebKeys(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AzureClusters", "GetAzureJsonWebKeys");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAzureJsonWebKeys(context, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>

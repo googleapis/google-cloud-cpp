@@ -68,6 +68,42 @@ class TranslationServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteGlossary(
       google::cloud::translation::v3::DeleteGlossaryRequest const& request);
+
+  virtual google::cloud::Idempotency CreateAdaptiveMtDataset(
+      google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteAdaptiveMtDataset(
+      google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetAdaptiveMtDataset(
+      google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListAdaptiveMtDatasets(
+      google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request);
+
+  virtual google::cloud::Idempotency AdaptiveMtTranslate(
+      google::cloud::translation::v3::AdaptiveMtTranslateRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetAdaptiveMtFile(
+      google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteAdaptiveMtFile(
+      google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ImportAdaptiveMtFile(
+      google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListAdaptiveMtFiles(
+      google::cloud::translation::v3::ListAdaptiveMtFilesRequest request);
+
+  virtual google::cloud::Idempotency ListAdaptiveMtSentences(
+      google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request);
 };
 
 std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy>

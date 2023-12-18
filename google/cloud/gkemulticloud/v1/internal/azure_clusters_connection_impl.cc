@@ -342,6 +342,23 @@ AzureClustersConnectionImpl::DeleteAzureCluster(
       polling_policy(*current), __func__);
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+AzureClustersConnectionImpl::GenerateAzureClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAzureClusterAgentTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateAzureClusterAgentToken(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::gkemulticloud::v1::
+                 GenerateAzureClusterAgentTokenRequest const& request) {
+        return stub_->GenerateAzureClusterAgentToken(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 AzureClustersConnectionImpl::GenerateAzureAccessToken(
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
@@ -514,6 +531,39 @@ AzureClustersConnectionImpl::DeleteAzureNodePool(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAzureNodePool(request),
       polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+AzureClustersConnectionImpl::GetAzureOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAzureOpenIdConfig(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+              request) {
+        return stub_->GetAzureOpenIdConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+AzureClustersConnectionImpl::GetAzureJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAzureJsonWebKeys(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
+                 request) {
+        return stub_->GetAzureJsonWebKeys(context, request);
+      },
+      request, __func__);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>

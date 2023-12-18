@@ -86,6 +86,60 @@ Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteGlossary(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+TranslationServiceConnectionIdempotencyPolicy::CreateAdaptiveMtDataset(
+    google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+TranslationServiceConnectionIdempotencyPolicy::DeleteAdaptiveMtDataset(
+    google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetAdaptiveMtDataset(
+    google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+TranslationServiceConnectionIdempotencyPolicy::ListAdaptiveMtDatasets(
+    google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::AdaptiveMtTranslate(
+    google::cloud::translation::v3::AdaptiveMtTranslateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetAdaptiveMtFile(
+    google::cloud::translation::v3::GetAdaptiveMtFileRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteAdaptiveMtFile(
+    google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ImportAdaptiveMtFile(
+    google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListAdaptiveMtFiles(
+    google::cloud::translation::v3::ListAdaptiveMtFilesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+TranslationServiceConnectionIdempotencyPolicy::ListAdaptiveMtSentences(
+    google::cloud::translation::v3::ListAdaptiveMtSentencesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy>
 MakeDefaultTranslationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<TranslationServiceConnectionIdempotencyPolicy>();

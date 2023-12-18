@@ -94,6 +94,12 @@ class AttachedClustersConnectionImpl
           GenerateAttachedClusterInstallManifestRequest const& request)
       override;
 
+  StatusOr<google::cloud::gkemulticloud::v1::
+               GenerateAttachedClusterAgentTokenResponse>
+  GenerateAttachedClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAttachedClusterAgentTokenRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<gkemulticloud_v1_internal::AttachedClustersStub> stub_;

@@ -68,6 +68,13 @@ class AwsClustersMetadata : public AwsClustersStub {
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request)
       override;
 
+  StatusOr<
+      google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+  GenerateAwsClusterAgentToken(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::
+          GenerateAwsClusterAgentTokenRequest const& request) override;
+
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
   GenerateAwsAccessToken(
       grpc::ClientContext& context,
@@ -86,6 +93,13 @@ class AwsClustersMetadata : public AwsClustersStub {
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncRollbackAwsNodePoolUpdate(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request) override;
+
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
       grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request)
@@ -101,6 +115,17 @@ class AwsClustersMetadata : public AwsClustersStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
+  GetAwsOpenIdConfig(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys> GetAwsJsonWebKeys(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>

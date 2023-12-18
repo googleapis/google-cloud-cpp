@@ -69,6 +69,31 @@ Idempotency OrgPolicyConnectionIdempotencyPolicy::DeletePolicy(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency OrgPolicyConnectionIdempotencyPolicy::CreateCustomConstraint(
+    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OrgPolicyConnectionIdempotencyPolicy::UpdateCustomConstraint(
+    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OrgPolicyConnectionIdempotencyPolicy::GetCustomConstraint(
+    google::cloud::orgpolicy::v2::GetCustomConstraintRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OrgPolicyConnectionIdempotencyPolicy::ListCustomConstraints(
+    google::cloud::orgpolicy::v2::ListCustomConstraintsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OrgPolicyConnectionIdempotencyPolicy::DeleteCustomConstraint(
+    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy>
 MakeDefaultOrgPolicyConnectionIdempotencyPolicy() {
   return std::make_unique<OrgPolicyConnectionIdempotencyPolicy>();

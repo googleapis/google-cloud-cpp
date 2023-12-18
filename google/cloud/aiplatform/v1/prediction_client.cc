@@ -132,6 +132,26 @@ PredictionServiceClient::Explain(
   return connection_->Explain(request);
 }
 
+StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
+PredictionServiceClient::StreamGenerateContent(
+    std::string const& model,
+    std::vector<google::cloud::aiplatform::v1::Content> const& contents,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::GenerateContentRequest request;
+  request.set_model(model);
+  *request.mutable_contents() = {contents.begin(), contents.end()};
+  return connection_->StreamGenerateContent(request);
+}
+
+StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
+PredictionServiceClient::StreamGenerateContent(
+    google::cloud::aiplatform::v1::GenerateContentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StreamGenerateContent(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1
 }  // namespace cloud

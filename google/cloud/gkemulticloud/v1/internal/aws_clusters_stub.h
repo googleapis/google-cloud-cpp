@@ -70,6 +70,13 @@ class AwsClustersStub {
           request) = 0;
 
   virtual StatusOr<
+      google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+  GenerateAwsClusterAgentToken(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::
+          GenerateAwsClusterAgentTokenRequest const& request) = 0;
+
+  virtual StatusOr<
       google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
   GenerateAwsAccessToken(
       grpc::ClientContext& context,
@@ -90,6 +97,13 @@ class AwsClustersStub {
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncRollbackAwsNodePoolUpdate(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
   GetAwsNodePool(grpc::ClientContext& context,
                  google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const&
@@ -106,6 +120,18 @@ class AwsClustersStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
+  GetAwsOpenIdConfig(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
+  GetAwsJsonWebKeys(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
@@ -164,6 +190,13 @@ class DefaultAwsClustersStub : public AwsClustersStub {
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request)
       override;
 
+  StatusOr<
+      google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+  GenerateAwsClusterAgentToken(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::
+          GenerateAwsClusterAgentTokenRequest const& request) override;
+
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
   GenerateAwsAccessToken(
       grpc::ClientContext& context,
@@ -182,6 +215,13 @@ class DefaultAwsClustersStub : public AwsClustersStub {
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncRollbackAwsNodePoolUpdate(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request) override;
+
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
       grpc::ClientContext& context,
       google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request)
@@ -197,6 +237,17 @@ class DefaultAwsClustersStub : public AwsClustersStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
+  GetAwsOpenIdConfig(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys> GetAwsJsonWebKeys(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>

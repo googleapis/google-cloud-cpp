@@ -63,6 +63,29 @@ class OrgPolicyTracingConnection : public orgpolicy_v2::OrgPolicyConnection {
   Status DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const&
                           request) override;
 
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  CreateCustomConstraint(
+      google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+          request) override;
+
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  UpdateCustomConstraint(
+      google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+          request) override;
+
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint> GetCustomConstraint(
+      google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request)
+      override;
+
+  StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
+  ListCustomConstraints(
+      google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request)
+      override;
+
+  Status DeleteCustomConstraint(
+      google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+          request) override;
+
  private:
   std::shared_ptr<orgpolicy_v2::OrgPolicyConnection> child_;
 };

@@ -91,6 +91,13 @@ class AzureClustersAuth : public AzureClustersStub {
       google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
           request) override;
 
+  StatusOr<
+      google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+  GenerateAzureClusterAgentToken(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::
+          GenerateAzureClusterAgentTokenRequest const& request) override;
+
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
   GenerateAzureAccessToken(
       grpc::ClientContext& context,
@@ -124,6 +131,18 @@ class AzureClustersAuth : public AzureClustersStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+          request) override;
+
+  StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+  GetAzureOpenIdConfig(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+  GetAzureJsonWebKeys(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
           request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>

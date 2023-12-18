@@ -102,6 +102,13 @@ class MockAttachedClustersConnection
       (google::cloud::gkemulticloud::v1::
            GenerateAttachedClusterInstallManifestRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::gkemulticloud::v1::
+                           GenerateAttachedClusterAgentTokenResponse>,
+              GenerateAttachedClusterAgentToken,
+              (google::cloud::gkemulticloud::v1::
+                   GenerateAttachedClusterAgentTokenRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

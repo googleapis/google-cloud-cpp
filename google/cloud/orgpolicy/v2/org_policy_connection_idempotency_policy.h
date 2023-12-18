@@ -56,6 +56,24 @@ class OrgPolicyConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeletePolicy(
       google::cloud::orgpolicy::v2::DeletePolicyRequest const& request);
+
+  virtual google::cloud::Idempotency CreateCustomConstraint(
+      google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateCustomConstraint(
+      google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetCustomConstraint(
+      google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request);
+
+  virtual google::cloud::Idempotency ListCustomConstraints(
+      google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request);
+
+  virtual google::cloud::Idempotency DeleteCustomConstraint(
+      google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+          request);
 };
 
 std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy>

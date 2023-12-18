@@ -300,6 +300,23 @@ AttachedClustersConnectionImpl::GenerateAttachedClusterInstallManifest(
       request, __func__);
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+AttachedClustersConnectionImpl::GenerateAttachedClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterAgentTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateAttachedClusterAgentToken(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::gkemulticloud::v1::
+                 GenerateAttachedClusterAgentTokenRequest const& request) {
+        return stub_->GenerateAttachedClusterAgentToken(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1_internal
 }  // namespace cloud

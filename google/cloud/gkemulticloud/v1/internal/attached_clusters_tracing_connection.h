@@ -82,6 +82,12 @@ class AttachedClustersTracingConnection
           GenerateAttachedClusterInstallManifestRequest const& request)
       override;
 
+  StatusOr<google::cloud::gkemulticloud::v1::
+               GenerateAttachedClusterAgentTokenResponse>
+  GenerateAttachedClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAttachedClusterAgentTokenRequest const& request) override;
+
  private:
   std::shared_ptr<gkemulticloud_v1::AttachedClustersConnection> child_;
 };

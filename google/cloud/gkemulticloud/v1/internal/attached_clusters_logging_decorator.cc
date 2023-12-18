@@ -164,6 +164,21 @@ AttachedClustersLogging::GenerateAttachedClusterInstallManifest(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+AttachedClustersLogging::GenerateAttachedClusterAgentToken(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterAgentTokenRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::gkemulticloud::v1::
+                 GenerateAttachedClusterAgentTokenRequest const& request) {
+        return child_->GenerateAttachedClusterAgentToken(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

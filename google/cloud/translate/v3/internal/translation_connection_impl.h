@@ -96,6 +96,52 @@ class TranslationServiceConnectionImpl
   DeleteGlossary(google::cloud::translation::v3::DeleteGlossaryRequest const&
                      request) override;
 
+  StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+  CreateAdaptiveMtDataset(
+      google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+          request) override;
+
+  Status DeleteAdaptiveMtDataset(
+      google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+          request) override;
+
+  StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+  GetAdaptiveMtDataset(
+      google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+          request) override;
+
+  StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>
+  ListAdaptiveMtDatasets(
+      google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
+  AdaptiveMtTranslate(
+      google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::AdaptiveMtFile> GetAdaptiveMtFile(
+      google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request)
+      override;
+
+  Status DeleteAdaptiveMtFile(
+      google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+          request) override;
+
+  StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
+  ImportAdaptiveMtFile(
+      google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+          request) override;
+
+  StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
+  ListAdaptiveMtFiles(google::cloud::translation::v3::ListAdaptiveMtFilesRequest
+                          request) override;
+
+  StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
+  ListAdaptiveMtSentences(
+      google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request)
+      override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<translate_v3_internal::TranslationServiceStub> stub_;

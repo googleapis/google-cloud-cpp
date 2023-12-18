@@ -81,6 +81,12 @@ class AzureClustersTracingConnection
       google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
           request) override;
 
+  StatusOr<
+      google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+  GenerateAzureClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAzureClusterAgentTokenRequest const& request) override;
+
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
   GenerateAzureAccessToken(
       google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
@@ -107,6 +113,16 @@ class AzureClustersTracingConnection
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureNodePool(
       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+          request) override;
+
+  StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+  GetAzureOpenIdConfig(
+      google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+  GetAzureJsonWebKeys(
+      google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
           request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>

@@ -103,6 +103,13 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::gkemulticloud::v1::
+                           GenerateAzureClusterAgentTokenResponse>,
+              GenerateAzureClusterAgentToken,
+              (google::cloud::gkemulticloud::v1::
+                   GenerateAzureClusterAgentTokenRequest const& request),
+              (override));
+
   MOCK_METHOD(
       StatusOr<
           google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>,
@@ -141,6 +148,20 @@ class MockAzureClustersConnection
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAzureNodePool,
       (google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>,
+      GetAzureOpenIdConfig,
+      (google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>,
+      GetAzureJsonWebKeys,
+      (google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
            request),
       (override));
 

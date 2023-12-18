@@ -162,6 +162,101 @@ TranslationServiceAuth::AsyncDeleteGlossary(
       });
 }
 
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceAuth::CreateAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAdaptiveMtDataset(context, request);
+}
+
+Status TranslationServiceAuth::DeleteAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAdaptiveMtDataset(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceAuth::GetAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAdaptiveMtDataset(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtDatasetsResponse>
+TranslationServiceAuth::ListAdaptiveMtDatasets(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAdaptiveMtDatasets(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
+TranslationServiceAuth::AdaptiveMtTranslate(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AdaptiveMtTranslate(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
+TranslationServiceAuth::GetAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAdaptiveMtFile(context, request);
+}
+
+Status TranslationServiceAuth::DeleteAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAdaptiveMtFile(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
+TranslationServiceAuth::ImportAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportAdaptiveMtFile(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtFilesResponse>
+TranslationServiceAuth::ListAdaptiveMtFiles(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtFilesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAdaptiveMtFiles(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtSentencesResponse>
+TranslationServiceAuth::ListAdaptiveMtSentences(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAdaptiveMtSentences(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

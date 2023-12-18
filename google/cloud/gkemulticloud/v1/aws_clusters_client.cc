@@ -119,6 +119,15 @@ AwsClustersClient::DeleteAwsCluster(
   return connection_->DeleteAwsCluster(request);
 }
 
+StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+AwsClustersClient::GenerateAwsClusterAgentToken(
+    google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GenerateAwsClusterAgentToken(request);
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
 AwsClustersClient::GenerateAwsAccessToken(
     google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
@@ -168,6 +177,24 @@ AwsClustersClient::UpdateAwsNodePool(
   return connection_->UpdateAwsNodePool(request);
 }
 
+future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+AwsClustersClient::RollbackAwsNodePoolUpdate(std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest request;
+  request.set_name(name);
+  return connection_->RollbackAwsNodePoolUpdate(request);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+AwsClustersClient::RollbackAwsNodePoolUpdate(
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RollbackAwsNodePoolUpdate(request);
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
 AwsClustersClient::GetAwsNodePool(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -214,6 +241,22 @@ AwsClustersClient::DeleteAwsNodePool(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAwsNodePool(request);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
+AwsClustersClient::GetAwsOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAwsOpenIdConfig(request);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
+AwsClustersClient::GetAwsJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAwsJsonWebKeys(request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>

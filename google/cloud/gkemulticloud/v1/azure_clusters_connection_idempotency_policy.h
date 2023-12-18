@@ -69,6 +69,10 @@ class AzureClustersConnectionIdempotencyPolicy {
       google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
           request);
 
+  virtual google::cloud::Idempotency GenerateAzureClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAzureClusterAgentTokenRequest const& request);
+
   virtual google::cloud::Idempotency GenerateAzureAccessToken(
       google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
           request);
@@ -89,6 +93,14 @@ class AzureClustersConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteAzureNodePool(
       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetAzureOpenIdConfig(
+      google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetAzureJsonWebKeys(
+      google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
           request);
 
   virtual google::cloud::Idempotency GetAzureServerConfig(

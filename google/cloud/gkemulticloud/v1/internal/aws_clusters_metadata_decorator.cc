@@ -94,6 +94,17 @@ AwsClustersMetadata::AsyncDeleteAwsCluster(
                                        request);
 }
 
+StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+AwsClustersMetadata::GenerateAwsClusterAgentToken(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const&
+        request) {
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("aws_cluster=", internal::UrlEncode(request.aws_cluster())));
+  return child_->GenerateAwsClusterAgentToken(context, request);
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
 AwsClustersMetadata::GenerateAwsAccessToken(
     grpc::ClientContext& context,
@@ -129,6 +140,18 @@ AwsClustersMetadata::AsyncUpdateAwsNodePool(
                                         request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+AwsClustersMetadata::AsyncRollbackAwsNodePoolUpdate(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+        request) {
+  SetMetadata(*context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRollbackAwsNodePoolUpdate(cq, std::move(context), options,
+                                                request);
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
 AwsClustersMetadata::GetAwsNodePool(
     grpc::ClientContext& context,
@@ -156,6 +179,27 @@ AwsClustersMetadata::AsyncDeleteAwsNodePool(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAwsNodePool(cq, std::move(context), options,
                                         request);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
+AwsClustersMetadata::GetAwsOpenIdConfig(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+        request) {
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("aws_cluster=", internal::UrlEncode(request.aws_cluster())));
+  return child_->GetAwsOpenIdConfig(context, request);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
+AwsClustersMetadata::GetAwsJsonWebKeys(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request) {
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("aws_cluster=", internal::UrlEncode(request.aws_cluster())));
+  return child_->GetAwsJsonWebKeys(context, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>

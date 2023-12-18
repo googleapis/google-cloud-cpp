@@ -170,6 +170,21 @@ AzureClustersLogging::AsyncDeleteAzureCluster(
       cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+AzureClustersLogging::GenerateAzureClusterAgentToken(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::
+        GenerateAzureClusterAgentTokenRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::gkemulticloud::v1::
+                 GenerateAzureClusterAgentTokenRequest const& request) {
+        return child_->GenerateAzureClusterAgentToken(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 AzureClustersLogging::GenerateAzureAccessToken(
     grpc::ClientContext& context,
@@ -263,6 +278,35 @@ AzureClustersLogging::AsyncDeleteAzureNodePool(
                                                 request);
       },
       cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+AzureClustersLogging::GetAzureOpenIdConfig(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+              request) {
+        return child_->GetAzureOpenIdConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+AzureClustersLogging::GetAzureJsonWebKeys(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
+                 request) {
+        return child_->GetAzureJsonWebKeys(context, request);
+      },
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>

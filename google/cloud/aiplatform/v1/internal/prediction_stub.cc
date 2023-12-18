@@ -130,6 +130,17 @@ DefaultPredictionServiceStub::Explain(
   return response;
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::aiplatform::v1::GenerateContentResponse>>
+DefaultPredictionServiceStub::StreamGenerateContent(
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
+  auto stream = grpc_stub_->StreamGenerateContent(context.get(), request);
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+      google::cloud::aiplatform::v1::GenerateContentResponse>>(
+      std::move(context), std::move(stream));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal
 }  // namespace cloud

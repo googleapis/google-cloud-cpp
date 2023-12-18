@@ -140,6 +140,101 @@ TranslationServiceMetadata::AsyncDeleteGlossary(
   return child_->AsyncDeleteGlossary(cq, std::move(context), options, request);
 }
 
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceMetadata::CreateAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+        request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAdaptiveMtDataset(context, request);
+}
+
+Status TranslationServiceMetadata::DeleteAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+        request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAdaptiveMtDataset(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceMetadata::GetAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+        request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAdaptiveMtDataset(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtDatasetsResponse>
+TranslationServiceMetadata::ListAdaptiveMtDatasets(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest const&
+        request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAdaptiveMtDatasets(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
+TranslationServiceMetadata::AdaptiveMtTranslate(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AdaptiveMtTranslate(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
+TranslationServiceMetadata::GetAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAdaptiveMtFile(context, request);
+}
+
+Status TranslationServiceMetadata::DeleteAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+        request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAdaptiveMtFile(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
+TranslationServiceMetadata::ImportAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+        request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportAdaptiveMtFile(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtFilesResponse>
+TranslationServiceMetadata::ListAdaptiveMtFiles(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtFilesRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAdaptiveMtFiles(context, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtSentencesResponse>
+TranslationServiceMetadata::ListAdaptiveMtSentences(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
+        request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAdaptiveMtSentences(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

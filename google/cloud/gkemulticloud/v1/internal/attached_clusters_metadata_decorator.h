@@ -90,6 +90,13 @@ class AttachedClustersMetadata : public AttachedClustersStub {
           GenerateAttachedClusterInstallManifestRequest const& request)
       override;
 
+  StatusOr<google::cloud::gkemulticloud::v1::
+               GenerateAttachedClusterAgentTokenResponse>
+  GenerateAttachedClusterAgentToken(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::
+          GenerateAttachedClusterAgentTokenRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context, Options const& options,

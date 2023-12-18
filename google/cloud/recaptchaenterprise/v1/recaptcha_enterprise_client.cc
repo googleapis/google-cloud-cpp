@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_client.h"
 #include <memory>
 

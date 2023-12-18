@@ -111,6 +111,71 @@ Status DefaultOrgPolicyStub::DeletePolicy(
   return google::cloud::Status();
 }
 
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+DefaultOrgPolicyStub::CreateCustomConstraint(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+        request) {
+  google::cloud::orgpolicy::v2::CustomConstraint response;
+  auto status =
+      grpc_stub_->CreateCustomConstraint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+DefaultOrgPolicyStub::UpdateCustomConstraint(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+        request) {
+  google::cloud::orgpolicy::v2::CustomConstraint response;
+  auto status =
+      grpc_stub_->UpdateCustomConstraint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+DefaultOrgPolicyStub::GetCustomConstraint(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
+  google::cloud::orgpolicy::v2::CustomConstraint response;
+  auto status = grpc_stub_->GetCustomConstraint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::orgpolicy::v2::ListCustomConstraintsResponse>
+DefaultOrgPolicyStub::ListCustomConstraints(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& request) {
+  google::cloud::orgpolicy::v2::ListCustomConstraintsResponse response;
+  auto status = grpc_stub_->ListCustomConstraints(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultOrgPolicyStub::DeleteCustomConstraint(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteCustomConstraint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy_v2_internal
 }  // namespace cloud

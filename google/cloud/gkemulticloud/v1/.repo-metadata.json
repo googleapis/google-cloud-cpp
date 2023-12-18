@@ -3,7 +3,7 @@
     "api_shortname": "gkemulticloud",
     "client_documentation": "https://cloud.google.com/cpp/docs/reference/gkemulticloud/latest",
     "distribution_name": "google-cloud-cpp",
-    "issue_tracker": "",
+    "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:997904%20status=open",
     "language": "cpp",
     "library_type": "GAPIC_AUTO",
     "name_pretty": "Anthos Multi-Cloud API",

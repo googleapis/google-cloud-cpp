@@ -108,6 +108,21 @@ DefaultAwsClustersStub::AsyncDeleteAwsCluster(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+DefaultAwsClustersStub::GenerateAwsClusterAgentToken(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const&
+        request) {
+  google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse
+      response;
+  auto status =
+      grpc_stub_->GenerateAwsClusterAgentToken(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
 DefaultAwsClustersStub::GenerateAwsAccessToken(
     grpc::ClientContext& context,
@@ -158,6 +173,25 @@ DefaultAwsClustersStub::AsyncUpdateAwsNodePool(
       request, std::move(context));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultAwsClustersStub::AsyncRollbackAwsNodePoolUpdate(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkemulticloud::v1::
+                 RollbackAwsNodePoolUpdateRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRollbackAwsNodePoolUpdate(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
 DefaultAwsClustersStub::GetAwsNodePool(
     grpc::ClientContext& context,
@@ -198,6 +232,31 @@ DefaultAwsClustersStub::AsyncDeleteAwsNodePool(
         return grpc_stub_->AsyncDeleteAwsNodePool(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
+DefaultAwsClustersStub::GetAwsOpenIdConfig(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+        request) {
+  google::cloud::gkemulticloud::v1::AwsOpenIdConfig response;
+  auto status = grpc_stub_->GetAwsOpenIdConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
+DefaultAwsClustersStub::GetAwsJsonWebKeys(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request) {
+  google::cloud::gkemulticloud::v1::AwsJsonWebKeys response;
+  auto status = grpc_stub_->GetAwsJsonWebKeys(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>

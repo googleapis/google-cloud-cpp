@@ -77,6 +77,13 @@ class MockAwsClustersConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::gkemulticloud::v1::
+                           GenerateAwsClusterAgentTokenResponse>,
+              GenerateAwsClusterAgentToken,
+              (google::cloud::gkemulticloud::v1::
+                   GenerateAwsClusterAgentTokenRequest const& request),
+              (override));
+
   MOCK_METHOD(
       StatusOr<
           google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>,
@@ -98,6 +105,13 @@ class MockAwsClustersConnection
               (override));
 
   MOCK_METHOD(
+      future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
+      RollbackAwsNodePoolUpdate,
+      (google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>, GetAwsNodePool,
       (google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request),
       (override));
@@ -114,6 +128,19 @@ class MockAwsClustersConnection
       (google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>,
+      GetAwsOpenIdConfig,
+      (google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>,
+              GetAwsJsonWebKeys,
+              (google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&
+                   request),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>,

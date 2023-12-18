@@ -102,6 +102,55 @@ Status OrgPolicyMetadata::DeletePolicy(
   return child_->DeletePolicy(context, request);
 }
 
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyMetadata::CreateCustomConstraint(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+        request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCustomConstraint(context, request);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyMetadata::UpdateCustomConstraint(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+        request) {
+  SetMetadata(
+      context, internal::CurrentOptions(),
+      absl::StrCat("custom_constraint.name=",
+                   internal::UrlEncode(request.custom_constraint().name())));
+  return child_->UpdateCustomConstraint(context, request);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyMetadata::GetCustomConstraint(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetCustomConstraint(context, request);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::ListCustomConstraintsResponse>
+OrgPolicyMetadata::ListCustomConstraints(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListCustomConstraints(context, request);
+}
+
+Status OrgPolicyMetadata::DeleteCustomConstraint(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+        request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCustomConstraint(context, request);
+}
+
 void OrgPolicyMetadata::SetMetadata(grpc::ClientContext& context,
                                     Options const& options,
                                     std::string const& request_params) {

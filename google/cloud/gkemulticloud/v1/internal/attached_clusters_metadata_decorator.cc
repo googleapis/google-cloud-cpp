@@ -133,6 +133,18 @@ AttachedClustersMetadata::GenerateAttachedClusterInstallManifest(
   return child_->GenerateAttachedClusterInstallManifest(context, request);
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+AttachedClustersMetadata::GenerateAttachedClusterAgentToken(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterAgentTokenRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("attached_cluster=",
+                           internal::UrlEncode(request.attached_cluster())));
+  return child_->GenerateAttachedClusterAgentToken(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

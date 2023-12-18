@@ -98,6 +98,17 @@ PredictionServiceConnection::Explain(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
+PredictionServiceConnection::StreamGenerateContent(
+    google::cloud::aiplatform::v1::GenerateContentRequest const&) {
+  return google::cloud::internal::MakeStreamRange<
+      google::cloud::aiplatform::v1::GenerateContentResponse>(
+      []() -> absl::variant<
+               Status, google::cloud::aiplatform::v1::GenerateContentResponse> {
+        return Status(StatusCode::kUnimplemented, "not implemented");
+      });
+}
+
 std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

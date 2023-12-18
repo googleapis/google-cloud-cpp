@@ -177,6 +177,135 @@ DefaultTranslationServiceStub::AsyncDeleteGlossary(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+DefaultTranslationServiceStub::CreateAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+        request) {
+  google::cloud::translation::v3::AdaptiveMtDataset response;
+  auto status =
+      grpc_stub_->CreateAdaptiveMtDataset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultTranslationServiceStub::DeleteAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteAdaptiveMtDataset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+DefaultTranslationServiceStub::GetAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+        request) {
+  google::cloud::translation::v3::AdaptiveMtDataset response;
+  auto status = grpc_stub_->GetAdaptiveMtDataset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtDatasetsResponse>
+DefaultTranslationServiceStub::ListAdaptiveMtDatasets(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest const&
+        request) {
+  google::cloud::translation::v3::ListAdaptiveMtDatasetsResponse response;
+  auto status =
+      grpc_stub_->ListAdaptiveMtDatasets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
+DefaultTranslationServiceStub::AdaptiveMtTranslate(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request) {
+  google::cloud::translation::v3::AdaptiveMtTranslateResponse response;
+  auto status = grpc_stub_->AdaptiveMtTranslate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
+DefaultTranslationServiceStub::GetAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request) {
+  google::cloud::translation::v3::AdaptiveMtFile response;
+  auto status = grpc_stub_->GetAdaptiveMtFile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultTranslationServiceStub::DeleteAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteAdaptiveMtFile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
+DefaultTranslationServiceStub::ImportAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+        request) {
+  google::cloud::translation::v3::ImportAdaptiveMtFileResponse response;
+  auto status = grpc_stub_->ImportAdaptiveMtFile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtFilesResponse>
+DefaultTranslationServiceStub::ListAdaptiveMtFiles(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtFilesRequest const& request) {
+  google::cloud::translation::v3::ListAdaptiveMtFilesResponse response;
+  auto status = grpc_stub_->ListAdaptiveMtFiles(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtSentencesResponse>
+DefaultTranslationServiceStub::ListAdaptiveMtSentences(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
+        request) {
+  google::cloud::translation::v3::ListAdaptiveMtSentencesResponse response;
+  auto status =
+      grpc_stub_->ListAdaptiveMtSentences(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultTranslationServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

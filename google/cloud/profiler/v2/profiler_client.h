@@ -126,8 +126,8 @@ class ProfilerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudprofiler.v2.CreateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L97}
-  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// [google.devtools.cloudprofiler.v2.CreateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L115}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L153}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
@@ -155,8 +155,8 @@ class ProfilerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L112}
-  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L130}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L153}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
@@ -189,8 +189,8 @@ class ProfilerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L112}
-  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L130}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L153}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
@@ -223,8 +223,8 @@ class ProfilerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
-  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L123}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L153}
+  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L141}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
@@ -257,8 +257,8 @@ class ProfilerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
-  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L123}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L153}
+  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L141}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(

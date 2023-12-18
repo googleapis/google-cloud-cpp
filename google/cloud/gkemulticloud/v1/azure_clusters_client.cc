@@ -189,6 +189,16 @@ AzureClustersClient::DeleteAzureCluster(
   return connection_->DeleteAzureCluster(request);
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+AzureClustersClient::GenerateAzureClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAzureClusterAgentTokenRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GenerateAzureClusterAgentToken(request);
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 AzureClustersClient::GenerateAzureAccessToken(
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
@@ -286,6 +296,41 @@ AzureClustersClient::DeleteAzureNodePool(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAzureNodePool(request);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+AzureClustersClient::GetAzureOpenIdConfig(std::string const& azure_cluster,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest request;
+  request.set_azure_cluster(azure_cluster);
+  return connection_->GetAzureOpenIdConfig(request);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+AzureClustersClient::GetAzureOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAzureOpenIdConfig(request);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+AzureClustersClient::GetAzureJsonWebKeys(std::string const& azure_cluster,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest request;
+  request.set_azure_cluster(azure_cluster);
+  return connection_->GetAzureJsonWebKeys(request);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+AzureClustersClient::GetAzureJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAzureJsonWebKeys(request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>

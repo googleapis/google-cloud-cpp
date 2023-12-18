@@ -178,6 +178,145 @@ TranslationServiceLogging::AsyncDeleteGlossary(
       cq, std::move(context), options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceLogging::CreateAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+              request) {
+        return child_->CreateAdaptiveMtDataset(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status TranslationServiceLogging::DeleteAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+              request) {
+        return child_->DeleteAdaptiveMtDataset(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceLogging::GetAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+                 request) {
+        return child_->GetAdaptiveMtDataset(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtDatasetsResponse>
+TranslationServiceLogging::ListAdaptiveMtDatasets(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest const&
+              request) {
+        return child_->ListAdaptiveMtDatasets(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
+TranslationServiceLogging::AdaptiveMtTranslate(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::translation::v3::AdaptiveMtTranslateRequest const&
+                 request) {
+        return child_->AdaptiveMtTranslate(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
+TranslationServiceLogging::GetAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::translation::v3::GetAdaptiveMtFileRequest const&
+                 request) {
+        return child_->GetAdaptiveMtFile(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status TranslationServiceLogging::DeleteAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+                 request) {
+        return child_->DeleteAdaptiveMtFile(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
+TranslationServiceLogging::ImportAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+                 request) {
+        return child_->ImportAdaptiveMtFile(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtFilesResponse>
+TranslationServiceLogging::ListAdaptiveMtFiles(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtFilesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::translation::v3::ListAdaptiveMtFilesRequest const&
+                 request) {
+        return child_->ListAdaptiveMtFiles(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtSentencesResponse>
+TranslationServiceLogging::ListAdaptiveMtSentences(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
+              request) {
+        return child_->ListAdaptiveMtSentences(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

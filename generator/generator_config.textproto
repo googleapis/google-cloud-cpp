@@ -2573,6 +2573,15 @@ service {
   forwarding_product_path: "google/cloud/profiler"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  omitted_services: ["ExportService"]
+}
+
+service {
+  service_proto_path: "google/devtools/cloudprofiler/v2/profiler.proto"
+  product_path: "google/cloud/profiler/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  omitted_services: ["ProfilerService"]
 }
 
 # Cloud Pub/Sub
@@ -2691,6 +2700,9 @@ service {
   product_path: "google/cloud/recaptchaenterprise/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
+  emitted_rpcs: [
+    "SearchRelatedAccountGroupMemberships(std::string const&, std::string const&)"
+  ]
 }
 
 # Recommender

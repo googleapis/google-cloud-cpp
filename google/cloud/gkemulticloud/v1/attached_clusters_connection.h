@@ -226,6 +226,12 @@ class AttachedClustersConnection {
   GenerateAttachedClusterInstallManifest(
       google::cloud::gkemulticloud::v1::
           GenerateAttachedClusterInstallManifestRequest const& request);
+
+  virtual StatusOr<google::cloud::gkemulticloud::v1::
+                       GenerateAttachedClusterAgentTokenResponse>
+  GenerateAttachedClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAttachedClusterAgentTokenRequest const& request);
 };
 
 /**

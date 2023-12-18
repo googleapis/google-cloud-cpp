@@ -63,6 +63,12 @@ class AwsClustersTracingConnection
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request)
       override;
 
+  StatusOr<
+      google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+  GenerateAwsClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAwsClusterAgentTokenRequest const& request) override;
+
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
   GenerateAwsAccessToken(
       google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
@@ -78,6 +84,11 @@ class AwsClustersTracingConnection
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  RollbackAwsNodePoolUpdate(
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request) override;
+
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
       google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request)
       override;
@@ -89,6 +100,15 @@ class AwsClustersTracingConnection
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
+  GetAwsOpenIdConfig(
+      google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys> GetAwsJsonWebKeys(
+      google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>

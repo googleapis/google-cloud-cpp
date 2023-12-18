@@ -171,6 +171,22 @@ DefaultAzureClustersStub::AsyncDeleteAzureCluster(
       request, std::move(context));
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+DefaultAzureClustersStub::GenerateAzureClusterAgentToken(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::
+        GenerateAzureClusterAgentTokenRequest const& request) {
+  google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse
+      response;
+  auto status =
+      grpc_stub_->GenerateAzureClusterAgentToken(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 DefaultAzureClustersStub::GenerateAzureAccessToken(
     grpc::ClientContext& context,
@@ -265,6 +281,32 @@ DefaultAzureClustersStub::AsyncDeleteAzureNodePool(
         return grpc_stub_->AsyncDeleteAzureNodePool(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+DefaultAzureClustersStub::GetAzureOpenIdConfig(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+        request) {
+  google::cloud::gkemulticloud::v1::AzureOpenIdConfig response;
+  auto status = grpc_stub_->GetAzureOpenIdConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+DefaultAzureClustersStub::GetAzureJsonWebKeys(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
+        request) {
+  google::cloud::gkemulticloud::v1::AzureJsonWebKeys response;
+  auto status = grpc_stub_->GetAzureJsonWebKeys(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>

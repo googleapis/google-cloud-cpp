@@ -193,6 +193,102 @@ Status OrgPolicyConnectionImpl::DeletePolicy(
       request, __func__);
 }
 
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyConnectionImpl::CreateCustomConstraint(
+    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCustomConstraint(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+                 request) {
+        return stub_->CreateCustomConstraint(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyConnectionImpl::UpdateCustomConstraint(
+    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCustomConstraint(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+                 request) {
+        return stub_->UpdateCustomConstraint(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyConnectionImpl::GetCustomConstraint(
+    google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetCustomConstraint(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orgpolicy::v2::GetCustomConstraintRequest const&
+                 request) {
+        return stub_->GetCustomConstraint(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyConnectionImpl::ListCustomConstraints(
+    google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListCustomConstraints(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<orgpolicy_v2::OrgPolicyRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::orgpolicy::v2::
+                       ListCustomConstraintsRequest const& request) {
+              return stub->ListCustomConstraints(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::orgpolicy::v2::ListCustomConstraintsResponse r) {
+        std::vector<google::cloud::orgpolicy::v2::CustomConstraint> result(
+            r.custom_constraints().size());
+        auto& messages = *r.mutable_custom_constraints();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+Status OrgPolicyConnectionImpl::DeleteCustomConstraint(
+    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCustomConstraint(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+                 request) {
+        return stub_->DeleteCustomConstraint(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy_v2_internal
 }  // namespace cloud

@@ -201,6 +201,28 @@ class OrgPolicyConnection {
 
   virtual Status DeletePolicy(
       google::cloud::orgpolicy::v2::DeletePolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  CreateCustomConstraint(
+      google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  UpdateCustomConstraint(
+      google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  GetCustomConstraint(
+      google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request);
+
+  virtual StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
+  ListCustomConstraints(
+      google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request);
+
+  virtual Status DeleteCustomConstraint(
+      google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+          request);
 };
 
 /**
