@@ -158,6 +158,135 @@ TranslationServiceTracingStub::AsyncDeleteGlossary(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceTracingStub::CreateAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.translation.v3.TranslationService",
+                             "CreateAdaptiveMtDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateAdaptiveMtDataset(context, request));
+}
+
+Status TranslationServiceTracingStub::DeleteAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.translation.v3.TranslationService",
+                             "DeleteAdaptiveMtDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAdaptiveMtDataset(context, request));
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceTracingStub::GetAdaptiveMtDataset(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.translation.v3.TranslationService", "GetAdaptiveMtDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAdaptiveMtDataset(context, request));
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtDatasetsResponse>
+TranslationServiceTracingStub::ListAdaptiveMtDatasets(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.translation.v3.TranslationService",
+                             "ListAdaptiveMtDatasets");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListAdaptiveMtDatasets(context, request));
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
+TranslationServiceTracingStub::AdaptiveMtTranslate(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.translation.v3.TranslationService", "AdaptiveMtTranslate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->AdaptiveMtTranslate(context, request));
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
+TranslationServiceTracingStub::GetAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.translation.v3.TranslationService", "GetAdaptiveMtFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAdaptiveMtFile(context, request));
+}
+
+Status TranslationServiceTracingStub::DeleteAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.translation.v3.TranslationService", "DeleteAdaptiveMtFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAdaptiveMtFile(context, request));
+}
+
+StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
+TranslationServiceTracingStub::ImportAdaptiveMtFile(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.translation.v3.TranslationService", "ImportAdaptiveMtFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ImportAdaptiveMtFile(context, request));
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtFilesResponse>
+TranslationServiceTracingStub::ListAdaptiveMtFiles(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtFilesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.translation.v3.TranslationService", "ListAdaptiveMtFiles");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListAdaptiveMtFiles(context, request));
+}
+
+StatusOr<google::cloud::translation::v3::ListAdaptiveMtSentencesResponse>
+TranslationServiceTracingStub::ListAdaptiveMtSentences(
+    grpc::ClientContext& context,
+    google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.translation.v3.TranslationService",
+                             "ListAdaptiveMtSentences");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListAdaptiveMtSentences(context, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

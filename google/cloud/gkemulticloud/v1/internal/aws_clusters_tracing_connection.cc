@@ -80,6 +80,17 @@ AwsClustersTracingConnection::DeleteAwsCluster(
   return internal::EndSpan(std::move(span), child_->DeleteAwsCluster(request));
 }
 
+StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+AwsClustersTracingConnection::GenerateAwsClusterAgentToken(
+    google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::GenerateAwsClusterAgentToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GenerateAwsClusterAgentToken(request));
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
 AwsClustersTracingConnection::GenerateAwsAccessToken(
     google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
@@ -106,6 +117,17 @@ AwsClustersTracingConnection::UpdateAwsNodePool(
       "gkemulticloud_v1::AwsClustersConnection::UpdateAwsNodePool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateAwsNodePool(request));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+AwsClustersTracingConnection::RollbackAwsNodePoolUpdate(
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::RollbackAwsNodePoolUpdate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RollbackAwsNodePoolUpdate(request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
@@ -136,6 +158,25 @@ AwsClustersTracingConnection::DeleteAwsNodePool(
       "gkemulticloud_v1::AwsClustersConnection::DeleteAwsNodePool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAwsNodePool(request));
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
+AwsClustersTracingConnection::GetAwsOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::GetAwsOpenIdConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAwsOpenIdConfig(request));
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
+AwsClustersTracingConnection::GetAwsJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::GetAwsJsonWebKeys");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAwsJsonWebKeys(request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>

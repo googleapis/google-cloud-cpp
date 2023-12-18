@@ -101,6 +101,17 @@ PredictionServiceTracingConnection::Explain(
   return internal::EndSpan(*span, child_->Explain(request));
 }
 
+StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
+PredictionServiceTracingConnection::StreamGenerateContent(
+    google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::StreamGenerateContent");
+  internal::OTelScope scope(span);
+  auto sr = child_->StreamGenerateContent(request);
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::GenerateContentResponse>(std::move(span),
+                                                              std::move(sr));
+}
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<aiplatform_v1::PredictionServiceConnection>

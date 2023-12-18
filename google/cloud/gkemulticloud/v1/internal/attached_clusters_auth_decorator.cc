@@ -151,6 +151,17 @@ AttachedClustersAuth::GenerateAttachedClusterInstallManifest(
   return child_->GenerateAttachedClusterInstallManifest(context, request);
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+AttachedClustersAuth::GenerateAttachedClusterAgentToken(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterAgentTokenRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GenerateAttachedClusterAgentToken(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

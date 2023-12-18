@@ -121,6 +121,19 @@ AttachedClustersTracingConnection::GenerateAttachedClusterInstallManifest(
       *span, child_->GenerateAttachedClusterInstallManifest(request));
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+AttachedClustersTracingConnection::GenerateAttachedClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterAgentTokenRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::"
+      "GenerateAttachedClusterAgentToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GenerateAttachedClusterAgentToken(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<gkemulticloud_v1::AttachedClustersConnection>

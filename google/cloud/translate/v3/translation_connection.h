@@ -230,6 +230,50 @@ class TranslationServiceConnection {
       StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
   DeleteGlossary(
       google::cloud::translation::v3::DeleteGlossaryRequest const& request);
+
+  virtual StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+  CreateAdaptiveMtDataset(
+      google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+          request);
+
+  virtual Status DeleteAdaptiveMtDataset(
+      google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+  GetAdaptiveMtDataset(
+      google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>
+  ListAdaptiveMtDatasets(
+      google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request);
+
+  virtual StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
+  AdaptiveMtTranslate(
+      google::cloud::translation::v3::AdaptiveMtTranslateRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
+  GetAdaptiveMtFile(
+      google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request);
+
+  virtual Status DeleteAdaptiveMtFile(
+      google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
+  ImportAdaptiveMtFile(
+      google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
+  ListAdaptiveMtFiles(
+      google::cloud::translation::v3::ListAdaptiveMtFilesRequest request);
+
+  virtual StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
+  ListAdaptiveMtSentences(
+      google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request);
 };
 
 /**

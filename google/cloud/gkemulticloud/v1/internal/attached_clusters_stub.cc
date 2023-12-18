@@ -166,6 +166,22 @@ DefaultAttachedClustersStub::GenerateAttachedClusterInstallManifest(
   return response;
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+DefaultAttachedClustersStub::GenerateAttachedClusterAgentToken(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterAgentTokenRequest const& request) {
+  google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse
+      response;
+  auto status = grpc_stub_->GenerateAttachedClusterAgentToken(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAttachedClustersStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

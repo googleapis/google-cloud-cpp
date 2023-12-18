@@ -77,6 +77,13 @@ Idempotency AttachedClustersConnectionIdempotencyPolicy::
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+AttachedClustersConnectionIdempotencyPolicy::GenerateAttachedClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterAgentTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AttachedClustersConnectionIdempotencyPolicy>
 MakeDefaultAttachedClustersConnectionIdempotencyPolicy() {
   return std::make_unique<AttachedClustersConnectionIdempotencyPolicy>();

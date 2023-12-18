@@ -124,8 +124,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L199}
-  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L277}
+  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L297}
+  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L375}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
@@ -190,8 +190,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L199}
-  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L277}
+  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L297}
+  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L375}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
@@ -223,8 +223,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L199}
-  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L277}
+  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L297}
+  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L375}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
@@ -271,8 +271,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DetectLanguageRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L319}
-  /// [google.cloud.translation.v3.DetectLanguageResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L382}
+  /// [google.cloud.translation.v3.DetectLanguageRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L417}
+  /// [google.cloud.translation.v3.DetectLanguageResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L480}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
@@ -303,8 +303,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DetectLanguageRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L319}
-  /// [google.cloud.translation.v3.DetectLanguageResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L382}
+  /// [google.cloud.translation.v3.DetectLanguageRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L417}
+  /// [google.cloud.translation.v3.DetectLanguageResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L480}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
@@ -357,8 +357,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.GetSupportedLanguagesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L389}
-  /// [google.cloud.translation.v3.SupportedLanguages]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L432}
+  /// [google.cloud.translation.v3.GetSupportedLanguagesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L487}
+  /// [google.cloud.translation.v3.SupportedLanguages]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L530}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::SupportedLanguages>
@@ -389,8 +389,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.GetSupportedLanguagesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L389}
-  /// [google.cloud.translation.v3.SupportedLanguages]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L432}
+  /// [google.cloud.translation.v3.GetSupportedLanguagesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L487}
+  /// [google.cloud.translation.v3.SupportedLanguages]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L530}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::SupportedLanguages>
@@ -422,8 +422,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.TranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L684}
-  /// [google.cloud.translation.v3.TranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L797}
+  /// [google.cloud.translation.v3.TranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L782}
+  /// [google.cloud.translation.v3.TranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L895}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
@@ -467,8 +467,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.BatchTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L941}
-  /// [google.cloud.translation.v3.BatchTranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L821}
+  /// [google.cloud.translation.v3.BatchTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1039}
+  /// [google.cloud.translation.v3.BatchTranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L919}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
@@ -527,8 +527,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.BatchTranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1222}
-  /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1398}
+  /// [google.cloud.translation.v3.BatchTranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1320}
+  /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1496}
   ///
   // clang-format on
   future<
@@ -579,8 +579,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.BatchTranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1222}
-  /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1398}
+  /// [google.cloud.translation.v3.BatchTranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1320}
+  /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1496}
   ///
   // clang-format on
   future<
@@ -617,8 +617,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1048}
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L990}
+  /// [google.cloud.translation.v3.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1146}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1088}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
@@ -657,8 +657,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1048}
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L990}
+  /// [google.cloud.translation.v3.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1146}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1088}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
@@ -693,8 +693,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L990}
-  /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1084}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1088}
+  /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1182}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
@@ -733,8 +733,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L990}
-  /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1084}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1088}
+  /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1182}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
@@ -760,8 +760,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1062}
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L990}
+  /// [google.cloud.translation.v3.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1160}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1088}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
@@ -791,8 +791,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1062}
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L990}
+  /// [google.cloud.translation.v3.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1160}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1088}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
@@ -826,8 +826,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1073}
-  /// [google.cloud.translation.v3.DeleteGlossaryResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1208}
+  /// [google.cloud.translation.v3.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1171}
+  /// [google.cloud.translation.v3.DeleteGlossaryResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1306}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
@@ -865,13 +865,653 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1073}
-  /// [google.cloud.translation.v3.DeleteGlossaryResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1208}
+  /// [google.cloud.translation.v3.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1171}
+  /// [google.cloud.translation.v3.DeleteGlossaryResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1306}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
   DeleteGlossary(
       google::cloud::translation::v3::DeleteGlossaryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates an Adaptive MT dataset.
+  ///
+  /// @param parent  Required. Name of the parent project. In form of
+  ///  `projects/{project-number-or-id}/locations/{location-id}`
+  /// @param adaptive_mt_dataset  Required. The AdaptiveMtDataset to be created.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.AdaptiveMtDataset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtDataset]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L34}
+  /// [google.cloud.translation.v3.CreateAdaptiveMtDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L73}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+  CreateAdaptiveMtDataset(
+      std::string const& parent,
+      google::cloud::translation::v3::AdaptiveMtDataset const&
+          adaptive_mt_dataset,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates an Adaptive MT dataset.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.CreateAdaptiveMtDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.AdaptiveMtDataset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtDataset]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L34}
+  /// [google.cloud.translation.v3.CreateAdaptiveMtDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L73}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+  CreateAdaptiveMtDataset(
+      google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an Adaptive MT dataset, including all its entries and associated
+  /// metadata.
+  ///
+  /// @param name  Required. Name of the dataset. In the form of
+  ///  `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtDatasets/{adaptive-mt-dataset-id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.DeleteAdaptiveMtDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L89}
+  ///
+  // clang-format on
+  Status DeleteAdaptiveMtDataset(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an Adaptive MT dataset, including all its entries and associated
+  /// metadata.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.DeleteAdaptiveMtDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.DeleteAdaptiveMtDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L89}
+  ///
+  // clang-format on
+  Status DeleteAdaptiveMtDataset(
+      google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the Adaptive MT dataset.
+  ///
+  /// @param name  Required. Name of the dataset. In the form of
+  ///  `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtDatasets/{adaptive-mt-dataset-id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.AdaptiveMtDataset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtDataset]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L34}
+  /// [google.cloud.translation.v3.GetAdaptiveMtDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L101}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+  GetAdaptiveMtDataset(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the Adaptive MT dataset.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.GetAdaptiveMtDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.AdaptiveMtDataset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtDataset]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L34}
+  /// [google.cloud.translation.v3.GetAdaptiveMtDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L101}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+  GetAdaptiveMtDataset(
+      google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all Adaptive MT datasets for which the caller has read permission.
+  ///
+  /// @param parent  Required. The resource name of the project from which to list the Adaptive
+  ///  MT datasets. `projects/{project-number-or-id}/locations/{location-id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.AdaptiveMtDataset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtDataset]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L34}
+  /// [google.cloud.translation.v3.ListAdaptiveMtDatasetsRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L114}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>
+  ListAdaptiveMtDatasets(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all Adaptive MT datasets for which the caller has read permission.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.ListAdaptiveMtDatasetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.AdaptiveMtDataset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtDataset]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L34}
+  /// [google.cloud.translation.v3.ListAdaptiveMtDatasetsRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L114}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>
+  ListAdaptiveMtDatasets(
+      google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Translate text using Adaptive MT.
+  ///
+  /// @param parent  Required. Location to make a regional call.
+  ///  @n
+  ///  Format: `projects/{project-number-or-id}/locations/{location-id}`.
+  /// @param content  Required. The content of the input in string format.
+  ///  For now only one sentence per request is supported.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.AdaptiveMtTranslateResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtTranslateRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L153}
+  /// [google.cloud.translation.v3.AdaptiveMtTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L185}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
+  AdaptiveMtTranslate(std::string const& parent,
+                      std::vector<std::string> const& content,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Translate text using Adaptive MT.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.AdaptiveMtTranslateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.AdaptiveMtTranslateResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtTranslateRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L153}
+  /// [google.cloud.translation.v3.AdaptiveMtTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L185}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
+  AdaptiveMtTranslate(
+      google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets and AdaptiveMtFile
+  ///
+  /// @param name  Required. The resource name of the file, in form of
+  ///  `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}/adaptiveMtFiles/{file}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.AdaptiveMtFile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L195}
+  /// [google.cloud.translation.v3.GetAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L226}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::AdaptiveMtFile> GetAdaptiveMtFile(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets and AdaptiveMtFile
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.GetAdaptiveMtFileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.AdaptiveMtFile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L195}
+  /// [google.cloud.translation.v3.GetAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L226}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::AdaptiveMtFile> GetAdaptiveMtFile(
+      google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an AdaptiveMtFile along with its sentences.
+  ///
+  /// @param name  Required. The resource name of the file to delete, in form of
+  ///  `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}/adaptiveMtFiles/{file}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L238}
+  ///
+  // clang-format on
+  Status DeleteAdaptiveMtFile(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an AdaptiveMtFile along with its sentences.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L238}
+  ///
+  // clang-format on
+  Status DeleteAdaptiveMtFile(
+      google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Imports an AdaptiveMtFile and adds all of its sentences into the
+  /// AdaptiveMtDataset.
+  ///
+  /// @param parent  Required. The resource name of the file, in form of
+  ///  `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.ImportAdaptiveMtFileResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.ImportAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L250}
+  /// [google.cloud.translation.v3.ImportAdaptiveMtFileResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L271}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
+  ImportAdaptiveMtFile(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Imports an AdaptiveMtFile and adds all of its sentences into the
+  /// AdaptiveMtDataset.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.ImportAdaptiveMtFileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.ImportAdaptiveMtFileResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.ImportAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L250}
+  /// [google.cloud.translation.v3.ImportAdaptiveMtFileResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L271}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
+  ImportAdaptiveMtFile(
+      google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all AdaptiveMtFiles associated to an AdaptiveMtDataset.
+  ///
+  /// @param parent  Required. The resource name of the project from which to list the Adaptive
+  ///  MT files.
+  ///  `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.AdaptiveMtFile], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L195}
+  /// [google.cloud.translation.v3.ListAdaptiveMtFilesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L278}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
+  ListAdaptiveMtFiles(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all AdaptiveMtFiles associated to an AdaptiveMtDataset.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.ListAdaptiveMtFilesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.AdaptiveMtFile], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L195}
+  /// [google.cloud.translation.v3.ListAdaptiveMtFilesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L278}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
+  ListAdaptiveMtFiles(
+      google::cloud::translation::v3::ListAdaptiveMtFilesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all AdaptiveMtSentences under a given file/dataset.
+  ///
+  /// @param parent  Required. The resource name of the project from which to list the Adaptive
+  ///  MT files. The following format lists all sentences under a file.
+  ///  `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}/adaptiveMtFiles/{file}`
+  ///  The following format lists all sentences within a dataset.
+  ///  `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.AdaptiveMtSentence], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtSentence]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L313}
+  /// [google.cloud.translation.v3.ListAdaptiveMtSentencesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L344}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
+  ListAdaptiveMtSentences(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all AdaptiveMtSentences under a given file/dataset.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.ListAdaptiveMtSentencesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.AdaptiveMtSentence], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.AdaptiveMtSentence]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L313}
+  /// [google.cloud.translation.v3.ListAdaptiveMtSentencesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L344}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
+  ListAdaptiveMtSentences(
+      google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request,
       Options opts = {});
 
  private:

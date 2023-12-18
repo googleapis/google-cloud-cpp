@@ -80,6 +80,37 @@ Status OrgPolicyConnection::DeletePolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyConnection::CreateCustomConstraint(
+    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyConnection::UpdateCustomConstraint(
+    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyConnection::GetCustomConstraint(
+    google::cloud::orgpolicy::v2::GetCustomConstraintRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyConnection::ListCustomConstraints(
+    google::cloud::orgpolicy::v2::
+        ListCustomConstraintsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>>();
+}
+
+Status OrgPolicyConnection::DeleteCustomConstraint(
+    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,

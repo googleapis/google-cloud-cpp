@@ -70,6 +70,34 @@ class OrgPolicyTracingStub : public OrgPolicyStub {
                       google::cloud::orgpolicy::v2::DeletePolicyRequest const&
                           request) override;
 
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  CreateCustomConstraint(
+      grpc::ClientContext& context,
+      google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+          request) override;
+
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  UpdateCustomConstraint(
+      grpc::ClientContext& context,
+      google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+          request) override;
+
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint> GetCustomConstraint(
+      grpc::ClientContext& context,
+      google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request)
+      override;
+
+  StatusOr<google::cloud::orgpolicy::v2::ListCustomConstraintsResponse>
+  ListCustomConstraints(
+      grpc::ClientContext& context,
+      google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& request)
+      override;
+
+  Status DeleteCustomConstraint(
+      grpc::ClientContext& context,
+      google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+          request) override;
+
  private:
   std::shared_ptr<OrgPolicyStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

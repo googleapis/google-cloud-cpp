@@ -42,6 +42,10 @@ void PredictionServiceServerStreamingPredictStreamingUpdater(
     google::cloud::aiplatform::v1::StreamingPredictResponse const& response,
     google::cloud::aiplatform::v1::StreamingPredictRequest& request);
 
+void PredictionServiceStreamGenerateContentStreamingUpdater(
+    google::cloud::aiplatform::v1::GenerateContentResponse const& response,
+    google::cloud::aiplatform::v1::GenerateContentRequest& request);
+
 class PredictionServiceConnectionImpl
     : public aiplatform_v1::PredictionServiceConnection {
  public:
@@ -85,6 +89,11 @@ class PredictionServiceConnectionImpl
 
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
+
+  StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
+  StreamGenerateContent(
+      google::cloud::aiplatform::v1::GenerateContentRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -318,6 +318,219 @@ TranslationServiceConnectionImpl::DeleteGlossary(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceConnectionImpl::CreateAdaptiveMtDataset(
+    google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAdaptiveMtDataset(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+              request) {
+        return stub_->CreateAdaptiveMtDataset(context, request);
+      },
+      request, __func__);
+}
+
+Status TranslationServiceConnectionImpl::DeleteAdaptiveMtDataset(
+    google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAdaptiveMtDataset(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+              request) {
+        return stub_->DeleteAdaptiveMtDataset(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceConnectionImpl::GetAdaptiveMtDataset(
+    google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAdaptiveMtDataset(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+                 request) {
+        return stub_->GetAdaptiveMtDataset(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>
+TranslationServiceConnectionImpl::ListAdaptiveMtDatasets(
+    google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListAdaptiveMtDatasets(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::translation::v3::
+                       ListAdaptiveMtDatasetsRequest const& request) {
+              return stub->ListAdaptiveMtDatasets(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::translation::v3::ListAdaptiveMtDatasetsResponse r) {
+        std::vector<google::cloud::translation::v3::AdaptiveMtDataset> result(
+            r.adaptive_mt_datasets().size());
+        auto& messages = *r.mutable_adaptive_mt_datasets();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
+TranslationServiceConnectionImpl::AdaptiveMtTranslate(
+    google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AdaptiveMtTranslate(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::translation::v3::AdaptiveMtTranslateRequest const&
+                 request) {
+        return stub_->AdaptiveMtTranslate(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
+TranslationServiceConnectionImpl::GetAdaptiveMtFile(
+    google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAdaptiveMtFile(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::translation::v3::GetAdaptiveMtFileRequest const&
+                 request) {
+        return stub_->GetAdaptiveMtFile(context, request);
+      },
+      request, __func__);
+}
+
+Status TranslationServiceConnectionImpl::DeleteAdaptiveMtFile(
+    google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAdaptiveMtFile(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+                 request) {
+        return stub_->DeleteAdaptiveMtFile(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
+TranslationServiceConnectionImpl::ImportAdaptiveMtFile(
+    google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportAdaptiveMtFile(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+                 request) {
+        return stub_->ImportAdaptiveMtFile(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
+TranslationServiceConnectionImpl::ListAdaptiveMtFiles(
+    google::cloud::translation::v3::ListAdaptiveMtFilesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAdaptiveMtFiles(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::translation::v3::AdaptiveMtFile>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::translation::v3::ListAdaptiveMtFilesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::translation::v3::
+                       ListAdaptiveMtFilesRequest const& request) {
+              return stub->ListAdaptiveMtFiles(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::translation::v3::ListAdaptiveMtFilesResponse r) {
+        std::vector<google::cloud::translation::v3::AdaptiveMtFile> result(
+            r.adaptive_mt_files().size());
+        auto& messages = *r.mutable_adaptive_mt_files();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
+TranslationServiceConnectionImpl::ListAdaptiveMtSentences(
+    google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListAdaptiveMtSentences(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::translation::v3::
+                       ListAdaptiveMtSentencesRequest const& request) {
+              return stub->ListAdaptiveMtSentences(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::translation::v3::ListAdaptiveMtSentencesResponse r) {
+        std::vector<google::cloud::translation::v3::AdaptiveMtSentence> result(
+            r.adaptive_mt_sentences().size());
+        auto& messages = *r.mutable_adaptive_mt_sentences();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate_v3_internal
 }  // namespace cloud

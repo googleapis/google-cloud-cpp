@@ -10,6 +10,10 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
+- `GOOGLE_CLOUD_CPP_EXPORT_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudprofiler.googleapis.com")
+  used by `MakeExportServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_PROFILER_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "cloudprofiler.googleapis.com")
   used by `MakeProfilerServiceConnection()`.

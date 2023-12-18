@@ -7,15 +7,26 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `profiler_v2::ProfilerServiceClient`:
+For example, this will override the default endpoint for `profiler_v2::ExportServiceClient`:
 
-@snippet profiler_client_samples.cc set-client-endpoint
+@snippet export_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c profiler_v2::ExportServiceClient](@ref profiler_v2::ExportServiceClient-endpoint-snippet)
+- [\c profiler_v2::ProfilerServiceClient](@ref profiler_v2::ProfilerServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page profiler_v2::ExportServiceClient-endpoint-snippet Override profiler_v2::ExportServiceClient Endpoint Configuration
+
+@snippet google/cloud/profiler/v2/samples/export_client_samples.cc set-client-endpoint
+
+*/
 
 /*! @page profiler_v2::ProfilerServiceClient-endpoint-snippet Override profiler_v2::ProfilerServiceClient Endpoint Configuration
 

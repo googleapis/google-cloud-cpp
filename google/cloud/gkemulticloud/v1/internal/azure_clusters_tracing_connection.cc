@@ -125,6 +125,19 @@ AzureClustersTracingConnection::DeleteAzureCluster(
                            child_->DeleteAzureCluster(request));
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+AzureClustersTracingConnection::GenerateAzureClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAzureClusterAgentTokenRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::"
+      "GenerateAzureClusterAgentToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GenerateAzureClusterAgentToken(request));
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 AzureClustersTracingConnection::GenerateAzureAccessToken(
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
@@ -187,6 +200,26 @@ AzureClustersTracingConnection::DeleteAzureNodePool(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteAzureNodePool(request));
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+AzureClustersTracingConnection::GetAzureOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::GetAzureOpenIdConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAzureOpenIdConfig(request));
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+AzureClustersTracingConnection::GetAzureJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::GetAzureJsonWebKeys");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAzureJsonWebKeys(request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>

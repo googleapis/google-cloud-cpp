@@ -104,6 +104,14 @@ AzureClustersConnection::DeleteAzureCluster(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+AzureClustersConnection::GenerateAzureClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAzureClusterAgentTokenRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 AzureClustersConnection::GenerateAzureAccessToken(
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&) {
@@ -146,6 +154,18 @@ AzureClustersConnection::DeleteAzureNodePool(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+AzureClustersConnection::GetAzureOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+AzureClustersConnection::GetAzureJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>

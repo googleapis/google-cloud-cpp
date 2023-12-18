@@ -51,6 +51,10 @@ class AwsClustersConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteAwsCluster(
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request);
 
+  virtual google::cloud::Idempotency GenerateAwsClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAwsClusterAgentTokenRequest const& request);
+
   virtual google::cloud::Idempotency GenerateAwsAccessToken(
       google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
           request);
@@ -63,6 +67,10 @@ class AwsClustersConnectionIdempotencyPolicy {
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
           request);
 
+  virtual google::cloud::Idempotency RollbackAwsNodePoolUpdate(
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request);
+
   virtual google::cloud::Idempotency GetAwsNodePool(
       google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request);
 
@@ -71,6 +79,14 @@ class AwsClustersConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteAwsNodePool(
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetAwsOpenIdConfig(
+      google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetAwsJsonWebKeys(
+      google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&
           request);
 
   virtual google::cloud::Idempotency GetAwsServerConfig(

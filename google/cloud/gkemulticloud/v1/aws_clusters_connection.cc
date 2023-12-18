@@ -74,6 +74,13 @@ AwsClustersConnection::DeleteAwsCluster(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+AwsClustersConnection::GenerateAwsClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAwsClusterAgentTokenRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
 AwsClustersConnection::GenerateAwsAccessToken(
     google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&) {
@@ -91,6 +98,14 @@ AwsClustersConnection::CreateAwsNodePool(
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnection::UpdateAwsNodePool(
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+AwsClustersConnection::RollbackAwsNodePoolUpdate(
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -116,6 +131,18 @@ AwsClustersConnection::DeleteAwsNodePool(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
+AwsClustersConnection::GetAwsOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
+AwsClustersConnection::GetAwsJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>

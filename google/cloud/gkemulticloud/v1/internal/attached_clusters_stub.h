@@ -91,6 +91,13 @@ class AttachedClustersStub {
       google::cloud::gkemulticloud::v1::
           GenerateAttachedClusterInstallManifestRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::gkemulticloud::v1::
+                       GenerateAttachedClusterAgentTokenResponse>
+  GenerateAttachedClusterAgentToken(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::
+          GenerateAttachedClusterAgentTokenRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -161,6 +168,13 @@ class DefaultAttachedClustersStub : public AttachedClustersStub {
       google::cloud::gkemulticloud::v1::
           GenerateAttachedClusterInstallManifestRequest const& request)
       override;
+
+  StatusOr<google::cloud::gkemulticloud::v1::
+               GenerateAttachedClusterAgentTokenResponse>
+  GenerateAttachedClusterAgentToken(
+      grpc::ClientContext& context,
+      google::cloud::gkemulticloud::v1::
+          GenerateAttachedClusterAgentTokenRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

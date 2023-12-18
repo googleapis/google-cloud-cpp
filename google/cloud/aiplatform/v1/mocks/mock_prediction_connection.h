@@ -87,6 +87,12 @@ class MockPredictionServiceConnection
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::ExplainResponse>, Explain,
               (google::cloud::aiplatform::v1::ExplainRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>,
+      StreamGenerateContent,
+      (google::cloud::aiplatform::v1::GenerateContentRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

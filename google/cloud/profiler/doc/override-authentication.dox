@@ -9,7 +9,12 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
-@snippet profiler_client_samples.cc with-service-account
+@snippet export_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c profiler_v2::ExportServiceClient](@ref profiler_v2::ExportServiceClient-service-account-snippet)
+- [\c profiler_v2::ProfilerServiceClient](@ref profiler_v2::ProfilerServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -26,6 +31,12 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page profiler_v2::ExportServiceClient-service-account-snippet Override profiler_v2::ExportServiceClient Authentication Defaults
+
+@snippet google/cloud/profiler/v2/samples/export_client_samples.cc with-service-account
+
+*/
 
 /*! @page profiler_v2::ProfilerServiceClient-service-account-snippet Override profiler_v2::ProfilerServiceClient Authentication Defaults
 

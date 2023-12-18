@@ -59,6 +59,13 @@ Idempotency AwsClustersConnectionIdempotencyPolicy::DeleteAwsCluster(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+AwsClustersConnectionIdempotencyPolicy::GenerateAwsClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAwsClusterAgentTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency AwsClustersConnectionIdempotencyPolicy::GenerateAwsAccessToken(
     google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&) {
   return Idempotency::kIdempotent;
@@ -71,6 +78,11 @@ Idempotency AwsClustersConnectionIdempotencyPolicy::CreateAwsNodePool(
 
 Idempotency AwsClustersConnectionIdempotencyPolicy::UpdateAwsNodePool(
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AwsClustersConnectionIdempotencyPolicy::RollbackAwsNodePoolUpdate(
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -87,6 +99,16 @@ Idempotency AwsClustersConnectionIdempotencyPolicy::ListAwsNodePools(
 Idempotency AwsClustersConnectionIdempotencyPolicy::DeleteAwsNodePool(
     google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&) {
+  return Idempotency::kIdempotent;
 }
 
 Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsServerConfig(

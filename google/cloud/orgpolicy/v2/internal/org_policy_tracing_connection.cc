@@ -98,6 +98,56 @@ Status OrgPolicyTracingConnection::DeletePolicy(
   return internal::EndSpan(*span, child_->DeletePolicy(request));
 }
 
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyTracingConnection::CreateCustomConstraint(
+    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "orgpolicy_v2::OrgPolicyConnection::CreateCustomConstraint");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateCustomConstraint(request));
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyTracingConnection::UpdateCustomConstraint(
+    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "orgpolicy_v2::OrgPolicyConnection::UpdateCustomConstraint");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateCustomConstraint(request));
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyTracingConnection::GetCustomConstraint(
+    google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
+  auto span = internal::MakeSpan(
+      "orgpolicy_v2::OrgPolicyConnection::GetCustomConstraint");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCustomConstraint(request));
+}
+
+StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyTracingConnection::ListCustomConstraints(
+    google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request) {
+  auto span = internal::MakeSpan(
+      "orgpolicy_v2::OrgPolicyConnection::ListCustomConstraints");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListCustomConstraints(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::orgpolicy::v2::CustomConstraint>(std::move(span),
+                                                      std::move(sr));
+}
+
+Status OrgPolicyTracingConnection::DeleteCustomConstraint(
+    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "orgpolicy_v2::OrgPolicyConnection::DeleteCustomConstraint");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteCustomConstraint(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<orgpolicy_v2::OrgPolicyConnection>

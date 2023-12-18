@@ -72,6 +72,11 @@ class PredictionServiceTracingConnection
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
 
+  StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
+  StreamGenerateContent(
+      google::cloud::aiplatform::v1::GenerateContentRequest const& request)
+      override;
+
  private:
   std::shared_ptr<aiplatform_v1::PredictionServiceConnection> child_;
 };

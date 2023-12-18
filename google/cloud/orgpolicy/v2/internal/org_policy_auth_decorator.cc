@@ -89,6 +89,53 @@ Status OrgPolicyAuth::DeletePolicy(
   return child_->DeletePolicy(context, request);
 }
 
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyAuth::CreateCustomConstraint(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCustomConstraint(context, request);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyAuth::UpdateCustomConstraint(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCustomConstraint(context, request);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyAuth::GetCustomConstraint(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetCustomConstraint(context, request);
+}
+
+StatusOr<google::cloud::orgpolicy::v2::ListCustomConstraintsResponse>
+OrgPolicyAuth::ListCustomConstraints(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListCustomConstraints(context, request);
+}
+
+Status OrgPolicyAuth::DeleteCustomConstraint(
+    grpc::ClientContext& context,
+    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCustomConstraint(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy_v2_internal
 }  // namespace cloud

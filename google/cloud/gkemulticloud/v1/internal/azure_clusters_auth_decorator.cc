@@ -164,6 +164,17 @@ AzureClustersAuth::AsyncDeleteAzureCluster(
       });
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+AzureClustersAuth::GenerateAzureClusterAgentToken(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::
+        GenerateAzureClusterAgentTokenRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GenerateAzureClusterAgentToken(context, request);
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 AzureClustersAuth::GenerateAzureAccessToken(
     grpc::ClientContext& context,
@@ -251,6 +262,26 @@ AzureClustersAuth::AsyncDeleteAzureNodePool(
         return child->AsyncDeleteAzureNodePool(cq, *std::move(context), options,
                                                request);
       });
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+AzureClustersAuth::GetAzureOpenIdConfig(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAzureOpenIdConfig(context, request);
+}
+
+StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+AzureClustersAuth::GetAzureJsonWebKeys(
+    grpc::ClientContext& context,
+    google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAzureJsonWebKeys(context, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>

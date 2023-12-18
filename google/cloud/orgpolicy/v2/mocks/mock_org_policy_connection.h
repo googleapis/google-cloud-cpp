@@ -78,6 +78,38 @@ class MockOrgPolicyConnection : public orgpolicy_v2::OrgPolicyConnection {
       Status, DeletePolicy,
       (google::cloud::orgpolicy::v2::DeletePolicyRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>,
+      CreateCustomConstraint,
+      (google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>,
+      UpdateCustomConstraint,
+      (google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>,
+      GetCustomConstraint,
+      (google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>),
+      ListCustomConstraints,
+      (google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteCustomConstraint,
+      (google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

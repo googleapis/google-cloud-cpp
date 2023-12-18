@@ -95,7 +95,8 @@ class AdvisoryNotificationsServiceClient {
   /// Lists notifications under a given parent.
   ///
   /// @param parent  Required. The parent, which owns this collection of notifications.
-  ///  Must be of the form "organizations/{organization}/locations/{location}".
+  ///  Must be of the form "organizations/{organization}/locations/{location}"
+  ///  or "projects/{project}/locations/{location}"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -118,8 +119,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L229}
-  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L132}
+  /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L238}
+  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L139}
   ///
   // clang-format on
   StreamRange<google::cloud::advisorynotifications::v1::Notification>
@@ -157,8 +158,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L229}
-  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L132}
+  /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L238}
+  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L139}
   ///
   // clang-format on
   StreamRange<google::cloud::advisorynotifications::v1::Notification>
@@ -173,7 +174,8 @@ class AdvisoryNotificationsServiceClient {
   ///
   /// @param name  Required. A name of the notification to retrieve.
   ///  Format:
-  ///  organizations/{organization}/locations/{location}/notifications/{notification}.
+  ///  organizations/{organization}/locations/{location}/notifications/{notification}
+  ///  or projects/{projects}/locations/{location}/notifications/{notification}.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -187,8 +189,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L276}
-  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L132}
+  /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L286}
+  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L139}
   ///
   // clang-format on
   StatusOr<google::cloud::advisorynotifications::v1::Notification>
@@ -217,8 +219,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L276}
-  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L132}
+  /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L286}
+  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L139}
   ///
   // clang-format on
   StatusOr<google::cloud::advisorynotifications::v1::Notification>
@@ -247,8 +249,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L327}
-  /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L296}
+  /// [google.cloud.advisorynotifications.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L338}
+  /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L307}
   ///
   // clang-format on
   StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
@@ -277,8 +279,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L327}
-  /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L296}
+  /// [google.cloud.advisorynotifications.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L338}
+  /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L307}
   ///
   // clang-format on
   StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
@@ -304,8 +306,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L296}
-  /// [google.cloud.advisorynotifications.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L340}
+  /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L307}
+  /// [google.cloud.advisorynotifications.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L351}
   ///
   // clang-format on
   StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
@@ -335,8 +337,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L296}
-  /// [google.cloud.advisorynotifications.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L340}
+  /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L307}
+  /// [google.cloud.advisorynotifications.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L351}
   ///
   // clang-format on
   StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(

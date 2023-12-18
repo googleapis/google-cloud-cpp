@@ -35,23 +35,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// An interface for managing organization policies.
 ///
-/// The Cloud Org Policy service provides a simple mechanism for organizations
-/// to restrict the allowed configurations across their entire Cloud Resource
-/// hierarchy.
+/// The Organization Policy Service provides a simple mechanism for
+/// organizations to restrict the allowed configurations across their entire
+/// resource hierarchy.
 ///
-/// You can use a `policy` to configure restrictions in Cloud resources. For
-/// example, you can enforce a `policy` that restricts which Google
-/// Cloud Platform APIs can be activated in a certain part of your resource
-/// hierarchy, or prevents serial port access to VM instances in a particular
-/// folder.
+/// You can use a policy to configure restrictions on resources. For
+/// example, you can enforce a policy that restricts which Google
+/// Cloud APIs can be activated in a certain part of your resource
+/// hierarchy, or prevents serial port access to VM instances in a
+/// particular folder.
 ///
-/// `Policies` are inherited down through the resource hierarchy. A `policy`
+/// Policies are inherited down through the resource hierarchy. A policy
 /// applied to a parent resource automatically applies to all its child
-/// resources unless overridden with a `policy` lower in the hierarchy.
+/// resources unless overridden with a policy lower in the hierarchy.
 ///
-/// A `constraint` defines an aspect of a resource's configuration that can be
-/// controlled by an organization's policy administrator. `Policies` are a
-/// collection of `constraints` that defines their allowable configuration on a
+/// A constraint defines an aspect of a resource's configuration that can be
+/// controlled by an organization's policy administrator. Policies are a
+/// collection of constraints that defines their allowable configuration on a
 /// particular resource and its child resources.
 ///
 /// @par Equality
@@ -103,10 +103,11 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Lists `Constraints` that could be applied on the specified resource.
+  /// Lists constraints that could be applied on the specified resource.
   ///
-  /// @param parent  Required. The Cloud resource that parents the constraint. Must be in one of
-  ///  the following forms:
+  /// @param parent  Required. The Google Cloud resource that parents the constraint. Must be in
+  ///  one of the following forms:
+  ///  @n
   ///  * `projects/{project_number}`
   ///  * `projects/{project_id}`
   ///  * `folders/{folder_id}`
@@ -134,7 +135,7 @@ class OrgPolicyClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orgpolicy.v2.Constraint]: @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L45}
-  /// [google.cloud.orgpolicy.v2.ListConstraintsRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L336}
+  /// [google.cloud.orgpolicy.v2.ListConstraintsRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L409}
   ///
   // clang-format on
   StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
@@ -142,7 +143,7 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Lists `Constraints` that could be applied on the specified resource.
+  /// Lists constraints that could be applied on the specified resource.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -173,7 +174,7 @@ class OrgPolicyClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orgpolicy.v2.Constraint]: @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L45}
-  /// [google.cloud.orgpolicy.v2.ListConstraintsRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L336}
+  /// [google.cloud.orgpolicy.v2.ListConstraintsRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L409}
   ///
   // clang-format on
   StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
@@ -182,11 +183,12 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Retrieves all of the `Policies` that exist on a particular resource.
+  /// Retrieves all of the policies that exist on a particular resource.
   ///
-  /// @param parent  Required. The target Cloud resource that parents the set of constraints and
-  ///  policies that will be returned from this call. Must be in one of the
-  ///  following forms:
+  /// @param parent  Required. The target Google Cloud resource that parents the set of
+  ///  constraints and policies that will be returned from this call. Must be in
+  ///  one of the following forms:
+  ///  @n
   ///  * `projects/{project_number}`
   ///  * `projects/{project_id}`
   ///  * `folders/{folder_id}`
@@ -213,8 +215,8 @@ class OrgPolicyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orgpolicy.v2.ListPoliciesRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L372}
-  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
+  /// [google.cloud.orgpolicy.v2.ListPoliciesRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L446}
+  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L244}
   ///
   // clang-format on
   StreamRange<google::cloud::orgpolicy::v2::Policy> ListPolicies(
@@ -222,7 +224,7 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Retrieves all of the `Policies` that exist on a particular resource.
+  /// Retrieves all of the policies that exist on a particular resource.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -252,8 +254,8 @@ class OrgPolicyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orgpolicy.v2.ListPoliciesRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L372}
-  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
+  /// [google.cloud.orgpolicy.v2.ListPoliciesRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L446}
+  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L244}
   ///
   // clang-format on
   StreamRange<google::cloud::orgpolicy::v2::Policy> ListPolicies(
@@ -262,14 +264,14 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Gets a `Policy` on a resource.
+  /// Gets a policy on a resource.
   ///
-  /// If no `Policy` is set on the resource, NOT_FOUND is returned. The
+  /// If no policy is set on the resource, `NOT_FOUND` is returned. The
   /// `etag` value can be used with `UpdatePolicy()` to update a
-  /// `Policy` during read-modify-write.
+  /// policy during read-modify-write.
   ///
-  /// @param name  Required. Resource name of the policy. See `Policy` for naming
-  ///  requirements.
+  /// @param name  Required. Resource name of the policy. See
+  ///  [Policy][google.cloud.orgpolicy.v2.Policy] for naming requirements.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -283,8 +285,8 @@ class OrgPolicyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orgpolicy.v2.GetPolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L412}
-  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
+  /// [google.cloud.orgpolicy.v2.GetPolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L487}
+  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L244}
   ///
   // clang-format on
   StatusOr<google::cloud::orgpolicy::v2::Policy> GetPolicy(
@@ -292,11 +294,11 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Gets a `Policy` on a resource.
+  /// Gets a policy on a resource.
   ///
-  /// If no `Policy` is set on the resource, NOT_FOUND is returned. The
+  /// If no policy is set on the resource, `NOT_FOUND` is returned. The
   /// `etag` value can be used with `UpdatePolicy()` to update a
-  /// `Policy` during read-modify-write.
+  /// policy during read-modify-write.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -317,8 +319,8 @@ class OrgPolicyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orgpolicy.v2.GetPolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L412}
-  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
+  /// [google.cloud.orgpolicy.v2.GetPolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L487}
+  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L244}
   ///
   // clang-format on
   StatusOr<google::cloud::orgpolicy::v2::Policy> GetPolicy(
@@ -327,14 +329,15 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Gets the effective `Policy` on a resource. This is the result of merging
-  /// `Policies` in the resource hierarchy and evaluating conditions. The
-  /// returned `Policy` will not have an `etag` or `condition` set because it is
-  /// a computed `Policy` across multiple resources.
+  /// Gets the effective policy on a resource. This is the result of merging
+  /// policies in the resource hierarchy and evaluating conditions. The
+  /// returned policy will not have an `etag` or `condition` set because it is
+  /// an evaluated policy across multiple resources.
   /// Subtrees of Resource Manager resource hierarchy with 'under:' prefix will
   /// not be expanded.
   ///
-  /// @param name  Required. The effective policy to compute. See `Policy` for naming rules.
+  /// @param name  Required. The effective policy to compute. See
+  ///  [Policy][google.cloud.orgpolicy.v2.Policy] for naming requirements.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -348,8 +351,8 @@ class OrgPolicyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orgpolicy.v2.GetEffectivePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L425}
-  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
+  /// [google.cloud.orgpolicy.v2.GetEffectivePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L500}
+  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L244}
   ///
   // clang-format on
   StatusOr<google::cloud::orgpolicy::v2::Policy> GetEffectivePolicy(
@@ -357,10 +360,10 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Gets the effective `Policy` on a resource. This is the result of merging
-  /// `Policies` in the resource hierarchy and evaluating conditions. The
-  /// returned `Policy` will not have an `etag` or `condition` set because it is
-  /// a computed `Policy` across multiple resources.
+  /// Gets the effective policy on a resource. This is the result of merging
+  /// policies in the resource hierarchy and evaluating conditions. The
+  /// returned policy will not have an `etag` or `condition` set because it is
+  /// an evaluated policy across multiple resources.
   /// Subtrees of Resource Manager resource hierarchy with 'under:' prefix will
   /// not be expanded.
   ///
@@ -383,8 +386,8 @@ class OrgPolicyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orgpolicy.v2.GetEffectivePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L425}
-  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
+  /// [google.cloud.orgpolicy.v2.GetEffectivePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L500}
+  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L244}
   ///
   // clang-format on
   StatusOr<google::cloud::orgpolicy::v2::Policy> GetEffectivePolicy(
@@ -393,20 +396,21 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Creates a Policy.
+  /// Creates a policy.
   ///
   /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
   /// constraint does not exist.
   /// Returns a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the
-  /// policy already exists on the given Cloud resource.
+  /// policy already exists on the given Google Cloud resource.
   ///
-  /// @param parent  Required. The Cloud resource that will parent the new Policy. Must be in
-  ///  one of the following forms:
+  /// @param parent  Required. The Google Cloud resource that will parent the new policy. Must
+  ///  be in one of the following forms:
+  ///  @n
   ///  * `projects/{project_number}`
   ///  * `projects/{project_id}`
   ///  * `folders/{folder_id}`
   ///  * `organizations/{organization_id}`
-  /// @param policy  Required. `Policy` to create.
+  /// @param policy  Required. Policy to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -420,8 +424,8 @@ class OrgPolicyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orgpolicy.v2.CreatePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L437}
-  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
+  /// [google.cloud.orgpolicy.v2.CreatePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L513}
+  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L244}
   ///
   // clang-format on
   StatusOr<google::cloud::orgpolicy::v2::Policy> CreatePolicy(
@@ -430,12 +434,12 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Creates a Policy.
+  /// Creates a policy.
   ///
   /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
   /// constraint does not exist.
   /// Returns a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the
-  /// policy already exists on the given Cloud resource.
+  /// policy already exists on the given Google Cloud resource.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -456,8 +460,8 @@ class OrgPolicyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orgpolicy.v2.CreatePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L437}
-  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
+  /// [google.cloud.orgpolicy.v2.CreatePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L513}
+  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L244}
   ///
   // clang-format on
   StatusOr<google::cloud::orgpolicy::v2::Policy> CreatePolicy(
@@ -466,7 +470,7 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Updates a Policy.
+  /// Updates a policy.
   ///
   /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
   /// constraint or the policy do not exist.
@@ -476,7 +480,7 @@ class OrgPolicyClient {
   /// Note: the supplied policy will perform a full overwrite of all
   /// fields.
   ///
-  /// @param policy  Required. `Policy` to update.
+  /// @param policy  Required. Policy to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -490,8 +494,8 @@ class OrgPolicyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
-  /// [google.cloud.orgpolicy.v2.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L457}
+  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L244}
+  /// [google.cloud.orgpolicy.v2.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L534}
   ///
   // clang-format on
   StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
@@ -499,7 +503,7 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Updates a Policy.
+  /// Updates a policy.
   ///
   /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
   /// constraint or the policy do not exist.
@@ -528,8 +532,8 @@ class OrgPolicyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
-  /// [google.cloud.orgpolicy.v2.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L457}
+  /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L244}
+  /// [google.cloud.orgpolicy.v2.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L534}
   ///
   // clang-format on
   StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
@@ -538,13 +542,13 @@ class OrgPolicyClient {
 
   // clang-format off
   ///
-  /// Deletes a Policy.
+  /// Deletes a policy.
   ///
   /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
-  /// constraint or Org Policy does not exist.
+  /// constraint or organization policy does not exist.
   ///
   /// @param name  Required. Name of the policy to delete.
-  ///  See `Policy` for naming rules.
+  ///  See the policy entry for naming rules.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -556,17 +560,17 @@ class OrgPolicyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orgpolicy.v2.DeletePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L469}
+  /// [google.cloud.orgpolicy.v2.DeletePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L546}
   ///
   // clang-format on
   Status DeletePolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
-  /// Deletes a Policy.
+  /// Deletes a policy.
   ///
   /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
-  /// constraint or Org Policy does not exist.
+  /// constraint or organization policy does not exist.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -585,11 +589,358 @@ class OrgPolicyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orgpolicy.v2.DeletePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L469}
+  /// [google.cloud.orgpolicy.v2.DeletePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L546}
   ///
   // clang-format on
   Status DeletePolicy(
       google::cloud::orgpolicy::v2::DeletePolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a custom constraint.
+  ///
+  /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
+  /// organization does not exist.
+  /// Returns a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the
+  /// constraint already exists on the given organization.
+  ///
+  /// @param parent  Required. Must be in the following form:
+  ///  @n
+  ///  * `organizations/{organization_id}`
+  /// @param custom_constraint  Required. Custom constraint to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orgpolicy.v2.CustomConstraint])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orgpolicy.v2.CreateCustomConstraintRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L564}
+  /// [google.cloud.orgpolicy.v2.CustomConstraint]: @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L138}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  CreateCustomConstraint(
+      std::string const& parent,
+      google::cloud::orgpolicy::v2::CustomConstraint const& custom_constraint,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a custom constraint.
+  ///
+  /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
+  /// organization does not exist.
+  /// Returns a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the
+  /// constraint already exists on the given organization.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orgpolicy.v2.CreateCustomConstraintRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orgpolicy.v2.CustomConstraint])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orgpolicy.v2.CreateCustomConstraintRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L564}
+  /// [google.cloud.orgpolicy.v2.CustomConstraint]: @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L138}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  CreateCustomConstraint(
+      google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a custom constraint.
+  ///
+  /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
+  /// constraint does not exist.
+  ///
+  /// Note: the supplied policy will perform a full overwrite of all
+  /// fields.
+  ///
+  /// @param custom_constraint  Required. `CustomConstraint` to update.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orgpolicy.v2.CustomConstraint])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orgpolicy.v2.CustomConstraint]: @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L138}
+  /// [google.cloud.orgpolicy.v2.UpdateCustomConstraintRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L633}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  UpdateCustomConstraint(
+      google::cloud::orgpolicy::v2::CustomConstraint const& custom_constraint,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a custom constraint.
+  ///
+  /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
+  /// constraint does not exist.
+  ///
+  /// Note: the supplied policy will perform a full overwrite of all
+  /// fields.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orgpolicy.v2.UpdateCustomConstraintRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orgpolicy.v2.CustomConstraint])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orgpolicy.v2.CustomConstraint]: @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L138}
+  /// [google.cloud.orgpolicy.v2.UpdateCustomConstraintRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L633}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  UpdateCustomConstraint(
+      google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a custom constraint.
+  ///
+  /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
+  /// custom constraint does not exist.
+  ///
+  /// @param name  Required. Resource name of the custom constraint. See the custom constraint
+  ///  entry for naming requirements.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orgpolicy.v2.CustomConstraint])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orgpolicy.v2.CustomConstraint]: @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L138}
+  /// [google.cloud.orgpolicy.v2.GetCustomConstraintRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L582}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint> GetCustomConstraint(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a custom constraint.
+  ///
+  /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
+  /// custom constraint does not exist.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orgpolicy.v2.GetCustomConstraintRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orgpolicy.v2.CustomConstraint])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orgpolicy.v2.CustomConstraint]: @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L138}
+  /// [google.cloud.orgpolicy.v2.GetCustomConstraintRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L582}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint> GetCustomConstraint(
+      google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves all of the custom constraints that exist on a particular
+  /// organization resource.
+  ///
+  /// @param parent  Required. The target Google Cloud resource that parents the set of custom
+  ///  constraints that will be returned from this call. Must be in one of the
+  ///  following forms:
+  ///  @n
+  ///  * `organizations/{organization_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.orgpolicy.v2.CustomConstraint], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orgpolicy.v2.CustomConstraint]: @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L138}
+  /// [google.cloud.orgpolicy.v2.ListCustomConstraintsRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L595}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
+  ListCustomConstraints(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves all of the custom constraints that exist on a particular
+  /// organization resource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orgpolicy.v2.ListCustomConstraintsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.orgpolicy.v2.CustomConstraint], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orgpolicy.v2.CustomConstraint]: @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L138}
+  /// [google.cloud.orgpolicy.v2.ListCustomConstraintsRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L595}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
+  ListCustomConstraints(
+      google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a custom constraint.
+  ///
+  /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
+  /// constraint does not exist.
+  ///
+  /// @param name  Required. Name of the custom constraint to delete.
+  ///  See the custom constraint entry for naming rules.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orgpolicy.v2.DeleteCustomConstraintRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L641}
+  ///
+  // clang-format on
+  Status DeleteCustomConstraint(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a custom constraint.
+  ///
+  /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
+  /// constraint does not exist.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orgpolicy.v2.DeleteCustomConstraintRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orgpolicy.v2.DeleteCustomConstraintRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L641}
+  ///
+  // clang-format on
+  Status DeleteCustomConstraint(
+      google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+          request,
       Options opts = {});
 
  private:

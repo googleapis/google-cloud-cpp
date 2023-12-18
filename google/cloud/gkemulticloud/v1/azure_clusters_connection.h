@@ -228,6 +228,12 @@ class AzureClustersConnection {
           request);
 
   virtual StatusOr<
+      google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+  GenerateAzureClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAzureClusterAgentTokenRequest const& request);
+
+  virtual StatusOr<
       google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
   GenerateAzureAccessToken(
       google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
@@ -254,6 +260,16 @@ class AzureClustersConnection {
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureNodePool(
       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+  GetAzureOpenIdConfig(
+      google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+  GetAzureJsonWebKeys(
+      google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
           request);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>

@@ -126,7 +126,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.Asset]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L96}
+  /// [google.cloud.asset.v1.Asset]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L95}
   /// [google.cloud.asset.v1.ExportAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L329}
   /// [google.cloud.asset.v1.ExportAssetsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L399}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
@@ -168,7 +168,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.Asset]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L96}
+  /// [google.cloud.asset.v1.Asset]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L95}
   /// [google.cloud.asset.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L415}
   ///
   // clang-format on
@@ -208,7 +208,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.Asset]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L96}
+  /// [google.cloud.asset.v1.Asset]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L95}
   /// [google.cloud.asset.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L415}
   ///
   // clang-format on
@@ -570,7 +570,7 @@ class AssetServiceClient {
   ///  For more information, see [SearchAllResourcesRequest][google.cloud.asset.v1.SearchAllResourcesRequest].
   /// @param asset_types  Optional. A list of asset types that this request searches for. If empty,
   ///  it will search all the [searchable asset
-  ///  types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+  ///  types](https://cloud.google.com/asset-inventory/docs/supported-asset-types).
   ///  @n
   ///  Regular expressions are also supported. For example:
   ///  @n
@@ -604,7 +604,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.ResourceSearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L345}
+  /// [google.cloud.asset.v1.ResourceSearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L342}
   /// [google.cloud.asset.v1.SearchAllResourcesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L889}
   ///
   // clang-format on
@@ -648,7 +648,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.ResourceSearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L345}
+  /// [google.cloud.asset.v1.ResourceSearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L342}
   /// [google.cloud.asset.v1.SearchAllResourcesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L889}
   ///
   // clang-format on
@@ -709,8 +709,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.IamPolicySearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L760}
-  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1078}
+  /// [google.cloud.asset.v1.IamPolicySearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L753}
+  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1082}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
@@ -752,8 +752,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.IamPolicySearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L760}
-  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1078}
+  /// [google.cloud.asset.v1.IamPolicySearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L753}
+  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1082}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
@@ -785,8 +785,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1389}
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1429}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1393}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1433}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse> AnalyzeIamPolicy(
@@ -832,9 +832,9 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1545}
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1576}
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1429}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1549}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1580}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1433}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -872,8 +872,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeMoveRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1759}
-  /// [google.cloud.asset.v1.AnalyzeMoveResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1794}
+  /// [google.cloud.asset.v1.AnalyzeMoveRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1763}
+  /// [google.cloud.asset.v1.AnalyzeMoveResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1806}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
@@ -914,8 +914,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.QueryAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1865}
-  /// [google.cloud.asset.v1.QueryAssetsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1951}
+  /// [google.cloud.asset.v1.QueryAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1877}
+  /// [google.cloud.asset.v1.QueryAssetsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1963}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::QueryAssetsResponse> QueryAssets(
@@ -955,8 +955,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.CreateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1636}
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1579}
+  /// [google.cloud.asset.v1.CreateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1640}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
@@ -987,8 +987,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.CreateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1636}
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1579}
+  /// [google.cloud.asset.v1.CreateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1640}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
@@ -1017,8 +1017,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.GetSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1666}
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1579}
+  /// [google.cloud.asset.v1.GetSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1670}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
@@ -1047,8 +1047,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.GetSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1666}
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1579}
+  /// [google.cloud.asset.v1.GetSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1670}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
@@ -1084,8 +1084,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1681}
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1579}
+  /// [google.cloud.asset.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1685}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
@@ -1123,8 +1123,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1681}
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1579}
+  /// [google.cloud.asset.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1685}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
@@ -1157,8 +1157,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1579}
-  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1726}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
+  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1730}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
@@ -1188,8 +1188,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1579}
-  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1726}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
+  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1730}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
@@ -1217,7 +1217,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1743}
+  /// [google.cloud.asset.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1747}
   ///
   // clang-format on
   Status DeleteSavedQuery(std::string const& name, Options opts = {});
@@ -1243,7 +1243,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1743}
+  /// [google.cloud.asset.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1747}
   ///
   // clang-format on
   Status DeleteSavedQuery(
@@ -1273,8 +1273,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2036}
-  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2066}
+  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2048}
+  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2078}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
@@ -1296,12 +1296,15 @@ class AssetServiceClient {
   ///  constraint.
   /// @param filter  The expression to filter
   ///  [AnalyzeOrgPoliciesResponse.org_policy_results][google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.org_policy_results].
-  ///  The only supported field is `consolidated_policy.attached_resource`, and
-  ///  the only supported operator is `=`.
+  ///  Filtering is currently available for bare literal values and the following
+  ///  fields:
+  ///  * consolidated_policy.attached_resource
+  ///  * consolidated_policy.rules.enforce
   ///  @n
-  ///  Example:
+  ///  When filtering by a specific field, the only supported operator is `=`.
+  ///  For example, filtering by
   ///  consolidated_policy.attached_resource="//cloudresourcemanager.googleapis.com/folders/001"
-  ///  will return the org policy results of"folders/001".
+  ///  will return all the Organization Policy results attached to "folders/001".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1324,9 +1327,9 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2344}
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2379}
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.org_policy_results]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2400}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2356}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2394}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.org_policy_results]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2415}
   ///
   // clang-format on
   StreamRange<
@@ -1366,8 +1369,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2344}
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2379}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2356}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2394}
   ///
   // clang-format on
   StreamRange<
@@ -1390,13 +1393,17 @@ class AssetServiceClient {
   /// @param constraint  Required. The name of the constraint to analyze governed containers for.
   ///  The analysis only contains organization policies for the provided
   ///  constraint.
-  /// @param filter  The expression to filter the governed containers in result.
-  ///  The only supported field is `parent`, and the only supported operator is
-  ///  `=`.
+  /// @param filter  The expression to filter
+  ///  [AnalyzeOrgPolicyGovernedContainersResponse.governed_containers][google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.governed_containers].
+  ///  Filtering is currently available for bare literal values and the following
+  ///  fields:
+  ///  * parent
+  ///  * consolidated_policy.rules.enforce
   ///  @n
-  ///  Example:
-  ///  parent="//cloudresourcemanager.googleapis.com/folders/001" will return all
-  ///  containers under "folders/001".
+  ///  When filtering by a specific field, the only supported operator is `=`.
+  ///  For example, filtering by
+  ///  parent="//cloudresourcemanager.googleapis.com/folders/001"
+  ///  will return all the containers under "folders/001".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1419,8 +1426,9 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2412}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2450}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2427}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2469}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.governed_containers]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2498}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::
@@ -1463,8 +1471,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2412}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2450}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2427}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2469}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::
@@ -1493,7 +1501,7 @@ class AssetServiceClient {
   ///
   /// This RPC only returns either resources of types supported by [searchable
   /// asset
-  /// types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types),
+  /// types](https://cloud.google.com/asset-inventory/docs/supported-asset-types),
   /// or IAM policies.
   ///
   /// @param scope  Required. The organization to scope the request. Only organization
@@ -1505,18 +1513,10 @@ class AssetServiceClient {
   /// @param constraint  Required. The name of the constraint to analyze governed assets for. The
   ///  analysis only contains analyzed organization policies for the provided
   ///  constraint.
-  /// @param filter  The expression to filter the governed assets in result. The only supported
-  ///  fields for governed resources are `governed_resource.project` and
-  ///  `governed_resource.folders`. The only supported fields for governed iam
-  ///  policies are `governed_iam_policy.project` and
-  ///  `governed_iam_policy.folders`. The only supported operator is `=`.
+  /// @param filter  The expression to filter
+  ///  [AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets][google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets].
   ///  @n
-  ///  Example 1: governed_resource.project="projects/12345678" filter will return
-  ///  all governed resources under projects/12345678 including the project
-  ///  ifself, if applicable.
-  ///  @n
-  ///  Example 2: governed_iam_policy.folders="folders/12345678" filter will
-  ///  return all governed iam policies under folders/12345678, if applicable.
+  ///  For more information, see [AnalyzeOrgPolicyGovernedAssetsRequest][google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1539,8 +1539,9 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2491}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2594}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2510}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2628}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2658}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
@@ -1568,7 +1569,7 @@ class AssetServiceClient {
   ///
   /// This RPC only returns either resources of types supported by [searchable
   /// asset
-  /// types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types),
+  /// types](https://cloud.google.com/asset-inventory/docs/supported-asset-types),
   /// or IAM policies.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1599,8 +1600,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2491}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2594}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2510}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2628}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::

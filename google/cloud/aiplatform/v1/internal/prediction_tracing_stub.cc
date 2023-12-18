@@ -136,6 +136,21 @@ PredictionServiceTracingStub::Explain(
   return internal::EndSpan(context, *span, child_->Explain(context, request));
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::aiplatform::v1::GenerateContentResponse>>
+PredictionServiceTracingStub::StreamGenerateContent(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PredictionService", "StreamGenerateContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->StreamGenerateContent(context, options, request);
+  return std::make_unique<internal::StreamingReadRpcTracing<
+      google::cloud::aiplatform::v1::GenerateContentResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<PredictionServiceStub> MakePredictionServiceTracingStub(

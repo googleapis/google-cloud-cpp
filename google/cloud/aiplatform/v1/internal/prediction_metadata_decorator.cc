@@ -122,6 +122,16 @@ PredictionServiceMetadata::Explain(
   return child_->Explain(context, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::aiplatform::v1::GenerateContentResponse>>
+PredictionServiceMetadata::StreamGenerateContent(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
+  SetMetadata(*context, options,
+              absl::StrCat("model=", internal::UrlEncode(request.model())));
+  return child_->StreamGenerateContent(std::move(context), options, request);
+}
+
 void PredictionServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                             Options const& options,
                                             std::string const& request_params) {

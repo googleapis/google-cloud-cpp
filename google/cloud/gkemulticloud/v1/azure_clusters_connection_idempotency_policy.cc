@@ -79,6 +79,13 @@ Idempotency AzureClustersConnectionIdempotencyPolicy::DeleteAzureCluster(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+AzureClustersConnectionIdempotencyPolicy::GenerateAzureClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAzureClusterAgentTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency AzureClustersConnectionIdempotencyPolicy::GenerateAzureAccessToken(
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&) {
   return Idempotency::kIdempotent;
@@ -107,6 +114,16 @@ Idempotency AzureClustersConnectionIdempotencyPolicy::ListAzureNodePools(
 Idempotency AzureClustersConnectionIdempotencyPolicy::DeleteAzureNodePool(
     google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&) {
+  return Idempotency::kIdempotent;
 }
 
 Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureServerConfig(

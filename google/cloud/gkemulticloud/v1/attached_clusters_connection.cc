@@ -96,6 +96,14 @@ AttachedClustersConnection::GenerateAttachedClusterInstallManifest(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+AttachedClustersConnection::GenerateAttachedClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterAgentTokenRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AttachedClustersConnection> MakeAttachedClustersConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -28,12 +28,18 @@ which should give you a taste of the Cloud Profiler API C++ client library API.
 ## Main classes
 
 <!-- inject-client-list-start -->
-The main class in this library is
-[`profiler_v2::ProfilerServiceClient`](@ref google::cloud::profiler_v2::ProfilerServiceClient). All RPCs are exposed
-as member functions of this class. Other classes provide helpers, configuration
-parameters, and infrastructure to mock
-[`profiler_v2::ProfilerServiceClient`](@ref google::cloud::profiler_v2::ProfilerServiceClient) when testing your
+This library offers multiple `*Client` classes, which are listed below. Each one
+of these classes exposes all the RPCs for a service as member functions of the
+class. This library groups multiple services because they are part of the same
+product or are often used together. A typical example may be the administrative
+and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
+
+- [\c profiler_v2::ExportServiceClient](@ref google::cloud::profiler_v2::ExportServiceClient)
+- [\c profiler_v2::ProfilerServiceClient](@ref google::cloud::profiler_v2::ProfilerServiceClient)
 <!-- inject-client-list-end -->
 
 ## More Information

@@ -205,6 +205,12 @@ class AwsClustersConnection {
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request);
 
   virtual StatusOr<
+      google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+  GenerateAwsClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAwsClusterAgentTokenRequest const& request);
+
+  virtual StatusOr<
       google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
   GenerateAwsAccessToken(
       google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
@@ -220,6 +226,11 @@ class AwsClustersConnection {
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
           request);
 
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  RollbackAwsNodePoolUpdate(
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request);
+
   virtual StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
   GetAwsNodePool(
       google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request);
@@ -231,6 +242,16 @@ class AwsClustersConnection {
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
+  GetAwsOpenIdConfig(
+      google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
+  GetAwsJsonWebKeys(
+      google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&
           request);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
