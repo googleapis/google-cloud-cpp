@@ -19,9 +19,9 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/status.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 #include <thread>
@@ -344,11 +344,9 @@ TEST(ConnectionRefreshRange, BothUnset) {
   auto opts = DefaultOptions();
 
   // See `kDefaultMinRefreshPeriod`
-  EXPECT_LT(absl::FromChrono(secs(15)),
-            absl::FromChrono(opts.get<MinConnectionRefreshOption>()));
+  EXPECT_LT(secs(15), opts.get<MinConnectionRefreshOption>());
   // See `kDefaultMaxRefreshPeriod`
-  EXPECT_GT(absl::FromChrono(mins(4)),
-            absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
+  EXPECT_GT(mins(4), opts.get<MaxConnectionRefreshOption>());
 }
 
 TEST(ConnectionRefreshRange, MinSetAboveMaxDefault) {
@@ -356,10 +354,8 @@ TEST(ConnectionRefreshRange, MinSetAboveMaxDefault) {
   auto opts =
       DefaultOptions(Options{}.set<MinConnectionRefreshOption>(mins(10)));
 
-  EXPECT_EQ(absl::FromChrono(mins(10)),
-            absl::FromChrono(opts.get<MinConnectionRefreshOption>()));
-  EXPECT_EQ(absl::FromChrono(mins(10)),
-            absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
+  EXPECT_EQ(mins(10), opts.get<MinConnectionRefreshOption>());
+  EXPECT_EQ(mins(10), opts.get<MaxConnectionRefreshOption>());
 }
 
 TEST(ConnectionRefreshRange, MaxSetBelowMinDefault) {
@@ -367,10 +363,8 @@ TEST(ConnectionRefreshRange, MaxSetBelowMinDefault) {
   auto opts =
       DefaultOptions(Options{}.set<MaxConnectionRefreshOption>(secs(1)));
 
-  EXPECT_EQ(absl::FromChrono(secs(1)),
-            absl::FromChrono(opts.get<MinConnectionRefreshOption>()));
-  EXPECT_EQ(absl::FromChrono(secs(1)),
-            absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
+  EXPECT_EQ(secs(1), opts.get<MinConnectionRefreshOption>());
+  EXPECT_EQ(secs(1), opts.get<MaxConnectionRefreshOption>());
 }
 
 TEST(ConnectionRefreshRange, BothSetValid) {
@@ -379,10 +373,8 @@ TEST(ConnectionRefreshRange, BothSetValid) {
                                  .set<MinConnectionRefreshOption>(secs(30))
                                  .set<MaxConnectionRefreshOption>(mins(2)));
 
-  EXPECT_EQ(absl::FromChrono(secs(30)),
-            absl::FromChrono(opts.get<MinConnectionRefreshOption>()));
-  EXPECT_EQ(absl::FromChrono(mins(2)),
-            absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
+  EXPECT_EQ(secs(30), opts.get<MinConnectionRefreshOption>());
+  EXPECT_EQ(mins(2), opts.get<MaxConnectionRefreshOption>());
 }
 
 TEST(ConnectionRefreshRange, BothSetInvalidUsesMax) {
@@ -391,10 +383,8 @@ TEST(ConnectionRefreshRange, BothSetInvalidUsesMax) {
                                  .set<MinConnectionRefreshOption>(mins(2))
                                  .set<MaxConnectionRefreshOption>(secs(30)));
 
-  EXPECT_EQ(absl::FromChrono(mins(2)),
-            absl::FromChrono(opts.get<MinConnectionRefreshOption>()));
-  EXPECT_EQ(absl::FromChrono(mins(2)),
-            absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
+  EXPECT_EQ(mins(2), opts.get<MinConnectionRefreshOption>());
+  EXPECT_EQ(mins(2), opts.get<MaxConnectionRefreshOption>());
 }
 
 TEST(ConnectionRefreshRange, DisabledIfEmulator) {
@@ -402,8 +392,7 @@ TEST(ConnectionRefreshRange, DisabledIfEmulator) {
   auto opts = DefaultOptions();
 
   // Zero duration means connection refreshing is disabled.
-  EXPECT_EQ(absl::ZeroDuration(),
-            absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
+  EXPECT_EQ(secs(0), opts.get<MaxConnectionRefreshOption>());
 }
 
 }  // namespace
