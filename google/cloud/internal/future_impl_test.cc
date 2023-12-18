@@ -15,7 +15,6 @@
 #include "google/cloud/internal/future_impl.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/expect_future_error.h"
-#include "google/cloud/testing_util/testing_types.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,8 +26,6 @@ namespace {
 using ::testing::HasSubstr;
 using testing_util::chrono_literals::operator"" _us;  // NOLINT
 using testing_util::ExpectFutureError;
-using testing_util::NoDefaultConstructor;
-using testing_util::Observable;
 
 TEST(FutureImplInt, Basic) {
   future_shared_state<int> shared_state;
@@ -237,136 +234,6 @@ TEST(FutureImplInt, SetContinuationAlreadySatisfied) {
   EXPECT_EQ(1, execute_counter);
 
   EXPECT_EQ(42, shared_state.get());
-}
-
-// @test Verify that we can create continuations.
-TEST(ContinuationIntTest, Constructor) {
-  auto functor = [](std::shared_ptr<future_shared_state<int>> const&) {};
-
-  using tested_type = SimpleContinuation<decltype(functor), int>;
-
-  auto input = std::make_shared<future_shared_state<int>>();
-  auto cont = std::make_shared<tested_type>(std::move(functor), input);
-
-  auto current = cont->input.lock();
-  EXPECT_EQ(input.get(), current.get());
-}
-
-/// @test Verify that satisfying the shared state with an exception calls the
-/// continuation.
-TEST(ContinuationIntTest, SetExceptionCallsContinuation) {
-  bool called = false;
-  auto functor =
-      [&called](std::shared_ptr<future_shared_state<int>> const& state) {
-        called = true;
-        return 2 * state->get();
-      };
-
-  auto input = std::make_shared<future_shared_state<int>>();
-  std::shared_ptr<future_shared_state<int>> output =
-      input->make_continuation(input, std::move(functor));
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  input->set_exception(
-      std::make_exception_ptr(std::runtime_error("test message")));
-  EXPECT_TRUE(called);
-  EXPECT_TRUE(output->is_ready());
-  EXPECT_THROW(
-      try { output->get(); } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("test message"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      input->set_exception(
-          std::make_exception_ptr(std::runtime_error("test message"))),
-      "future<T>::get\\(\\) had an exception but exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-/// @test Verify that satisfying the shared state with a value calls the
-/// continuation.
-TEST(ContinuationIntTest, SetValueCallsContinuation) {
-  bool called = false;
-  auto functor =
-      [&called](std::shared_ptr<future_shared_state<int>> const& state) {
-        called = true;
-        return 2 * state->get();
-      };
-
-  auto input = std::make_shared<future_shared_state<int>>();
-  std::shared_ptr<future_shared_state<int>> output =
-      input->make_continuation(input, std::move(functor));
-
-  input->set_value(42);
-  EXPECT_TRUE(called);
-  EXPECT_TRUE(output->is_ready());
-  EXPECT_EQ(84, output->get());
-}
-
-TEST(FutureImplNoDefaultConstructor, SetValue) {
-  future_shared_state<NoDefaultConstructor> shared_state;
-  EXPECT_FALSE(shared_state.is_ready());
-
-  shared_state.set_value(NoDefaultConstructor("42"));
-  EXPECT_TRUE(shared_state.is_ready());
-
-  NoDefaultConstructor result = shared_state.get();
-  EXPECT_EQ("42", result.str());
-}
-
-TEST(FutureImplObservable, NeverSet) {
-  Observable::reset_counters();
-  {
-    future_shared_state<Observable> shared_state;
-    EXPECT_FALSE(shared_state.is_ready());
-    EXPECT_EQ(0, Observable::default_constructor());
-    EXPECT_EQ(0, Observable::destructor());
-  }
-  EXPECT_EQ(0, Observable::default_constructor());
-  EXPECT_EQ(0, Observable::destructor());
-}
-
-TEST(FutureImplObservable, SetValue) {
-  Observable::reset_counters();
-  {
-    future_shared_state<Observable> shared_state;
-    EXPECT_FALSE(shared_state.is_ready());
-
-    shared_state.set_value(Observable("set value"));
-    EXPECT_EQ(0, Observable::default_constructor());
-    EXPECT_EQ(1, Observable::value_constructor());
-    EXPECT_EQ(0, Observable::copy_constructor());
-    EXPECT_EQ(1, Observable::move_constructor());
-    EXPECT_EQ(0, Observable::copy_assignment());
-    EXPECT_EQ(0, Observable::move_assignment());
-    EXPECT_EQ(1, Observable::destructor());
-    {
-      Observable value = shared_state.get();
-      EXPECT_EQ(0, Observable::default_constructor());
-      EXPECT_EQ(1, Observable::value_constructor());
-      EXPECT_EQ(0, Observable::copy_constructor());
-      EXPECT_EQ(2, Observable::move_constructor());
-      EXPECT_EQ(0, Observable::copy_assignment());
-      EXPECT_EQ(0, Observable::move_assignment());
-      EXPECT_EQ(1, Observable::destructor());
-    }
-    EXPECT_EQ(0, Observable::default_constructor());
-    EXPECT_EQ(1, Observable::value_constructor());
-    EXPECT_EQ(0, Observable::copy_constructor());
-    EXPECT_EQ(2, Observable::move_constructor());
-    EXPECT_EQ(0, Observable::copy_assignment());
-    EXPECT_EQ(0, Observable::move_assignment());
-    EXPECT_EQ(2, Observable::destructor());
-  }
-  EXPECT_EQ(0, Observable::default_constructor());
-  EXPECT_EQ(1, Observable::value_constructor());
-  EXPECT_EQ(0, Observable::copy_constructor());
-  EXPECT_EQ(2, Observable::move_constructor());
-  EXPECT_EQ(0, Observable::copy_assignment());
-  EXPECT_EQ(0, Observable::move_assignment());
-  EXPECT_EQ(3, Observable::destructor());
 }
 
 }  // namespace

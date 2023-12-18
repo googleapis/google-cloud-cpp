@@ -547,6 +547,12 @@ TEST_F(SessionPoolTest, SessionRefresh) {
   auto s2 = pool->Allocate();
   ASSERT_STATUS_OK(s2);
   EXPECT_EQ("s2", (*s2)->session_name());
+
+  // Cancel all pending operations, satisfying any remaining futures. When
+  // compiling with exceptions disabled the destructors eventually invoke
+  // `std::abort()`. On real programs, shutting down the completion queue
+  // will have the same effect.
+  impl->SimulateCompletion(false);
 }
 
 TEST_F(SessionPoolTest, SessionRefreshNotFound) {
@@ -604,6 +610,12 @@ TEST_F(SessionPoolTest, SessionRefreshNotFound) {
   auto s3 = pool->Allocate();
   ASSERT_STATUS_OK(s3);
   EXPECT_EQ("s3", (*s3)->session_name());
+
+  // Cancel all pending operations, satisfying any remaining futures. When
+  // compiling with exceptions disabled the destructors eventually invoke
+  // `std::abort()`. In non-test programs, the completion queue does this
+  // automatically as part of its shutdown.
+  impl->SimulateCompletion(false);
 }
 
 }  // namespace

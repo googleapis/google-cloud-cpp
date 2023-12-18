@@ -53,6 +53,14 @@ class PublisherConnectionImplTest : public ::testing::Test {
     conn_ = std::make_unique<PublisherConnectionImpl>(
         absl::WrapUnique(&publisher_ref_), transformer_.AsStdFunction());
   }
+  ~PublisherConnectionImplTest() override {
+    // We must set a final value, or the program aborts when exceptions are
+    // disabled. Without a final value the promise is "abadoned", that sets
+    // the future to throw an exception, and with exceptions disabled that is
+    // a complicated way to call `std::abort()`. In non-test programs, the
+    // completion queue does this automatically as part of its shutdown.
+    status_promise_.set_value(Status{StatusCode::kCancelled, "dtor"});
+  }
 
   promise<Status> status_promise_;
   StrictMock<MockPublisher<MessageMetadata>>& publisher_ref_;

@@ -82,8 +82,8 @@ add_library(
     internal/future_fwd.h
     internal/future_impl.cc
     internal/future_impl.h
+    internal/future_then_impl.cc
     internal/future_then_impl.h
-    internal/future_then_meta.h
     internal/getenv.cc
     internal/getenv.h
     internal/group_options.h
@@ -349,6 +349,7 @@ if (BUILD_TESTING)
         internal/filesystem_test.cc
         internal/format_time_point_test.cc
         internal/future_impl_test.cc
+        internal/future_then_impl_test.cc
         internal/group_options_test.cc
         internal/invoke_result_test.cc
         internal/log_impl_test.cc
