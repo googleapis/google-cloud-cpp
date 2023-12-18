@@ -1,1 +1,3 @@
+@com_google_googleapis//google/cloud/translate/v3:adaptive_mt.proto
+@com_google_googleapis//google/cloud/translate/v3:common.proto
 @com_google_googleapis//google/cloud/translate/v3:translation_service.proto
