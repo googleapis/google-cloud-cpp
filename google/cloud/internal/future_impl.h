@@ -107,7 +107,7 @@ struct IsReferenceWrapper<std::reference_wrapper<U>> : public std::true_type {};
  * Continuations (the parameters to a `.then()` call) can be of arbitrary
  * types: any callable (lambdas, function pointers, `std::function<>`) should be
  * accepted. We want to hold these continuations as type-erased objects, so we
- * can call them without having to known their types.
+ * can call them without having to know their types.
  *
  * A continuation object will hold both the callable and the state to call it
  * with, the implementation of `.then()` takes care of those details.
