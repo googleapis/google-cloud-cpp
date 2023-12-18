@@ -107,7 +107,7 @@ struct IsReferenceWrapper<std::reference_wrapper<U>> : public std::true_type {};
  * Continuations (the parameters to a `.then()` call) can be of arbitrary
  * types: any callable (lambdas, function pointers, `std::function<>`) should be
  * accepted. We want to hold these continuations as type-erased objects, so we
- * can call them without having to their types.
+ * can call them without having to known their types.
  *
  * A continuation object will hold both the callable and the state to call it
  * with, the implementation of `.then()` takes care of those details.
@@ -140,7 +140,7 @@ struct FutureValueRetrieved {};
  * the value or exception was extracted.  It may also contain a continuation to
  * be called when the shared state is satisfied.
  *
- * The shared state value can be retrieved only once, this is enforced by
+ * The shared state value can be retrieved only once. This is enforced by
  * `future<T>::get()`: calling `.get()` invalidates the future.
  *
  * Calling `future<T>::then()` also invalidates the future, and all operations,
@@ -208,10 +208,12 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
             "future<T>::get() had an exception but exceptions are disabled");
       }
       T operator()(FutureValueRetrieved) {
-        ThrowFutureError(std::future_errc::no_state, "future<T>::get()");
+        ThrowFutureError(std::future_errc::no_state,
+                         "future<T>::get() - already retrieved");
       }
       T operator()(absl::monostate) {
-        ThrowFutureError(std::future_errc::no_state, "future<T>::get()");
+        ThrowFutureError(std::future_errc::no_state,
+                         "future<T>::get() - not set");
       }
     };
     // Note that the value is moved out. It is impossible to retrieve the value
