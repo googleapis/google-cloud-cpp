@@ -14,10 +14,11 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub_factory.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -27,96 +28,47 @@ namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::MakeStubFactoryMockAuth;
+using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::test::admin::database::v1::GenerateIdTokenRequest;
 using ::testing::Contains;
-using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
-using ::testing::IsNull;
+using ::testing::Return;
 
-class GoldenKitchenSinkStubFactoryTest : public ::testing::Test {
- protected:
-  testing_util::ScopedLog log_;
-};
+TEST(GoldenKitchenSinkStubFactoryTest, DefaultStubWithoutLogging) {
+  ScopedLog log;
 
-TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithoutLogging) {
   Options options;
-  auto default_stub =
-      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
-  auto const log_lines = log_.ExtractLines();
+  auto auth = MakeStubFactoryMockAuth();
+  auto default_stub = CreateDefaultGoldenKitchenSinkStub(auth, options);
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, IsEmpty());
-  ASSERT_TRUE(options.has<EndpointOption>());
-  EXPECT_THAT(options.get<EndpointOption>(),
-              Eq("goldenkitchensink.googleapis.com."));
 }
 
-TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithLogging) {
+TEST(GoldenKitchenSinkStubFactoryTest, DefaultStubWithLogging) {
+  ScopedLog log;
+
   Options options;
   options.set<TracingComponentsOption>({"rpc"});
-  auto default_stub =
-      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
-  auto const log_lines = log_.ExtractLines();
+  auto auth = MakeStubFactoryMockAuth();
+  auto default_stub = CreateDefaultGoldenKitchenSinkStub(auth, options);
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Enabled logging for gRPC calls")));
 }
 
-TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithAuth) {
+TEST(GoldenKitchenSinkStubFactoryTest, DefaultStubWithAuth) {
   Options options;
-  options.set<EndpointOption>("localhost:1")
-      .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
-          "invalid-access-token",
-          std::chrono::system_clock::now() + std::chrono::minutes(15)));
-  auto default_stub =
-      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
+  auto auth = MakeStubFactoryMockAuth();
+  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(true));
+  EXPECT_CALL(*auth, ConfigureContext)
+      .WillOnce(Return(internal::AbortedError("fail")));
+  auto default_stub = CreateDefaultGoldenKitchenSinkStub(auth, options);
   grpc::ClientContext context;
   auto response =
       default_stub->GenerateIdToken(context, GenerateIdTokenRequest{});
-  EXPECT_THAT(response, Not(IsOk()));
-  EXPECT_THAT(context.credentials(), Not(IsNull()));
-}
-
-TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithUniverseDomainOption) {
-  Options options;
-  options.set<EndpointOption>("localhost:1")
-      .set<internal::UniverseDomainOption>("not empty")
-      .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
-          "invalid-access-token",
-          std::chrono::system_clock::now() + std::chrono::minutes(15)));
-  auto default_stub =
-      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
-  ASSERT_TRUE(options.has<EndpointOption>());
-  EXPECT_THAT(options.get<EndpointOption>(), Eq("localhost:1"));
-
-  grpc::ClientContext context;
-  auto response =
-      default_stub->GenerateIdToken(context, GenerateIdTokenRequest{});
-  EXPECT_THAT(
-      response,
-      Not(AnyOf(IsOk(),
-                StatusIs(StatusCode::kInvalidArgument,
-                         HasSubstr("UniverseDomainOption cannot be empty")))));
-  EXPECT_THAT(context.credentials(), Not(IsNull()));
-}
-
-TEST_F(GoldenKitchenSinkStubFactoryTest,
-       DefaultStubWithEmptyUniverseDomainOption) {
-  Options options;
-  options.set<internal::UniverseDomainOption>("").set<UnifiedCredentialsOption>(
-      MakeAccessTokenCredentials(
-          "invalid-access-token",
-          std::chrono::system_clock::now() + std::chrono::minutes(15)));
-  auto default_stub =
-      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
-  EXPECT_FALSE(options.has<EndpointOption>());
-
-  grpc::ClientContext context;
-  auto response =
-      default_stub->GenerateIdToken(context, GenerateIdTokenRequest{});
-  EXPECT_THAT(response,
-              StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("UniverseDomainOption cannot be empty")));
-  EXPECT_THAT(context.credentials(), IsNull());
+  EXPECT_THAT(response, StatusIs(StatusCode::kAborted, "fail"));
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -125,11 +77,12 @@ using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::Not;
 
-TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingEnabled) {
+TEST(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto options = EnableTracing(Options{}.set<EndpointOption>("localhost:1"));
-  auto stub = CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
+  auto auth = MakeStubFactoryMockAuth();
+  auto stub = CreateDefaultGoldenKitchenSinkStub(auth, options);
   grpc::ClientContext context;
   (void)stub->DoNothing(context, {});
 
@@ -139,11 +92,12 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingEnabled) {
                  "google.test.admin.database.v1.GoldenKitchenSink/DoNothing")));
 }
 
-TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingDisabled) {
+TEST(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto options = DisableTracing(Options{}.set<EndpointOption>("localhost:1"));
-  auto stub = CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
+  auto auth = MakeStubFactoryMockAuth();
+  auto stub = CreateDefaultGoldenKitchenSinkStub(auth, options);
   grpc::ClientContext context;
   (void)stub->DoNothing(context, {});
 
