@@ -64,9 +64,8 @@ auto MakeParent(Links const& links, Spans const& message_spans,
   // TODO(#13287): Use the constant instead of the string.
   // Setting a span as a root span was added in OTel v1.13+. It is a no-op for
   // earlier versions.
-  root_context = root_context.SetValue(
+  options.parent = root_context.SetValue(
       /*opentelemetry::trace::kIsRootSpanKey=*/"is_root_span", true);
-  options.parent = root_context;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   auto batch_sink_parent = internal::MakeSpan(
       topic.topic_id() + " publish",
