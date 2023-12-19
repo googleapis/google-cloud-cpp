@@ -17,6 +17,7 @@
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/universe_domain_options.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 
@@ -125,6 +126,37 @@ TEST(PopulateCommonOptions, EndpointAuthority) {
       }
     }
   }
+}
+
+TEST(PopulateCommonOptions, UniverseDomain) {
+  auto actual =
+      PopulateCommonOptions(Options{}.set<UniverseDomainOption>("my-ud.net"),
+                            {}, {}, {}, "default.googleapis.com");
+  EXPECT_EQ(actual.get<EndpointOption>(), "default.my-ud.net");
+}
+
+TEST(PopulateCommonOptions, EndpointOptionOverridesUniverseDomain) {
+  auto actual = PopulateCommonOptions(
+      Options{}
+          .set<UniverseDomainOption>("ignored-ud.net")
+          .set<EndpointOption>("custom-endpoint.googleapis.com"),
+      {}, {}, {}, "default.googleapis.com");
+  EXPECT_EQ(actual.get<EndpointOption>(), "custom-endpoint.googleapis.com");
+}
+
+TEST(PopulateCommonOptions, EnvVarsOverridesUniverseDomain) {
+  ScopedEnvironment endpoint("SERVICE_ENDPOINT", "endpoint-env.googleapis.com");
+  ScopedEnvironment emulator("SERVICE_EMULATOR", "emulator-env.googleapis.com");
+
+  auto actual = PopulateCommonOptions(
+      Options{}.set<UniverseDomainOption>("ignored-ud.net"), "SERVICE_ENDPOINT",
+      {}, {}, "default.googleapis.com");
+  EXPECT_EQ(actual.get<EndpointOption>(), "endpoint-env.googleapis.com");
+
+  actual = PopulateCommonOptions(
+      Options{}.set<UniverseDomainOption>("ignored-ud.net"), {},
+      "SERVICE_EMULATOR", {}, "default.googleapis.com");
+  EXPECT_EQ(actual.get<EndpointOption>(), "emulator-env.googleapis.com");
 }
 
 TEST(PopulateCommonOptions, UserProject) {
