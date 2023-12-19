@@ -72,14 +72,13 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
 }
 
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
-    google::cloud::CompletionQueue cq, Options const& options,
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    CompletionQueue const& cq, Options const& options,
     BaseBigtableStubFactory const& base_factory) {
   auto cq_impl = internal::GetCompletionQueueImpl(cq);
   auto refresh = std::make_shared<ConnectionRefreshState>(
       cq_impl, options.get<bigtable::MinConnectionRefreshOption>(),
       options.get<bigtable::MaxConnectionRefreshOption>());
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      std::move(cq), options);
   auto child_factory = [base_factory, cq_impl, refresh, &auth,
                         options](int id) {
     auto channel = CreateGrpcChannel(*auth, options, id);
@@ -98,24 +97,24 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
       std::move(stub),
       std::multimap<std::string, std::string>{
           {"bigtable-features", FeaturesMetadata()}},
-      google::cloud::internal::HandCraftedLibClientHeader());
-  if (google::cloud::internal::Contains(options.get<TracingComponentsOption>(),
-                                        "rpc")) {
+      internal::HandCraftedLibClientHeader());
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<BigtableLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
   }
-  if (google::cloud::internal::TracingEnabled(options)) {
+  if (internal::TracingEnabled(options)) {
     stub = MakeBigtableTracingStub(std::move(stub));
   }
   return stub;
 }
 
 std::shared_ptr<BigtableStub> CreateBigtableStub(
-    google::cloud::CompletionQueue cq, Options const& options) {
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    CompletionQueue const& cq, Options const& options) {
   return CreateDecoratedStubs(
-      std::move(cq), options, [](std::shared_ptr<grpc::Channel> c) {
+      std::move(auth), cq, options, [](std::shared_ptr<grpc::Channel> c) {
         return std::make_shared<DefaultBigtableStub>(
             google::bigtable::v2::Bigtable::NewStub(std::move(c)));
       });

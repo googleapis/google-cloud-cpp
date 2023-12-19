@@ -20,6 +20,9 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
+using ::testing::NiceMock;
+using ::testing::Return;
+
 std::shared_ptr<MockAuthenticationStrategy> MakeTypicalMockAuth() {
   auto auth = std::make_shared<MockAuthenticationStrategy>();
   EXPECT_CALL(*auth, ConfigureContext)
@@ -47,6 +50,15 @@ std::shared_ptr<MockAuthenticationStrategy> MakeTypicalAsyncMockAuth() {
             grpc::AccessTokenCredentials("test-only-invalid"));
         return make_ready_future(make_status_or(std::move(context)));
       });
+  return auth;
+}
+
+std::shared_ptr<MockAuthenticationStrategy> MakeStubFactoryMockAuth() {
+  auto auth = std::make_shared<NiceMock<MockAuthenticationStrategy>>();
+  ON_CALL(*auth, CreateChannel)
+      .WillByDefault(Return(grpc::CreateCustomChannel(
+          "error:///", grpc::InsecureChannelCredentials(), {})));
+  ON_CALL(*auth, RequiresConfigureContext).WillByDefault(Return(false));
   return auth;
 }
 

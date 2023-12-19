@@ -18,6 +18,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
+#include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -27,6 +28,7 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::MakeStubFactoryMockAuth;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 
 auto constexpr kTestChannels = 3;
@@ -51,11 +53,13 @@ TEST(BigtableChannelRefresh, Enabled) {
       });
 
   CompletionQueue cq(mock);
+  auto auth = MakeStubFactoryMockAuth();
   auto stub = CreateBigtableStub(
-      cq, Options{}
-              .set<GrpcNumChannelsOption>(kTestChannels)
-              .set<bigtable::MinConnectionRefreshOption>(ms(500))
-              .set<bigtable::MaxConnectionRefreshOption>(ms(1000)));
+      std::move(auth), cq,
+      Options{}
+          .set<GrpcNumChannelsOption>(kTestChannels)
+          .set<bigtable::MinConnectionRefreshOption>(ms(500))
+          .set<bigtable::MaxConnectionRefreshOption>(ms(1000)));
 }
 
 TEST(BigtableChannelRefresh, Disabled) {
@@ -68,8 +72,10 @@ TEST(BigtableChannelRefresh, Disabled) {
   EXPECT_CALL(*mock, MakeRelativeTimer).Times(0);
 
   CompletionQueue cq(mock);
+  auto auth = MakeStubFactoryMockAuth();
   auto stub = CreateBigtableStub(
-      cq, Options{}.set<bigtable::MaxConnectionRefreshOption>(ms(0)));
+      std::move(auth), cq,
+      Options{}.set<bigtable::MaxConnectionRefreshOption>(ms(0)));
 }
 
 TEST(BigtableChannelRefresh, Continuations) {
@@ -114,12 +120,14 @@ TEST(BigtableChannelRefresh, Continuations) {
   EXPECT_CALL(*mock_cq, RunAsync).Times(2);
 
   CompletionQueue cq(mock_cq);
+  auto auth = MakeStubFactoryMockAuth();
   auto stub = CreateBigtableStub(
-      cq, Options{}
-              .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-              .set<GrpcNumChannelsOption>(1)
-              .set<bigtable::MinConnectionRefreshOption>(ms(500))
-              .set<bigtable::MaxConnectionRefreshOption>(ms(1000)));
+      std::move(auth), cq,
+      Options{}
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+          .set<GrpcNumChannelsOption>(1)
+          .set<bigtable::MinConnectionRefreshOption>(ms(500))
+          .set<bigtable::MaxConnectionRefreshOption>(ms(1000)));
 
   // Simulate the timer firing, which should trigger another round of refreshes.
   p.set_value(make_status_or(std::chrono::system_clock::now()));
