@@ -16,6 +16,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "absl/strings/str_split.h"
@@ -39,12 +40,6 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
     }
   }
 
-  if (!opts.has<EndpointOption>()) {
-    if (!absl::EndsWith(default_endpoint, ".")) {
-      absl::StrAppend(&default_endpoint, ".");
-    }
-    opts.set<EndpointOption>(std::move(default_endpoint));
-  }
   if (!endpoint_env_var.empty()) {
     auto e = GetEnv(endpoint_env_var.c_str());
     if (e && !e->empty()) {
@@ -56,6 +51,11 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
     if (e && !e->empty()) {
       opts.set<EndpointOption>(*std::move(e));
     }
+  }
+  if (!opts.has<EndpointOption>()) {
+    absl::StrAppend(&default_endpoint, ".");
+    opts.set<EndpointOption>(
+        UniverseDomainEndpoint(std::move(default_endpoint), opts));
   }
 
   auto e = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
