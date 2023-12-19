@@ -53,6 +53,13 @@ StatusOr<std::string> DetermineServiceEndpoint(
   return default_endpoint;
 }
 
+std::string UniverseDomainEndpoint(std::string gdu_endpoint,
+                                   Options const& options) {
+  if (!options.has<UniverseDomainOption>()) return gdu_endpoint;
+  return absl::StrCat(absl::StripSuffix(gdu_endpoint, ".googleapis.com."), ".",
+                      options.get<UniverseDomainOption>());
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
