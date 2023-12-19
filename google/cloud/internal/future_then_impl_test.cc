@@ -25,6 +25,15 @@ namespace {
 
 using ::testing::HasSubstr;
 
+template <typename T>
+void TestSetExceptionPtr(future_shared_state<T>& input) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  input.set_exception(std::make_exception_ptr(std::runtime_error("test-only")));
+#else
+  input.set_exception(nullptr);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 TEST(FutureThenImpl, EvalVoid) {
   auto const r = FutureThenImpl::eval([](int) {}, 42);
   EXPECT_TRUE((std::is_same<FutureVoid const, decltype(r)>::value));
@@ -97,8 +106,7 @@ TEST(FutureThenImpl, UnwrapMatchingTypesException) {
   auto input = std::make_shared<future_shared_state<int>>();
   FutureThenImpl::unwrap(output, input);
   EXPECT_FALSE(output->is_ready());
-  input->set_exception(
-      std::make_exception_ptr(std::runtime_error("test-only")));
+  TestSetExceptionPtr(*input);
   EXPECT_TRUE(output->is_ready());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -146,6 +154,7 @@ TEST(FutureThenImpl, UnwrapFutureValue) {
   EXPECT_EQ(output->get(), 42);
 }
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST(FutureThenImpl, UnwrapFutureException1) {
   auto output = std::make_shared<future_shared_state<int>>();
   auto input = std::make_shared<future_shared_state<future<int>>>();
@@ -156,7 +165,6 @@ TEST(FutureThenImpl, UnwrapFutureException1) {
   EXPECT_FALSE(output->is_ready());
   p.set_exception(std::make_exception_ptr(std::runtime_error("test-only")));
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_TRUE(output->is_ready());
   EXPECT_THROW(
       try { output->get(); } catch (std::runtime_error const& ex) {
@@ -164,18 +172,15 @@ TEST(FutureThenImpl, UnwrapFutureException1) {
         throw;
       },
       std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(output->get(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST(FutureThenImpl, UnwrapFutureException2) {
   auto output = std::make_shared<future_shared_state<int>>();
   auto input = std::make_shared<future_shared_state<future<int>>>();
   FutureThenImpl::unwrap(output, input);
   EXPECT_FALSE(output->is_ready());
-  input->set_exception(
-      std::make_exception_ptr(std::runtime_error("test-only")));
+  TestSetExceptionPtr(*input);
   EXPECT_TRUE(output->is_ready());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
