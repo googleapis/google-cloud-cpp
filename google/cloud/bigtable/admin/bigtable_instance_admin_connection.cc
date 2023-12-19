@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -182,8 +183,9 @@ MakeBigtableInstanceAdminConnection(Options options) {
   options = bigtable_admin_internal::BigtableInstanceAdminDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = bigtable_admin_internal::CreateDefaultBigtableInstanceAdminStub(
-      background->cq(), options);
+      std::move(auth), options);
   return bigtable_admin_internal::MakeBigtableInstanceAdminTracingConnection(
       std::make_shared<
           bigtable_admin_internal::BigtableInstanceAdminConnectionImpl>(

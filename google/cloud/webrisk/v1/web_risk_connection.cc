@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -76,8 +77,9 @@ std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
   options =
       webrisk_v1_internal::WebRiskServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = webrisk_v1_internal::CreateDefaultWebRiskServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return webrisk_v1_internal::MakeWebRiskServiceTracingConnection(
       std::make_shared<webrisk_v1_internal::WebRiskServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

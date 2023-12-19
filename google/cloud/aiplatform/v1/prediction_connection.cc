@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -118,8 +119,9 @@ std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
   options = aiplatform_v1_internal::PredictionServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultPredictionServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return aiplatform_v1_internal::MakePredictionServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::PredictionServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

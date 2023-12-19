@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -294,8 +295,9 @@ std::shared_ptr<ArtifactRegistryConnection> MakeArtifactRegistryConnection(
   options = artifactregistry_v1_internal::ArtifactRegistryDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = artifactregistry_v1_internal::CreateDefaultArtifactRegistryStub(
-      background->cq(), options);
+      std::move(auth), options);
   return artifactregistry_v1_internal::MakeArtifactRegistryTracingConnection(
       std::make_shared<
           artifactregistry_v1_internal::ArtifactRegistryConnectionImpl>(

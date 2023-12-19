@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -91,9 +92,10 @@ MakeEssentialContactsServiceConnection(Options options) {
       essentialcontacts_v1_internal::EssentialContactsServiceDefaultOptions(
           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       essentialcontacts_v1_internal::CreateDefaultEssentialContactsServiceStub(
-          background->cq(), options);
+          std::move(auth), options);
   return essentialcontacts_v1_internal::
       MakeEssentialContactsServiceTracingConnection(
           std::make_shared<essentialcontacts_v1_internal::

@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -278,8 +279,9 @@ std::shared_ptr<DlpServiceConnection> MakeDlpServiceConnection(
                                  DlpServicePolicyOptionList>(options, __func__);
   options = dlp_v2_internal::DlpServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
-      dlp_v2_internal::CreateDefaultDlpServiceStub(background->cq(), options);
+      dlp_v2_internal::CreateDefaultDlpServiceStub(std::move(auth), options);
   return dlp_v2_internal::MakeDlpServiceTracingConnection(
       std::make_shared<dlp_v2_internal::DlpServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

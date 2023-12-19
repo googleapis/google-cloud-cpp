@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -85,8 +86,9 @@ std::shared_ptr<DatastoreConnection> MakeDatastoreConnection(Options options) {
                                  DatastorePolicyOptionList>(options, __func__);
   options = datastore_v1_internal::DatastoreDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = datastore_v1_internal::CreateDefaultDatastoreStub(
-      background->cq(), options);
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub = datastore_v1_internal::CreateDefaultDatastoreStub(std::move(auth),
+                                                                options);
   return datastore_v1_internal::MakeDatastoreTracingConnection(
       std::make_shared<datastore_v1_internal::DatastoreConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

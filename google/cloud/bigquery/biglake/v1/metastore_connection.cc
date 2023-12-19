@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -141,8 +142,9 @@ std::shared_ptr<MetastoreServiceConnection> MakeMetastoreServiceConnection(
   options = bigquery_biglake_v1_internal::MetastoreServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = bigquery_biglake_v1_internal::CreateDefaultMetastoreServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return bigquery_biglake_v1_internal::MakeMetastoreServiceTracingConnection(
       std::make_shared<
           bigquery_biglake_v1_internal::MetastoreServiceConnectionImpl>(

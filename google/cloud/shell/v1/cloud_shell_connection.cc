@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -82,8 +83,9 @@ std::shared_ptr<CloudShellServiceConnection> MakeCloudShellServiceConnection(
   options =
       shell_v1_internal::CloudShellServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = shell_v1_internal::CreateDefaultCloudShellServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return shell_v1_internal::MakeCloudShellServiceTracingConnection(
       std::make_shared<shell_v1_internal::CloudShellServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

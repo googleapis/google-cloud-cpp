@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -88,8 +89,9 @@ MakeServingConfigServiceConnection(Options options) {
   options = retail_v2_internal::ServingConfigServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = retail_v2_internal::CreateDefaultServingConfigServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return retail_v2_internal::MakeServingConfigServiceTracingConnection(
       std::make_shared<retail_v2_internal::ServingConfigServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

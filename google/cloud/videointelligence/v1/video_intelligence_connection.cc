@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -54,9 +55,10 @@ MakeVideoIntelligenceServiceConnection(Options options) {
       videointelligence_v1_internal::VideoIntelligenceServiceDefaultOptions(
           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       videointelligence_v1_internal::CreateDefaultVideoIntelligenceServiceStub(
-          background->cq(), options);
+          std::move(auth), options);
   return videointelligence_v1_internal::
       MakeVideoIntelligenceServiceTracingConnection(
           std::make_shared<videointelligence_v1_internal::

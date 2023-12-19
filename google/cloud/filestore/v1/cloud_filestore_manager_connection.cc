@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -175,8 +176,9 @@ MakeCloudFilestoreManagerConnection(Options options) {
   options = filestore_v1_internal::CloudFilestoreManagerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = filestore_v1_internal::CreateDefaultCloudFilestoreManagerStub(
-      background->cq(), options);
+      std::move(auth), options);
   return filestore_v1_internal::MakeCloudFilestoreManagerTracingConnection(
       std::make_shared<
           filestore_v1_internal::CloudFilestoreManagerConnectionImpl>(

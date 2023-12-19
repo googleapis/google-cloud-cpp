@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -72,8 +73,9 @@ std::shared_ptr<ImageAnnotatorConnection> MakeImageAnnotatorConnection(
   options =
       vision_v1_internal::ImageAnnotatorDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = vision_v1_internal::CreateDefaultImageAnnotatorStub(
-      background->cq(), options);
+      std::move(auth), options);
   return vision_v1_internal::MakeImageAnnotatorTracingConnection(
       std::make_shared<vision_v1_internal::ImageAnnotatorConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

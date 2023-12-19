@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -212,8 +213,9 @@ MakeDocumentProcessorServiceConnection(std::string const& location,
   options = documentai_v1_internal::DocumentProcessorServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = documentai_v1_internal::CreateDefaultDocumentProcessorServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return documentai_v1_internal::MakeDocumentProcessorServiceTracingConnection(
       std::make_shared<
           documentai_v1_internal::DocumentProcessorServiceConnectionImpl>(

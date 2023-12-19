@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -63,8 +64,9 @@ std::shared_ptr<RevisionsConnection> MakeRevisionsConnection(Options options) {
                                  RevisionsPolicyOptionList>(options, __func__);
   options = run_v2_internal::RevisionsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
-      run_v2_internal::CreateDefaultRevisionsStub(background->cq(), options);
+      run_v2_internal::CreateDefaultRevisionsStub(std::move(auth), options);
   return run_v2_internal::MakeRevisionsTracingConnection(
       std::make_shared<run_v2_internal::RevisionsConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -62,8 +63,9 @@ std::shared_ptr<ProfilerServiceConnection> MakeProfilerServiceConnection(
   options =
       profiler_v2_internal::ProfilerServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = profiler_v2_internal::CreateDefaultProfilerServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return profiler_v2_internal::MakeProfilerServiceTracingConnection(
       std::make_shared<profiler_v2_internal::ProfilerServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -89,8 +90,9 @@ MakeTimeseriesInsightsControllerConnection(Options options) {
   options = timeseriesinsights_v1_internal::
       TimeseriesInsightsControllerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = timeseriesinsights_v1_internal::
-      CreateDefaultTimeseriesInsightsControllerStub(background->cq(), options);
+      CreateDefaultTimeseriesInsightsControllerStub(std::move(auth), options);
   return timeseriesinsights_v1_internal::
       MakeTimeseriesInsightsControllerTracingConnection(
           std::make_shared<timeseriesinsights_v1_internal::

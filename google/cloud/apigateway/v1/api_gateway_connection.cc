@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -159,8 +160,9 @@ std::shared_ptr<ApiGatewayServiceConnection> MakeApiGatewayServiceConnection(
   options = apigateway_v1_internal::ApiGatewayServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = apigateway_v1_internal::CreateDefaultApiGatewayServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return apigateway_v1_internal::MakeApiGatewayServiceTracingConnection(
       std::make_shared<apigateway_v1_internal::ApiGatewayServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

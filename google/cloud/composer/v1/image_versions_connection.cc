@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -53,8 +54,9 @@ std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(
   options =
       composer_v1_internal::ImageVersionsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = composer_v1_internal::CreateDefaultImageVersionsStub(
-      background->cq(), options);
+      std::move(auth), options);
   return composer_v1_internal::MakeImageVersionsTracingConnection(
       std::make_shared<composer_v1_internal::ImageVersionsConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

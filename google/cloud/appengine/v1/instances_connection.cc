@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -70,8 +71,9 @@ std::shared_ptr<InstancesConnection> MakeInstancesConnection(Options options) {
                                  InstancesPolicyOptionList>(options, __func__);
   options = appengine_v1_internal::InstancesDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = appengine_v1_internal::CreateDefaultInstancesStub(
-      background->cq(), options);
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub = appengine_v1_internal::CreateDefaultInstancesStub(std::move(auth),
+                                                                options);
   return appengine_v1_internal::MakeInstancesTracingConnection(
       std::make_shared<appengine_v1_internal::InstancesConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

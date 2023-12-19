@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -76,9 +77,10 @@ MakeDocumentSchemaServiceConnection(Options options) {
   options = contentwarehouse_v1_internal::DocumentSchemaServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       contentwarehouse_v1_internal::CreateDefaultDocumentSchemaServiceStub(
-          background->cq(), options);
+          std::move(auth), options);
   return contentwarehouse_v1_internal::
       MakeDocumentSchemaServiceTracingConnection(
           std::make_shared<contentwarehouse_v1_internal::

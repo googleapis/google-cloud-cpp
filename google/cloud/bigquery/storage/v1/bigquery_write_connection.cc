@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -86,8 +87,9 @@ std::shared_ptr<BigQueryWriteConnection> MakeBigQueryWriteConnection(
   options = bigquery_storage_v1_internal::BigQueryWriteDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = bigquery_storage_v1_internal::CreateDefaultBigQueryWriteStub(
-      background->cq(), options);
+      std::move(auth), options);
   return bigquery_storage_v1_internal::MakeBigQueryWriteTracingConnection(
       std::make_shared<
           bigquery_storage_v1_internal::BigQueryWriteConnectionImpl>(

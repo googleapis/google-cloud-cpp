@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -124,9 +125,10 @@ MakeManagedIdentitiesServiceConnection(Options options) {
       managedidentities_v1_internal::ManagedIdentitiesServiceDefaultOptions(
           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       managedidentities_v1_internal::CreateDefaultManagedIdentitiesServiceStub(
-          background->cq(), options);
+          std::move(auth), options);
   return managedidentities_v1_internal::
       MakeManagedIdentitiesServiceTracingConnection(
           std::make_shared<managedidentities_v1_internal::

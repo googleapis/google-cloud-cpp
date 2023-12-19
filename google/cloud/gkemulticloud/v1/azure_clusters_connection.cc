@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -183,8 +184,9 @@ std::shared_ptr<AzureClustersConnection> MakeAzureClustersConnection(
   options = gkemulticloud_v1_internal::AzureClustersDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = gkemulticloud_v1_internal::CreateDefaultAzureClustersStub(
-      background->cq(), options);
+      std::move(auth), options);
   return gkemulticloud_v1_internal::MakeAzureClustersTracingConnection(
       std::make_shared<gkemulticloud_v1_internal::AzureClustersConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

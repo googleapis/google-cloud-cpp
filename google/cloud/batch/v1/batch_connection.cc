@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -81,7 +82,8 @@ std::shared_ptr<BatchServiceConnection> MakeBatchServiceConnection(
                                                                __func__);
   options = batch_v1_internal::BatchServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = batch_v1_internal::CreateDefaultBatchServiceStub(background->cq(),
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub = batch_v1_internal::CreateDefaultBatchServiceStub(std::move(auth),
                                                                options);
   return batch_v1_internal::MakeBatchServiceTracingConnection(
       std::make_shared<batch_v1_internal::BatchServiceConnectionImpl>(

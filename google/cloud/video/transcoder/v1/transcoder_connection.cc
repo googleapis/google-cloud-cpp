@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -95,8 +96,9 @@ std::shared_ptr<TranscoderServiceConnection> MakeTranscoderServiceConnection(
   options = video_transcoder_v1_internal::TranscoderServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = video_transcoder_v1_internal::CreateDefaultTranscoderServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return video_transcoder_v1_internal::MakeTranscoderServiceTracingConnection(
       std::make_shared<
           video_transcoder_v1_internal::TranscoderServiceConnectionImpl>(

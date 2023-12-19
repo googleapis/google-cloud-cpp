@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -91,8 +92,9 @@ std::shared_ptr<DatastoreAdminConnection> MakeDatastoreAdminConnection(
   options = datastore_admin_v1_internal::DatastoreAdminDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = datastore_admin_v1_internal::CreateDefaultDatastoreAdminStub(
-      background->cq(), options);
+      std::move(auth), options);
   return datastore_admin_v1_internal::MakeDatastoreAdminTracingConnection(
       std::make_shared<
           datastore_admin_v1_internal::DatastoreAdminConnectionImpl>(

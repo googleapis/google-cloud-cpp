@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -354,8 +355,9 @@ std::shared_ptr<SecurityCenterConnection> MakeSecurityCenterConnection(
   options = securitycenter_v1_internal::SecurityCenterDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = securitycenter_v1_internal::CreateDefaultSecurityCenterStub(
-      background->cq(), options);
+      std::move(auth), options);
   return securitycenter_v1_internal::MakeSecurityCenterTracingConnection(
       std::make_shared<
           securitycenter_v1_internal::SecurityCenterConnectionImpl>(

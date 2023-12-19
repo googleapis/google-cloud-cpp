@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -268,8 +269,9 @@ std::shared_ptr<AlloyDBAdminConnection> MakeAlloyDBAdminConnection(
                                                                __func__);
   options = alloydb_v1_internal::AlloyDBAdminDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = alloydb_v1_internal::CreateDefaultAlloyDBAdminStub(
-      background->cq(), options);
+      std::move(auth), options);
   return alloydb_v1_internal::MakeAlloyDBAdminTracingConnection(
       std::make_shared<alloydb_v1_internal::AlloyDBAdminConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

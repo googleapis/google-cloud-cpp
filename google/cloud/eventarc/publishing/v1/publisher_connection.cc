@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -56,8 +57,9 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(Options options) {
   options = eventarc_publishing_v1_internal::PublisherDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = eventarc_publishing_v1_internal::CreateDefaultPublisherStub(
-      background->cq(), options);
+      std::move(auth), options);
   return eventarc_publishing_v1_internal::MakePublisherTracingConnection(
       std::make_shared<
           eventarc_publishing_v1_internal::PublisherConnectionImpl>(

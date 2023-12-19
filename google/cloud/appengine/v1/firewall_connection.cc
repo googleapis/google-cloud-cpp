@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -79,7 +80,8 @@ std::shared_ptr<FirewallConnection> MakeFirewallConnection(Options options) {
                                  FirewallPolicyOptionList>(options, __func__);
   options = appengine_v1_internal::FirewallDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = appengine_v1_internal::CreateDefaultFirewallStub(background->cq(),
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub = appengine_v1_internal::CreateDefaultFirewallStub(std::move(auth),
                                                                options);
   return appengine_v1_internal::MakeFirewallTracingConnection(
       std::make_shared<appengine_v1_internal::FirewallConnectionImpl>(

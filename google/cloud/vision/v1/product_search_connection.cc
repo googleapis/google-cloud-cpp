@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -165,8 +166,9 @@ std::shared_ptr<ProductSearchConnection> MakeProductSearchConnection(
                                                                 __func__);
   options = vision_v1_internal::ProductSearchDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = vision_v1_internal::CreateDefaultProductSearchStub(
-      background->cq(), options);
+      std::move(auth), options);
   return vision_v1_internal::MakeProductSearchTracingConnection(
       std::make_shared<vision_v1_internal::ProductSearchConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

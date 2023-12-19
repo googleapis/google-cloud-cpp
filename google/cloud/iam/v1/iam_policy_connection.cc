@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -57,8 +58,9 @@ std::shared_ptr<IAMPolicyConnection> MakeIAMPolicyConnection(Options options) {
                                  IAMPolicyPolicyOptionList>(options, __func__);
   options = iam_v1_internal::IAMPolicyDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
-      iam_v1_internal::CreateDefaultIAMPolicyStub(background->cq(), options);
+      iam_v1_internal::CreateDefaultIAMPolicyStub(std::move(auth), options);
   return iam_v1_internal::MakeIAMPolicyTracingConnection(
       std::make_shared<iam_v1_internal::IAMPolicyConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

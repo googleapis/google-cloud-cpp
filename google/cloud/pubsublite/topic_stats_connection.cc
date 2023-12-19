@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -62,8 +63,9 @@ std::shared_ptr<TopicStatsServiceConnection> MakeTopicStatsServiceConnection(
   options =
       pubsublite_internal::TopicStatsServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = pubsublite_internal::CreateDefaultTopicStatsServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return pubsublite_internal::MakeTopicStatsServiceTracingConnection(
       std::make_shared<pubsublite_internal::TopicStatsServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

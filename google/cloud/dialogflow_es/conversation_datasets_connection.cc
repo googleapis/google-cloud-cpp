@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -87,8 +88,9 @@ MakeConversationDatasetsConnection(std::string const& location,
   options = dialogflow_es_internal::ConversationDatasetsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_es_internal::CreateDefaultConversationDatasetsStub(
-      background->cq(), options);
+      std::move(auth), options);
   return dialogflow_es_internal::MakeConversationDatasetsTracingConnection(
       std::make_shared<
           dialogflow_es_internal::ConversationDatasetsConnectionImpl>(

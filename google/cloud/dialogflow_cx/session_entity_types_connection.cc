@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -76,8 +77,9 @@ std::shared_ptr<SessionEntityTypesConnection> MakeSessionEntityTypesConnection(
   options = dialogflow_cx_internal::SessionEntityTypesDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_cx_internal::CreateDefaultSessionEntityTypesStub(
-      background->cq(), options);
+      std::move(auth), options);
   return dialogflow_cx_internal::MakeSessionEntityTypesTracingConnection(
       std::make_shared<
           dialogflow_cx_internal::SessionEntityTypesConnectionImpl>(

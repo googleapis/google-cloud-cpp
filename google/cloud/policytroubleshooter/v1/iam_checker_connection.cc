@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -50,8 +51,9 @@ std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
   options = policytroubleshooter_v1_internal::IamCheckerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = policytroubleshooter_v1_internal::CreateDefaultIamCheckerStub(
-      background->cq(), options);
+      std::move(auth), options);
   return policytroubleshooter_v1_internal::MakeIamCheckerTracingConnection(
       std::make_shared<
           policytroubleshooter_v1_internal::IamCheckerConnectionImpl>(

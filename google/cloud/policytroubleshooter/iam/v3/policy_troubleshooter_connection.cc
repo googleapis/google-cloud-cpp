@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -53,8 +54,9 @@ MakePolicyTroubleshooterConnection(Options options) {
       policytroubleshooter_iam_v3_internal::PolicyTroubleshooterDefaultOptions(
           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = policytroubleshooter_iam_v3_internal::
-      CreateDefaultPolicyTroubleshooterStub(background->cq(), options);
+      CreateDefaultPolicyTroubleshooterStub(std::move(auth), options);
   return policytroubleshooter_iam_v3_internal::
       MakePolicyTroubleshooterTracingConnection(
           std::make_shared<policytroubleshooter_iam_v3_internal::
