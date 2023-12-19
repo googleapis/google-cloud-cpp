@@ -284,7 +284,7 @@ class AsyncClient {
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
-   * @param options a list of optional query parameters and/or request headers.
+   * @param args a list of optional query parameters and/or request headers.
    *   Valid types for this operation include `ContentEncoding`, `ContentType`,
    *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
    *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
