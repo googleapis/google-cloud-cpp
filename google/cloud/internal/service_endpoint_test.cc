@@ -103,6 +103,17 @@ TEST(DetermineServiceEndpoint, DefaultHost) {
   EXPECT_THAT(result, IsOkAndHolds(absl::StrCat(kDefaultEndpoint, ".")));
 }
 
+TEST(UniverseDomainEndpoint, WithoutUniverseDomainOption) {
+  auto ep = UniverseDomainEndpoint("foo.googleapis.com.", Options{});
+  EXPECT_EQ(ep, "foo.googleapis.com.");
+}
+
+TEST(UniverseDomainEndpoint, WithUniverseDomainOption) {
+  auto ep = UniverseDomainEndpoint(
+      "foo.googleapis.com.", Options{}.set<UniverseDomainOption>("my-ud.net"));
+  EXPECT_EQ(ep, "foo.my-ud.net");
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
