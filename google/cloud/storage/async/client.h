@@ -252,6 +252,66 @@ class AsyncClient {
          std::move(options)});
   }
 
+  /**
+   * Uploads a new object without buffering.
+   *
+   * Use this API to upload objects without any client-side buffering. The API
+   * permits resuming an upload after a transient error. If the application
+   * can checkpoint a simple string, the API can even be used to resume an
+   * upload, even after the application restarts.
+   *
+   * In both cases this API assumes the application can start sending data from
+   * an arbitrary point in the data source. That makes this API best suited to
+   * upload persistent data sources, such as files, of arbitrary size.
+   *
+   * To upload relatively small objects consider using `InsertObject` instead.
+   * To upload streaming data sources, where rewinding to an arbitrary point
+   * may be impossible, consider using `StreamingUpload()`.
+   *
+   * This function always uses [resumable uploads][resumable-link]. The
+   * application can provide a `#RestoreResumableUploadSession()` option to
+   * resume a previously created upload. The returned object has accessors to
+   * query the session ID and the next byte expected by GCS.
+   *
+   * @note When resuming uploads it is the application's responsibility to save
+   *     the session ID to restart the upload later. Likewise, it is the
+   *     application's responsibility to query the next expected byte and send
+   *     the remaining data without gaps or duplications.
+   *
+   * If the application does not provide a `#RestoreResumableUploadSession()`
+   * option, or it provides the `#NewResumableUploadSession()` option, then this
+   * function will create a new resumable upload session.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param args a list of optional query parameters and/or request headers.
+   *   Valid types for this operation include `ContentEncoding`, `ContentType`,
+   *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
+   *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
+   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
+   *   `MD5HashValue`, `PredefinedAcl`, `Projection`,
+   *   `UseResumableUploadSession`, `UserProject`, and `WithObjectMetadata`.
+   *
+   * @par Idempotency
+   * The client library always retries (a) any RPCs to create a resumable upload
+   * session, and (b) any RPCs to query the status of a resumable upload
+   * session. The client library never retries functions to upload more data
+   * or to finalize the upload. The caller can retry these functions if it is
+   * safe to do so.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc write-object
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc write-object-with-retry
+   *
+   * @see [Resumable Uploads][resumable-link] for more information about
+   *     resumable uploads.
+   *
+   * [resumable-link]: https://cloud.google.com/storage/docs/resumable-uploads
+   * [service documentation]:
+   * https://cloud.google.com/storage/docs/uploads-downloads#size
+   */
   template <typename... Args>
   future<StatusOr<std::pair<AsyncWriter, AsyncToken>>> WriteObject(
       std::string bucket_name, std::string object_name, Args&&... args) {
