@@ -94,7 +94,7 @@ std::shared_ptr<SubscriberStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,
     BaseSubscriberStubFactory const& base_factory) {
   auto endpoint = internal::DetermineServiceEndpoint(
-      internal::GetEnv("GOOGLE_CLOUD_CPP_SUBSCRIBER_SERVICE_ENDPOINT"),
+      internal::GetEnv("GOOGLE_CLOUD_CPP_SUBSCRIBER_ENDPOINT"),
       internal::FetchOption<EndpointOption>(options), "pubsub.googleapis.com",
       options);
 
