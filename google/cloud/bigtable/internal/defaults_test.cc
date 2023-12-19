@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/universe_domain_options.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 #include <thread>
@@ -214,6 +215,63 @@ TEST(OptionsTest, DataAuthorityOption) {
   options = DefaultDataOptions(
       Options{}.set<AuthorityOption>("custom-endpoint.googleapis.com"));
   EXPECT_EQ(options.get<AuthorityOption>(), "custom-endpoint.googleapis.com");
+}
+
+TEST(OptionsTest, UniverseDomain) {
+  auto options =
+      Options{}.set<google::cloud::internal::UniverseDomainOption>("ud.net");
+
+  EXPECT_EQ(DefaultDataOptions(options).get<EndpointOption>(),
+            "bigtable.ud.net");
+  EXPECT_EQ(DefaultTableAdminOptions(options).get<EndpointOption>(),
+            "bigtableadmin.ud.net");
+  EXPECT_EQ(DefaultInstanceAdminOptions(options).get<EndpointOption>(),
+            "bigtableadmin.ud.net");
+}
+
+TEST(OptionsTest, EndpointOptionsOverrideUniverseDomain) {
+  auto options =
+      Options{}
+          .set<google::cloud::internal::UniverseDomainOption>("ud.net")
+          .set<EndpointOption>("data.googleapis.com");
+  EXPECT_EQ(DefaultDataOptions(options).get<EndpointOption>(),
+            "data.googleapis.com");
+}
+
+TEST(OptionsTest, BigtableEndpointOptionsOverrideUniverseDomain) {
+  auto options =
+      Options{}
+          .set<google::cloud::internal::UniverseDomainOption>("ignored-ud.net")
+          .set<DataEndpointOption>("data.googleapis.com")
+          .set<AdminEndpointOption>("tableadmin.googleapis.com")
+          .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
+
+  EXPECT_EQ(DefaultDataOptions(options).get<EndpointOption>(),
+            "data.googleapis.com");
+  EXPECT_EQ(DefaultTableAdminOptions(options).get<EndpointOption>(),
+            "tableadmin.googleapis.com");
+  EXPECT_EQ(DefaultInstanceAdminOptions(options).get<EndpointOption>(),
+            "instanceadmin.googleapis.com");
+}
+
+TEST(OptionsTest, BigtableEndpointEnvVarsOverrideUniverseDomain) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
+
+  auto options =
+      Options{}
+          .set<google::cloud::internal::UniverseDomainOption>("ignored-ud.net")
+          .set<DataEndpointOption>("ignored-data.googleapis.com")
+          .set<AdminEndpointOption>("ignored-tableadmin.googleapis.com")
+          .set<InstanceAdminEndpointOption>(
+              "ignored-instanceadmin.googleapis.com")
+          .set<EndpointOption>("ignored-endpoint.googleapis.com");
+
+  EXPECT_EQ(DefaultDataOptions(options).get<EndpointOption>(),
+            "emulator-host:8000");
+  EXPECT_EQ(DefaultTableAdminOptions(options).get<EndpointOption>(),
+            "emulator-host:8000");
+  EXPECT_EQ(DefaultInstanceAdminOptions(options).get<EndpointOption>(),
+            "emulator-host:8000");
 }
 
 TEST(EndpointEnvTest, EmulatorEnvOnly) {
