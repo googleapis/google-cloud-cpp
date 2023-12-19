@@ -60,6 +60,12 @@ auto MakeParent(Links const& links, Spans const& message_spans,
                 pubsub::Topic const& topic) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
+  opentelemetry::context::Context root_context;
+  // TODO(#13287): Use the constant instead of the string.
+  // Setting a span as a root span was added in OTel v1.13+. It is a no-op for
+  // earlier versions.
+  options.parent = root_context.SetValue(
+      /*opentelemetry::trace::kIsRootSpanKey=*/"is_root_span", true);
   options.kind = opentelemetry::trace::SpanKind::kClient;
   auto batch_sink_parent = internal::MakeSpan(
       topic.topic_id() + " publish",
@@ -74,7 +80,6 @@ auto MakeParent(Links const& links, Spans const& message_spans,
        {sc::kMessagingDestinationTemplate, topic.FullName()}},
       /*links*/ std::move(links), options);
 
-  // Add metadata to the message spans about the batch sink span.
   auto context = batch_sink_parent->GetContext();
   auto trace_id = internal::ToString(context.trace_id());
   auto span_id = internal::ToString(context.span_id());
