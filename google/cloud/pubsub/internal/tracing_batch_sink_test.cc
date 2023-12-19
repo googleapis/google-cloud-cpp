@@ -217,11 +217,12 @@ TEST(TracingBatchSink, PublishSpanHasAttributes) {
                                  TestTopic().FullName())))));
 }
 
-#if OPENTELEMETRY_VERSION_MAJOR >= 1
-#if OPENTELEMETRY_VERSION_MINOR >= 13
+#if OPENTELEMETRY_VERSION_MAJOR >= 2 || \
+    (OPENTELEMETRY_VERSION_MAJOR == 1 && OPENTELEMETRY_VERSION_MINOR >= 13)
 TEST(TracingBatchSink, PublishSpanIsRoot) {
   auto span_catcher = InstallSpanCatcher();
   auto message_span = MakeSpan("test span");
+  auto scope = opentelemetry::trace::Scope(message_span);
   auto mock = std::make_unique<pubsub_testing::MockBatchSink>();
   EXPECT_CALL(*mock, AddMessage(_));
   EXPECT_CALL(*mock, AsyncPublish)
@@ -239,9 +240,7 @@ TEST(TracingBatchSink, PublishSpanIsRoot) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-topic publish"), SpanIsRoot())));
-  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test span"), SpanIsRoot())));
 }
-#endif
 #endif
 
 TEST(TracingBatchSink, AsyncPublishOnlyIncludeSampledLink) {

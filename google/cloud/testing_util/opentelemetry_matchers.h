@@ -150,9 +150,8 @@ MATCHER_P(SpanWithParent, span,
   return actual == span->GetContext().span_id();
 }
 
-MATCHER(SpanIsRoot, " is root span") {
-  auto const& actual =
-      (arg->GetParentSpanId() == opentelemetry::trace::SpanId());
+MATCHER(SpanIsRoot, "is root span") {
+  auto const actual = arg->GetParentSpanId() == opentelemetry::trace::SpanId();
   *result_listener << "is root span: " << (actual ? "true" : "false");
   return actual;
 }
