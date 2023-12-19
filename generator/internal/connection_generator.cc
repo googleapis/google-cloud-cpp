@@ -326,6 +326,7 @@ Status ConnectionGenerator::GenerateCc() {
        HasGenerateGrpcTransport() ? vars("stub_factory_header_path") : "",
        "google/cloud/background_threads.h", "google/cloud/common_options.h",
        "google/cloud/credentials.h", "google/cloud/grpc_options.h",
+       "google/cloud/internal/unified_grpc_credentials.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : ""});
   CcSystemIncludes({"memory"});
 
@@ -564,8 +565,9 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
   CcPrint("std::move(options));");
   CcPrint(R"""(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = $product_internal_namespace$::CreateDefault$stub_class_name$(
-    background->cq(), options);
+    std::move(auth), options);
   return $product_internal_namespace$::Make$tracing_connection_class_name$(
       std::make_shared<$product_internal_namespace$::$connection_class_name$Impl>(
       std::move(background), std::move(stub), std::move(options)));

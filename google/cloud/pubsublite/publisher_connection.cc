@@ -29,6 +29,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/base64_transforms.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <google/protobuf/struct.pb.h>
 #include <functional>
 
@@ -145,7 +146,9 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
         });
   };
 
-  auto publisher_service_stub = CreateDefaultPublisherServiceStub(cq, opts);
+  auto auth = internal::CreateAuthenticationStrategy(cq, opts);
+  auto publisher_service_stub =
+      CreateDefaultPublisherServiceStub(std::move(auth), opts);
   auto batching_options = MakeBatchingOptions(opts);
 
   auto partition_publisher_factory = [=](std::uint32_t partition) {
