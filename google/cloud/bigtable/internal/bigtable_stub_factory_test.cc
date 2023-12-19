@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::bigtable::testing::MockBigtableStub;
-using ::google::cloud::testing_util::MockAuthenticationStrategy;
+using ::google::cloud::testing_util::MakeStubFactoryMockAuth;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
@@ -85,7 +85,7 @@ TEST(BigtableStubFactory, RoundRobin) {
         Optional(id));
   };
 
-  auto auth = std::make_shared<MockAuthenticationStrategy>();
+  auto auth = MakeStubFactoryMockAuth();
   EXPECT_CALL(*auth, CreateChannel("localhost:1", expect_channel_id(0)));
   EXPECT_CALL(*auth, CreateChannel("localhost:1", expect_channel_id(1)));
   EXPECT_CALL(*auth, CreateChannel("localhost:1", expect_channel_id(2)));
@@ -119,7 +119,7 @@ TEST(BigtableStubFactory, Auth) {
         return mock;
       });
 
-  auto auth = std::make_shared<MockAuthenticationStrategy>();
+  auto auth = MakeStubFactoryMockAuth();
   EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(true));
   EXPECT_CALL(*auth, CreateChannel("localhost:1", _));
   EXPECT_CALL(*auth, ConfigureContext)
@@ -157,9 +157,7 @@ TEST(BigtableStubFactory, Metadata) {
         return mock;
       });
 
-  auto auth = std::make_shared<MockAuthenticationStrategy>();
-  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
-
+  auto auth = MakeStubFactoryMockAuth();
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
       std::move(auth), cq,
@@ -186,9 +184,7 @@ TEST(BigtableStubFactory, LoggingEnabled) {
         return mock;
       });
 
-  auto auth = std::make_shared<MockAuthenticationStrategy>();
-  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
-
+  auto auth = MakeStubFactoryMockAuth();
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
       std::move(auth), cq,
@@ -218,9 +214,7 @@ TEST(BigtableStubFactory, LoggingDisabled) {
         return mock;
       });
 
-  auto auth = std::make_shared<MockAuthenticationStrategy>();
-  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
-
+  auto auth = MakeStubFactoryMockAuth();
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
       std::move(auth), cq,
@@ -257,9 +251,7 @@ TEST(BigtableStubFactory, FeaturesFlags) {
         return mock;
       });
 
-  auto auth = std::make_shared<MockAuthenticationStrategy>();
-  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
-
+  auto auth = MakeStubFactoryMockAuth();
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
       std::move(auth), std::move(cq),
@@ -295,9 +287,7 @@ TEST(BigtableStubFactory, TracingEnabled) {
         return mock;
       });
 
-  auto auth = std::make_shared<MockAuthenticationStrategy>();
-  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
-
+  auto auth = MakeStubFactoryMockAuth();
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
       std::move(auth), std::move(cq),
@@ -328,9 +318,7 @@ TEST(BigtableStubFactory, TracingDisabled) {
         return mock;
       });
 
-  auto auth = std::make_shared<MockAuthenticationStrategy>();
-  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
-
+  auto auth = MakeStubFactoryMockAuth();
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
       std::move(auth), std::move(cq),
