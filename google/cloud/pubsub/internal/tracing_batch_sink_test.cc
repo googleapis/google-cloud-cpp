@@ -480,9 +480,9 @@ TEST(TracingBatchSink, AsyncPublishAddsLink) {
 
   EndSpans(message_spans);
 
-  EXPECT_THAT(span_catcher->GetSpans(),
-              Contains(AllOf(SpanNamed("test span 0"),
-                             SpanHasLinks(AllOf(LinkHasSpanContext(_)),
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      Contains(AllOf(SpanNamed("test span 0"), SpanLinksSizeIs(1),
                      SpanHasEvents(EventNamed("gl-cpp.publish_start")))));
 }
 #else
