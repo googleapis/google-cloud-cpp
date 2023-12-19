@@ -257,8 +257,8 @@ class AsyncClient {
    *
    * Use this API to upload objects without any client-side buffering. The API
    * permits resuming an upload after a transient error. If the application
-   * can checkpoint a simple string the API can even be used to resume an upload
-   * even after the application restarts.
+   * can checkpoint a simple string, the API can even be used to resume an
+   * upload, even after the application restarts.
    *
    * In both cases this API assumes the application can start sending data from
    * an arbitrary point in the data source. That makes this API best suited to
@@ -266,21 +266,21 @@ class AsyncClient {
    *
    * To upload relatively small objects consider using `InsertObject` instead.
    * To upload streaming data sources, where rewinding to an arbitrary point
-   * may be impossible consider using `StreamingUpload()`.
+   * may be impossible, consider using `StreamingUpload()`.
    *
    * This function always uses [resumable uploads][resumable-link]. The
    * application can provide a `#RestoreResumableUploadSession()` option to
    * resume a previously created upload. The returned object has accessors to
-   * query the session id and the next byte expected by GCS.
+   * query the session ID and the next byte expected by GCS.
    *
    * @note When resuming uploads it is the application's responsibility to save
-   *     the session id to restart the upload later. Likewise, it is the
+   *     the session ID to restart the upload later. Likewise, it is the
    *     application's responsibility to query the next expected byte and send
    *     the remaining data without gaps or duplications.
    *
    * If the application does not provide a `#RestoreResumableUploadSession()`
-   * option, or it provides the `#NewResumableUploadSession()` option then this
-   * function will create a new resumable upload session is created.
+   * option, or it provides the `#NewResumableUploadSession()` option, then this
+   * function will create a new resumable upload session.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.

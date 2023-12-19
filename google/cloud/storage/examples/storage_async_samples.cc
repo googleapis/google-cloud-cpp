@@ -215,14 +215,14 @@ void WriteObject(google::cloud::storage_experimental::AsyncClient& client,
     auto [writer, token] = (co_await client.WriteObject(std::move(bucket_name),
                                                         std::move(object_name)))
                                .value();
-    while (token.valid()) {
+    is.seekg(0);  // clear EOF bit
+    while (token.valid() && !is.eof()) {
       std::vector<char> buffer(1024 * 1024);
       is.read(buffer.data(), buffer.size());
       buffer.resize(is.gcount());
       token = (co_await writer.Write(std::move(token),
                                      gcs_ex::WritePayload(std::move(buffer))))
                   .value();
-      if (is.eof()) break;
     }
     co_return (co_await writer.Finalize(std::move(token))).value();
   };
@@ -243,7 +243,7 @@ void WriteObjectWithRetry(
   auto attempt =
       [](gcs_ex::AsyncWriter& writer, gcs_ex::AsyncToken& token,
          std::istream& is) -> google::cloud::future<google::cloud::Status> {
-    while (token.valid()) {
+    while (token.valid() && !is.eof()) {
       std::vector<char> buffer(1024 * 1024);
       is.read(buffer.data(), buffer.size());
       buffer.resize(is.gcount());
@@ -251,7 +251,6 @@ void WriteObjectWithRetry(
                                      gcs_ex::WritePayload(std::move(buffer)));
       if (!w) co_return std::move(w).status();
       token = *std::move(w);
-      if (is.eof()) break;
     }
     co_return google::cloud::Status{};
   };
@@ -279,9 +278,9 @@ void WriteObjectWithRetry(
       upload_id = gcs::UseResumableUploadSession(writer.UploadId());
       is.seekg(absl::get<std::int64_t>(std::move(state)));
       auto status = co_await attempt(writer, token, is);
-      if (!status.ok()) continue;  // Error in upload, try again
+      if (!status.ok()) continue;  // Error in upload, try again.
       auto f = co_await writer.Finalize(std::move(token));
-      if (f) co_return *std::move(f);  // Successfully uploaded, yay!
+      if (f) co_return *std::move(f);  // Return immediately on success.
     }
     throw std::runtime_error("Too many upload attempts");
   };
@@ -310,8 +309,7 @@ void WriteObject(google::cloud::storage_experimental::AsyncClient&,
 
 void WriteObjectWithRetry(google::cloud::storage_experimental::AsyncClient&,
                           std::vector<std::string> const&) {
-  std::cerr
-      << "AsyncClient::WriteObjectWithRetry() example requires coroutines\n";
+  std::cerr << "AsyncClient::WriteObject() example requires coroutines\n";
 }
 #endif  // GOOGLE_CLOUD_CPP
 
@@ -442,7 +440,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   }
 
   if (!examples::UsingEmulator()) {
-    std::cout << "Creating file for upload [1]" << std::endl;
+    std::cout << "Creating file for uploads" << std::endl;
     std::ofstream of(filename);
     for (int i = 0; i != 100'000; ++i) {
       of << i << ": Some text\n";
