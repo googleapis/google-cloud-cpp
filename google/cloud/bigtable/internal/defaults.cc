@@ -20,6 +20,7 @@
 #include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
 #include "absl/algorithm/container.h"
@@ -121,6 +122,25 @@ int DefaultConnectionPoolSize() {
                     cpu_count * BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU);
 }
 
+Options HandleUniverseDomain(Options opts) {
+  if (!opts.has<DataEndpointOption>()) {
+    auto ep = google::cloud::internal::UniverseDomainEndpoint(
+        "bigtable.googleapis.com.", opts);
+    opts.set<DataEndpointOption>(std::move(ep));
+  }
+  if (!opts.has<AdminEndpointOption>()) {
+    auto ep = google::cloud::internal::UniverseDomainEndpoint(
+        "bigtableadmin.googleapis.com.", opts);
+    opts.set<AdminEndpointOption>(std::move(ep));
+  }
+  if (!opts.has<InstanceAdminEndpointOption>()) {
+    auto ep = google::cloud::internal::UniverseDomainEndpoint(
+        "bigtableadmin.googleapis.com.", opts);
+    opts.set<InstanceAdminEndpointOption>(std::move(ep));
+  }
+  return opts;
+}
+
 Options DefaultOptions(Options opts) {
   using ::google::cloud::internal::GetEnv;
 
@@ -165,20 +185,21 @@ Options DefaultOptions(Options opts) {
     opts.set<InstanceAdminEndpointOption>(*std::move(instance_admin_emulator));
   }
 
+  // Handle `UniverseDomainOption`. Note that we have already addressed the
+  // cases where the emulator env var or `EndpointOption` is set. The endpoint
+  // options are always set as a result of calling this function.
+  opts = HandleUniverseDomain(std::move(opts));
+
   // Fill any missing default values.
-  auto defaults =
-      Options{}
-          .set<DataEndpointOption>("bigtable.googleapis.com.")
-          .set<AdminEndpointOption>("bigtableadmin.googleapis.com.")
-          .set<InstanceAdminEndpointOption>("bigtableadmin.googleapis.com.")
-          .set<GrpcCredentialOption>(emulator
-                                         ? grpc::InsecureChannelCredentials()
-                                         : grpc::GoogleDefaultCredentials())
-          .set<TracingComponentsOption>(
-              ::google::cloud::internal::DefaultTracingComponents())
-          .set<GrpcTracingOptionsOption>(
-              ::google::cloud::internal::DefaultTracingOptions())
-          .set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
+  auto defaults = Options{}
+                      .set<GrpcCredentialOption>(
+                          emulator ? grpc::InsecureChannelCredentials()
+                                   : grpc::GoogleDefaultCredentials())
+                      .set<TracingComponentsOption>(
+                          ::google::cloud::internal::DefaultTracingComponents())
+                      .set<GrpcTracingOptionsOption>(
+                          ::google::cloud::internal::DefaultTracingOptions())
+                      .set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
 
   opts = google::cloud::internal::MergeOptions(std::move(opts),
                                                std::move(defaults));
