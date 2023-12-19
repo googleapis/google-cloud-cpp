@@ -26,6 +26,7 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <random>
 #include <string>
 #include <vector>
 
@@ -291,6 +292,43 @@ void WriteObjectWithRetry(
   std::cout << "File successfully uploaded " << metadata << "\n";
 }
 
+void StartBufferedUpload(
+    google::cloud::storage_experimental::AsyncClient& client,
+    std::vector<std::string> const& argv) {
+  //! [buffered-upload]
+  namespace gcs = google::cloud::storage;
+  namespace gcs_ex = google::cloud::storage_experimental;
+  auto coro = [](gcs_ex::AsyncClient& client, std::string bucket_name,
+                 std::string object_name)
+      -> google::cloud::future<gcs::ObjectMetadata> {
+    auto generator = std::mt19937_64(std::random_device{}());
+    auto const values = std::string("012345689");
+    auto random_line = [&] {
+      std::string buffer;
+      std::generate_n(std::back_inserter(buffer), 64, [&generator, values]() {
+        auto const n = values.size();
+        return values.at(
+            std::uniform_int_distribution<std::size_t>(n)(generator));
+      });
+      return gcs_ex::WritePayload(
+          std::vector<std::string>{std::move(buffer), std::string("\n")});
+    };
+
+    auto [writer, token] = (co_await client.StartBufferedUpload(
+                                std::move(bucket_name), std::move(object_name)))
+                               .value();
+    for (int i = 0; i != 1000; ++i) {
+      token = (co_await writer.Write(std::move(token), random_line())).value();
+    }
+    co_return (co_await writer.Finalize(std::move(token))).value();
+  };
+  //! [buffered-upload]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes.
+  auto const metadata = coro(client, argv.at(0), argv.at(1)).get();
+  std::cout << "File successfully uploaded " << metadata << "\n";
+}
+
 #else
 void ReadObject(google::cloud::storage_experimental::AsyncClient&,
                 std::vector<std::string> const&) {
@@ -304,12 +342,20 @@ void ReadObjectWithOptions(google::cloud::storage_experimental::AsyncClient&,
 
 void WriteObject(google::cloud::storage_experimental::AsyncClient&,
                  std::vector<std::string> const&) {
-  std::cerr << "AsyncClient::WriteObject() example requires coroutines\n";
+  std::cerr
+      << "AsyncClient::StartUnbufferedUpload() example requires coroutines\n";
 }
 
 void WriteObjectWithRetry(google::cloud::storage_experimental::AsyncClient&,
                           std::vector<std::string> const&) {
-  std::cerr << "AsyncClient::WriteObject() example requires coroutines\n";
+  std::cerr
+      << "AsyncClient::StartUnbufferedUpload() example requires coroutines\n";
+}
+
+void StartBufferedUpload(google::cloud::storage_experimental::AsyncClient&,
+                         std::vector<std::string> const&) {
+  std::cerr
+      << "AsyncClient::StartBufferedUpload() example requires coroutines\n";
 }
 #endif  // GOOGLE_CLOUD_CPP
 
@@ -390,10 +436,13 @@ void AutoRun(std::vector<std::string> const& argv) {
                          .value();
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto const object_name = examples::MakeRandomObjectName(generator, "object-");
+  // We need different object names because writing to the same object within
+  // a second exceeds the service's quota.
   auto const o1 = examples::MakeRandomObjectName(generator, "object-");
   auto const o2 = examples::MakeRandomObjectName(generator, "object-");
   auto const o3 = examples::MakeRandomObjectName(generator, "object-");
   auto const o4 = examples::MakeRandomObjectName(generator, "object-");
+  auto const o5 = examples::MakeRandomObjectName(generator, "object-");
   auto const filename = MakeRandomFilename(generator);
 
   std::cout << "Running AsyncClient() example" << std::endl;
@@ -453,6 +502,9 @@ void AutoRun(std::vector<std::string> const& argv) {
     std::cout << "Running the WriteObjectWithRetry() example" << std::endl;
     WriteObjectWithRetry(client, {bucket_name, o4, filename});
 
+    std::cout << "Running the MakeWriter() example" << std::endl;
+    StartBufferedUpload(client, {bucket_name, o5});
+
     std::cout << "Removing local file" << std::endl;
     (void)std::remove(filename.c_str());
   }
@@ -466,6 +518,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   pending.push_back(client.DeleteObject(bucket_name, o2));
   pending.push_back(client.DeleteObject(bucket_name, o3));
   pending.push_back(client.DeleteObject(bucket_name, o4));
+  pending.push_back(client.DeleteObject(bucket_name, o5));
   for (auto& f : pending) (void)f.get();
 }
 
@@ -511,6 +564,7 @@ int main(int argc, char* argv[]) try {
       make_entry("write-object", {"<filename>"}, WriteObject),
       make_entry("write-object-with-retry", {"<filename>"},
                  WriteObjectWithRetry),
+      make_entry("buffered-upload", {}, StartBufferedUpload),
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
