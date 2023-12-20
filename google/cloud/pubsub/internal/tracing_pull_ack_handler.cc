@@ -116,7 +116,7 @@ std::unique_ptr<pubsub::PullAckHandler::Impl> MakeTracingPullAckHandler(
 
 std::unique_ptr<pubsub::PullAckHandler::Impl> MakeTracingPullAckHandler(
     std::unique_ptr<pubsub::PullAckHandler::Impl> handler,
-    pubsub::Subscription const& subscription, std::string ack_id) {
+    pubsub::Subscription const&, std::string) {
   return handler;
 }
 
