@@ -232,7 +232,7 @@ Options DefaultOptionsGrpc(Options options) {
     options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
   }
 
-  auto const default_endpoint = google::cloud::internal::UniverseDomainEndpoint(
+  auto default_endpoint = google::cloud::internal::UniverseDomainEndpoint(
       "storage.googleapis.com.", options);
   options = google::cloud::internal::MergeOptions(
       std::move(options), Options{}
