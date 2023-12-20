@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,13 +23,13 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-TEST(Options, IAMPolicyOptionsDefault) {
+TEST(IAMPolicyOptions, Default) {
   auto const actual = IAMPolicyOptions();
-  EXPECT_EQ(actual.get<EndpointOption>(), "pubsub.googleapis.com");
+  EXPECT_EQ(actual.get<EndpointOption>(), "pubsub.googleapis.com.");
   EXPECT_EQ(actual.get<AuthorityOption>(), "pubsub.googleapis.com");
 }
 
-TEST(Options, IAMPolicyOptionsOverrideAll) {
+TEST(IAMPolicyOptions, OverrideAll) {
   auto const actual =
       IAMPolicyOptions(Options{}
                            .set<EndpointOption>("test-only-endpoint")
@@ -39,7 +40,7 @@ TEST(Options, IAMPolicyOptionsOverrideAll) {
   EXPECT_EQ(actual.get<UserProjectOption>(), "test-only-user-project");
 }
 
-TEST(Options, IAMPolicyOptionsOverrideEndpoint) {
+TEST(IAMPolicyOptions, OverrideEndpoint) {
   auto const actual =
       IAMPolicyOptions(Options{}
                            .set<EndpointOption>("test-only-endpoint")
@@ -49,14 +50,28 @@ TEST(Options, IAMPolicyOptionsOverrideEndpoint) {
   EXPECT_EQ(actual.get<UserProjectOption>(), "test-only-user-project");
 }
 
-TEST(Options, IAMPolicyOptionsOverrideAuthority) {
+TEST(IAMPolicyOptions, OverrideAuthority) {
   auto const actual =
       IAMPolicyOptions(Options{}
                            .set<AuthorityOption>("test-only-authority")
                            .set<UserProjectOption>("test-only-user-project"));
-  EXPECT_EQ(actual.get<EndpointOption>(), "pubsub.googleapis.com");
+  EXPECT_EQ(actual.get<EndpointOption>(), "pubsub.googleapis.com.");
   EXPECT_EQ(actual.get<AuthorityOption>(), "test-only-authority");
   EXPECT_EQ(actual.get<UserProjectOption>(), "test-only-user-project");
+}
+
+TEST(IAMPolicyOptions, IncorporatesUniverseDomain) {
+  auto const actual = IAMPolicyOptions(
+      Options{}.set<internal::UniverseDomainOption>("my-ud.net"));
+  EXPECT_EQ(actual.get<EndpointOption>(), "pubsub.my-ud.net");
+}
+
+TEST(IAMPolicyOptions, EndpointOverridesUniverseDomain) {
+  auto const actual =
+      IAMPolicyOptions(Options{}
+                           .set<internal::UniverseDomainOption>("my-ud.net")
+                           .set<EndpointOption>("test-only-endpoint"));
+  EXPECT_EQ(actual.get<EndpointOption>(), "test-only-endpoint");
 }
 
 }  // namespace
