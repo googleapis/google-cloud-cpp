@@ -38,6 +38,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include "absl/time/time.h"
@@ -231,9 +232,11 @@ Options DefaultOptionsGrpc(Options options) {
     options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
   }
 
+  auto default_endpoint = google::cloud::internal::UniverseDomainEndpoint(
+      "storage.googleapis.com.", options);
   options = google::cloud::internal::MergeOptions(
       std::move(options), Options{}
-                              .set<EndpointOption>("storage.googleapis.com")
+                              .set<EndpointOption>(std::move(default_endpoint))
                               .set<AuthorityOption>("storage.googleapis.com"));
   // We can only compute this once the endpoint is known, so take an additional
   // step.
