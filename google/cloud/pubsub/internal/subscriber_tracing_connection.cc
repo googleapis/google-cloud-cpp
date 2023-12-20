@@ -17,6 +17,9 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/opentelemetry.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/pubsub/internal/message_propagator.h"
+#include "opentelemetry/context/propagation/text_map_propagator.h"
+#include "opentelemetry/trace/propagation/http_trace_context.h"
 #include "opentelemetry/trace/semantic_conventions.h"
 #include "opentelemetry/trace/span_startoptions.h"
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -48,6 +51,9 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPullSpan() {
 
 StatusOr<pubsub::PullResponse> EndPullSpan(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
+    std::shared_ptr<
+        opentelemetry::context::propagation::TextMapPropagator> const&
+        propagator,
     StatusOr<pubsub::PullResponse> response) {
   namespace sc = opentelemetry::trace::SemanticConventions;
   if (response.ok()) {
@@ -60,6 +66,20 @@ StatusOr<pubsub::PullResponse> EndPullSpan(
     span->SetAttribute(
         /*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
         static_cast<std::int64_t>(MessageSize(message)));
+
+    auto context = ExtractTraceContext(message, *propagator);
+    auto producer_span_context =
+        opentelemetry::trace::GetSpan(context)->GetContext();
+    if (producer_span_context.IsSampled() && producer_span_context.IsValid()) {
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      span->AddLink(producer_span_context, {});
+#else
+      span->SetAttribute("gcp_pubsub.create.trace_id",
+                         internal::ToString(producer_span_context.trace_id()));
+      span->SetAttribute("gcp_pubsub.create.span_id",
+                         internal::ToString(producer_span_context.span_id()));
+#endif
+    }
   }
   return internal::EndSpan(*span, std::move(response));
 }
@@ -67,8 +87,10 @@ StatusOr<pubsub::PullResponse> EndPullSpan(
 class SubscriberTracingConnection : public pubsub::SubscriberConnection {
  public:
   explicit SubscriberTracingConnection(
-      std::shared_ptr<pubsub::SubscriberConnection> child_)
-      : child_(std::move(child_)) {}
+      std::shared_ptr<pubsub::SubscriberConnection> child)
+      : child_(std::move(child)),
+        propagator_(std::make_shared<
+                    opentelemetry::trace::propagation::HttpTraceContext>()) {}
 
   ~SubscriberTracingConnection() override = default;
 
@@ -84,13 +106,15 @@ class SubscriberTracingConnection : public pubsub::SubscriberConnection {
     auto span = StartPullSpan();
 
     auto scope = opentelemetry::trace::Scope(span);
-    return EndPullSpan(std::move(span), child_->Pull());
+    return EndPullSpan(std::move(span), propagator_, child_->Pull());
   };
 
   Options options() override { return child_->options(); };
 
  private:
   std::shared_ptr<pubsub::SubscriberConnection> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 }  // namespace
