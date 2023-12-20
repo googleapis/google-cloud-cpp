@@ -208,6 +208,9 @@ TEST(SubscriberTracingConnectionTest, PullSetsOrderingKeyAttributeIfExists) {
 }
 
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
+
+using ::google::cloud::testing_util::SpanLinksSizeIs;
+
 TEST(SubscriberTracingConnectionTest, PullAddsLink) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockSubscriberConnection>();
