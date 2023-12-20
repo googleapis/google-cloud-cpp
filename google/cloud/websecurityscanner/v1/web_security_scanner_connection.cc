@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -130,9 +131,10 @@ std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
   options = websecurityscanner_v1_internal::WebSecurityScannerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       websecurityscanner_v1_internal::CreateDefaultWebSecurityScannerStub(
-          background->cq(), options);
+          std::move(auth), options);
   return websecurityscanner_v1_internal::
       MakeWebSecurityScannerTracingConnection(
           std::make_shared<

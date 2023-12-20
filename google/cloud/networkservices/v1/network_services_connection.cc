@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -341,8 +342,9 @@ std::shared_ptr<NetworkServicesConnection> MakeNetworkServicesConnection(
   options = networkservices_v1_internal::NetworkServicesDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = networkservices_v1_internal::CreateDefaultNetworkServicesStub(
-      background->cq(), options);
+      std::move(auth), options);
   return networkservices_v1_internal::MakeNetworkServicesTracingConnection(
       std::make_shared<
           networkservices_v1_internal::NetworkServicesConnectionImpl>(

@@ -28,6 +28,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -71,8 +72,9 @@ MakeConsumerProcurementServiceConnection(Options options) {
   options = commerce_consumer_procurement_v1_internal::
       ConsumerProcurementServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = commerce_consumer_procurement_v1_internal::
-      CreateDefaultConsumerProcurementServiceStub(background->cq(), options);
+      CreateDefaultConsumerProcurementServiceStub(std::move(auth), options);
   return commerce_consumer_procurement_v1_internal::
       MakeConsumerProcurementServiceTracingConnection(
           std::make_shared<commerce_consumer_procurement_v1_internal::

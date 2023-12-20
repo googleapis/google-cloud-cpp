@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -217,8 +218,9 @@ MakeVideoStitcherServiceConnection(Options options) {
   options = video_stitcher_v1_internal::VideoStitcherServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = video_stitcher_v1_internal::CreateDefaultVideoStitcherServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return video_stitcher_v1_internal::MakeVideoStitcherServiceTracingConnection(
       std::make_shared<
           video_stitcher_v1_internal::VideoStitcherServiceConnectionImpl>(

@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -58,8 +59,9 @@ std::shared_ptr<FleetRoutingConnection> MakeFleetRoutingConnection(
   options =
       optimization_v1_internal::FleetRoutingDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = optimization_v1_internal::CreateDefaultFleetRoutingStub(
-      background->cq(), options);
+      std::move(auth), options);
   return optimization_v1_internal::MakeFleetRoutingTracingConnection(
       std::make_shared<optimization_v1_internal::FleetRoutingConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

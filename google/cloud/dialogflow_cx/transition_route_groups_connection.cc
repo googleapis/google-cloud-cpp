@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -80,8 +81,9 @@ MakeTransitionRouteGroupsConnection(std::string const& location,
   options = dialogflow_cx_internal::TransitionRouteGroupsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_cx_internal::CreateDefaultTransitionRouteGroupsStub(
-      background->cq(), options);
+      std::move(auth), options);
   return dialogflow_cx_internal::MakeTransitionRouteGroupsTracingConnection(
       std::make_shared<
           dialogflow_cx_internal::TransitionRouteGroupsConnectionImpl>(

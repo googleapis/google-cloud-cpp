@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -103,8 +104,9 @@ std::shared_ptr<TagKeysConnection> MakeTagKeysConnection(Options options) {
   options =
       resourcemanager_v3_internal::TagKeysDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = resourcemanager_v3_internal::CreateDefaultTagKeysStub(
-      background->cq(), options);
+      std::move(auth), options);
   return resourcemanager_v3_internal::MakeTagKeysTracingConnection(
       std::make_shared<resourcemanager_v3_internal::TagKeysConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

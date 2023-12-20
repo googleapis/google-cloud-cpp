@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -179,8 +180,9 @@ std::shared_ptr<TranslationServiceConnection> MakeTranslationServiceConnection(
   options = translate_v3_internal::TranslationServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = translate_v3_internal::CreateDefaultTranslationServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return translate_v3_internal::MakeTranslationServiceTracingConnection(
       std::make_shared<translate_v3_internal::TranslationServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

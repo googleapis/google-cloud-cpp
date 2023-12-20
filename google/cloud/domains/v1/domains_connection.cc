@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -150,8 +151,9 @@ std::shared_ptr<DomainsConnection> MakeDomainsConnection(Options options) {
                                  DomainsPolicyOptionList>(options, __func__);
   options = domains_v1_internal::DomainsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
-      domains_v1_internal::CreateDefaultDomainsStub(background->cq(), options);
+      domains_v1_internal::CreateDefaultDomainsStub(std::move(auth), options);
   return domains_v1_internal::MakeDomainsTracingConnection(
       std::make_shared<domains_v1_internal::DomainsConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

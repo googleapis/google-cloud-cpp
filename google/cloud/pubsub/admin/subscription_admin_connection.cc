@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -116,8 +117,9 @@ std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
   options = pubsub_admin_internal::SubscriptionAdminDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = pubsub_admin_internal::CreateDefaultSubscriptionAdminStub(
-      background->cq(), options);
+      std::move(auth), options);
   return pubsub_admin_internal::MakeSubscriptionAdminTracingConnection(
       std::make_shared<pubsub_admin_internal::SubscriptionAdminConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

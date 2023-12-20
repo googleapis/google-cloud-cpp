@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -106,9 +107,10 @@ MakeAssuredWorkloadsServiceConnection(Options options) {
   options = assuredworkloads_v1_internal::AssuredWorkloadsServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       assuredworkloads_v1_internal::CreateDefaultAssuredWorkloadsServiceStub(
-          background->cq(), options);
+          std::move(auth), options);
   return assuredworkloads_v1_internal::
       MakeAssuredWorkloadsServiceTracingConnection(
           std::make_shared<assuredworkloads_v1_internal::

@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -221,8 +222,9 @@ MakeKeyManagementServiceConnection(Options options) {
   options =
       kms_v1_internal::KeyManagementServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = kms_v1_internal::CreateDefaultKeyManagementServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return kms_v1_internal::MakeKeyManagementServiceTracingConnection(
       std::make_shared<kms_v1_internal::KeyManagementServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

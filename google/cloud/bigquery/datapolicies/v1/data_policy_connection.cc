@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -98,9 +99,10 @@ std::shared_ptr<DataPolicyServiceConnection> MakeDataPolicyServiceConnection(
   options = bigquery_datapolicies_v1_internal::DataPolicyServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       bigquery_datapolicies_v1_internal::CreateDefaultDataPolicyServiceStub(
-          background->cq(), options);
+          std::move(auth), options);
   return bigquery_datapolicies_v1_internal::
       MakeDataPolicyServiceTracingConnection(
           std::make_shared<bigquery_datapolicies_v1_internal::

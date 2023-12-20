@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -151,9 +152,10 @@ MakeDataTransferServiceConnection(Options options) {
       bigquery_datatransfer_v1_internal::DataTransferServiceDefaultOptions(
           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       bigquery_datatransfer_v1_internal::CreateDefaultDataTransferServiceStub(
-          background->cq(), options);
+          std::move(auth), options);
   return bigquery_datatransfer_v1_internal::
       MakeDataTransferServiceTracingConnection(
           std::make_shared<bigquery_datatransfer_v1_internal::

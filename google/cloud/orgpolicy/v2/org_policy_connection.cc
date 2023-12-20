@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -117,8 +118,9 @@ std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(Options options) {
                                  OrgPolicyPolicyOptionList>(options, __func__);
   options = orgpolicy_v2_internal::OrgPolicyDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = orgpolicy_v2_internal::CreateDefaultOrgPolicyStub(
-      background->cq(), options);
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub = orgpolicy_v2_internal::CreateDefaultOrgPolicyStub(std::move(auth),
+                                                                options);
   return orgpolicy_v2_internal::MakeOrgPolicyTracingConnection(
       std::make_shared<orgpolicy_v2_internal::OrgPolicyConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

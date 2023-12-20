@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -275,9 +276,10 @@ MakeCertificateAuthorityServiceConnection(Options options) {
   options = privateca_v1_internal::CertificateAuthorityServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       privateca_v1_internal::CreateDefaultCertificateAuthorityServiceStub(
-          background->cq(), options);
+          std::move(auth), options);
   return privateca_v1_internal::
       MakeCertificateAuthorityServiceTracingConnection(
           std::make_shared<

@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -59,8 +60,9 @@ std::shared_ptr<CloudCatalogConnection> MakeCloudCatalogConnection(
                                                                __func__);
   options = billing_v1_internal::CloudCatalogDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = billing_v1_internal::CreateDefaultCloudCatalogStub(
-      background->cq(), options);
+      std::move(auth), options);
   return billing_v1_internal::MakeCloudCatalogTracingConnection(
       std::make_shared<billing_v1_internal::CloudCatalogConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

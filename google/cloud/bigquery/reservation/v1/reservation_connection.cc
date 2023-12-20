@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -186,9 +187,10 @@ std::shared_ptr<ReservationServiceConnection> MakeReservationServiceConnection(
   options = bigquery_reservation_v1_internal::ReservationServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       bigquery_reservation_v1_internal::CreateDefaultReservationServiceStub(
-          background->cq(), options);
+          std::move(auth), options);
   return bigquery_reservation_v1_internal::
       MakeReservationServiceTracingConnection(
           std::make_shared<bigquery_reservation_v1_internal::

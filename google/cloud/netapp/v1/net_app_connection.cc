@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -312,8 +313,9 @@ std::shared_ptr<NetAppConnection> MakeNetAppConnection(Options options) {
                                  NetAppPolicyOptionList>(options, __func__);
   options = netapp_v1_internal::NetAppDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
-      netapp_v1_internal::CreateDefaultNetAppStub(background->cq(), options);
+      netapp_v1_internal::CreateDefaultNetAppStub(std::move(auth), options);
   return netapp_v1_internal::MakeNetAppTracingConnection(
       std::make_shared<netapp_v1_internal::NetAppConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

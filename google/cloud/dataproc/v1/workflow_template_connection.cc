@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -95,8 +96,9 @@ MakeWorkflowTemplateServiceConnection(std::string const& location,
   options = dataproc_v1_internal::WorkflowTemplateServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataproc_v1_internal::CreateDefaultWorkflowTemplateServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return dataproc_v1_internal::MakeWorkflowTemplateServiceTracingConnection(
       std::make_shared<
           dataproc_v1_internal::WorkflowTemplateServiceConnectionImpl>(

@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -171,8 +172,9 @@ std::shared_ptr<EventarcConnection> MakeEventarcConnection(Options options) {
                                  EventarcPolicyOptionList>(options, __func__);
   options = eventarc_v1_internal::EventarcDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = eventarc_v1_internal::CreateDefaultEventarcStub(background->cq(),
-                                                              options);
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub =
+      eventarc_v1_internal::CreateDefaultEventarcStub(std::move(auth), options);
   return eventarc_v1_internal::MakeEventarcTracingConnection(
       std::make_shared<eventarc_v1_internal::EventarcConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

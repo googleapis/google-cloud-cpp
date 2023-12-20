@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -56,8 +57,9 @@ std::shared_ptr<MatchServiceConnection> MakeMatchServiceConnection(
   options = aiplatform_v1_internal::MatchServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultMatchServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return aiplatform_v1_internal::MakeMatchServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::MatchServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

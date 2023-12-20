@@ -28,6 +28,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -100,8 +101,9 @@ MakeAppConnectionsServiceConnection(Options options) {
   options = beyondcorp_appconnections_v1_internal::
       AppConnectionsServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = beyondcorp_appconnections_v1_internal::
-      CreateDefaultAppConnectionsServiceStub(background->cq(), options);
+      CreateDefaultAppConnectionsServiceStub(std::move(auth), options);
   return beyondcorp_appconnections_v1_internal::
       MakeAppConnectionsServiceTracingConnection(
           std::make_shared<beyondcorp_appconnections_v1_internal::

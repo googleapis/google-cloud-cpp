@@ -45,10 +45,8 @@ Status StubFactoryGenerator::GenerateHeader() {
   // includes
   HeaderPrint("\n");
   HeaderLocalIncludes({vars("stub_header_path"),
-                       "google/cloud/completion_queue.h",
-                       "google/cloud/credentials.h",
                        "google/cloud/internal/unified_grpc_credentials.h",
-                       "google/cloud/version.h"});
+                       "google/cloud/options.h", "google/cloud/version.h"});
   HeaderSystemIncludes({"memory"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
@@ -57,7 +55,8 @@ Status StubFactoryGenerator::GenerateHeader() {
   HeaderPrint(
       R"""(
 std::shared_ptr<$stub_class_name$> CreateDefault$stub_class_name$(
-    google::cloud::CompletionQueue cq, Options& options);
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    Options const& options);
 )""");
 
   HeaderCloseNamespaces();
@@ -83,10 +82,7 @@ Status StubFactoryGenerator::GenerateCc() {
                    "google/cloud/common_options.h",
                    "google/cloud/grpc_options.h",
                    "google/cloud/internal/algorithm.h",
-                   "google/cloud/internal/credentials_impl.h",
-                   "google/cloud/internal/getenv.h",
                    "google/cloud/internal/opentelemetry.h",
-                   "google/cloud/internal/service_endpoint.h",
                    "google/cloud/options.h", "google/cloud/log.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
 
@@ -97,39 +93,24 @@ Status StubFactoryGenerator::GenerateCc() {
   CcPrint(R"""(
 std::shared_ptr<$stub_class_name$>
 CreateDefault$stub_class_name$(
-    google::cloud::CompletionQueue cq, Options& options) {
-  auto endpoint = internal::DetermineServiceEndpoint(
-      internal::GetEnv("$service_endpoint_env_var$"),
-      internal::FetchOption<EndpointOption>(options), "$service_endpoint$",
-      options);
-
-  std::shared_ptr<$stub_class_name$> stub;
-  std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;
-  if (!endpoint.ok()) {
-    Options error_options = options;
-    error_options.set<google::cloud::UnifiedCredentialsOption>(
-        internal::MakeErrorCredentials(endpoint.status()));
-    auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
-                                                  error_options);
-  } else {
-    options.set<EndpointOption>(*endpoint);
-    auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
-    auto channel = auth->CreateChannel(
-      *endpoint, internal::MakeChannelArguments(options));
-    auto service_grpc_stub = $grpc_stub_fqn$::NewStub(channel);)""");
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    Options const& options) {
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = $grpc_stub_fqn$::NewStub(channel);)""");
 
   if (!HasLongrunningMethod()) {
     CcPrint(R"""(
-    stub =
-      std::make_shared<Default$stub_class_name$>(std::move(service_grpc_stub));
-  })""");
+  std::shared_ptr<$stub_class_name$> stub =
+    std::make_shared<Default$stub_class_name$>(std::move(service_grpc_stub));
+)""");
   } else {
     CcPrint(R"""(
-    stub =
-      std::make_shared<Default$stub_class_name$>(
-        std::move(service_grpc_stub),
-        google::longrunning::Operations::NewStub(channel));
-  })""");
+  std::shared_ptr<$stub_class_name$> stub =
+    std::make_shared<Default$stub_class_name$>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
+)""");
   }
   CcPrint(R"""(
   if (auth->RequiresConfigureContext()) {

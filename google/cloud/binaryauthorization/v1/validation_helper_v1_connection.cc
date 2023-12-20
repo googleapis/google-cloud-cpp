@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -52,9 +53,10 @@ std::shared_ptr<ValidationHelperV1Connection> MakeValidationHelperV1Connection(
   options = binaryauthorization_v1_internal::ValidationHelperV1DefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       binaryauthorization_v1_internal::CreateDefaultValidationHelperV1Stub(
-          background->cq(), options);
+          std::move(auth), options);
   return binaryauthorization_v1_internal::
       MakeValidationHelperV1TracingConnection(
           std::make_shared<binaryauthorization_v1_internal::

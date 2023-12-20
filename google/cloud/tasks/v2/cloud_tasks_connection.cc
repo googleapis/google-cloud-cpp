@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -128,8 +129,9 @@ std::shared_ptr<CloudTasksConnection> MakeCloudTasksConnection(
                                  CloudTasksPolicyOptionList>(options, __func__);
   options = tasks_v2_internal::CloudTasksDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
-      tasks_v2_internal::CreateDefaultCloudTasksStub(background->cq(), options);
+      tasks_v2_internal::CreateDefaultCloudTasksStub(std::move(auth), options);
   return tasks_v2_internal::MakeCloudTasksTracingConnection(
       std::make_shared<tasks_v2_internal::CloudTasksConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

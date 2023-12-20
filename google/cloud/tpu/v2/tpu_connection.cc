@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -129,7 +130,8 @@ std::shared_ptr<TpuConnection> MakeTpuConnection(Options options) {
                                  TpuPolicyOptionList>(options, __func__);
   options = tpu_v2_internal::TpuDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = tpu_v2_internal::CreateDefaultTpuStub(background->cq(), options);
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub = tpu_v2_internal::CreateDefaultTpuStub(std::move(auth), options);
   return tpu_v2_internal::MakeTpuTracingConnection(
       std::make_shared<tpu_v2_internal::TpuConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

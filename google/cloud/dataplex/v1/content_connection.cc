@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -92,8 +93,9 @@ std::shared_ptr<ContentServiceConnection> MakeContentServiceConnection(
   options =
       dataplex_v1_internal::ContentServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataplex_v1_internal::CreateDefaultContentServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return dataplex_v1_internal::MakeContentServiceTracingConnection(
       std::make_shared<dataplex_v1_internal::ContentServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

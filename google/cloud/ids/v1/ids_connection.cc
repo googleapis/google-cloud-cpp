@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -70,7 +71,8 @@ std::shared_ptr<IDSConnection> MakeIDSConnection(Options options) {
                                  IDSPolicyOptionList>(options, __func__);
   options = ids_v1_internal::IDSDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = ids_v1_internal::CreateDefaultIDSStub(background->cq(), options);
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub = ids_v1_internal::CreateDefaultIDSStub(std::move(auth), options);
   return ids_v1_internal::MakeIDSTracingConnection(
       std::make_shared<ids_v1_internal::IDSConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

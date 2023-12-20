@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -78,8 +79,9 @@ std::shared_ptr<SessionsConnection> MakeSessionsConnection(
   options = dialogflow_cx_internal::SessionsDefaultOptions(location,
                                                            std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_cx_internal::CreateDefaultSessionsStub(
-      background->cq(), options);
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub = dialogflow_cx_internal::CreateDefaultSessionsStub(std::move(auth),
+                                                                options);
   return dialogflow_cx_internal::MakeSessionsTracingConnection(
       std::make_shared<dialogflow_cx_internal::SessionsConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -105,8 +106,9 @@ std::shared_ptr<AdaptationConnection> MakeAdaptationConnection(
                                  AdaptationPolicyOptionList>(options, __func__);
   options = speech_v1_internal::AdaptationDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = speech_v1_internal::CreateDefaultAdaptationStub(background->cq(),
-                                                              options);
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub =
+      speech_v1_internal::CreateDefaultAdaptationStub(std::move(auth), options);
   return speech_v1_internal::MakeAdaptationTracingConnection(
       std::make_shared<speech_v1_internal::AdaptationConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

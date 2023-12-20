@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -127,8 +128,9 @@ std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
   options =
       recommender_v1_internal::RecommenderDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = recommender_v1_internal::CreateDefaultRecommenderStub(
-      background->cq(), options);
+      std::move(auth), options);
   return recommender_v1_internal::MakeRecommenderTracingConnection(
       std::make_shared<recommender_v1_internal::RecommenderConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

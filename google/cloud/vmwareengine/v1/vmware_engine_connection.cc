@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -337,8 +338,9 @@ std::shared_ptr<VmwareEngineConnection> MakeVmwareEngineConnection(
   options =
       vmwareengine_v1_internal::VmwareEngineDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = vmwareengine_v1_internal::CreateDefaultVmwareEngineStub(
-      background->cq(), options);
+      std::move(auth), options);
   return vmwareengine_v1_internal::MakeVmwareEngineTracingConnection(
       std::make_shared<vmwareengine_v1_internal::VmwareEngineConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -106,8 +107,9 @@ MakeIdentityAwareProxyAdminServiceConnection(Options options) {
   options = iap_v1_internal::IdentityAwareProxyAdminServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = iap_v1_internal::CreateDefaultIdentityAwareProxyAdminServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return iap_v1_internal::MakeIdentityAwareProxyAdminServiceTracingConnection(
       std::make_shared<
           iap_v1_internal::IdentityAwareProxyAdminServiceConnectionImpl>(

@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -351,8 +352,9 @@ MakeDataMigrationServiceConnection(Options options) {
   options = datamigration_v1_internal::DataMigrationServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = datamigration_v1_internal::CreateDefaultDataMigrationServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return datamigration_v1_internal::MakeDataMigrationServiceTracingConnection(
       std::make_shared<
           datamigration_v1_internal::DataMigrationServiceConnectionImpl>(

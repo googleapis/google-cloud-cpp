@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -75,8 +76,9 @@ std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(
   options = dialogflow_cx_internal::WebhooksDefaultOptions(location,
                                                            std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_cx_internal::CreateDefaultWebhooksStub(
-      background->cq(), options);
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub = dialogflow_cx_internal::CreateDefaultWebhooksStub(std::move(auth),
+                                                                options);
   return dialogflow_cx_internal::MakeWebhooksTracingConnection(
       std::make_shared<dialogflow_cx_internal::WebhooksConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

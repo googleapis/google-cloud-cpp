@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -200,9 +201,10 @@ MakeAnalyticsHubServiceConnection(Options options) {
       bigquery_analyticshub_v1_internal::AnalyticsHubServiceDefaultOptions(
           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       bigquery_analyticshub_v1_internal::CreateDefaultAnalyticsHubServiceStub(
-          background->cq(), options);
+          std::move(auth), options);
   return bigquery_analyticshub_v1_internal::
       MakeAnalyticsHubServiceTracingConnection(
           std::make_shared<bigquery_analyticshub_v1_internal::

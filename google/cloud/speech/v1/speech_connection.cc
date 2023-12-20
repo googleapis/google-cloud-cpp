@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -66,8 +67,9 @@ std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options) {
                                  SpeechPolicyOptionList>(options, __func__);
   options = speech_v1_internal::SpeechDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
-      speech_v1_internal::CreateDefaultSpeechStub(background->cq(), options);
+      speech_v1_internal::CreateDefaultSpeechStub(std::move(auth), options);
   return speech_v1_internal::MakeSpeechTracingConnection(
       std::make_shared<speech_v1_internal::SpeechConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

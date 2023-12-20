@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -54,7 +55,8 @@ std::shared_ptr<TraceServiceConnection> MakeTraceServiceConnection(
                                                                __func__);
   options = trace_v2_internal::TraceServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = trace_v2_internal::CreateDefaultTraceServiceStub(background->cq(),
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub = trace_v2_internal::CreateDefaultTraceServiceStub(std::move(auth),
                                                                options);
   return trace_v2_internal::MakeTraceServiceTracingConnection(
       std::make_shared<trace_v2_internal::TraceServiceConnectionImpl>(

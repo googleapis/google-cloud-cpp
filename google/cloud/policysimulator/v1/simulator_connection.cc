@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -65,8 +66,9 @@ std::shared_ptr<SimulatorConnection> MakeSimulatorConnection(Options options) {
   options =
       policysimulator_v1_internal::SimulatorDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = policysimulator_v1_internal::CreateDefaultSimulatorStub(
-      background->cq(), options);
+      std::move(auth), options);
   return policysimulator_v1_internal::MakeSimulatorTracingConnection(
       std::make_shared<policysimulator_v1_internal::SimulatorConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

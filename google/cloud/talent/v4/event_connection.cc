@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -49,8 +50,9 @@ std::shared_ptr<EventServiceConnection> MakeEventServiceConnection(
                                                                __func__);
   options = talent_v4_internal::EventServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = talent_v4_internal::CreateDefaultEventServiceStub(
-      background->cq(), options);
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub = talent_v4_internal::CreateDefaultEventServiceStub(std::move(auth),
+                                                                options);
   return talent_v4_internal::MakeEventServiceTracingConnection(
       std::make_shared<talent_v4_internal::EventServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -170,8 +171,9 @@ MakeRecaptchaEnterpriseServiceConnection(Options options) {
       recaptchaenterprise_v1_internal::RecaptchaEnterpriseServiceDefaultOptions(
           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = recaptchaenterprise_v1_internal::
-      CreateDefaultRecaptchaEnterpriseServiceStub(background->cq(), options);
+      CreateDefaultRecaptchaEnterpriseServiceStub(std::move(auth), options);
   return recaptchaenterprise_v1_internal::
       MakeRecaptchaEnterpriseServiceTracingConnection(
           std::make_shared<recaptchaenterprise_v1_internal::

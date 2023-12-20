@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -105,8 +106,9 @@ std::shared_ptr<AccessApprovalConnection> MakeAccessApprovalConnection(
   options = accessapproval_v1_internal::AccessApprovalDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = accessapproval_v1_internal::CreateDefaultAccessApprovalStub(
-      background->cq(), options);
+      std::move(auth), options);
   return accessapproval_v1_internal::MakeAccessApprovalTracingConnection(
       std::make_shared<
           accessapproval_v1_internal::AccessApprovalConnectionImpl>(

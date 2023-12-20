@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -206,8 +207,9 @@ std::shared_ptr<LivestreamServiceConnection> MakeLivestreamServiceConnection(
   options = video_livestream_v1_internal::LivestreamServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = video_livestream_v1_internal::CreateDefaultLivestreamServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return video_livestream_v1_internal::MakeLivestreamServiceTracingConnection(
       std::make_shared<
           video_livestream_v1_internal::LivestreamServiceConnectionImpl>(

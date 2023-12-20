@@ -20,9 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_INTERNAL_BIGTABLE_TABLE_ADMIN_STUB_FACTORY_H
 
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_stub.h"
-#include "google/cloud/completion_queue.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -32,7 +31,8 @@ namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<BigtableTableAdminStub> CreateDefaultBigtableTableAdminStub(
-    google::cloud::CompletionQueue cq, Options& options);
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal

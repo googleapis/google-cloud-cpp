@@ -20,9 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_STUB_FACTORY_H
 
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub.h"
-#include "google/cloud/completion_queue.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -32,7 +31,8 @@ namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<BareMetalSolutionStub> CreateDefaultBareMetalSolutionStub(
-    google::cloud::CompletionQueue cq, Options& options);
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution_v2_internal

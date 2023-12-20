@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -84,9 +85,10 @@ MakeConversationalSearchServiceConnection(Options options) {
       discoveryengine_v1_internal::ConversationalSearchServiceDefaultOptions(
           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       discoveryengine_v1_internal::CreateDefaultConversationalSearchServiceStub(
-          background->cq(), options);
+          std::move(auth), options);
   return discoveryengine_v1_internal::
       MakeConversationalSearchServiceTracingConnection(
           std::make_shared<discoveryengine_v1_internal::

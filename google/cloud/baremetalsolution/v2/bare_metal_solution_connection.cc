@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -366,8 +367,9 @@ std::shared_ptr<BareMetalSolutionConnection> MakeBareMetalSolutionConnection(
   options = baremetalsolution_v2_internal::BareMetalSolutionDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = baremetalsolution_v2_internal::CreateDefaultBareMetalSolutionStub(
-      background->cq(), options);
+      std::move(auth), options);
   return baremetalsolution_v2_internal::MakeBareMetalSolutionTracingConnection(
       std::make_shared<
           baremetalsolution_v2_internal::BareMetalSolutionConnectionImpl>(

@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -91,9 +92,10 @@ MakeAgentEndpointServiceConnection(Options options) {
       osconfig_agentendpoint_v1_internal::AgentEndpointServiceDefaultOptions(
           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       osconfig_agentendpoint_v1_internal::CreateDefaultAgentEndpointServiceStub(
-          background->cq(), options);
+          std::move(auth), options);
   return osconfig_agentendpoint_v1_internal::
       MakeAgentEndpointServiceTracingConnection(
           std::make_shared<osconfig_agentendpoint_v1_internal::

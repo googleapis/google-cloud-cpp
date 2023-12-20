@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -98,8 +99,9 @@ std::shared_ptr<DataFusionConnection> MakeDataFusionConnection(
   options =
       datafusion_v1_internal::DataFusionDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = datafusion_v1_internal::CreateDefaultDataFusionStub(
-      background->cq(), options);
+      std::move(auth), options);
   return datafusion_v1_internal::MakeDataFusionTracingConnection(
       std::make_shared<datafusion_v1_internal::DataFusionConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

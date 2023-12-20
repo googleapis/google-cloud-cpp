@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -99,8 +100,9 @@ std::shared_ptr<AgentsConnection> MakeAgentsConnection(
   options = dialogflow_es_internal::AgentsDefaultOptions(location,
                                                          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_es_internal::CreateDefaultAgentsStub(background->cq(),
-                                                              options);
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
+  auto stub =
+      dialogflow_es_internal::CreateDefaultAgentsStub(std::move(auth), options);
   return dialogflow_es_internal::MakeAgentsTracingConnection(
       std::make_shared<dialogflow_es_internal::AgentsConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

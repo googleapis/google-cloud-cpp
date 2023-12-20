@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -121,8 +122,9 @@ std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(Options options) {
                                  GkeHubPolicyOptionList>(options, __func__);
   options = gkehub_v1_internal::GkeHubDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
-      gkehub_v1_internal::CreateDefaultGkeHubStub(background->cq(), options);
+      gkehub_v1_internal::CreateDefaultGkeHubStub(std::move(auth), options);
   return gkehub_v1_internal::MakeGkeHubTracingConnection(
       std::make_shared<gkehub_v1_internal::GkeHubConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

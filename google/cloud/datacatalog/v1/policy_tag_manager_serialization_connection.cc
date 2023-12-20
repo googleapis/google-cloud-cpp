@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -64,9 +65,10 @@ MakePolicyTagManagerSerializationConnection(Options options) {
       datacatalog_v1_internal::PolicyTagManagerSerializationDefaultOptions(
           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
       datacatalog_v1_internal::CreateDefaultPolicyTagManagerSerializationStub(
-          background->cq(), options);
+          std::move(auth), options);
   return datacatalog_v1_internal::
       MakePolicyTagManagerSerializationTracingConnection(
           std::make_shared<datacatalog_v1_internal::

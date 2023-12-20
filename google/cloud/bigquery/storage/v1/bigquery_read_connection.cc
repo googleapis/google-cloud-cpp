@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -67,8 +68,9 @@ std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
   options = bigquery_storage_v1_internal::BigQueryReadDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = bigquery_storage_v1_internal::CreateDefaultBigQueryReadStub(
-      background->cq(), options);
+      std::move(auth), options);
   return bigquery_storage_v1_internal::MakeBigQueryReadTracingConnection(
       std::make_shared<
           bigquery_storage_v1_internal::BigQueryReadConnectionImpl>(

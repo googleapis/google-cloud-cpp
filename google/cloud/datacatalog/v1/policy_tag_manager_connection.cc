@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -123,8 +124,9 @@ std::shared_ptr<PolicyTagManagerConnection> MakePolicyTagManagerConnection(
   options = datacatalog_v1_internal::PolicyTagManagerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = datacatalog_v1_internal::CreateDefaultPolicyTagManagerStub(
-      background->cq(), options);
+      std::move(auth), options);
   return datacatalog_v1_internal::MakePolicyTagManagerTracingConnection(
       std::make_shared<datacatalog_v1_internal::PolicyTagManagerConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -90,8 +91,9 @@ std::shared_ptr<StorageInsightsConnection> MakeStorageInsightsConnection(
   options = storageinsights_v1_internal::StorageInsightsDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = storageinsights_v1_internal::CreateDefaultStorageInsightsStub(
-      background->cq(), options);
+      std::move(auth), options);
   return storageinsights_v1_internal::MakeStorageInsightsTracingConnection(
       std::make_shared<
           storageinsights_v1_internal::StorageInsightsConnectionImpl>(

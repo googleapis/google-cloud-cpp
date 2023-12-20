@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -184,8 +185,9 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
   options =
       spanner_admin_internal::DatabaseAdminDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = spanner_admin_internal::CreateDefaultDatabaseAdminStub(
-      background->cq(), options);
+      std::move(auth), options);
   return spanner_admin_internal::MakeDatabaseAdminTracingConnection(
       std::make_shared<spanner_admin_internal::DatabaseAdminConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

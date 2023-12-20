@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -53,8 +54,9 @@ std::shared_ptr<ExportServiceConnection> MakeExportServiceConnection(
   options =
       profiler_v2_internal::ExportServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = profiler_v2_internal::CreateDefaultExportServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return profiler_v2_internal::MakeExportServiceTracingConnection(
       std::make_shared<profiler_v2_internal::ExportServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

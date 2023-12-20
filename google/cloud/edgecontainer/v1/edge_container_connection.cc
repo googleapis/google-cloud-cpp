@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -171,8 +172,9 @@ std::shared_ptr<EdgeContainerConnection> MakeEdgeContainerConnection(
   options = edgecontainer_v1_internal::EdgeContainerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = edgecontainer_v1_internal::CreateDefaultEdgeContainerStub(
-      background->cq(), options);
+      std::move(auth), options);
   return edgecontainer_v1_internal::MakeEdgeContainerTracingConnection(
       std::make_shared<edgecontainer_v1_internal::EdgeContainerConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

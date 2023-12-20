@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -76,8 +77,9 @@ std::shared_ptr<BudgetServiceConnection> MakeBudgetServiceConnection(
   options = billing_budgets_v1_internal::BudgetServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = billing_budgets_v1_internal::CreateDefaultBudgetServiceStub(
-      background->cq(), options);
+      std::move(auth), options);
   return billing_budgets_v1_internal::MakeBudgetServiceTracingConnection(
       std::make_shared<
           billing_budgets_v1_internal::BudgetServiceConnectionImpl>(

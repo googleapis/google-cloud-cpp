@@ -27,6 +27,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 
 namespace google {
@@ -202,8 +203,9 @@ std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
                                  IAMPolicyOptionList>(options, __func__);
   options = iam_admin_v1_internal::IAMDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
-      iam_admin_v1_internal::CreateDefaultIAMStub(background->cq(), options);
+      iam_admin_v1_internal::CreateDefaultIAMStub(std::move(auth), options);
   return iam_admin_v1_internal::MakeIAMTracingConnection(
       std::make_shared<iam_admin_v1_internal::IAMConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

@@ -20,9 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_STUB_FACTORY_H
 
 #include "google/cloud/edgecontainer/v1/internal/edge_container_stub.h"
-#include "google/cloud/completion_queue.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -32,7 +31,8 @@ namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<EdgeContainerStub> CreateDefaultEdgeContainerStub(
-    google::cloud::CompletionQueue cq, Options& options);
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer_v1_internal
