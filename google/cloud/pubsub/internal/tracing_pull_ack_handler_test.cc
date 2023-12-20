@@ -30,26 +30,14 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::internal::MakeSpan;
 using ::google::cloud::pubsub_mocks::MockPullAckHandler;
-using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
-using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::IsProtoEqual;
-using ::google::cloud::testing_util::LinkHasSpanContext;
-using ::google::cloud::testing_util::OTelAttribute;
-using ::google::cloud::testing_util::OTelContextCaptured;
-using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
-using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
-using ::google::cloud::testing_util::SpanLinksSizeIs;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::cloud::testing_util::ThereIsAnActiveSpan;
-using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -98,10 +86,10 @@ TEST(TracingAckHandlerTest, AckError) {
               StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              Contains(AllOf(
-                  SpanWithStatus(opentelemetry::trace::StatusCode::kError),
-                  SpanNamed("test-subscription settle"))));
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(SpanWithStatus(opentelemetry::trace::StatusCode::kError),
+                     SpanNamed("test-subscription settle"))));
 }
 
 TEST(TracingAckHandlerTest, AckAttributes) {
@@ -116,11 +104,10 @@ TEST(TracingAckHandlerTest, AckAttributes) {
   EXPECT_THAT(std::move(handler->ack()).get(), StatusIs(StatusCode::kOk));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans,
-      Contains(AllOf(SpanNamed("test-subscription settle"),
-                     SpanHasAttributes(OTelAttribute<std::string>(
-                         sc::kMessagingSystem, "gcp_pubsub")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-subscription settle"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::kMessagingSystem, "gcp_pubsub")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription settle"),
                              SpanHasAttributes(OTelAttribute<std::string>(
@@ -167,12 +154,11 @@ TEST(TracingAckHandlerTest, NackError) {
               StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              Contains(AllOf(
-                  SpanWithStatus(opentelemetry::trace::StatusCode::kError),
-                  SpanNamed("test-subscription settle"))));
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(SpanWithStatus(opentelemetry::trace::StatusCode::kError),
+                     SpanNamed("test-subscription settle"))));
 }
-
 
 TEST(TracingAckHandlerTest, NackAttributes) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
@@ -186,11 +172,10 @@ TEST(TracingAckHandlerTest, NackAttributes) {
   EXPECT_THAT(std::move(handler->nack()).get(), StatusIs(StatusCode::kOk));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans,
-      Contains(AllOf(SpanNamed("test-subscription settle"),
-                     SpanHasAttributes(OTelAttribute<std::string>(
-                         sc::kMessagingSystem, "gcp_pubsub")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-subscription settle"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::kMessagingSystem, "gcp_pubsub")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription settle"),
                              SpanHasAttributes(OTelAttribute<std::string>(

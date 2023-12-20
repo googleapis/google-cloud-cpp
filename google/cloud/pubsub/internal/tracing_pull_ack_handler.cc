@@ -67,9 +67,9 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
 
     return child_->ack().then(
         [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-         subscription = std::move(subscription_), span =
-             std::move(span)](auto f) {
-  auto result = f.get();
+         subscription = std::move(subscription_),
+         span = std::move(span)](auto f) {
+          auto result = f.get();
           internal::DetachOTelContext(oc);
           return internal::EndSpan(*span, std::move(result));
         });
@@ -107,7 +107,7 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
 
 std::unique_ptr<pubsub::PullAckHandler::Impl> MakeTracingPullAckHandler(
     std::unique_ptr<pubsub::PullAckHandler::Impl> handler,
-    pubsub::Subscription subscription, std::string ack_id) {
+    pubsub::Subscription const& subscription, std::string ack_id) {
   return std::make_unique<TracingPullAckHandler>(
       std::move(handler), std::move(subscription), std::move(ack_id));
 }
@@ -116,7 +116,7 @@ std::unique_ptr<pubsub::PullAckHandler::Impl> MakeTracingPullAckHandler(
 
 std::unique_ptr<pubsub::PullAckHandler::Impl> MakeTracingPullAckHandler(
     std::unique_ptr<pubsub::PullAckHandler::Impl> handler,
-    pubsub::Subscription subscription, std::string ack_id) {
+    pubsub::Subscription const& subscription, std::string ack_id) {
   return handler;
 }
 
