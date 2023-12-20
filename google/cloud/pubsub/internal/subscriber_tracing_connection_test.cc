@@ -49,7 +49,6 @@ using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsConsumer;
-using ::google::cloud::testing_util::SpanLinksSizeIs;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
@@ -58,7 +57,6 @@ using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
-using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::Return;
 
