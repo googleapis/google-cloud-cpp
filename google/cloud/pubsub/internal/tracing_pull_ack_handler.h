@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::unique_ptr<pubsub::PullAckHandler::Impl> MakeTracingPullAckHandler(
     std::unique_ptr<pubsub::PullAckHandler::Impl> handler,
-    pubsub::Subscription subscription, std::string ack_id);
+    pubsub::Subscription const& subscription, std::string ack_id);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
