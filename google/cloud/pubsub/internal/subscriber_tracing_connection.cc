@@ -51,7 +51,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPullSpan() {
 
 StatusOr<pubsub::PullResponse> EndPullSpan(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
-    std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> const&
+    std::shared_ptr<
+        opentelemetry::context::propagation::TextMapPropagator> const&
         propagator,
     StatusOr<pubsub::PullResponse> response) {
   namespace sc = opentelemetry::trace::SemanticConventions;
