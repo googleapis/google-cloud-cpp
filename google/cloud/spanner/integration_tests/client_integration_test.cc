@@ -815,7 +815,7 @@ TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessDuration) {
 }
 
 /// @test Test that a directed read within a read-write transaction fails.
-TEST_F(ClientIntegrationTest, DISABLED_DirectedReadWithinReadWriteTransaction) {
+TEST_F(ClientIntegrationTest, DirectedReadWithinReadWriteTransaction) {
   auto& client = *client_;
   auto commit =
       client_->Commit([&client](Transaction const& txn) -> StatusOr<Mutations> {
