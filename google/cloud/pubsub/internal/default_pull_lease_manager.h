@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_LEASE_MANAGER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_LEASE_MANAGER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_PULL_LEASE_MANAGER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_PULL_LEASE_MANAGER_H
 
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -34,15 +34,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Maintains the lease for a single message.
  */
-class PullLeaseManager : public std::enable_shared_from_this<PullLeaseManager> {
+class DefaultPullLeaseManager
+    : public std::enable_shared_from_this<DefaultPullLeaseManager> {
  public:
   using Clock = std::function<std::chrono::system_clock::time_point()>;
 
-  PullLeaseManager(CompletionQueue cq, std::weak_ptr<SubscriberStub> w,
-                   Options options, pubsub::Subscription subscription,
-                   std::string ack_id,
-                   Clock clock = std::chrono::system_clock::now);
-  ~PullLeaseManager();
+  DefaultPullLeaseManager(CompletionQueue cq, std::weak_ptr<SubscriberStub> w,
+                          Options options, pubsub::Subscription subscription,
+                          std::string ack_id,
+                          Clock clock = std::chrono::system_clock::now);
+  ~DefaultPullLeaseManager();
 
   void StartLeaseLoop();
 
@@ -85,4 +86,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_LEASE_MANAGER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_PULL_LEASE_MANAGER_H

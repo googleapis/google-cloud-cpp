@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ DefaultPullAckHandler::DefaultPullAckHandler(CompletionQueue cq,
       subscription_(std::move(subscription)),
       ack_id_(std::move(ack_id)),
       delivery_attempt_(delivery_attempt),
-      lease_manager_(std::make_shared<PullLeaseManager>(
+      lease_manager_(std::make_shared<DefaultPullLeaseManager>(
           cq_, stub_, std::move(options), subscription_, ack_id_)) {}
 
 DefaultPullAckHandler::~DefaultPullAckHandler() = default;

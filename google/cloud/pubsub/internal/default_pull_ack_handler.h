@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_PULL_ACK_HANDLER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_PULL_ACK_HANDLER_H
 
+#include "google/cloud/pubsub/internal/default_pull_lease_manager.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/pull_ack_handler.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -32,7 +33,7 @@ namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-class PullLeaseManager;
+class DefaultPullLeaseManager;
 
 /**
  * The default implementation for a `pubsub::PullAckHandler::Impl`.
@@ -56,7 +57,7 @@ class DefaultPullAckHandler : public pubsub::PullAckHandler::Impl {
   pubsub::Subscription subscription_;
   std::string ack_id_;
   std::int32_t delivery_attempt_;
-  std::shared_ptr<PullLeaseManager> lease_manager_;
+  std::shared_ptr<DefaultPullLeaseManager> lease_manager_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
