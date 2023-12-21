@@ -403,6 +403,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         publisher_connection_test.cc
         publisher_options_test.cc
         publisher_test.cc
+        pull_ack_handler_test.cc
         schema_test.cc
         snapshot_builder_test.cc
         snapshot_test.cc
