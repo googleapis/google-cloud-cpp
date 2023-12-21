@@ -143,16 +143,18 @@ RestStub::RestStub(
 Options RestStub::ResolveStorageAuthority(Options const& options) {
   auto endpoint = RestEndpoint(options);
   if (options.has<AuthorityOption>() ||
-      !absl::StrContains(endpoint, "googleapis.com"))
+      !absl::StrContains(endpoint, "googleapis.com")) {
     return options;
+  }
   return Options(options).set<AuthorityOption>("storage.googleapis.com");
 }
 
 Options RestStub::ResolveIamAuthority(Options const& options) {
   auto endpoint = IamEndpoint(options);
   if (options.has<AuthorityOption>() ||
-      !absl::StrContains(endpoint, "googleapis.com"))
+      !absl::StrContains(endpoint, "googleapis.com")) {
     return options;
+  }
   return Options(options).set<AuthorityOption>("iamcredentials.googleapis.com");
 }
 
