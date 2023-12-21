@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PULL_ACK_HANDLER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PULL_ACK_HANDLER_H
 
+#include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
@@ -122,6 +123,14 @@ class PullAckHandler {
     }
     /// The implementation for `PullAckHandler::delivery_attempt()`
     virtual std::int32_t delivery_attempt() const { return 0; }
+    /// Returns the ack_id for the handler. No public interface for
+    /// `PullAckHandler`.
+    virtual std::string ack_id() const { return ""; }
+    /// Returns the subscription for the handler. No public interface for
+    /// `PullAckHandler`.
+    virtual pubsub::Subscription subscription() const {
+      return pubsub::Subscription{};
+    }
   };
 
   /**
