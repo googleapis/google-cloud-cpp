@@ -39,6 +39,7 @@ using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -227,6 +228,71 @@ TEST(TracingAckHandlerTest, SubscriptionNoSpans) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, IsEmpty());
 }
+
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+
+using ::google::cloud::testing_util::SpanLinksSizeIs;
+
+TEST(TracingAckHandlerTest, AckAddsLink) {
+  auto span_catcher = InstallSpanCatcher();
+  auto consumer_span = internal::MakeSpan("receive");
+  auto scope = internal::OTelScope(consumer_span);
+  auto mock = std::make_unique<MockPullAckHandler>();
+  EXPECT_CALL(*mock, ack())
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  auto handler = MakeTestPullAckHandler(std::move(mock));
+
+  EXPECT_THAT(std::move(handler->ack()).get(), StatusIs(StatusCode::kOk));
+
+  consumer_span->End();
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription settle"),
+                                    SpanLinksSizeIs(1))));
+}
+
+TEST(TracingAckHandlerTest, AckSkipsLinkForNotSampledSpan) {
+  // Create the span before it is sampled so no link is added.
+  auto consumer_span = internal::MakeSpan("receive");
+  auto span_catcher = InstallSpanCatcher();
+  auto scope = internal::OTelScope(consumer_span);
+  auto mock = std::make_unique<MockPullAckHandler>();
+  EXPECT_CALL(*mock, ack())
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  auto handler = MakeTestPullAckHandler(std::move(mock));
+
+  EXPECT_THAT(std::move(handler->ack()).get(), StatusIs(StatusCode::kOk));
+
+  consumer_span->End();
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription settle"),
+                                    SpanLinksSizeIs(0))));
+}
+
+#else
+
+TEST(TracingAckHandlerTest, AckAddsSpanIdAndTraceIdAttribute) {
+  auto span_catcher = InstallSpanCatcher();
+  auto consumer_span = internal::MakeSpan("receive");
+  auto scope = internal::OTelScope(consumer_span);
+  auto mock = std::make_unique<MockPullAckHandler>();
+  EXPECT_CALL(*mock, ack())
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  auto handler = MakeTestPullAckHandler(std::move(mock));
+
+  EXPECT_THAT(std::move(handler->ack()).get(), StatusIs(StatusCode::kOk));
+
+  consumer_span->End();
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(
+          SpanNamed("test-subscription settle"),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp_pubsub.receive.trace_id", _),
+              OTelAttribute<std::string>("gcp_pubsub.receive.span_id", _)))));
+}
+
+#endif
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
