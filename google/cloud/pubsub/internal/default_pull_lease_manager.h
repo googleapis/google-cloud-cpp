@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_PULL_LEASE_MANAGER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_PULL_LEASE_MANAGER_H
 
+#include "google/cloud/pubsub/internal/pull_lease_manager.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/completion_queue.h"
@@ -35,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Maintains the lease for a single message.
  */
 class DefaultPullLeaseManager
-    : public std::enable_shared_from_this<DefaultPullLeaseManager> {
+    : public PullLeaseManager,
+      public std::enable_shared_from_this<DefaultPullLeaseManager> {
  public:
   using Clock = std::function<std::chrono::system_clock::time_point()>;
 
@@ -43,9 +45,9 @@ class DefaultPullLeaseManager
                           Options options, pubsub::Subscription subscription,
                           std::string ack_id,
                           Clock clock = std::chrono::system_clock::now);
-  ~DefaultPullLeaseManager();
+  ~DefaultPullLeaseManager() override;
 
-  void StartLeaseLoop();
+  void StartLeaseLoop() override;
 
   // The following functions are used in testing.
   std::chrono::system_clock::time_point lease_deadline() const {
@@ -55,7 +57,7 @@ class DefaultPullLeaseManager
     return current_lease_;
   }
 
-  std::chrono::milliseconds LeaseRefreshPeriod() const;
+  std::chrono::milliseconds LeaseRefreshPeriod() const override;
 
  private:
   void OnLeaseTimer(Status const& timer_status);

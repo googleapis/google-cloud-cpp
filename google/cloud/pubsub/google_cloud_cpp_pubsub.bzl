@@ -79,6 +79,7 @@ google_cloud_cpp_pubsub_hdrs = [
     "internal/publisher_stub_factory.h",
     "internal/publisher_tracing_connection.h",
     "internal/publisher_tracing_stub.h",
+    "internal/pull_lease_manager.h",
     "internal/rejects_with_ordering_key.h",
     "internal/schema_auth_decorator.h",
     "internal/schema_connection_impl.h",

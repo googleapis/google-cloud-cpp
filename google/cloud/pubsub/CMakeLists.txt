@@ -155,6 +155,7 @@ add_library(
     internal/publisher_tracing_connection.h
     internal/publisher_tracing_stub.cc
     internal/publisher_tracing_stub.h
+    internal/pull_lease_manager.h
     internal/rejects_with_ordering_key.cc
     internal/rejects_with_ordering_key.h
     internal/schema_auth_decorator.cc
@@ -301,6 +302,7 @@ set(google_cloud_cpp_pubsub_mocks_hdrs
     mocks/mock_exactly_once_ack_handler.h
     mocks/mock_publisher_connection.h
     mocks/mock_pull_ack_handler.h
+    mocks/mock_pull_lease_manager.h
     mocks/mock_schema_connection.h
     mocks/mock_subscriber_connection.h
     mocks/mock_subscription_admin_connection.h
