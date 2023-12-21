@@ -70,8 +70,7 @@ include(GoogleCloudCppDoxygen)
 
 foreach (dir IN LISTS service_dirs operation_service_dirs)
     string(REPLACE "/v1/" "" short_dir "${dir}")
-    list(APPEND compute_proto_lib_targets
-         "google_cloud_cpp_compute_${short_dir}_protos")
+    list(APPEND compute_proto_lib_targets "compute_${short_dir}_protos")
 endforeach ()
 
 set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
