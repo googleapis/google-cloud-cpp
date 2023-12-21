@@ -87,6 +87,7 @@ std::string LanguageVersion() {
   auto constexpr kMagicVersionCxx14 = 201402L;
   auto constexpr kMagicVersionCxx17 = 201703L;
   auto constexpr kMagicVersionCxx20 = 202002L;
+  auto constexpr kMagicVersionCxx23 = 202302L;
   switch (GOOGLE_CLOUD_CPP_CPP_VERSION) {
     case kMagicVersionCxx98:
       return "1998";
@@ -98,6 +99,8 @@ std::string LanguageVersion() {
       return "2017";
     case kMagicVersionCxx20:
       return "2020";
+    case kMagicVersionCxx23:
+      return "2023";
     default:
       return "unknown";
   }
