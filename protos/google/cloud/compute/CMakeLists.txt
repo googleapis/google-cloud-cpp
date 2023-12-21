@@ -42,6 +42,12 @@ function (compute_proto_library dir library)
     google_cloud_cpp_install_proto_library_protos(
         "${library}" "${PROJECT_SOURCE_DIR}/protos")
     google_cloud_cpp_install_proto_library_headers("${library}")
+
+    # In some configs we need to only generate the protocol definitions from
+    # `*.proto` files. We achieve this by having this target depend on all proto
+    # libraries. It has to be defined at the top level of the project.
+    add_dependencies(google-cloud-cpp-protos ${library})
+    add_dependencies("${library}" googleapis_download)
 endfunction ()
 
 include(${PROJECT_SOURCE_DIR}/google/cloud/compute/service_dirs.cmake)
