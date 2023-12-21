@@ -123,11 +123,13 @@ class PullAckHandler {
     }
     /// The implementation for `PullAckHandler::delivery_attempt()`
     virtual std::int32_t delivery_attempt() const { return 0; }
-    /// Returns the ack_id for the handler. No public interface for
-    /// `PullAckHandler`.
+    /// Returns the ack id for the handler. There is no corresponding public
+    /// interface to access the ack id in `PullAckHandler`. This is for internal
+    /// use only.
     virtual std::string ack_id() const { return ""; }
-    /// Returns the subscription for the handler. No public interface for
-    /// `PullAckHandler`.
+    /// Returns the subscription for the handler. There is no corresponding
+    /// public interface to access the subscription id in `PullAckHandler`. This
+    /// is for internal use only.
     virtual pubsub::Subscription subscription() const {
       return pubsub::Subscription{};
     }

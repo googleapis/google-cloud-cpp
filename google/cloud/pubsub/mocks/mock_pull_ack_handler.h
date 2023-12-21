@@ -35,8 +35,8 @@ class MockPullAckHandler : public pubsub::PullAckHandler::Impl {
  public:
   MOCK_METHOD(future<Status>, ack, (), (override));
   MOCK_METHOD(future<Status>, nack, (), (override));
-  MOCK_METHOD(std::string, ack_id, (), (const, override));
   MOCK_METHOD(std::int32_t, delivery_attempt, (), (const, override));
+  MOCK_METHOD(std::string, ack_id, (), (const, override));
   MOCK_METHOD(pubsub::Subscription, subscription, (), (const, override));
 };
 
