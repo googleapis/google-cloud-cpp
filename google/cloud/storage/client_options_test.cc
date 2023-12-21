@@ -87,9 +87,10 @@ TEST_F(ClientOptionsTest, Default) {
   EXPECT_FALSE(options.enable_http_tracing());
   EXPECT_FALSE(options.enable_raw_client_tracing());
   EXPECT_TRUE(creds.get() == options.credentials().get());
-  EXPECT_EQ("https://storage.googleapis.com", options.endpoint());
+  EXPECT_EQ("https://storage.googleapis.com.", options.endpoint());
   EXPECT_EQ("v1", options.version());
-  EXPECT_EQ("https://iamcredentials.googleapis.com/v1", options.iam_endpoint());
+  EXPECT_EQ("https://iamcredentials.googleapis.com./v1",
+            options.iam_endpoint());
 }
 
 TEST_F(ClientOptionsTest, CreateDefaultError) {
@@ -141,13 +142,13 @@ TEST_F(ClientOptionsTest, EndpointsDefault) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            {});
   ClientOptions options(oauth2::CreateAnonymousCredentials());
-  EXPECT_EQ("https://storage.googleapis.com", options.endpoint());
+  EXPECT_EQ("https://storage.googleapis.com.", options.endpoint());
   auto o = internal::MakeOptions(std::move(options));
-  EXPECT_EQ("https://storage.googleapis.com/storage/v1",
+  EXPECT_EQ("https://storage.googleapis.com./storage/v1",
             internal::JsonEndpoint(o));
-  EXPECT_EQ("https://storage.googleapis.com/upload/storage/v1",
+  EXPECT_EQ("https://storage.googleapis.com./upload/storage/v1",
             internal::JsonUploadEndpoint(o));
-  EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
+  EXPECT_EQ("https://iamcredentials.googleapis.com./v1",
             internal::IamEndpoint(o));
 }
 
@@ -163,7 +164,7 @@ TEST_F(ClientOptionsTest, EndpointsOverride) {
   EXPECT_EQ("http://127.0.0.1.nip.io:1234/upload/storage/v1",
             internal::JsonUploadEndpoint(o));
   EXPECT_EQ("http://127.0.0.1.nip.io:1234", internal::XmlEndpoint(o));
-  EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
+  EXPECT_EQ("https://iamcredentials.googleapis.com./v1",
             internal::IamEndpoint(o));
 }
 
@@ -199,9 +200,9 @@ TEST_F(ClientOptionsTest, SetVersion) {
   options.set_version("vTest");
   EXPECT_EQ("vTest", options.version());
   auto o = internal::MakeOptions(std::move(options));
-  EXPECT_EQ("https://storage.googleapis.com/storage/vTest",
+  EXPECT_EQ("https://storage.googleapis.com./storage/vTest",
             internal::JsonEndpoint(o));
-  EXPECT_EQ("https://storage.googleapis.com/upload/storage/vTest",
+  EXPECT_EQ("https://storage.googleapis.com./upload/storage/vTest",
             internal::JsonUploadEndpoint(o));
 }
 
@@ -317,8 +318,8 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
                                       "test-project-id");
   auto const opts = internal::MakeOptions(
       ClientOptions(oauth2::CreateAnonymousCredentials()));
-  EXPECT_EQ("https://storage.googleapis.com", opts.get<RestEndpointOption>());
-  EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
+  EXPECT_EQ("https://storage.googleapis.com.", opts.get<RestEndpointOption>());
+  EXPECT_EQ("https://iamcredentials.googleapis.com./v1",
             opts.get<IamEndpointOption>());
   EXPECT_TRUE(opts.has<Oauth2CredentialsOption>());
   EXPECT_EQ("v1", opts.get<internal::TargetApiVersionOption>());
@@ -339,7 +340,7 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
 
 TEST_F(ClientOptionsTest, DefaultOptions) {
   auto o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
-  EXPECT_EQ("https://storage.googleapis.com", o.get<RestEndpointOption>());
+  EXPECT_EQ("https://storage.googleapis.com.", o.get<RestEndpointOption>());
 
   // Verify any set values are respected overridden.
   o = internal::DefaultOptions(
@@ -348,8 +349,8 @@ TEST_F(ClientOptionsTest, DefaultOptions) {
   EXPECT_EQ("https://private.googleapis.com", o.get<RestEndpointOption>());
 
   o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
-  EXPECT_EQ("https://storage.googleapis.com", o.get<RestEndpointOption>());
-  EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
+  EXPECT_EQ("https://storage.googleapis.com.", o.get<RestEndpointOption>());
+  EXPECT_EQ("https://iamcredentials.googleapis.com./v1",
             o.get<IamEndpointOption>());
 
   EXPECT_EQ("v1", o.get<internal::TargetApiVersionOption>());

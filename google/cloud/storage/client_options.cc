@@ -172,8 +172,8 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
   auto o =
       Options{}
           .set<Oauth2CredentialsOption>(std::move(credentials))
-          .set<RestEndpointOption>("https://storage.googleapis.com")
-          .set<IamEndpointOption>("https://iamcredentials.googleapis.com/v1")
+          .set<RestEndpointOption>("https://storage.googleapis.com.")
+          .set<IamEndpointOption>("https://iamcredentials.googleapis.com./v1")
           .set<TargetApiVersionOption>("v1")
           .set<ConnectionPoolSizeOption>(DefaultConnectionPoolSize())
           .set<DownloadBufferSizeOption>(
