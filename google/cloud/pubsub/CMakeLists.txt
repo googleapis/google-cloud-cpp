@@ -155,6 +155,8 @@ add_library(
     internal/publisher_tracing_connection.h
     internal/publisher_tracing_stub.cc
     internal/publisher_tracing_stub.h
+    internal/pull_ack_handler_factory.cc
+    internal/pull_ack_handler_factory.h
     internal/pull_lease_manager.h
     internal/rejects_with_ordering_key.cc
     internal/rejects_with_ordering_key.h
@@ -390,6 +392,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_stub_factory_test.cc
         internal/publisher_tracing_connection_test.cc
+        internal/pull_ack_handler_factory_test.cc
         internal/rejects_with_ordering_key_test.cc
         internal/sequential_batch_sink_test.cc
         internal/session_shutdown_manager_test.cc
