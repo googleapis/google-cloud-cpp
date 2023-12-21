@@ -177,6 +177,29 @@ TEST(PullAckHandlerTest, NackPermanentError) {
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
 
+TEST(AckHandlerTest, Subscription) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  auto mock = std::make_shared<MockSubscriberStub>();
+  AsyncSequencer<bool> aseq;
+  auto cq = MakeMockCompletionQueue(aseq);
+  auto handler = std::make_unique<DefaultPullAckHandler>(
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
+
+  EXPECT_EQ(handler->subscription(), subscription);
+}
+
+TEST(AckHandlerTest, AckId) {
+  auto mock = std::make_shared<MockSubscriberStub>();
+  AsyncSequencer<bool> aseq;
+  auto cq = MakeMockCompletionQueue(aseq);
+  auto handler = std::make_unique<DefaultPullAckHandler>(
+      cq, mock, MakeTestOptions(),
+      pubsub::Subscription("test-project", "test-subscription"), "test-ack-id",
+      42);
+
+  EXPECT_EQ(handler->ack_id(), "test-ack-id");
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

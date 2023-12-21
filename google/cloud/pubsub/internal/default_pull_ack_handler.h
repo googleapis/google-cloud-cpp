@@ -49,6 +49,8 @@ class DefaultPullAckHandler : public pubsub::PullAckHandler::Impl {
   future<Status> ack() override;
   future<Status> nack() override;
   std::int32_t delivery_attempt() const override;
+  std::string ack_id() const override;
+  pubsub::Subscription subscription() const override;
 
  private:
   CompletionQueue cq_;
