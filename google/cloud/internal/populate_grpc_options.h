@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_POPULATE_GRPC_OPTIONS_H
 
 #include "google/cloud/options.h"
-#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <string>
 
@@ -43,9 +42,6 @@ namespace internal {
  * @return opts with some common defaults set.
  */
 Options PopulateGrpcOptions(Options opts, std::string const& emulator_env_var);
-
-/// Compute the default value for the tracing options.
-TracingOptions DefaultTracingOptions();
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

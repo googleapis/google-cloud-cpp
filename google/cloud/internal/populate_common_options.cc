@@ -83,6 +83,12 @@ std::set<std::string> DefaultTracingComponents() {
   return absl::StrSplit(*tracing, ',');
 }
 
+TracingOptions DefaultTracingOptions() {
+  auto tracing_options = GetEnv("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
+  if (!tracing_options) return {};
+  return TracingOptions{}.SetOptions(*tracing_options);
+}
+
 Options MakeAuthOptions(Options const& options) {
   Options opts;
   if (options.has<OpenTelemetryTracingOption>()) {
