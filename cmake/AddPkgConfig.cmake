@@ -42,10 +42,15 @@ endmacro ()
 # * ARGN: the names of any pkgconfig modules the generated module depends on
 #
 function (google_cloud_cpp_add_pkgconfig library name description)
-    set(target "google_cloud_cpp_${library}")
+    cmake_parse_arguments(_opt "WITH_SHORT_TARGET" "" "" ${ARGN})
+    if (_opt_WITH_SHORT_TARGET)
+        set(target "${library}")
+    else ()
+        set(target "google_cloud_cpp_${library}")
+    endif ()
     set(GOOGLE_CLOUD_CPP_PC_NAME "${name}")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION "${description}")
-    string(JOIN " " GOOGLE_CLOUD_CPP_PC_REQUIRES ${ARGN})
+    string(JOIN " " GOOGLE_CLOUD_CPP_PC_REQUIRES ${_opt_UNPARSED_ARGUMENTS})
     google_cloud_cpp_set_pkgconfig_paths()
     get_target_property(target_type ${target} TYPE)
     if ("${target_type}" STREQUAL "INTERFACE_LIBRARY")
@@ -53,7 +58,7 @@ function (google_cloud_cpp_add_pkgconfig library name description)
         # files to link against with `-l`.
         set(GOOGLE_CLOUD_CPP_PC_LIBS "")
     else ()
-        set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
+        set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_${library}")
     endif ()
     get_target_property(target_defs ${target} INTERFACE_COMPILE_DEFINITIONS)
     if (target_defs)
@@ -64,9 +69,9 @@ function (google_cloud_cpp_add_pkgconfig library name description)
 
     # Create and install the pkg-config files.
     configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-                   "${target}.pc" @ONLY)
+                   "google_cloud_cpp_${library}.pc" @ONLY)
     install(
-        FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_${library}.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
         COMPONENT google_cloud_cpp_development)
 endfunction ()

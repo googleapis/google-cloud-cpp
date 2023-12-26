@@ -24,8 +24,9 @@ function (compute_service_library dir library)
         "${dir}internal/*")
     list(SORT service_source_files)
 
-    string(REPLACE "google_cloud_cpp_" "" alias "${library}")
     add_library(${library} ${service_source_files})
+    set_target_properties(${library} PROPERTIES OUTPUT_NAME
+                                                "google_cloud_cpp_${library}")
     target_include_directories(
         ${library}
         PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -37,14 +38,14 @@ function (compute_service_library dir library)
     google_cloud_cpp_add_common_options(${library})
     set_target_properties(
         ${library}
-        PROPERTIES EXPORT_NAME google-cloud-cpp::${alias}
+        PROPERTIES EXPORT_NAME google-cloud-cpp::${library}
                    VERSION "${PROJECT_VERSION}"
                    SOVERSION "${PROJECT_VERSION_MAJOR}")
     target_compile_options(${library}
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
     google_cloud_cpp_install_headers(${library} "include/google/cloud/compute")
 
-    add_library(google-cloud-cpp::${alias} ALIAS ${library})
+    add_library(google-cloud-cpp::${library} ALIAS ${library})
 endfunction ()
 
 include(GoogleapisConfig)
@@ -69,8 +70,7 @@ include(GoogleCloudCppDoxygen)
 
 foreach (dir IN LISTS service_dirs operation_service_dirs)
     string(REPLACE "/v1/" "" short_dir "${dir}")
-    list(APPEND compute_proto_lib_targets
-         "google_cloud_cpp_compute_${short_dir}_protos")
+    list(APPEND compute_proto_lib_targets "compute_${short_dir}_protos")
 endforeach ()
 
 set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
@@ -81,25 +81,24 @@ google_cloud_cpp_doxygen_targets("compute" THREADED DEPENDS cloud-docs
 foreach (dir IN LISTS operation_service_dirs)
     string(REPLACE "/v1/" "" short_dir "${dir}")
     compute_service_library(
-        ${dir} google_cloud_cpp_compute_${short_dir} DEPS
+        ${dir} compute_${short_dir} DEPS
         google-cloud-cpp::rest_protobuf_internal
         google-cloud-cpp::compute_${short_dir}_protos)
-    list(APPEND compute_operation_lib_targets
-         "google_cloud_cpp_compute_${short_dir}")
+    list(APPEND compute_operation_lib_targets "compute_${short_dir}")
 endforeach ()
 
 foreach (dir IN LISTS service_dirs)
     string(REPLACE "/v1/" "" short_dir "${dir}")
     compute_service_library(
         ${dir}
-        google_cloud_cpp_compute_${short_dir}
+        compute_${short_dir}
         DEPS
         google-cloud-cpp::compute_${short_dir}_protos
         google-cloud-cpp::compute_global_operations
         google-cloud-cpp::compute_global_organization_operations
         google-cloud-cpp::compute_region_operations
         google-cloud-cpp::compute_zone_operations)
-    list(APPEND compute_lib_targets "google_cloud_cpp_compute_${short_dir}")
+    list(APPEND compute_lib_targets "compute_${short_dir}")
 endforeach ()
 
 add_library(google_cloud_cpp_compute INTERFACE)
@@ -208,6 +207,7 @@ foreach (dir IN LISTS operation_service_dirs)
         "compute_${short_dir}"
         "The Cloud Compute API C++ Client Library"
         "Provides C++ APIs to use the Cloud Compute API."
+        WITH_SHORT_TARGET
         "google_cloud_cpp_rest_internal"
         "google_cloud_cpp_rest_protobuf_internal"
         "google_cloud_cpp_grpc_utils"
@@ -221,6 +221,7 @@ foreach (dir IN LISTS service_dirs)
         "compute_${short_dir}"
         "The Cloud Compute API C++ Client Library"
         "Provides C++ APIs to use the Cloud Compute API."
+        WITH_SHORT_TARGET
         "google_cloud_cpp_compute_global_operations"
         "google_cloud_cpp_compute_global_organization_operations"
         "google_cloud_cpp_compute_region_operations"
@@ -228,6 +229,8 @@ foreach (dir IN LISTS service_dirs)
         "google_cloud_cpp_compute_${short_dir}_protos")
 endforeach ()
 
+set(compute_pc_modules ${compute_lib_targets})
+list(TRANSFORM compute_pc_modules PREPEND "google_cloud_cpp_")
 google_cloud_cpp_add_pkgconfig(
     "compute" "The Cloud Compute API C++ Client Library"
-    "Provides C++ APIs to use the Cloud Compute API." ${compute_lib_targets})
+    "Provides C++ APIs to use the Cloud Compute API." ${compute_pc_modules})

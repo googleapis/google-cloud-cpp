@@ -22,13 +22,19 @@ function (compute_proto_library dir library)
         LIST_DIRECTORIES false
         RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.proto")
     list(SORT proto_files)
-    string(REPLACE "google_cloud_cpp_" "" alias "${library}")
     google_cloud_cpp_proto_library(
         "${library}" "${proto_files}" PROTO_PATH_DIRECTORIES
         "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}"
         "${PROJECT_SOURCE_DIR}/protos")
-    external_googleapis_set_version_and_alias("${alias}")
-    target_link_libraries("${library}" PUBLIC "${_opt_DEPS}")
+    set_target_properties(${library} PROPERTIES OUTPUT_NAME
+                                                "google_cloud_cpp_${library}")
+    add_library(google-cloud-cpp::${library} ALIAS ${library})
+    set_target_properties(
+        ${library}
+        PROPERTIES EXPORT_NAME google-cloud-cpp::${library}
+                   VERSION "${PROJECT_VERSION}"
+                   SOVERSION "${PROJECT_VERSION_MAJOR}")
+    target_link_libraries(${library} PUBLIC ${_opt_DEPS})
     # Some files are too big for the MSVC defaults.
     if (MSVC)
         target_compile_options("${library}" PRIVATE "/bigobj")
@@ -36,6 +42,12 @@ function (compute_proto_library dir library)
     google_cloud_cpp_install_proto_library_protos(
         "${library}" "${PROJECT_SOURCE_DIR}/protos")
     google_cloud_cpp_install_proto_library_headers("${library}")
+
+    # In some configs we need to only generate the protocol definitions from
+    # `*.proto` files. We achieve this by having this target depend on all proto
+    # libraries. It has to be defined at the top level of the project.
+    add_dependencies(google-cloud-cpp-protos ${library})
+    add_dependencies("${library}" googleapis_download)
 endfunction ()
 
 include(${PROJECT_SOURCE_DIR}/google/cloud/compute/service_dirs.cmake)
@@ -46,17 +58,14 @@ google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 google_cloud_cpp_load_protodeps(
     deps "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/compute.deps")
 
-compute_proto_library("v1/internal/" "google_cloud_cpp_compute_internal_protos"
-                      DEPS "${deps}")
+compute_proto_library("v1/internal/" "compute_internal_protos" DEPS "${deps}")
 
 foreach (dir IN LISTS service_dirs operation_service_dirs)
     string(REPLACE "/v1/" "" short_dir "${dir}")
     compute_proto_library(
-        ${dir} "google_cloud_cpp_compute_${short_dir}_protos" PROTO_FILES
-        "${${short_dir}_proto_files}" DEPS
-        google_cloud_cpp_compute_internal_protos)
-    list(APPEND compute_proto_lib_targets
-         "google_cloud_cpp_compute_${short_dir}_protos")
+        ${dir} "compute_${short_dir}_protos" PROTO_FILES
+        "${${short_dir}_proto_files}" DEPS compute_internal_protos)
+    list(APPEND compute_proto_lib_targets "compute_${short_dir}_protos")
 endforeach ()
 
 # Get the destination directories based on the GNU recommendations.
@@ -71,8 +80,7 @@ install(
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(
-    TARGETS ${compute_proto_lib_targets}
-            google_cloud_cpp_compute_internal_protos
+    TARGETS ${compute_proto_lib_targets} compute_internal_protos
     EXPORT google_cloud_cpp_compute_protos-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -100,7 +108,7 @@ install(
 
 google_cloud_cpp_add_pkgconfig(
     "compute_internal_protos" "The Cloud Compute API C++ Client Library"
-    "Provides C++ APIs to use the Cloud Compute API."
+    "Provides C++ APIs to use the Cloud Compute API." WITH_SHORT_TARGET
     "google_cloud_cpp_cloud_extended_operations_protos")
 
 foreach (dir IN LISTS service_dirs operation_service_dirs)
@@ -109,6 +117,7 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
         "compute_${short_dir}_protos"
         "The Cloud Compute API C++ Client Library"
         "Provides C++ APIs to use the Cloud Compute API."
+        WITH_SHORT_TARGET
         "google_cloud_cpp_compute_internal_protos"
         "google_cloud_cpp_api_annotations_protos"
         "google_cloud_cpp_api_client_protos"
