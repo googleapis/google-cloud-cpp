@@ -16,6 +16,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/populate_common_options.h"
 
 namespace google {
 namespace cloud {
@@ -37,12 +38,6 @@ Options PopulateGrpcOptions(Options opts, std::string const& emulator_env_var) {
     opts.set<GrpcTracingOptionsOption>(DefaultTracingOptions());
   }
   return opts;
-}
-
-TracingOptions DefaultTracingOptions() {
-  auto tracing_options = GetEnv("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
-  if (!tracing_options) return {};
-  return TracingOptions{}.SetOptions(*tracing_options);
 }
 
 }  // namespace internal

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_POPULATE_COMMON_OPTIONS_H
 
 #include "google/cloud/options.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <string>
 
@@ -60,6 +61,9 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
 
 /// Compute the default value for the tracing components.
 std::set<std::string> DefaultTracingComponents();
+
+/// Compute the default value for the tracing options.
+TracingOptions DefaultTracingOptions();
 
 /**
  * Given client options, returns a minimal set of matching options to be used by
