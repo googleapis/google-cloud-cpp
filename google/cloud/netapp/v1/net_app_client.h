@@ -392,7 +392,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L114}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L475}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -429,7 +429,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L114}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L475}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -464,8 +464,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.ListVolumesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L117}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L224}
+  /// [google.cloud.netapp.v1.ListVolumesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L119}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L226}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::Volume> ListVolumes(
@@ -503,8 +503,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.ListVolumesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L117}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L224}
+  /// [google.cloud.netapp.v1.ListVolumesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L119}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L226}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::Volume> ListVolumes(
@@ -528,8 +528,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.GetVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L153}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L224}
+  /// [google.cloud.netapp.v1.GetVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L155}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L226}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::Volume> GetVolume(std::string const& name,
@@ -558,8 +558,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.GetVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L153}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L224}
+  /// [google.cloud.netapp.v1.GetVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L155}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L226}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::Volume> GetVolume(
@@ -595,8 +595,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.CreateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L162}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L224}
+  /// [google.cloud.netapp.v1.CreateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L164}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> CreateVolume(
@@ -634,8 +634,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.CreateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L162}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L224}
+  /// [google.cloud.netapp.v1.CreateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L164}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> CreateVolume(
@@ -672,8 +672,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.UpdateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L181}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L224}
+  /// [google.cloud.netapp.v1.UpdateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L183}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> UpdateVolume(
@@ -710,8 +710,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.UpdateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L181}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L224}
+  /// [google.cloud.netapp.v1.UpdateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L183}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> UpdateVolume(
@@ -743,8 +743,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L195}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L475}
+  /// [google.cloud.netapp.v1.DeleteVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L197}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteVolume(
@@ -780,8 +780,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L195}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L475}
+  /// [google.cloud.netapp.v1.DeleteVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L197}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteVolume(
@@ -820,8 +820,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.RevertVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L209}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L224}
+  /// [google.cloud.netapp.v1.RevertVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L211}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
@@ -1065,7 +1065,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteSnapshotRequest]: @googleapis_reference_link{google/cloud/netapp/v1/snapshot.proto#L102}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L475}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteSnapshot(
@@ -1102,7 +1102,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteSnapshotRequest]: @googleapis_reference_link{google/cloud/netapp/v1/snapshot.proto#L102}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L475}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteSnapshot(
@@ -1494,7 +1494,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteActiveDirectoryRequest]: @googleapis_reference_link{google/cloud/netapp/v1/active_directory.proto#L111}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L475}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1531,7 +1531,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteActiveDirectoryRequest]: @googleapis_reference_link{google/cloud/netapp/v1/active_directory.proto#L111}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L475}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1917,7 +1917,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteKmsConfigRequest]: @googleapis_reference_link{google/cloud/netapp/v1/kms.proto#L113}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L475}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1954,7 +1954,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteKmsConfigRequest]: @googleapis_reference_link{google/cloud/netapp/v1/kms.proto#L113}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L475}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1991,7 +1991,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.ListReplicationsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L205}
+  /// [google.cloud.netapp.v1.ListReplicationsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L207}
   /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L64}
   ///
   // clang-format on
@@ -2030,7 +2030,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.ListReplicationsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L205}
+  /// [google.cloud.netapp.v1.ListReplicationsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L207}
   /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L64}
   ///
   // clang-format on
@@ -2057,7 +2057,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.GetReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L244}
+  /// [google.cloud.netapp.v1.GetReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L246}
   /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L64}
   ///
   // clang-format on
@@ -2087,7 +2087,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.GetReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L244}
+  /// [google.cloud.netapp.v1.GetReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L246}
   /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L64}
   ///
   // clang-format on
@@ -2125,7 +2125,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.CreateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L281}
+  /// [google.cloud.netapp.v1.CreateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L283}
   /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L64}
   ///
   // clang-format on
@@ -2164,7 +2164,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.CreateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L281}
+  /// [google.cloud.netapp.v1.CreateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L283}
   /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L64}
   ///
   // clang-format on
@@ -2198,8 +2198,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L301}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L475}
+  /// [google.cloud.netapp.v1.DeleteReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L303}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -2235,8 +2235,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L301}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L475}
+  /// [google.cloud.netapp.v1.DeleteReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L303}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -2272,7 +2272,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L64}
-  /// [google.cloud.netapp.v1.UpdateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L313}
+  /// [google.cloud.netapp.v1.UpdateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L315}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> UpdateReplication(
@@ -2310,7 +2310,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L64}
-  /// [google.cloud.netapp.v1.UpdateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L313}
+  /// [google.cloud.netapp.v1.UpdateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L315}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> UpdateReplication(
@@ -2348,7 +2348,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L64}
-  /// [google.cloud.netapp.v1.StopReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L324}
+  /// [google.cloud.netapp.v1.StopReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L326}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> StopReplication(
@@ -2386,7 +2386,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L64}
-  /// [google.cloud.netapp.v1.ResumeReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L344}
+  /// [google.cloud.netapp.v1.ResumeReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L346}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> ResumeReplication(
@@ -2425,13 +2425,1103 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L64}
-  /// [google.cloud.netapp.v1.ReverseReplicationDirectionRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L357}
+  /// [google.cloud.netapp.v1.ReverseReplicationDirectionRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L359}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>>
   ReverseReplicationDirection(
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates new backup vault
+  ///
+  /// @param parent  Required. The location to create the backup vaults, in the format
+  ///  `projects/{project_id}/locations/{location}`
+  /// @param backup_vault  Required. A backupVault resource
+  /// @param backup_vault_id  Required. The ID to use for the backupVault.
+  ///  The ID must be unique within the specified location.
+  ///  The max supported length is 63 characters.
+  ///  This value must start with a lowercase letter followed by up to 62
+  ///  lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
+  ///  Values that do not match this pattern will trigger an INVALID_ARGUMENT
+  ///  error.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.BackupVault] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
+  /// [google.cloud.netapp.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L133}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::BackupVault>> CreateBackupVault(
+      std::string const& parent,
+      google::cloud::netapp::v1::BackupVault const& backup_vault,
+      std::string const& backup_vault_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates new backup vault
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.CreateBackupVaultRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.BackupVault] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
+  /// [google.cloud.netapp.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L133}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::BackupVault>> CreateBackupVault(
+      google::cloud::netapp::v1::CreateBackupVaultRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the description of the specified backup vault
+  ///
+  /// @param name  Required. The backupVault resource name, in the format
+  ///  `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.netapp.v1.BackupVault])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
+  /// [google.cloud.netapp.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L82}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the description of the specified backup vault
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.GetBackupVaultRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.netapp.v1.BackupVault])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
+  /// [google.cloud.netapp.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L82}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
+      google::cloud::netapp::v1::GetBackupVaultRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns list of all available backup vaults.
+  ///
+  /// @param parent  Required. The location for which to retrieve backupVault information,
+  ///  in the format
+  ///  `projects/{project_id}/locations/{location}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.netapp.v1.BackupVault], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
+  /// [google.cloud.netapp.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L94}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::netapp::v1::BackupVault> ListBackupVaults(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns list of all available backup vaults.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.ListBackupVaultsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.netapp.v1.BackupVault], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
+  /// [google.cloud.netapp.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L94}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::netapp::v1::BackupVault> ListBackupVaults(
+      google::cloud::netapp::v1::ListBackupVaultsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the settings of a specific backup vault.
+  ///
+  /// @param backup_vault  Required. The backupVault being updated
+  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  ///  Backup resource to be updated.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.BackupVault] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
+  /// [google.cloud.netapp.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L169}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::BackupVault>> UpdateBackupVault(
+      google::cloud::netapp::v1::BackupVault const& backup_vault,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the settings of a specific backup vault.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.UpdateBackupVaultRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.BackupVault] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
+  /// [google.cloud.netapp.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L169}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::BackupVault>> UpdateBackupVault(
+      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Warning! This operation will permanently delete the backup vault.
+  ///
+  /// @param name  Required. The backupVault resource name, in the format
+  ///  `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L157}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteBackupVault(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Warning! This operation will permanently delete the backup vault.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.DeleteBackupVaultRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L157}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteBackupVault(
+      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a backup from the volume specified in the request
+  /// The backup can be created from the given snapshot if specified in the
+  /// request. If no snapshot specified, there'll be a new snapshot taken to
+  /// initiate the backup creation.
+  ///
+  /// @param parent  Required. The NetApp backupVault to create the backups of, in the format
+  ///  `projects/*/locations/*/backupVaults/{backup_vault_id}`
+  /// @param backup  Required. A backup resource
+  /// @param backup_id  Required. The ID to use for the backup.
+  ///  The ID must be unique within the specified backupVault.
+  ///  This value must start with a lowercase letter followed by up to 62
+  ///  lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
+  ///  Values that do not match this pattern will trigger an INVALID_ARGUMENT
+  ///  error.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.Backup] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
+  /// [google.cloud.netapp.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L190}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
+      std::string const& parent,
+      google::cloud::netapp::v1::Backup const& backup,
+      std::string const& backup_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a backup from the volume specified in the request
+  /// The backup can be created from the given snapshot if specified in the
+  /// request. If no snapshot specified, there'll be a new snapshot taken to
+  /// initiate the backup creation.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.CreateBackupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.Backup] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
+  /// [google.cloud.netapp.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L190}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
+      google::cloud::netapp::v1::CreateBackupRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the description of the specified backup
+  ///
+  /// @param name  Required. The backup resource name, in the format
+  ///  `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}/backups/{backup_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.netapp.v1.Backup])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
+  /// [google.cloud.netapp.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L180}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::netapp::v1::Backup> GetBackup(std::string const& name,
+                                                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the description of the specified backup
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.GetBackupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.netapp.v1.Backup])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
+  /// [google.cloud.netapp.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L180}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::netapp::v1::Backup> GetBackup(
+      google::cloud::netapp::v1::GetBackupRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns descriptions of all backups for a backupVault.
+  ///
+  /// @param parent  Required. The backupVault for which to retrieve backup information,
+  ///  in the format
+  ///  `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`.
+  ///  To retrieve backup information for all locations, use "-" for the
+  ///  `{location}` value.
+  ///  To retrieve backup information for all backupVaults, use "-" for the
+  ///  `{backup_vault_id}` value.
+  ///  To retrieve backup information for a volume, use "-" for the
+  ///  `{backup_vault_id}` value and specify volume full name with the filter.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.netapp.v1.Backup], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
+  /// [google.cloud.netapp.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L130}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::netapp::v1::Backup> ListBackups(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns descriptions of all backups for a backupVault.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.ListBackupsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.netapp.v1.Backup], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
+  /// [google.cloud.netapp.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L130}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::netapp::v1::Backup> ListBackups(
+      google::cloud::netapp::v1::ListBackupsRequest request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Warning! This operation will permanently delete the backup.
+  ///
+  /// @param name  Required. The backup resource name, in the format
+  ///  `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}/backups/{backup_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L213}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteBackup(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Warning! This operation will permanently delete the backup.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.DeleteBackupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L213}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteBackup(
+      google::cloud::netapp::v1::DeleteBackupRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update backup with full spec.
+  ///
+  /// @param backup  Required. The backup being updated
+  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  ///  Backup resource to be updated.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.Backup] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
+  /// [google.cloud.netapp.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L223}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
+      google::cloud::netapp::v1::Backup const& backup,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update backup with full spec.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.UpdateBackupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.Backup] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
+  /// [google.cloud.netapp.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L223}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
+      google::cloud::netapp::v1::UpdateBackupRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates new backup policy
+  ///
+  /// @param parent  Required. The location to create the backup policies of, in the format
+  ///  `projects/{project_id}/locations/{location}`
+  /// @param backup_policy  Required. A backupPolicy resource
+  /// @param backup_policy_id  Required. The ID to use for the backup policy.
+  ///  The ID must be unique within the specified location.
+  ///  This value must start with a lowercase letter followed by up to 62
+  ///  lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.BackupPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupPolicy]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L33}
+  /// [google.cloud.netapp.v1.CreateBackupPolicyRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L102}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::BackupPolicy>> CreateBackupPolicy(
+      std::string const& parent,
+      google::cloud::netapp::v1::BackupPolicy const& backup_policy,
+      std::string const& backup_policy_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates new backup policy
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.CreateBackupPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.BackupPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupPolicy]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L33}
+  /// [google.cloud.netapp.v1.CreateBackupPolicyRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L102}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::BackupPolicy>> CreateBackupPolicy(
+      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the description of the specified backup policy by backup_policy_id.
+  ///
+  /// @param name  Required. The backupPolicy resource name, in the format
+  ///  `projects/{project_id}/locations/{location}/backupPolicies/{backup_policy_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.netapp.v1.BackupPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupPolicy]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L33}
+  /// [google.cloud.netapp.v1.GetBackupPolicyRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L123}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::netapp::v1::BackupPolicy> GetBackupPolicy(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the description of the specified backup policy by backup_policy_id.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.GetBackupPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.netapp.v1.BackupPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupPolicy]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L33}
+  /// [google.cloud.netapp.v1.GetBackupPolicyRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L123}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::netapp::v1::BackupPolicy> GetBackupPolicy(
+      google::cloud::netapp::v1::GetBackupPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns list of all available backup policies.
+  ///
+  /// @param parent  Required. Parent value for ListBackupPoliciesRequest
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.netapp.v1.BackupPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupPolicy]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L33}
+  /// [google.cloud.netapp.v1.ListBackupPoliciesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L135}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::netapp::v1::BackupPolicy> ListBackupPolicies(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns list of all available backup policies.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.ListBackupPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.netapp.v1.BackupPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupPolicy]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L33}
+  /// [google.cloud.netapp.v1.ListBackupPoliciesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L135}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::netapp::v1::BackupPolicy> ListBackupPolicies(
+      google::cloud::netapp::v1::ListBackupPoliciesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates settings of a specific backup policy.
+  ///
+  /// @param backup_policy  Required. The backup policy being updated
+  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  ///  Backup Policy resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.BackupPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupPolicy]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L33}
+  /// [google.cloud.netapp.v1.UpdateBackupPolicyRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L171}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::BackupPolicy>> UpdateBackupPolicy(
+      google::cloud::netapp::v1::BackupPolicy const& backup_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates settings of a specific backup policy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.UpdateBackupPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.BackupPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.BackupPolicy]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L33}
+  /// [google.cloud.netapp.v1.UpdateBackupPolicyRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L171}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::BackupPolicy>> UpdateBackupPolicy(
+      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Warning! This operation will permanently delete the backup policy.
+  ///
+  /// @param name  Required. The backup policy resource name, in the format
+  ///  `projects/{project_id}/locations/{location}/backupPolicies/{backup_policy_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.DeleteBackupPolicyRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L185}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteBackupPolicy(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Warning! This operation will permanently delete the backup policy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.DeleteBackupPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.DeleteBackupPolicyRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L185}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteBackupPolicy(
+      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request,
       Options opts = {});
 
  private:

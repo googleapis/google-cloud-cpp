@@ -144,6 +144,51 @@ class NetAppConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ReverseReplicationDirection(
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request);
+
+  virtual google::cloud::Idempotency CreateBackupVault(
+      google::cloud::netapp::v1::CreateBackupVaultRequest const& request);
+
+  virtual google::cloud::Idempotency GetBackupVault(
+      google::cloud::netapp::v1::GetBackupVaultRequest const& request);
+
+  virtual google::cloud::Idempotency ListBackupVaults(
+      google::cloud::netapp::v1::ListBackupVaultsRequest request);
+
+  virtual google::cloud::Idempotency UpdateBackupVault(
+      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteBackupVault(
+      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request);
+
+  virtual google::cloud::Idempotency CreateBackup(
+      google::cloud::netapp::v1::CreateBackupRequest const& request);
+
+  virtual google::cloud::Idempotency GetBackup(
+      google::cloud::netapp::v1::GetBackupRequest const& request);
+
+  virtual google::cloud::Idempotency ListBackups(
+      google::cloud::netapp::v1::ListBackupsRequest request);
+
+  virtual google::cloud::Idempotency DeleteBackup(
+      google::cloud::netapp::v1::DeleteBackupRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateBackup(
+      google::cloud::netapp::v1::UpdateBackupRequest const& request);
+
+  virtual google::cloud::Idempotency CreateBackupPolicy(
+      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency GetBackupPolicy(
+      google::cloud::netapp::v1::GetBackupPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency ListBackupPolicies(
+      google::cloud::netapp::v1::ListBackupPoliciesRequest request);
+
+  virtual google::cloud::Idempotency UpdateBackupPolicy(
+      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteBackupPolicy(
+      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request);
 };
 
 std::unique_ptr<NetAppConnectionIdempotencyPolicy>

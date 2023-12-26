@@ -357,6 +357,143 @@ NetAppTracingConnection::ReverseReplicationDirection(
                            child_->ReverseReplicationDirection(request));
 }
 
+future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+NetAppTracingConnection::CreateBackupVault(
+    google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::CreateBackupVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateBackupVault(request));
+}
+
+StatusOr<google::cloud::netapp::v1::BackupVault>
+NetAppTracingConnection::GetBackupVault(
+    google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::GetBackupVault");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBackupVault(request));
+}
+
+StreamRange<google::cloud::netapp::v1::BackupVault>
+NetAppTracingConnection::ListBackupVaults(
+    google::cloud::netapp::v1::ListBackupVaultsRequest request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::ListBackupVaults");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListBackupVaults(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::netapp::v1::BackupVault>(std::move(span), std::move(sr));
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+NetAppTracingConnection::UpdateBackupVault(
+    google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::UpdateBackupVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateBackupVault(request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppTracingConnection::DeleteBackupVault(
+    google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::DeleteBackupVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteBackupVault(request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Backup>>
+NetAppTracingConnection::CreateBackup(
+    google::cloud::netapp::v1::CreateBackupRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::CreateBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateBackup(request));
+}
+
+StatusOr<google::cloud::netapp::v1::Backup> NetAppTracingConnection::GetBackup(
+    google::cloud::netapp::v1::GetBackupRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::GetBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBackup(request));
+}
+
+StreamRange<google::cloud::netapp::v1::Backup>
+NetAppTracingConnection::ListBackups(
+    google::cloud::netapp::v1::ListBackupsRequest request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::ListBackups");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListBackups(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::netapp::v1::Backup>(
+      std::move(span), std::move(sr));
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppTracingConnection::DeleteBackup(
+    google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::DeleteBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteBackup(request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Backup>>
+NetAppTracingConnection::UpdateBackup(
+    google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::UpdateBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateBackup(request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+NetAppTracingConnection::CreateBackupPolicy(
+    google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::CreateBackupPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateBackupPolicy(request));
+}
+
+StatusOr<google::cloud::netapp::v1::BackupPolicy>
+NetAppTracingConnection::GetBackupPolicy(
+    google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::GetBackupPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBackupPolicy(request));
+}
+
+StreamRange<google::cloud::netapp::v1::BackupPolicy>
+NetAppTracingConnection::ListBackupPolicies(
+    google::cloud::netapp::v1::ListBackupPoliciesRequest request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::ListBackupPolicies");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListBackupPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::netapp::v1::BackupPolicy>(std::move(span), std::move(sr));
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+NetAppTracingConnection::UpdateBackupPolicy(
+    google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::UpdateBackupPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateBackupPolicy(request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppTracingConnection::DeleteBackupPolicy(
+    google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::DeleteBackupPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteBackupPolicy(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<netapp_v1::NetAppConnection> MakeNetAppTracingConnection(

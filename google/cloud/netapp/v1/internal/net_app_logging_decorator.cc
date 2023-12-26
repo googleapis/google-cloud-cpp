@@ -563,6 +563,222 @@ NetAppLogging::AsyncReverseReplicationDirection(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncCreateBackupVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
+        return child_->AsyncCreateBackupVault(cq, std::move(context), options,
+                                              request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::BackupVault> NetAppLogging::GetBackupVault(
+    grpc::ClientContext& context,
+    google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
+        return child_->GetBackupVault(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::ListBackupVaultsResponse>
+NetAppLogging::ListBackupVaults(
+    grpc::ClientContext& context,
+    google::cloud::netapp::v1::ListBackupVaultsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::netapp::v1::ListBackupVaultsRequest const& request) {
+        return child_->ListBackupVaults(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncUpdateBackupVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
+        return child_->AsyncUpdateBackupVault(cq, std::move(context), options,
+                                              request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncDeleteBackupVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
+        return child_->AsyncDeleteBackupVault(cq, std::move(context), options,
+                                              request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncCreateBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::netapp::v1::CreateBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::netapp::v1::CreateBackupRequest const& request) {
+        return child_->AsyncCreateBackup(cq, std::move(context), options,
+                                         request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::Backup> NetAppLogging::GetBackup(
+    grpc::ClientContext& context,
+    google::cloud::netapp::v1::GetBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::netapp::v1::GetBackupRequest const& request) {
+        return child_->GetBackup(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::ListBackupsResponse>
+NetAppLogging::ListBackups(
+    grpc::ClientContext& context,
+    google::cloud::netapp::v1::ListBackupsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::netapp::v1::ListBackupsRequest const& request) {
+        return child_->ListBackups(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncDeleteBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+        return child_->AsyncDeleteBackup(cq, std::move(context), options,
+                                         request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncUpdateBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+        return child_->AsyncUpdateBackup(cq, std::move(context), options,
+                                         request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncCreateBackupPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
+        return child_->AsyncCreateBackupPolicy(cq, std::move(context), options,
+                                               request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::BackupPolicy>
+NetAppLogging::GetBackupPolicy(
+    grpc::ClientContext& context,
+    google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
+        return child_->GetBackupPolicy(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::ListBackupPoliciesResponse>
+NetAppLogging::ListBackupPolicies(
+    grpc::ClientContext& context,
+    google::cloud::netapp::v1::ListBackupPoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::netapp::v1::ListBackupPoliciesRequest const& request) {
+        return child_->ListBackupPolicies(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncUpdateBackupPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
+        return child_->AsyncUpdateBackupPolicy(cq, std::move(context), options,
+                                               request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncDeleteBackupPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
+        return child_->AsyncDeleteBackupPolicy(cq, std::move(context), options,
+                                               request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context, Options const& options,

@@ -214,6 +214,81 @@ Idempotency NetAppConnectionIdempotencyPolicy::ReverseReplicationDirection(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetAppConnectionIdempotencyPolicy::CreateBackupVault(
+    google::cloud::netapp::v1::CreateBackupVaultRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::GetBackupVault(
+    google::cloud::netapp::v1::GetBackupVaultRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::ListBackupVaults(
+    google::cloud::netapp::v1::ListBackupVaultsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateBackupVault(
+    google::cloud::netapp::v1::UpdateBackupVaultRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteBackupVault(
+    google::cloud::netapp::v1::DeleteBackupVaultRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::CreateBackup(
+    google::cloud::netapp::v1::CreateBackupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::GetBackup(
+    google::cloud::netapp::v1::GetBackupRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::ListBackups(
+    google::cloud::netapp::v1::ListBackupsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteBackup(
+    google::cloud::netapp::v1::DeleteBackupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateBackup(
+    google::cloud::netapp::v1::UpdateBackupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::CreateBackupPolicy(
+    google::cloud::netapp::v1::CreateBackupPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::GetBackupPolicy(
+    google::cloud::netapp::v1::GetBackupPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::ListBackupPolicies(
+    google::cloud::netapp::v1::ListBackupPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateBackupPolicy(
+    google::cloud::netapp::v1::UpdateBackupPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteBackupPolicy(
+    google::cloud::netapp::v1::DeleteBackupPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<NetAppConnectionIdempotencyPolicy>
 MakeDefaultNetAppConnectionIdempotencyPolicy() {
   return std::make_unique<NetAppConnectionIdempotencyPolicy>();

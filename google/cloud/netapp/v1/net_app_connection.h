@@ -308,6 +308,58 @@ class NetAppConnection {
   ReverseReplicationDirection(
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+  CreateBackupVault(
+      google::cloud::netapp::v1::CreateBackupVaultRequest const& request);
+
+  virtual StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
+      google::cloud::netapp::v1::GetBackupVaultRequest const& request);
+
+  virtual StreamRange<google::cloud::netapp::v1::BackupVault> ListBackupVaults(
+      google::cloud::netapp::v1::ListBackupVaultsRequest request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+  UpdateBackupVault(
+      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteBackupVault(
+      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
+      google::cloud::netapp::v1::CreateBackupRequest const& request);
+
+  virtual StatusOr<google::cloud::netapp::v1::Backup> GetBackup(
+      google::cloud::netapp::v1::GetBackupRequest const& request);
+
+  virtual StreamRange<google::cloud::netapp::v1::Backup> ListBackups(
+      google::cloud::netapp::v1::ListBackupsRequest request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteBackup(google::cloud::netapp::v1::DeleteBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
+      google::cloud::netapp::v1::UpdateBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+  CreateBackupPolicy(
+      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::netapp::v1::BackupPolicy> GetBackupPolicy(
+      google::cloud::netapp::v1::GetBackupPolicyRequest const& request);
+
+  virtual StreamRange<google::cloud::netapp::v1::BackupPolicy>
+  ListBackupPolicies(
+      google::cloud::netapp::v1::ListBackupPoliciesRequest request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+  UpdateBackupPolicy(
+      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteBackupPolicy(
+      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request);
 };
 
 /**
