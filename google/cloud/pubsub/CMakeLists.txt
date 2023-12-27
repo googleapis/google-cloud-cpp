@@ -215,6 +215,8 @@ add_library(
     internal/subscription_session.h
     internal/tracing_batch_sink.cc
     internal/tracing_batch_sink.h
+    internal/tracing_helpers.cc
+    internal/tracing_helpers.h
     internal/tracing_pull_ack_handler.cc
     internal/tracing_pull_ack_handler.h
     message.cc
