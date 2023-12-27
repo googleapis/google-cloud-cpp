@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/internal/subscriber_connection_impl.h"
 #include "google/cloud/pubsub/internal/ack_handler_wrapper.h"
 #include "google/cloud/pubsub/internal/default_pull_ack_handler.h"
+#include "google/cloud/pubsub/internal/pull_ack_handler_factory.h"
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/grpc_options.h"
@@ -74,14 +75,13 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
 
       auto received_message =
           std::move(response->mutable_received_messages()->at(0));
-      auto impl = std::make_unique<pubsub_internal::DefaultPullAckHandler>(
-          background_->cq(), stub_, current, std::move(subscription),
+      auto ack_handler = CreatePullAckHandler(
+          background_->cq(), stub_, std::move(subscription),
           std::move(*received_message.mutable_ack_id()),
-          received_message.delivery_attempt());
+          received_message.delivery_attempt(), current);
       auto message = pubsub_internal::FromProto(
           std::move(*received_message.mutable_message()));
-      return pubsub::PullResponse{pubsub::PullAckHandler(std::move(impl)),
-                                  std::move(message)};
+      return pubsub::PullResponse{std::move(ack_handler), std::move(message)};
     }
     last_status = std::move(response).status();
     if (!retry_policy->OnFailure(last_status)) {
