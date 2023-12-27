@@ -72,6 +72,7 @@ void MaybeAddLinkAttributes(
 }
 
 }  // namespace
+
 class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
  public:
   explicit TracingPullAckHandler(
