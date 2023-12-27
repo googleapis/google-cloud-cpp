@@ -385,6 +385,31 @@ TEST(DefaultPullLeaseManager, ExtendLeasePermanentError) {
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
 
+TEST(DefaultPullLeaseManager, Subscription) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  auto mock = std::make_shared<MockSubscriberStub>();
+  AsyncSequencer<bool> aseq;
+  auto cq = MakeMockCompletionQueue(aseq);
+  MockClock clock;
+  auto manager = std::make_shared<DefaultPullLeaseManager>(
+      cq, mock, Options{}, subscription, "test-ack-id", clock.AsStdFunction());
+
+  EXPECT_EQ(manager->subscription(), subscription);
+}
+
+TEST(DefaultPullLeaseManager, AckId) {
+  auto mock = std::make_shared<MockSubscriberStub>();
+  AsyncSequencer<bool> aseq;
+  auto cq = MakeMockCompletionQueue(aseq);
+  MockClock clock;
+  auto manager = std::make_shared<DefaultPullLeaseManager>(
+      cq, mock, Options{},
+      pubsub::Subscription("test-project", "test-subscription"), "test-ack-id",
+      clock.AsStdFunction());
+
+  EXPECT_EQ(manager->ack_id(), "test-ack-id");
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

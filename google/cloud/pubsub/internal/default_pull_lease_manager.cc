@@ -134,6 +134,12 @@ void DefaultPullLeaseManager::OnLeaseExtended(
   current_lease_ = new_deadline;
 }
 
+std::string DefaultPullLeaseManager::ack_id() const { return ack_id_; }
+
+pubsub::Subscription DefaultPullLeaseManager::subscription() const {
+  return subscription_;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
