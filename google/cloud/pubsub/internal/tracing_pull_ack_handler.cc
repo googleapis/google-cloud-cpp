@@ -17,6 +17,8 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/status.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "opentelemetry/context/runtime_context.h"
+#include "opentelemetry/trace/context.h"
 #include "opentelemetry/trace/semantic_conventions.h"
 #include "opentelemetry/trace/span.h"
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -30,10 +32,46 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 using Attributes =
     std::vector<std::pair<opentelemetry::nostd::string_view,
                           opentelemetry::common::AttributeValue>>;
+
+namespace {
+
+auto CreateLinks() {
+  using Links =
+      std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+  auto consumer_span_context =
+      opentelemetry::trace::GetSpan(
+          opentelemetry::context::RuntimeContext::GetCurrent())
+          ->GetContext();
+  if (consumer_span_context.IsSampled() && consumer_span_context.IsValid()) {
+    return Links{{consumer_span_context, Attributes{}}};
+  }
+#endif
+  return Links{};
+}
+
+void MaybeAddLinkAttributes(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span) {
+#if OPENTELEMETRY_ABI_VERSION_NO < 2
+  auto consumer_span_context =
+      opentelemetry::trace::GetSpan(
+          opentelemetry::context::RuntimeContext::GetCurrent())
+          ->GetContext();
+  if (consumer_span_context.IsSampled() && consumer_span_context.IsValid()) {
+    span->SetAttribute("gcp_pubsub.receive.trace_id",
+                       internal::ToString(consumer_span_context.trace_id()));
+    span->SetAttribute("gcp_pubsub.receive.span_id",
+                       internal::ToString(consumer_span_context.span_id()));
+  }
+#else
+  (void)span;
+#endif
+}
+
+}  // namespace
 
 class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
  public:
@@ -65,7 +103,8 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
     attributes.emplace_back(
         std::make_pair(sc::kCodeFunction, "pubsub::PullAckHandler::ack"));
     auto span = internal::MakeSpan(subscription.subscription_id() + " settle",
-                                   attributes, options);
+                                   attributes, CreateLinks(), options);
+    MaybeAddLinkAttributes(span);
     auto scope = internal::OTelScope(span);
 
     return child_->ack().then(
@@ -88,7 +127,8 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
     attributes.emplace_back(
         std::make_pair(sc::kCodeFunction, "pubsub::PullAckHandler::nack"));
     auto span = internal::MakeSpan(subscription.subscription_id() + " settle",
-                                   attributes, options);
+                                   attributes, CreateLinks(), options);
+    MaybeAddLinkAttributes(span);
     auto scope = internal::OTelScope(span);
 
     return child_->nack().then(
