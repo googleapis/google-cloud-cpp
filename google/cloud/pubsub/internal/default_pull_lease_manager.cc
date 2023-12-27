@@ -73,17 +73,26 @@ void DefaultPullLeaseManager::StartLeaseLoop() {
   auto const extension = (std::min)(remaining, es);
   if (extension == std::chrono::seconds(0)) return;
 
+  auto self = std::weak_ptr<DefaultPullLeaseManager>(shared_from_this());
+  ExtendLease(std::move(s), now, extension)
+      .then([w = std::move(self), deadline = now + extension](auto f) {
+        if (auto self = w.lock()) self->OnLeaseExtended(deadline, f.get());
+      });
+}
+
+future<Status> DefaultPullLeaseManager::ExtendLease(
+    std::shared_ptr<SubscriberStub> stub,
+    std::chrono::system_clock::time_point now, std::chrono::seconds extension) {
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   request.set_subscription(subscription_.FullName());
   request.set_ack_deadline_seconds(
       static_cast<std::int32_t>(extension.count()));
   request.add_ack_ids(ack_id_);
-  auto self = std::weak_ptr<DefaultPullLeaseManager>(shared_from_this());
-  internal::AsyncRetryLoop(
+  return internal::AsyncRetryLoop(
       options_.get<pubsub::RetryPolicyOption>()->clone(),
       options_.get<pubsub::BackoffPolicyOption>()->clone(),
       google::cloud::Idempotency::kIdempotent, cq_,
-      [stub = std::move(s), deadline = now + extension, clock = clock_](
+      [stub = std::move(stub), deadline = now + extension, clock = clock_](
           auto cq, auto context, auto const& request) {
         if (deadline < clock()) {
           return make_ready_future(
@@ -92,10 +101,7 @@ void DefaultPullLeaseManager::StartLeaseLoop() {
         context->set_deadline((std::min)(deadline, context->deadline()));
         return stub->AsyncModifyAckDeadline(cq, std::move(context), request);
       },
-      request, __func__)
-      .then([w = std::move(self), deadline = now + extension](auto f) {
-        if (auto self = w.lock()) self->OnLeaseExtended(deadline, f.get());
-      });
+      request, __func__);
 }
 
 std::chrono::milliseconds DefaultPullLeaseManager::LeaseRefreshPeriod() const {

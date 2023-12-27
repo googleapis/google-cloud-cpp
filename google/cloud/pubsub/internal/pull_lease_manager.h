@@ -41,6 +41,10 @@ class PullLeaseManager {
   virtual void StartLeaseLoop() = 0;
 
   virtual std::chrono::milliseconds LeaseRefreshPeriod() const = 0;
+
+  virtual future<Status> ExtendLease(std::shared_ptr<SubscriberStub> stub,
+                                     std::chrono::system_clock::time_point now,
+                                     std::chrono::seconds extension) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
