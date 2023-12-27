@@ -302,7 +302,6 @@ set(google_cloud_cpp_pubsub_mocks_hdrs
     mocks/mock_exactly_once_ack_handler.h
     mocks/mock_publisher_connection.h
     mocks/mock_pull_ack_handler.h
-    mocks/mock_pull_lease_manager.h
     mocks/mock_schema_connection.h
     mocks/mock_subscriber_connection.h
     mocks/mock_subscription_admin_connection.h
@@ -348,6 +347,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         testing/fake_streaming_pull.h
         testing/mock_batch_sink.h
         testing/mock_publisher_stub.h
+        testing/mock_pull_lease_manager.h
         testing/mock_subscriber_stub.h
         testing/mock_subscription_batch_source.h
         testing/mock_subscription_message_source.h

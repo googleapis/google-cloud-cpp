@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_MOCKS_MOCK_PULL_LEASE_MANAGER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_MOCKS_MOCK_PULL_LEASE_MANAGER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_PULL_LEASE_MANAGER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_PULL_LEASE_MANAGER_H
 
 #include "google/cloud/pubsub/internal/pull_lease_manager.h"
 #include <gmock/gmock.h>
@@ -25,9 +25,7 @@ namespace pubsub_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A googlemock-based mock for [pubsub_internal::PullLeaseManager][mocked-link]
- *
- * [mocked-link]: @ref google::cloud::pubsub_internal::PullLeaseManager
+ * A class to mock pubsub_internal::PullLeaseManager
  */
 class MockPullLeaseManager : public pubsub_internal::PullLeaseManager {
  public:
@@ -41,4 +39,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_MOCKS_MOCK_PULL_LEASE_MANAGER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_PULL_LEASE_MANAGER_H
