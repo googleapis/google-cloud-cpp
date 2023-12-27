@@ -30,14 +30,18 @@ namespace {
 
 using ::google::cloud::pubsub_testing::MockSubscriberStub;
 using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::pubsub::v1::ModifyAckDeadlineRequest;
 using ::testing::_;
 using ::testing::AllOf;
+using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::HasSubstr;
 using ::testing::Le;
 using ::testing::Pointee;
 using ::testing::Property;
+using ::testing::Return;
 
 using MockClock =
     ::testing::MockFunction<std::chrono::system_clock::time_point()>;
@@ -301,6 +305,84 @@ TEST(DefaultPullLeaseManager, InitializeDeadlines) {
   EXPECT_EQ(manager->lease_deadline(),
             current_time + std::chrono::seconds(300));
   EXPECT_EQ(manager->LeaseRefreshPeriod(), std::chrono::seconds(9));
+}
+
+TEST(DefaultPullLeaseManager, ExtendLeaseDeadlineSimple) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  auto constexpr kLeaseExtension = std::chrono::seconds(10);
+  auto options = google::cloud::pubsub_testing::MakeTestOptions(
+      Options{}.set<pubsub::MaxDeadlineExtensionOption>(kLeaseExtension));
+
+  auto mock = std::make_shared<MockSubscriberStub>();
+  auto request_matcher = AllOf(
+      Property(&ModifyAckDeadlineRequest::ack_ids, ElementsAre("test-ack-id")),
+      Property(&ModifyAckDeadlineRequest::ack_deadline_seconds,
+               kLeaseExtension.count()),
+      Property(&ModifyAckDeadlineRequest::subscription,
+               subscription.FullName()));
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, request_matcher))
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  AsyncSequencer<bool> aseq;
+  auto cq = MakeMockCompletionQueue(aseq);
+  auto current_time = std::chrono::system_clock::now();
+  MockClock clock;
+  EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
+  auto manager = std::make_shared<DefaultPullLeaseManager>(
+      cq, mock, options, subscription, "test-ack-id", clock.AsStdFunction());
+
+  auto status = manager->ExtendLease(mock, current_time, kLeaseExtension);
+  EXPECT_STATUS_OK(status.get());
+}
+
+TEST(DefaultPullLeaseManager, ExtendLeaseDeadlineExceeded) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  auto constexpr kLeaseExtension = std::chrono::seconds(10);
+  auto options = google::cloud::pubsub_testing::MakeTestOptions(
+      Options{}.set<pubsub::MaxDeadlineExtensionOption>(kLeaseExtension));
+
+  auto mock = std::make_shared<MockSubscriberStub>();
+  AsyncSequencer<bool> aseq;
+  auto cq = MakeMockCompletionQueue(aseq);
+  auto current_time = std::chrono::system_clock::now();
+  MockClock clock;
+  // Set the time for the clock call to after the current time + extension.
+  EXPECT_CALL(clock, Call).WillRepeatedly([&] {
+    return current_time + std::chrono::seconds(11);
+  });
+  auto manager = std::make_shared<DefaultPullLeaseManager>(
+      cq, mock, options, subscription, "test-ack-id", clock.AsStdFunction());
+
+  auto status = manager->ExtendLease(mock, current_time, kLeaseExtension);
+  EXPECT_THAT(status.get(),
+              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("expired")));
+}
+
+TEST(DefaultPullLeaseManager, ExtendLeasePermanentError) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  auto constexpr kLeaseExtension = std::chrono::seconds(10);
+  auto options = google::cloud::pubsub_testing::MakeTestOptions(
+      Options{}.set<pubsub::MaxDeadlineExtensionOption>(kLeaseExtension));
+
+  auto mock = std::make_shared<MockSubscriberStub>();
+  auto request_matcher = AllOf(
+      Property(&ModifyAckDeadlineRequest::ack_ids, ElementsAre("test-ack-id")),
+      Property(&ModifyAckDeadlineRequest::ack_deadline_seconds,
+               kLeaseExtension.count()),
+      Property(&ModifyAckDeadlineRequest::subscription,
+               subscription.FullName()));
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, request_matcher))
+      .WillOnce(Return(ByMove(make_ready_future(PermanentError()))));
+  AsyncSequencer<bool> aseq;
+  auto cq = MakeMockCompletionQueue(aseq);
+  auto current_time = std::chrono::system_clock::now();
+  MockClock clock;
+  EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
+  auto manager = std::make_shared<DefaultPullLeaseManager>(
+      cq, mock, options, subscription, "test-ack-id", clock.AsStdFunction());
+
+  auto status = manager->ExtendLease(mock, current_time, kLeaseExtension);
+  EXPECT_THAT(status.get(),
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
 
 }  // namespace

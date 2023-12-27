@@ -59,6 +59,10 @@ class DefaultPullLeaseManager
 
   std::chrono::milliseconds LeaseRefreshPeriod() const override;
 
+  future<Status> ExtendLease(std::shared_ptr<SubscriberStub> stub,
+                             std::chrono::system_clock::time_point now,
+                             std::chrono::seconds extension) override;
+
  private:
   void OnLeaseTimer(Status const& timer_status);
   void OnLeaseExtended(std::chrono::system_clock::time_point new_deadline,
