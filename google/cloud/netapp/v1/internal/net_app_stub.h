@@ -227,6 +227,83 @@ class NetAppStub {
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateBackupVault(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::CreateBackupVaultRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
+      grpc::ClientContext& context,
+      google::cloud::netapp::v1::GetBackupVaultRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::netapp::v1::ListBackupVaultsResponse>
+  ListBackupVaults(
+      grpc::ClientContext& context,
+      google::cloud::netapp::v1::ListBackupVaultsRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateBackupVault(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteBackupVault(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::CreateBackupRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::netapp::v1::Backup> GetBackup(
+      grpc::ClientContext& context,
+      google::cloud::netapp::v1::GetBackupRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::netapp::v1::ListBackupsResponse> ListBackups(
+      grpc::ClientContext& context,
+      google::cloud::netapp::v1::ListBackupsRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::DeleteBackupRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::UpdateBackupRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateBackupPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::netapp::v1::BackupPolicy> GetBackupPolicy(
+      grpc::ClientContext& context,
+      google::cloud::netapp::v1::GetBackupPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::netapp::v1::ListBackupPoliciesResponse>
+  ListBackupPolicies(
+      grpc::ClientContext& context,
+      google::cloud::netapp::v1::ListBackupPoliciesRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateBackupPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteBackupPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -435,6 +512,84 @@ class DefaultNetAppStub : public NetAppStub {
       std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateBackupVault(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::CreateBackupVaultRequest const& request)
+      override;
+
+  StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
+      grpc::ClientContext& context,
+      google::cloud::netapp::v1::GetBackupVaultRequest const& request) override;
+
+  StatusOr<google::cloud::netapp::v1::ListBackupVaultsResponse>
+  ListBackupVaults(grpc::ClientContext& context,
+                   google::cloud::netapp::v1::ListBackupVaultsRequest const&
+                       request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackupVault(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackupVault(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::CreateBackupRequest const& request) override;
+
+  StatusOr<google::cloud::netapp::v1::Backup> GetBackup(
+      grpc::ClientContext& context,
+      google::cloud::netapp::v1::GetBackupRequest const& request) override;
+
+  StatusOr<google::cloud::netapp::v1::ListBackupsResponse> ListBackups(
+      grpc::ClientContext& context,
+      google::cloud::netapp::v1::ListBackupsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::DeleteBackupRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::UpdateBackupRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateBackupPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::netapp::v1::BackupPolicy> GetBackupPolicy(
+      grpc::ClientContext& context,
+      google::cloud::netapp::v1::GetBackupPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::netapp::v1::ListBackupPoliciesResponse>
+  ListBackupPolicies(grpc::ClientContext& context,
+                     google::cloud::netapp::v1::ListBackupPoliciesRequest const&
+                         request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackupPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackupPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

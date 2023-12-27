@@ -1168,6 +1168,461 @@ NetAppConnectionImpl::ReverseReplicationDirection(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+NetAppConnectionImpl::CreateBackupVault(
+    google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::BackupVault>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
+        return stub->AsyncCreateBackupVault(cq, std::move(context), options,
+                                            request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::BackupVault>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBackupVault(request),
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::netapp::v1::BackupVault>
+NetAppConnectionImpl::GetBackupVault(
+    google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBackupVault(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
+        return stub_->GetBackupVault(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::netapp::v1::BackupVault>
+NetAppConnectionImpl::ListBackupVaults(
+    google::cloud::netapp::v1::ListBackupVaultsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBackupVaults(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::netapp::v1::BackupVault>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::netapp::v1::ListBackupVaultsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::netapp::v1::ListBackupVaultsRequest const&
+                       request) {
+              return stub->ListBackupVaults(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::netapp::v1::ListBackupVaultsResponse r) {
+        std::vector<google::cloud::netapp::v1::BackupVault> result(
+            r.backup_vaults().size());
+        auto& messages = *r.mutable_backup_vaults();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+NetAppConnectionImpl::UpdateBackupVault(
+    google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::BackupVault>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
+        return stub->AsyncUpdateBackupVault(cq, std::move(context), options,
+                                            request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::BackupVault>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBackupVault(request),
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteBackupVault(
+    google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
+        return stub->AsyncDeleteBackupVault(cq, std::move(context), options,
+                                            request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBackupVault(request),
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Backup>>
+NetAppConnectionImpl::CreateBackup(
+    google::cloud::netapp::v1::CreateBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::Backup>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::CreateBackupRequest const& request) {
+        return stub->AsyncCreateBackup(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Backup>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBackup(request),
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::netapp::v1::Backup> NetAppConnectionImpl::GetBackup(
+    google::cloud::netapp::v1::GetBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBackup(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::netapp::v1::GetBackupRequest const& request) {
+        return stub_->GetBackup(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::netapp::v1::Backup>
+NetAppConnectionImpl::ListBackups(
+    google::cloud::netapp::v1::ListBackupsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBackups(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::netapp::v1::Backup>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::netapp::v1::ListBackupsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::netapp::v1::ListBackupsRequest const& request) {
+              return stub->ListBackups(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::netapp::v1::ListBackupsResponse r) {
+        std::vector<google::cloud::netapp::v1::Backup> result(
+            r.backups().size());
+        auto& messages = *r.mutable_backups();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteBackup(
+    google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+        return stub->AsyncDeleteBackup(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBackup(request),
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Backup>>
+NetAppConnectionImpl::UpdateBackup(
+    google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::Backup>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+        return stub->AsyncUpdateBackup(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Backup>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBackup(request),
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+NetAppConnectionImpl::CreateBackupPolicy(
+    google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::BackupPolicy>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
+        return stub->AsyncCreateBackupPolicy(cq, std::move(context), options,
+                                             request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::BackupPolicy>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBackupPolicy(request),
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::netapp::v1::BackupPolicy>
+NetAppConnectionImpl::GetBackupPolicy(
+    google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBackupPolicy(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
+        return stub_->GetBackupPolicy(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::netapp::v1::BackupPolicy>
+NetAppConnectionImpl::ListBackupPolicies(
+    google::cloud::netapp::v1::ListBackupPoliciesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBackupPolicies(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::netapp::v1::BackupPolicy>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::netapp::v1::ListBackupPoliciesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::netapp::v1::ListBackupPoliciesRequest const&
+                       request) {
+              return stub->ListBackupPolicies(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::netapp::v1::ListBackupPoliciesResponse r) {
+        std::vector<google::cloud::netapp::v1::BackupPolicy> result(
+            r.backup_policies().size());
+        auto& messages = *r.mutable_backup_policies();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+NetAppConnectionImpl::UpdateBackupPolicy(
+    google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::BackupPolicy>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
+        return stub->AsyncUpdateBackupPolicy(cq, std::move(context), options,
+                                             request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::BackupPolicy>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBackupPolicy(request),
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteBackupPolicy(
+    google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
+        return stub->AsyncDeleteBackupPolicy(cq, std::move(context), options,
+                                             request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBackupPolicy(request),
+      polling_policy(*current), __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace netapp_v1_internal
 }  // namespace cloud

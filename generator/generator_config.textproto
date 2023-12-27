@@ -579,6 +579,7 @@ service {
   product_path: "google/cloud/channel/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
+  emitted_rpcs: ["RunReportJob", "FetchReportResults", "ListReports"]
 }
 
 # Composer

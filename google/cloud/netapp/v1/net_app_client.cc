@@ -588,6 +588,258 @@ NetAppClient::ReverseReplicationDirection(
   return connection_->ReverseReplicationDirection(request);
 }
 
+future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+NetAppClient::CreateBackupVault(
+    std::string const& parent,
+    google::cloud::netapp::v1::BackupVault const& backup_vault,
+    std::string const& backup_vault_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::CreateBackupVaultRequest request;
+  request.set_parent(parent);
+  *request.mutable_backup_vault() = backup_vault;
+  request.set_backup_vault_id(backup_vault_id);
+  return connection_->CreateBackupVault(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+NetAppClient::CreateBackupVault(
+    google::cloud::netapp::v1::CreateBackupVaultRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBackupVault(request);
+}
+
+StatusOr<google::cloud::netapp::v1::BackupVault> NetAppClient::GetBackupVault(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::GetBackupVaultRequest request;
+  request.set_name(name);
+  return connection_->GetBackupVault(request);
+}
+
+StatusOr<google::cloud::netapp::v1::BackupVault> NetAppClient::GetBackupVault(
+    google::cloud::netapp::v1::GetBackupVaultRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetBackupVault(request);
+}
+
+StreamRange<google::cloud::netapp::v1::BackupVault>
+NetAppClient::ListBackupVaults(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::ListBackupVaultsRequest request;
+  request.set_parent(parent);
+  return connection_->ListBackupVaults(request);
+}
+
+StreamRange<google::cloud::netapp::v1::BackupVault>
+NetAppClient::ListBackupVaults(
+    google::cloud::netapp::v1::ListBackupVaultsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBackupVaults(std::move(request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+NetAppClient::UpdateBackupVault(
+    google::cloud::netapp::v1::BackupVault const& backup_vault,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::UpdateBackupVaultRequest request;
+  *request.mutable_backup_vault() = backup_vault;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBackupVault(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+NetAppClient::UpdateBackupVault(
+    google::cloud::netapp::v1::UpdateBackupVaultRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackupVault(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::DeleteBackupVault(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::DeleteBackupVaultRequest request;
+  request.set_name(name);
+  return connection_->DeleteBackupVault(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::DeleteBackupVault(
+    google::cloud::netapp::v1::DeleteBackupVaultRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBackupVault(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Backup>> NetAppClient::CreateBackup(
+    std::string const& parent, google::cloud::netapp::v1::Backup const& backup,
+    std::string const& backup_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::CreateBackupRequest request;
+  request.set_parent(parent);
+  *request.mutable_backup() = backup;
+  request.set_backup_id(backup_id);
+  return connection_->CreateBackup(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Backup>> NetAppClient::CreateBackup(
+    google::cloud::netapp::v1::CreateBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBackup(request);
+}
+
+StatusOr<google::cloud::netapp::v1::Backup> NetAppClient::GetBackup(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::GetBackupRequest request;
+  request.set_name(name);
+  return connection_->GetBackup(request);
+}
+
+StatusOr<google::cloud::netapp::v1::Backup> NetAppClient::GetBackup(
+    google::cloud::netapp::v1::GetBackupRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetBackup(request);
+}
+
+StreamRange<google::cloud::netapp::v1::Backup> NetAppClient::ListBackups(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::ListBackupsRequest request;
+  request.set_parent(parent);
+  return connection_->ListBackups(request);
+}
+
+StreamRange<google::cloud::netapp::v1::Backup> NetAppClient::ListBackups(
+    google::cloud::netapp::v1::ListBackupsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBackups(std::move(request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::DeleteBackup(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::DeleteBackupRequest request;
+  request.set_name(name);
+  return connection_->DeleteBackup(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::DeleteBackup(
+    google::cloud::netapp::v1::DeleteBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBackup(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Backup>> NetAppClient::UpdateBackup(
+    google::cloud::netapp::v1::Backup const& backup,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::UpdateBackupRequest request;
+  *request.mutable_backup() = backup;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBackup(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Backup>> NetAppClient::UpdateBackup(
+    google::cloud::netapp::v1::UpdateBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackup(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+NetAppClient::CreateBackupPolicy(
+    std::string const& parent,
+    google::cloud::netapp::v1::BackupPolicy const& backup_policy,
+    std::string const& backup_policy_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::CreateBackupPolicyRequest request;
+  request.set_parent(parent);
+  *request.mutable_backup_policy() = backup_policy;
+  request.set_backup_policy_id(backup_policy_id);
+  return connection_->CreateBackupPolicy(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+NetAppClient::CreateBackupPolicy(
+    google::cloud::netapp::v1::CreateBackupPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBackupPolicy(request);
+}
+
+StatusOr<google::cloud::netapp::v1::BackupPolicy> NetAppClient::GetBackupPolicy(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::GetBackupPolicyRequest request;
+  request.set_name(name);
+  return connection_->GetBackupPolicy(request);
+}
+
+StatusOr<google::cloud::netapp::v1::BackupPolicy> NetAppClient::GetBackupPolicy(
+    google::cloud::netapp::v1::GetBackupPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetBackupPolicy(request);
+}
+
+StreamRange<google::cloud::netapp::v1::BackupPolicy>
+NetAppClient::ListBackupPolicies(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::ListBackupPoliciesRequest request;
+  request.set_parent(parent);
+  return connection_->ListBackupPolicies(request);
+}
+
+StreamRange<google::cloud::netapp::v1::BackupPolicy>
+NetAppClient::ListBackupPolicies(
+    google::cloud::netapp::v1::ListBackupPoliciesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBackupPolicies(std::move(request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+NetAppClient::UpdateBackupPolicy(
+    google::cloud::netapp::v1::BackupPolicy const& backup_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::UpdateBackupPolicyRequest request;
+  *request.mutable_backup_policy() = backup_policy;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBackupPolicy(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+NetAppClient::UpdateBackupPolicy(
+    google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackupPolicy(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::DeleteBackupPolicy(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::DeleteBackupPolicyRequest request;
+  request.set_name(name);
+  return connection_->DeleteBackupPolicy(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::DeleteBackupPolicy(
+    google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBackupPolicy(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace netapp_v1
 }  // namespace cloud
