@@ -38,7 +38,6 @@ pubsub_client_unit_tests = [
     "internal/ordering_key_publisher_connection_test.cc",
     "internal/publisher_stub_factory_test.cc",
     "internal/publisher_tracing_connection_test.cc",
-    "internal/pull_lease_manager_test.cc",
     "internal/rejects_with_ordering_key_test.cc",
     "internal/sequential_batch_sink_test.cc",
     "internal/session_shutdown_manager_test.cc",

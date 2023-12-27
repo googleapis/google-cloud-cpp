@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/default_pull_ack_handler.h"
+#include "google/cloud/pubsub/internal/default_pull_lease_manager.h"
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
-#include "google/cloud/pubsub/internal/pull_lease_manager.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include <google/pubsub/v1/pubsub.pb.h>
