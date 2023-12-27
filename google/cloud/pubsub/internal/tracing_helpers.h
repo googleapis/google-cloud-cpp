@@ -18,8 +18,8 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 #include "google/cloud/pubsub/pull_ack_handler.h"
-#include "opentelemetry/trace/span_startoptions.h"
 #include "google/cloud/pubsub/version.h"
+#include "opentelemetry/trace/span_startoptions.h"
 
 namespace google {
 namespace cloud {
@@ -27,7 +27,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Create start span options for a root span.
-opentelemetry::trace::StartSpanOptions RootStartSpanOptions(); 
+opentelemetry::trace::StartSpanOptions RootStartSpanOptions();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
