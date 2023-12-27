@@ -66,6 +66,8 @@ void MaybeAddLinkAttributes(
     span->SetAttribute("gcp_pubsub.receive.span_id",
                        internal::ToString(consumer_span_context.span_id()));
   }
+#else
+  (void)span;
 #endif
 }
 
