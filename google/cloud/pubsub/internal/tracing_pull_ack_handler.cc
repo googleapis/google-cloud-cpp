@@ -35,11 +35,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using Attributes =
     std::vector<std::pair<opentelemetry::nostd::string_view,
                           opentelemetry::common::AttributeValue>>;
-using Links =
-    std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
 
 namespace {
-Links CreateLinks() {
+
+auto CreateLinks() {
+  using Links =
+      std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
   auto consumer_span_context =
       opentelemetry::trace::GetSpan(
