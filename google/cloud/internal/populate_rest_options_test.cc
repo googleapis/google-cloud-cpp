@@ -17,6 +17,8 @@
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/opentelemetry_options.h"
+#include "google/cloud/rest_options.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 
@@ -25,6 +27,8 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
+
+using ::google::cloud::testing_util::ScopedEnvironment;
 
 struct Visitor : public CredentialsVisitor {
   std::string name;
@@ -112,6 +116,14 @@ TEST(PopulateRestOptions, LongrunningEndpointOption) {
   options = PopulateRestOptions(std::move(options));
   EXPECT_EQ(options.get<LongrunningEndpointOption>(),
             "https://foo.googleapis.com");
+}
+
+TEST(PopulateRestOptions, TracingOptions) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
+                        "truncate_string_field_longer_than=42");
+  auto actual = PopulateRestOptions(Options{});
+  auto tracing = actual.get<RestTracingOptionsOption>();
+  EXPECT_EQ(tracing.truncate_string_field_longer_than(), 42);
 }
 
 }  // namespace
