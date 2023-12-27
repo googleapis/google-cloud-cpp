@@ -16,10 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_TRACING_PULL_ACK_HANDLER_H
 
 #include "google/cloud/pubsub/pull_ack_handler.h"
-#include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
 #include <memory>
-#include <string>
 
 namespace google {
 namespace cloud {

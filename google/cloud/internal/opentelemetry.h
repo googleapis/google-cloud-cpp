@@ -96,9 +96,9 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
         DefaultStartSpanOptions());
 
 /**
- * Start a span with a @p name and @p attributes using templates.
+ * Start a span with a @p name and @p attributes.
  */
-template <class T>
+template <typename T>
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
     opentelemetry::nostd::string_view name, T const& attributes,
     opentelemetry::trace::StartSpanOptions const& options =
@@ -129,7 +129,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
 /**
  * Start a span with a @p name, @p attributes, and @p links.
  */
-template <class T, class U>
+template <typename T, typename U>
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
     opentelemetry::nostd::string_view name, T const& attributes, U const& links,
     opentelemetry::trace::StartSpanOptions const& options =
@@ -143,7 +143,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
  * Start a span with a @p name, @p attributes, and @p links where attributes
  * uses an initializer list.
  */
-template <class T>
+template <typename T>
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
     opentelemetry::nostd::string_view name,
     std::initializer_list<std::pair<opentelemetry::nostd::string_view,
