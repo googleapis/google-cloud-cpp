@@ -30,7 +30,7 @@ pubsub::PullAckHandler CreatePullAckHandler(
   std::unique_ptr<pubsub::PullAckHandler::Impl> impl =
       std::make_unique<pubsub_internal::DefaultPullAckHandler>(
           std::move(cq), std::move(stub), options, std::move(subscription),
-          ack_id, delivery_attempt);
+          std::move(ack_id), delivery_attempt);
   if (internal::TracingEnabled(options)) {
     impl = MakeTracingPullAckHandler(std::move(impl));
   }
