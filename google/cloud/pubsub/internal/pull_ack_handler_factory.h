@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 pubsub::PullAckHandler CreatePullAckHandler(
     CompletionQueue cq, std::weak_ptr<SubscriberStub> stub,
-    pubsub::Subscription const& subscription, std::string const& ack_id,
+    pubsub::Subscription subscription, std::string  ack_id,
     std::int32_t delivery_attempt, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
