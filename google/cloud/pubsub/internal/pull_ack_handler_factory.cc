@@ -23,10 +23,12 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-pubsub::PullAckHandler CreatePullAckHandler(
-    CompletionQueue cq, std::weak_ptr<SubscriberStub> stub,
-    pubsub::Subscription subscription, std::string  ack_id,
-    std::int32_t delivery_attempt, Options const& options) {
+pubsub::PullAckHandler CreatePullAckHandler(CompletionQueue cq,
+                                            std::weak_ptr<SubscriberStub> stub,
+                                            pubsub::Subscription subscription,
+                                            std::string ack_id,
+                                            std::int32_t delivery_attempt,
+                                            Options const& options) {
   std::unique_ptr<pubsub::PullAckHandler::Impl> impl =
       std::make_unique<pubsub_internal::DefaultPullAckHandler>(
           std::move(cq), std::move(stub), options, std::move(subscription),
