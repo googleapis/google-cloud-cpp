@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/pull_lease_manager.h"
+#include "google/cloud/pubsub/internal/default_pull_lease_manager.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
@@ -65,7 +65,7 @@ Status PermanentError() {
   return Status(StatusCode::kPermissionDenied, "uh-oh");
 }
 
-TEST(PullLeaseManager, SimpleLeaseLoop) {
+TEST(DefaultPullLeaseManager, SimpleLeaseLoop) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
   // Use a mock clock where the time is controlled by a test variable. We do not
@@ -128,7 +128,7 @@ TEST(PullLeaseManager, SimpleLeaseLoop) {
           return f.get() ? Status{} : PermanentError();
         });
       });
-  auto manager = std::make_shared<PullLeaseManager>(
+  auto manager = std::make_shared<DefaultPullLeaseManager>(
       cq, mock, options, subscription, "test-ack-id", clock.AsStdFunction());
   manager->StartLeaseLoop();
   auto pending = aseq.PopFrontWithName();
@@ -163,7 +163,7 @@ TEST(PullLeaseManager, SimpleLeaseLoop) {
   pending.first.set_value(false);
 }
 
-TEST(PullLeaseManager, StartLeaseLoopAlreadyReleased) {
+TEST(DefaultPullLeaseManager, StartLeaseLoopAlreadyReleased) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
   // Use a mock clock where the time is controlled by a test variable. We do not
@@ -176,9 +176,9 @@ TEST(PullLeaseManager, StartLeaseLoopAlreadyReleased) {
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
-  auto manager = std::make_shared<PullLeaseManager>(cq, mock, MakeTestOptions(),
-                                                    subscription, "test-ack-id",
-                                                    clock.AsStdFunction());
+  auto manager = std::make_shared<DefaultPullLeaseManager>(
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id",
+      clock.AsStdFunction());
   // This can happen if the subscriber is shutdown, but the application manages
   // to hold to a `AckHandler` reference. In this case, we expect the loop to
   // stop (or have no effect).
@@ -186,7 +186,7 @@ TEST(PullLeaseManager, StartLeaseLoopAlreadyReleased) {
   manager->StartLeaseLoop();
 }
 
-TEST(PullLeaseManager, StartLeastLoopAlreadyPastMaxExtension) {
+TEST(DefaultPullLeaseManager, StartLeastLoopAlreadyPastMaxExtension) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
   // Use a mock clock where the time is controlled by a test variable. We do not
@@ -199,9 +199,9 @@ TEST(PullLeaseManager, StartLeastLoopAlreadyPastMaxExtension) {
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
-  auto manager = std::make_shared<PullLeaseManager>(cq, mock, MakeTestOptions(),
-                                                    subscription, "test-ack-id",
-                                                    clock.AsStdFunction());
+  auto manager = std::make_shared<DefaultPullLeaseManager>(
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id",
+      clock.AsStdFunction());
   EXPECT_THAT(manager->lease_deadline(),
               Eq(current_time + std::chrono::seconds(300)));
   current_time = current_time + std::chrono::seconds(301);
@@ -209,7 +209,7 @@ TEST(PullLeaseManager, StartLeastLoopAlreadyPastMaxExtension) {
   // This is a "AsyncModifyAckDeadline() is not called" test.
 }
 
-TEST(PullLeaseManager, StartLeastLoopTooCloseMaxExtension) {
+TEST(DefaultPullLeaseManager, StartLeastLoopTooCloseMaxExtension) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
   // Use a mock clock where the time is controlled by a test variable. We do not
@@ -222,9 +222,9 @@ TEST(PullLeaseManager, StartLeastLoopTooCloseMaxExtension) {
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
-  auto manager = std::make_shared<PullLeaseManager>(cq, mock, MakeTestOptions(),
-                                                    subscription, "test-ack-id",
-                                                    clock.AsStdFunction());
+  auto manager = std::make_shared<DefaultPullLeaseManager>(
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id",
+      clock.AsStdFunction());
   EXPECT_THAT(manager->lease_deadline(),
               Eq(current_time + std::chrono::seconds(300)));
   current_time =
@@ -233,7 +233,7 @@ TEST(PullLeaseManager, StartLeastLoopTooCloseMaxExtension) {
   // This is a "AsyncModifyAckDeadline() is not called" test.
 }
 
-TEST(PullLeaseManager, StartLeastLoopAlreadyPastCurrentExtension) {
+TEST(DefaultPullLeaseManager, StartLeastLoopAlreadyPastCurrentExtension) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
   // Use a mock clock where the time is controlled by a test variable. We do not
@@ -246,16 +246,16 @@ TEST(PullLeaseManager, StartLeastLoopAlreadyPastCurrentExtension) {
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
-  auto manager = std::make_shared<PullLeaseManager>(cq, mock, MakeTestOptions(),
-                                                    subscription, "test-ack-id",
-                                                    clock.AsStdFunction());
+  auto manager = std::make_shared<DefaultPullLeaseManager>(
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id",
+      clock.AsStdFunction());
   EXPECT_GT(manager->current_lease(), current_time);
   current_time = manager->current_lease();
   manager->StartLeaseLoop();
   // This is a "AsyncModifyAckDeadline() is not called" test.
 }
 
-TEST(PullLeaseManager, InitializeDeadlines) {
+TEST(DefaultPullLeaseManager, InitializeDeadlines) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
   auto current_time = std::chrono::system_clock::now();
@@ -265,7 +265,7 @@ TEST(PullLeaseManager, InitializeDeadlines) {
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
 
-  auto manager = std::make_shared<PullLeaseManager>(
+  auto manager = std::make_shared<DefaultPullLeaseManager>(
       cq, mock,
       google::cloud::pubsub_testing::MakeTestOptions(
           Options{}
@@ -277,7 +277,7 @@ TEST(PullLeaseManager, InitializeDeadlines) {
             current_time + std::chrono::seconds(300));
   EXPECT_EQ(manager->LeaseRefreshPeriod(), std::chrono::seconds(9));
 
-  manager = std::make_shared<PullLeaseManager>(
+  manager = std::make_shared<DefaultPullLeaseManager>(
       cq, mock,
       google::cloud::pubsub_testing::MakeTestOptions(
           Options{}
@@ -289,7 +289,7 @@ TEST(PullLeaseManager, InitializeDeadlines) {
             current_time + std::chrono::seconds(300));
   EXPECT_EQ(manager->LeaseRefreshPeriod(), std::chrono::seconds(29));
 
-  manager = std::make_shared<PullLeaseManager>(
+  manager = std::make_shared<DefaultPullLeaseManager>(
       cq, mock,
       google::cloud::pubsub_testing::MakeTestOptions(
           Options{}

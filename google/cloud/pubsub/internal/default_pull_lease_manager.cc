@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/pull_lease_manager.h"
+#include "google/cloud/pubsub/internal/default_pull_lease_manager.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
 
@@ -38,11 +38,9 @@ std::chrono::seconds DefaultLeaseExtension(Options const& options) {
 
 }  // namespace
 
-PullLeaseManager::PullLeaseManager(CompletionQueue cq,
-                                   std::weak_ptr<SubscriberStub> w,
-                                   Options options,
-                                   pubsub::Subscription subscription,
-                                   std::string ack_id, Clock clock)
+DefaultPullLeaseManager::DefaultPullLeaseManager(
+    CompletionQueue cq, std::weak_ptr<SubscriberStub> w, Options options,
+    pubsub::Subscription subscription, std::string ack_id, Clock clock)
     : cq_(std::move(cq)),
       stub_(std::move(w)),
       options_(std::move(options)),
@@ -53,12 +51,12 @@ PullLeaseManager::PullLeaseManager(CompletionQueue cq,
       lease_extension_(DefaultLeaseExtension(options_)),
       current_lease_(clock_() + kMinimalLeaseExtension) {}
 
-PullLeaseManager::~PullLeaseManager() {
+DefaultPullLeaseManager::~DefaultPullLeaseManager() {
   if (!timer_.valid()) return;
   timer_.cancel();
 }
 
-void PullLeaseManager::StartLeaseLoop() {
+void DefaultPullLeaseManager::StartLeaseLoop() {
   auto s = stub_.lock();
   if (!s) return;
   auto const now = clock_();
@@ -80,7 +78,7 @@ void PullLeaseManager::StartLeaseLoop() {
   request.set_ack_deadline_seconds(
       static_cast<std::int32_t>(extension.count()));
   request.add_ack_ids(ack_id_);
-  auto self = std::weak_ptr<PullLeaseManager>(shared_from_this());
+  auto self = std::weak_ptr<DefaultPullLeaseManager>(shared_from_this());
   internal::AsyncRetryLoop(
       options_.get<pubsub::RetryPolicyOption>()->clone(),
       options_.get<pubsub::BackoffPolicyOption>()->clone(),
@@ -100,7 +98,7 @@ void PullLeaseManager::StartLeaseLoop() {
       });
 }
 
-std::chrono::milliseconds PullLeaseManager::LeaseRefreshPeriod() const {
+std::chrono::milliseconds DefaultPullLeaseManager::LeaseRefreshPeriod() const {
   auto constexpr kLeaseExtensionSlack = std::chrono::seconds(1);
   if (lease_extension_ > 2 * kLeaseExtensionSlack) {
     return lease_extension_ - kLeaseExtensionSlack;
@@ -108,17 +106,17 @@ std::chrono::milliseconds PullLeaseManager::LeaseRefreshPeriod() const {
   return std::chrono::milliseconds(500);
 }
 
-void PullLeaseManager::OnLeaseTimer(Status const& timer_status) {
+void DefaultPullLeaseManager::OnLeaseTimer(Status const& timer_status) {
   if (!timer_status.ok()) return;
   StartLeaseLoop();
 }
 
-void PullLeaseManager::OnLeaseExtended(
+void DefaultPullLeaseManager::OnLeaseExtended(
     std::chrono::system_clock::time_point new_deadline,
     google::cloud::Status const& status) {
   if (!status.ok()) return;
 
-  auto self = std::weak_ptr<PullLeaseManager>(shared_from_this());
+  auto self = std::weak_ptr<DefaultPullLeaseManager>(shared_from_this());
   auto timer = cq_.MakeRelativeTimer(LeaseRefreshPeriod())
                    .then([w = std::move(self)](auto f) {
                      if (auto self = w.lock())
