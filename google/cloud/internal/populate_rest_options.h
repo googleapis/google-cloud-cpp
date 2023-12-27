@@ -24,15 +24,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /**
- * Modify @p opts to have default values for REST options.
+ * Default values for REST options, given @p opts.
  *
  * It is expected that `EndpointOption` has already been set on `opts` by
  * `PopulateCommonOptions`.
  *
- * @param opts the current options. Any values already present in this
- *     collection are not modified.
+ * @param opts the current options.
  *
- * @return opts with some common defaults set.
+ * @return options with some common defaults set.
  */
 Options PopulateRestOptions(Options opts);
 
