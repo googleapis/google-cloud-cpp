@@ -21,11 +21,8 @@
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_rest_metadata_decorator.h"
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_rest_stub.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/rest_options.h"
+#include "google/cloud/internal/populate_rest_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/rest_options.h"
@@ -39,21 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<UrlMapsRestStub> CreateDefaultUrlMapsRestStub(
     Options const& options) {
-  Options opts = options;
-  if (!opts.has<UnifiedCredentialsOption>()) {
-    opts.set<UnifiedCredentialsOption>(
-        MakeGoogleDefaultCredentials(internal::MakeAuthOptions(options)));
-  }
-  if (!opts.has<rest_internal::LongrunningEndpointOption>()) {
-    opts.set<rest_internal::LongrunningEndpointOption>(
-        "https://longrunning.googleapis.com");
-  }
-  if (opts.has<EndpointOption>()) {
-    std::string endpoint = opts.get<EndpointOption>();
-    if (!absl::StartsWithIgnoreCase(endpoint, "http")) {
-      opts.set<EndpointOption>(absl::StrCat("https://", endpoint));
-    }
-  }
+  auto opts = internal::PopulateRestOptions(options);
   std::shared_ptr<UrlMapsRestStub> stub =
       std::make_shared<DefaultUrlMapsRestStub>(std::move(opts));
   stub = std::make_shared<UrlMapsRestMetadata>(std::move(stub));

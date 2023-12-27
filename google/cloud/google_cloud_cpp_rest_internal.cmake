@@ -90,6 +90,8 @@ add_library(
     internal/oauth2_service_account_credentials.h
     internal/openssl_util.cc
     internal/openssl_util.h
+    internal/populate_rest_options.cc
+    internal/populate_rest_options.h
     internal/rest_carrier.cc
     internal/rest_carrier.h
     internal/rest_client.h
@@ -239,6 +241,7 @@ if (BUILD_TESTING)
         internal/oauth2_minimal_iam_credentials_rest_test.cc
         internal/oauth2_refreshing_credentials_wrapper_test.cc
         internal/oauth2_service_account_credentials_test.cc
+        internal/populate_rest_options_test.cc
         internal/rest_carrier_test.cc
         internal/rest_context_test.cc
         internal/rest_opentelemetry_test.cc
