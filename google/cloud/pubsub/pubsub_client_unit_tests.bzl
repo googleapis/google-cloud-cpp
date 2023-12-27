@@ -52,6 +52,7 @@ pubsub_client_unit_tests = [
     "internal/subscription_session_test.cc",
     "internal/tracing_batch_sink_test.cc",
     "internal/tracing_pull_ack_handler_test.cc",
+    "internal/tracing_pull_lease_manager_test.cc",
     "message_test.cc",
     "options_test.cc",
     "publisher_connection_test.cc",

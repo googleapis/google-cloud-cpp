@@ -217,6 +217,8 @@ add_library(
     internal/tracing_batch_sink.h
     internal/tracing_pull_ack_handler.cc
     internal/tracing_pull_ack_handler.h
+    internal/tracing_pull_lease_manager.cc
+    internal/tracing_pull_lease_manager.h
     message.cc
     message.h
     options.cc
@@ -406,6 +408,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/subscription_session_test.cc
         internal/tracing_batch_sink_test.cc
         internal/tracing_pull_ack_handler_test.cc
+        internal/tracing_pull_lease_manager_test.cc
         message_test.cc
         options_test.cc
         publisher_connection_test.cc
