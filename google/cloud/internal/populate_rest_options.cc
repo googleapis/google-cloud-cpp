@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/rest_options.h"
+#include "google/cloud/rest_options.h"
 #include "absl/strings/match.h"
 
 namespace google {
@@ -38,6 +39,9 @@ Options PopulateRestOptions(Options opts) {
     if (!absl::StartsWithIgnoreCase(endpoint, "http")) {
       opts.set<EndpointOption>(absl::StrCat("https://", endpoint));
     }
+  }
+  if (!opts.has<RestTracingOptionsOption>()) {
+    opts.set<RestTracingOptionsOption>(DefaultTracingOptions());
   }
   return opts;
 }
