@@ -62,6 +62,8 @@ class DefaultPullLeaseManager
   future<Status> ExtendLease(std::shared_ptr<SubscriberStub> stub,
                              std::chrono::system_clock::time_point now,
                              std::chrono::seconds extension) override;
+  std::string ack_id() const override;
+  pubsub::Subscription subscription() const override;
 
  private:
   void OnLeaseTimer(Status const& timer_status);

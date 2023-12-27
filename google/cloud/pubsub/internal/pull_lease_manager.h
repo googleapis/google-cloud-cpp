@@ -45,6 +45,12 @@ class PullLeaseManager {
   virtual future<Status> ExtendLease(std::shared_ptr<SubscriberStub> stub,
                                      std::chrono::system_clock::time_point now,
                                      std::chrono::seconds extension) = 0;
+
+  virtual std::string ack_id() const { return ""; }
+
+  virtual pubsub::Subscription subscription() const {
+    return pubsub::Subscription{};
+  }
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
