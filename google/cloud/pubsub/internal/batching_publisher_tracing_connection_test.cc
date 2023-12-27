@@ -68,7 +68,7 @@ TEST(BatchingPublisherTracingConnectionTest, PublishSpan) {
       span_catcher->GetSpans(),
       ElementsAre(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsClient(),
-          SpanNamed("publish scheduler"),
+          SpanNamed("publisher batching"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(OTelAttribute<std::string>(
                                 sc::kCodeFunction,
