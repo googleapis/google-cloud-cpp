@@ -32,12 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // Create start span options for a root span.
 opentelemetry::trace::StartSpanOptions RootStartSpanOptions();
 
+using TracingAttributes =  std::vector<std::pair<
+    opentelemetry::nostd::string_view, opentelemetry::common::AttributeValue>>;
+
 /// Create a list of links with @p span context if compiled with open telemetery
 /// ABI 2.0.
-std::vector<
-    std::pair<opentelemetry::trace::SpanContext,
-              std::vector<std::pair<opentelemetry::nostd::string_view,
-                                    opentelemetry::common::AttributeValue>>>>
+std::vector<std::pair<opentelemetry::trace::SpanContext, TracingAttributes>>
 CreateLinks(opentelemetry::trace::SpanContext const& span_context);
 
 /// Adds two link attributes to the @p current span for the trace id and span id
