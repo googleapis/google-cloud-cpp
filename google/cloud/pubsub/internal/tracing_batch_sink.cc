@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/internal/tracing_batch_sink.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/pubsub/internal/tracing_helpers.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -59,13 +60,7 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
 auto MakeParent(Links const& links, Spans const& message_spans,
                 pubsub::Topic const& topic) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
-  opentelemetry::trace::StartSpanOptions options;
-  opentelemetry::context::Context root_context;
-  // TODO(#13287): Use the constant instead of the string.
-  // Setting a span as a root span was added in OTel v1.13+. It is a no-op for
-  // earlier versions.
-  options.parent = root_context.SetValue(
-      /*opentelemetry::trace::kIsRootSpanKey=*/"is_root_span", true);
+  auto options = RootStartSpanOptions();
   options.kind = opentelemetry::trace::SpanKind::kClient;
   auto batch_sink_parent = internal::MakeSpan(
       topic.topic_id() + " publish",
