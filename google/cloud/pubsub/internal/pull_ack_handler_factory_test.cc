@@ -73,8 +73,8 @@ TEST(PullAckHandlerTest, AckSimple) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler =
-      CreatePullAckHandler(std::move(cq), std::move(mock), subscription,
-                           "test-ack-id", 42, MakeTestOptions());
+      MakePullAckHandler(std::move(cq), std::move(mock), subscription,
+                         "test-ack-id", 42, MakeTestOptions());
 
   EXPECT_THAT(std::move(handler).ack().get(), StatusIs(StatusCode::kOk));
 }
@@ -103,8 +103,8 @@ TEST(PullAckHandlerTest, TracingEnabled) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler =
-      CreatePullAckHandler(std::move(cq), std::move(mock), subscription,
-                           "test-ack-id", 42, EnableTracing(MakeTestOptions()));
+      MakePullAckHandler(std::move(cq), std::move(mock), subscription,
+                         "test-ack-id", 42, EnableTracing(MakeTestOptions()));
 
   EXPECT_THAT(std::move(handler).ack().get(), StatusIs(StatusCode::kOk));
 
@@ -126,9 +126,9 @@ TEST(PullAckHandlerTest, TracingDisabled) {
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
-  auto handler = CreatePullAckHandler(std::move(cq), std::move(mock),
-                                      subscription, "test-ack-id", 42,
-                                      DisableTracing(MakeTestOptions()));
+  auto handler =
+      MakePullAckHandler(std::move(cq), std::move(mock), subscription,
+                         "test-ack-id", 42, DisableTracing(MakeTestOptions()));
 
   EXPECT_THAT(std::move(handler).ack().get(), StatusIs(StatusCode::kOk));
 
