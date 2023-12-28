@@ -14,7 +14,6 @@
 
 #include "google/cloud/pubsub/internal/pull_lease_manager_factory.h"
 #include "google/cloud/pubsub/options.h"
-#include "google/cloud/pubsub/testing/mock_pull_lease_manager.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/testing_util/async_sequencer.h"
@@ -32,11 +31,8 @@ namespace {
 using MockClock =
     ::testing::MockFunction<std::chrono::system_clock::time_point()>;
 
-using ::google::cloud::pubsub_testing::MockPullLeaseManager;
 using ::google::cloud::pubsub_testing::MockSubscriberStub;
 using ::google::cloud::testing_util::AsyncSequencer;
-using ::google::cloud::testing_util::StatusIs;
-using ::google::pubsub::v1::AcknowledgeRequest;
 using ::google::pubsub::v1::ModifyAckDeadlineRequest;
 using ::testing::_;
 using ::testing::AllOf;

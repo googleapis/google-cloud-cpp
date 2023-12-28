@@ -34,7 +34,7 @@ std::shared_ptr<PullLeaseManager> CreatePullLeaseManager(
     CompletionQueue cq, std::weak_ptr<SubscriberStub> stub,
     pubsub::Subscription subscription, std::string ack_id,
     Options const& options,
-    std::function<std::chrono::system_clock::time_point()> clock =
+    std::function<std::chrono::system_clock::time_point()> const& clock =
         std::chrono::system_clock::now);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

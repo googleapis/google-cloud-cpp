@@ -28,7 +28,7 @@ std::shared_ptr<PullLeaseManager> CreatePullLeaseManager(
     CompletionQueue cq, std::weak_ptr<SubscriberStub> stub,
     pubsub::Subscription subscription, std::string ack_id,
     Options const& options,
-    std::function<std::chrono::system_clock::time_point()> clock) {
+    std::function<std::chrono::system_clock::time_point()> const& clock) {
   std::shared_ptr<PullLeaseManager> manager =
       std::make_shared<pubsub_internal::DefaultPullLeaseManager>(
           std::move(cq), std::move(stub), options, std::move(subscription),
