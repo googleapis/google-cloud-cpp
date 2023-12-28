@@ -55,7 +55,7 @@ auto CreateLinks(opentelemetry::trace::SpanContext const& span_context) {
 /// Adds two link attributes to the @p current span for the trace id and span id
 /// from @span.
 void MaybeAddLinkAttributes(
-    opentelemetry::trace::Span const& current_span,
+    opentelemetry::trace::Span& current_span,
     opentelemetry::trace::SpanContext const& span_context,
     std::string const& span_name) {
 #if OPENTELEMETRY_ABI_VERSION_NO < 2
