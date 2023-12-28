@@ -82,9 +82,9 @@ TEST(DefaultPullLeaseManager, ExtendLeaseDeadlineSimple) {
   auto current_time = std::chrono::system_clock::now();
   MockClock clock;
   EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
-  auto manager = MakePullLeaseManager(
-      std::move(cq), std::move(mock), subscription, "test-ack-id",
-      MakeTestOptions(), clock.AsStdFunction());
+  auto manager = MakePullLeaseManager(std::move(cq), std::move(mock),
+                                      subscription, "test-ack-id",
+                                      MakeTestOptions(), clock.AsStdFunction());
 
   auto status = manager->ExtendLease(mock, current_time, kLeaseExtension);
   EXPECT_STATUS_OK(status.get());
