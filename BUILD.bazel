@@ -222,6 +222,14 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "experimental-bigquery-rest_mocks",
+    testonly = True,
+    deps = [
+        "//google/cloud/bigquery:google_cloud_cpp_bigquery_rest_mocks",
+    ],
+)
+
 bool_flag(
     name = "enable_opentelemetry",
     build_setting_default = False,
