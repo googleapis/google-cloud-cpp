@@ -46,7 +46,7 @@ auto CreateLinks(
       std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
   if (span_context->IsSampled() && span_context->IsValid()) {
-    return Links{{span_context, Attributes{}}};
+    return Links{{*span_context, Attributes{}}};
   }
 #endif
   (void)span_context;
