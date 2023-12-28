@@ -43,8 +43,9 @@ class PullLeaseManager;
 class DefaultPullAckHandler : public pubsub::PullAckHandler::Impl {
  public:
   DefaultPullAckHandler(CompletionQueue cq, std::weak_ptr<SubscriberStub> w,
-                        Options options, pubsub::Subscription subscription,
-                        std::string ack_id, std::int32_t delivery_attempt);
+                        Options const& options,
+                        pubsub::Subscription subscription, std::string ack_id,
+                        std::int32_t delivery_attempt);
   ~DefaultPullAckHandler() override;
 
   future<Status> ack() override;
