@@ -49,18 +49,16 @@ class TracingPullLeaseManager : public PullLeaseManager {
     namespace sc = opentelemetry::trace::SemanticConventions;
     opentelemetry::trace::StartSpanOptions options;
     options.kind = opentelemetry::trace::SpanKind::kClient;
-    auto const ack_id = child_->ack_id();
-    auto const subscription = child_->subscription();
-    auto const subscription_name = subscription.FullName();
     auto span = internal::MakeSpan(
-        subscription.subscription_id() + " extend",
+        child_->subscription().subscription_id() + " extend",
         {{sc::kMessagingSystem, "gcp_pubsub"},
          {sc::kMessagingOperation, "extend"},
          {sc::kCodeFunction, "pubsub::PullLeaseManager::ExtendLease"},
-         {"messaging.gcp_pubsub.message.ack_id", ack_id},
+         {"messaging.gcp_pubsub.message.ack_id", child_->ack_id()},
          {"messaging.gcp_pubsub.message.ack_deadline_seconds",
           static_cast<std::int32_t>(extension.count())},
-         {"messaging.gcp_pubsub.subscription.template", subscription_name}},
+         {"messaging.gcp_pubsub.subscription.template",
+          child_->subscription().FullName()}},
         options);
     auto scope = internal::OTelScope(span);
     return child_
