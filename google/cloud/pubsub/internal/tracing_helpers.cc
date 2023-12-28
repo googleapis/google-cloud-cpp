@@ -42,18 +42,13 @@ std::vector<
               std::vector<std::pair<opentelemetry::nostd::string_view,
                                     opentelemetry::common::AttributeValue>>>>
 CreateLinks(opentelemetry::trace::SpanContext const& span_context) {
-  using Attributes =
-      std::vector<std::pair<opentelemetry::nostd::string_view,
-                            opentelemetry::common::AttributeValue>>;
-  using Links =
-      std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
   if (span_context.IsSampled() && span_context.IsValid()) {
-    return Links{{span_context, Attributes{}}};
+    return {{span_context, TracingAttributes{}}};
   }
 #endif
   (void)span_context;
-  return Links{};
+  return {};
 }
 
 void MaybeAddLinkAttributes(
