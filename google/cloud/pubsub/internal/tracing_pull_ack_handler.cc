@@ -40,13 +40,12 @@ namespace {
 
 /// Create a list of links with @p span context if compiled with open telemetery
 /// ABI 2.0.
-auto CreateLinks(
-    std::shared_ptr<opentelemetry::trace::SpanContext> const& span_context) {
+auto CreateLinks(opentelemetry::trace::SpanContext const& span_context) {
   using Links =
       std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
-  if (span_context->IsSampled() && span_context->IsValid()) {
-    return Links{{*span_context, Attributes{}}};
+  if (span_context.IsSampled() && span_context.IsValid()) {
+    return Links{{span_context, Attributes{}}};
   }
 #endif
   (void)span_context;
@@ -56,16 +55,15 @@ auto CreateLinks(
 /// Adds two link attributes to the @p current span for the trace id and span id
 /// from @span.
 void MaybeAddLinkAttributes(
-    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const&
-        current_span,
-    std::shared_ptr<opentelemetry::trace::SpanContext> const& span_context,
+    opentelemetry::trace::Span const& current_span,
+    opentelemetry::trace::SpanContext const& span_context,
     std::string const& span_name) {
 #if OPENTELEMETRY_ABI_VERSION_NO < 2
-  if (span_context->IsSampled() && span_context->IsValid()) {
-    current_span->SetAttribute("gcp_pubsub." + span_name + ".trace_id",
-                               internal::ToString(span_context->trace_id()));
-    current_span->SetAttribute("gcp_pubsub." + span_name + ".span_id",
-                               internal::ToString(span_context->span_id()));
+  if (span_context.IsSampled() && span_context.IsValid()) {
+    current_span.SetAttribute("gcp_pubsub." + span_name + ".trace_id",
+                              internal::ToString(span_context.trace_id()));
+    current_span.SetAttribute("gcp_pubsub." + span_name + ".span_id",
+                              internal::ToString(span_context.span_id()));
   }
 #else
   (void)current_span;
@@ -82,10 +80,9 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
       std::unique_ptr<pubsub::PullAckHandler::Impl> child)
       : child_(std::move(child)) {
     consumer_span_context_ =
-        std::make_shared<opentelemetry::trace::SpanContext>(
-            opentelemetry::trace::GetSpan(
-                opentelemetry::context::RuntimeContext::GetCurrent())
-                ->GetContext());
+        opentelemetry::trace::GetSpan(
+            opentelemetry::context::RuntimeContext::GetCurrent())
+            ->GetContext();
   }
   ~TracingPullAckHandler() override = default;
 
@@ -114,7 +111,7 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
     auto span = internal::MakeSpan(
         subscription.subscription_id() + " settle", attributes,
         CreateLinks(consumer_span_context_), options);
-    MaybeAddLinkAttributes(span, consumer_span_context_, "receive");
+    MaybeAddLinkAttributes(*span, consumer_span_context_, "receive");
     auto scope = internal::OTelScope(span);
 
     return child_->ack().then(
@@ -139,7 +136,7 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
     auto span = internal::MakeSpan(
         subscription.subscription_id() + " settle", attributes,
         CreateLinks(consumer_span_context_), options);
-    MaybeAddLinkAttributes(span, consumer_span_context_, "receive");
+    MaybeAddLinkAttributes(*span, consumer_span_context_, "receive");
     auto scope = internal::OTelScope(span);
 
     return child_->nack().then(
@@ -163,7 +160,8 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
 
  private:
   std::unique_ptr<pubsub::PullAckHandler::Impl> child_;
-  std::shared_ptr<opentelemetry::trace::SpanContext> consumer_span_context_;
+  opentelemetry::trace::SpanContext consumer_span_context_ =
+      opentelemetry::trace::SpanContext::GetInvalid();
 };
 
 std::unique_ptr<pubsub::PullAckHandler::Impl> MakeTracingPullAckHandler(
