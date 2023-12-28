@@ -17,6 +17,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/status.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/pubsub/internal/tracing_helpers.h"
 #include "opentelemetry/context/runtime_context.h"
 #include "opentelemetry/trace/context.h"
 #include "opentelemetry/trace/semantic_conventions.h"
@@ -32,49 +33,12 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-using Attributes =
-    std::vector<std::pair<opentelemetry::nostd::string_view,
-                          opentelemetry::common::AttributeValue>>;
-
-namespace {
-
-/// Create a list of links with @p span context if compiled with open telemetery
-/// ABI 2.0.
-auto CreateLinks(opentelemetry::trace::SpanContext const& span_context) {
-  using Links =
-      std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
-#if OPENTELEMETRY_ABI_VERSION_NO >= 2
-  if (span_context.IsSampled() && span_context.IsValid()) {
-    return Links{{span_context, Attributes{}}};
-  }
-#endif
-  (void)span_context;
-  return Links{};
-}
-
-/// Adds two link attributes to the @p current span for the trace id and span id
-/// from @span.
-void MaybeAddLinkAttributes(
-    opentelemetry::trace::Span& current_span,
-    opentelemetry::trace::SpanContext const& span_context,
-    std::string const& span_name) {
-#if OPENTELEMETRY_ABI_VERSION_NO < 2
-  if (span_context.IsSampled() && span_context.IsValid()) {
-    current_span.SetAttribute("gcp_pubsub." + span_name + ".trace_id",
-                              internal::ToString(span_context.trace_id()));
-    current_span.SetAttribute("gcp_pubsub." + span_name + ".span_id",
-                              internal::ToString(span_context.span_id()));
-  }
-#else
-  (void)current_span;
-  (void)span_context;
-  (void)span_name;
-#endif
-}
-
-}  // namespace
 
 class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
+  using Attributes =
+      std::vector<std::pair<opentelemetry::nostd::string_view,
+                            opentelemetry::common::AttributeValue>>;
+
  public:
   explicit TracingPullAckHandler(
       std::unique_ptr<pubsub::PullAckHandler::Impl> child)

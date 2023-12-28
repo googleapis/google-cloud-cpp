@@ -13,8 +13,10 @@
 // limitations under the License.
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 #include "google/cloud/pubsub/internal/tracing_helpers.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "opentelemetry/trace/context.h"
 #include "opentelemetry/trace/span_startoptions.h"
 #include <string>
@@ -33,6 +35,43 @@ opentelemetry::trace::StartSpanOptions RootStartSpanOptions() {
   options.parent = root_context.SetValue(
       /*opentelemetry::trace::kIsRootSpanKey=*/"is_root_span", true);
   return options;
+}
+
+std::vector<
+    std::pair<opentelemetry::trace::SpanContext,
+              std::vector<std::pair<opentelemetry::nostd::string_view,
+                                    opentelemetry::common::AttributeValue>>>>
+CreateLinks(opentelemetry::trace::SpanContext const& span_context) {
+  using Attributes =
+      std::vector<std::pair<opentelemetry::nostd::string_view,
+                            opentelemetry::common::AttributeValue>>;
+  using Links =
+      std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+  if (span_context.IsSampled() && span_context.IsValid()) {
+    return Links{{span_context, Attributes{}}};
+  }
+#endif
+  (void)span_context;
+  return Links{};
+}
+
+void MaybeAddLinkAttributes(
+    opentelemetry::trace::Span& current_span,
+    opentelemetry::trace::SpanContext const& span_context,
+    std::string const& span_name) {
+#if OPENTELEMETRY_ABI_VERSION_NO < 2
+  if (span_context.IsSampled() && span_context.IsValid()) {
+    current_span.SetAttribute("gcp_pubsub." + span_name + ".trace_id",
+                              internal::ToString(span_context.trace_id()));
+    current_span.SetAttribute("gcp_pubsub." + span_name + ".span_id",
+                              internal::ToString(span_context.span_id()));
+  }
+#else
+  (void)current_span;
+  (void)span_context;
+  (void)span_name;
+#endif
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

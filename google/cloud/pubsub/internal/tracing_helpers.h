@@ -19,7 +19,10 @@
 
 #include "google/cloud/pubsub/pull_ack_handler.h"
 #include "google/cloud/pubsub/version.h"
+#include "opentelemetry/trace/context.h"
+#include "opentelemetry/trace/span.h"
 #include "opentelemetry/trace/span_startoptions.h"
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -28,6 +31,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Create start span options for a root span.
 opentelemetry::trace::StartSpanOptions RootStartSpanOptions();
+
+/// Create a list of links with @p span context if compiled with open telemetery
+/// ABI 2.0.
+std::vector<
+    std::pair<opentelemetry::trace::SpanContext,
+              std::vector<std::pair<opentelemetry::nostd::string_view,
+                                    opentelemetry::common::AttributeValue>>>>
+CreateLinks(opentelemetry::trace::SpanContext const& span_context);
+
+/// Adds two link attributes to the @p current span for the trace id and span id
+/// from @p span.
+void MaybeAddLinkAttributes(
+    opentelemetry::trace::Span& current_span,
+    opentelemetry::trace::SpanContext const& span_context,
+    std::string const& span_name);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
