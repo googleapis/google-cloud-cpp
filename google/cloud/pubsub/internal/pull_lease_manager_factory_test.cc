@@ -82,7 +82,7 @@ TEST(DefaultPullLeaseManager, ExtendLeaseDeadlineSimple) {
   auto current_time = std::chrono::system_clock::now();
   MockClock clock;
   EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
-  auto manager = CreatePullLeaseManager(
+  auto manager = MakePullLeaseManager(
       std::move(cq), std::move(mock), subscription, "test-ack-id",
       MakeTestOptions(), clock.AsStdFunction());
 
@@ -123,7 +123,7 @@ TEST(DefaultPullLeaseManager, TracingEnabled) {
   auto current_time = std::chrono::system_clock::now();
   MockClock clock;
   EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
-  auto manager = CreatePullLeaseManager(
+  auto manager = MakePullLeaseManager(
       std::move(cq), std::move(mock), subscription, "test-ack-id",
       EnableTracing(MakeTestOptions()), clock.AsStdFunction());
 
@@ -158,7 +158,7 @@ TEST(DefaultPullLeaseManager, TracingDisabled) {
   auto current_time = std::chrono::system_clock::now();
   MockClock clock;
   EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
-  auto manager = CreatePullLeaseManager(
+  auto manager = MakePullLeaseManager(
       std::move(cq), std::move(mock), subscription, "test-ack-id",
       DisableTracing(MakeTestOptions()), clock.AsStdFunction());
 

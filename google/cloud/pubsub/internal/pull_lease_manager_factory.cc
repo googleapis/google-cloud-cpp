@@ -24,7 +24,7 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<PullLeaseManager> CreatePullLeaseManager(
+std::shared_ptr<PullLeaseManager> MakePullLeaseManager(
     CompletionQueue cq, std::weak_ptr<SubscriberStub> stub,
     pubsub::Subscription subscription, std::string ack_id,
     Options const& options,
