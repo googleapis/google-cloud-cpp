@@ -49,6 +49,7 @@ auto CreateLinks(
     return Links{{span_context, Attributes{}}};
   }
 #endif
+  (void)span_context;
   return Links{};
 }
 
