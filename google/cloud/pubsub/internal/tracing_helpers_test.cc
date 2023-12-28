@@ -29,10 +29,8 @@ namespace {
 
 using ::google::cloud::internal::MakeSpan;
 using ::google::cloud::testing_util::InstallSpanCatcher;
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::SpanIsRoot;
 using ::google::cloud::testing_util::SpanNamed;
-using ::testing::_;
 using ::testing::AllOf;
 using ::testing::Contains;
 
