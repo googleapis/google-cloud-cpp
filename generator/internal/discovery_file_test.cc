@@ -141,7 +141,7 @@ auto constexpr kGetRequestTypeJson = R"""({
 auto constexpr kOperationTypeJson = R"""({})""";
 
 TEST_F(DiscoveryFileTest, FormatFileWithImport) {
-  auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
+  auto constexpr kExpectedProto = R"""(// Copyright 2024 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -262,7 +262,7 @@ message GetMyResourceRequest {
 }
 
 TEST_F(DiscoveryFileTest, FormatFileWithoutImports) {
-  auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
+  auto constexpr kExpectedProto = R"""(// Copyright 2024 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -379,7 +379,7 @@ message GetMyResourceRequest {
 }
 
 TEST_F(DiscoveryFileTest, FormatFileNoResource) {
-  auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
+  auto constexpr kExpectedProto = R"""(// Copyright 2024 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -462,7 +462,7 @@ TEST_F(DiscoveryFileTest, FormatFileNoTypes) {
   }
 })""";
 
-  auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
+  auto constexpr kExpectedProto = R"""(// Copyright 2024 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
