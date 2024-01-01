@@ -30,6 +30,7 @@ struct DiscoveryDocumentProperties {
   std::string revision;
   std::string discovery_doc_url;
   std::set<std::string> operation_services;
+  std::string copyright_year;
 };
 
 }  // namespace generator_internal

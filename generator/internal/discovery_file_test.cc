@@ -249,13 +249,9 @@ message GetMyResourceRequest {
   types.emplace("Foo",
                 DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
-  DiscoveryDocumentProperties document_properties{"my/service",
-                                                  "https://default.host",
-                                                  "my_product",
-                                                  "v1",
-                                                  "19700101",
-                                                  "file:///my_url",
-                                                  {}};
+  DiscoveryDocumentProperties document_properties{
+      "my/service", "https://default.host", "my_product", "v1",
+      "19700101",   "file:///my_url",       {},           "2023"};
   auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
@@ -366,13 +362,9 @@ message GetMyResourceRequest {
   types.emplace("Foo",
                 DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
-  DiscoveryDocumentProperties document_properties{"my/service",
-                                                  "https://default.host",
-                                                  "my_product",
-                                                  "v1",
-                                                  "19700101",
-                                                  "file:///my_url",
-                                                  {}};
+  DiscoveryDocumentProperties document_properties{
+      "my/service", "https://default.host", "my_product", "v1",
+      "19700101",   "file:///my_url",       {},           "2023"};
   auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
@@ -443,7 +435,7 @@ message GetMyResourceRequest {
                 DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{
-      "", "", "my_product", "v1", "19700101", "file:///my_url", {}};
+      "", "", "my_product", "v1", "19700101", "file:///my_url", {}, "2023"};
   auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
@@ -509,13 +501,9 @@ service MyResources {
   types.emplace("Foo",
                 DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
-  DiscoveryDocumentProperties document_properties{"my/service",
-                                                  "https://default.host",
-                                                  "my_product",
-                                                  "v1",
-                                                  "19700101",
-                                                  "file:///my_url",
-                                                  {}};
+  DiscoveryDocumentProperties document_properties{
+      "my/service", "https://default.host", "my_product", "v1",
+      "19700101",   "file:///my_url",       {},           "2023"};
   auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
@@ -572,8 +560,8 @@ TEST_F(DiscoveryFileTest, FormatFileResourceScopeError) {
   types.emplace("Foo",
                 DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
-  DiscoveryDocumentProperties document_properties{
-      "", "", "my_product", "v1", "", "", {}};
+  DiscoveryDocumentProperties document_properties{"", "", "my_product", "v1",
+                                                  "", "", {},           "2023"};
   auto result = f.FormatFile(document_properties, types, os);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("scope")));
@@ -631,8 +619,8 @@ TEST_F(DiscoveryFileTest, FormatFileTypeMissingError) {
   types.emplace("Foo",
                 DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
-  DiscoveryDocumentProperties document_properties{
-      "", "", "my_product", "v1", "", "", {}};
+  DiscoveryDocumentProperties document_properties{"", "", "my_product", "v1",
+                                                  "", "", {},           "2023"};
   auto result = f.FormatFile(document_properties, types, os);
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("neither $ref nor type")));
