@@ -672,7 +672,7 @@ service MyResources {
                          &pool());
   r.AddResponseType("Operation", &t3);
   DiscoveryDocumentProperties document_properties{
-      "base/path", "https://my.endpoint.com", "", "", "", "", {}};
+      "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   ASSERT_STATUS_OK(emitted_proto);
   EXPECT_THAT(*emitted_proto, Eq(kExpectedProto));
@@ -703,7 +703,7 @@ TEST_F(DiscoveryResourceTest, JsonToProtobufServiceMissingOAuthScopes) {
                         get_request_type_json, &pool());
   r.AddRequestType("GetMyResourcesRequest", &t);
   DiscoveryDocumentProperties document_properties{
-      "base/path", "https://my.endpoint.com", "", "", "", "", {}};
+      "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   EXPECT_THAT(
       emitted_proto,
@@ -740,7 +740,7 @@ TEST_F(DiscoveryResourceTest, JsonToProtobufServiceMissingRequestType) {
   ASSERT_TRUE(resource_json.is_object());
   DiscoveryResource r("myResources", "this.package", resource_json);
   DiscoveryDocumentProperties document_properties{
-      "base/path", "https://my.endpoint.com", "", "", "", "", {}};
+      "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   EXPECT_THAT(
       emitted_proto,
@@ -781,7 +781,7 @@ service MyResources {
   ASSERT_TRUE(resource_json.is_object());
   DiscoveryResource r("myResources", "this.package", resource_json);
   DiscoveryDocumentProperties document_properties{
-      "base/path", "https://my.endpoint.com", "", "", "", "", {}};
+      "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   ASSERT_STATUS_OK(emitted_proto);
   EXPECT_THAT(*emitted_proto, Eq(kExpectedProto));
@@ -814,7 +814,7 @@ TEST_F(DiscoveryResourceTest, JsonToProtobufServiceErrorFormattingRpcOptions) {
                         get_request_type_json, &pool());
   r.AddRequestType("GetMyResourcesRequest", &t);
   DiscoveryDocumentProperties document_properties{
-      "base/path", "https://my.endpoint.com", "", "", "", "", {}};
+      "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   EXPECT_THAT(
       emitted_proto,
