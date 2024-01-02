@@ -27,6 +27,7 @@ add_library(
     chrono_output.h
     command_line_parsing.cc
     command_line_parsing.h
+    credentials.h
     example_driver.cc
     example_driver.h
     expect_exception.h
