@@ -254,9 +254,9 @@ class AsyncWriterConnectionBuffered
                       MakeFastForwardError(UploadId(), buffer_offset_,
                                            persisted_size, GCP_ERROR_INFO()));
     }
-    resend_buffer_.RemovePrefix(n);
+    resend_buffer_.RemovePrefix(static_cast<std::size_t>(n));
     buffer_offset_ = persisted_size;
-    write_offset_ -= n;
+    write_offset_ -= static_cast<std::size_t>(n);
     // If the buffer is small enough, collect all the handlers to notify them.
     auto const handlers = [this, &lk] {
       if (resend_buffer_.size() <= buffer_size_lwm_) return ClearHandlers(lk);
