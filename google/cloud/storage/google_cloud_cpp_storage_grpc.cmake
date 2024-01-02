@@ -74,6 +74,8 @@ else ()
         internal/async/token_impl.h
         internal/async/write_payload_fwd.h
         internal/async/write_payload_impl.h
+        internal/async/writer_connection_buffered.cc
+        internal/async/writer_connection_buffered.h
         internal/async/writer_connection_finalized.cc
         internal/async/writer_connection_finalized.h
         internal/async/writer_connection_impl.cc
@@ -293,6 +295,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/async/reader_connection_impl_test.cc
         internal/async/reader_connection_tracing_test.cc
         internal/async/write_payload_impl_test.cc
+        internal/async/writer_connection_buffered_test.cc
         internal/async/writer_connection_finalized_test.cc
         internal/async/writer_connection_impl_test.cc
         internal/async/writer_connection_tracing_test.cc
