@@ -25,23 +25,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /**
- * Modify @p opts to have default values for common options.
- *
- * Add default values for common options, including `UnifiedCredentialsOption`
- * `EndpointOption`,`UserAgentProductsOption`, `TracingComponentsOption`, and
- * `UserProjectOption`.
+ * Default values for REST options, given @p opts.
  *
  * @param opts the current options. Any values already present in this
  *     collection are not modified.
- * @param emulator_env_var an environment variable name to override the endpoint
- *     and the default credentials. If this environment variable is set, this
- *     function sets `UnifiedCredentialsOption` to the insecure credentials.
- *     Not all services have emulators, in this case, the library can provide
- *     an empty value for this environment variable.
  *
  * @return opts with some common defaults set.
  */
-Options PopulateGrpcOptions(Options opts, std::string const& emulator_env_var);
+Options PopulateGrpcOptions(Options opts);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

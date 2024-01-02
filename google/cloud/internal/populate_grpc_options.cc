@@ -15,7 +15,6 @@
 #include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/populate_common_options.h"
 
 namespace google {
@@ -23,16 +22,10 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-Options PopulateGrpcOptions(Options opts, std::string const& emulator_env_var) {
-  if (!emulator_env_var.empty()) {
-    auto e = GetEnv(emulator_env_var.c_str());
-    if (e && !e->empty()) {
-      opts.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
-    }
-  }
+Options PopulateGrpcOptions(Options opts) {
   if (!opts.has<GrpcCredentialOption>() &&
       !opts.has<UnifiedCredentialsOption>()) {
-    opts.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
+    opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   }
   if (!opts.has<GrpcTracingOptionsOption>()) {
     opts.set<GrpcTracingOptionsOption>(DefaultTracingOptions());

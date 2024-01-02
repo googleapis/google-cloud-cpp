@@ -15,7 +15,9 @@
 #include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/testing_util/credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
@@ -27,45 +29,44 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::TestCredentialsVisitor;
 
 TEST(PopulateGrpcOptions, Simple) {
   // Unset any environment variables
   ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
-  auto actual = PopulateGrpcOptions(Options{}, {});
-  EXPECT_TRUE(actual.has<GrpcCredentialOption>());
+  auto actual = PopulateGrpcOptions(Options{});
   EXPECT_TRUE(actual.has<GrpcTracingOptionsOption>());
   EXPECT_EQ(actual.get<GrpcTracingOptionsOption>()
                 .truncate_string_field_longer_than(),
             TracingOptions{}.truncate_string_field_longer_than());
+
+  EXPECT_TRUE(actual.has<UnifiedCredentialsOption>());
+  auto const& creds = actual.get<UnifiedCredentialsOption>();
+  TestCredentialsVisitor v;
+  CredentialsVisitor::dispatch(*creds, v);
+  EXPECT_EQ(v.name, "GoogleDefaultCredentialsConfig");
 }
 
-TEST(PopulateGrpcOptions, WithoutEmulator) {
-  auto credentials = grpc::GoogleDefaultCredentials();
-  auto actual =
-      PopulateGrpcOptions(Options{}.set<GrpcCredentialOption>(credentials), "");
-  EXPECT_EQ(actual.get<GrpcCredentialOption>(), credentials);
+TEST(PopulateRestOptions, CustomCredentials) {
+  auto const expiration = std::chrono::system_clock::now();
+  auto creds = MakeAccessTokenCredentials("access-token", expiration);
+  auto options =
+      PopulateGrpcOptions(Options{}.set<UnifiedCredentialsOption>(creds));
+  EXPECT_EQ(options.get<UnifiedCredentialsOption>(), creds);
 }
 
-TEST(PopulateGrpcOptions, WithUnsetEmulator) {
-  ScopedEnvironment env("EMULATOR", absl::nullopt);
-  auto credentials = grpc::GoogleDefaultCredentials();
-  auto actual = PopulateGrpcOptions(
-      Options{}.set<GrpcCredentialOption>(credentials), "EMULATOR");
-  EXPECT_EQ(actual.get<GrpcCredentialOption>(), credentials);
-}
-
-TEST(PopulateGrpcOptions, WithSetEmulator) {
-  ScopedEnvironment env("EMULATOR", "test-only.example.com");
-  auto credentials = grpc::GoogleDefaultCredentials();
-  auto actual = PopulateGrpcOptions(
-      Options{}.set<GrpcCredentialOption>(credentials), "EMULATOR");
-  EXPECT_NE(actual.get<GrpcCredentialOption>(), credentials);
+TEST(PopulateGrpcOptions, GrpcCredentialOptionBackCompat) {
+  auto creds = grpc::InsecureChannelCredentials();
+  auto actual = PopulateGrpcOptions(Options{}.set<GrpcCredentialOption>(creds));
+  EXPECT_FALSE(actual.has<UnifiedCredentialsOption>());
+  EXPECT_TRUE(actual.has<GrpcCredentialOption>());
+  EXPECT_EQ(creds, actual.get<GrpcCredentialOption>());
 }
 
 TEST(PopulateGrpcOptions, TracingOptions) {
   ScopedEnvironment env("GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
                         "truncate_string_field_longer_than=42");
-  auto actual = PopulateGrpcOptions(Options{}, "");
+  auto actual = PopulateGrpcOptions(Options{});
   auto tracing = actual.get<GrpcTracingOptionsOption>();
   EXPECT_EQ(tracing.truncate_string_field_longer_than(), 42);
 }
