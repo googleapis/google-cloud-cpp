@@ -582,7 +582,7 @@ Status GenerateProtosFromDiscoveryDoc(
       discovery_doc.value("basePath", ""), *default_hostname,
       discovery_doc.value("name", ""),     discovery_doc.value("version", ""),
       discovery_doc.value("revision", ""), discovery_doc_url,
-      std::move(operation_services)};
+      std::move(operation_services),       CurrentCopyrightYear()};
 
   if (document_properties.base_path.empty() ||
       document_properties.default_hostname.empty() ||
