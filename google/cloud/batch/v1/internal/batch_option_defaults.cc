@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options BatchServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_BATCH_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_BATCH_SERVICE_AUTHORITY", "batch.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<batch_v1::BatchServiceRetryPolicyOption>()) {
     options.set<batch_v1::BatchServiceRetryPolicyOption>(
         batch_v1::BatchServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))

@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options HubServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_HUB_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_HUB_SERVICE_AUTHORITY",
       "networkconnectivity.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<networkconnectivity_v1::HubServiceRetryPolicyOption>()) {
     options.set<networkconnectivity_v1::HubServiceRetryPolicyOption>(
         networkconnectivity_v1::HubServiceLimitedTimeRetryPolicy(

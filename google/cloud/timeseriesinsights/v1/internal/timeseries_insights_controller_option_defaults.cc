@@ -33,13 +33,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options TimeseriesInsightsControllerDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_TIMESERIES_INSIGHTS_CONTROLLER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_TIMESERIES_INSIGHTS_CONTROLLER_AUTHORITY",
       "timeseriesinsights.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<timeseriesinsights_v1::
                        TimeseriesInsightsControllerRetryPolicyOption>()) {
     options.set<

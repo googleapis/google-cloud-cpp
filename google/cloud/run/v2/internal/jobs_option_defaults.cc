@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options JobsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_JOBS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_JOBS_AUTHORITY", "run.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<run_v2::JobsRetryPolicyOption>()) {
     options.set<run_v2::JobsRetryPolicyOption>(
         run_v2::JobsLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());

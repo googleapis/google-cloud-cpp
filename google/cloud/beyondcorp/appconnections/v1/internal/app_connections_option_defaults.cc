@@ -34,12 +34,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options AppConnectionsServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_APP_CONNECTIONS_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_APP_CONNECTIONS_SERVICE_AUTHORITY",
       "beyondcorp.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<beyondcorp_appconnections_v1::
                        AppConnectionsServiceRetryPolicyOption>()) {
     options.set<

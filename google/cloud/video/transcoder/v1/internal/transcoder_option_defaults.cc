@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options TranscoderServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TRANSCODER_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_TRANSCODER_SERVICE_AUTHORITY",
       "transcoder.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<video_transcoder_v1::TranscoderServiceRetryPolicyOption>()) {
     options.set<video_transcoder_v1::TranscoderServiceRetryPolicyOption>(
         video_transcoder_v1::TranscoderServiceLimitedTimeRetryPolicy(

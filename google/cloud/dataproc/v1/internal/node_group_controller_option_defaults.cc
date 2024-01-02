@@ -35,12 +35,11 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options NodeGroupControllerDefaultOptions(std::string const& location,
                                           Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_NODE_GROUP_CONTROLLER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_NODE_GROUP_CONTROLLER_AUTHORITY",
       absl::StrCat(location, "-", "dataproc.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataproc_v1::NodeGroupControllerRetryPolicyOption>()) {
     options.set<dataproc_v1::NodeGroupControllerRetryPolicyOption>(
         dataproc_v1::NodeGroupControllerLimitedTimeRetryPolicy(

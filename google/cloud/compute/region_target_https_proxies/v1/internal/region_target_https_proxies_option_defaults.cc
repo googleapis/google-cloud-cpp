@@ -34,13 +34,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options RegionTargetHttpsProxiesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_REGION_TARGET_HTTPS_PROXIES_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_REGION_TARGET_HTTPS_PROXIES_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_region_target_https_proxies_v1::
                        RegionTargetHttpsProxiesRetryPolicyOption>()) {
     options.set<compute_region_target_https_proxies_v1::

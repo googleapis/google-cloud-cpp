@@ -35,13 +35,12 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AnswerRecordsDefaultOptions(std::string const& location,
                                     Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ANSWER_RECORDS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_ANSWER_RECORDS_AUTHORITY",
       absl::StrCat(location, location.empty() ? "" : "-",
                    "dialogflow.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_es::AnswerRecordsRetryPolicyOption>()) {
     options.set<dialogflow_es::AnswerRecordsRetryPolicyOption>(
         dialogflow_es::AnswerRecordsLimitedTimeRetryPolicy(

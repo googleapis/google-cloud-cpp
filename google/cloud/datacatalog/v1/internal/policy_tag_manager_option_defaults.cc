@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options PolicyTagManagerDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_AUTHORITY",
       "datacatalog.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datacatalog_v1::PolicyTagManagerRetryPolicyOption>()) {
     options.set<datacatalog_v1::PolicyTagManagerRetryPolicyOption>(
         datacatalog_v1::PolicyTagManagerLimitedTimeRetryPolicy(

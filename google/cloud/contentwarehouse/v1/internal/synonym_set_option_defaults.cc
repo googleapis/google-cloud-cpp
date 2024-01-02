@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options SynonymSetServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SYNONYM_SET_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_SYNONYM_SET_SERVICE_AUTHORITY",
       "contentwarehouse.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<contentwarehouse_v1::SynonymSetServiceRetryPolicyOption>()) {
     options.set<contentwarehouse_v1::SynonymSetServiceRetryPolicyOption>(
         contentwarehouse_v1::SynonymSetServiceLimitedTimeRetryPolicy(

@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ProductSearchDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_PRODUCT_SEARCH_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_PRODUCT_SEARCH_AUTHORITY", "vision.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<vision_v1::ProductSearchRetryPolicyOption>()) {
     options.set<vision_v1::ProductSearchRetryPolicyOption>(
         vision_v1::ProductSearchLimitedTimeRetryPolicy(std::chrono::minutes(30))

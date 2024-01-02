@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options HealthChecksDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_HEALTH_CHECKS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_HEALTH_CHECKS_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_health_checks_v1::HealthChecksRetryPolicyOption>()) {
     options.set<compute_health_checks_v1::HealthChecksRetryPolicyOption>(
         compute_health_checks_v1::HealthChecksLimitedTimeRetryPolicy(

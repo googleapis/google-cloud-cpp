@@ -34,12 +34,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options RegionHealthChecksDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_REGION_HEALTH_CHECKS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_REGION_HEALTH_CHECKS_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_region_health_checks_v1::
                        RegionHealthChecksRetryPolicyOption>()) {
     options.set<

@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options AdminServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ADMIN_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_ADMIN_SERVICE_AUTHORITY", "pubsublite.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<pubsublite::AdminServiceRetryPolicyOption>()) {
     options.set<pubsublite::AdminServiceRetryPolicyOption>(
         pubsublite::AdminServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))

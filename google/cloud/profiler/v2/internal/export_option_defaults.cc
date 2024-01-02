@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ExportServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_EXPORT_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_EXPORT_SERVICE_AUTHORITY",
       "cloudprofiler.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<profiler_v2::ExportServiceRetryPolicyOption>()) {
     options.set<profiler_v2::ExportServiceRetryPolicyOption>(
         profiler_v2::ExportServiceLimitedTimeRetryPolicy(

@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options TraceServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TRACE_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_TRACE_SERVICE_AUTHORITY", "cloudtrace.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<trace_v2::TraceServiceRetryPolicyOption>()) {
     options.set<trace_v2::TraceServiceRetryPolicyOption>(
         trace_v2::TraceServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))

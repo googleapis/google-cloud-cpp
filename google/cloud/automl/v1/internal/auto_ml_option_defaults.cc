@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options AutoMlDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_AUTO_ML_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_AUTO_ML_AUTHORITY", "automl.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<automl_v1::AutoMlRetryPolicyOption>()) {
     options.set<automl_v1::AutoMlRetryPolicyOption>(
         automl_v1::AutoMlLimitedTimeRetryPolicy(std::chrono::minutes(30))

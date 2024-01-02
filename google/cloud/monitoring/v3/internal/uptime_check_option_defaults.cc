@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options UptimeCheckServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_UPTIME_CHECK_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_UPTIME_CHECK_SERVICE_AUTHORITY",
       "monitoring.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<monitoring_v3::UptimeCheckServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::UptimeCheckServiceRetryPolicyOption>(
         monitoring_v3::UptimeCheckServiceLimitedTimeRetryPolicy(

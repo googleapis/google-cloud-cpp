@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options RevisionsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_REVISIONS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_REVISIONS_AUTHORITY", "run.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<run_v2::RevisionsRetryPolicyOption>()) {
     options.set<run_v2::RevisionsRetryPolicyOption>(
         run_v2::RevisionsLimitedTimeRetryPolicy(std::chrono::minutes(30))

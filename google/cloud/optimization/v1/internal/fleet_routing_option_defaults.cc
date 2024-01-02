@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options FleetRoutingDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_FLEET_ROUTING_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_FLEET_ROUTING_AUTHORITY",
       "cloudoptimization.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<optimization_v1::FleetRoutingRetryPolicyOption>()) {
     options.set<optimization_v1::FleetRoutingRetryPolicyOption>(
         optimization_v1::FleetRoutingLimitedTimeRetryPolicy(

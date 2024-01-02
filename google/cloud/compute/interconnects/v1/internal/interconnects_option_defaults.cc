@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options InterconnectsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_INTERCONNECTS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_INTERCONNECTS_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options
            .has<compute_interconnects_v1::InterconnectsRetryPolicyOption>()) {
     options.set<compute_interconnects_v1::InterconnectsRetryPolicyOption>(

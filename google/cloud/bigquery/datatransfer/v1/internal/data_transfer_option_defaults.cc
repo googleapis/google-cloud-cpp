@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options DataTransferServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_AUTHORITY",
       "bigquerydatatransfer.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>()) {
     options.set<bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>(

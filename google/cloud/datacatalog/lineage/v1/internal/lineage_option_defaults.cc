@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options LineageDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_LINEAGE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_LINEAGE_AUTHORITY", "datalineage.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datacatalog_lineage_v1::LineageRetryPolicyOption>()) {
     options.set<datacatalog_lineage_v1::LineageRetryPolicyOption>(
         datacatalog_lineage_v1::LineageLimitedTimeRetryPolicy(

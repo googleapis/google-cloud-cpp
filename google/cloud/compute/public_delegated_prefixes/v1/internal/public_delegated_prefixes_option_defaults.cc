@@ -34,12 +34,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options PublicDelegatedPrefixesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_PUBLIC_DELEGATED_PREFIXES_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_PUBLIC_DELEGATED_PREFIXES_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_public_delegated_prefixes_v1::
                        PublicDelegatedPrefixesRetryPolicyOption>()) {
     options.set<compute_public_delegated_prefixes_v1::

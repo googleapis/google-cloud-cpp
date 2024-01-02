@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options PolicyTroubleshooterDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_POLICY_TROUBLESHOOTER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_POLICY_TROUBLESHOOTER_AUTHORITY",
       "policytroubleshooter.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<policytroubleshooter_iam_v3::
                        PolicyTroubleshooterRetryPolicyOption>()) {
     options.set<

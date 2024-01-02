@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options EkmServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_EKM_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_EKM_SERVICE_AUTHORITY", "cloudkms.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<kms_v1::EkmServiceRetryPolicyOption>()) {
     options.set<kms_v1::EkmServiceRetryPolicyOption>(
         kms_v1::EkmServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))

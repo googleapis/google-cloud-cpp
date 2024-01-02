@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options WorkflowsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_WORKFLOWS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_WORKFLOWS_AUTHORITY", "workflows.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<workflows_v1::WorkflowsRetryPolicyOption>()) {
     options.set<workflows_v1::WorkflowsRetryPolicyOption>(
         workflows_v1::WorkflowsLimitedTimeRetryPolicy(std::chrono::minutes(30))

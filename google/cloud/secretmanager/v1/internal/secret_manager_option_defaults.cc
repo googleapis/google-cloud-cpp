@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options SecretManagerServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SECRET_MANAGER_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_SECRET_MANAGER_SERVICE_AUTHORITY",
       "secretmanager.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<secretmanager_v1::SecretManagerServiceRetryPolicyOption>()) {
     options.set<secretmanager_v1::SecretManagerServiceRetryPolicyOption>(
         secretmanager_v1::SecretManagerServiceLimitedTimeRetryPolicy(

@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options QuotaControllerDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_QUOTA_CONTROLLER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_QUOTA_CONTROLLER_AUTHORITY",
       "servicecontrol.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<servicecontrol_v1::QuotaControllerRetryPolicyOption>()) {
     options.set<servicecontrol_v1::QuotaControllerRetryPolicyOption>(
         servicecontrol_v1::QuotaControllerLimitedTimeRetryPolicy(

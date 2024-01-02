@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options DomainsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DOMAINS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_DOMAINS_AUTHORITY", "domains.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<domains_v1::DomainsRetryPolicyOption>()) {
     options.set<domains_v1::DomainsRetryPolicyOption>(
         domains_v1::DomainsLimitedTimeRetryPolicy(std::chrono::minutes(30))

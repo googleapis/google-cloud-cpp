@@ -33,13 +33,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CertificateAuthorityServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_CERTIFICATE_AUTHORITY_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CERTIFICATE_AUTHORITY_SERVICE_AUTHORITY",
       "privateca.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options
            .has<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>()) {
     options.set<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>(

@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options AdaptationDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ADAPTATION_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_ADAPTATION_AUTHORITY", "speech.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<speech_v1::AdaptationRetryPolicyOption>()) {
     options.set<speech_v1::AdaptationRetryPolicyOption>(
         speech_v1::AdaptationLimitedTimeRetryPolicy(std::chrono::minutes(30))

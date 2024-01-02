@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options StorageTransferServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_STORAGE_TRANSFER_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_STORAGE_TRANSFER_SERVICE_AUTHORITY",
       "storagetransfer.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           storagetransfer_v1::StorageTransferServiceRetryPolicyOption>()) {
     options.set<storagetransfer_v1::StorageTransferServiceRetryPolicyOption>(

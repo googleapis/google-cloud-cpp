@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options LoggingServiceV2DefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_LOGGING_SERVICE_V2_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_LOGGING_SERVICE_V2_AUTHORITY",
       "logging.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<logging_v2::LoggingServiceV2RetryPolicyOption>()) {
     options.set<logging_v2::LoggingServiceV2RetryPolicyOption>(
         logging_v2::LoggingServiceV2LimitedTimeRetryPolicy(

@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options DatabaseAdminDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT",
       "SPANNER_EMULATOR_HOST", "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY",
       "spanner.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "SPANNER_EMULATOR_HOST");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<spanner_admin::DatabaseAdminRetryPolicyOption>()) {
     options.set<spanner_admin::DatabaseAdminRetryPolicyOption>(
         spanner_admin::DatabaseAdminLimitedTimeRetryPolicy(

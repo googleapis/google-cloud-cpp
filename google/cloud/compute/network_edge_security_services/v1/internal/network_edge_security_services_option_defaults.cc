@@ -34,13 +34,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options NetworkEdgeSecurityServicesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_NETWORK_EDGE_SECURITY_SERVICES_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_NETWORK_EDGE_SECURITY_SERVICES_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_network_edge_security_services_v1::
                        NetworkEdgeSecurityServicesRetryPolicyOption>()) {
     options.set<compute_network_edge_security_services_v1::

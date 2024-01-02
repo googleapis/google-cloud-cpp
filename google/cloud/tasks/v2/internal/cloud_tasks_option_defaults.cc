@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CloudTasksDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_TASKS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CLOUD_TASKS_AUTHORITY", "cloudtasks.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<tasks_v2::CloudTasksRetryPolicyOption>()) {
     options.set<tasks_v2::CloudTasksRetryPolicyOption>(
         tasks_v2::CloudTasksLimitedTimeRetryPolicy(std::chrono::minutes(30))

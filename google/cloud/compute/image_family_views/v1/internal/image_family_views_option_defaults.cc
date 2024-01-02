@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ImageFamilyViewsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_IMAGE_FAMILY_VIEWS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_IMAGE_FAMILY_VIEWS_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           compute_image_family_views_v1::ImageFamilyViewsRetryPolicyOption>()) {
     options.set<

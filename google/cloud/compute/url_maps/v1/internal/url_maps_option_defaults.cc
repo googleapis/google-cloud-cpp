@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options UrlMapsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_URL_MAPS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_URL_MAPS_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_url_maps_v1::UrlMapsRetryPolicyOption>()) {
     options.set<compute_url_maps_v1::UrlMapsRetryPolicyOption>(
         compute_url_maps_v1::UrlMapsLimitedTimeRetryPolicy(

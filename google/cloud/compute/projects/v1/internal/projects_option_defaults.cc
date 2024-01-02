@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ProjectsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_PROJECTS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_PROJECTS_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_projects_v1::ProjectsRetryPolicyOption>()) {
     options.set<compute_projects_v1::ProjectsRetryPolicyOption>(
         compute_projects_v1::ProjectsLimitedTimeRetryPolicy(

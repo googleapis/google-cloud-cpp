@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options DatastreamDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DATASTREAM_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_DATASTREAM_AUTHORITY", "datastream.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datastream_v1::DatastreamRetryPolicyOption>()) {
     options.set<datastream_v1::DatastreamRetryPolicyOption>(
         datastream_v1::DatastreamLimitedTimeRetryPolicy(

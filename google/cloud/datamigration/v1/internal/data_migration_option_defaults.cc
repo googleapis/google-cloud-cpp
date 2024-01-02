@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options DataMigrationServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DATA_MIGRATION_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_DATA_MIGRATION_SERVICE_AUTHORITY",
       "datamigration.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datamigration_v1::DataMigrationServiceRetryPolicyOption>()) {
     options.set<datamigration_v1::DataMigrationServiceRetryPolicyOption>(
         datamigration_v1::DataMigrationServiceLimitedTimeRetryPolicy(

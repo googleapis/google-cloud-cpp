@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options OsConfigZonalServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_OS_CONFIG_ZONAL_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_OS_CONFIG_ZONAL_SERVICE_AUTHORITY",
       "osconfig.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>()) {
     options.set<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>(
         osconfig_v1::OsConfigZonalServiceLimitedTimeRetryPolicy(

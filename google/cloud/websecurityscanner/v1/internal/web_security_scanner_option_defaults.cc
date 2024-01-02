@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options WebSecurityScannerDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_WEB_SECURITY_SCANNER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_WEB_SECURITY_SCANNER_AUTHORITY",
       "websecurityscanner.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options
            .has<websecurityscanner_v1::WebSecurityScannerRetryPolicyOption>()) {
     options.set<websecurityscanner_v1::WebSecurityScannerRetryPolicyOption>(

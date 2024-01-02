@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CaseServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CASE_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CASE_SERVICE_AUTHORITY", "cloudsupport.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<support_v2::CaseServiceRetryPolicyOption>()) {
     options.set<support_v2::CaseServiceRetryPolicyOption>(
         support_v2::CaseServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))

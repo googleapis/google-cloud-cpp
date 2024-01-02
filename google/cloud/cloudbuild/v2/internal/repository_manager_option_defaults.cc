@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options RepositoryManagerDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_REPOSITORY_MANAGER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_REPOSITORY_MANAGER_AUTHORITY",
       "cloudbuild.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()) {
     options.set<cloudbuild_v2::RepositoryManagerRetryPolicyOption>(
         cloudbuild_v2::RepositoryManagerLimitedTimeRetryPolicy(

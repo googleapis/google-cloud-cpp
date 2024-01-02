@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options DataplexServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DATAPLEX_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_DATAPLEX_SERVICE_AUTHORITY", "dataplex.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataplex_v1::DataplexServiceRetryPolicyOption>()) {
     options.set<dataplex_v1::DataplexServiceRetryPolicyOption>(
         dataplex_v1::DataplexServiceLimitedTimeRetryPolicy(

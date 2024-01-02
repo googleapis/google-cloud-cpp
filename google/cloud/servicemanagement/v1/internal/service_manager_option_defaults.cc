@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ServiceManagerDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_MANAGER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_SERVICE_MANAGER_AUTHORITY",
       "servicemanagement.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<servicemanagement_v1::ServiceManagerRetryPolicyOption>()) {
     options.set<servicemanagement_v1::ServiceManagerRetryPolicyOption>(
         servicemanagement_v1::ServiceManagerLimitedTimeRetryPolicy(

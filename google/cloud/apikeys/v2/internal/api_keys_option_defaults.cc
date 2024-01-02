@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ApiKeysDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_API_KEYS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_API_KEYS_AUTHORITY", "apikeys.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<apikeys_v2::ApiKeysRetryPolicyOption>()) {
     options.set<apikeys_v2::ApiKeysRetryPolicyOption>(
         apikeys_v2::ApiKeysLimitedTimeRetryPolicy(std::chrono::minutes(30))

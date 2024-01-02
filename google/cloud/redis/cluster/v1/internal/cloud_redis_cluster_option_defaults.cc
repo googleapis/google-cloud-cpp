@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CloudRedisClusterDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_REDIS_CLUSTER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CLOUD_REDIS_CLUSTER_AUTHORITY", "redis.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<redis_cluster_v1::CloudRedisClusterRetryPolicyOption>()) {
     options.set<redis_cluster_v1::CloudRedisClusterRetryPolicyOption>(
         redis_cluster_v1::CloudRedisClusterLimitedTimeRetryPolicy(

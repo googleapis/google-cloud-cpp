@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CommentServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_COMMENT_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_COMMENT_SERVICE_AUTHORITY",
       "cloudsupport.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<support_v2::CommentServiceRetryPolicyOption>()) {
     options.set<support_v2::CommentServiceRetryPolicyOption>(
         support_v2::CommentServiceLimitedTimeRetryPolicy(

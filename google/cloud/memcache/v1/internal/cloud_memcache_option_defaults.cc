@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CloudMemcacheDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_MEMCACHE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CLOUD_MEMCACHE_AUTHORITY", "memcache.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<memcache_v1::CloudMemcacheRetryPolicyOption>()) {
     options.set<memcache_v1::CloudMemcacheRetryPolicyOption>(
         memcache_v1::CloudMemcacheLimitedTimeRetryPolicy(

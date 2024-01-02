@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options FoldersDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_FOLDERS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_FOLDERS_AUTHORITY",
       "cloudresourcemanager.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<resourcemanager_v3::FoldersRetryPolicyOption>()) {
     options.set<resourcemanager_v3::FoldersRetryPolicyOption>(
         resourcemanager_v3::FoldersLimitedTimeRetryPolicy(

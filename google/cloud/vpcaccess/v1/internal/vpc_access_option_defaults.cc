@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options VpcAccessServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_VPC_ACCESS_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_VPC_ACCESS_SERVICE_AUTHORITY",
       "vpcaccess.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<vpcaccess_v1::VpcAccessServiceRetryPolicyOption>()) {
     options.set<vpcaccess_v1::VpcAccessServiceRetryPolicyOption>(
         vpcaccess_v1::VpcAccessServiceLimitedTimeRetryPolicy(

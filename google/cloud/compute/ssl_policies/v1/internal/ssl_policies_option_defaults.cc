@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options SslPoliciesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SSL_POLICIES_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_SSL_POLICIES_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_ssl_policies_v1::SslPoliciesRetryPolicyOption>()) {
     options.set<compute_ssl_policies_v1::SslPoliciesRetryPolicyOption>(
         compute_ssl_policies_v1::SslPoliciesLimitedTimeRetryPolicy(

@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options AssetServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ASSET_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_ASSET_SERVICE_AUTHORITY", "cloudasset.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<asset_v1::AssetServiceRetryPolicyOption>()) {
     options.set<asset_v1::AssetServiceRetryPolicyOption>(
         asset_v1::AssetServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))

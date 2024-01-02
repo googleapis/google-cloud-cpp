@@ -35,12 +35,11 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ModelServiceDefaultOptions(std::string const& location,
                                    Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_MODEL_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_MODEL_SERVICE_AUTHORITY",
       absl::StrCat(location, "-", "aiplatform.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<aiplatform_v1::ModelServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::ModelServiceRetryPolicyOption>(
         aiplatform_v1::ModelServiceLimitedTimeRetryPolicy(

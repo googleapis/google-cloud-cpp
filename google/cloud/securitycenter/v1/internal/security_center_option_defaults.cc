@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options SecurityCenterDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SECURITY_CENTER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_SECURITY_CENTER_AUTHORITY",
       "securitycenter.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<securitycenter_v1::SecurityCenterRetryPolicyOption>()) {
     options.set<securitycenter_v1::SecurityCenterRetryPolicyOption>(
         securitycenter_v1::SecurityCenterLimitedTimeRetryPolicy(

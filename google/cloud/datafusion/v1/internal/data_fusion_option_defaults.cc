@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options DataFusionDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DATA_FUSION_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_DATA_FUSION_AUTHORITY", "datafusion.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datafusion_v1::DataFusionRetryPolicyOption>()) {
     options.set<datafusion_v1::DataFusionRetryPolicyOption>(
         datafusion_v1::DataFusionLimitedTimeRetryPolicy(

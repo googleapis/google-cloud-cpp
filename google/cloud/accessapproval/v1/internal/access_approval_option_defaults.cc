@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options AccessApprovalDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ACCESS_APPROVAL_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_ACCESS_APPROVAL_AUTHORITY",
       "accessapproval.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<accessapproval_v1::AccessApprovalRetryPolicyOption>()) {
     options.set<accessapproval_v1::AccessApprovalRetryPolicyOption>(
         accessapproval_v1::AccessApprovalLimitedTimeRetryPolicy(

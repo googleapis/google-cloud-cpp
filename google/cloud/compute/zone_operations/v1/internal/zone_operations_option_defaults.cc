@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ZoneOperationsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ZONE_OPERATIONS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_ZONE_OPERATIONS_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           compute_zone_operations_v1::ZoneOperationsRetryPolicyOption>()) {
     options.set<compute_zone_operations_v1::ZoneOperationsRetryPolicyOption>(

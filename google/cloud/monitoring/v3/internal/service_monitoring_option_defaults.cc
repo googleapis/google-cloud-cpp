@@ -33,13 +33,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ServiceMonitoringServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_SERVICE_MONITORING_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_SERVICE_MONITORING_SERVICE_AUTHORITY",
       "monitoring.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options
            .has<monitoring_v3::ServiceMonitoringServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::ServiceMonitoringServiceRetryPolicyOption>(

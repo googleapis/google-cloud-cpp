@@ -35,12 +35,11 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AttachedClustersDefaultOptions(std::string const& location,
                                        Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ATTACHED_CLUSTERS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_ATTACHED_CLUSTERS_AUTHORITY",
       absl::StrCat(location, "-", "gkemulticloud.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<gkemulticloud_v1::AttachedClustersRetryPolicyOption>()) {
     options.set<gkemulticloud_v1::AttachedClustersRetryPolicyOption>(
         gkemulticloud_v1::AttachedClustersLimitedTimeRetryPolicy(

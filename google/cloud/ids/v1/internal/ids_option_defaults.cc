@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options IDSDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_IDS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_IDS_AUTHORITY", "ids.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<ids_v1::IDSRetryPolicyOption>()) {
     options.set<ids_v1::IDSRetryPolicyOption>(
         ids_v1::IDSLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());

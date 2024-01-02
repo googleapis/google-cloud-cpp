@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ConfidentialComputingDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CONFIDENTIAL_COMPUTING_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_CONFIDENTIAL_COMPUTING_AUTHORITY",
       "confidentialcomputing.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           confidentialcomputing_v1::ConfidentialComputingRetryPolicyOption>()) {
     options.set<

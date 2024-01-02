@@ -35,14 +35,13 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DocumentProcessorServiceDefaultOptions(std::string const& location,
                                                Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_DOCUMENT_PROCESSOR_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_DOCUMENT_PROCESSOR_SERVICE_AUTHORITY",
       absl::StrCat(location, location.empty() ? "" : "-",
                    "documentai.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options
            .has<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()) {
     options.set<documentai_v1::DocumentProcessorServiceRetryPolicyOption>(

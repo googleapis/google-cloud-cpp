@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options EdgeNetworkDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_EDGE_NETWORK_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_EDGE_NETWORK_AUTHORITY", "edgenetwork.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<edgenetwork_v1::EdgeNetworkRetryPolicyOption>()) {
     options.set<edgenetwork_v1::EdgeNetworkRetryPolicyOption>(
         edgenetwork_v1::EdgeNetworkLimitedTimeRetryPolicy(

@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options DataCatalogDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DATA_CATALOG_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_DATA_CATALOG_AUTHORITY", "datacatalog.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datacatalog_v1::DataCatalogRetryPolicyOption>()) {
     options.set<datacatalog_v1::DataCatalogRetryPolicyOption>(
         datacatalog_v1::DataCatalogLimitedTimeRetryPolicy(

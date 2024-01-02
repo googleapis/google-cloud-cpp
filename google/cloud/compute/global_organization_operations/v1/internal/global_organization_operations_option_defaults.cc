@@ -34,13 +34,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options GlobalOrganizationOperationsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_GLOBAL_ORGANIZATION_OPERATIONS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_GLOBAL_ORGANIZATION_OPERATIONS_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_global_organization_operations_v1::
                        GlobalOrganizationOperationsRetryPolicyOption>()) {
     options.set<compute_global_organization_operations_v1::

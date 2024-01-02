@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options OsLoginServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_OS_LOGIN_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_OS_LOGIN_SERVICE_AUTHORITY", "oslogin.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<oslogin_v1::OsLoginServiceRetryPolicyOption>()) {
     options.set<oslogin_v1::OsLoginServiceRetryPolicyOption>(
         oslogin_v1::OsLoginServiceLimitedTimeRetryPolicy(

@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options WebRiskServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_WEB_RISK_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_WEB_RISK_SERVICE_AUTHORITY", "webrisk.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<webrisk_v1::WebRiskServiceRetryPolicyOption>()) {
     options.set<webrisk_v1::WebRiskServiceRetryPolicyOption>(
         webrisk_v1::WebRiskServiceLimitedTimeRetryPolicy(

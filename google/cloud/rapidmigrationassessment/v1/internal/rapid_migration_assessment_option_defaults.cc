@@ -34,13 +34,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options RapidMigrationAssessmentDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_RAPID_MIGRATION_ASSESSMENT_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_RAPID_MIGRATION_ASSESSMENT_AUTHORITY",
       "rapidmigrationassessment.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<rapidmigrationassessment_v1::
                        RapidMigrationAssessmentRetryPolicyOption>()) {
     options.set<

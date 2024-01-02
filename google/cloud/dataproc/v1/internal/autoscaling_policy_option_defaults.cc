@@ -35,14 +35,13 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AutoscalingPolicyServiceDefaultOptions(std::string const& location,
                                                Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_AUTHORITY",
       absl::StrCat(location, location.empty() ? "" : "-",
                    "dataproc.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption>()) {
     options.set<dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption>(
         dataproc_v1::AutoscalingPolicyServiceLimitedTimeRetryPolicy(
