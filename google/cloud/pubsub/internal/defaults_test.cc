@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/connection_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -61,8 +62,7 @@ TEST(OptionsTest, UnsetEmulatorEnv) {
 TEST(OptionsTest, CommonDefaults) {
   auto opts = DefaultCommonOptions(Options{});
   EXPECT_EQ("pubsub.googleapis.com.", opts.get<EndpointOption>());
-  EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
-            typeid(opts.get<GrpcCredentialOption>()));
+  EXPECT_TRUE(opts.has<UnifiedCredentialsOption>());
   EXPECT_EQ(static_cast<int>(DefaultThreadCount()),
             opts.get<GrpcNumChannelsOption>());
   EXPECT_EQ(internal::DefaultTracingComponents(),
@@ -260,8 +260,8 @@ TEST(OptionsTest, DefaultSubscriberOnly) {
   // Ensure that we do not set common options
   auto opts = DefaultSubscriberOptionsOnly(Options{});
   EXPECT_FALSE(opts.has<GrpcCredentialOption>());
+  EXPECT_FALSE(opts.has<UnifiedCredentialsOption>());
   EXPECT_FALSE(opts.has<EndpointOption>());
-  EXPECT_FALSE(opts.has<GrpcCredentialOption>());
   EXPECT_FALSE(opts.has<GrpcNumChannelsOption>());
   EXPECT_FALSE(opts.has<TracingComponentsOption>());
   EXPECT_FALSE(opts.has<GrpcTracingOptionsOption>());
@@ -271,9 +271,8 @@ TEST(OptionsTest, DefaultSubscriberOnly) {
 
   // Ensure that we do set common options
   opts = DefaultSubscriberOptions(Options{});
-  EXPECT_TRUE(opts.has<GrpcCredentialOption>());
+  EXPECT_TRUE(opts.has<UnifiedCredentialsOption>());
   EXPECT_TRUE(opts.has<EndpointOption>());
-  EXPECT_TRUE(opts.has<GrpcCredentialOption>());
   EXPECT_TRUE(opts.has<GrpcNumChannelsOption>());
   EXPECT_TRUE(opts.has<TracingComponentsOption>());
   EXPECT_TRUE(opts.has<GrpcTracingOptionsOption>());
@@ -285,8 +284,8 @@ TEST(OptionsTest, DefaultPublisherOnly) {
   // Ensure that we do not set common options
   auto opts = DefaultPublisherOptionsOnly(Options{});
   EXPECT_FALSE(opts.has<GrpcCredentialOption>());
+  EXPECT_FALSE(opts.has<UnifiedCredentialsOption>());
   EXPECT_FALSE(opts.has<EndpointOption>());
-  EXPECT_FALSE(opts.has<GrpcCredentialOption>());
   EXPECT_FALSE(opts.has<GrpcNumChannelsOption>());
   EXPECT_FALSE(opts.has<TracingComponentsOption>());
   EXPECT_FALSE(opts.has<GrpcTracingOptionsOption>());
@@ -295,9 +294,8 @@ TEST(OptionsTest, DefaultPublisherOnly) {
 
   // Ensure that we do set common options
   opts = DefaultPublisherOptions(Options{});
-  EXPECT_TRUE(opts.has<GrpcCredentialOption>());
+  EXPECT_TRUE(opts.has<UnifiedCredentialsOption>());
   EXPECT_TRUE(opts.has<EndpointOption>());
-  EXPECT_TRUE(opts.has<GrpcCredentialOption>());
   EXPECT_TRUE(opts.has<GrpcNumChannelsOption>());
   EXPECT_TRUE(opts.has<TracingComponentsOption>());
   EXPECT_TRUE(opts.has<GrpcTracingOptionsOption>());

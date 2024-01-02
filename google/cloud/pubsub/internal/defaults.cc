@@ -48,7 +48,7 @@ std::size_t DefaultThreadCount() {
 Options DefaultCommonOptions(Options opts) {
   opts = internal::PopulateCommonOptions(
       std::move(opts), "", "PUBSUB_EMULATOR_HOST", "", "pubsub.googleapis.com");
-  opts = internal::PopulateGrpcOptions(std::move(opts), "PUBSUB_EMULATOR_HOST");
+  opts = internal::PopulateGrpcOptions(std::move(opts));
 
   if (!opts.has<GrpcNumChannelsOption>()) {
     opts.set<GrpcNumChannelsOption>(static_cast<int>(DefaultThreadCount()));

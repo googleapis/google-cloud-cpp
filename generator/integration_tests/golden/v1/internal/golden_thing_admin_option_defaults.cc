@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options GoldenThingAdminDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOLDEN_KITCHEN_SINK_ENDPOINT",
       "GOLDEN_KITCHEN_SINK_EMULATOR_HOST", "GOLDEN_KITCHEN_SINK_AUTHORITY",
       "test.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "GOLDEN_KITCHEN_SINK_EMULATOR_HOST");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<golden_v1::GoldenThingAdminRetryPolicyOption>()) {
     options.set<golden_v1::GoldenThingAdminRetryPolicyOption>(
         golden_v1::GoldenThingAdminLimitedTimeRetryPolicy(

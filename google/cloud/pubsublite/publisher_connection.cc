@@ -114,7 +114,7 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
     opts.set<GrpcNumChannelsOption>(20);
   }
 
-  opts = google::cloud::internal::PopulateGrpcOptions(std::move(opts), "");
+  opts = google::cloud::internal::PopulateGrpcOptions(std::move(opts));
   if (!opts.has<EndpointOption>()) {
     // need to parse the location because if it's a zone we need to extract the
     // region to form the endpoint

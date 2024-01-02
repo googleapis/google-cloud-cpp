@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options GoldenKitchenSinkDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOLDEN_KITCHEN_SINK_ENDPOINT",
       "GOLDEN_KITCHEN_SINK_EMULATOR_HOST", "GOLDEN_KITCHEN_SINK_AUTHORITY",
       "goldenkitchensink.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "GOLDEN_KITCHEN_SINK_EMULATOR_HOST");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<golden_v1::GoldenKitchenSinkRetryPolicyOption>()) {
     options.set<golden_v1::GoldenKitchenSinkRetryPolicyOption>(
         golden_v1::GoldenKitchenSinkLimitedTimeRetryPolicy(
