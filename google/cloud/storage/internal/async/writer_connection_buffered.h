@@ -16,9 +16,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITER_CONNECTION_BUFFERED_H
 
 #include "google/cloud/storage/async/writer_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <cstddef>
 #include <functional>
 #include <memory>
 

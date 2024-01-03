@@ -69,7 +69,7 @@ Status MakeFastForwardError(absl::string_view upload_id,
  *
  * This implementation of `AsyncWriterConnection` keeps an in-memory
  * `resend_buffer_` of type `absl::Cord`. New data is added to the end of the
- * Cord. Flushed data is removed from the from of the Cord.
+ * Cord. Flushed data is removed from the front of the Cord.
  *
  * Applications threads add data by calling `Write()` and `Finalize()`.
  *
@@ -333,7 +333,12 @@ class AsyncWriterConnectionBuffered
   // start sending data again if the size goes below buffer_size_lwm_.
   std::size_t const buffer_size_hwm_;
 
-  // The background threads may change the state of this class
+  // The remaining member variables need a mutex for access. The background
+  // threads may change them as the resend_buffer_ is drained and/or as the
+  // reconnect loop resets `impl_`.
+  // It may be possible to reduce locking overhead as only one background thread
+  // operates on these member variables at a time. That seems like too small an
+  // optimization to increase the complexity of the code.
   std::mutex mu_;
 
   // The state of the resume loop. Once the resume loop fails no more resume
