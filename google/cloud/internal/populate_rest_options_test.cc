@@ -39,6 +39,8 @@ TEST(PopulateRestOptions, EndpointOption) {
   };
   std::vector<TestCase> cases = {
       {"example.com", "https://example.com"},
+      {"foo.googleapis.com.", "https://foo.googleapis.com"},
+      {"https://foo.googleapis.com.", "https://foo.googleapis.com"},
       {"http://example.com", "http://example.com"},
       {"https://example.com", "https://example.com"}};
 
