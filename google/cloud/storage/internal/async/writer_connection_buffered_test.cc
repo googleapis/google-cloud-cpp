@@ -164,11 +164,9 @@ TEST(WriteConnectionBuffered, FinalizedOnResume) {
   EXPECT_CALL(*mock, PersistedState)
       .WillRepeatedly(Return(MakePersistedState(0)));
   EXPECT_CALL(*mock, Finalize).Times(AtMost(1)).WillRepeatedly([&](auto) {
-    return sequencer.PushBack("Finalize")
-        .then([](auto f) -> StatusOr<storage::ObjectMetadata> {
-          if (!f.get()) return TransientError();
-          return TestObject();
-        });
+    return sequencer.PushBack("Finalize").then([](auto) {
+      return StatusOr<storage::ObjectMetadata>(TransientError());
+    });
   });
 
   MockFactory mock_factory;
@@ -213,13 +211,6 @@ TEST(WriteConnectionBuffered, WriteResumes) {
         if (!f.get()) return TransientError();
         return Status{};
       });
-    });
-    EXPECT_CALL(*mock, Finalize).Times(AtMost(1)).WillRepeatedly([&](auto) {
-      return sequencer.PushBack("Finalize")
-          .then([](auto f) -> StatusOr<storage::ObjectMetadata> {
-            if (!f.get()) return TransientError();
-            return TestObject();
-          });
     });
     return mock;
   };
