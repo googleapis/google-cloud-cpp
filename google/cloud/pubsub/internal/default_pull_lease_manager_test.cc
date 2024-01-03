@@ -190,7 +190,7 @@ TEST(DefaultPullLeaseManager, StartLeaseLoopAlreadyReleased) {
   manager->StartLeaseLoop();
 }
 
-TEST(DefaultPullLeaseManager, StartLeastLoopAlreadyPastMaxExtension) {
+TEST(DefaultPullLeaseManager, StartLeaseLoopAlreadyPastMaxExtension) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
   // Use a mock clock where the time is controlled by a test variable. We do not
@@ -213,7 +213,7 @@ TEST(DefaultPullLeaseManager, StartLeastLoopAlreadyPastMaxExtension) {
   // This is a "AsyncModifyAckDeadline() is not called" test.
 }
 
-TEST(DefaultPullLeaseManager, StartLeastLoopTooCloseMaxExtension) {
+TEST(DefaultPullLeaseManager, StartLeaseLoopTooCloseMaxExtension) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
   // Use a mock clock where the time is controlled by a test variable. We do not
@@ -237,7 +237,7 @@ TEST(DefaultPullLeaseManager, StartLeastLoopTooCloseMaxExtension) {
   // This is a "AsyncModifyAckDeadline() is not called" test.
 }
 
-TEST(DefaultPullLeaseManager, StartLeastLoopAlreadyPastCurrentExtension) {
+TEST(DefaultPullLeaseManager, StartLeaseLoopAlreadyPastCurrentExtension) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
   // Use a mock clock where the time is controlled by a test variable. We do not
