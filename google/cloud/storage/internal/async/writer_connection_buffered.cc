@@ -108,6 +108,9 @@ class AsyncWriterConnectionBuffered
     if (absl::holds_alternative<storage::ObjectMetadata>(state)) {
       finalized_.set_value(
           absl::get<storage::ObjectMetadata>(std::move(state)));
+      cancelled_ = true;
+      resume_status_ = internal::CancelledError("upload already finalized",
+                                                GCP_ERROR_INFO());
       return;
     }
     buffer_offset_ = absl::get<std::int64_t>(state);
@@ -242,6 +245,13 @@ class AsyncWriterConnectionBuffered
     return tmp;
   }
 
+  auto ClearHandlersIfEmpty(std::unique_lock<std::mutex> const& /* lk */) {
+    decltype(flush_handlers_) tmp;
+    if (resend_buffer_.size() >= buffer_size_lwm_) return tmp;
+    flush_handlers_.swap(tmp);
+    return tmp;
+  }
+
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
     if (persisted_size < buffer_offset_) {
       return SetError(std::move(lk),
@@ -258,10 +268,7 @@ class AsyncWriterConnectionBuffered
     buffer_offset_ = persisted_size;
     write_offset_ -= static_cast<std::size_t>(n);
     // If the buffer is small enough, collect all the handlers to notify them.
-    auto const handlers = [this, &lk] {
-      if (resend_buffer_.size() <= buffer_size_lwm_) return ClearHandlers(lk);
-      return decltype(flush_handlers_){};
-    }();
+    auto const handlers = ClearHandlersIfEmpty(lk);
     WriteLoop(std::move(lk));
     // The notifications are deferred until the lock is released, as they might
     // call back and try to acquire the lock.
