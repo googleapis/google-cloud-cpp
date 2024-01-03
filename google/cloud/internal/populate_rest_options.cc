@@ -19,6 +19,7 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/rest_options.h"
 #include "absl/strings/match.h"
+#include "absl/strings/strip.h"
 
 namespace google {
 namespace cloud {
@@ -35,9 +36,12 @@ Options PopulateRestOptions(Options opts) {
         "https://longrunning.googleapis.com");
   }
   if (opts.has<EndpointOption>()) {
-    std::string endpoint = opts.get<EndpointOption>();
+    auto& endpoint = opts.lookup<EndpointOption>();
+    // Use an unqualified domain name, because we do not seem to reuse
+    // connections with a fully qualified domain name over REST.
+    if (absl::EndsWith(endpoint, ".googleapis.com.")) endpoint.pop_back();
     if (!absl::StartsWithIgnoreCase(endpoint, "http")) {
-      opts.set<EndpointOption>(absl::StrCat("https://", endpoint));
+      endpoint = absl::StrCat("https://", endpoint);
     }
   }
   if (!opts.has<RestTracingOptionsOption>()) {
