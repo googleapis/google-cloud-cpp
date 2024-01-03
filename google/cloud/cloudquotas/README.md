@@ -34,7 +34,6 @@ int main(int argc, char* argv[]) try {
       cloudquotas::CloudQuotasClient(cloudquotas::MakeCloudQuotasConnection());
 
   auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
-  std::cout << "parent=" << parent << std::endl;
   for (auto r : client.ListQuotaPreferences(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
