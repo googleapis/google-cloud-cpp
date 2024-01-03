@@ -37,10 +37,7 @@ opentelemetry::trace::StartSpanOptions RootStartSpanOptions() {
   return options;
 }
 
-std::vector<
-    std::pair<opentelemetry::trace::SpanContext,
-              std::vector<std::pair<opentelemetry::nostd::string_view,
-                                    opentelemetry::common::AttributeValue>>>>
+std::vector<std::pair<opentelemetry::trace::SpanContext, TracingAttributes>>
 CreateLinks(opentelemetry::trace::SpanContext const& span_context) {
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
   if (span_context.IsSampled() && span_context.IsValid()) {
