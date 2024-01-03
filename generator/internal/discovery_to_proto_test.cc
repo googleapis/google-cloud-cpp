@@ -923,7 +923,7 @@ TEST(CreateFilesFromResourcesTest, NonEmptyResources) {
       DiscoveryResource("foos", "google.cloud.cpp.product_name.foos.version",
                         resource_json));
   DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
-                                    "", {}};
+                                    "", {}, "2023"};
   auto result = CreateFilesFromResources(resources, props, "tmp", {});
   ASSERT_THAT(result, SizeIs(1));
   EXPECT_THAT(result.front().resource_name(), Eq("foos"));
@@ -940,7 +940,7 @@ TEST(CreateFilesFromResourcesTest, NonEmptyResources) {
 TEST(CreateFilesFromResourcesTest, EmptyResources) {
   std::map<std::string, DiscoveryResource> resources;
   DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
-                                    "", {}};
+                                    "", {}, "2023"};
   auto result = CreateFilesFromResources(resources, props, "tmp", {});
   EXPECT_THAT(result, IsEmpty());
 }
@@ -1651,7 +1651,7 @@ TEST_F(AssignResourcesAndTypesToFilesTest,
   types.emplace("Operation", DiscoveryTypeVertex("Operation", "",
                                                  operation_type_json, &pool()));
   DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
-                                    "", {}};
+                                    "", {}, "2023"};
   auto result = AssignResourcesAndTypesToFiles(
       resources, types, props, "output_path", "export_output_path");
   ASSERT_STATUS_OK(result);
@@ -2326,7 +2326,7 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
       nlohmann::json::parse(kDiscoveryJson, nullptr, false);
   ASSERT_TRUE(discovery_json.is_object());
   DiscoveryDocumentProperties document_properties{
-      "", "", "product_name", "version", "", "", {}};
+      "", "", "product_name", "version", "", "", {}, "2023"};
   auto types =
       ExtractTypesFromSchema(document_properties, discovery_json, &pool());
   ASSERT_STATUS_OK(types);

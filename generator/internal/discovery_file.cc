@@ -66,7 +66,7 @@ Status DiscoveryFile::FormatFile(
     std::map<std::string, DiscoveryTypeVertex> const& types,
     std::ostream& output_stream) const {
   std::map<std::string, std::string> const vars = {
-      {"copyright_year", CurrentCopyrightYear()},
+      {"copyright_year", document_properties.copyright_year},
       {"discovery_doc_url", document_properties.discovery_doc_url},
       {"package_name", package_name_},
       {"product_name", document_properties.product_name},
