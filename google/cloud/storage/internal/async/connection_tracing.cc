@@ -37,18 +37,17 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
 
   Options options() const override { return impl_->options(); }
 
-  future<StatusOr<storage::ObjectMetadata>> AsyncInsertObject(
+  future<StatusOr<storage::ObjectMetadata>> InsertObject(
       InsertObjectParams p) override {
-    auto span =
-        internal::MakeSpan("storage::AsyncConnection::AsyncInsertObject");
+    auto span = internal::MakeSpan("storage::AsyncConnection::InsertObject");
     internal::OTelScope scope(span);
     return internal::EndSpan(std::move(span),
-                             impl_->AsyncInsertObject(std::move(p)));
+                             impl_->InsertObject(std::move(p)));
   }
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
-  AsyncReadObject(ReadObjectParams p) override {
-    auto span = internal::MakeSpan("storage::AsyncConnection::AsyncReadObject");
+  ReadObject(ReadObjectParams p) override {
+    auto span = internal::MakeSpan("storage::AsyncConnection::ReadObject");
     internal::OTelScope scope(span);
     auto wrap = [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                  span = std::move(span)](auto f)
@@ -59,15 +58,14 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
       if (!reader) return internal::EndSpan(*span, std::move(reader).status());
       return MakeTracingReaderConnection(std::move(span), *std::move(reader));
     };
-    return impl_->AsyncReadObject(std::move(p)).then(std::move(wrap));
+    return impl_->ReadObject(std::move(p)).then(std::move(wrap));
   }
 
-  future<StatusOr<storage_experimental::ReadPayload>> AsyncReadObjectRange(
+  future<StatusOr<storage_experimental::ReadPayload>> ReadObjectRange(
       ReadObjectParams p) override {
-    auto span =
-        internal::MakeSpan("storage::AsyncConnection::AsyncReadObjectRange");
+    auto span = internal::MakeSpan("storage::AsyncConnection::ReadObjectRange");
     internal::OTelScope scope(span);
-    return impl_->AsyncReadObjectRange(std::move(p))
+    return impl_->ReadObjectRange(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                span = std::move(span)](auto f) {
           auto result = f.get();
@@ -77,11 +75,10 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
   }
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-  AsyncWriteObject(WriteObjectParams p) override {
-    auto span =
-        internal::MakeSpan("storage::AsyncConnection::AsyncWriteObject");
+  WriteObject(WriteObjectParams p) override {
+    auto span = internal::MakeSpan("storage::AsyncConnection::WriteObject");
     internal::OTelScope scope(span);
-    return impl_->AsyncWriteObject(std::move(p))
+    return impl_->WriteObject(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                span = std::move(span)](auto f)
                   -> StatusOr<std::unique_ptr<
@@ -93,21 +90,19 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
         });
   }
 
-  future<StatusOr<storage::ObjectMetadata>> AsyncComposeObject(
+  future<StatusOr<storage::ObjectMetadata>> ComposeObject(
       ComposeObjectParams p) override {
-    auto span =
-        internal::MakeSpan("storage::AsyncConnection::AsyncComposeObject");
+    auto span = internal::MakeSpan("storage::AsyncConnection::ComposeObject");
     internal::OTelScope scope(span);
     return internal::EndSpan(std::move(span),
-                             impl_->AsyncComposeObject(std::move(p)));
+                             impl_->ComposeObject(std::move(p)));
   }
 
-  future<Status> AsyncDeleteObject(DeleteObjectParams p) override {
-    auto span =
-        internal::MakeSpan("storage::AsyncConnection::AsyncDeleteObject");
+  future<Status> DeleteObject(DeleteObjectParams p) override {
+    auto span = internal::MakeSpan("storage::AsyncConnection::DeleteObject");
     internal::OTelScope scope(span);
     return internal::EndSpan(std::move(span),
-                             impl_->AsyncDeleteObject(std::move(p)));
+                             impl_->DeleteObject(std::move(p)));
   }
 
  private:

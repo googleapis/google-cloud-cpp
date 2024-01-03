@@ -340,8 +340,8 @@ void ComposeObject(google::cloud::storage_experimental::AsyncClient& client,
 
 // We would like to call this function `DeleteObject()`, but that conflicts with
 // a global `DeleteObject()` function on Windows.
-void AsyncDeleteObject(google::cloud::storage_experimental::AsyncClient& client,
-                       std::vector<std::string> const& argv) {
+void DeleteObject(google::cloud::storage_experimental::AsyncClient& client,
+                  std::vector<std::string> const& argv) {
   //! [delete-object]
   namespace g = google::cloud;
   namespace gcs_ex = google::cloud::storage_experimental;
@@ -458,7 +458,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   }
 
   std::cout << "Running DeleteObject() example" << std::endl;
-  AsyncDeleteObject(client, {bucket_name, object_name});
+  DeleteObject(client, {bucket_name, object_name});
 
   namespace g = ::google::cloud;
   std::vector<g::future<g::Status>> pending;
@@ -507,7 +507,7 @@ int main(int argc, char* argv[]) try {
       make_entry("read-object-with-options", {"<generation>"},
                  ReadObjectWithOptions),
       make_entry("compose-object", {"<o1> <o2>"}, ComposeObject),
-      make_entry("delete-object", {}, AsyncDeleteObject),
+      make_entry("delete-object", {}, DeleteObject),
       make_entry("write-object", {"<filename>"}, WriteObject),
       make_entry("write-object-with-retry", {"<filename>"},
                  WriteObjectWithRetry),

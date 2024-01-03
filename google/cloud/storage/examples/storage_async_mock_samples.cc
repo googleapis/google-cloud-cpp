@@ -33,7 +33,7 @@ TEST(StorageAsyncMockingSamples, MockDeleteObject) {
   auto mock =
       std::make_shared<google::cloud::storage_mocks::MockAsyncConnection>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, AsyncDeleteObject)
+  EXPECT_CALL(*mock, DeleteObject)
       .WillOnce(Return(ByMove(gc::make_ready_future(gc::Status{}))));
 
   auto client = gcs_ex::AsyncClient(mock);
@@ -50,7 +50,7 @@ TEST(StorageAsyncMockingSamples, MockReadObject) {
   auto mock =
       std::make_shared<google::cloud::storage_mocks::MockAsyncConnection>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, AsyncReadObject).WillOnce([] {
+  EXPECT_CALL(*mock, ReadObject).WillOnce([] {
     using ReadResponse = gcs_ex::AsyncReaderConnection::ReadResponse;
     using ReadPayload = gcs_ex::ReadPayload;
     auto reader = std::make_unique<
