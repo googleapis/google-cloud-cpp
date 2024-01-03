@@ -15,19 +15,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_CREATE_CHANNEL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_CREATE_CHANNEL_H
 
-#include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/options.h"
 #include <grpcpp/grpcpp.h>
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/// Create a gRPC channel with the right configuration.
-std::shared_ptr<grpc::Channel> CreateChannel(Options const& opts,
-                                             int channel_id);
 
 /// Initialize Channel Arguments configured by @p opts and @p channel_id
 grpc::ChannelArguments MakeChannelArguments(Options const& opts,

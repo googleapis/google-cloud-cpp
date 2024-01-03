@@ -169,12 +169,12 @@ void TestRoundtrip(pubsub::Publisher publisher, pubsub::Subscriber subscriber) {
   EXPECT_STATUS_OK(result.get());
 }
 
-TEST_F(SubscriberIntegrationTest, RawStub) {
+TEST_F(SubscriberIntegrationTest, Stub) {
   auto publisher = Publisher(MakePublisherConnection(topic_));
 
   internal::AutomaticallyCreatedBackgroundThreads background(4);
-  auto stub = pubsub_internal::CreateDefaultSubscriberStub(
-      pubsub_internal::DefaultCommonOptions({}), 0);
+  auto stub = pubsub_internal::MakeRoundRobinSubscriberStub(
+      background.cq(), pubsub_internal::DefaultCommonOptions({}));
   google::pubsub::v1::StreamingPullRequest request;
   request.set_client_id("test-client-0001");
   request.set_subscription(subscription_.FullName());
@@ -250,8 +250,8 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
       topic_, Options{}.set<GrpcBackgroundThreadPoolSizeOption>(2)));
 
   internal::AutomaticallyCreatedBackgroundThreads background(4);
-  auto stub = pubsub_internal::CreateDefaultSubscriberStub(
-      pubsub_internal::DefaultCommonOptions({}), 0);
+  auto stub = pubsub_internal::MakeRoundRobinSubscriberStub(
+      background.cq(), pubsub_internal::DefaultCommonOptions({}));
 
   auto shutdown = std::make_shared<pubsub_internal::SessionShutdownManager>();
   auto source =

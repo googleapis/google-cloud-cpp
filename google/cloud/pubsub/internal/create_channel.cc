@@ -19,13 +19,6 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<grpc::Channel> CreateChannel(Options const& opts,
-                                             int channel_id) {
-  return grpc::CreateCustomChannel(opts.get<EndpointOption>(),
-                                   opts.get<GrpcCredentialOption>(),
-                                   MakeChannelArguments(opts, channel_id));
-}
-
 grpc::ChannelArguments MakeChannelArguments(Options const& opts,
                                             int channel_id) {
   auto args = internal::MakeChannelArguments(opts);

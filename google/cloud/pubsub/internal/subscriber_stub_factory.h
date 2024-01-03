@@ -35,25 +35,10 @@ std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
     std::shared_ptr<grpc::Channel> channel);
 
 /**
- * Creates a SubscriberStub configured with @p opts and @p channel_id.
- *
- * @p channel_id should be unique among all stubs in the same Connection pool,
- * to ensure they use different underlying connections.
- */
-std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
-                                                            int channel_id);
-
-/**
  * Creates a SubscriberStub configured with @p cq and @p options.
  *
  * By default, a SubscriberRoundRobinStub is created using the number of
  * GrpcNumChannelsOption.
- */
-std::shared_ptr<SubscriberStub> MakeDefaultSubscriberStub(
-    google::cloud::CompletionQueue cq, Options const& options);
-
-/**
- * Creates a SubscriberStub configured with @p cq and @p options.
  */
 std::shared_ptr<SubscriberStub> MakeRoundRobinSubscriberStub(
     google::cloud::CompletionQueue cq, Options const& options);
