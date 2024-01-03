@@ -119,15 +119,18 @@ class AsyncWriterConnectionBuffered
   void Cancel() override {
     std::unique_lock<std::mutex> lk(mu_);
     cancelled_ = true;
+    auto impl = Impl(lk);
     lk.unlock();
-    return impl_->Cancel();
+    return impl->Cancel();
   }
 
-  std::string UploadId() const override { return impl_->UploadId(); }
+  std::string UploadId() const override {
+    return UploadId(std::unique_lock<std::mutex>(mu_));
+  }
 
   absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState()
       const override {
-    return impl_->PersistedState();
+    return Impl(std::unique_lock<std::mutex>(mu_))->PersistedState();
   }
 
   future<Status> Write(storage_experimental::WritePayload p) override {
@@ -149,10 +152,12 @@ class AsyncWriterConnectionBuffered
     return Write(std::move(p));
   }
 
-  future<StatusOr<std::int64_t>> Query() override { return impl_->Query(); }
+  future<StatusOr<std::int64_t>> Query() override {
+    return Impl(std::unique_lock<std::mutex>(mu_))->Query();
+  }
 
   RpcMetadata GetRequestMetadata() override {
-    return impl_->GetRequestMetadata();
+    return Impl(std::unique_lock<std::mutex>(mu_))->GetRequestMetadata();
   }
 
  private:
@@ -205,8 +210,9 @@ class AsyncWriterConnectionBuffered
   }
 
   void FinalizeStep(std::unique_lock<std::mutex> lk, absl::Cord payload) {
+    auto impl = Impl(lk);
     lk.unlock();
-    (void)impl_->Finalize(WritePayloadImpl::Make(std::move(payload)))
+    (void)impl->Finalize(WritePayloadImpl::Make(std::move(payload)))
         .then([this](auto f) { OnFinalize(f.get()); });
   }
 
@@ -220,9 +226,10 @@ class AsyncWriterConnectionBuffered
   }
 
   void FlushStep(std::unique_lock<std::mutex> lk, absl::Cord payload) {
-    auto const size = payload.size();
+    auto impl = Impl(lk);
     lk.unlock();
-    (void)impl_->Flush(WritePayloadImpl::Make(std::move(payload)))
+    auto const size = payload.size();
+    (void)impl->Flush(WritePayloadImpl::Make(std::move(payload)))
         .then([this, size](auto f) { OnFlush(f.get(), size); });
   }
 
@@ -230,8 +237,9 @@ class AsyncWriterConnectionBuffered
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
+    auto impl = Impl(lk);
     lk.unlock();
-    impl_->Query().then([this](auto f) { OnQuery(f.get()); });
+    impl->Query().then([this](auto f) { OnQuery(f.get()); });
   }
 
   void OnQuery(StatusOr<std::int64_t> persisted_size) {
@@ -254,14 +262,16 @@ class AsyncWriterConnectionBuffered
 
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
     if (persisted_size < buffer_offset_) {
+      auto id = UploadId(lk);
       return SetError(std::move(lk),
-                      MakeRewindError(UploadId(), buffer_offset_,
+                      MakeRewindError(std::move(id), buffer_offset_,
                                       persisted_size, GCP_ERROR_INFO()));
     }
     auto const n = persisted_size - buffer_offset_;
     if (n > static_cast<std::int64_t>(resend_buffer_.size())) {
+      auto id = UploadId(lk);
       return SetError(std::move(lk),
-                      MakeFastForwardError(UploadId(), buffer_offset_,
+                      MakeFastForwardError(std::move(id), buffer_offset_,
                                            persisted_size, GCP_ERROR_INFO()));
     }
     resend_buffer_.RemovePrefix(static_cast<std::size_t>(n));
@@ -276,9 +286,10 @@ class AsyncWriterConnectionBuffered
   }
 
   void WriteStep(std::unique_lock<std::mutex> lk, absl::Cord payload) {
-    auto const size = payload.size();
+    auto impl = Impl(lk);
     lk.unlock();
-    (void)impl_->Write(WritePayloadImpl::Make(std::move(payload)))
+    auto const size = payload.size();
+    (void)impl->Write(WritePayloadImpl::Make(std::move(payload)))
         .then([this, size](auto f) { OnWrite(f.get(), size); });
   }
 
@@ -323,10 +334,19 @@ class AsyncWriterConnectionBuffered
     finalized_.set_value(std::move(status));
   }
 
+  std::shared_ptr<storage_experimental::AsyncWriterConnection> Impl(
+      std::unique_lock<std::mutex> const& /*lk*/) const {
+    return impl_;
+  }
+
+  std::string UploadId(std::unique_lock<std::mutex> const& lk) const {
+    return Impl(lk)->UploadId();
+  }
+
   // Creates new `impl_` instances when needed.
   WriterConnectionFactory const factory_;
 
-  // Request a server-side fush if the buffer goes over this threshold.
+  // Request a server-side flush if the buffer goes over this threshold.
   std::size_t const buffer_size_lwm_;
 
   // Stop sending data if the buffer goes over this threshold. Only
@@ -339,14 +359,14 @@ class AsyncWriterConnectionBuffered
   // It may be possible to reduce locking overhead as only one background thread
   // operates on these member variables at a time. That seems like too small an
   // optimization to increase the complexity of the code.
-  std::mutex mu_;
+  std::mutex mutable mu_;
 
   // The state of the resume loop. Once the resume loop fails no more resume
   // or write attempts are made.
   Status resume_status_;
 
   // The current writer.
-  std::unique_ptr<storage_experimental::AsyncWriterConnection> impl_;
+  std::shared_ptr<storage_experimental::AsyncWriterConnection> impl_;
 
   // The result of calling `Finalize()`. Note that only one such call is ever
   // made.
