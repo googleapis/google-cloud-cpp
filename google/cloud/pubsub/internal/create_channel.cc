@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/create_channel.h"
+#include "google/cloud/grpc_options.h"
 
 namespace google {
 namespace cloud {
