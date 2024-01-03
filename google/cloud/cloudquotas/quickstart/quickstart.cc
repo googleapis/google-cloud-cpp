@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC
+// Copyright 2024 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,7 +28,8 @@ int main(int argc, char* argv[]) try {
   auto client =
       cloudquotas::CloudQuotasClient(cloudquotas::MakeCloudQuotasConnection());
 
-  auto const parent = google::cloud::Location(argv[1], "global").FullName();;
+  auto const parent = google::cloud::Location(argv[1], "global").FullName();
+  ;
   for (auto r : client.ListQuotaPreferences(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
