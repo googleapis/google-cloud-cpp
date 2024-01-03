@@ -2640,10 +2640,6 @@ void UsePartitionQuery(google::cloud::spanner::Client client) {
   for (auto const& partition : *partitions) {
     auto rows = client.ExecuteQuery(partition);
     for (auto& row : spanner::StreamOf<RowType>(rows)) {
-      if (row.status().code() ==                           //! TODO(#11201)
-          google::cloud::StatusCode::kPermissionDenied) {  //! TODO(#11201)
-        continue;                                          //! TODO(#11201)
-      }                                                    //! TODO(#11201)
       if (!row) throw std::move(row).status();
       number_of_rows++;
     }
@@ -3939,10 +3935,6 @@ void PartitionRead(google::cloud::spanner::Client client) {
       remote_connection.ReceiveReadPartitionFromRemoteMachine();
   if (!partition) throw std::move(partition).status();
   for (auto& row : client.Read(*partition)) {
-    if (row.status().code() ==                           //! TODO(#11201)
-        google::cloud::StatusCode::kPermissionDenied) {  //! TODO(#11201)
-      continue;                                          //! TODO(#11201)
-    }                                                    //! TODO(#11201)
     if (!row) throw std::move(row).status();
     ProcessRow(*row);
   }
@@ -3992,10 +3984,6 @@ void PartitionQuery(google::cloud::spanner::Client client) {
       remote_connection.ReceiveQueryPartitionFromRemoteMachine();
   if (!partition) throw std::move(partition).status();
   for (auto& row : client.ExecuteQuery(*partition)) {
-    if (row.status().code() ==                           //! TODO(#11201)
-        google::cloud::StatusCode::kPermissionDenied) {  //! TODO(#11201)
-      continue;                                          //! TODO(#11201)
-    }                                                    //! TODO(#11201)
     if (!row) throw std::move(row).status();
     ProcessRow(*row);
   }
