@@ -13,23 +13,24 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/cloudquotas/v1/ EDIT HERE _client.h"
+#include "google/cloud/cloudquotas/v1/cloud_quotas_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
+#include <string>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], argv[2]);
-
   namespace cloudquotas = ::google::cloud::cloudquotas_v1;
-  auto client = cloudquotas::ServiceClient(
-      cloudquotas::MakeServiceConnection());  // EDIT HERE
+  auto client =
+      cloudquotas::CloudQuotasClient(cloudquotas::MakeCloudQuotasConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+  std::cout << "parent=" << parent << std::endl;
+  for (auto r : client.ListQuotaPreferences(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

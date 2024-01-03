@@ -6,6 +6,13 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.20.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Cloud Quotas](/google/cloud/cloudquotas/README.md)
+
 ## v2.19.0 - 2023-12
 
 ### New Libraries

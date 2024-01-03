@@ -16,9 +16,8 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "v1/")
-
-google_cloud_cpp_add_ga_grpc_library(cloudquotas "Cloud Quotas API")
+google_cloud_cpp_add_gapic_library(cloudquotas "Cloud Quotas API"
+                                   SERVICE_DIRS "__EMPTY__" "v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(cloudquotas_quickstart "quickstart/quickstart.cc")
@@ -27,11 +26,11 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     google_cloud_cpp_add_common_options(cloudquotas_quickstart)
     add_test(
         NAME cloudquotas_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:cloudquotas_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
-    )
-    set_tests_properties(cloudquotas_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:cloudquotas_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(
+        cloudquotas_quickstart
+        PROPERTIES
+            LABELS "integration-test;quickstart" ENVIRONMENT
+            GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT})
 endif ()

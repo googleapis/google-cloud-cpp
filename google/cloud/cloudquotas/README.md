@@ -1,9 +1,9 @@
 # Cloud Quotas API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Quotas API][cloud-service-docs], a service to Cloud Quotas API provides
-GCP service consumers with management and observability for resource usage,
-quotas, and restrictions of the services they consume.
+[Cloud Quotas API][cloud-service-docs]. Cloud Quotas API provides GCP service
+consumers with management and observability for resource usage, quotas, and
+restrictions of the services they consume.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -17,6 +17,36 @@ this library.
 
 <!-- inject-quickstart-start -->
 
+```cc
+#include "google/cloud/cloudquotas/v1/cloud_quotas_client.h"
+#include "google/cloud/location.h"
+#include <iostream>
+#include <string>
+
+int main(int argc, char* argv[]) try {
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    return 1;
+  }
+
+  namespace cloudquotas = ::google::cloud::cloudquotas_v1;
+  auto client =
+      cloudquotas::CloudQuotasClient(cloudquotas::MakeCloudQuotasConnection());
+
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+  std::cout << "parent=" << parent << std::endl;
+  for (auto r : client.ListQuotaPreferences(parent)) {
+    if (!r) throw std::move(r).status();
+    std::cout << r->DebugString() << "\n";
+  }
+
+  return 0;
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
+  return 1;
+}
+```
+
 <!-- inject-quickstart-end -->
 
 ## More Information
@@ -27,6 +57,6 @@ this library.
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/cloudquotas
+[cloud-service-docs]: https://cloud.google.com/docs/quota/api-overview
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/cloudquotas/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/cloudquotas

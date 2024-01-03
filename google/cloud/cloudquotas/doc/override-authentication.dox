@@ -9,6 +9,8 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet cloud_quotas_client_samples.cc with-service-account
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -20,8 +22,15 @@ guide for more details.
 
 [Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
 [Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+[Troubleshoot your ADC setup]: https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds
 
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page cloudquotas_v1::CloudQuotasClient-service-account-snippet Override cloudquotas_v1::CloudQuotasClient Authentication Defaults
+
+@snippet google/cloud/cloudquotas/v1/samples/cloud_quotas_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

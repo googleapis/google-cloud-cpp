@@ -24,8 +24,8 @@ some experience as a C++ developer and that you have a working C++ toolchain
 ## Before you begin
 
 To run the quickstart examples you will need a working Google Cloud Platform
-(GCP) project. The [quickstart][quickstart-link] covers the necessary steps in
-detail.
+(GCP) project with at least one additional service enabled. Additional
+permissions required are detailed here: [Quota Permissions][quota-permissions].
 
 ## Configuring authentication for the C++ Client Library
 
@@ -151,4 +151,4 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
-[quickstart-link]: https://cloud.google.com/cloudquotas/docs/quickstart
+[quota-permissions]: https://cloud.google.com/docs/quota/permissions
