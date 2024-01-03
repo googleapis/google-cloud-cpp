@@ -295,7 +295,8 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(Options opts) {
   opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
 
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto stub = pubsub_internal::MakeDefaultPublisherStub(background->cq(), opts);
+  auto stub =
+      pubsub_internal::MakeRoundRobinPublisherStub(background->cq(), opts);
   return std::make_shared<TopicAdminConnectionImpl>(
       std::move(background), std::move(stub), std::move(opts));
 }

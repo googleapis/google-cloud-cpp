@@ -36,12 +36,6 @@ using BasePublisherStubFactory = std::function<std::shared_ptr<PublisherStub>(
  * By default, a PublisherRoundRobinStub is created using the number of
  * GrpcNumChannelsOption.
  */
-std::shared_ptr<PublisherStub> MakeDefaultPublisherStub(
-    google::cloud::CompletionQueue cq, Options const& options);
-
-/**
- * Creates a PublisherStub configured with @p cq and @p options.
- */
 std::shared_ptr<PublisherStub> MakeRoundRobinPublisherStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
