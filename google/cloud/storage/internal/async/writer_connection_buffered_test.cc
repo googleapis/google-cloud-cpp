@@ -38,6 +38,7 @@ using ::testing::IsSupersetOf;
 using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 using ::testing::VariantWith;
 
 using MockFactory = ::testing::MockFunction<future<
@@ -663,6 +664,30 @@ TEST(WriteConnectionBuffered, Query) {
   next.first.set_value(true);
   ASSERT_TRUE(query.is_ready());
   EXPECT_THAT(query.get(), StatusIs(TransientError().code()));
+}
+
+TEST(WriteConnectionBuffered, GetRequestMetadata) {
+  AsyncSequencer<bool> sequencer;
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(RpcMetadata{{{"k1", "v1"}, {"k1", "v2"}, {"k2", "v3"}},
+                                   {{"t1", "v4"}, {"t2", "v5"}}}));
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+  auto const actual = connection->GetRequestMetadata();
+  EXPECT_THAT(actual.headers,
+              UnorderedElementsAre(Pair("k1", "v1"), Pair("k1", "v2"),
+                                   Pair("k2", "v3")));
+  EXPECT_THAT(actual.trailers,
+              UnorderedElementsAre(Pair("t1", "v4"), Pair("t2", "v5")));
 }
 
 }  // namespace
