@@ -26,9 +26,6 @@ namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::Return;
-
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 using ::google::cloud::testing_util::InstallSpanCatcher;
@@ -39,6 +36,7 @@ using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::google::cloud::testing_util::ValidatePropagator;
 using ::testing::_;
@@ -682,6 +680,9 @@ TEST(MakeGoldenThingAdminTracingStub, OpenTelemetry) {
 }
 
 #else
+
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::Return;
 
 TEST(MakeGoldenThingAdminTracingStub, NoOpenTelemetry) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();

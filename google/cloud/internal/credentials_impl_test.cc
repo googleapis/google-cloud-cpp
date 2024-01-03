@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/testing_util/credentials.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -21,47 +22,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::TestCredentialsVisitor;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
 
-struct Visitor : public CredentialsVisitor {
-  std::string name;
-  AccessToken access_token;
-  ImpersonateServiceAccountConfig const* impersonate = nullptr;
-  std::string json_object;
-  Options options;
-
-  void visit(ErrorCredentialsConfig const&) override {
-    name = "ErrorCredentialsConfig";
-  }
-  void visit(InsecureCredentialsConfig const&) override {
-    name = "InsecureCredentialsConfig";
-  }
-  void visit(GoogleDefaultCredentialsConfig const&) override {
-    name = "GoogleDefaultCredentialsConfig";
-  }
-  void visit(AccessTokenConfig const& cfg) override {
-    name = "AccessTokenConfig";
-    access_token = cfg.access_token();
-  }
-  void visit(ImpersonateServiceAccountConfig const& cfg) override {
-    name = "ImpersonateServiceAccountConfig";
-    impersonate = &cfg;
-  }
-  void visit(ServiceAccountConfig const& cfg) override {
-    name = "ServiceAccountConfig";
-    json_object = cfg.json_object();
-  }
-  void visit(ExternalAccountConfig const& cfg) override {
-    name = "ExternalAccountConfig";
-    json_object = cfg.json_object();
-    options = cfg.options();
-  }
-};
-
 TEST(Credentials, ErrorCredentials) {
-  Visitor visitor;
+  TestCredentialsVisitor visitor;
 
   auto credentials = internal::MakeErrorCredentials({});
   CredentialsVisitor::dispatch(*credentials, visitor);
@@ -69,7 +36,7 @@ TEST(Credentials, ErrorCredentials) {
 }
 
 TEST(Credentials, InsecureCredentials) {
-  Visitor visitor;
+  TestCredentialsVisitor visitor;
 
   auto credentials = MakeInsecureCredentials();
   CredentialsVisitor::dispatch(*credentials, visitor);
@@ -77,7 +44,7 @@ TEST(Credentials, InsecureCredentials) {
 }
 
 TEST(Credentials, GoogleDefaultCredentials) {
-  Visitor visitor;
+  TestCredentialsVisitor visitor;
 
   auto credentials = MakeGoogleDefaultCredentials();
   CredentialsVisitor::dispatch(*credentials, visitor);
@@ -85,7 +52,7 @@ TEST(Credentials, GoogleDefaultCredentials) {
 }
 
 TEST(Credentials, AccessTokenCredentials) {
-  Visitor visitor;
+  TestCredentialsVisitor visitor;
 
   auto const expiration = std::chrono::system_clock::now();
   auto credentials = MakeAccessTokenCredentials("test-token", expiration);
@@ -98,7 +65,7 @@ TEST(Credentials, AccessTokenCredentials) {
 TEST(Credentials, ImpersonateServiceAccountCredentialsDefault) {
   auto credentials = MakeImpersonateServiceAccountCredentials(
       MakeGoogleDefaultCredentials(), "invalid-test-only@invalid.address");
-  Visitor visitor;
+  TestCredentialsVisitor visitor;
   CredentialsVisitor::dispatch(*credentials, visitor);
   ASSERT_THAT(visitor.impersonate, Not(IsNull()));
   EXPECT_EQ("invalid-test-only@invalid.address",
@@ -116,7 +83,7 @@ TEST(Credentials, ImpersonateServiceAccountCredentialsDefaultWithOptions) {
           .set<AccessTokenLifetimeOption>(std::chrono::minutes(15))
           .set<ScopesOption>({"scope1", "scope2"})
           .set<DelegatesOption>({"delegate1", "delegate2"}));
-  Visitor visitor;
+  TestCredentialsVisitor visitor;
   CredentialsVisitor::dispatch(*credentials, visitor);
   ASSERT_THAT(visitor.impersonate, Not(IsNull()));
   EXPECT_EQ("invalid-test-only@invalid.address",
@@ -129,7 +96,7 @@ TEST(Credentials, ImpersonateServiceAccountCredentialsDefaultWithOptions) {
 
 TEST(Credentials, ServiceAccount) {
   auto credentials = MakeServiceAccountCredentials("test-only-invalid");
-  Visitor visitor;
+  TestCredentialsVisitor visitor;
   CredentialsVisitor::dispatch(*credentials, visitor);
   ASSERT_EQ("ServiceAccountConfig", visitor.name);
   EXPECT_EQ("test-only-invalid", visitor.json_object);
@@ -138,7 +105,7 @@ TEST(Credentials, ServiceAccount) {
 TEST(Credentials, ExternalAccount) {
   auto credentials = MakeExternalAccountCredentials(
       "test-only-invalid", Options{}.set<ScopesOption>({"scope1", "scope2"}));
-  Visitor visitor;
+  TestCredentialsVisitor visitor;
   CredentialsVisitor::dispatch(*credentials, visitor);
   ASSERT_EQ("ExternalAccountConfig", visitor.name);
   EXPECT_EQ("test-only-invalid", visitor.json_object);

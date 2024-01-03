@@ -18,6 +18,7 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/rest_options.h"
+#include "google/cloud/testing_util/credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
@@ -29,32 +30,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
-
-struct Visitor : public CredentialsVisitor {
-  std::string name;
-  Options options;
-
-  void visit(ErrorCredentialsConfig const&) override {
-    name = "ErrorCredentialsConfig";
-  }
-  void visit(InsecureCredentialsConfig const&) override {
-    name = "InsecureCredentialsConfig";
-  }
-  void visit(GoogleDefaultCredentialsConfig const& cfg) override {
-    name = "GoogleDefaultCredentialsConfig";
-    options = cfg.options();
-  }
-  void visit(AccessTokenConfig const&) override { name = "AccessTokenConfig"; }
-  void visit(ImpersonateServiceAccountConfig const&) override {
-    name = "ImpersonateServiceAccountConfig";
-  }
-  void visit(ServiceAccountConfig const&) override {
-    name = "ServiceAccountConfig";
-  }
-  void visit(ExternalAccountConfig const&) override {
-    name = "ExternalAccountConfig";
-  }
-};
+using ::google::cloud::testing_util::TestCredentialsVisitor;
 
 TEST(PopulateRestOptions, EndpointOption) {
   struct TestCase {
@@ -77,7 +53,7 @@ TEST(PopulateRestOptions, EmptyCredentials) {
   options = PopulateRestOptions(std::move(options));
   auto const& creds = options.get<UnifiedCredentialsOption>();
 
-  Visitor v;
+  TestCredentialsVisitor v;
   CredentialsVisitor::dispatch(*creds, v);
   EXPECT_EQ(v.name, "GoogleDefaultCredentialsConfig");
 }
@@ -89,7 +65,7 @@ TEST(PopulateRestOptions, EmptyCredentialsUsesAuthOptions) {
   options = PopulateRestOptions(std::move(options));
   auto const& creds = options.get<UnifiedCredentialsOption>();
 
-  Visitor v;
+  TestCredentialsVisitor v;
   CredentialsVisitor::dispatch(*creds, v);
   EXPECT_EQ(v.name, "GoogleDefaultCredentialsConfig");
   EXPECT_FALSE(v.options.has<EndpointOption>());
