@@ -34,7 +34,8 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - fix(common): returnable argument to `.then()` ([#13316](https://github.com/googleapis/google-cloud-cpp/pull/13316))
 - feat(common): read-write streaming RPCs metadata ([#13228](https://github.com/googleapis/google-cloud-cpp/pull/13228))
-
+- fix: respect logging format env var in `compute`, `sql` ([#13368](https://github.com/googleapis/google-cloud-cpp/pull/13368))
+ 
 ## v2.19.0 - 2023-12
 
 ### New Libraries
