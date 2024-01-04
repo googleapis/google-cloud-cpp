@@ -582,6 +582,14 @@ service {
   emitted_rpcs: ["RunReportJob", "FetchReportResults", "ListReports"]
 }
 
+# Cloud Quotas
+service {
+  service_proto_path: "google/api/cloudquotas/v1/cloudquotas.proto"
+  product_path: "google/cloud/cloudquotas/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Composer
 service {
   service_proto_path: "google/cloud/orchestration/airflow/service/v1/environments.proto"

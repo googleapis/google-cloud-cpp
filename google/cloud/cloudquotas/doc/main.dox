@@ -1,0 +1,46 @@
+/*!
+
+@mainpage Cloud Quotas API C++ Client Library
+
+An idiomatic C++ client library for the [Cloud Quotas API][cloud-service-docs], a service
+to Cloud Quotas API provides GCP service consumers with management and observability for resource usage, quotas, and restrictions of the services they consume.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/cloudquotas/quickstart/` directory,
+which should give you a taste of the Cloud Quotas API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`cloudquotas_v1::CloudQuotasClient`](@ref google::cloud::cloudquotas_v1::CloudQuotasClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`cloudquotas_v1::CloudQuotasClient`](@ref google::cloud::cloudquotas_v1::CloudQuotasClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref cloudquotas-override-endpoint - describes how to override the default
+  endpoint.
+- @ref cloudquotas-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref cloudquotas-override-retry - describes how to change the default retry
+  policies.
+- @ref cloudquotas-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/docs/quota/api-overview
+
+*/

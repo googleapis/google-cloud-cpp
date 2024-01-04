@@ -47,6 +47,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "certificatemanager",
     "channel",
     "cloudbuild",
+    "cloudquotas",
     "commerce",
     "composer",
     "compute_accelerator_types",
