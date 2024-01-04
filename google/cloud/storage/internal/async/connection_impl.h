@@ -64,7 +64,7 @@ class AsyncConnectionImpl
       ReadObjectParams p) override;
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-  WriteObject(WriteObjectParams p) override;
+  StartUnbufferedUpload(UploadParams p) override;
 
   future<StatusOr<storage::ObjectMetadata>> ComposeObject(
       ComposeObjectParams p) override;
@@ -85,19 +85,19 @@ class AsyncConnectionImpl
                    storage::internal::QueryResumableUploadRequest request);
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-  WriteObjectImpl(
+  UnbufferedUploadImpl(
       internal::ImmutableOptions current,
       storage_experimental::ResumableUploadRequest request,
       StatusOr<google::storage::v2::StartResumableWriteResponse> response);
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-  WriteObjectImpl(
+  UnbufferedUploadImpl(
       internal::ImmutableOptions current,
       storage_experimental::ResumableUploadRequest request,
       StatusOr<google::storage::v2::QueryWriteStatusResponse> response);
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-  WriteObjectImpl(
+  UnbufferedUploadImpl(
       internal::ImmutableOptions current,
       std::function<void(grpc::ClientContext&)> configure_context,
       std::string upload_id,

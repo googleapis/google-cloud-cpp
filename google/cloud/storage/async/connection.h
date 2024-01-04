@@ -98,7 +98,7 @@ class AsyncConnection {
    * We use a single struct as the input parameter for this function to
    * prevent breaking any mocks when additional parameters are needed.
    */
-  struct WriteObjectParams {
+  struct UploadParams {
     /// The metadata attributes for the new object.
     ResumableUploadRequest request;
     /// Any options modifying the RPC behavior, including per-client and
@@ -106,10 +106,10 @@ class AsyncConnection {
     Options options;
   };
 
-  /// Start (or resume) a streaming write.
+  /// Start (or resume) an unbuffered upload.
   virtual future<
       StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-  WriteObject(WriteObjectParams p) = 0;
+  StartUnbufferedUpload(UploadParams p) = 0;
 
   /**
    * A thin wrapper around the `ComposeObject()` parameters.
