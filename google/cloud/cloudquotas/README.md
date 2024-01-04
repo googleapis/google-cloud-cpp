@@ -34,7 +34,6 @@ int main(int argc, char* argv[]) try {
       cloudquotas::CloudQuotasClient(cloudquotas::MakeCloudQuotasConnection());
 
   auto const parent = google::cloud::Location(argv[1], "global").FullName();
-  ;
   for (auto r : client.ListQuotaPreferences(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
