@@ -105,7 +105,10 @@ TEST(Options, AdminDefaults) {
 
   EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com.");
   EXPECT_EQ(opts.get<AuthorityOption>(), "spanner.googleapis.com");
-  EXPECT_TRUE(opts.has<UnifiedCredentialsOption>());
+  // In Google's testing environment `expected` can be `nullptr`, we just want
+  // to verify that both are `nullptr` or neither is `nullptr`.
+  auto const expected = grpc::GoogleDefaultCredentials();
+  EXPECT_EQ(!!opts.get<GrpcCredentialOption>(), !!expected);
   EXPECT_EQ(opts.get<GrpcNumChannelsOption>(), 4);
   EXPECT_THAT(opts.get<TracingComponentsOption>(), IsEmpty());
   EXPECT_EQ(opts.get<GrpcTracingOptionsOption>(), TracingOptions{});

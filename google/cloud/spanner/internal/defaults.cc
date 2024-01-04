@@ -126,6 +126,15 @@ Options DefaultOptions(Options opts) {
 Options DefaultAdminOptions(Options opts) {
   SetBasicDefaults(opts);
 
+  // Manually default `GrpcCredentialOption`, because the legacy admin stubs do
+  // not support GUAC (aka `UnifiedCredentialsOption`).
+  auto e = internal::GetEnv("SPANNER_EMULATOR_HOST");
+  if (e && !e->empty()) {
+    opts.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
+  } else if (!opts.has<GrpcCredentialOption>()) {
+    opts.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
+  }
+
   if (!opts.has<spanner::SpannerRetryPolicyOption>()) {
     opts.set<spanner::SpannerRetryPolicyOption>(
         std::make_shared<google::cloud::spanner::LimitedTimeRetryPolicy>(
