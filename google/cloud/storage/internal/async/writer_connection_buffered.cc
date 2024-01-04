@@ -420,8 +420,8 @@ MakeWriterConnectionBuffered(
     Options const& options) {
   return absl::make_unique<AsyncWriterConnectionBuffered>(
       std::move(factory), std::move(impl),
-      options.get<BufferedWriteLwmOption>(),
-      options.get<BufferedWriteHwmOption>());
+      options.get<storage_experimental::BufferedUploadLwmOption>(),
+      options.get<storage_experimental::BufferedUploadHwmOption>());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

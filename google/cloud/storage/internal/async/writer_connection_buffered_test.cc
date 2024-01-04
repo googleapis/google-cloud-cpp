@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/writer_connection_buffered.h"
+#include "google/cloud/storage/async/connection.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/testing_util/async_sequencer.h"
@@ -46,8 +47,8 @@ using MockFactory = ::testing::MockFunction<future<
 
 Options TestOptions() {
   return Options{}
-      .set<BufferedWriteLwmOption>(16 * 1024)
-      .set<BufferedWriteHwmOption>(32 * 1024);
+      .set<storage_experimental::BufferedUploadLwmOption>(16 * 1024)
+      .set<storage_experimental::BufferedUploadHwmOption>(32 * 1024);
 }
 
 absl::variant<std::int64_t, storage::ObjectMetadata> MakePersistedState(

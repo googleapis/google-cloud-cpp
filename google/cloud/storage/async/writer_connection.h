@@ -121,6 +121,27 @@ class AsyncWriterConnection {
   virtual RpcMetadata GetRequestMetadata() = 0;
 };
 
+/**
+ * Configure the flow control algorithm for buffered uploads.
+ *
+ * Buffered uploads flow control the sender if the internal buffer exceeds the
+ * HWM (High Watermark) value configured in this option.  The flow control is
+ * only released once the internal buffer reaches the LWM (Low Watermark) value
+ * configured via `BufferedUploadLwmOption`.
+ *
+ * The library caps these values as follows (1) the LWM is always capped to the
+ * [256KiB, std::numeric_limits<std::size_t>::max() / 4] range, and (2)
+ * the HWM is always at least two times the LWM.
+ */
+struct BufferedUploadHwmOption {
+  using Type = std::size_t;
+};
+
+/// @copydoc BufferedUploadHwmOption
+struct BufferedUploadLwmOption {
+  using Type = std::size_t;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud
