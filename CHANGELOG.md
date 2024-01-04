@@ -4,7 +4,7 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.20.0 - TBD
+## v2.20.0 - 2024-01
 
 ### New Libraries
 
@@ -12,6 +12,28 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Cloud Quotas](/google/cloud/cloudquotas/README.md)
+
+### [AI Platform/Vertex AI](/google/cloud/aiplatform/README.md)
+
+- feat(aiplatform): add new service proto file ([#13325](https://github.com/googleapis/google-cloud-cpp/pull/13325))
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- fix(bigtable): use FQDN ([#13305](https://github.com/googleapis/google-cloud-cpp/pull/13305))
+
+### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
+
+- feat(otel): capture gRPC response metadata in traces ([#13278](https://github.com/googleapis/google-cloud-cpp/pull/13278))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- fix(pubsub): get future value before returning ([#13241](https://github.com/googleapis/google-cloud-cpp/pull/13241))
+- fix(pubsub): pass by reference explicitly ([#13220](https://github.com/googleapis/google-cloud-cpp/pull/13220))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix(common): returnable argument to `.then()` ([#13316](https://github.com/googleapis/google-cloud-cpp/pull/13316))
+- feat(common): read-write streaming RPCs metadata ([#13228](https://github.com/googleapis/google-cloud-cpp/pull/13228))
 
 ## v2.19.0 - 2023-12
 
