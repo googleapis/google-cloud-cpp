@@ -35,10 +35,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
-  using Attributes =
-      std::vector<std::pair<opentelemetry::nostd::string_view,
-                            opentelemetry::common::AttributeValue>>;
-
  public:
   explicit TracingPullAckHandler(
       std::unique_ptr<pubsub::PullAckHandler::Impl> child)
@@ -50,10 +46,10 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
   }
   ~TracingPullAckHandler() override = default;
 
-  Attributes MakeSharedAttributes(std::string const& ack_id,
-                                  std::string const& subscription) {
+  TracingAttributes MakeSharedAttributes(std::string const& ack_id,
+                                         std::string const& subscription) {
     namespace sc = opentelemetry::trace::SemanticConventions;
-    return Attributes{
+    return TracingAttributes{
         {sc::kMessagingSystem, "gcp_pubsub"},
         {sc::kMessagingOperation, "settle"},
         {"messaging.gcp_pubsub.message.ack_id", ack_id},
@@ -69,7 +65,8 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
     auto const ack_id = child_->ack_id();
     auto const subscription = child_->subscription();
     auto const subscription_name = subscription.FullName();
-    Attributes attributes = MakeSharedAttributes(ack_id, subscription_name);
+    TracingAttributes attributes =
+        MakeSharedAttributes(ack_id, subscription_name);
     attributes.emplace_back(
         std::make_pair(sc::kCodeFunction, "pubsub::PullAckHandler::ack"));
     auto span = internal::MakeSpan(
@@ -94,7 +91,8 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
     auto const ack_id = child_->ack_id();
     auto const subscription = child_->subscription();
     auto const subscription_name = subscription.FullName();
-    Attributes attributes = MakeSharedAttributes(ack_id, subscription_name);
+    TracingAttributes attributes =
+        MakeSharedAttributes(ack_id, subscription_name);
     attributes.emplace_back(
         std::make_pair(sc::kCodeFunction, "pubsub::PullAckHandler::nack"));
     auto span = internal::MakeSpan(
