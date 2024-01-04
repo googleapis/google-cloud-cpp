@@ -184,7 +184,7 @@ AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-AsyncConnectionImpl::WriteObject(WriteObjectParams p) {
+AsyncConnectionImpl::StartUnbufferedUpload(UploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
 
   if (p.request.HasOption<storage::UseResumableUploadSession>()) {
@@ -196,8 +196,8 @@ AsyncConnectionImpl::WriteObject(WriteObjectParams p) {
                           request = std::move(p.request)](auto f) mutable {
       auto self = w.lock();
       if (auto self = w.lock()) {
-        return self->WriteObjectImpl(std::move(current), std::move(request),
-                                     f.get());
+        return self->UnbufferedUploadImpl(std::move(current),
+                                          std::move(request), f.get());
       }
       return make_ready_future(
           StatusOr<
@@ -210,8 +210,8 @@ AsyncConnectionImpl::WriteObject(WriteObjectParams p) {
                         request = std::move(p.request)](auto f) mutable {
     auto self = w.lock();
     if (auto self = w.lock()) {
-      return self->WriteObjectImpl(std::move(current), std::move(request),
-                                   f.get());
+      return self->UnbufferedUploadImpl(std::move(current), std::move(request),
+                                        f.get());
     }
     return make_ready_future(
         StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
@@ -322,7 +322,7 @@ AsyncConnectionImpl::QueryWriteStatus(
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-AsyncConnectionImpl::WriteObjectImpl(
+AsyncConnectionImpl::UnbufferedUploadImpl(
     internal::ImmutableOptions current,
     storage_experimental::ResumableUploadRequest request,
     StatusOr<google::storage::v2::StartResumableWriteResponse> response) {
@@ -343,13 +343,13 @@ AsyncConnectionImpl::WriteObjectImpl(
     ApplyResumableUploadRoutingHeader(context, upload);
   };
 
-  return WriteObjectImpl(std::move(current), std::move(configure),
-                         std::move(*response->mutable_upload_id()),
-                         std::move(hash_function), 0);
+  return UnbufferedUploadImpl(std::move(current), std::move(configure),
+                              std::move(*response->mutable_upload_id()),
+                              std::move(hash_function), 0);
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-AsyncConnectionImpl::WriteObjectImpl(
+AsyncConnectionImpl::UnbufferedUploadImpl(
     internal::ImmutableOptions current,
     storage_experimental::ResumableUploadRequest request,
     StatusOr<google::storage::v2::QueryWriteStatusResponse> response) {
@@ -381,13 +381,13 @@ AsyncConnectionImpl::WriteObjectImpl(
     ApplyQueryParameters(context, *current, request);
     ApplyResumableUploadRoutingHeader(context, upload);
   };
-  return WriteObjectImpl(std::move(current), std::move(configure),
-                         std::move(id), std::move(hash_function),
-                         response->persisted_size());
+  return UnbufferedUploadImpl(std::move(current), std::move(configure),
+                              std::move(id), std::move(hash_function),
+                              response->persisted_size());
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-AsyncConnectionImpl::WriteObjectImpl(
+AsyncConnectionImpl::UnbufferedUploadImpl(
     internal::ImmutableOptions current,
     std::function<void(grpc::ClientContext&)> configure_context,
     std::string upload_id,

@@ -212,8 +212,8 @@ void WriteObject(google::cloud::storage_experimental::AsyncClient& client,
       -> google::cloud::future<gcs::ObjectMetadata> {
     std::ifstream is(filename);
     if (is.bad()) throw std::runtime_error("Cannot read " + filename);
-    auto [writer, token] = (co_await client.WriteObject(std::move(bucket_name),
-                                                        std::move(object_name)))
+    auto [writer, token] = (co_await client.StartUnbufferedUpload(
+                                std::move(bucket_name), std::move(object_name)))
                                .value();
     is.seekg(0);  // clear EOF bit
     while (token.valid() && !is.eof()) {
@@ -266,9 +266,9 @@ void WriteObjectWithRetry(
     auto upload_id = gcs::UseResumableUploadSession();
     for (int i = 0; i != 3; ++i) {
       // Start or resume the upload.
-      auto [writer, token] =
-          (co_await client.WriteObject(bucket_name, object_name, upload_id))
-              .value();
+      auto [writer, token] = (co_await client.StartUnbufferedUpload(
+                                  bucket_name, object_name, upload_id))
+                                 .value();
       // If the upload already completed, there is nothing left to do.
       auto state = writer.PersistedState();
       if (absl::holds_alternative<gcs::ObjectMetadata>(state)) {

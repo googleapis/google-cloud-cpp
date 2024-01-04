@@ -537,7 +537,7 @@ g::future<Result> UploadOne(Configuration const& cfg, IterationConfig iteration,
   auto const transfer_start = std::chrono::system_clock::now();
   auto const start = std::chrono::steady_clock::now();
   auto [writer, token] =
-      (co_await client.WriteObject(cfg.bucket, object_name)).value();
+      (co_await client.StartUnbufferedUpload(cfg.bucket, object_name)).value();
 
   using google::cloud::storage_experimental::WritePayload;
   for (auto remaining = iteration.transfer_size; remaining != 0;) {
