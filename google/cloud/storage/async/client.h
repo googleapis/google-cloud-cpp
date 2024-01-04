@@ -34,7 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * A client for Google Cloud Storage offering asynchronous operations.
  *
- *ote This class is experimental, it is subject to change without notice.
+ * @note This class is experimental, it is subject to change without notice.
  *
  * @par Optional Request Options
  * Most of the member functions in this class can receive optional request
@@ -127,7 +127,7 @@ class AsyncClient {
    * in memory.
    *
    * - *Pro:* Easy to use, a single function call uploads the object.
-   * - *Pro:* Lowest latency for small objects. Use 4MiB as a rule of thumb.
+   * - *Pro:* Lowest latency for small objects. Use <= 4MiB as a rule of thumb.
    *   The precise threshold depends on your environment.
    * - *Con:* Recovery from transient errors requires resending all the data.
    * - *Con:* Multiple concurrent calls to `InsertObject()` will consume as
@@ -303,7 +303,7 @@ class AsyncClient {
    * in memory.
    *
    * - *Pro:* Easy to use, a single function call uploads the object.
-   * - *Pro:* Lowest latency for small objects. Use 4MiB as a rule of thumb.
+   * - *Pro:* Lowest latency for small objects. Use <= 4MiB as a rule of thumb.
    *   The precise threshold depends on your environment.
    * - *Con:* Recovery from transient errors requires resending all the data.
    * - *Con:* Multiple concurrent calls to `InsertObject()` will consume as
@@ -411,7 +411,7 @@ class AsyncClient {
    * in memory.
    *
    * - *Pro:* Easy to use, a single function call uploads the object.
-   * - *Pro:* Lowest latency for small objects. Use 4MiB as a rule of thumb.
+   * - *Pro:* Lowest latency for small objects. Use <= 4MiB as a rule of thumb.
    *   The precise threshold depends on your environment.
    * - *Con:* Recovery from transient errors requires resending all the data.
    * - *Con:* Multiple concurrent calls to `InsertObject()` will consume as
