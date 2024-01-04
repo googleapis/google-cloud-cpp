@@ -65,8 +65,8 @@ AsyncConnectionImpl::AsyncConnectionImpl(
       stub_(std::move(stub)),
       options_(std::move(options)) {}
 
-future<StatusOr<storage::ObjectMetadata>>
-AsyncConnectionImpl::AsyncInsertObject(InsertObjectParams p) {
+future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::InsertObject(
+    InsertObjectParams p) {
   auto proto = ToProto(p.request);
   if (!proto) {
     return make_ready_future(
@@ -110,7 +110,7 @@ AsyncConnectionImpl::AsyncInsertObject(InsertObjectParams p) {
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
-AsyncConnectionImpl::AsyncReadObject(ReadObjectParams p) {
+AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   using StreamingRpc = google::cloud::internal::AsyncStreamingReadRpc<
       google::storage::v2::ReadObjectResponse>;
 
@@ -160,7 +160,7 @@ AsyncConnectionImpl::AsyncReadObject(ReadObjectParams p) {
 }
 
 future<StatusOr<storage_experimental::ReadPayload>>
-AsyncConnectionImpl::AsyncReadObjectRange(ReadObjectParams p) {
+AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
   auto proto = ToProto(p.request.impl_);
   if (!proto) {
     return make_ready_future(
@@ -184,14 +184,14 @@ AsyncConnectionImpl::AsyncReadObjectRange(ReadObjectParams p) {
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-AsyncConnectionImpl::AsyncWriteObject(WriteObjectParams p) {
+AsyncConnectionImpl::WriteObject(WriteObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
 
   if (p.request.HasOption<storage::UseResumableUploadSession>()) {
     auto query = storage::internal::QueryResumableUploadRequest(
         p.request.GetOption<storage::UseResumableUploadSession>().value());
     p.request.impl_.ForEachOption(storage::internal::CopyCommonOptions(query));
-    auto response = AsyncQueryWriteStatus(current, std::move(query));
+    auto response = QueryWriteStatus(current, std::move(query));
     return response.then([w = WeakFromThis(), current = std::move(current),
                           request = std::move(p.request)](auto f) mutable {
       auto self = w.lock();
@@ -205,7 +205,7 @@ AsyncConnectionImpl::AsyncWriteObject(WriteObjectParams p) {
               internal::CancelledError("Cannot lock self", GCP_ERROR_INFO())));
     });
   }
-  auto response = AsyncStartResumableWrite(current, p.request.impl_);
+  auto response = StartResumableWrite(current, p.request.impl_);
   return response.then([w = WeakFromThis(), current = std::move(current),
                         request = std::move(p.request)](auto f) mutable {
     auto self = w.lock();
@@ -219,8 +219,8 @@ AsyncConnectionImpl::AsyncWriteObject(WriteObjectParams p) {
   });
 }
 
-future<StatusOr<storage::ObjectMetadata>>
-AsyncConnectionImpl::AsyncComposeObject(ComposeObjectParams p) {
+future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::ComposeObject(
+    ComposeObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto proto = ToProto(p.request.impl_);
   if (!proto) {
@@ -248,7 +248,7 @@ AsyncConnectionImpl::AsyncComposeObject(ComposeObjectParams p) {
       });
 }
 
-future<Status> AsyncConnectionImpl::AsyncDeleteObject(DeleteObjectParams p) {
+future<Status> AsyncConnectionImpl::DeleteObject(DeleteObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto proto = ToProto(p.request.impl_);
   auto const idempotency =
@@ -269,7 +269,7 @@ future<Status> AsyncConnectionImpl::AsyncDeleteObject(DeleteObjectParams p) {
 }
 
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
-AsyncConnectionImpl::AsyncStartResumableWrite(
+AsyncConnectionImpl::StartResumableWrite(
     internal::ImmutableOptions current,
     storage::internal::ResumableUploadRequest request) {
   auto proto = ToProto(request);
@@ -298,7 +298,7 @@ AsyncConnectionImpl::AsyncStartResumableWrite(
 }
 
 future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
-AsyncConnectionImpl::AsyncQueryWriteStatus(
+AsyncConnectionImpl::QueryWriteStatus(
     internal::ImmutableOptions current,
     storage::internal::QueryResumableUploadRequest request) {
   auto proto = ToProto(request);

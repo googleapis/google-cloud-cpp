@@ -32,22 +32,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockAsyncConnection : public storage_experimental::AsyncConnection {
  public:
   MOCK_METHOD(Options, options, (), (const, override));
-  MOCK_METHOD(future<StatusOr<storage::ObjectMetadata>>, AsyncInsertObject,
+  MOCK_METHOD(future<StatusOr<storage::ObjectMetadata>>, InsertObject,
               (InsertObjectParams), (override));
   MOCK_METHOD(
       future<StatusOr<
           std::unique_ptr<storage_experimental::AsyncReaderConnection>>>,
-      AsyncReadObject, (ReadObjectParams), (override));
+      ReadObject, (ReadObjectParams), (override));
   MOCK_METHOD(future<StatusOr<storage_experimental::ReadPayload>>,
-              AsyncReadObjectRange, (ReadObjectParams), (override));
+              ReadObjectRange, (ReadObjectParams), (override));
   MOCK_METHOD(
       future<StatusOr<
           std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
-      AsyncWriteObject, (WriteObjectParams), (override));
-  MOCK_METHOD(future<StatusOr<storage::ObjectMetadata>>, AsyncComposeObject,
+      WriteObject, (WriteObjectParams), (override));
+  MOCK_METHOD(future<StatusOr<storage::ObjectMetadata>>, ComposeObject,
               (ComposeObjectParams), (override));
-  MOCK_METHOD(future<Status>, AsyncDeleteObject, (DeleteObjectParams),
-              (override));
+  MOCK_METHOD(future<Status>, DeleteObject, (DeleteObjectParams), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -54,22 +54,22 @@ class AsyncConnectionImpl
 
   Options options() const override { return options_; }
 
-  future<StatusOr<storage::ObjectMetadata>> AsyncInsertObject(
+  future<StatusOr<storage::ObjectMetadata>> InsertObject(
       InsertObjectParams p) override;
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
-  AsyncReadObject(ReadObjectParams p) override;
+  ReadObject(ReadObjectParams p) override;
 
-  future<StatusOr<storage_experimental::ReadPayload>> AsyncReadObjectRange(
+  future<StatusOr<storage_experimental::ReadPayload>> ReadObjectRange(
       ReadObjectParams p) override;
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-  AsyncWriteObject(WriteObjectParams p) override;
+  WriteObject(WriteObjectParams p) override;
 
-  future<StatusOr<storage::ObjectMetadata>> AsyncComposeObject(
+  future<StatusOr<storage::ObjectMetadata>> ComposeObject(
       ComposeObjectParams p) override;
 
-  future<Status> AsyncDeleteObject(DeleteObjectParams p) override;
+  future<Status> DeleteObject(DeleteObjectParams p) override;
 
  private:
   std::weak_ptr<AsyncConnectionImpl> WeakFromThis() {
@@ -77,12 +77,12 @@ class AsyncConnectionImpl
   }
 
   future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
-  AsyncStartResumableWrite(internal::ImmutableOptions current,
-                           storage::internal::ResumableUploadRequest request);
+  StartResumableWrite(internal::ImmutableOptions current,
+                      storage::internal::ResumableUploadRequest request);
 
   future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
-  AsyncQueryWriteStatus(internal::ImmutableOptions current,
-                        storage::internal::QueryResumableUploadRequest request);
+  QueryWriteStatus(internal::ImmutableOptions current,
+                   storage::internal::QueryResumableUploadRequest request);
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
   WriteObjectImpl(

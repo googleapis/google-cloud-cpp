@@ -67,7 +67,7 @@ class AsyncConnection {
   };
 
   /// Insert a new object.
-  virtual future<StatusOr<storage::ObjectMetadata>> AsyncInsertObject(
+  virtual future<StatusOr<storage::ObjectMetadata>> InsertObject(
       InsertObjectParams p) = 0;
 
   /**
@@ -86,12 +86,11 @@ class AsyncConnection {
   };
 
   /// Asynchronously create a stream to read object contents.
-  virtual future<StatusOr<std::unique_ptr<AsyncReaderConnection>>>
-  AsyncReadObject(ReadObjectParams p) = 0;
+  virtual future<StatusOr<std::unique_ptr<AsyncReaderConnection>>> ReadObject(
+      ReadObjectParams p) = 0;
 
   /// Read a range from an object returning all the contents.
-  virtual future<StatusOr<ReadPayload>> AsyncReadObjectRange(
-      ReadObjectParams p) = 0;
+  virtual future<StatusOr<ReadPayload>> ReadObjectRange(ReadObjectParams p) = 0;
 
   /**
    * A thin wrapper around the `WriteObject()` parameters.
@@ -110,7 +109,7 @@ class AsyncConnection {
   /// Start (or resume) a streaming write.
   virtual future<
       StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-  AsyncWriteObject(WriteObjectParams p) = 0;
+  WriteObject(WriteObjectParams p) = 0;
 
   /**
    * A thin wrapper around the `ComposeObject()` parameters.
@@ -128,7 +127,7 @@ class AsyncConnection {
 
   /// Create a new object by composing (concatenating) the contents of existing
   /// objects.
-  virtual future<StatusOr<storage::ObjectMetadata>> AsyncComposeObject(
+  virtual future<StatusOr<storage::ObjectMetadata>> ComposeObject(
       ComposeObjectParams p) = 0;
 
   /**
@@ -146,7 +145,7 @@ class AsyncConnection {
   };
 
   /// Delete an object.
-  virtual future<Status> AsyncDeleteObject(DeleteObjectParams p) = 0;
+  virtual future<Status> DeleteObject(DeleteObjectParams p) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

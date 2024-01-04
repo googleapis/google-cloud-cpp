@@ -177,7 +177,7 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncInsertObject(
+  auto pending = connection->InsertObject(
       {storage_experimental::InsertObjectRequest("test-bucket", "test-object")
            .set_multiple_options(storage::Fields("field1,field2"),
                                  storage::QuotaUser("test-quota-user")),
@@ -223,7 +223,7 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectPermanentError) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncInsertObject(
+  auto pending = connection->InsertObject(
       {storage_experimental::InsertObjectRequest("test-bucket", "test-object")
            .set_multiple_options(storage::Fields("field1,field2"),
                                  storage::QuotaUser("test-quota-user")),
@@ -251,7 +251,7 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectTooManyTransients) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncInsertObject(
+  auto pending = connection->InsertObject(
       {storage_experimental::InsertObjectRequest("test-bucket", "test-object")
            .set_multiple_options(storage::Fields("field1,field2"),
                                  storage::QuotaUser("test-quota-user")),
@@ -325,13 +325,13 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncReadObject(
+  auto pending = connection->ReadObject(
       {storage_experimental::ReadObjectRequest("test-bucket", "test-object")
            .set_multiple_options(storage::Fields("field1,field2"),
                                  storage::QuotaUser("test-quota-user")),
        connection->options()});
 
-  // First simulate a failed `AsyncReadObject()`. This returns a streaming RPC
+  // First simulate a failed `ReadObject()`. This returns a streaming RPC
   // that completes with `false` on `Start()` (i.e. never starts) and then
   // completes with a transient error on `Finish()`.
   auto next = sequencer.PopFrontWithName();
@@ -342,7 +342,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 
-  // Then simulate a successful `AsyncReadObject()`. This returns a streaming
+  // Then simulate a successful `ReadObject()`. This returns a streaming
   // RPC that completes with `true` on `Start()`, then returns some data on the
   // first `Read()`, then an unset optional on the second `Read()` (indicating
   // 'end of the streaming RPC'), and then a success `Status` for `Finish()`.
@@ -385,7 +385,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectPermanentError) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncReadObject(
+  auto pending = connection->ReadObject(
       {storage_experimental::ReadObjectRequest("test-bucket", "test-object"),
        connection->options()});
 
@@ -410,7 +410,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectTooManyTransients) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncReadObject(
+  auto pending = connection->ReadObject(
       {storage_experimental::ReadObjectRequest("test-bucket", "test-object"),
        connection->options()});
 
@@ -428,7 +428,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectTooManyTransients) {
   EXPECT_THAT(r, StatusIs(TransientError().code()));
 }
 
-TEST_F(AsyncConnectionImplTest, AsyncWriteObjectNewUpload) {
+TEST_F(AsyncConnectionImplTest, WriteObjectNewUpload) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncStartResumableWrite)
@@ -502,7 +502,7 @@ TEST_F(AsyncConnectionImplTest, AsyncWriteObjectNewUpload) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncWriteObject(
+  auto pending = connection->WriteObject(
       {storage_experimental::ResumableUploadRequest("test-bucket",
                                                     "test-object")
            .set_multiple_options(
@@ -563,7 +563,7 @@ TEST_F(AsyncConnectionImplTest, AsyncWriteObjectNewUpload) {
   next.first.set_value(true);
 }
 
-TEST_F(AsyncConnectionImplTest, AsyncWriteObjectResumeUpload) {
+TEST_F(AsyncConnectionImplTest, WriteObjectResumeUpload) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncQueryWriteStatus)
@@ -630,7 +630,7 @@ TEST_F(AsyncConnectionImplTest, AsyncWriteObjectResumeUpload) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncWriteObject(
+  auto pending = connection->WriteObject(
       {storage_experimental::ResumableUploadRequest("test-bucket",
                                                     "test-object")
            .set_multiple_options(
@@ -717,7 +717,7 @@ TEST_F(AsyncConnectionImplTest, AsyncWriteObjectResumeFinalizedUpload) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncWriteObject(
+  auto pending = connection->WriteObject(
       {storage_experimental::ResumableUploadRequest("test-bucket",
                                                     "test-object")
            .set_multiple_options(
@@ -759,10 +759,10 @@ TEST_F(AsyncConnectionImplTest,
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncWriteObject(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object"),
-       connection->options()});
+  auto pending =
+      connection->WriteObject({storage_experimental::ResumableUploadRequest(
+                                   "test-bucket", "test-object"),
+                               connection->options()});
 
   for (int i = 0; i != 3; ++i) {
     auto next = sequencer.PopFrontWithName();
@@ -787,10 +787,10 @@ TEST_F(AsyncConnectionImplTest,
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncWriteObject(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object"),
-       connection->options()});
+  auto pending =
+      connection->WriteObject({storage_experimental::ResumableUploadRequest(
+                                   "test-bucket", "test-object"),
+                               connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "StartResumableWrite");
@@ -810,7 +810,7 @@ TEST_F(AsyncConnectionImplTest, AsyncWriteObjectInvalidRequest) {
   // will fail, and that should result in a
   auto key = storage::EncryptionDataFromBinaryKey("123");
   key.sha256 = "not-a-valid-base-64-SHA256";
-  auto pending = connection->AsyncWriteObject(
+  auto pending = connection->WriteObject(
       {storage_experimental::ResumableUploadRequest("test-bucket",
                                                     "test-object")
            .set_multiple_options(storage::EncryptionKey(key)),
@@ -833,7 +833,7 @@ TEST_F(AsyncConnectionImplTest,
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncWriteObject(
+  auto pending = connection->WriteObject(
       {storage_experimental::ResumableUploadRequest("test-bucket",
                                                     "test-object")
            .set_multiple_options(
@@ -863,7 +863,7 @@ TEST_F(AsyncConnectionImplTest,
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncWriteObject(
+  auto pending = connection->WriteObject(
       {storage_experimental::ResumableUploadRequest("test-bucket",
                                                     "test-object")
            .set_multiple_options(
@@ -892,10 +892,10 @@ TEST_F(AsyncConnectionImplTest, AsyncWriteObjectTooManyTransients) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncWriteObject(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object"),
-       connection->options()});
+  auto pending =
+      connection->WriteObject({storage_experimental::ResumableUploadRequest(
+                                   "test-bucket", "test-object"),
+                               connection->options()});
 
   for (int i = 0; i != 3; ++i) {
     auto next = sequencer.PopFrontWithName();
@@ -925,10 +925,10 @@ TEST_F(AsyncConnectionImplTest, AsyncWriteObjectPermanentError) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncWriteObject(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object"),
-       connection->options()});
+  auto pending =
+      connection->WriteObject({storage_experimental::ResumableUploadRequest(
+                                   "test-bucket", "test-object"),
+                               connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Start");
@@ -942,7 +942,7 @@ TEST_F(AsyncConnectionImplTest, AsyncWriteObjectPermanentError) {
   EXPECT_THAT(r, StatusIs(PermanentError().code()));
 }
 
-TEST_F(AsyncConnectionImplTest, AsyncDeleteObject) {
+TEST_F(AsyncConnectionImplTest, DeleteObject) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncDeleteObject)
@@ -969,7 +969,7 @@ TEST_F(AsyncConnectionImplTest, AsyncDeleteObject) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncDeleteObject(
+  auto pending = connection->DeleteObject(
       {storage_experimental::DeleteObjectRequest("test-bucket", "test-object")
            .set_multiple_options(storage::Fields("field1,field2"),
                                  storage::QuotaUser("test-quota-user")),
@@ -987,7 +987,7 @@ TEST_F(AsyncConnectionImplTest, AsyncDeleteObject) {
   ASSERT_STATUS_OK(response);
 }
 
-TEST_F(AsyncConnectionImplTest, AsyncDeleteObjectPermanentError) {
+TEST_F(AsyncConnectionImplTest, DeleteObjectPermanentError) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncDeleteObject).WillOnce([&] {
@@ -998,7 +998,7 @@ TEST_F(AsyncConnectionImplTest, AsyncDeleteObjectPermanentError) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncDeleteObject(
+  auto pending = connection->DeleteObject(
       {storage_experimental::DeleteObjectRequest("test-bucket", "test-object"),
        connection->options()});
 
@@ -1021,7 +1021,7 @@ TEST_F(AsyncConnectionImplTest, AsyncDeleteObjectTooManyTransients) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->AsyncDeleteObject(
+  auto pending = connection->DeleteObject(
       {storage_experimental::DeleteObjectRequest("test-bucket", "test-object"),
        connection->options()});
 

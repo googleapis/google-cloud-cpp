@@ -146,7 +146,7 @@ class AsyncClient {
       std::string bucket_name, std::string object_name, Collection&& contents,
       Args&&... args) {
     auto options = SpanOptions(std::forward<Args>(args)...);
-    return connection_->AsyncInsertObject(
+    return connection_->InsertObject(
         {/*.request=*/InsertObjectRequest(std::move(bucket_name),
                                           std::move(object_name))
              .set_multiple_options(std::forward<Args>(args)...),
@@ -180,7 +180,7 @@ class AsyncClient {
       std::string bucket_name, std::string object_name, Args&&... args) {
     auto options = SpanOptions(std::forward<Args>(args)...);
     return connection_
-        ->AsyncReadObject(
+        ->ReadObject(
             {ReadObjectRequest(std::move(bucket_name), std::move(object_name))
                  .set_multiple_options(std::forward<Args>(args)...),
              std::move(options)})
@@ -245,7 +245,7 @@ class AsyncClient {
                   "parameters instead.");
 
     auto options = SpanOptions(std::forward<Args>(args)...);
-    return connection_->AsyncReadObjectRange(
+    return connection_->ReadObjectRange(
         {ReadObjectRequest(std::move(bucket_name), std::move(object_name))
              .set_multiple_options(std::forward<Args>(args)...,
                                    storage::ReadRange(offset, offset + limit)),
@@ -317,11 +317,10 @@ class AsyncClient {
       std::string bucket_name, std::string object_name, Args&&... args) {
     auto options = SpanOptions(std::forward<Args>(args)...);
     return connection_
-        ->AsyncWriteObject(
-            {ResumableUploadRequest(std::move(bucket_name),
-                                    std::move(object_name))
-                 .set_multiple_options(std::forward<Args>(args)...),
-             std::move(options)})
+        ->WriteObject({ResumableUploadRequest(std::move(bucket_name),
+                                              std::move(object_name))
+                           .set_multiple_options(std::forward<Args>(args)...),
+                       std::move(options)})
         .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
           auto impl = f.get();
           if (!impl) return std::move(impl).status();
@@ -356,7 +355,7 @@ class AsyncClient {
       std::vector<storage::ComposeSourceObject> source_objects,
       std::string destination_object_name, Args&&... args) {
     auto options = SpanOptions(std::forward<Args>(args)...);
-    return connection_->AsyncComposeObject(
+    return connection_->ComposeObject(
         {ComposeObjectRequest(std::move(bucket_name), std::move(source_objects),
                               std::move(destination_object_name))
              .set_multiple_options(std::forward<Args>(args)...),
@@ -386,7 +385,7 @@ class AsyncClient {
   future<Status> DeleteObject(std::string bucket_name, std::string object_name,
                               Args&&... args) {
     auto options = SpanOptions(std::forward<Args>(args)...);
-    return connection_->AsyncDeleteObject(
+    return connection_->DeleteObject(
         {DeleteObjectRequest(std::move(bucket_name), std::move(object_name))
              .set_multiple_options(std::forward<Args>(args)...),
          /*.options=*/std::move(options)});
