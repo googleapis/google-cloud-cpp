@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_impl.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
+#include "google/cloud/storage/internal/async/writer_connection_buffered.h"
 #include "google/cloud/storage/internal/async/writer_connection_finalized.h"
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
 #include "google/cloud/storage/internal/crc32c.h"
@@ -217,6 +218,34 @@ AsyncConnectionImpl::StartUnbufferedUpload(UploadParams p) {
         StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
             internal::CancelledError("Cannot lock self", GCP_ERROR_INFO())));
   });
+}
+
+future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
+  auto async_write_object = [p, w = WeakFromThis()](
+                                std::string upload_id) mutable {
+    p.request.set_multiple_options(
+        storage::UseResumableUploadSession(std::move(upload_id)));
+    if (auto self = w.lock()) return self->StartUnbufferedUpload(p);
+    return make_ready_future(
+        StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>{
+            internal::CancelledError("Cannot lock self", GCP_ERROR_INFO())});
+  };
+  auto current = internal::MakeImmutableOptions(p.options);
+  return StartUnbufferedUpload(std::move(p))
+      .then([current,
+             async_write_object = std::move(async_write_object)](auto f) mutable
+            -> StatusOr<
+                std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        auto factory = [upload_id = (*w)->UploadId(),
+                        f = std::move(async_write_object)]() mutable {
+          return f(upload_id);
+        };
+        return MakeWriterConnectionBuffered(std::move(factory), *std::move(w),
+                                            *current);
+      });
 }
 
 future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::ComposeObject(

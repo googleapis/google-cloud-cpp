@@ -66,6 +66,9 @@ class AsyncConnectionImpl
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
   StartUnbufferedUpload(UploadParams p) override;
 
+  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  StartBufferedUpload(UploadParams p) override;
+
   future<StatusOr<storage::ObjectMetadata>> ComposeObject(
       ComposeObjectParams p) override;
 

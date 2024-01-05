@@ -106,10 +106,15 @@ class AsyncConnection {
     Options options;
   };
 
-  /// Start (or resume) an unbuffered upload.
+  /// Start (or resume) an upload configured for persistent sources.
   virtual future<
       StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
   StartUnbufferedUpload(UploadParams p) = 0;
+
+  /// Start (or resume) an upload configured for streaming sources.
+  virtual future<
+      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  StartBufferedUpload(UploadParams p) = 0;
 
   /**
    * A thin wrapper around the `ComposeObject()` parameters.
