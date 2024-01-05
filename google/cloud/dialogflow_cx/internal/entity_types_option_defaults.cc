@@ -35,13 +35,12 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options EntityTypesDefaultOptions(std::string const& location,
                                   Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ENTITY_TYPES_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_ENTITY_TYPES_AUTHORITY",
       absl::StrCat(location, location.empty() ? "" : "-",
                    "dialogflow.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_cx::EntityTypesRetryPolicyOption>()) {
     options.set<dialogflow_cx::EntityTypesRetryPolicyOption>(
         dialogflow_cx::EntityTypesLimitedTimeRetryPolicy(

@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options PredictionServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_RETAIL_PREDICTION_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_RETAIL_PREDICTION_SERVICE_AUTHORITY",
       "retail.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<retail_v2::PredictionServiceRetryPolicyOption>()) {
     options.set<retail_v2::PredictionServiceRetryPolicyOption>(
         retail_v2::PredictionServiceLimitedTimeRetryPolicy(

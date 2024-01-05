@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options KeyDashboardServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_KEY_DASHBOARD_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_KEY_DASHBOARD_SERVICE_AUTHORITY",
       "kmsinventory.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<kms_inventory_v1::KeyDashboardServiceRetryPolicyOption>()) {
     options.set<kms_inventory_v1::KeyDashboardServiceRetryPolicyOption>(
         kms_inventory_v1::KeyDashboardServiceLimitedTimeRetryPolicy(

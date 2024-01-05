@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options MetastoreServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_METASTORE_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_METASTORE_SERVICE_AUTHORITY", "biglake.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>()) {
     options.set<bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>(
         bigquery_biglake_v1::MetastoreServiceLimitedTimeRetryPolicy(

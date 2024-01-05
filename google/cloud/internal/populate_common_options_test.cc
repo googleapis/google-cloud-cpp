@@ -14,8 +14,11 @@
 
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/opentelemetry_options.h"
+#include "google/cloud/testing_util/credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/universe_domain_options.h"
 #include "absl/types/optional.h"
@@ -28,6 +31,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::TestCredentialsVisitor;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
@@ -74,6 +78,20 @@ TEST(PopulateCommonOptions, EmptyEmulatorEnvVar) {
                             {}, "default.googleapis.com");
   EXPECT_TRUE(actual.has<EndpointOption>());
   EXPECT_THAT(actual.get<EndpointOption>(), Eq("default.googleapis.com."));
+  EXPECT_FALSE(actual.has<UnifiedCredentialsOption>());
+}
+
+TEST(PopulateCommonOptions, InsecureCredentialsWithEmulator) {
+  ScopedEnvironment endpoint("GOOGLE_CLOUD_CPP_EMULATOR_ENDPOINT", "emulator");
+  auto actual =
+      PopulateCommonOptions(Options{}, {}, "GOOGLE_CLOUD_CPP_EMULATOR_ENDPOINT",
+                            {}, "default.googleapis.com");
+  EXPECT_TRUE(actual.has<UnifiedCredentialsOption>());
+  auto const& creds = actual.get<UnifiedCredentialsOption>();
+
+  TestCredentialsVisitor v;
+  CredentialsVisitor::dispatch(*creds, v);
+  EXPECT_EQ(v.name, "InsecureCredentialsConfig");
 }
 
 // TODO(#13191): Simplify into multiple tests.

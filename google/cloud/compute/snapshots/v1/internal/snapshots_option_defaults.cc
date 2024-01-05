@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options SnapshotsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SNAPSHOTS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_SNAPSHOTS_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_snapshots_v1::SnapshotsRetryPolicyOption>()) {
     options.set<compute_snapshots_v1::SnapshotsRetryPolicyOption>(
         compute_snapshots_v1::SnapshotsLimitedTimeRetryPolicy(

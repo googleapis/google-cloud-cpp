@@ -34,12 +34,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options RegionSslCertificatesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_REGION_SSL_CERTIFICATES_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_REGION_SSL_CERTIFICATES_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_region_ssl_certificates_v1::
                        RegionSslCertificatesRetryPolicyOption>()) {
     options.set<compute_region_ssl_certificates_v1::

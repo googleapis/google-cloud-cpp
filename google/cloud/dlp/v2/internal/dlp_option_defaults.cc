@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options DlpServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DLP_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_DLP_SERVICE_AUTHORITY", "dlp.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dlp_v2::DlpServiceRetryPolicyOption>()) {
     options.set<dlp_v2::DlpServiceRetryPolicyOption>(
         dlp_v2::DlpServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))

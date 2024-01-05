@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options RecommenderDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_RECOMMENDER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_RECOMMENDER_AUTHORITY", "recommender.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<recommender_v1::RecommenderRetryPolicyOption>()) {
     options.set<recommender_v1::RecommenderRetryPolicyOption>(
         recommender_v1::RecommenderLimitedTimeRetryPolicy(

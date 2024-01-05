@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options SslCertificatesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SSL_CERTIFICATES_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_SSL_CERTIFICATES_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()) {
     options.set<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>(

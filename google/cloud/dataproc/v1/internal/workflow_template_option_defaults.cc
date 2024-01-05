@@ -35,13 +35,12 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options WorkflowTemplateServiceDefaultOptions(std::string const& location,
                                               Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_WORKFLOW_TEMPLATE_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_WORKFLOW_TEMPLATE_SERVICE_AUTHORITY",
       absl::StrCat(location, location.empty() ? "" : "-",
                    "dataproc.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>()) {
     options.set<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>(
         dataproc_v1::WorkflowTemplateServiceLimitedTimeRetryPolicy(

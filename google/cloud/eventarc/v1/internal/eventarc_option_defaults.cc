@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options EventarcDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_EVENTARC_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_EVENTARC_AUTHORITY", "eventarc.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<eventarc_v1::EventarcRetryPolicyOption>()) {
     options.set<eventarc_v1::EventarcRetryPolicyOption>(
         eventarc_v1::EventarcLimitedTimeRetryPolicy(std::chrono::minutes(30))

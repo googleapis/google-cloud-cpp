@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options AssuredWorkloadsServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ASSURED_WORKLOADS_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_ASSURED_WORKLOADS_SERVICE_AUTHORITY",
       "assuredworkloads.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()) {
     options.set<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>(

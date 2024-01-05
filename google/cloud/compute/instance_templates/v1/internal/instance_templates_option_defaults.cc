@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options InstanceTemplatesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_INSTANCE_TEMPLATES_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_INSTANCE_TEMPLATES_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_instance_templates_v1::
                        InstanceTemplatesRetryPolicyOption>()) {
     options.set<

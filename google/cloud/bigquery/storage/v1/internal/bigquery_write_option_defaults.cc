@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options BigQueryWriteDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_BIGQUERY_WRITE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_BIGQUERY_WRITE_AUTHORITY",
       "bigquerystorage.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<bigquery_storage_v1::BigQueryWriteRetryPolicyOption>()) {
     options.set<bigquery_storage_v1::BigQueryWriteRetryPolicyOption>(
         bigquery_storage_v1::BigQueryWriteLimitedTimeRetryPolicy(

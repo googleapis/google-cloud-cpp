@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options RuleSetServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_RULE_SET_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_RULE_SET_SERVICE_AUTHORITY",
       "contentwarehouse.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<contentwarehouse_v1::RuleSetServiceRetryPolicyOption>()) {
     options.set<contentwarehouse_v1::RuleSetServiceRetryPolicyOption>(
         contentwarehouse_v1::RuleSetServiceLimitedTimeRetryPolicy(

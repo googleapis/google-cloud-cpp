@@ -35,13 +35,12 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ClusterControllerDefaultOptions(std::string const& location,
                                         Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLUSTER_CONTROLLER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CLUSTER_CONTROLLER_AUTHORITY",
       absl::StrCat(location, location.empty() ? "" : "-",
                    "dataproc.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataproc_v1::ClusterControllerRetryPolicyOption>()) {
     options.set<dataproc_v1::ClusterControllerRetryPolicyOption>(
         dataproc_v1::ClusterControllerLimitedTimeRetryPolicy(

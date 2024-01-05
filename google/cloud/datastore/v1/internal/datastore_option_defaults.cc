@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options DatastoreDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DATASTORE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_DATASTORE_AUTHORITY", "datastore.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datastore_v1::DatastoreRetryPolicyOption>()) {
     options.set<datastore_v1::DatastoreRetryPolicyOption>(
         datastore_v1::DatastoreLimitedTimeRetryPolicy(std::chrono::minutes(30))

@@ -122,7 +122,7 @@ auto constexpr kBackoffScaling = 2.0;
       break;
   }
   CcPrint(R"""(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "$service_endpoint_env_var$",
       "$emulator_endpoint_env_var$", "$service_authority_env_var$",
 )""");
@@ -140,8 +140,7 @@ auto constexpr kBackoffScaling = 2.0;
       break;
   }
   CcPrint(R"""(
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "$emulator_endpoint_env_var$");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<$product_namespace$::$retry_policy_name$Option>()) {
     options.set<$product_namespace$::$retry_policy_name$Option>(
         $product_namespace$::$limited_time_retry_policy_name$(

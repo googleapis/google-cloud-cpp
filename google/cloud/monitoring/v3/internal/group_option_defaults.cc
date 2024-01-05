@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options GroupServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_GROUP_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_GROUP_SERVICE_AUTHORITY", "monitoring.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<monitoring_v3::GroupServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::GroupServiceRetryPolicyOption>(
         monitoring_v3::GroupServiceLimitedTimeRetryPolicy(

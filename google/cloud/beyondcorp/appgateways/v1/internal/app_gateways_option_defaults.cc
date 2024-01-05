@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options AppGatewaysServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_APP_GATEWAYS_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_APP_GATEWAYS_SERVICE_AUTHORITY",
       "beyondcorp.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>()) {
     options.set<beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>(

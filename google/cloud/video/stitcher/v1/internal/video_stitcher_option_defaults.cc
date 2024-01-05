@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options VideoStitcherServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_VIDEO_STITCHER_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_VIDEO_STITCHER_SERVICE_AUTHORITY",
       "videostitcher.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options
            .has<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()) {
     options.set<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>(

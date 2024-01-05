@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ImageAnnotatorDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_IMAGE_ANNOTATOR_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_IMAGE_ANNOTATOR_AUTHORITY", "vision.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<vision_v1::ImageAnnotatorRetryPolicyOption>()) {
     options.set<vision_v1::ImageAnnotatorRetryPolicyOption>(
         vision_v1::ImageAnnotatorLimitedTimeRetryPolicy(

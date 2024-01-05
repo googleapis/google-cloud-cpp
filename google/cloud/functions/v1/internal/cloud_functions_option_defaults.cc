@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CloudFunctionsServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_FUNCTIONS_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_CLOUD_FUNCTIONS_SERVICE_AUTHORITY",
       "cloudfunctions.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<functions_v1::CloudFunctionsServiceRetryPolicyOption>()) {
     options.set<functions_v1::CloudFunctionsServiceRetryPolicyOption>(
         functions_v1::CloudFunctionsServiceLimitedTimeRetryPolicy(

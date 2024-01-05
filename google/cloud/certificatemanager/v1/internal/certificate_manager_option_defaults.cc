@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CertificateManagerDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CERTIFICATE_MANAGER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CERTIFICATE_MANAGER_AUTHORITY",
       "certificatemanager.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options
            .has<certificatemanager_v1::CertificateManagerRetryPolicyOption>()) {
     options.set<certificatemanager_v1::CertificateManagerRetryPolicyOption>(

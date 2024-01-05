@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CloudDeployDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_DEPLOY_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CLOUD_DEPLOY_AUTHORITY", "clouddeploy.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<deploy_v1::CloudDeployRetryPolicyOption>()) {
     options.set<deploy_v1::CloudDeployRetryPolicyOption>(
         deploy_v1::CloudDeployLimitedTimeRetryPolicy(std::chrono::minutes(30))

@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options MachineImagesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_MACHINE_IMAGES_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_MACHINE_IMAGES_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options
            .has<compute_machine_images_v1::MachineImagesRetryPolicyOption>()) {
     options.set<compute_machine_images_v1::MachineImagesRetryPolicyOption>(

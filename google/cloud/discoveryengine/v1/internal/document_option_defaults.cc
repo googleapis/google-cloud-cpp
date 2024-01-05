@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options DocumentServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DOCUMENT_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_DOCUMENT_SERVICE_AUTHORITY",
       "discoveryengine.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<discoveryengine_v1::DocumentServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::DocumentServiceRetryPolicyOption>(
         discoveryengine_v1::DocumentServiceLimitedTimeRetryPolicy(

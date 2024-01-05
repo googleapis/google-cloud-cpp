@@ -35,13 +35,12 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options FulfillmentsDefaultOptions(std::string const& location,
                                    Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_FULFILLMENTS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_FULFILLMENTS_AUTHORITY",
       absl::StrCat(location, location.empty() ? "" : "-",
                    "dialogflow.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_es::FulfillmentsRetryPolicyOption>()) {
     options.set<dialogflow_es::FulfillmentsRetryPolicyOption>(
         dialogflow_es::FulfillmentsLimitedTimeRetryPolicy(

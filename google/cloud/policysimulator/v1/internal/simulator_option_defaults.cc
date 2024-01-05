@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options SimulatorDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SIMULATOR_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_SIMULATOR_AUTHORITY", "policysimulator.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<policysimulator_v1::SimulatorRetryPolicyOption>()) {
     options.set<policysimulator_v1::SimulatorRetryPolicyOption>(
         policysimulator_v1::SimulatorLimitedTimeRetryPolicy(

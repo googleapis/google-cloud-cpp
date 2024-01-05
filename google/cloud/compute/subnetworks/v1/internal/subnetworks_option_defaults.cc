@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options SubnetworksDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SUBNETWORKS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_SUBNETWORKS_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_subnetworks_v1::SubnetworksRetryPolicyOption>()) {
     options.set<compute_subnetworks_v1::SubnetworksRetryPolicyOption>(
         compute_subnetworks_v1::SubnetworksLimitedTimeRetryPolicy(

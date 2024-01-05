@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options TargetGrpcProxiesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TARGET_GRPC_PROXIES_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_TARGET_GRPC_PROXIES_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_target_grpc_proxies_v1::
                        TargetGrpcProxiesRetryPolicyOption>()) {
     options.set<

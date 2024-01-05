@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options TagKeysDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TAG_KEYS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_TAG_KEYS_AUTHORITY",
       "cloudresourcemanager.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<resourcemanager_v3::TagKeysRetryPolicyOption>()) {
     options.set<resourcemanager_v3::TagKeysRetryPolicyOption>(
         resourcemanager_v3::TagKeysLimitedTimeRetryPolicy(

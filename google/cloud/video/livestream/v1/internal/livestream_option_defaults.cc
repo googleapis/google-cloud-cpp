@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options LivestreamServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_LIVESTREAM_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_LIVESTREAM_SERVICE_AUTHORITY",
       "livestream.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<video_livestream_v1::LivestreamServiceRetryPolicyOption>()) {
     options.set<video_livestream_v1::LivestreamServiceRetryPolicyOption>(
         video_livestream_v1::LivestreamServiceLimitedTimeRetryPolicy(

@@ -33,13 +33,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ManagedIdentitiesServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_MANAGED_IDENTITIES_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_MANAGED_IDENTITIES_SERVICE_AUTHORITY",
       "managedidentities.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption>()) {
     options.set<

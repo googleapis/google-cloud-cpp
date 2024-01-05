@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ReachabilityServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_REACHABILITY_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_REACHABILITY_SERVICE_AUTHORITY",
       "networkmanagement.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options
            .has<networkmanagement_v1::ReachabilityServiceRetryPolicyOption>()) {
     options.set<networkmanagement_v1::ReachabilityServiceRetryPolicyOption>(

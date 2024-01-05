@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ServiceAttachmentsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_ATTACHMENTS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_SERVICE_ATTACHMENTS_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_service_attachments_v1::
                        ServiceAttachmentsRetryPolicyOption>()) {
     options.set<

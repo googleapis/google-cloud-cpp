@@ -35,12 +35,11 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DatasetServiceDefaultOptions(std::string const& location,
                                      Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DATASET_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_DATASET_SERVICE_AUTHORITY",
       absl::StrCat(location, "-", "aiplatform.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<aiplatform_v1::DatasetServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::DatasetServiceRetryPolicyOption>(
         aiplatform_v1::DatasetServiceLimitedTimeRetryPolicy(

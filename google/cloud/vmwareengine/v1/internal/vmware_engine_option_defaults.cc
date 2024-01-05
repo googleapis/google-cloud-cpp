@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options VmwareEngineDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_VMWARE_ENGINE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_VMWARE_ENGINE_AUTHORITY",
       "vmwareengine.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<vmwareengine_v1::VmwareEngineRetryPolicyOption>()) {
     options.set<vmwareengine_v1::VmwareEngineRetryPolicyOption>(
         vmwareengine_v1::VmwareEngineLimitedTimeRetryPolicy(

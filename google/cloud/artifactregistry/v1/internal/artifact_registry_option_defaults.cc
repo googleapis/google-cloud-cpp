@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ArtifactRegistryDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ARTIFACT_REGISTRY_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_ARTIFACT_REGISTRY_AUTHORITY",
       "artifactregistry.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()) {
     options.set<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>(
         artifactregistry_v1::ArtifactRegistryLimitedTimeRetryPolicy(

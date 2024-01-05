@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ConnectorsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CONNECTORS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CONNECTORS_AUTHORITY", "connectors.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<connectors_v1::ConnectorsRetryPolicyOption>()) {
     options.set<connectors_v1::ConnectorsRetryPolicyOption>(
         connectors_v1::ConnectorsLimitedTimeRetryPolicy(

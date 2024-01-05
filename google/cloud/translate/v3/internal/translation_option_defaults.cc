@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options TranslationServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TRANSLATION_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_TRANSLATION_SERVICE_AUTHORITY",
       "translate.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<translate_v3::TranslationServiceRetryPolicyOption>()) {
     options.set<translate_v3::TranslationServiceRetryPolicyOption>(
         translate_v3::TranslationServiceLimitedTimeRetryPolicy(

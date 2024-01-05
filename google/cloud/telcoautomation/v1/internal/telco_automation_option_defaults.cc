@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options TelcoAutomationDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TELCO_AUTOMATION_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_TELCO_AUTOMATION_AUTHORITY",
       "telcoautomation.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<telcoautomation_v1::TelcoAutomationRetryPolicyOption>()) {
     options.set<telcoautomation_v1::TelcoAutomationRetryPolicyOption>(
         telcoautomation_v1::TelcoAutomationLimitedTimeRetryPolicy(

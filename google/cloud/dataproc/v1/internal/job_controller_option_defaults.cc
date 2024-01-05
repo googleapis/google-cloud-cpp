@@ -35,13 +35,12 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options JobControllerDefaultOptions(std::string const& location,
                                     Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_JOB_CONTROLLER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_JOB_CONTROLLER_AUTHORITY",
       absl::StrCat(location, location.empty() ? "" : "-",
                    "dataproc.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataproc_v1::JobControllerRetryPolicyOption>()) {
     options.set<dataproc_v1::JobControllerRetryPolicyOption>(
         dataproc_v1::JobControllerLimitedTimeRetryPolicy(

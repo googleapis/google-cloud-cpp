@@ -33,13 +33,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options VideoIntelligenceServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_VIDEO_INTELLIGENCE_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_VIDEO_INTELLIGENCE_SERVICE_AUTHORITY",
       "videointelligence.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption>()) {
     options.set<

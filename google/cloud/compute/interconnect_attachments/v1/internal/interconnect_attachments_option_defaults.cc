@@ -34,12 +34,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options InterconnectAttachmentsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_INTERCONNECT_ATTACHMENTS_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_INTERCONNECT_ATTACHMENTS_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_interconnect_attachments_v1::
                        InterconnectAttachmentsRetryPolicyOption>()) {
     options.set<compute_interconnect_attachments_v1::

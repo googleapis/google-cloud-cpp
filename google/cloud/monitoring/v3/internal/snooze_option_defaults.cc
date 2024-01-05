@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options SnoozeServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SNOOZE_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_SNOOZE_SERVICE_AUTHORITY", "monitoring.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<monitoring_v3::SnoozeServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::SnoozeServiceRetryPolicyOption>(
         monitoring_v3::SnoozeServiceLimitedTimeRetryPolicy(

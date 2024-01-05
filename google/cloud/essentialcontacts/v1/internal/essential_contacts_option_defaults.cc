@@ -33,13 +33,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options EssentialContactsServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_ESSENTIAL_CONTACTS_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_ESSENTIAL_CONTACTS_SERVICE_AUTHORITY",
       "essentialcontacts.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           essentialcontacts_v1::EssentialContactsServiceRetryPolicyOption>()) {
     options.set<

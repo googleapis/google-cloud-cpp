@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options TpuDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TPU_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_TPU_AUTHORITY", "tpu.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<tpu_v1::TpuRetryPolicyOption>()) {
     options.set<tpu_v1::TpuRetryPolicyOption>(
         tpu_v1::TpuLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());

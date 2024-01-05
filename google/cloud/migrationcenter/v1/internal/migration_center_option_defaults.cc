@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options MigrationCenterDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_MIGRATION_CENTER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_MIGRATION_CENTER_AUTHORITY",
       "migrationcenter.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<migrationcenter_v1::MigrationCenterRetryPolicyOption>()) {
     options.set<migrationcenter_v1::MigrationCenterRetryPolicyOption>(
         migrationcenter_v1::MigrationCenterLimitedTimeRetryPolicy(

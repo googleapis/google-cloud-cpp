@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CloudShellServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_SHELL_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CLOUD_SHELL_SERVICE_AUTHORITY",
       "cloudshell.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<shell_v1::CloudShellServiceRetryPolicyOption>()) {
     options.set<shell_v1::CloudShellServiceRetryPolicyOption>(
         shell_v1::CloudShellServiceLimitedTimeRetryPolicy(

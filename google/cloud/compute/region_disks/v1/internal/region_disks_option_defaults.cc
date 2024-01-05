@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options RegionDisksDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_REGION_DISKS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_REGION_DISKS_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_region_disks_v1::RegionDisksRetryPolicyOption>()) {
     options.set<compute_region_disks_v1::RegionDisksRetryPolicyOption>(
         compute_region_disks_v1::RegionDisksLimitedTimeRetryPolicy(

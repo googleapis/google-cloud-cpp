@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options AddressesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ADDRESSES_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_ADDRESSES_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_addresses_v1::AddressesRetryPolicyOption>()) {
     options.set<compute_addresses_v1::AddressesRetryPolicyOption>(
         compute_addresses_v1::AddressesLimitedTimeRetryPolicy(

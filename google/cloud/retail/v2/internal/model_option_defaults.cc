@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ModelServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_MODEL_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_MODEL_SERVICE_AUTHORITY", "retail.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<retail_v2::ModelServiceRetryPolicyOption>()) {
     options.set<retail_v2::ModelServiceRetryPolicyOption>(
         retail_v2::ModelServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))

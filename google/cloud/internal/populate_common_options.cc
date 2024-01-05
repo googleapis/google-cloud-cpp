@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/service_endpoint.h"
@@ -50,6 +51,7 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
     auto e = GetEnv(emulator_env_var.c_str());
     if (e && !e->empty()) {
       opts.set<EndpointOption>(*std::move(e));
+      opts.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
     }
   }
   if (!opts.has<EndpointOption>()) {

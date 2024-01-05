@@ -35,12 +35,11 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options VizierServiceDefaultOptions(std::string const& location,
                                     Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_VIZIER_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_VIZIER_SERVICE_AUTHORITY",
       absl::StrCat(location, "-", "aiplatform.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<aiplatform_v1::VizierServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::VizierServiceRetryPolicyOption>(
         aiplatform_v1::VizierServiceLimitedTimeRetryPolicy(

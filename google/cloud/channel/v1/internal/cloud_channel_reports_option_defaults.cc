@@ -33,13 +33,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CloudChannelReportsServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_REPORTS_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_REPORTS_SERVICE_AUTHORITY",
       "cloudchannel.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<channel_v1::CloudChannelReportsServiceRetryPolicyOption>()) {
     options.set<channel_v1::CloudChannelReportsServiceRetryPolicyOption>(
         channel_v1::CloudChannelReportsServiceLimitedTimeRetryPolicy(

@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options EventServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_EVENT_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_EVENT_SERVICE_AUTHORITY", "jobs.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<talent_v4::EventServiceRetryPolicyOption>()) {
     options.set<talent_v4::EventServiceRetryPolicyOption>(
         talent_v4::EventServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))

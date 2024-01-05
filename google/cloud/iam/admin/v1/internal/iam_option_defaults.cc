@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options IAMDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_IAM_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_IAM_AUTHORITY", "iam.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<iam_admin_v1::IAMRetryPolicyOption>()) {
     options.set<iam_admin_v1::IAMRetryPolicyOption>(
         iam_admin_v1::IAMLimitedTimeRetryPolicy(std::chrono::minutes(30))

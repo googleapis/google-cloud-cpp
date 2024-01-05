@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options IamCheckerDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_IAM_CHECKER_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_IAM_CHECKER_AUTHORITY",
       "policytroubleshooter.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<policytroubleshooter_v1::IamCheckerRetryPolicyOption>()) {
     options.set<policytroubleshooter_v1::IamCheckerRetryPolicyOption>(
         policytroubleshooter_v1::IamCheckerLimitedTimeRetryPolicy(

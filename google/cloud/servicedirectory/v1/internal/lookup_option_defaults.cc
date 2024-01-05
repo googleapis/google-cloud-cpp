@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options LookupServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_LOOKUP_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_LOOKUP_SERVICE_AUTHORITY",
       "servicedirectory.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<servicedirectory_v1::LookupServiceRetryPolicyOption>()) {
     options.set<servicedirectory_v1::LookupServiceRetryPolicyOption>(
         servicedirectory_v1::LookupServiceLimitedTimeRetryPolicy(

@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options AuthorizedCertificatesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_AUTHORIZED_CERTIFICATES_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_AUTHORIZED_CERTIFICATES_AUTHORITY",
       "appengine.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<appengine_v1::AuthorizedCertificatesRetryPolicyOption>()) {
     options.set<appengine_v1::AuthorizedCertificatesRetryPolicyOption>(
         appengine_v1::AuthorizedCertificatesLimitedTimeRetryPolicy(

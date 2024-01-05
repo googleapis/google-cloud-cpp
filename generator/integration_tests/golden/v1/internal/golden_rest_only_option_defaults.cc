@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options GoldenRestOnlyDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_GOLDEN_REST_ONLY_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_GOLDEN_REST_ONLY_AUTHORITY",
       "goldenrestonly.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<golden_v1::GoldenRestOnlyRetryPolicyOption>()) {
     options.set<golden_v1::GoldenRestOnlyRetryPolicyOption>(
         golden_v1::GoldenRestOnlyLimitedTimeRetryPolicy(

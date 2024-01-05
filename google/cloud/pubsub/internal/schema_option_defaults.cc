@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options SchemaServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SCHEMA_SERVICE_ENDPOINT",
       "PUBSUB_EMULATOR_HOST", "GOOGLE_CLOUD_CPP_SCHEMA_SERVICE_AUTHORITY",
       "pubsub.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "PUBSUB_EMULATOR_HOST");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<pubsub::SchemaServiceRetryPolicyOption>()) {
     options.set<pubsub::SchemaServiceRetryPolicyOption>(
         pubsub::SchemaServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))

@@ -16,8 +16,10 @@
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/compiler_info.h"
+#include "google/cloud/testing_util/credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
@@ -27,6 +29,7 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::TestCredentialsVisitor;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -61,10 +64,7 @@ TEST(Options, Defaults) {
 
   EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com.");
   EXPECT_EQ(opts.get<AuthorityOption>(), "spanner.googleapis.com");
-  // In Google's testing environment `expected` can be `nullptr`, we just want
-  // to verify that both are `nullptr` or neither is `nullptr`.
-  auto const expected = grpc::GoogleDefaultCredentials();
-  EXPECT_EQ(!!opts.get<GrpcCredentialOption>(), !!expected);
+  EXPECT_TRUE(opts.has<UnifiedCredentialsOption>());
   EXPECT_EQ(opts.get<GrpcNumChannelsOption>(), 4);
   EXPECT_THAT(opts.get<TracingComponentsOption>(), IsEmpty());
   EXPECT_EQ(opts.get<GrpcTracingOptionsOption>(), TracingOptions{});
@@ -151,7 +151,11 @@ TEST(Options, SpannerEmulatorHost) {
   auto opts = spanner_internal::DefaultOptions();
   EXPECT_EQ(opts.get<EndpointOption>(), "foo.bar.baz");
   EXPECT_EQ(opts.get<AuthorityOption>(), "spanner.googleapis.com");
-  EXPECT_NE(opts.get<GrpcCredentialOption>(), nullptr);
+
+  TestCredentialsVisitor v;
+  auto const& creds = opts.get<UnifiedCredentialsOption>();
+  internal::CredentialsVisitor::dispatch(*creds, v);
+  EXPECT_EQ(v.name, "InsecureCredentialsConfig");
 }
 
 TEST(Options, RouteToLeaderFromEnvOff) {

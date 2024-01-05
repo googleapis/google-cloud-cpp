@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options StorageInsightsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_STORAGE_INSIGHTS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_STORAGE_INSIGHTS_AUTHORITY",
       "storageinsights.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<storageinsights_v1::StorageInsightsRetryPolicyOption>()) {
     options.set<storageinsights_v1::StorageInsightsRetryPolicyOption>(
         storageinsights_v1::StorageInsightsLimitedTimeRetryPolicy(

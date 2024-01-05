@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options MachineTypesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_MACHINE_TYPES_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_MACHINE_TYPES_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_machine_types_v1::MachineTypesRetryPolicyOption>()) {
     options.set<compute_machine_types_v1::MachineTypesRetryPolicyOption>(
         compute_machine_types_v1::MachineTypesLimitedTimeRetryPolicy(

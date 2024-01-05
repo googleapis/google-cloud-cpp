@@ -34,13 +34,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options AgentsDefaultOptions(std::string const& location, Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_AGENTS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_AGENTS_AUTHORITY",
       absl::StrCat(location, location.empty() ? "" : "-",
                    "dialogflow.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_es::AgentsRetryPolicyOption>()) {
     options.set<dialogflow_es::AgentsRetryPolicyOption>(
         dialogflow_es::AgentsLimitedTimeRetryPolicy(std::chrono::minutes(30))

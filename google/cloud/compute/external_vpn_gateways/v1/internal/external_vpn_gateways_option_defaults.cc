@@ -34,12 +34,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ExternalVpnGatewaysDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_EXTERNAL_VPN_GATEWAYS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_EXTERNAL_VPN_GATEWAYS_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_external_vpn_gateways_v1::
                        ExternalVpnGatewaysRetryPolicyOption>()) {
     options.set<

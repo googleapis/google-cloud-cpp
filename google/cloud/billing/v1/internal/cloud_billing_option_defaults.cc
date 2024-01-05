@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CloudBillingDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_BILLING_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CLOUD_BILLING_AUTHORITY",
       "cloudbilling.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<billing_v1::CloudBillingRetryPolicyOption>()) {
     options.set<billing_v1::CloudBillingRetryPolicyOption>(
         billing_v1::CloudBillingLimitedTimeRetryPolicy(std::chrono::minutes(30))

@@ -35,13 +35,12 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SecuritySettingsServiceDefaultOptions(std::string const& location,
                                               Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SECURITY_SETTINGS_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_SECURITY_SETTINGS_SERVICE_AUTHORITY",
       absl::StrCat(location, location.empty() ? "" : "-",
                    "dialogflow.googleapis.com"));
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_cx::SecuritySettingsServiceRetryPolicyOption>()) {
     options.set<dialogflow_cx::SecuritySettingsServiceRetryPolicyOption>(
         dialogflow_cx::SecuritySettingsServiceLimitedTimeRetryPolicy(

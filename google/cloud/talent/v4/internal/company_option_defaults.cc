@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CompanyServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_COMPANY_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_COMPANY_SERVICE_AUTHORITY", "jobs.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<talent_v4::CompanyServiceRetryPolicyOption>()) {
     options.set<talent_v4::CompanyServiceRetryPolicyOption>(
         talent_v4::CompanyServiceLimitedTimeRetryPolicy(

@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options BackupForGKEDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_BACKUP_FOR_GKE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_BACKUP_FOR_GKE_AUTHORITY", "gkebackup.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<gkebackup_v1::BackupForGKERetryPolicyOption>()) {
     options.set<gkebackup_v1::BackupForGKERetryPolicyOption>(
         gkebackup_v1::BackupForGKELimitedTimeRetryPolicy(

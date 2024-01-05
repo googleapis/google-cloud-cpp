@@ -34,13 +34,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options RegionNetworkFirewallPoliciesDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_REGION_NETWORK_FIREWALL_POLICIES_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_REGION_NETWORK_FIREWALL_POLICIES_AUTHORITY",
       "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_region_network_firewall_policies_v1::
                        RegionNetworkFirewallPoliciesRetryPolicyOption>()) {
     options.set<compute_region_network_firewall_policies_v1::

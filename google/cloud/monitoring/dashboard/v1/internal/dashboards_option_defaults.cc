@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options DashboardsServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DASHBOARDS_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_DASHBOARDS_SERVICE_AUTHORITY",
       "monitoring.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption>()) {
     options.set<monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption>(

@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options IAMCredentialsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_AUTHORITY",
       "iamcredentials.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<iam_credentials_v1::IAMCredentialsRetryPolicyOption>()) {
     options.set<iam_credentials_v1::IAMCredentialsRetryPolicyOption>(
         iam_credentials_v1::IAMCredentialsLimitedTimeRetryPolicy(

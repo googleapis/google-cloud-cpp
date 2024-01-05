@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options KeyTrackingServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_KEY_TRACKING_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_KEY_TRACKING_SERVICE_AUTHORITY",
       "kmsinventory.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>()) {
     options.set<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>(
         kms_inventory_v1::KeyTrackingServiceLimitedTimeRetryPolicy(

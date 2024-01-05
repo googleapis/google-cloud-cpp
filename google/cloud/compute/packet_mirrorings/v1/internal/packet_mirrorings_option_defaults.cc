@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options PacketMirroringsDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_PACKET_MIRRORINGS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_PACKET_MIRRORINGS_AUTHORITY", "compute.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<
           compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>()) {
     options.set<

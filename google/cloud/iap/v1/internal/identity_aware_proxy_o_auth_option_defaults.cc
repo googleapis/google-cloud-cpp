@@ -33,13 +33,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options IdentityAwareProxyOAuthServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_O_AUTH_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_O_AUTH_SERVICE_AUTHORITY",
       "iap.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<iap_v1::IdentityAwareProxyOAuthServiceRetryPolicyOption>()) {
     options.set<iap_v1::IdentityAwareProxyOAuthServiceRetryPolicyOption>(
         iap_v1::IdentityAwareProxyOAuthServiceLimitedTimeRetryPolicy(

@@ -33,11 +33,10 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options FirewallDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_FIREWALL_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_FIREWALL_AUTHORITY", "appengine.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<appengine_v1::FirewallRetryPolicyOption>()) {
     options.set<appengine_v1::FirewallRetryPolicyOption>(
         appengine_v1::FirewallLimitedTimeRetryPolicy(std::chrono::minutes(30))

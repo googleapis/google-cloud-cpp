@@ -34,13 +34,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options ConsumerProcurementServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_CONSUMER_PROCUREMENT_SERVICE_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_CONSUMER_PROCUREMENT_SERVICE_AUTHORITY",
       "cloudcommerceconsumerprocurement.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<commerce_consumer_procurement_v1::
                        ConsumerProcurementServiceRetryPolicyOption>()) {
     options.set<commerce_consumer_procurement_v1::

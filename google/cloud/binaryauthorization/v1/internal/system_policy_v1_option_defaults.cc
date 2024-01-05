@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options SystemPolicyV1DefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SYSTEM_POLICY_V1_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_SYSTEM_POLICY_V1_AUTHORITY",
       "binaryauthorization.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<binaryauthorization_v1::SystemPolicyV1RetryPolicyOption>()) {
     options.set<binaryauthorization_v1::SystemPolicyV1RetryPolicyOption>(
         binaryauthorization_v1::SystemPolicyV1LimitedTimeRetryPolicy(

@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options CloudFilestoreManagerDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_FILESTORE_MANAGER_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_CLOUD_FILESTORE_MANAGER_AUTHORITY",
       "file.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()) {
     options.set<filestore_v1::CloudFilestoreManagerRetryPolicyOption>(
         filestore_v1::CloudFilestoreManagerLimitedTimeRetryPolicy(

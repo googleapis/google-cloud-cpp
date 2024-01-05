@@ -33,12 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options KeyManagementServiceDefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_KEY_MANAGEMENT_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_KEY_MANAGEMENT_SERVICE_AUTHORITY",
       "cloudkms.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<kms_v1::KeyManagementServiceRetryPolicyOption>()) {
     options.set<kms_v1::KeyManagementServiceRetryPolicyOption>(
         kms_v1::KeyManagementServiceLimitedTimeRetryPolicy(

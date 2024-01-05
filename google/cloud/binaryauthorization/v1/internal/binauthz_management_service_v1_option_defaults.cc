@@ -33,13 +33,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options BinauthzManagementServiceV1DefaultOptions(Options options) {
-  options = google::cloud::internal::PopulateCommonOptions(
+  options = internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_BINAUTHZ_MANAGEMENT_SERVICE_V1_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_BINAUTHZ_MANAGEMENT_SERVICE_V1_AUTHORITY",
       "binaryauthorization.googleapis.com");
-  options =
-      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<binaryauthorization_v1::
                        BinauthzManagementServiceV1RetryPolicyOption>()) {
     options.set<
