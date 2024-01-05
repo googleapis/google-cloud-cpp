@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DOXYGEN_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DOXYGEN_H
 
-#include "google/cloud/version.h"
 #include "google/protobuf/descriptor.h"
 #include <string>
 

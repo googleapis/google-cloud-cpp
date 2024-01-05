@@ -50,7 +50,7 @@ service Service {
   ASSERT_THAT(FindFile("test/v1/common.proto"), NotNull());
   ASSERT_TRUE(AddProtoFile("test/v1/service.proto", kProtoFile));
 
-  auto output_type_descriptor =
+  auto const* output_type_descriptor =
       FindMethod("test.v1.Service.Imported")->output_type();
   ASSERT_THAT(output_type_descriptor, NotNull());
   auto result = FormatDoxygenLink(*output_type_descriptor);

@@ -25,7 +25,6 @@
 
 using ::google::protobuf::Descriptor;
 using ::google::protobuf::MethodDescriptor;
-using ::google::protobuf::SourceLocation;
 
 namespace google {
 namespace cloud {
