@@ -15,6 +15,7 @@
 #include "generator/internal/descriptor_utils.h"
 #include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/doxygen.h"
 #include "generator/internal/format_class_comments.h"
 #include "generator/internal/format_method_comments.h"
 #include "generator/internal/http_option_utils.h"
@@ -625,17 +626,6 @@ std::string CppTypeToString(FieldDescriptor const* field) {
                  << " not handled";
   /*NOTREACHED*/
   return field->cpp_type_name();
-}
-
-// TODO(#11545): relocate this function to a separate TU.
-std::string FormatDoxygenLink(
-    google::protobuf::Descriptor const& message_type) {
-  google::protobuf::SourceLocation loc;
-  message_type.GetSourceLocation(&loc);
-  std::string output_type_proto_file_name = message_type.file()->name();
-  return absl::StrCat(
-      "@googleapis_link{", ProtoNameToCppName(message_type.full_name()), ",",
-      output_type_proto_file_name, "#L", loc.start_line + 1, "}");
 }
 
 std::string FormatMethodCommentsMethodSignature(

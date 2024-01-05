@@ -61,6 +61,8 @@ add_library(
     internal/discovery_to_proto.h
     internal/discovery_type_vertex.cc
     internal/discovery_type_vertex.h
+    internal/doxygen.cc
+    internal/doxygen.h
     internal/format_class_comments.cc
     internal/format_class_comments.h
     internal/format_method_comments.cc
@@ -233,6 +235,7 @@ function (google_cloud_cpp_generator_define_tests)
         internal/discovery_resource_test.cc
         internal/discovery_to_proto_test.cc
         internal/discovery_type_vertex_test.cc
+        internal/doxygen_test.cc
         internal/format_class_comments_test.cc
         internal/format_method_comments_test.cc
         internal/http_annotation_parser_test.cc
