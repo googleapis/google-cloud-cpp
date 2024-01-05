@@ -41,7 +41,6 @@ until grep -q "/googleapis/archive/${REV_COMMIT}\.tar" bazel/workspace0.bzl; do
     grep PiperOrigin-RevId:) && break
   REV_COMMIT=$(jq --raw-output '.parents[0].sha' <"${DOWNLOAD}")
 done
-PIPERORIGIN_REVID=
 rm -f "${DOWNLOAD}"
 
 banner "Updating Bazel/CMake dependencies"
