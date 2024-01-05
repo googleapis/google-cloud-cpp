@@ -83,6 +83,11 @@ class AsyncConnectionImpl
   StartResumableWrite(internal::ImmutableOptions current,
                       storage::internal::ResumableUploadRequest request);
 
+  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  ResumeUpload(internal::ImmutableOptions current,
+               storage_experimental::ResumableUploadRequest request,
+               storage::internal::QueryResumableUploadRequest query);
+
   future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
   QueryWriteStatus(internal::ImmutableOptions current,
                    storage::internal::QueryResumableUploadRequest request);
