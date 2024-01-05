@@ -59,44 +59,10 @@ Status MakeFastForwardError(absl::string_view upload_id,
           .WithMetadata("gcloud-cpp.storage.persisted_size", returned));
 }
 
-/**
- * Implements an `AsyncWriterConnection` that automatically resumes and resends
- * data.
- *
- * This class is used in the implementation of
- * `AsyncClient::StreamingWriteObject()`. Please see that function for the
- * motivation.
- *
- * This implementation of `AsyncWriterConnection` keeps an in-memory
- * `resend_buffer_` of type `absl::Cord`. New data is added to the end of the
- * Cord. Flushed data is removed from the front of the Cord.
- *
- * Applications threads add data by calling `Write()` and `Finalize()`.
- *
- * The buffer is drained by an asynchronous loop running in background threads.
- * This loop starts (if needed) when new data is appended to the
- * `resend_buffer_`. If the buffer is neither full nor approaching fullness
- * the loop calls `impl_->Write()` to upload data to the service.
- *
- * When the application finalizes an upload the loop calls `impl_->Finalize()`
- * and sends any previously buffered data as well as the new data.
- *
- * If the buffer is getting full, the loop uses `impl_->Flush()` instead of
- * `impl_->Write()` to upload data, and it also queries the status of the upload
- * after each `impl_->Flush()` call.
- *
- * If any of these operations fail the loop resumes the upload using a factory
- * function to create new `AsyncWriterConnection` instances. This class assumes
- * that the factory function implements the retry loop.
- *
- * If the factory function returns an error the loop ends.
- *
- * The loop also ends if there are no more bytes to send in the resend buffer.
- */
-class AsyncWriterConnectionBuffered
-    : public storage_experimental::AsyncWriterConnection {
+class AsyncWriterConnectionBufferedState
+    : public std::enable_shared_from_this<AsyncWriterConnectionBufferedState> {
  public:
-  explicit AsyncWriterConnectionBuffered(
+  AsyncWriterConnectionBufferedState(
       WriterConnectionFactory factory,
       std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
       std::size_t buffer_size_lwm, std::size_t buffer_size_hwm)
@@ -104,10 +70,11 @@ class AsyncWriterConnectionBuffered
         buffer_size_lwm_(buffer_size_lwm),
         buffer_size_hwm_(buffer_size_hwm),
         impl_(std::move(impl)) {
+    finalized_future_ = finalized_.get_future();
     auto state = impl_->PersistedState();
     if (absl::holds_alternative<storage::ObjectMetadata>(state)) {
-      finalized_.set_value(
-          absl::get<storage::ObjectMetadata>(std::move(state)));
+      SetFinalized(std::unique_lock<std::mutex>(mu_),
+                   absl::get<storage::ObjectMetadata>(std::move(state)));
       cancelled_ = true;
       resume_status_ = internal::CancelledError("upload already finalized",
                                                 GCP_ERROR_INFO());
@@ -116,7 +83,7 @@ class AsyncWriterConnectionBuffered
     buffer_offset_ = absl::get<std::int64_t>(state);
   }
 
-  void Cancel() override {
+  void Cancel() {
     std::unique_lock<std::mutex> lk(mu_);
     cancelled_ = true;
     auto impl = Impl(lk);
@@ -124,43 +91,46 @@ class AsyncWriterConnectionBuffered
     return impl->Cancel();
   }
 
-  std::string UploadId() const override {
+  std::string UploadId() const {
     return UploadId(std::unique_lock<std::mutex>(mu_));
   }
 
-  absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState()
-      const override {
+  absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState() const {
     return Impl(std::unique_lock<std::mutex>(mu_))->PersistedState();
   }
 
-  future<Status> Write(storage_experimental::WritePayload p) override {
+  future<Status> Write(storage_experimental::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     return HandleNewData(std::move(lk));
   }
 
   future<StatusOr<storage::ObjectMetadata>> Finalize(
-      storage_experimental::WritePayload p) override {
+      storage_experimental::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
     HandleNewData(std::move(lk));
-    return finalized_.get_future();
+    return std::move(finalized_future_);
   }
 
-  future<Status> Flush(storage_experimental::WritePayload p) override {
-    return Write(std::move(p));
+  future<Status> Flush(storage_experimental::WritePayload const& p) {
+    return Write(p);
   }
 
-  future<StatusOr<std::int64_t>> Query() override {
+  future<StatusOr<std::int64_t>> Query() {
     return Impl(std::unique_lock<std::mutex>(mu_))->Query();
   }
 
-  RpcMetadata GetRequestMetadata() override {
+  RpcMetadata GetRequestMetadata() {
     return Impl(std::unique_lock<std::mutex>(mu_))->GetRequestMetadata();
   }
 
  private:
+  std::weak_ptr<AsyncWriterConnectionBufferedState> WeakFromThis() {
+    return shared_from_this();
+  }
+
   // Cannot use `std::function<>` because we need to capture a move-only
   // `promise<Status>`. Cannot use `absl::AnyInvocable<>` because we need to
   // support versions of Abseil that lack such a class.
@@ -213,16 +183,14 @@ class AsyncWriterConnectionBuffered
     auto impl = Impl(lk);
     lk.unlock();
     (void)impl->Finalize(WritePayloadImpl::Make(std::move(payload)))
-        .then([this](auto f) { OnFinalize(f.get()); });
+        .then([w = WeakFromThis()](auto f) {
+          if (auto self = w.lock()) return self->OnFinalize(f.get());
+        });
   }
 
   void OnFinalize(StatusOr<storage::ObjectMetadata> result) {
     if (!result) return Resume(std::move(result).status());
-    finalized_.set_value(std::move(result));
-    resend_buffer_.Clear();
-    writing_ = false;
-    finalize_ = false;
-    flush_ = false;
+    SetFinalized(std::unique_lock<std::mutex>(mu_), std::move(result));
   }
 
   void FlushStep(std::unique_lock<std::mutex> lk, absl::Cord payload) {
@@ -230,7 +198,9 @@ class AsyncWriterConnectionBuffered
     lk.unlock();
     auto const size = payload.size();
     (void)impl->Flush(WritePayloadImpl::Make(std::move(payload)))
-        .then([this, size](auto f) { OnFlush(f.get(), size); });
+        .then([size, w = WeakFromThis()](auto f) {
+          if (auto self = w.lock()) return self->OnFlush(f.get(), size);
+        });
   }
 
   void OnFlush(Status result, std::size_t write_size) {
@@ -239,7 +209,9 @@ class AsyncWriterConnectionBuffered
     write_offset_ += write_size;
     auto impl = Impl(lk);
     lk.unlock();
-    impl->Query().then([this](auto f) { OnQuery(f.get()); });
+    impl->Query().then([w = WeakFromThis()](auto f) {
+      if (auto self = w.lock()) return self->OnQuery(f.get());
+    });
   }
 
   void OnQuery(StatusOr<std::int64_t> persisted_size) {
@@ -290,7 +262,9 @@ class AsyncWriterConnectionBuffered
     lk.unlock();
     auto const size = payload.size();
     (void)impl->Write(WritePayloadImpl::Make(std::move(payload)))
-        .then([this, size](auto f) { OnWrite(f.get(), size); });
+        .then([size, w = WeakFromThis()](auto f) {
+          if (auto self = w.lock()) return self->OnWrite(f.get(), size);
+        });
   }
 
   void OnWrite(Status result, std::size_t write_size) {
@@ -304,7 +278,9 @@ class AsyncWriterConnectionBuffered
     if (!s.ok() && cancelled_) {
       return SetError(std::unique_lock<std::mutex>(mu_), std::move(s));
     }
-    factory_().then([this](auto f) { OnResume(f.get()); });
+    factory_().then([w = WeakFromThis()](auto f) {
+      if (auto self = w.lock()) return self->OnResume(f.get());
+    });
   }
 
   void OnResume(
@@ -315,23 +291,43 @@ class AsyncWriterConnectionBuffered
     impl_ = *std::move(impl);
     auto state = impl_->PersistedState();
     if (absl::holds_alternative<storage::ObjectMetadata>(state)) {
-      finalized_.set_value(
-          absl::get<storage::ObjectMetadata>(std::move(state)));
-      auto handlers = ClearHandlers(lk);
-      lk.unlock();
-      for (auto& h : handlers) h->Execute(Status{});
-      return;
+      return SetFinalized(std::move(lk),
+                          absl::get<storage::ObjectMetadata>(std::move(state)));
     }
     OnQuery(std::move(lk), absl::get<std::int64_t>(state));
+  }
+
+  void SetFinalized(std::unique_lock<std::mutex> lk,
+                    StatusOr<storage::ObjectMetadata> r) {
+    if (!r) return SetError(std::move(lk), std::move(r).status());
+    SetFinalized(std::move(lk), *std::move(r));
+  }
+
+  void SetFinalized(std::unique_lock<std::mutex> lk,
+                    storage::ObjectMetadata object) {
+    resend_buffer_.Clear();
+    writing_ = false;
+    finalize_ = false;
+    flush_ = false;
+    auto handlers = ClearHandlers(lk);
+    promise<StatusOr<storage::ObjectMetadata>> finalized{null_promise_t{}};
+    finalized.swap(finalized_);
+    lk.unlock();
+    for (auto& h : handlers) h->Execute(Status{});
+    finalized.set_value(std::move(object));
   }
 
   void SetError(std::unique_lock<std::mutex> lk, Status status) {
     resume_status_ = status;
     writing_ = false;
+    finalize_ = false;
+    flush_ = false;
     auto handlers = ClearHandlers(lk);
+    promise<StatusOr<storage::ObjectMetadata>> finalized{null_promise_t{}};
+    finalized.swap(finalized_);
     lk.unlock();
     for (auto& h : handlers) h->Execute(status);
-    finalized_.set_value(std::move(status));
+    finalized.set_value(std::move(status));
   }
 
   std::shared_ptr<storage_experimental::AsyncWriterConnection> Impl(
@@ -372,6 +368,10 @@ class AsyncWriterConnectionBuffered
   // made.
   promise<StatusOr<storage::ObjectMetadata>> finalized_;
 
+  // Retrieve the future in the constructor, as some operations reset
+  // finalized_.
+  future<StatusOr<storage::ObjectMetadata>> finalized_future_;
+
   // The resend buffer. If there is an error, this will have all the data since
   // the last persisted byte and will be resent.
   //
@@ -409,6 +409,83 @@ class AsyncWriterConnectionBuffered
 
   // True if cancelled, in which case any RPC failures are final.
   bool cancelled_ = false;
+};
+
+/**
+ * Implements an `AsyncWriterConnection` that automatically resumes and resends
+ * data.
+ *
+ * This class is used in the implementation of
+ * `AsyncClient::StartBufferedUpload()`. Please see that function for the
+ * motivation.
+ *
+ * This implementation of `AsyncWriterConnection` keeps an in-memory
+ * `resend_buffer_` of type `absl::Cord`. New data is added to the end of the
+ * Cord. Flushed data is removed from the front of the Cord.
+ *
+ * Applications threads add data by calling `Write()` and `Finalize()`.
+ *
+ * The buffer is drained by an asynchronous loop running in background threads.
+ * This loop starts (if needed) when new data is appended to the
+ * `resend_buffer_`. If the buffer is neither full nor approaching fullness
+ * the loop calls `impl_->Write()` to upload data to the service.
+ *
+ * When the application finalizes an upload the loop calls `impl_->Finalize()`
+ * and sends any previously buffered data as well as the new data.
+ *
+ * If the buffer is getting full, the loop uses `impl_->Flush()` instead of
+ * `impl_->Write()` to upload data, and it also queries the status of the upload
+ * after each `impl_->Flush()` call.
+ *
+ * If any of these operations fail the loop resumes the upload using a factory
+ * function to create new `AsyncWriterConnection` instances. This class assumes
+ * that the factory function implements the retry loop.
+ *
+ * If the factory function returns an error the loop ends.
+ *
+ * The loop also ends if there are no more bytes to send in the resend buffer.
+ */
+class AsyncWriterConnectionBuffered
+    : public storage_experimental::AsyncWriterConnection {
+ public:
+  explicit AsyncWriterConnectionBuffered(
+      WriterConnectionFactory factory,
+      std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
+      std::size_t buffer_size_lwm, std::size_t buffer_size_hwm)
+      : state_(std::make_shared<AsyncWriterConnectionBufferedState>(
+            std::move(factory), std::move(impl), buffer_size_lwm,
+            buffer_size_hwm)) {}
+
+  void Cancel() override { return state_->Cancel(); }
+
+  std::string UploadId() const override { return state_->UploadId(); }
+
+  absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState()
+      const override {
+    return state_->PersistedState();
+  }
+
+  future<Status> Write(storage_experimental::WritePayload p) override {
+    return state_->Write(std::move(p));
+  }
+
+  future<StatusOr<storage::ObjectMetadata>> Finalize(
+      storage_experimental::WritePayload p) override {
+    return state_->Finalize(std::move(p));
+  }
+
+  future<Status> Flush(storage_experimental::WritePayload p) override {
+    return Write(std::move(p));
+  }
+
+  future<StatusOr<std::int64_t>> Query() override { return state_->Query(); }
+
+  RpcMetadata GetRequestMetadata() override {
+    return state_->GetRequestMetadata();
+  }
+
+ private:
+  std::shared_ptr<AsyncWriterConnectionBufferedState> state_;
 };
 
 }  // namespace
