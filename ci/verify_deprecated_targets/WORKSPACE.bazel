@@ -24,24 +24,26 @@ local_repository(
     path = "../../",
 )
 
-# Load indirect dependencies due to
-#     https://github.com/bazelbuild/bazel/issues/1943
-load("@google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+load("@google_cloud_cpp//bazel:workspace0.bzl", "gl_cpp_workspace0")
 
-google_cloud_cpp_deps()
+gl_cpp_workspace0()
 
-load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
+load("@google_cloud_cpp//bazel:workspace1.bzl", "gl_cpp_workspace1")
 
-switched_rules_by_language(
-    name = "com_google_googleapis_imports",
-    cc = True,
-    grpc = True,
-)
+gl_cpp_workspace1()
 
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+load("@google_cloud_cpp//bazel:workspace2.bzl", "gl_cpp_workspace2")
 
-grpc_deps()
+gl_cpp_workspace2()
 
-load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
+load("@google_cloud_cpp//bazel:workspace3.bzl", "gl_cpp_workspace3")
 
-grpc_extra_deps()
+gl_cpp_workspace3()
+
+load("@google_cloud_cpp//bazel:workspace4.bzl", "gl_cpp_workspace4")
+
+gl_cpp_workspace4()
+
+load("@google_cloud_cpp//bazel:workspace5.bzl", "gl_cpp_workspace5")
+
+gl_cpp_workspace5()
