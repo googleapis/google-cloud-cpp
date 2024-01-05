@@ -184,6 +184,12 @@ template <typename... Args>
       ::testing::IsSupersetOf({matchers...}));
 }
 
+MATCHER(SpanHasNoAttributes, " has no attributes") {
+  auto const actual = arg->GetAttributes().size() == 0;
+  *result_listener << "has no attributes: " << (actual ? "true" : "false");
+  return actual;
+}
+
 template <typename T>
 ::testing::Matcher<
     std::pair<std::string, opentelemetry::sdk::common::OwnedAttributeValue>>
