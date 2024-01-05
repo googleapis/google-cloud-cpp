@@ -25,7 +25,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /**
- * Default values for REST options, given @p opts.
+ * Default values for gRPC options, given @p opts.
  *
  * @param opts the current options. Any values already present in this
  *     collection are not modified.
