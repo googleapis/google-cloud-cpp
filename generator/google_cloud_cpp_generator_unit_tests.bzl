@@ -25,6 +25,7 @@ google_cloud_cpp_generator_unit_tests = [
     "internal/discovery_resource_test.cc",
     "internal/discovery_to_proto_test.cc",
     "internal/discovery_type_vertex_test.cc",
+    "internal/doxygen_test.cc",
     "internal/format_class_comments_test.cc",
     "internal/format_method_comments_test.cc",
     "internal/http_annotation_parser_test.cc",
