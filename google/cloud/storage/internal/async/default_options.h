@@ -12,35 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITER_CONNECTION_BUFFERED_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITER_CONNECTION_BUFFERED_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_DEFAULT_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_DEFAULT_OPTIONS_H
 
-#include "google/cloud/storage/async/writer_connection.h"
-#include "google/cloud/future.h"
 #include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <cstddef>
-#include <functional>
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using WriterConnectionFactory = std::function<future<
-    StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>()>;
-
-std::unique_ptr<storage_experimental::AsyncWriterConnection>
-MakeWriterConnectionBuffered(
-    WriterConnectionFactory factory,
-    std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
-    Options const& options);
+Options DefaultOptionsAsync(Options opts);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITER_CONNECTION_BUFFERED_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_DEFAULT_OPTIONS_H

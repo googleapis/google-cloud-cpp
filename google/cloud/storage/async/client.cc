@@ -15,6 +15,7 @@
 #include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/connection_tracing.h"
+#include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/grpc_options.h"
 #include <utility>
@@ -27,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using ::google::cloud::internal::MakeBackgroundThreadsFactory;
 
 AsyncClient::AsyncClient(Options options) {
-  options = storage_internal::DefaultOptionsGrpc(std::move(options));
+  options = storage_internal::DefaultOptionsAsync(std::move(options));
   background_ = MakeBackgroundThreadsFactory(options)();
   connection_ = storage_internal::MakeTracingAsyncConnection(
       storage_internal::MakeAsyncConnection(background_->cq(),

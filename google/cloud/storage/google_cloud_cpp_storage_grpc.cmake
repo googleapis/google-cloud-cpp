@@ -60,6 +60,8 @@ else ()
         internal/async/connection_impl.h
         internal/async/connection_tracing.cc
         internal/async/connection_tracing.h
+        internal/async/default_options.cc
+        internal/async/default_options.h
         internal/async/insert_object.cc
         internal/async/insert_object.h
         internal/async/partial_upload.cc
@@ -289,6 +291,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/async/accumulate_read_object_test.cc
         internal/async/connection_impl_test.cc
         internal/async/connection_tracing_test.cc
+        internal/async/default_options_test.cc
         internal/async/insert_object_test.cc
         internal/async/partial_upload_test.cc
         internal/async/read_payload_impl_test.cc
