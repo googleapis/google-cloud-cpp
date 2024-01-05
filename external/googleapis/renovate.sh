@@ -29,6 +29,8 @@ REPO="googleapis/googleapis"
 BRANCH="master"
 COMMIT=$(curl -fsSL -H "Accept: application/vnd.github.VERSION.sha" \
   "https://api.github.com/repos/${REPO}/commits/${BRANCH}")
+PIPERORIGIN_REVID=$(gh api "repos/${REPO}/commits/${COMMIT}" |
+  jq --raw-output .commit.message | grep PiperOrigin-RevId:)
 DOWNLOAD="$(mktemp)"
 curl -fsSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" -o "${DOWNLOAD}"
 gsutil -q cp "${DOWNLOAD}" "gs://cloud-cpp-community-archive/com_google_googleapis/${COMMIT}.tar.gz"
@@ -70,6 +72,7 @@ ci/cloudbuild/build.sh --docker --trigger=generate-libraries-pr || true
 
 banner "Creating commits"
 git commit -m"chore: update googleapis SHA circa $(date +%Y-%m-%d)" \
+  -m "${PIPERORIGIN_REVID}" \
   bazel/google_cloud_cpp_deps.bzl cmake/GoogleapisConfig.cmake
 if ! git diff --quiet external/googleapis/protodeps \
   external/googleapis/protolists; then
