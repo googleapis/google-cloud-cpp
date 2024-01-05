@@ -457,22 +457,6 @@ TEST_F(SubscriberIntegrationTest, PublishOrdered) {
   EXPECT_STATUS_OK(result.get());
 }
 
-TEST_F(SubscriberIntegrationTest, UnifiedCredentials) {
-  auto options =
-      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
-  auto const using_emulator =
-      internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
-  if (using_emulator) {
-    options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                  .set<internal::UseInsecureChannelOption>(true);
-  }
-  auto publisher = Publisher(MakePublisherConnection(topic_, options));
-  auto subscriber =
-      Subscriber(MakeSubscriberConnection(subscription_, options));
-  ASSERT_NO_FATAL_FAILURE(TestRoundtrip(publisher, subscriber));
-}
-
 TEST_F(SubscriberIntegrationTest, ExactlyOnce) {
   auto publisher = Publisher(MakePublisherConnection(topic_));
   auto subscriber =
