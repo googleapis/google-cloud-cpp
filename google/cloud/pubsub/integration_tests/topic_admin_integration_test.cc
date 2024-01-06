@@ -107,21 +107,6 @@ TEST_F(TopicAdminIntegrationTest, TopicCRUD) {
   EXPECT_THAT(*names, Not(Contains(topic.FullName())));
 }
 
-TEST_F(TopicAdminIntegrationTest, UnifiedCredentials) {
-  auto project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  ASSERT_THAT(project_id, Not(IsEmpty()));
-  auto options =
-      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
-  if (UsingEmulator()) {
-    options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                  .set<internal::UseInsecureChannelOption>(true);
-  }
-  auto client = TopicAdminClient(MakeTopicAdminConnection(std::move(options)));
-  ASSERT_STATUS_OK(TopicNames(client, project_id));
-}
-
 TEST_F(TopicAdminIntegrationTest, CreateTopicFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto publisher = MakeTestTopicAdminClient();

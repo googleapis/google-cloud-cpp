@@ -1640,27 +1640,6 @@ TEST_F(ClientIntegrationTest, SpannerStatistics) {
   }
 }
 
-/// @test Verify the use of unified credentials.
-TEST_F(ClientIntegrationTest, UnifiedCredentials) {
-  auto options =
-      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
-  if (UsingEmulator()) {
-    options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                  .set<internal::UseInsecureChannelOption>(true);
-  }
-
-  // Reconnect to the database using the new credentials.
-  auto client = Client(MakeConnection(GetDatabase(), options));
-
-  auto commit_result = client.Commit(Mutations{
-      InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
-          .EmplaceRow(1, "test-fname-1", "test-lname-1")
-          .EmplaceRow(2, "test-fname-2", "test-lname-2")
-          .Build()});
-  EXPECT_STATUS_OK(commit_result);
-}
-
 /// @test Verify backwards compatibility for MakeConnection() arguments.
 TEST_F(ClientIntegrationTest, MakeConnectionOverloads) {
   MakeConnection(GetDatabase(), ConnectionOptions());

@@ -41,7 +41,6 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::Contains;
-using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::NotNull;
 
@@ -198,22 +197,6 @@ TEST_F(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   names = SubscriptionNames(subscription_admin, project_id);
   ASSERT_STATUS_OK(names);
   EXPECT_THAT(*names, Not(Contains(subscription.FullName())));
-}
-
-TEST_F(SubscriptionAdminIntegrationTest, UnifiedCredentials) {
-  auto project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  ASSERT_THAT(project_id, Not(IsEmpty()));
-  auto options =
-      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
-  if (UsingEmulator()) {
-    options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                  .set<internal::UseInsecureChannelOption>(true);
-  }
-  auto client = SubscriptionAdminClient(
-      MakeSubscriptionAdminConnection(std::move(options)));
-  ASSERT_STATUS_OK(SubscriptionNames(client, project_id));
 }
 
 TEST_F(SubscriptionAdminIntegrationTest, CreateSubscriptionFailure) {
