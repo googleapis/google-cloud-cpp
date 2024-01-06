@@ -33,6 +33,14 @@ DOWNLOAD="$(mktemp)"
 curl -fsSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" -o "${DOWNLOAD}"
 gsutil -q cp "${DOWNLOAD}" "gs://cloud-cpp-community-archive/com_google_googleapis/${COMMIT}.tar.gz"
 SHA256=$(sha256sum "${DOWNLOAD}" | sed "s/ .*//")
+PIPERORIGIN_REVID=
+REV_COMMIT="${COMMIT}"
+until grep -q "/googleapis/archive/${REV_COMMIT}\.tar" bazel/workspace0.bzl; do
+  gh api "repos/${REPO}/commits/${REV_COMMIT}" >"${DOWNLOAD}"
+  PIPERORIGIN_REVID=$(jq --raw-output .commit.message <"${DOWNLOAD}" |
+    grep PiperOrigin-RevId:) && break
+  REV_COMMIT=$(jq --raw-output '.parents[0].sha' <"${DOWNLOAD}")
+done
 rm -f "${DOWNLOAD}"
 
 banner "Updating Bazel/CMake dependencies"
@@ -70,6 +78,7 @@ ci/cloudbuild/build.sh --docker --trigger=generate-libraries-pr || true
 
 banner "Creating commits"
 git commit -m"chore: update googleapis SHA circa $(date +%Y-%m-%d)" \
+  ${PIPERORIGIN_REVID:+-m "${PIPERORIGIN_REVID}"} \
   bazel/google_cloud_cpp_deps.bzl cmake/GoogleapisConfig.cmake
 if ! git diff --quiet external/googleapis/protodeps \
   external/googleapis/protolists; then
