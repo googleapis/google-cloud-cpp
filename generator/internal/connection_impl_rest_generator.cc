@@ -141,17 +141,24 @@ Status ConnectionImplRestGenerator::GenerateCc() {
 )""");
 
   auto const needs_async_retry_loop = !async_methods().empty();
+  std::string lro_extract_include;
+  std::string lro_op_include;
+  if (HasLongrunningMethod()) {
+    lro_extract_include = "google/cloud/internal/extract_long_running_result.h";
+    if (HasGRPCLongrunningOperation()) {
+      lro_op_include =
+          "google/cloud/internal/async_rest_long_running_operation.h";
+    } else {
+      lro_op_include =
+          "google/cloud/internal/async_rest_long_running_operation_custom.h";
+    }
+  }
   CcLocalIncludes(
       {vars("connection_impl_rest_header_path"),
        vars("stub_factory_rest_header_path"), "google/cloud/common_options.h",
        "google/cloud/credentials.h", "google/cloud/rest_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
-       HasLongrunningMethod()
-           ? "google/cloud/internal/extract_long_running_result.h"
-           : "",
-       HasLongrunningMethod()
-           ? "google/cloud/internal/async_rest_long_running_operation.h"
-           : "",
+       std::move(lro_extract_include), std::move(lro_op_include),
        needs_async_retry_loop ? "google/cloud/internal/async_rest_retry_loop.h"
                               : "",
        "google/cloud/internal/rest_retry_loop.h"});
