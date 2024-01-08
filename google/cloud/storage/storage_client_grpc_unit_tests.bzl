@@ -17,10 +17,10 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 storage_client_grpc_unit_tests = [
+    "async/client_test.cc",
     "async/reader_test.cc",
     "async/token_test.cc",
     "async/writer_test.cc",
-    "async/client_test.cc",
     "grpc_plugin_test.cc",
     "internal/async/accumulate_read_object_test.cc",
     "internal/async/connection_impl_test.cc",

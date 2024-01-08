@@ -284,10 +284,10 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
     set(storage_client_grpc_unit_tests
         # cmake-format: sort
+        async/client_test.cc
         async/reader_test.cc
         async/token_test.cc
         async/writer_test.cc
-        async/client_test.cc
         grpc_plugin_test.cc
         internal/async/accumulate_read_object_test.cc
         internal/async/connection_impl_test.cc
