@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/default_pull_ack_handler.h"
-#include "google/cloud/pubsub/internal/default_pull_lease_manager.h"
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
+#include "google/cloud/pubsub/internal/pull_lease_manager_factory.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include <google/pubsub/v1/pubsub.pb.h>
@@ -26,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DefaultPullAckHandler::DefaultPullAckHandler(CompletionQueue cq,
                                              std::weak_ptr<SubscriberStub> w,
-                                             Options options,
+                                             Options const& options,
                                              pubsub::Subscription subscription,
                                              std::string ack_id,
                                              std::int32_t delivery_attempt)
@@ -35,8 +35,8 @@ DefaultPullAckHandler::DefaultPullAckHandler(CompletionQueue cq,
       subscription_(std::move(subscription)),
       ack_id_(std::move(ack_id)),
       delivery_attempt_(delivery_attempt),
-      lease_manager_(std::make_shared<DefaultPullLeaseManager>(
-          cq_, stub_, std::move(options), subscription_, ack_id_)) {}
+      lease_manager_(
+          MakePullLeaseManager(cq_, stub_, subscription_, ack_id_, options)) {}
 
 DefaultPullAckHandler::~DefaultPullAckHandler() = default;
 
