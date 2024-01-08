@@ -15,6 +15,7 @@
 #include "google/cloud/internal/async_rest_polling_loop.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/async_rest_polling_loop_impl.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
