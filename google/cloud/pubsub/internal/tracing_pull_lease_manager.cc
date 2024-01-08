@@ -85,8 +85,7 @@ class TracingPullLeaseManager : public PullLeaseManager {
   }
 
   std::shared_ptr<PullLeaseManager> child_;
-  opentelemetry::trace::SpanContext consumer_span_context_ =
-      opentelemetry::trace::SpanContext::GetInvalid();
+  opentelemetry::trace::SpanContext consumer_span_context_;
 };
 
 std::shared_ptr<PullLeaseManager> MakeTracingPullLeaseManager(
