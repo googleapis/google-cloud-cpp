@@ -36,12 +36,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TracingPullLeaseManager : public PullLeaseManager {
  public:
   explicit TracingPullLeaseManager(std::shared_ptr<PullLeaseManager> child)
-      : child_(std::move(child)) {
-    consumer_span_context_ =
+      : child_(std::move(child)),
+        consumer_span_context_(
         opentelemetry::trace::GetSpan(
             opentelemetry::context::RuntimeContext::GetCurrent())
-            ->GetContext();
-  }
+            ->GetContext()) {}
 
   void StartLeaseLoop() override { child_->StartLeaseLoop(); };
 
