@@ -19,6 +19,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/status.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/pubsub/internal/tracing_helpers.h"
 #include "opentelemetry/trace/semantic_conventions.h"
 #include "opentelemetry/trace/span.h"
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -35,7 +36,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TracingPullLeaseManager : public PullLeaseManager {
  public:
   explicit TracingPullLeaseManager(std::shared_ptr<PullLeaseManager> child)
-      : child_(std::move(child)) {}
+      : child_(std::move(child)),
+        consumer_span_context_(
+            opentelemetry::trace::GetSpan(
+                opentelemetry::context::RuntimeContext::GetCurrent())
+                ->GetContext()) {}
 
   void StartLeaseLoop() override { child_->StartLeaseLoop(); };
 
@@ -59,8 +64,9 @@ class TracingPullLeaseManager : public PullLeaseManager {
           static_cast<std::int32_t>(extension.count())},
          {"messaging.gcp_pubsub.subscription.template",
           child_->subscription().FullName()}},
-        options);
+        CreateLinks(consumer_span_context_), options);
     auto scope = internal::OTelScope(span);
+    MaybeAddLinkAttributes(*span, consumer_span_context_, "receive");
     return child_
         ->ExtendLease(std::move(stub), std::move(time_now),
                       std::move(extension))
@@ -79,6 +85,7 @@ class TracingPullLeaseManager : public PullLeaseManager {
   }
 
   std::shared_ptr<PullLeaseManager> child_;
+  opentelemetry::trace::SpanContext consumer_span_context_;
 };
 
 std::shared_ptr<PullLeaseManager> MakeTracingPullLeaseManager(

@@ -145,6 +145,57 @@ TEST(TracingPullLeaseManagerTest, ExtendAttributes) {
               "projects/test-project/subscriptions/test-subscription")))));
 }
 
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+
+using ::google::cloud::testing_util::SpanLinksSizeIs;
+
+TEST(TracingPullLeaseManagerTest, ExtendAddsLink) {
+  auto span_catcher = InstallSpanCatcher();
+  auto consumer_span = internal::MakeSpan("receive");
+  auto scope = internal::OTelScope(consumer_span);
+  auto mock = std::make_unique<MockPullLeaseManager>();
+  EXPECT_CALL(*mock, ExtendLease(_, _, _))
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  auto manager = MakeTestPullLeaseManager(std::move(mock));
+  auto stub = std::make_shared<MockSubscriberStub>();
+  consumer_span->End();
+
+  auto status = manager->ExtendLease(stub, kCurrentTime, kLeaseExtension);
+  EXPECT_STATUS_OK(status.get());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription extend"),
+                                    SpanLinksSizeIs(1))));
+}
+
+#else
+
+TEST(TracingPullLeaseManagerTest, ExtendAddsSpanIdAndTraceIdAttribute) {
+  auto span_catcher = InstallSpanCatcher();
+  auto consumer_span = internal::MakeSpan("receive");
+  auto scope = internal::OTelScope(consumer_span);
+  auto mock = std::make_unique<MockPullLeaseManager>();
+  EXPECT_CALL(*mock, ExtendLease(_, _, _))
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  auto manager = MakeTestPullLeaseManager(std::move(mock));
+  auto stub = std::make_shared<MockSubscriberStub>();
+  consumer_span->End();
+
+  auto status = manager->ExtendLease(stub, kCurrentTime, kLeaseExtension);
+  EXPECT_STATUS_OK(status.get());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(
+          SpanNamed("test-subscription extend"),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp_pubsub.receive.trace_id", _),
+              OTelAttribute<std::string>("gcp_pubsub.receive.span_id", _)))));
+}
+
+#endif
+
 TEST(TracingPullLeaseManagerTest, AckIdNoSpans) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<MockPullLeaseManager>();
