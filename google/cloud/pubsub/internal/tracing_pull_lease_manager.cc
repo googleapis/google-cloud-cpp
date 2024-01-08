@@ -38,9 +38,9 @@ class TracingPullLeaseManager : public PullLeaseManager {
   explicit TracingPullLeaseManager(std::shared_ptr<PullLeaseManager> child)
       : child_(std::move(child)),
         consumer_span_context_(
-        opentelemetry::trace::GetSpan(
-            opentelemetry::context::RuntimeContext::GetCurrent())
-            ->GetContext()) {}
+            opentelemetry::trace::GetSpan(
+                opentelemetry::context::RuntimeContext::GetCurrent())
+                ->GetContext()) {}
 
   void StartLeaseLoop() override { child_->StartLeaseLoop(); };
 
