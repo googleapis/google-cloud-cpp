@@ -483,14 +483,23 @@ class AsyncClient {
    */
   template <typename... Args>
   future<StatusOr<std::pair<AsyncWriter, AsyncToken>>> StartBufferedUpload(
-      std::string const& bucket_name, std::string const& object_name,
-      Args&&... args) {
-    (void)bucket_name;
-    (void)object_name;
+      std::string bucket_name, std::string object_name, Args&&... args) {
     auto options = SpanOptions(std::forward<Args>(args)...);
-    (void)options;
-    return make_ready_future(StatusOr<std::pair<AsyncWriter, AsyncToken>>(
-        Status(StatusCode::kUnimplemented, "TODO(#13385)")));
+    return connection_
+        ->StartBufferedUpload(
+            {ResumableUploadRequest(std::move(bucket_name),
+                                    std::move(object_name))
+                 .set_multiple_options(std::forward<Args>(args)...),
+             std::move(options)})
+        .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
+          auto impl = f.get();
+          if (!impl) return std::move(impl).status();
+          auto t = absl::holds_alternative<storage::ObjectMetadata>(
+                       (*impl)->PersistedState())
+                       ? AsyncToken()
+                       : storage_internal::MakeAsyncToken(impl->get());
+          return std::make_pair(AsyncWriter(*std::move(impl)), std::move(t));
+        });
   }
 
   /**

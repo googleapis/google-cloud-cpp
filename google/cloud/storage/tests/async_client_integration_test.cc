@@ -350,6 +350,61 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResumeFinalized) {
   EXPECT_EQ(*metadata, finalized);
 }
 
+TEST_F(AsyncClientIntegrationTest, StartBufferedUploadEmpty) {
+  if (UsingEmulator()) GTEST_SKIP();
+  auto object_name = MakeRandomObjectName();
+
+  auto client = AsyncClient();
+  auto w = client
+               .StartBufferedUpload(bucket_name(), object_name,
+                                    gcs::IfGenerationMatch(0))
+               .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->name(), object_name);
+  EXPECT_EQ(metadata->size(), 0);
+}
+
+TEST_F(AsyncClientIntegrationTest, StartBufferedUploadMultiple) {
+  if (UsingEmulator()) GTEST_SKIP();
+  auto object_name = MakeRandomObjectName();
+  // Create a small block to send over and over.
+  auto constexpr kBlockSize = 256 * 1024;
+  auto constexpr kBlockCount = 16;
+  auto const block = MakeRandomData(kBlockSize);
+
+  auto client = AsyncClient();
+  auto w = client
+               .StartBufferedUpload(bucket_name(), object_name,
+                                    gcs::IfGenerationMatch(0))
+               .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+  for (int i = 0; i != kBlockCount; ++i) {
+    auto p = writer.Write(std::move(token), WritePayload(block)).get();
+    ASSERT_STATUS_OK(p);
+    token = *std::move(p);
+  }
+
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->name(), object_name);
+  EXPECT_EQ(metadata->size(), kBlockCount * kBlockSize);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
