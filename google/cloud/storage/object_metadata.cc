@@ -26,6 +26,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::FormatRfc3339;
 
+std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r) {
+  os << "ComposeSourceObject={object_name=" << r.object_name;
+  if (r.generation) os << ", generation=" << *r.generation;
+  if (r.if_generation_match) {
+    os << ", if_generation_match=" << *r.if_generation_match;
+  }
+  return os << "}";
+}
+
 bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
   return lhs.acl_ == rhs.acl_ && lhs.bucket_ == rhs.bucket_                   //
          && lhs.cache_control_ == rhs.cache_control_                          //
