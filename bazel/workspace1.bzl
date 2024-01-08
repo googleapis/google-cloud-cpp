@@ -15,14 +15,9 @@
 """Load dependencies needed for google-cloud-cpp development / Phase 1."""
 
 load(
-    "@rules_cc//cc:repositories.bzl",
-    "rules_cc_dependencies",
+    "@build_bazel_rules_apple//apple:repositories.bzl",
+    "apple_rules_dependencies",
 )
-load(
-    "@com_google_googleapis//:repository_rules.bzl",
-    "switched_rules_by_language",
-)
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 def gl_cpp_workspace1(name = None):
     """Loads dependencies needed to use the google-cloud-cpp libraries.
@@ -34,13 +29,6 @@ def gl_cpp_workspace1(name = None):
             workspace functions.
     """
 
-    rules_cc_dependencies()
-
-    # Configure @com_google_googleapis to only compile C++ and gRPC libraries.
-    switched_rules_by_language(
-        name = "com_google_googleapis_imports",
-        cc = True,
-        grpc = True,
-    )
-
-    grpc_deps()
+    # `google-cloud-cpp` does not use these, but we need to override the
+    # rules_apple initialization in gRPC.
+    apple_rules_dependencies()
