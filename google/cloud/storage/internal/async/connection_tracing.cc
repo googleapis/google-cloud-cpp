@@ -91,6 +91,23 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
         });
   }
 
+  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  StartBufferedUpload(UploadParams p) override {
+    auto span =
+        internal::MakeSpan("storage::AsyncConnection::StartBufferedUpload");
+    internal::OTelScope scope(span);
+    return impl_->StartBufferedUpload(std::move(p))
+        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+               span = std::move(span)](auto f)
+                  -> StatusOr<std::unique_ptr<
+                      storage_experimental::AsyncWriterConnection>> {
+          auto w = f.get();
+          internal::DetachOTelContext(oc);
+          if (!w) return internal::EndSpan(*span, std::move(w).status());
+          return MakeTracingWriterConnection(span, *std::move(w));
+        });
+  }
+
   future<StatusOr<storage::ObjectMetadata>> ComposeObject(
       ComposeObjectParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::ComposeObject");
