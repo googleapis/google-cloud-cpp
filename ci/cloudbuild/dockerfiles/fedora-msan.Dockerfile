@@ -29,7 +29,7 @@ RUN pip3 install --upgrade pip
 RUN pip3 install setuptools wheel
 
 # The Cloud Pub/Sub emulator needs Java :shrug:
-RUN dnf makecache && dnf install -y java-latest-openjdk
+RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
