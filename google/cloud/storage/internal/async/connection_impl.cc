@@ -192,19 +192,7 @@ AsyncConnectionImpl::StartUnbufferedUpload(UploadParams p) {
     auto query = storage::internal::QueryResumableUploadRequest(
         p.request.GetOption<storage::UseResumableUploadSession>().value());
     p.request.impl_.ForEachOption(storage::internal::CopyCommonOptions(query));
-    auto response = QueryWriteStatus(current, std::move(query));
-    return response.then([w = WeakFromThis(), current = std::move(current),
-                          request = std::move(p.request)](auto f) mutable {
-      auto self = w.lock();
-      if (auto self = w.lock()) {
-        return self->UnbufferedUploadImpl(std::move(current),
-                                          std::move(request), f.get());
-      }
-      return make_ready_future(
-          StatusOr<
-              std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-              internal::CancelledError("Cannot lock self", GCP_ERROR_INFO())));
-    });
+    return ResumeUpload(current, std::move(p.request), query);
   }
   auto response = StartResumableWrite(current, p.request.impl_);
   return response.then([w = WeakFromThis(), current = std::move(current),
@@ -222,18 +210,19 @@ AsyncConnectionImpl::StartUnbufferedUpload(UploadParams p) {
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
-  auto async_write_object = [p, w = WeakFromThis()](
-                                std::string upload_id) mutable {
-    p.request.set_multiple_options(
-        storage::UseResumableUploadSession(std::move(upload_id)));
-    if (auto self = w.lock()) return self->StartUnbufferedUpload(p);
+  auto current = internal::MakeImmutableOptions(p.options);
+  auto async_write_object = [c = current, r = p.request, w = WeakFromThis()](
+                                std::string const& upload_id) mutable {
+    auto query = storage::internal::QueryResumableUploadRequest(upload_id);
+    r.impl_.ForEachOption(storage::internal::CopyCommonOptions(query));
+    r.set_multiple_options(storage::UseResumableUploadSession(upload_id));
+    if (auto self = w.lock()) return self->ResumeUpload(c, r, query);
     return make_ready_future(
         StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>{
             internal::CancelledError("Cannot lock self", GCP_ERROR_INFO())});
   };
-  auto current = internal::MakeImmutableOptions(p.options);
   return StartUnbufferedUpload(std::move(p))
-      .then([current,
+      .then([current = std::move(current),
              async_write_object = std::move(async_write_object)](auto f) mutable
             -> StatusOr<
                 std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
@@ -324,6 +313,24 @@ AsyncConnectionImpl::StartResumableWrite(
         return stub->AsyncStartResumableWrite(cq, std::move(context), proto);
       },
       *proto, __func__);
+}
+
+future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+AsyncConnectionImpl::ResumeUpload(
+    internal::ImmutableOptions current,
+    storage_experimental::ResumableUploadRequest request,
+    storage::internal::QueryResumableUploadRequest query) {
+  auto response = QueryWriteStatus(current, std::move(query));
+  return response.then([w = WeakFromThis(), c = std::move(current),
+                        r = std::move(request)](auto f) mutable {
+    auto self = w.lock();
+    if (auto self = w.lock()) {
+      return self->UnbufferedUploadImpl(std::move(c), std::move(r), f.get());
+    }
+    return make_ready_future(
+        StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
+            internal::CancelledError("Cannot lock self", GCP_ERROR_INFO())));
+  });
 }
 
 future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
