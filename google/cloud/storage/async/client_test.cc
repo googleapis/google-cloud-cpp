@@ -15,6 +15,7 @@
 #include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/mocks/mock_async_connection.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
+#include "google/cloud/storage/mocks/mock_async_rewriter_connection.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -28,11 +29,15 @@ namespace {
 
 using ::google::cloud::storage_mocks::MockAsyncConnection;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
+using ::google::cloud::storage_mocks::MockAsyncRewriterConnection;
 using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
+using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::Field;
+using ::testing::IsEmpty;
 using ::testing::Optional;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -355,6 +360,98 @@ TEST(AsyncClient, DeleteObject) {
                                         .set<TestOption<2>>("O2-function"))
                       .get();
   EXPECT_THAT(response, IsOk());
+}
+
+TEST(AsyncClient, StartRewrite) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, RewriteObject)
+      .WillOnce([](AsyncConnection::RewriteObjectParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        EXPECT_EQ(p.request.source_bucket(), "src-bucket");
+        EXPECT_EQ(p.request.source_object(), "src-object");
+        EXPECT_EQ(p.request.destination_bucket(), "dst-bucket");
+        EXPECT_EQ(p.request.destination_object(), "dst-object");
+        EXPECT_THAT(p.request.rewrite_token(), IsEmpty());
+        EXPECT_EQ(p.request.GetOption<storage::IfGenerationMatch>().value_or(0),
+                  42);
+        auto rewriter = std::make_shared<MockAsyncRewriterConnection>();
+        EXPECT_CALL(*rewriter, Iterate).WillOnce([] {
+          return make_ready_future(make_status_or(RewriteObjectResponse{
+              3000, 3000, "", storage::ObjectMetadata().set_size(3000)}));
+        });
+        return rewriter;
+      });
+
+  auto client = AsyncClient(mock);
+  AsyncRewriter rewriter;
+  AsyncToken token;
+  std::tie(rewriter, token) =
+      client.StartRewrite("src-bucket", "src-object", "dst-bucket",
+                          "dst-object", storage::IfGenerationMatch(42),
+                          Options{}
+                              .set<TestOption<1>>("O1-function")
+                              .set<TestOption<2>>("O2-function"));
+  auto rt = rewriter.Iterate(std::move(token)).get();
+  ASSERT_STATUS_OK(rt);
+  EXPECT_FALSE(rt->second.valid());
+  EXPECT_THAT(rt->first,
+              AllOf(Field(&RewriteObjectResponse::total_bytes_rewritten, 3000),
+                    Field(&RewriteObjectResponse::object_size, 3000),
+                    Field(&RewriteObjectResponse::rewrite_token, IsEmpty()),
+                    Field(&RewriteObjectResponse::metadata,
+                          Optional(storage::ObjectMetadata().set_size(3000)))));
+}
+
+TEST(AsyncClient, ResumeRewrite) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, RewriteObject)
+      .WillOnce([](AsyncConnection::RewriteObjectParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        EXPECT_EQ(p.request.source_bucket(), "src-bucket");
+        EXPECT_EQ(p.request.source_object(), "src-object");
+        EXPECT_EQ(p.request.destination_bucket(), "dst-bucket");
+        EXPECT_EQ(p.request.destination_object(), "dst-object");
+        EXPECT_EQ(p.request.rewrite_token(), "test-rewrite-token");
+        EXPECT_EQ(p.request.GetOption<storage::IfGenerationMatch>().value_or(0),
+                  42);
+        auto rewriter = std::make_shared<MockAsyncRewriterConnection>();
+        EXPECT_CALL(*rewriter, Iterate).WillOnce([] {
+          return make_ready_future(make_status_or(RewriteObjectResponse{
+              3000, 3000, "", storage::ObjectMetadata().set_size(3000)}));
+        });
+        return rewriter;
+      });
+
+  auto client = AsyncClient(mock);
+  AsyncRewriter rewriter;
+  AsyncToken token;
+  std::tie(rewriter, token) = client.ResumeRewrite(
+      "src-bucket", "src-object", "dst-bucket", "dst-object",
+      "test-rewrite-token", storage::IfGenerationMatch(42),
+      Options{}
+          .set<TestOption<1>>("O1-function")
+          .set<TestOption<2>>("O2-function"));
+  auto rt = rewriter.Iterate(std::move(token)).get();
+  ASSERT_STATUS_OK(rt);
+  EXPECT_FALSE(rt->second.valid());
+  EXPECT_THAT(rt->first,
+              AllOf(Field(&RewriteObjectResponse::total_bytes_rewritten, 3000),
+                    Field(&RewriteObjectResponse::object_size, 3000),
+                    Field(&RewriteObjectResponse::rewrite_token, IsEmpty()),
+                    Field(&RewriteObjectResponse::metadata,
+                          Optional(storage::ObjectMetadata().set_size(3000)))));
 }
 
 }  // namespace

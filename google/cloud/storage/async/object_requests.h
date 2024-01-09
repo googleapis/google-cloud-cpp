@@ -326,6 +326,7 @@ class RewriteObjectRequest {
   std::string const& destination_object() const {
     return impl_.destination_object();
   }
+  std::string const& rewrite_token() const { return impl_.rewrite_token(); }
   RewriteObjectRequest& set_rewrite_token(std::string t) & {
     impl_.set_rewrite_token(std::move(t));
     return *this;
