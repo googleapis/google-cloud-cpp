@@ -48,6 +48,7 @@ class AsyncConnection {
  public:
   virtual ~AsyncConnection() = default;
 
+  /// The options used to configure this connection, with any defaults applied.
   virtual Options options() const = 0;
 
   /**
@@ -57,7 +58,9 @@ class AsyncConnection {
    * prevent breaking any mocks when additional parameters are needed.
    */
   struct InsertObjectParams {
-    /// The metadata attributes to create the object.
+    /// The bucket and object name for the new object. Includes any optional
+    /// parameters, such as pre-conditions on the insert operation, or metadata
+    /// attributes.
     InsertObjectRequest request;
     /// The bulk payload, sometimes called the "media" or "contents".
     WritePayload payload;
@@ -77,8 +80,9 @@ class AsyncConnection {
    * prevent breaking any mocks when additional parameters are needed.
    */
   struct ReadObjectParams {
-    /// What object to read, what portion of the object to read, and any
-    /// pre-conditions on the read.
+    /// The name of the bucket and object to read. Includes optional parameters,
+    /// such as pre-conditions on the read operation, or the range within the
+    /// object to read.
     ReadObjectRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
@@ -99,7 +103,8 @@ class AsyncConnection {
    * prevent breaking any mocks when additional parameters are needed.
    */
   struct UploadParams {
-    /// The metadata attributes for the new object.
+    /// The bucket name and object name for the new object. Includes optional
+    /// parameters such as pre-conditions on the new object.
     ResumableUploadRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
@@ -123,7 +128,9 @@ class AsyncConnection {
    * prevent breaking any mocks when additional parameters are needed.
    */
   struct ComposeObjectParams {
-    /// The metadata attributes to create the object.
+    /// The bucket name, the name of the source objects, and the name of the
+    /// destination object. Including pre-conditions on the source objects, the
+    /// destination object, and other optional parameters.
     ComposeObjectRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
@@ -142,7 +149,8 @@ class AsyncConnection {
    * prevent breaking any mocks when additional parameters are needed.
    */
   struct DeleteObjectParams {
-    /// The metadata attributes to create the object.
+    /// The bucket and object name for the object to be deleted. Including
+    /// pre-conditions on the object and other optional parameters.
     DeleteObjectRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
