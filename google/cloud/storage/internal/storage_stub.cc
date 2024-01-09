@@ -478,6 +478,22 @@ DefaultStorageStub::AsyncWriteObject(
       });
 }
 
+future<StatusOr<google::storage::v2::RewriteResponse>>
+DefaultStorageStub::AsyncRewriteObject(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::storage::v2::RewriteObjectRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::storage::v2::RewriteObjectRequest,
+                                    google::storage::v2::RewriteResponse>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::storage::v2::RewriteObjectRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRewriteObject(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 DefaultStorageStub::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,

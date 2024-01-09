@@ -466,6 +466,19 @@ StorageTracingStub::AsyncWriteObject(
       std::move(context), std::move(stream), std::move(span));
 }
 
+future<StatusOr<google::storage::v2::RewriteResponse>>
+StorageTracingStub::AsyncRewriteObject(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::storage::v2::RewriteObjectRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.storage.v2.Storage", "RewriteObject");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncRewriteObject(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageTracingStub::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,
