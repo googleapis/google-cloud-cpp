@@ -3200,6 +3200,7 @@ service {
     "ComposeObject",
     "DeleteObject",
     "ReadObject",
+    "RewriteObject",
     "StartResumableWrite",
     "QueryWriteStatus",
     "WriteObject"
