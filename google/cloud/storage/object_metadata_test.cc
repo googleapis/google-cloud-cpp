@@ -17,12 +17,31 @@
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include <gmock/gmock.h>
+#include <sstream>
 
 namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+TEST(ComposeSourceObject, IOStream) {
+  auto to_string = [](ComposeSourceObject const& r) {
+    std::ostringstream os;
+    os << r;
+    return std::move(os).str();
+  };
+  EXPECT_THAT(
+      to_string(ComposeSourceObject{"name", absl::nullopt, absl::nullopt}),
+      "ComposeSourceObject={object_name=name}");
+  EXPECT_THAT(to_string(ComposeSourceObject{"name", 42, absl::nullopt}),
+              "ComposeSourceObject={object_name=name, generation=42}");
+  EXPECT_THAT(to_string(ComposeSourceObject{"name", absl::nullopt, 42}),
+              "ComposeSourceObject={object_name=name, if_generation_match=42}");
+  EXPECT_THAT(to_string(ComposeSourceObject{"name", 7, 42}),
+              "ComposeSourceObject={object_name=name, generation=7, "
+              "if_generation_match=42}");
+}
 
 ObjectMetadata CreateObjectMetadataForTest() {
   // This metadata object has some impossible combination of fields in it. The
