@@ -40,16 +40,17 @@ std::chrono::seconds DefaultLeaseExtension(Options const& options) {
 
 DefaultPullLeaseManager::DefaultPullLeaseManager(
     CompletionQueue cq, std::weak_ptr<SubscriberStub> w, Options options,
-    pubsub::Subscription subscription, std::string ack_id, Clock clock)
+    pubsub::Subscription subscription, std::string ack_id,
+    std::shared_ptr<Clock> clock)
     : cq_(std::move(cq)),
       stub_(std::move(w)),
       options_(std::move(options)),
       subscription_(std::move(subscription)),
       ack_id_(std::move(ack_id)),
       clock_(std::move(clock)),
-      lease_deadline_(DefaultLeaseDeadline(clock_(), options_)),
+      lease_deadline_(DefaultLeaseDeadline(clock_->Now(), options_)),
       lease_extension_(DefaultLeaseExtension(options_)),
-      current_lease_(clock_() + kMinimalLeaseExtension) {}
+      current_lease_(clock_->Now() + kMinimalLeaseExtension) {}
 
 DefaultPullLeaseManager::~DefaultPullLeaseManager() {
   if (!timer_.valid()) return;
@@ -59,7 +60,7 @@ DefaultPullLeaseManager::~DefaultPullLeaseManager() {
 void DefaultPullLeaseManager::StartLeaseLoop() {
   auto s = stub_.lock();
   if (!s) return;
-  auto const now = clock_();
+  auto const now = clock_->Now();
 
   // Check if the lease has expired, or is so close to expiring that we cannot
   // extend it. In either case, simply return and stop the loop.
@@ -94,7 +95,7 @@ future<Status> DefaultPullLeaseManager::ExtendLease(
       google::cloud::Idempotency::kIdempotent, cq_,
       [stub = std::move(stub), deadline = now + extension, clock = clock_](
           auto cq, auto context, auto const& request) {
-        if (deadline < clock()) {
+        if (deadline < clock->Now()) {
           return make_ready_future(
               Status(StatusCode::kDeadlineExceeded, "lease already expired"));
         }

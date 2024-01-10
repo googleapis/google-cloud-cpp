@@ -20,6 +20,7 @@
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/clock.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include <chrono>
@@ -39,12 +40,12 @@ class DefaultPullLeaseManager
     : public PullLeaseManager,
       public std::enable_shared_from_this<DefaultPullLeaseManager> {
  public:
-  using Clock = std::function<std::chrono::system_clock::time_point()>;
+  using Clock = ::google::cloud::internal::SystemClock;
 
-  DefaultPullLeaseManager(CompletionQueue cq, std::weak_ptr<SubscriberStub> w,
-                          Options options, pubsub::Subscription subscription,
-                          std::string ack_id,
-                          Clock clock = std::chrono::system_clock::now);
+  DefaultPullLeaseManager(
+      CompletionQueue cq, std::weak_ptr<SubscriberStub> w, Options options,
+      pubsub::Subscription subscription, std::string ack_id,
+      std::shared_ptr<Clock> clock = std::make_shared<Clock>());
   ~DefaultPullLeaseManager() override;
 
   void StartLeaseLoop() override;
@@ -75,7 +76,7 @@ class DefaultPullLeaseManager
   Options options_;
   pubsub::Subscription subscription_;
   std::string ack_id_;
-  Clock clock_;
+  std::shared_ptr<Clock> clock_;
   // The absolute deadline to complete processing the message.
   // The application can configure this value using
   // `pubsub::MaxDeadlineTimeOption`

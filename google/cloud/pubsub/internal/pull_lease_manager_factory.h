@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/clock.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <chrono>
@@ -30,12 +31,13 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using Clock = ::google::cloud::internal::SystemClock;
+
 std::shared_ptr<PullLeaseManager> MakePullLeaseManager(
     CompletionQueue cq, std::weak_ptr<SubscriberStub> stub,
     pubsub::Subscription subscription, std::string ack_id,
     Options const& options,
-    std::function<std::chrono::system_clock::time_point()> const& clock =
-        std::chrono::system_clock::now);
+    std::shared_ptr<Clock> clock = std::make_shared<Clock>());
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

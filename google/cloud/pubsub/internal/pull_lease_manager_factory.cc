@@ -27,12 +27,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<PullLeaseManager> MakePullLeaseManager(
     CompletionQueue cq, std::weak_ptr<SubscriberStub> stub,
     pubsub::Subscription subscription, std::string ack_id,
-    Options const& options,
-    std::function<std::chrono::system_clock::time_point()> const& clock) {
+    Options const& options, std::shared_ptr<Clock> clock) {
   std::shared_ptr<PullLeaseManager> manager =
       std::make_shared<pubsub_internal::DefaultPullLeaseManager>(
           std::move(cq), std::move(stub), options, std::move(subscription),
-          std::move(ack_id), clock);
+          std::move(ack_id), std::move(clock));
   if (internal::TracingEnabled(options)) {
     manager = MakeTracingPullLeaseManager(std::move(manager));
   }
