@@ -72,6 +72,8 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
 
 std::string MinimalIamCredentialsRestStub::MakeRequestPath(
     GenerateAccessTokenRequest const& request) {
+  // TODO(#13422): Do not use hardcoded IAM endpoint. Use Universe Domain
+  // to build endpoint name.
   return absl::StrCat(
       "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/",
       request.service_account, ":generateAccessToken");

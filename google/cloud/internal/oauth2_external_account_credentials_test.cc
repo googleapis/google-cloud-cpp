@@ -153,12 +153,14 @@ TEST(ExternalAccount, ParseAwsSuccess) {
   auto constexpr kTestAudience =
       "//iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/"
       "workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID";
+  auto constexpr kUniverseDomain = "my-domain.net";
 
   auto const configuration = nlohmann::json{
       {"type", "external_account"},
       {"audience", kTestAudience},
       {"subject_token_type", kTestTokenType},
       {"token_url", "test-token-url"},
+      {"universe_domain", kUniverseDomain},
       {"credential_source",
        nlohmann::json{
            {"environment_id", "aws1"},
@@ -176,6 +178,7 @@ TEST(ExternalAccount, ParseAwsSuccess) {
   EXPECT_EQ(actual->audience, kTestAudience);
   EXPECT_EQ(actual->subject_token_type, kTestTokenType);
   EXPECT_EQ(actual->token_url, "test-token-url");
+  EXPECT_EQ(actual->universe_domain, kUniverseDomain);
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).Times(0);
@@ -469,6 +472,62 @@ TEST(ExternalAccount, ParseInvalidTokenUrl) {
                        HasSubstr("invalid type for `token_url` field")));
 }
 
+TEST(ExternalAccount, ParseMissingUniverseDomain) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(actual->universe_domain, "googleapis.com");
+}
+
+TEST(ExternalAccount, ParseInvalidUniverseDomain) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"universe_domain", ""},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(
+      actual,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr(
+              "universe_domain field in credentials file cannot be empty")));
+}
+
+TEST(ExternalAccount, ParseIncorrectTypeUniverseDomain) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"universe_domain", true},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Invalid type for universe_domain field in "
+                                 "credentials; expected string")));
+}
+
 TEST(ExternalAccount, ParseMissingCredentialSource) {
   auto const configuration = nlohmann::json{
       {"type", "external_account"},
@@ -595,10 +654,10 @@ TEST(ExternalAccount, Working) {
   auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
-  auto const info = ExternalAccountInfo{
-      "test-audience", "test-subject-token-type", test_url, mock_source,
-      absl::nullopt,
-  };
+  auto const info =
+      ExternalAccountInfo{"test-audience", "test-subject-token-type",
+                          test_url,        mock_source,
+                          absl::nullopt,   {}};
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call(make_expected_options())).WillOnce([&]() {
@@ -661,14 +720,14 @@ TEST(ExternalAccount, WorkingWithImpersonation) {
   auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
-  auto const info = ExternalAccountInfo{
-      "test-audience",
-      "test-subject-token-type",
-      sts_test_url,
-      mock_source,
-      ExternalAccountImpersonationConfig{impersonate_test_url,
-                                         impersonate_test_lifetime},
-  };
+  auto const info =
+      ExternalAccountInfo{"test-audience",
+                          "test-subject-token-type",
+                          sts_test_url,
+                          mock_source,
+                          ExternalAccountImpersonationConfig{
+                              impersonate_test_url, impersonate_test_lifetime},
+                          {}};
 
   auto sts_client = [&] {
     auto expected_sts_request = Property(&RestRequest::path, sts_test_url);
@@ -737,8 +796,9 @@ TEST(ExternalAccount, HandleHttpError) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info =
-      ExternalAccountInfo{"test-audience", "test-subject-token-type", test_url,
-                          mock_source, absl::nullopt};
+      ExternalAccountInfo{"test-audience", "test-subject-token-type",
+                          test_url,        mock_source,
+                          absl::nullopt,   {}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -774,8 +834,9 @@ TEST(ExternalAccount, HandleHttpPartialError) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info =
-      ExternalAccountInfo{"test-audience", "test-subject-token-type", test_url,
-                          mock_source, absl::nullopt};
+      ExternalAccountInfo{"test-audience", "test-subject-token-type",
+                          test_url,        mock_source,
+                          absl::nullopt,   {}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -812,8 +873,9 @@ TEST(ExternalAccount, HandleNotJson) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info =
-      ExternalAccountInfo{"test-audience", "test-subject-token-type", test_url,
-                          mock_source, absl::nullopt};
+      ExternalAccountInfo{"test-audience", "test-subject-token-type",
+                          test_url,        mock_source,
+                          absl::nullopt,   {}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -850,8 +912,9 @@ TEST(ExternalAccount, HandleNotJsonObject) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info =
-      ExternalAccountInfo{"test-audience", "test-subject-token-type", test_url,
-                          mock_source, absl::nullopt};
+      ExternalAccountInfo{"test-audience", "test-subject-token-type",
+                          test_url,        mock_source,
+                          absl::nullopt,   {}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -894,8 +957,9 @@ TEST(ExternalAccount, MissingToken) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info =
-      ExternalAccountInfo{"test-audience", "test-subject-token-type", test_url,
-                          mock_source, absl::nullopt};
+      ExternalAccountInfo{"test-audience", "test-subject-token-type",
+                          test_url,        mock_source,
+                          absl::nullopt,   {}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -927,8 +991,9 @@ TEST(ExternalAccount, MissingIssuedTokenType) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info =
-      ExternalAccountInfo{"test-audience", "test-subject-token-type", test_url,
-                          mock_source, absl::nullopt};
+      ExternalAccountInfo{"test-audience", "test-subject-token-type",
+                          test_url,        mock_source,
+                          absl::nullopt,   {}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -960,8 +1025,9 @@ TEST(ExternalAccount, MissingTokenType) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info =
-      ExternalAccountInfo{"test-audience", "test-subject-token-type", test_url,
-                          mock_source, absl::nullopt};
+      ExternalAccountInfo{"test-audience", "test-subject-token-type",
+                          test_url,        mock_source,
+                          absl::nullopt,   {}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -993,8 +1059,9 @@ TEST(ExternalAccount, InvalidIssuedTokenType) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info =
-      ExternalAccountInfo{"test-audience", "test-subject-token-type", test_url,
-                          mock_source, absl::nullopt};
+      ExternalAccountInfo{"test-audience", "test-subject-token-type",
+                          test_url,        mock_source,
+                          absl::nullopt,   {}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -1028,8 +1095,9 @@ TEST(ExternalAccount, InvalidTokenType) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info =
-      ExternalAccountInfo{"test-audience", "test-subject-token-type", test_url,
-                          mock_source, absl::nullopt};
+      ExternalAccountInfo{"test-audience", "test-subject-token-type",
+                          test_url,        mock_source,
+                          absl::nullopt,   {}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -1064,8 +1132,9 @@ TEST(ExternalAccount, MissingExpiresIn) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info =
-      ExternalAccountInfo{"test-audience", "test-subject-token-type", test_url,
-                          mock_source, absl::nullopt};
+      ExternalAccountInfo{"test-audience", "test-subject-token-type",
+                          test_url,        mock_source,
+                          absl::nullopt,   {}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -1098,8 +1167,9 @@ TEST(ExternalAccount, InvalidExpiresIn) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info =
-      ExternalAccountInfo{"test-audience", "test-subject-token-type", test_url,
-                          mock_source, absl::nullopt};
+      ExternalAccountInfo{"test-audience", "test-subject-token-type",
+                          test_url,        mock_source,
+                          absl::nullopt,   {}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();

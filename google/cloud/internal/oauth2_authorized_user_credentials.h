@@ -36,6 +36,7 @@ struct AuthorizedUserCredentialsInfo {
   std::string client_secret;
   std::string refresh_token;
   std::string token_uri;
+  std::string universe_domain;
 };
 
 /// Parses a user credentials JSON string into an AuthorizedUserCredentialsInfo.

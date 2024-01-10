@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
+#include "google/cloud/internal/oauth2_universe_domain.h"
 #include <nlohmann/json.hpp>
 
 namespace google {
@@ -49,6 +50,10 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
                         " field is empty on data loaded from " + source);
     }
   }
+
+  auto universe_domain = GetUniverseDomainFromCredentialsJson(credentials);
+  if (!universe_domain.ok()) return std::move(universe_domain).status();
+
   return AuthorizedUserCredentialsInfo{
       credentials.value(client_id_key, ""),
       credentials.value(client_secret_key, ""),
@@ -56,7 +61,8 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
       // Some credential formats (e.g. gcloud's ADC file) don't contain a
       // "token_uri" attribute in the JSON object.  In this case, we try using
       // the default value.
-      credentials.value("token_uri", default_token_uri)};
+      credentials.value("token_uri", default_token_uri),
+      *std::move(universe_domain)};
 }
 
 StatusOr<AccessToken> ParseAuthorizedUserRefreshResponse(
