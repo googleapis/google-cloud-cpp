@@ -38,10 +38,7 @@ using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
-using ::testing::Eq;
 using ::testing::HasSubstr;
-using ::testing::Le;
-using ::testing::Pointee;
 using ::testing::Property;
 using ::testing::Return;
 
@@ -86,20 +83,8 @@ Status PermanentError() {
 
 TEST(PullAckHandlerTest, AckSimple) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
-  // Start lease loop past max extension so that we don't get any modify ack
-  // deadline calls.
-  auto const current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  // On the first call, when the class is created return the current time. Any
-  // calls after will show the current time is past the max deadline. See
-  // MakeTestOptions for the magic numbers.
-  EXPECT_CALL(clock, Call)
-      .WillOnce([&] { return current_time; })
-      .WillRepeatedly([&] { return current_time + std::chrono::seconds(301); });
 
   auto mock = std::make_shared<MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
-  // Expect the ack call.
   auto request_matcher = AllOf(
       Property(&AcknowledgeRequest::ack_ids, ElementsAre("test-ack-id")),
       Property(&AcknowledgeRequest::subscription, subscription.FullName()));
@@ -111,8 +96,7 @@ TEST(PullAckHandlerTest, AckSimple) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
-      clock.AsStdFunction());
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->ack();
   auto timer = aseq.PopFrontWithName();
@@ -124,105 +108,10 @@ TEST(PullAckHandlerTest, AckSimple) {
   EXPECT_STATUS_OK(status.get());
 }
 
-TEST(PullAckHandlerTest, AckWithLeaseManagement) {
-  auto subscription = pubsub::Subscription("test-project", "test-subscription");
-
-  // Use a mock clock where the time is controlled by a test variable. We do not
-  // really care how many times or exactly when is the clock called, we just
-  // want to control the passage of time.
-  auto const start = std::chrono::system_clock::now();
-  auto current_time = start;
-  MockClock clock;
-  EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
-  AsyncSequencer<bool> aseq;
-  auto cq = MakeMockCompletionQueue(aseq);
-  auto mock = std::make_shared<MockSubscriberStub>();
-
-  // these values explain the magic numbers in the expectations
-  auto constexpr kLeaseExtension = std::chrono::seconds(10);
-  auto constexpr kLeaseOdd = std::chrono::seconds(3);
-  auto constexpr kLeaseDeadline = 2 * kLeaseExtension + kLeaseOdd;
-  auto constexpr kLeaseSlack = std::chrono::seconds(1);
-  auto constexpr kLastLeaseExtension = 2 * kLeaseSlack + kLeaseOdd;
-  auto options = google::cloud::pubsub_testing::MakeTestOptions(
-      Options{}
-          .set<pubsub::MaxDeadlineTimeOption>(kLeaseDeadline)
-          .set<pubsub::MaxDeadlineExtensionOption>(kLeaseExtension));
-
-  // Set the expectation for the lease management calls.
-  auto context_matcher = Pointee(Property(&grpc::ClientContext::deadline,
-                                          Le(current_time + kLeaseExtension)));
-  auto request_matcher = AllOf(
-      Property(&ModifyAckDeadlineRequest::ack_ids, ElementsAre("test-ack-id")),
-      Property(&ModifyAckDeadlineRequest::ack_deadline_seconds,
-               kLeaseExtension.count()),
-      Property(&ModifyAckDeadlineRequest::subscription,
-               subscription.FullName()));
-  ::testing::InSequence sequence;
-  EXPECT_CALL(*mock,
-              AsyncModifyAckDeadline(_, context_matcher, request_matcher))
-      .WillOnce([&](auto, auto, auto) {
-        return aseq.PushBack("AsyncModifyAckDeadline").then([](auto f) {
-          return f.get() ? Status{} : PermanentError();
-        });
-      });
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
-      .WillOnce([&](auto, auto, auto) {
-        return aseq.PushBack("AsyncModifyAckDeadline").then([](auto f) {
-          return f.get() ? Status{} : PermanentError();
-        });
-      });
-
-  // Set the expectation for the ack call.
-  auto ack_request_matcher = AllOf(
-      Property(&AcknowledgeRequest::ack_ids, ElementsAre("test-ack-id")),
-      Property(&AcknowledgeRequest::subscription, subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, ack_request_matcher))
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
-
-  // Create the ack handler.
-  auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
-      clock.AsStdFunction());
-  // Extend the lease.
-  auto pending = aseq.PopFrontWithName();
-  EXPECT_EQ(pending.second, "AsyncModifyAckDeadline");
-  pending.first.set_value(true);
-  pending = aseq.PopFrontWithName();
-  EXPECT_EQ(pending.second, "MakeRelativeTimer");
-  pending.first.set_value(true);
-  pending = aseq.PopFrontWithName();
-  EXPECT_EQ(pending.second, "AsyncModifyAckDeadline");
-  pending.first.set_value(true);
-  pending = aseq.PopFrontWithName();
-  EXPECT_EQ(pending.second, "MakeRelativeTimer");
-  // Ack the message.
-  auto status = handler->ack();
-  EXPECT_STATUS_OK(status.get());
-
-  // Terminate the loop. With exceptions disabled abandoning a future with a
-  // continuation results in a crash. In non-test programs, the completion queue
-  // does this automatically as part of its shutdown.
-  pending.first.set_value(false);
-}
-
 TEST(PullAckHandlerTest, AckPermanentError) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
-  // Start lease loop past max extension so that we don't get any modify ack
-  // deadline calls.
-  auto const current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  // On the first call, when the class is created return the current time. Any
-  // calls after will show the current time is past the max deadline. See
-  // MakeTestOptions for the magic numbers.
-  EXPECT_CALL(clock, Call)
-      .WillOnce([&] { return current_time; })
-      .WillRepeatedly([&] { return current_time + std::chrono::seconds(301); });
-
   auto mock = std::make_shared<MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
-  // Expect the ack call.
   auto request_matcher = AllOf(
       Property(&AcknowledgeRequest::ack_ids, ElementsAre("test-ack-id")),
       Property(&AcknowledgeRequest::subscription, subscription.FullName()));
@@ -231,8 +120,7 @@ TEST(PullAckHandlerTest, AckPermanentError) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
-      clock.AsStdFunction());
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->ack();
   EXPECT_THAT(status.get(),
@@ -241,16 +129,6 @@ TEST(PullAckHandlerTest, AckPermanentError) {
 
 TEST(PullAckHandlerTest, NackSimple) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
-  // Start lease loop past max extension so that we don't get any modify ack
-  // deadline calls.
-  auto const current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  // On the first call, when the class is created return the current time. Any
-  // calls after will show the current time is past the max deadline. See
-  // MakeTestOptions for the magic numbers.
-  EXPECT_CALL(clock, Call)
-      .WillOnce([&] { return current_time; })
-      .WillRepeatedly([&] { return current_time + std::chrono::seconds(301); });
 
   auto mock = std::make_shared<MockSubscriberStub>();
   auto request_matcher = AllOf(
@@ -266,8 +144,7 @@ TEST(PullAckHandlerTest, NackSimple) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
-      clock.AsStdFunction());
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->nack();
   auto timer = aseq.PopFrontWithName();
@@ -281,16 +158,6 @@ TEST(PullAckHandlerTest, NackSimple) {
 
 TEST(PullAckHandlerTest, NackPermanentError) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
-  // Start lease loop past max extension so that we don't get any modify ack
-  // deadline calls.
-  auto const current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  // On the first call, when the class is created return the current time. Any
-  // calls after will show the current time is past the max deadline. See
-  // MakeTestOptions for the magic numbers.
-  EXPECT_CALL(clock, Call)
-      .WillOnce([&] { return current_time; })
-      .WillRepeatedly([&] { return current_time + std::chrono::seconds(301); });
 
   auto mock = std::make_shared<MockSubscriberStub>();
   auto request_matcher = AllOf(
@@ -303,8 +170,7 @@ TEST(PullAckHandlerTest, NackPermanentError) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
-      clock.AsStdFunction());
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->nack();
   EXPECT_THAT(status.get(),
@@ -313,46 +179,23 @@ TEST(PullAckHandlerTest, NackPermanentError) {
 
 TEST(AckHandlerTest, Subscription) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
-  // Start lease loop past max extension so that we don't get any modify ack
-  // deadline calls.
-  auto const current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  // On the first call, when the class is created return the current time. Any
-  // calls after will show the current time is past the max deadline. See
-  // MakeTestOptions for the magic numbers.
-  EXPECT_CALL(clock, Call)
-      .WillOnce([&] { return current_time; })
-      .WillRepeatedly([&] { return current_time + std::chrono::seconds(301); });
   auto mock = std::make_shared<MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
-      clock.AsStdFunction());
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
 
   EXPECT_EQ(handler->subscription(), subscription);
 }
 
 TEST(AckHandlerTest, AckId) {
-  // Start lease loop past max extension so that we don't get any modify ack
-  // deadline calls.
-  auto const current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  // On the first call, when the class is created return the current time. Any
-  // calls after will show the current time is past the max deadline. See
-  // MakeTestOptions for the magic numbers.
-  EXPECT_CALL(clock, Call)
-      .WillOnce([&] { return current_time; })
-      .WillRepeatedly([&] { return current_time + std::chrono::seconds(301); });
   auto mock = std::make_shared<MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
       cq, mock, MakeTestOptions(),
       pubsub::Subscription("test-project", "test-subscription"), "test-ack-id",
-      42, clock.AsStdFunction());
+      42);
 
   EXPECT_EQ(handler->ack_id(), "test-ack-id");
 }

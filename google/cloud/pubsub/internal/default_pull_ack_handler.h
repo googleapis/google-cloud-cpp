@@ -42,13 +42,10 @@ class PullLeaseManager;
  */
 class DefaultPullAckHandler : public pubsub::PullAckHandler::Impl {
  public:
-  using Clock = std::function<std::chrono::system_clock::time_point()>;
-
   DefaultPullAckHandler(CompletionQueue cq, std::weak_ptr<SubscriberStub> w,
                         Options const& options,
                         pubsub::Subscription subscription, std::string ack_id,
-                        std::int32_t delivery_attempt,
-                        Clock clock = std::chrono::system_clock::now);
+                        std::int32_t delivery_attempt);
   ~DefaultPullAckHandler() override;
 
   future<Status> ack() override;

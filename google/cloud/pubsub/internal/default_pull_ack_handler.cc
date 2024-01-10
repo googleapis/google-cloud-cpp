@@ -24,19 +24,19 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultPullAckHandler::DefaultPullAckHandler(
-    CompletionQueue cq, std::weak_ptr<SubscriberStub> w, Options const& options,
-    pubsub::Subscription subscription, std::string ack_id,
-    std::int32_t delivery_attempt, Clock clock)
+DefaultPullAckHandler::DefaultPullAckHandler(CompletionQueue cq,
+                                             std::weak_ptr<SubscriberStub> w,
+                                             Options const& options,
+                                             pubsub::Subscription subscription,
+                                             std::string ack_id,
+                                             std::int32_t delivery_attempt)
     : cq_(std::move(cq)),
       stub_(std::move(w)),
       subscription_(std::move(subscription)),
       ack_id_(std::move(ack_id)),
       delivery_attempt_(delivery_attempt),
-      lease_manager_(MakePullLeaseManager(cq_, stub_, subscription_, ack_id_,
-                                          options, std::move(clock))) {
-  lease_manager_->StartLeaseLoop();
-}
+      lease_manager_(
+          MakePullLeaseManager(cq_, stub_, subscription_, ack_id_, options)) {}
 
 DefaultPullAckHandler::~DefaultPullAckHandler() = default;
 
