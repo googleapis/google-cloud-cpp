@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/internal/default_pull_lease_manager.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"
+#include "google/cloud/pubsub/testing/mock_pull_lease_manager.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/testing_util/async_sequencer.h"
@@ -29,6 +30,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::pubsub_testing::MockPullLeaseManager;
 using ::google::cloud::pubsub_testing::MockSubscriberStub;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::StatusIs;
@@ -96,7 +98,8 @@ TEST(PullAckHandlerTest, AckSimple) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
+      std::make_shared<MockPullLeaseManager>());
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->ack();
   auto timer = aseq.PopFrontWithName();
@@ -120,7 +123,8 @@ TEST(PullAckHandlerTest, AckPermanentError) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
+      std::make_shared<MockPullLeaseManager>());
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->ack();
   EXPECT_THAT(status.get(),
@@ -144,7 +148,8 @@ TEST(PullAckHandlerTest, NackSimple) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
+      std::make_shared<MockPullLeaseManager>());
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->nack();
   auto timer = aseq.PopFrontWithName();
@@ -170,11 +175,24 @@ TEST(PullAckHandlerTest, NackPermanentError) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
+      std::make_shared<MockPullLeaseManager>());
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->nack();
   EXPECT_THAT(status.get(),
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+}
+
+TEST(PullAckHandlerTest, StartsLeaseManager) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+
+  auto mock = std::make_shared<MockSubscriberStub>();
+  AsyncSequencer<bool> aseq;
+  auto cq = MakeMockCompletionQueue(aseq);
+  auto lm = std::make_shared<MockPullLeaseManager>();
+  EXPECT_CALL(*lm, StartLeaseLoop()).Times(1);
+  auto handler = std::make_unique<DefaultPullAckHandler>(
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42, lm);
 }
 
 TEST(AckHandlerTest, Subscription) {
@@ -183,7 +201,8 @@ TEST(AckHandlerTest, Subscription) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
+      std::make_shared<MockPullLeaseManager>());
 
   EXPECT_EQ(handler->subscription(), subscription);
 }
@@ -195,7 +214,7 @@ TEST(AckHandlerTest, AckId) {
   auto handler = std::make_unique<DefaultPullAckHandler>(
       cq, mock, MakeTestOptions(),
       pubsub::Subscription("test-project", "test-subscription"), "test-ack-id",
-      42);
+      42, std::make_shared<MockPullLeaseManager>());
 
   EXPECT_EQ(handler->ack_id(), "test-ack-id");
 }
