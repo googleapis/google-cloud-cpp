@@ -117,14 +117,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r) {
   auto const& opts = internal::CurrentOptions();
 
   rest_internal::RestRequest request;
-  if (r.project_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid GetJobRequest: Project Id is empty", GCP_ERROR_INFO());
-  }
-  if (r.job_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
-  }
   // Builds GetJob request path based on endpoint provided.
   std::string endpoint = GetBaseEndpoint(opts);
 
@@ -149,11 +141,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
     ListJobsRequest const& r) {
   rest_internal::RestRequest request;
   auto const& opts = internal::CurrentOptions();
-
-  if (r.project_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid ListJobsRequest: Project Id is empty", GCP_ERROR_INFO());
-  }
   // Builds GetJob request path based on endpoint provided.
   std::string endpoint = GetBaseEndpoint(opts);
 
@@ -213,11 +200,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   auto const& opts = internal::CurrentOptions();
 
   rest_internal::RestRequest request;
-  if (r.project_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid InsertJobRequest: Project Id is empty", GCP_ERROR_INFO());
-  }
-
   // Builds InsertJob request path based on endpoint provided.
   std::string endpoint = GetBaseEndpoint(opts);
   std::string path =
@@ -248,15 +230,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   auto const& opts = internal::CurrentOptions();
 
   rest_internal::RestRequest request;
-  if (r.project_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid CancelJobRequest: Project Id is empty", GCP_ERROR_INFO());
-  }
-  if (r.job_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid CancelJobRequest: Job Id is empty", GCP_ERROR_INFO());
-  }
-
   // Builds CancelJob request path based on endpoint provided.
   std::string endpoint = GetBaseEndpoint(opts);
   std::string path = absl::StrCat(endpoint, "/projects/", r.project_id(),
@@ -343,11 +316,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
     PostQueryRequest const& r) {
   auto const& opts = internal::CurrentOptions();
   rest_internal::RestRequest request;
-
-  if (r.project_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid PostQueryRequest: Project Id is empty", GCP_ERROR_INFO());
-  }
 
   // Builds PostQueryRequest path based on endpoint provided.
   std::string endpoint = GetBaseEndpoint(opts);
@@ -443,16 +411,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
     GetQueryResultsRequest const& r) {
   auto const& opts = internal::CurrentOptions();
   rest_internal::RestRequest request;
-
-  if (r.project_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid GetQueryResultsRequest: Project Id is empty",
-        GCP_ERROR_INFO());
-  }
-  if (r.job_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid GetQueryResultsRequest: Job Id is empty", GCP_ERROR_INFO());
-  }
 
   // Builds GetQueryResultsRequest path based on endpoint provided.
   std::string endpoint = GetBaseEndpoint(opts);

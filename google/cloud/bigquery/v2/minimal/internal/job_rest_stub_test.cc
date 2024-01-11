@@ -329,19 +329,6 @@ TEST(BigQueryJobStubTest, InsertJobRestResponseError) {
   EXPECT_THAT(status, StatusIs(InvalidArgumentError().code()));
 }
 
-TEST(BigQueryJobStubTest, InsertJobPrepareRestRequestError) {
-  auto mock_rest_client = std::make_unique<MockRestClient>();
-
-  rest_internal::RestContext context;
-  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
-
-  // Should fail without 'project_id' specified
-  InsertJobRequest job_request("", MakePartialJob());
-
-  auto status = rest_stub.InsertJob(context, std::move(job_request));
-  EXPECT_THAT(status, StatusIs(InvalidArgumentError().code()));
-}
-
 TEST(BigQueryJobStubTest, CancelJobSuccess) {
   std::string job_response_payload = R"({"kind":"cancel-job",
           "job":{"kind": "jkind",
