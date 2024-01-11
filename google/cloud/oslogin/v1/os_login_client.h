@@ -387,7 +387,7 @@ class OsLoginServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oslogin.v1.ImportSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L204}
-  /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L222}
+  /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L227}
   ///
   // clang-format on
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
@@ -419,7 +419,7 @@ class OsLoginServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oslogin.v1.ImportSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L204}
-  /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L222}
+  /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L227}
   ///
   // clang-format on
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
@@ -454,7 +454,7 @@ class OsLoginServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oslogin.v1.ImportSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L204}
-  /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L222}
+  /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L227}
   ///
   // clang-format on
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
@@ -485,7 +485,7 @@ class OsLoginServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oslogin.common.SshPublicKey]: @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
-  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
+  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L236}
   ///
   // clang-format on
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
@@ -517,7 +517,7 @@ class OsLoginServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oslogin.common.SshPublicKey]: @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
-  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
+  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L236}
   ///
   // clang-format on
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
@@ -550,7 +550,7 @@ class OsLoginServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oslogin.common.SshPublicKey]: @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
-  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
+  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L236}
   ///
   // clang-format on
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
