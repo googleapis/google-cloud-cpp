@@ -245,6 +245,11 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/api/servicecontrol/v2:servicecontrol_cc_grpc"
   )"
   ["servicedirectory"]="@com_google_googleapis//google/cloud/servicedirectory/v1:servicedirectory_cc_grpc"
+  ["servicehealth"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/servicehealth/v1:servicehealth_cc_grpc" \
+      "@com_google_googleapis//google/cloud/servicehealth/logging/v1:logging_cc_grpc"
+  )"
   ["servicemanagement"]="@com_google_googleapis//google/api/servicemanagement/v1:servicemanagement_cc_grpc"
   ["serviceusage"]="@com_google_googleapis//google/api/serviceusage/v1:serviceusage_cc_grpc"
   ["shell"]="@com_google_googleapis//google/cloud/shell/v1:shell_cc_grpc"

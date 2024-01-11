@@ -2998,6 +2998,14 @@ service {
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
+# Service Health
+service {
+  service_proto_path: "google/cloud/servicehealth/v1/event_service.proto"
+  product_path: "google/cloud/servicehealth/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Service Management
 service {
   service_proto_path: "google/api/servicemanagement/v1/servicemanager.proto"
