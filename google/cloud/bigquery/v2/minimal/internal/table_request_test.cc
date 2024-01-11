@@ -25,6 +25,9 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
+
 TEST(GetTableRequestTest, SingleSelectedField) {
   std::vector<std::string> fields;
   fields.emplace_back("f1");
@@ -81,6 +84,39 @@ TEST(GetTableRequestTest, MultipleSelectedFields) {
   EXPECT_EQ(expected, *actual);
 }
 
+TEST(GetTableRequestTest, EmptyProjectId) {
+  GetTableRequest request("", "2", "3");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto actual = BuildRestRequest(request);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("Project Id is empty")));
+}
+
+TEST(GetTableRequestTest, EmptyDatasetId) {
+  GetTableRequest request("1", "", "3");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto actual = BuildRestRequest(request);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("Dataset Id is empty")));
+}
+
+TEST(GetTableRequestTest, EmptyTableId) {
+  GetTableRequest request("1", "2", "");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto actual = BuildRestRequest(request);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("Table Id is empty")));
+}
+
 TEST(GetTableRequestTest, TableEndpoints) {
   GetTableRequest request("1", "2", "3");
 
@@ -135,6 +171,30 @@ TEST(ListTablesRequestTest, Success) {
   expected.AddQueryParameter("pageToken", page_token);
 
   EXPECT_EQ(expected, *actual);
+}
+
+TEST(ListTablesRequestTest, EmptyProjectId) {
+  ListTablesRequest request("", "2");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto actual = BuildRestRequest(request);
+
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("Project Id is empty")));
+}
+
+TEST(ListTablesRequestTest, EmptyDatasetId) {
+  ListTablesRequest request("1", "");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto actual = BuildRestRequest(request);
+
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("Dataset Id is empty")));
 }
 
 TEST(GetTableRequest, DebugString) {

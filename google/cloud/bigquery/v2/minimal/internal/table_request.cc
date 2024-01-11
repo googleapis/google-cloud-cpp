@@ -58,6 +58,18 @@ ListTablesRequest::ListTablesRequest(std::string project_id,
 
 StatusOr<rest_internal::RestRequest> BuildRestRequest(
     GetTableRequest const& r) {
+  if (r.project_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid GetTableRequest: Project Id is empty", GCP_ERROR_INFO());
+  }
+  if (r.dataset_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid GetTableRequest: Dataset Id is empty", GCP_ERROR_INFO());
+  }
+  if (r.table_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid GetTableRequest: Table Id is empty", GCP_ERROR_INFO());
+  }
   auto const& opts = internal::CurrentOptions();
 
   rest_internal::RestRequest request;
@@ -94,6 +106,15 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
 
 StatusOr<rest_internal::RestRequest> BuildRestRequest(
     ListTablesRequest const& r) {
+  if (r.project_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid ListTablesRequest: Project Id is empty", GCP_ERROR_INFO());
+  }
+  if (r.dataset_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid ListTablesRequest: Dataset Id is empty", GCP_ERROR_INFO());
+  }
+
   rest_internal::RestRequest request;
   auto const& opts = internal::CurrentOptions();
 
