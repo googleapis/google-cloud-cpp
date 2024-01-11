@@ -17,6 +17,7 @@
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/async_rest_polling_loop.h"
 #include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/log.h"
