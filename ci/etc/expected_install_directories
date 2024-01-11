@@ -968,6 +968,10 @@
 ./include/google/cloud/servicedirectory/v1
 ./include/google/cloud/servicedirectory/v1/internal
 ./include/google/cloud/servicedirectory/v1/mocks
+./include/google/cloud/servicehealth
+./include/google/cloud/servicehealth/v1
+./include/google/cloud/servicehealth/v1/internal
+./include/google/cloud/servicehealth/v1/mocks
 ./include/google/cloud/servicemanagement
 ./include/google/cloud/servicemanagement/mocks
 ./include/google/cloud/servicemanagement/v1
@@ -1273,6 +1277,7 @@
 ./lib64/cmake/google_cloud_cpp_securitycenter
 ./lib64/cmake/google_cloud_cpp_servicecontrol
 ./lib64/cmake/google_cloud_cpp_servicedirectory
+./lib64/cmake/google_cloud_cpp_servicehealth
 ./lib64/cmake/google_cloud_cpp_servicemanagement
 ./lib64/cmake/google_cloud_cpp_serviceusage
 ./lib64/cmake/google_cloud_cpp_shell
