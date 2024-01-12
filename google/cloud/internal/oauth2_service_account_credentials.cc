@@ -43,10 +43,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& default_token_uri) {
   auto credentials = nlohmann::json::parse(content, nullptr, false);
   if (credentials.is_discarded()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials,"
-                  "parsing failed on data loaded from " +
-                      source);
+    return internal::InvalidArgumentError(
+        "Invalid ServiceAccountCredentials,"
+        "parsing failed on data loaded from " +
+        source);
   }
   std::string const private_key_id_key = "private_key_id";
   std::string const private_key_key = "private_key";
@@ -55,26 +55,23 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
   std::string const universe_domain_key = "universe_domain";
   for (auto const& key : {private_key_key, client_email_key}) {
     if (credentials.count(key) == 0) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid ServiceAccountCredentials, the " +
-                        std::string(key) +
-                        " field is missing on data loaded from " + source);
+      return internal::InvalidArgumentError(
+          "Invalid ServiceAccountCredentials, the " + std::string(key) +
+          " field is missing on data loaded from " + source);
     }
     if (credentials.value(key, "").empty()) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid ServiceAccountCredentials, the " +
-                        std::string(key) +
-                        " field is empty on data loaded from " + source);
+      return internal::InvalidArgumentError(
+          "Invalid ServiceAccountCredentials, the " + std::string(key) +
+          " field is empty on data loaded from " + source);
     }
   }
   // The token_uri and universe_domain fields may be missing, but may not be
   // empty.
   for (auto const& key : {token_uri_key, universe_domain_key}) {
     if (credentials.count(key) != 0 && credentials.value(key, "").empty()) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid ServiceAccountCredentials, the " +
-                        std::string(key) +
-                        " field is empty on data loaded from " + source);
+      return internal::InvalidArgumentError(
+          "Invalid ServiceAccountCredentials, the " + std::string(key) +
+          " field is empty on data loaded from " + source);
     }
   }
   return ServiceAccountCredentialsInfo{
