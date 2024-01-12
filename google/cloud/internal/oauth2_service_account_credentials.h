@@ -50,6 +50,7 @@ struct ServiceAccountCredentialsInfo {
   // See https://developers.google.com/identity/protocols/OAuth2ServiceAccount.
   absl::optional<std::string> subject;
   bool enable_self_signed_jwt;
+  absl::optional<std::string> universe_domain;
 };
 
 /// Indicates whether or not to use a self-signed JWT or issue a request to
@@ -229,6 +230,8 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
   std::string AccountEmail() const override { return info_.client_email; }
 
   std::string KeyId() const override { return info_.private_key_id; }
+
+  StatusOr<std::string> universe_domain() const override;
 
  private:
   bool UseOAuth();
