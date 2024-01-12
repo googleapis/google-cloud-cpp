@@ -98,7 +98,7 @@ TEST(PullAckHandlerTest, AckSimple) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
+      cq, mock, subscription, "test-ack-id", 42,
       std::make_shared<MockPullLeaseManager>());
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->ack();
@@ -123,7 +123,7 @@ TEST(PullAckHandlerTest, AckPermanentError) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
+      cq, mock, subscription, "test-ack-id", 42,
       std::make_shared<MockPullLeaseManager>());
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->ack();
@@ -148,7 +148,7 @@ TEST(PullAckHandlerTest, NackSimple) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
+      cq, mock, subscription, "test-ack-id", 42,
       std::make_shared<MockPullLeaseManager>());
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->nack();
@@ -175,7 +175,7 @@ TEST(PullAckHandlerTest, NackPermanentError) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
+      cq, mock, subscription, "test-ack-id", 42,
       std::make_shared<MockPullLeaseManager>());
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->nack();
@@ -191,8 +191,8 @@ TEST(PullAckHandlerTest, StartsLeaseManager) {
   auto cq = MakeMockCompletionQueue(aseq);
   auto lm = std::make_shared<MockPullLeaseManager>();
   EXPECT_CALL(*lm, StartLeaseLoop()).Times(1);
-  auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42, lm);
+  auto handler = std::make_unique<DefaultPullAckHandler>(cq, mock, subscription,
+                                                         "test-ack-id", 42, lm);
 }
 
 TEST(AckHandlerTest, Subscription) {
@@ -201,7 +201,7 @@ TEST(AckHandlerTest, Subscription) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42,
+      cq, mock, subscription, "test-ack-id", 42,
       std::make_shared<MockPullLeaseManager>());
 
   EXPECT_EQ(handler->subscription(), subscription);
@@ -212,9 +212,8 @@ TEST(AckHandlerTest, AckId) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler = std::make_unique<DefaultPullAckHandler>(
-      cq, mock, MakeTestOptions(),
-      pubsub::Subscription("test-project", "test-subscription"), "test-ack-id",
-      42, std::make_shared<MockPullLeaseManager>());
+      cq, mock, pubsub::Subscription("test-project", "test-subscription"),
+      "test-ack-id", 42, std::make_shared<MockPullLeaseManager>());
 
   EXPECT_EQ(handler->ack_id(), "test-ack-id");
 }
