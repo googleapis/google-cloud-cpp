@@ -206,21 +206,23 @@ TEST(ComputeEngineCredentialsTest, ParseMetadataServerResponse) {
     std::string payload;
     ServiceAccountMetadata expected;
   } cases[] = {
-      {R"js({"email": "foo@bar.baz", "scopes": ["scope1", "scope2"]})js",
-       ServiceAccountMetadata{{"scope1", "scope2"}, "foo@bar.baz", {}}},
+      {R"js({"email": "foo@bar.baz", "scopes": ["scope1", "scope2"], "universe_domain": "test-ud.net"})js",
+       ServiceAccountMetadata{
+           {"scope1", "scope2"}, "foo@bar.baz", "test-ud.net"}},
       {R"js({"email": "foo@bar.baz", "scopes": "scope1\nscope2\n"})js",
-       ServiceAccountMetadata{{"scope1", "scope2"}, "foo@bar.baz", {}}},
+       ServiceAccountMetadata{
+           {"scope1", "scope2"}, "foo@bar.baz", "googleapis.com"}},
       // Ignore invalid formats
-      {R"js({"email": ["1", "2"], "scopes": ["scope1", "scope2"]})js",
+      {R"js({"email": ["1", "2"], "scopes": ["scope1", "scope2"], "universe_domain": true})js",
        ServiceAccountMetadata{{"scope1", "scope2"}, "", {}}},
-      {R"js({"email": "foo@bar", "scopes": {"foo": "bar"}})js",
+      {R"js({"email": "foo@bar", "scopes": {"foo": "bar"}, "universe_domain": 42})js",
        ServiceAccountMetadata{{}, "foo@bar", {}}},
       // Ignore missing fields
       {R"js({"scopes": ["scope1", "scope2"]})js",
-       ServiceAccountMetadata{{"scope1", "scope2"}, "", {}}},
+       ServiceAccountMetadata{{"scope1", "scope2"}, "", "googleapis.com"}},
       {R"js({"email": "foo@bar.baz"})js",
-       ServiceAccountMetadata{{}, "foo@bar.baz", {}}},
-      {R"js({})js", ServiceAccountMetadata{{}, "", {}}},
+       ServiceAccountMetadata{{}, "foo@bar.baz", "googleapis.com"}},
+      {R"js({})js", ServiceAccountMetadata{{}, "", "googleapis.com"}},
   };
 
   for (auto const& test : cases) {
@@ -238,6 +240,7 @@ TEST(ComputeEngineCredentialsTest, ParseMetadataServerResponse) {
     EXPECT_EQ(metadata.email, test.expected.email);
     EXPECT_THAT(metadata.scopes,
                 UnorderedElementsAreArray(test.expected.scopes));
+    EXPECT_EQ(metadata.universe_domain, test.expected.universe_domain);
   }
 }
 

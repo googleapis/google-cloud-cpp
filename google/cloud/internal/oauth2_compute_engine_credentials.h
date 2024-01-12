@@ -19,6 +19,7 @@
 #include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include <chrono>
 #include <mutex>
 #include <string>
@@ -141,15 +142,16 @@ class ComputeEngineCredentials : public Credentials {
   std::string RetrieveServiceAccountInfo() const;
   std::string RetrieveServiceAccountInfo(
       std::lock_guard<std::mutex> const&) const;
+  StatusOr<std::string> RetrieveUniverseDomain(
+      std::lock_guard<std::mutex> const&, Options const& options) const;
 
   Options options_;
   HttpClientFactory client_factory_;
   mutable std::mutex mu_;
   mutable bool service_account_retrieved_ = false;
-  mutable bool universe_domain_retrieved_ = false;
   mutable std::set<std::string> scopes_;
   mutable std::string service_account_email_;
-  mutable std::string universe_domain_;
+  mutable absl::optional<std::string> universe_domain_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -122,6 +122,7 @@ ServiceAccountMetadata ParseMetadataServerResponse(std::string const& payload) {
   auto body = nlohmann::json::parse(payload, nullptr, false);
   // Parse the body, ignoring invalid or missing values.
   auto scopes = [&]() -> std::set<std::string> {
+    // TODO(#13436): refactor to use iterator in the JSON.
     if (!body.contains("scopes")) return {};
     auto const& s = body["scopes"];
     if (s.is_string()) {
@@ -138,14 +139,19 @@ ServiceAccountMetadata ParseMetadataServerResponse(std::string const& payload) {
     return result;
   };
   auto email = [&]() -> std::string {
+    // TODO(#13436): refactor to use iterator in the JSON.
     if (!body.contains("email") || !body["email"].is_string()) return {};
     return body.value("email", "");
   };
   auto universe_domain = [&]() -> std::string {
-    if (!body.contains("universe_domain") ||
-        !body["universe_domain"].is_string())
-      return {};
-    return body.value("universe_domain", "");
+    auto iter = body.find("universe_domain");
+    if (iter == body.end()) {
+      return GoogleDefaultUniverseDomain();
+    }
+    // If the universe_domain field exists, but is the incorrect type, we don't
+    // return the GDU in order to avoid leaking any auth data.
+    if (!iter->is_string()) return {};
+    return *iter;
   };
   return ServiceAccountMetadata{scopes(), email(), universe_domain()};
 }
@@ -209,15 +215,20 @@ std::string ComputeEngineCredentials::AccountEmail() const {
 }
 
 StatusOr<std::string> ComputeEngineCredentials::universe_domain() const {
-  // Fetch the universe domain only once.
-  if (universe_domain_retrieved_) return universe_domain_;
-  return universe_domain(Options{});
+  std::lock_guard<std::mutex> lock(mu_);
+  return RetrieveUniverseDomain(lock, Options{});
 }
 
 StatusOr<std::string> ComputeEngineCredentials::universe_domain(
     google::cloud::Options const& options) const {
+  std::lock_guard<std::mutex> lock(mu_);
+  return RetrieveUniverseDomain(lock, options);
+}
+
+StatusOr<std::string> ComputeEngineCredentials::RetrieveUniverseDomain(
+    std::lock_guard<std::mutex> const&, Options const& options) const {
   // Fetch the universe domain only once.
-  if (universe_domain_retrieved_) return universe_domain_;
+  if (universe_domain_.has_value()) return *universe_domain_;
 
   Options merged_options = internal::MergeOptions(
       options, internal::MergeOptions(
@@ -249,8 +260,7 @@ StatusOr<std::string> ComputeEngineCredentials::universe_domain(
   auto metadata = ParseMetadataServerResponse(**response);
   if (!metadata) return std::move(metadata).status();
   universe_domain_ = std::move(metadata->universe_domain);
-  universe_domain_retrieved_ = true;
-  return universe_domain_;
+  return *universe_domain_;
 }
 
 std::string ComputeEngineCredentials::service_account_email() const {
