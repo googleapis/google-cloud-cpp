@@ -41,7 +41,7 @@ DefaultPullAckHandler::DefaultPullAckHandler(CompletionQueue cq,
 }
 
 DefaultPullAckHandler::DefaultPullAckHandler(
-    CompletionQueue cq, std::weak_ptr<SubscriberStub> w, Options const& options,
+    CompletionQueue cq, std::weak_ptr<SubscriberStub> w, Options const&,
     pubsub::Subscription subscription, std::string ack_id,
     std::int32_t delivery_attempt, std::shared_ptr<PullLeaseManager> manager)
     : cq_(std::move(cq)),
