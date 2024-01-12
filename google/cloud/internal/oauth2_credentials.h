@@ -80,13 +80,13 @@ class Credentials {
   /// Return the universe domain from the credentials. If no explicit value is
   /// present, it is assumed to be "googleapis.com". If additional rpc calls are
   /// required, the default retry policy is used.
-  virtual std::string universe_domain() const;
+  virtual StatusOr<std::string> universe_domain() const;
 
   /// Return the universe domain from the credentials. If no explicit value is
   /// present, it is assumed to be "googleapis.com". If additional rpc calls are
   /// required, the `UniverseDomainRetryPolicyOption`, if present in the
   /// `Options`, is used. Otherwise the default retry policy is used.
-  virtual std::string universe_domain(
+  virtual StatusOr<std::string> universe_domain(
       google::cloud::Options const& options) const;
 };
 

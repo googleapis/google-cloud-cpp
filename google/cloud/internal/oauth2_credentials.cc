@@ -27,11 +27,12 @@ StatusOr<std::vector<std::uint8_t>> Credentials::SignBlob(
                 "The current credentials cannot sign blobs locally");
 }
 
-std::string Credentials::universe_domain() const {
+StatusOr<std::string> Credentials::universe_domain() const {
   return GoogleDefaultUniverseDomain();
 }
 
-std::string Credentials::universe_domain(google::cloud::Options const&) const {
+StatusOr<std::string> Credentials::universe_domain(
+    google::cloud::Options const&) const {
   return universe_domain();
 }
 

@@ -84,7 +84,7 @@ class ExternalAccountCredentials : public oauth2_internal::Credentials {
   StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
 
-  std::string universe_domain(Options const&) const override {
+  StatusOr<std::string> universe_domain(Options const&) const override {
     return info_.universe_domain;
   }
 

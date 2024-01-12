@@ -32,6 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct ServiceAccountMetadata {
   std::set<std::string> scopes;
   std::string email;
+  std::string universe_domain;
 };
 
 /// Parses a metadata server response JSON string into a ServiceAccountMetadata.
@@ -98,6 +99,18 @@ class ComputeEngineCredentials : public Credentials {
   std::string AccountEmail() const override;
 
   /**
+   * Returns the universe domain from the Metadata Server (MDS).
+   * RPCs are made using `UniverseDomainRetryPolicyOption` and
+   * `UniverseDomainBackoffPolicyOption` if specified,
+   * preferring per call `Options` over `Options` used to construct the
+   * `ComputeEngineCredentials` instance. Otherwise, the default policies are
+   * used.
+   */
+  StatusOr<std::string> universe_domain() const override;
+  StatusOr<std::string> universe_domain(
+      google::cloud::Options const& options) const override;
+
+  /**
    * Returns the email or alias of this credential's service account.
    *
    * @note This class must query the Compute Engine instance's metadata server
@@ -132,9 +145,11 @@ class ComputeEngineCredentials : public Credentials {
   Options options_;
   HttpClientFactory client_factory_;
   mutable std::mutex mu_;
-  mutable bool metadata_retrieved_ = false;
+  mutable bool service_account_retrieved_ = false;
+  mutable bool universe_domain_retrieved_ = false;
   mutable std::set<std::string> scopes_;
   mutable std::string service_account_email_;
+  mutable std::string universe_domain_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
