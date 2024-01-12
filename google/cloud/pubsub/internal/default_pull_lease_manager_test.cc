@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/fake_clock.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -30,6 +31,7 @@ namespace {
 
 using ::google::cloud::pubsub_testing::MockSubscriberStub;
 using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::FakeSystemClock;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::pubsub::v1::ModifyAckDeadlineRequest;
 using ::testing::_;
@@ -42,9 +44,6 @@ using ::testing::Le;
 using ::testing::Pointee;
 using ::testing::Property;
 using ::testing::Return;
-
-using MockClock =
-    ::testing::MockFunction<std::chrono::system_clock::time_point()>;
 
 Options MakeTestOptions() {
   return google::cloud::pubsub_testing::MakeTestOptions(
@@ -72,13 +71,10 @@ Status PermanentError() {
 TEST(DefaultPullLeaseManager, SimpleLeaseLoop) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
-  // Use a mock clock where the time is controlled by a test variable. We do not
-  // really care how many times or exactly when is the clock called, we just
-  // want to control the passage of time.
   auto const start = std::chrono::system_clock::now();
   auto current_time = start;
-  MockClock clock;
-  EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
+  auto clock = std::make_shared<FakeSystemClock>();
+  clock->SetTime(current_time);
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
@@ -133,33 +129,33 @@ TEST(DefaultPullLeaseManager, SimpleLeaseLoop) {
         });
       });
   auto manager = std::make_shared<DefaultPullLeaseManager>(
-      cq, mock, options, subscription, "test-ack-id", clock.AsStdFunction());
+      cq, mock, options, subscription, "test-ack-id", clock);
   manager->StartLeaseLoop();
   auto pending = aseq.PopFrontWithName();
   EXPECT_EQ(pending.second, "AsyncModifyAckDeadline");
   pending.first.set_value(true);
   pending = aseq.PopFrontWithName();
   EXPECT_EQ(pending.second, "MakeRelativeTimer");
-  EXPECT_THAT(manager->current_lease(), current_time + kLeaseExtension);
+  EXPECT_THAT(manager->current_lease(), clock->Now() + kLeaseExtension);
 
-  current_time = current_time + kLeaseExtension - kLeaseSlack;
+  clock->AdvanceTime(kLeaseExtension - kLeaseSlack);
   pending.first.set_value(true);
   pending = aseq.PopFrontWithName();
   EXPECT_EQ(pending.second, "AsyncModifyAckDeadline");
   pending.first.set_value(true);
   pending = aseq.PopFrontWithName();
   EXPECT_EQ(pending.second, "MakeRelativeTimer");
-  EXPECT_THAT(manager->current_lease(), current_time + kLeaseExtension);
+  EXPECT_THAT(manager->current_lease(), clock->Now() + kLeaseExtension);
 
   // This is close to the end of the lifetime
-  current_time = current_time + kLeaseExtension - kLeaseSlack;
+  clock->AdvanceTime(kLeaseExtension - kLeaseSlack);
   pending.first.set_value(true);
   pending = aseq.PopFrontWithName();
   EXPECT_EQ(pending.second, "AsyncModifyAckDeadline");
   pending.first.set_value(true);
   pending = aseq.PopFrontWithName();
   EXPECT_EQ(pending.second, "MakeRelativeTimer");
-  EXPECT_THAT(manager->current_lease(), current_time + kLastLeaseExtension);
+  EXPECT_THAT(manager->current_lease(), clock->Now() + kLastLeaseExtension);
 
   // Terminate the loop. With exceptions disabled abandoning a future with a
   // continuation results in a crash. In non-test programs, the completion queue
@@ -170,19 +166,16 @@ TEST(DefaultPullLeaseManager, SimpleLeaseLoop) {
 TEST(DefaultPullLeaseManager, StartLeaseLoopAlreadyReleased) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
-  // Use a mock clock where the time is controlled by a test variable. We do not
-  // really care how many times or exactly when is the clock called, we just
-  // want to control the passage of time.
   auto current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
+  auto clock = std::make_shared<FakeSystemClock>();
+  clock->SetTime(current_time);
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
   auto manager = std::make_shared<DefaultPullLeaseManager>(
       cq, mock, MakeTestOptions(), subscription, "test-ack-id",
-      clock.AsStdFunction());
+      std::move(clock));
   // This can happen if the subscriber is shutdown, but the application manages
   // to hold to a `AckHandler` reference. In this case, we expect the loop to
   // stop (or have no effect).
@@ -193,22 +186,19 @@ TEST(DefaultPullLeaseManager, StartLeaseLoopAlreadyReleased) {
 TEST(DefaultPullLeaseManager, StartLeaseLoopAlreadyPastMaxExtension) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
-  // Use a mock clock where the time is controlled by a test variable. We do not
-  // really care how many times or exactly when is the clock called, we just
-  // want to control the passage of time.
   auto current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
+  auto clock = std::make_shared<FakeSystemClock>();
+  clock->SetTime(current_time);
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
   auto manager = std::make_shared<DefaultPullLeaseManager>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id",
-      clock.AsStdFunction());
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", clock);
   EXPECT_THAT(manager->lease_deadline(),
               Eq(current_time + std::chrono::seconds(300)));
-  current_time = current_time + std::chrono::seconds(301);
+  // See the MakeTestOptions() for the magic number.
+  clock->AdvanceTime(std::chrono::seconds(301));
   manager->StartLeaseLoop();
   // This is a "AsyncModifyAckDeadline() is not called" test.
 }
@@ -216,23 +206,20 @@ TEST(DefaultPullLeaseManager, StartLeaseLoopAlreadyPastMaxExtension) {
 TEST(DefaultPullLeaseManager, StartLeaseLoopTooCloseMaxExtension) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
-  // Use a mock clock where the time is controlled by a test variable. We do not
-  // really care how many times or exactly when is the clock called, we just
-  // want to control the passage of time.
   auto current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
+  auto clock = std::make_shared<FakeSystemClock>();
+  clock->SetTime(current_time);
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
   auto manager = std::make_shared<DefaultPullLeaseManager>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id",
-      clock.AsStdFunction());
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", clock);
   EXPECT_THAT(manager->lease_deadline(),
               Eq(current_time + std::chrono::seconds(300)));
-  current_time =
-      current_time + std::chrono::seconds(299) + std::chrono::milliseconds(500);
+  // See the MakeTestOptions() for the magic number.
+  clock->AdvanceTime(std::chrono::seconds(299) +
+                     std::chrono::milliseconds(500));
   manager->StartLeaseLoop();
   // This is a "AsyncModifyAckDeadline() is not called" test.
 }
@@ -240,21 +227,17 @@ TEST(DefaultPullLeaseManager, StartLeaseLoopTooCloseMaxExtension) {
 TEST(DefaultPullLeaseManager, StartLeaseLoopAlreadyPastCurrentExtension) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
-  // Use a mock clock where the time is controlled by a test variable. We do not
-  // really care how many times or exactly when is the clock called, we just
-  // want to control the passage of time.
   auto current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
+  auto clock = std::make_shared<FakeSystemClock>();
+  clock->SetTime(current_time);
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
   auto manager = std::make_shared<DefaultPullLeaseManager>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id",
-      clock.AsStdFunction());
+      cq, mock, MakeTestOptions(), subscription, "test-ack-id", clock);
   EXPECT_GT(manager->current_lease(), current_time);
-  current_time = manager->current_lease();
+  clock->SetTime(manager->current_lease());
   manager->StartLeaseLoop();
   // This is a "AsyncModifyAckDeadline() is not called" test.
 }
@@ -263,8 +246,8 @@ TEST(DefaultPullLeaseManager, InitializeDeadlines) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
 
   auto current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
+  auto clock = std::make_shared<FakeSystemClock>();
+  clock->SetTime(current_time);
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
@@ -276,7 +259,7 @@ TEST(DefaultPullLeaseManager, InitializeDeadlines) {
               .set<pubsub::MaxDeadlineTimeOption>(std::chrono::seconds(300))
               .set<pubsub::MinDeadlineExtensionOption>(
                   std::chrono::seconds(10))),
-      subscription, "test-ack-id", clock.AsStdFunction());
+      subscription, "test-ack-id", clock);
   EXPECT_EQ(manager->lease_deadline(),
             current_time + std::chrono::seconds(300));
   EXPECT_EQ(manager->LeaseRefreshPeriod(), std::chrono::seconds(9));
@@ -288,7 +271,7 @@ TEST(DefaultPullLeaseManager, InitializeDeadlines) {
               .set<pubsub::MaxDeadlineTimeOption>(std::chrono::seconds(300))
               .set<pubsub::MaxDeadlineExtensionOption>(
                   std::chrono::seconds(30))),
-      subscription, "test-ack-id", clock.AsStdFunction());
+      subscription, "test-ack-id", clock);
   EXPECT_EQ(manager->lease_deadline(),
             current_time + std::chrono::seconds(300));
   EXPECT_EQ(manager->LeaseRefreshPeriod(), std::chrono::seconds(29));
@@ -301,7 +284,7 @@ TEST(DefaultPullLeaseManager, InitializeDeadlines) {
               .set<pubsub::MinDeadlineExtensionOption>(std::chrono::seconds(10))
               .set<pubsub::MaxDeadlineExtensionOption>(
                   std::chrono::seconds(30))),
-      subscription, "test-ack-id", clock.AsStdFunction());
+      subscription, "test-ack-id", clock);
   EXPECT_EQ(manager->lease_deadline(),
             current_time + std::chrono::seconds(300));
   EXPECT_EQ(manager->LeaseRefreshPeriod(), std::chrono::seconds(9));
@@ -325,10 +308,10 @@ TEST(DefaultPullLeaseManager, ExtendLeaseDeadlineSimple) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
+  auto clock = std::make_shared<FakeSystemClock>();
+  clock->SetTime(current_time);
   auto manager = std::make_shared<DefaultPullLeaseManager>(
-      cq, mock, options, subscription, "test-ack-id", clock.AsStdFunction());
+      cq, mock, options, subscription, "test-ack-id", std::move(clock));
 
   auto status = manager->ExtendLease(mock, current_time, kLeaseExtension);
   EXPECT_STATUS_OK(status.get());
@@ -344,13 +327,12 @@ TEST(DefaultPullLeaseManager, ExtendLeaseDeadlineExceeded) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  // Set the time for the clock call to after the current time + extension.
-  EXPECT_CALL(clock, Call).WillRepeatedly([&] {
-    return current_time + std::chrono::seconds(11);
-  });
+  auto clock = std::make_shared<FakeSystemClock>();
+  // Set the time for the clock call to after the current time +
+  // extension.
+  clock->SetTime(current_time + std::chrono::seconds(11));
   auto manager = std::make_shared<DefaultPullLeaseManager>(
-      cq, mock, options, subscription, "test-ack-id", clock.AsStdFunction());
+      cq, mock, options, subscription, "test-ack-id", std::move(clock));
 
   auto status = manager->ExtendLease(mock, current_time, kLeaseExtension);
   EXPECT_THAT(status.get(),
@@ -375,10 +357,10 @@ TEST(DefaultPullLeaseManager, ExtendLeasePermanentError) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto current_time = std::chrono::system_clock::now();
-  MockClock clock;
-  EXPECT_CALL(clock, Call).WillRepeatedly([&] { return current_time; });
+  auto clock = std::make_shared<FakeSystemClock>();
+  clock->SetTime(current_time);
   auto manager = std::make_shared<DefaultPullLeaseManager>(
-      cq, mock, options, subscription, "test-ack-id", clock.AsStdFunction());
+      cq, mock, options, subscription, "test-ack-id", std::move(clock));
 
   auto status = manager->ExtendLease(mock, current_time, kLeaseExtension);
   EXPECT_THAT(status.get(),
@@ -390,9 +372,10 @@ TEST(DefaultPullLeaseManager, Subscription) {
   auto mock = std::make_shared<MockSubscriberStub>();
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
-  MockClock clock;
+  auto clock = std::make_shared<FakeSystemClock>();
+  clock->SetTime(std::chrono::system_clock::now());
   auto manager = std::make_shared<DefaultPullLeaseManager>(
-      cq, mock, Options{}, subscription, "test-ack-id", clock.AsStdFunction());
+      cq, mock, Options{}, subscription, "test-ack-id", std::move(clock));
 
   EXPECT_EQ(manager->subscription(), subscription);
 }
@@ -401,11 +384,12 @@ TEST(DefaultPullLeaseManager, AckId) {
   auto mock = std::make_shared<MockSubscriberStub>();
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
-  MockClock clock;
+  auto clock = std::make_shared<FakeSystemClock>();
+  clock->SetTime(std::chrono::system_clock::now());
   auto manager = std::make_shared<DefaultPullLeaseManager>(
       cq, mock, Options{},
       pubsub::Subscription("test-project", "test-subscription"), "test-ack-id",
-      clock.AsStdFunction());
+      std::move(clock));
 
   EXPECT_EQ(manager->ack_id(), "test-ack-id");
 }
