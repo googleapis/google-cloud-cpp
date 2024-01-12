@@ -70,6 +70,10 @@ TEST(PullAckHandlerTest, AckSimple) {
       Property(&AcknowledgeRequest::subscription, subscription.FullName()));
   EXPECT_CALL(*mock, AsyncAcknowledge(_, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  // Since the lease manager is started in the constructor o the ack handler, we
+  // need to match the lease manager calls.
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler =
@@ -100,6 +104,10 @@ TEST(PullAckHandlerTest, TracingEnabled) {
       Property(&AcknowledgeRequest::subscription, subscription.FullName()));
   EXPECT_CALL(*mock, AsyncAcknowledge(_, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  // Since the lease manager is started in the constructor o the ack handler, we
+  // need to match the lease manager calls.
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler =
@@ -123,6 +131,10 @@ TEST(PullAckHandlerTest, TracingDisabled) {
       Property(&AcknowledgeRequest::ack_ids, ElementsAre("test-ack-id")),
       Property(&AcknowledgeRequest::subscription, subscription.FullName()));
   EXPECT_CALL(*mock, AsyncAcknowledge(_, _, request_matcher))
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  // Since the lease manager is started in the constructor o the ack handler, we
+  // need to match the lease manager calls.
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
