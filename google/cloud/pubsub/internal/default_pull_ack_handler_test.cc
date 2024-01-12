@@ -14,7 +14,6 @@
 
 #include "google/cloud/pubsub/internal/default_pull_ack_handler.h"
 #include "google/cloud/pubsub/internal/default_pull_lease_manager.h"
-#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/testing/mock_pull_lease_manager.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
@@ -46,13 +45,6 @@ using ::testing::Return;
 
 using MockClock =
     ::testing::MockFunction<std::chrono::system_clock::time_point()>;
-
-Options MakeTestOptions() {
-  return google::cloud::pubsub_testing::MakeTestOptions(
-      Options{}
-          .set<pubsub::MaxDeadlineTimeOption>(std::chrono::seconds(300))
-          .set<pubsub::MaxDeadlineExtensionOption>(std::chrono::seconds(10)));
-}
 
 CompletionQueue MakeMockCompletionQueue(AsyncSequencer<bool>& aseq) {
   auto mock = std::make_shared<testing_util::MockCompletionQueueImpl>();
