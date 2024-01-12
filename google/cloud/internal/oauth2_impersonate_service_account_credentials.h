@@ -48,7 +48,7 @@ class ImpersonateServiceAccountCredentials
   StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
 
-  std::string universe_domain(Options const& options) const override {
+  StatusOr<std::string> universe_domain(Options const& options) const override {
     return stub_->universe_domain(options);
   }
 
