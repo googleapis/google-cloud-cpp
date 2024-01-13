@@ -138,6 +138,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "securitycenter"
     "servicecontrol"
     "servicedirectory"
+    "servicehealth"
     "servicemanagement"
     "serviceusage"
     "shell"
