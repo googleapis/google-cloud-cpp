@@ -13,11 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_jwt_assertion.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
+#include "google/cloud/internal/oauth2_universe_domain.h"
 #include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/internal/rest_response.h"
 #include <nlohmann/json.hpp>
@@ -42,36 +43,36 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& default_token_uri) {
   auto credentials = nlohmann::json::parse(content, nullptr, false);
   if (credentials.is_discarded()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials,"
-                  "parsing failed on data loaded from " +
-                      source);
+    return internal::InvalidArgumentError(
+        "Invalid ServiceAccountCredentials,"
+        "parsing failed on data loaded from " +
+        source);
   }
   std::string const private_key_id_key = "private_key_id";
   std::string const private_key_key = "private_key";
   std::string const token_uri_key = "token_uri";
   std::string const client_email_key = "client_email";
+  std::string const universe_domain_key = "universe_domain";
   for (auto const& key : {private_key_key, client_email_key}) {
     if (credentials.count(key) == 0) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid ServiceAccountCredentials, the " +
-                        std::string(key) +
-                        " field is missing on data loaded from " + source);
+      return internal::InvalidArgumentError(
+          "Invalid ServiceAccountCredentials, the " + std::string(key) +
+          " field is missing on data loaded from " + source);
     }
     if (credentials.value(key, "").empty()) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid ServiceAccountCredentials, the " +
-                        std::string(key) +
-                        " field is empty on data loaded from " + source);
+      return internal::InvalidArgumentError(
+          "Invalid ServiceAccountCredentials, the " + std::string(key) +
+          " field is empty on data loaded from " + source);
     }
   }
-  // The token_uri field may be missing, but may not be empty:
-  if (credentials.count(token_uri_key) != 0 &&
-      credentials.value(token_uri_key, "").empty()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials, the " +
-                      std::string(token_uri_key) +
-                      " field is empty on data loaded from " + source);
+  // The token_uri and universe_domain fields may be missing, but may not be
+  // empty.
+  for (auto const& key : {token_uri_key, universe_domain_key}) {
+    if (credentials.count(key) != 0 && credentials.value(key, "").empty()) {
+      return internal::InvalidArgumentError(
+          "Invalid ServiceAccountCredentials, the " + std::string(key) +
+          " field is empty on data loaded from " + source);
+    }
   }
   return ServiceAccountCredentialsInfo{
       credentials.value(client_email_key, ""),
@@ -83,7 +84,8 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
       credentials.value(token_uri_key, default_token_uri),
       /*scopes=*/absl::nullopt,
       /*subject=*/absl::nullopt,
-      /*enable_self_signed_jwt=*/true};
+      /*enable_self_signed_jwt=*/true,
+      credentials.value(universe_domain_key, GoogleDefaultUniverseDomain())};
 }
 
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
@@ -224,6 +226,14 @@ StatusOr<std::vector<std::uint8_t>> ServiceAccountCredentials::SignBlob(
   return internal::SignUsingSha256(blob, info_.private_key);
 }
 
+StatusOr<std::string> ServiceAccountCredentials::universe_domain() const {
+  if (!info_.universe_domain.has_value()) {
+    return internal::NotFoundError(
+        "universe_domain is not present in the credentials");
+  }
+  return *info_.universe_domain;
+}
+
 #include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     std::string const& source) {
@@ -327,11 +337,17 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
                                        GoogleOAuthRefreshEndpoint(),
                                        /*scopes=*/{},
                                        /*subject=*/{},
-                                       /*enable_self_signed_jwt=*/false};
+                                       /*enable_self_signed_jwt=*/false,
+                                       /*universe_domain=*/{}};
 }
 #include "google/cloud/internal/diagnostics_pop.inc"
 
 bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {
+  // Custom universe domains are only supported with JWT, not OAuth tokens.
+  if (info.universe_domain.has_value() &&
+      info.universe_domain != GoogleDefaultUniverseDomain()) {
+    return false;
+  }
   if (info.private_key_id == kP12PrivateKeyIdMarker ||
       !info.enable_self_signed_jwt) {
     return true;

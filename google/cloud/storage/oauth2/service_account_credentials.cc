@@ -147,7 +147,7 @@ oauth2_internal::ServiceAccountCredentialsInfo MapServiceAccountCredentialsInfo(
   return {std::move(info.client_email), std::move(info.private_key_id),
           std::move(info.private_key),  std::move(info.token_uri),
           std::move(info.scopes),       std::move(info.subject),
-          enable_self_signed_jwt};
+          enable_self_signed_jwt,       {}};
 }
 
 }  // namespace internal
