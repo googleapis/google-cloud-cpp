@@ -47,6 +47,7 @@ else ()
         async/reader.cc
         async/reader.h
         async/reader_connection.h
+        async/rewriter_connection.h
         async/token.h
         async/writer.cc
         async/writer.h
