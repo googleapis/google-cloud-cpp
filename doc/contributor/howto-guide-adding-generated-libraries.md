@@ -157,6 +157,19 @@ bazel run \
 To generate a library that is initially experimental, add an
 `--experimental_scaffold` flag.
 
+### Update the root files
+
+Manually edit
+[cmake/GoogleCloudCppFeatures.cmake](../../cmake/GoogleCloudCppFeatures.cmake)
+to include the new target. If you are generating a GA library, add it to
+`GOOGLE_CLOUD_CPP_GA_LIBRARIES`. Otherwise, if you are generating an
+experimental library, add it to `GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` and
+note in a comment when the library was generated.
+
+Update [libraries.bzl](../../libraries.bzl) to include the new library. While
+this can be done by running a cmake-based build, it is fastest to edit the file
+manually.
+
 ### Fix formatting of existing libraries and the generated code
 
 ```shell
@@ -173,7 +186,7 @@ tree google/cloud/$library
 ### Commit all the generated files
 
 ```shell
-git add external ci "google/cloud/${library}"
+git add external ci "google/cloud/${library}" README.md
 git commit -m"Run generators and format their outputs"
 ```
 
@@ -204,19 +217,6 @@ knows about one such subdirectory. You may need to manually update the
 - `google/cloud/${library}/CMakeLists.txt`
 
 [#10237] offers one way to automate this step.
-
-### Update the root files
-
-Manually edit
-[cmake/GoogleCloudCppFeatures.cmake](../../cmake/GoogleCloudCppFeatures.cmake)
-to include the new target. If you are generating a GA library, add it to
-`GOOGLE_CLOUD_CPP_GA_LIBRARIES`. Otherwise, if you are generating an
-experimental library, add it to `GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` and
-note in a comment when the library was generated.
-
-Update [libraries.bzl](../../libraries.bzl) to include the new library. While
-this can be done by running a cmake-based build, it is fastest to edit the file
-manually.
 
 ### Update the quickstart
 
