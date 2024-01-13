@@ -19,5 +19,6 @@
 google_cloud_cpp_storage_grpc_mocks_hdrs = [
     "mocks/mock_async_connection.h",
     "mocks/mock_async_reader_connection.h",
+    "mocks/mock_async_rewriter_connection.h",
     "mocks/mock_async_writer_connection.h",
 ]
