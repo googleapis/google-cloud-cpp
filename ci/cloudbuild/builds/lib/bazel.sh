@@ -68,6 +68,7 @@ function bazel::common_args() {
     "--cache_test_results=$(should_cache_test_results)"
   )
   if [[ -n "${BAZEL_REMOTE_CACHE:-}" ]]; then
+    args+=("--remote_download_minimal")
     args+=("--remote_cache=${BAZEL_REMOTE_CACHE}")
     args+=("--google_default_credentials")
     # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
