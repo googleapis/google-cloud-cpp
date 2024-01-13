@@ -1,9 +1,8 @@
 # Service Health API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Service Health API][cloud-service-docs], a service to Personalized Service
-Health helps you gain visibility into disruptive events impacting Google Cloud
-products.
+[Service Health API][cloud-service-docs], a service that helps you gain
+visibility into disruptive events impacting Google Cloud products.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -18,25 +17,25 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/servicehealth/v1/ EDIT HERE _client.h"
+#include "google/cloud/servicehealth/v1/service_health_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], argv[2]);
+  auto const location = google::cloud::Location(argv[1], "global");
 
   namespace servicehealth = ::google::cloud::servicehealth_v1;
-  auto client = servicehealth::ServiceClient(
-      servicehealth::MakeServiceConnection());  // EDIT HERE
+  auto client = servicehealth::ServiceHealthClient(
+      servicehealth::MakeServiceHealthConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto e : client.ListEvents(location.FullName())) {
+    if (!e) throw std::move(e).status();
+    std::cout << e->DebugString() << "\n";
   }
 
   return 0;
@@ -56,6 +55,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/servicehealth
+[cloud-service-docs]: https://cloud.google.com/service-health/docs/overview
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/servicehealth/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/servicehealth

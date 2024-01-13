@@ -26,11 +26,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     google_cloud_cpp_add_common_options(servicehealth_quickstart)
     add_test(
         NAME servicehealth_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:servicehealth_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
-    )
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:servicehealth_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(servicehealth_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

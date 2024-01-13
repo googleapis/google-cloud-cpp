@@ -2,8 +2,9 @@
 
 @mainpage Service Health API C++ Client Library
 
-An idiomatic C++ client library for the [Service Health API][cloud-service-docs], a service
-to Personalized Service Health helps you gain visibility into disruptive events impacting Google Cloud products.
+An idiomatic C++ client library for the [Service Health API][cloud-service-docs],
+a service that helps you gain visibility into disruptive events impacting Google
+Cloud products.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -41,6 +42,6 @@ application.
 - @ref servicehealth-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/servicehealth
+[cloud-service-docs]: https://cloud.google.com/service-health/docs/overview
 
 */
