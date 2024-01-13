@@ -9,6 +9,11 @@ environment variables are convenient when troubleshooting problems.
 @section servicehealth-env-endpoint Endpoint Overrides
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_SERVICE_HEALTH_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "servicehealth.googleapis.com")
+  used by `MakeServiceHealthConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption

@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `servicehealth_v1::ServiceHealthClient`:
+
+@snippet service_health_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page servicehealth_v1::ServiceHealthClient-endpoint-snippet Override servicehealth_v1::ServiceHealthClient Endpoint Configuration
+
+@snippet google/cloud/servicehealth/v1/samples/service_health_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

@@ -17,6 +17,35 @@ this library.
 
 <!-- inject-quickstart-start -->
 
+```cc
+#include "google/cloud/servicehealth/v1/ EDIT HERE _client.h"
+#include "google/cloud/location.h"
+#include <iostream>
+
+int main(int argc, char* argv[]) try {
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+    return 1;
+  }
+
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
+  namespace servicehealth = ::google::cloud::servicehealth_v1;
+  auto client = servicehealth::ServiceClient(
+      servicehealth::MakeServiceConnection());  // EDIT HERE
+
+  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+    if (!r) throw std::move(r).status();
+    std::cout << r->DebugString() << "\n";
+  }
+
+  return 0;
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
+  return 1;
+}
+```
+
 <!-- inject-quickstart-end -->
 
 ## More Information
