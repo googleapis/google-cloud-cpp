@@ -272,6 +272,14 @@ StorageRoundRobin::AsyncWriteObject(
   return Child()->AsyncWriteObject(cq, std::move(context));
 }
 
+future<StatusOr<google::storage::v2::RewriteResponse>>
+StorageRoundRobin::AsyncRewriteObject(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::storage::v2::RewriteObjectRequest const& request) {
+  return Child()->AsyncRewriteObject(cq, std::move(context), request);
+}
+
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageRoundRobin::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,

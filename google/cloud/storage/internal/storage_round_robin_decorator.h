@@ -201,6 +201,11 @@ class StorageRoundRobin : public StorageStub {
   AsyncWriteObject(google::cloud::CompletionQueue const& cq,
                    std::shared_ptr<grpc::ClientContext> context) override;
 
+  future<StatusOr<google::storage::v2::RewriteResponse>> AsyncRewriteObject(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::storage::v2::RewriteObjectRequest const& request) override;
+
   future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
   AsyncStartResumableWrite(
       google::cloud::CompletionQueue& cq,

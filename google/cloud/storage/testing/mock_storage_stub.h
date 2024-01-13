@@ -188,6 +188,12 @@ class MockStorageStub : public storage_internal::StorageStub {
                std::shared_ptr<grpc::ClientContext>,
                google::storage::v2::ReadObjectRequest const&),
               (override));
+  MOCK_METHOD(future<StatusOr<google::storage::v2::RewriteResponse>>,
+              AsyncRewriteObject,
+              (google::cloud::CompletionQueue&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::storage::v2::RewriteObjectRequest const&),
+              (override));
   using AsyncWriteObjectReturnType =
       std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
           google::storage::v2::WriteObjectRequest,

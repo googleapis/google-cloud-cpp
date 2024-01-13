@@ -825,6 +825,33 @@ StorageMetadata::AsyncWriteObject(
   return child_->AsyncWriteObject(cq, std::move(context));
 }
 
+future<StatusOr<google::storage::v2::RewriteResponse>>
+StorageMetadata::AsyncRewriteObject(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::storage::v2::RewriteObjectRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(2);
+
+  if (!request.source_bucket().empty()) {
+    params.push_back(absl::StrCat(
+        "source_bucket=", internal::UrlEncode(request.source_bucket())));
+  }
+
+  if (!request.destination_bucket().empty()) {
+    params.push_back(absl::StrCat(
+        "bucket=", internal::UrlEncode(request.destination_bucket())));
+  }
+
+  if (params.empty()) {
+    SetMetadata(*context, internal::CurrentOptions());
+  } else {
+    SetMetadata(*context, internal::CurrentOptions(),
+                absl::StrJoin(params, "&"));
+  }
+  return child_->AsyncRewriteObject(cq, std::move(context), request);
+}
+
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageMetadata::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,

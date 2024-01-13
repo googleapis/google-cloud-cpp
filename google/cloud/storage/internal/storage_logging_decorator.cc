@@ -501,6 +501,20 @@ StorageLogging::AsyncWriteObject(google::cloud::CompletionQueue const& cq,
   return stream;
 }
 
+future<StatusOr<google::storage::v2::RewriteResponse>>
+StorageLogging::AsyncRewriteObject(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::storage::v2::RewriteObjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::storage::v2::RewriteObjectRequest const& request) {
+        return child_->AsyncRewriteObject(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageLogging::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,
