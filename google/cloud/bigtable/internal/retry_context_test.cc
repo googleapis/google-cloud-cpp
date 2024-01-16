@@ -61,7 +61,7 @@ TEST_F(RetryContextTest, StartsEmpty) {
 
   grpc::ClientContext c;
   retry_context.PreCall(c);
-  auto headers = SimulateRequest(retry_context);
+  auto headers = metadata_fixture_.GetMetadata(c);
   EXPECT_THAT(headers, IsEmpty());
 }
 

@@ -51,11 +51,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class RetryContext {
  public:
+  // Adds stored bigtable cookies as client metadata.
   void PreCall(grpc::ClientContext& context) const;
+  // Stores bigtable cookies returned as server metadata.
   void PostCall(grpc::ClientContext const& context);
 
  private:
-  // Add cookies that start with "x-goog-cbt-cookie" to the cookie jar.
+  // Adds cookies that start with "x-goog-cbt-cookie" to the cookie jar.
   void ProcessMetadata(
       std::multimap<grpc::string_ref, grpc::string_ref> const& metadata);
 
