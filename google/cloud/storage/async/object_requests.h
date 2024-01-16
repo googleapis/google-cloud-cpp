@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
 #include "absl/strings/cord.h"
+#include "absl/types/optional.h"
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -299,6 +300,76 @@ class ComposeObjectRequest {
  protected:
   friend class storage_internal::AsyncConnectionImpl;
   storage::internal::ComposeObjectRequest impl_;
+};
+
+/**
+ * A request to compose multiple objects into a single object.
+ *
+ * This class can hold all the mandatory and optional parameters to compose
+ * objects. This class is in the public API because it is required for mocking.
+ */
+class RewriteObjectRequest {
+ public:
+  RewriteObjectRequest() = default;
+  RewriteObjectRequest(std::string source_bucket, std::string source_object,
+                       std::string destination_bucket,
+                       std::string destination_object)
+      : impl_(std::move(source_bucket), std::move(source_object),
+              std::move(destination_bucket), std::move(destination_object),
+              /*rewrite_token=*/std::string{}) {}
+
+  std::string const& source_bucket() const { return impl_.source_bucket(); }
+  std::string const& source_object() const { return impl_.source_object(); }
+  std::string const& destination_bucket() const {
+    return impl_.destination_bucket();
+  }
+  std::string const& destination_object() const {
+    return impl_.destination_object();
+  }
+  RewriteObjectRequest& set_rewrite_token(std::string t) & {
+    impl_.set_rewrite_token(std::move(t));
+    return *this;
+  }
+  RewriteObjectRequest&& set_rewrite_token(std::string t) && {
+    return std::move(set_rewrite_token(std::move(t)));
+  }
+
+  template <typename... T>
+  RewriteObjectRequest& set_multiple_options(T&&... o) & {
+    impl_.set_multiple_options(std::forward<T>(o)...);
+    return *this;
+  }
+  template <typename... T>
+  RewriteObjectRequest&& set_multiple_options(T&&... o) && {
+    return std::move(set_multiple_options(std::forward<T>(o)...));
+  }
+
+  template <typename T>
+  bool HasOption() const {
+    return impl_.HasOption<T>();
+  }
+  template <typename T>
+  T GetOption() const {
+    return impl_.GetOption<T>();
+  }
+
+ protected:
+  friend class storage_internal::AsyncConnectionImpl;
+  storage::internal::RewriteObjectRequest impl_;
+};
+
+/**
+ * The result of a (maybe partial) object rewrite.
+ *
+ * Object rewrites may require one or more requests. The final request returns
+ * the rewritten object metadata. Previous requests return the number of bytes
+ * rewritten and any
+ */
+struct RewriteObjectResponse {
+  std::int64_t total_bytes_rewritten;
+  std::int64_t object_size;
+  std::string rewrite_token;
+  absl::optional<storage::ObjectMetadata> metadata;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

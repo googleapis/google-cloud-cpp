@@ -47,6 +47,7 @@ else ()
         async/reader.cc
         async/reader.h
         async/reader_connection.h
+        async/rewriter_connection.h
         async/token.h
         async/writer.cc
         async/writer.h
@@ -72,6 +73,8 @@ else ()
         internal/async/reader_connection_impl.h
         internal/async/reader_connection_tracing.cc
         internal/async/reader_connection_tracing.h
+        internal/async/rewriter_connection_impl.cc
+        internal/async/rewriter_connection_impl.h
         internal/async/token_impl.cc
         internal/async/token_impl.h
         internal/async/write_payload_fwd.h
@@ -298,6 +301,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/async/read_payload_impl_test.cc
         internal/async/reader_connection_impl_test.cc
         internal/async/reader_connection_tracing_test.cc
+        internal/async/rewriter_connection_impl_test.cc
         internal/async/write_payload_impl_test.cc
         internal/async/writer_connection_buffered_test.cc
         internal/async/writer_connection_finalized_test.cc
