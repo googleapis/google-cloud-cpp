@@ -53,7 +53,7 @@ auto PermanentError() {
       storage::testing::canonical_errors::PermanentError());
 }
 
-TEST(ReaderConnectionTracing, Basic) {
+TEST(RewriterTracingConnection, Basic) {
   auto span_catcher = InstallSpanCatcher();
   AsyncSequencer<void> sequencer;
 
@@ -129,7 +129,7 @@ TEST(ReaderConnectionTracing, Basic) {
                                     static_cast<std::int64_t>(3000))))))));
 }
 
-TEST(ReaderConnectionTracing, Disabled) {
+TEST(RewriterTracingConnection, Disabled) {
   auto mock = std::make_unique<MockAsyncRewriterConnection>();
   auto* const expected = mock.get();
 
