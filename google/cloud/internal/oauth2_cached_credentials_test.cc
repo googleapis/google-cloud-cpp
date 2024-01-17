@@ -27,7 +27,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::UnavailableError;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::ElementsAreArray;
 using ::testing::Return;
 
@@ -40,6 +42,9 @@ class MockCredentials : public Credentials {
               (const, override));
   MOCK_METHOD(std::string, AccountEmail, (), (const, override));
   MOCK_METHOD(std::string, KeyId, (), (const, override));
+  MOCK_METHOD(StatusOr<std::string>, universe_domain, (), (const, override));
+  MOCK_METHOD(StatusOr<std::string>, universe_domain, (Options const&),
+              (const, override));
 };
 
 TEST(CachedCredentials, GetTokenUncached) {
@@ -152,6 +157,22 @@ TEST(CachedCredentials, KeyId) {
   EXPECT_CALL(*mock, KeyId).WillOnce(Return("test-key-id"));
   CachedCredentials tested(mock);
   EXPECT_EQ(tested.KeyId(), "test-key-id");
+}
+
+TEST(CachedCredentials, UniverseDomain) {
+  auto mock = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock, universe_domain())
+      .WillOnce(Return(StatusOr<std::string>("test-ud.net")));
+  CachedCredentials tested(mock);
+  EXPECT_THAT(tested.universe_domain(), IsOkAndHolds("test-ud.net"));
+}
+
+TEST(CachedCredentials, UniverseDomainWithOptions) {
+  auto mock = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock, universe_domain(_))
+      .WillOnce(Return(StatusOr<std::string>("test-ud.net")));
+  CachedCredentials tested(mock);
+  EXPECT_THAT(tested.universe_domain(Options{}), IsOkAndHolds("test-ud.net"));
 }
 
 }  // namespace

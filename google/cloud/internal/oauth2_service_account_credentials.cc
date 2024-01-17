@@ -234,6 +234,12 @@ StatusOr<std::string> ServiceAccountCredentials::universe_domain() const {
   return *info_.universe_domain;
 }
 
+StatusOr<std::string> ServiceAccountCredentials::universe_domain(
+    Options const&) const {
+  // universe_domain is stored locally, so any retry options are unnecessary.
+  return universe_domain();
+}
+
 #include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     std::string const& source) {

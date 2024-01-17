@@ -65,6 +65,15 @@ std::string CachedCredentials::AccountEmail() const {
 
 std::string CachedCredentials::KeyId() const { return impl_->KeyId(); }
 
+StatusOr<std::string> CachedCredentials::universe_domain() const {
+  return impl_->universe_domain();
+}
+
+StatusOr<std::string> CachedCredentials::universe_domain(
+    Options const& options) const {
+  return impl_->universe_domain(options);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud

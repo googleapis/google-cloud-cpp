@@ -50,6 +50,8 @@ class CachedCredentials : public Credentials {
       std::string const& string_to_sign) const override;
   std::string AccountEmail() const override;
   std::string KeyId() const override;
+  StatusOr<std::string> universe_domain() const override;
+  StatusOr<std::string> universe_domain(Options const& options) const override;
 
  private:
   std::shared_ptr<Credentials> impl_;

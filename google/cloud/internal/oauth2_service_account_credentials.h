@@ -232,6 +232,7 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
   std::string KeyId() const override { return info_.private_key_id; }
 
   StatusOr<std::string> universe_domain() const override;
+  StatusOr<std::string> universe_domain(Options const&) const override;
 
  private:
   bool UseOAuth();
