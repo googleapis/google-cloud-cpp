@@ -71,10 +71,9 @@ TEST(PullAckHandlerTest, AckSimple) {
   EXPECT_CALL(*mock, AsyncAcknowledge(_, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   // Since the lease manager is started in the constructor of the ack handler,
-  // we
-  // need to match the lease manager calls.
+  // we need to match the lease manager calls.
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
-      .WillRepeatedly(Return(ByMove(make_ready_future(Status{}))));
+      .WillRepeatedly(Return(make_ready_future(Status{})));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler =
@@ -108,7 +107,7 @@ TEST(PullAckHandlerTest, TracingEnabled) {
   // Since the lease manager is started in the constructor of the ack handler,
   // we need to match the lease manager calls.
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
-      .WillRepeatedly(Return(ByMove(make_ready_future(Status{}))));
+      .WillRepeatedly(Return(make_ready_future(Status{})));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler =
@@ -136,7 +135,7 @@ TEST(PullAckHandlerTest, TracingDisabled) {
   // Since the lease manager is started in the constructor of the ack handler,
   // we need to match the lease manager calls.
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
-      .WillRepeatedly(Return(ByMove(make_ready_future(Status{}))));
+      .WillRepeatedly(Return(make_ready_future(Status{})));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto handler =
