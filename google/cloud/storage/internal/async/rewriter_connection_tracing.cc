@@ -39,22 +39,25 @@ class AsyncRewriterTracingConnection
   future<StatusOr<storage_experimental::RewriteObjectResponse>> Iterate()
       override {
     internal::OTelScope scope(span_);
-    return impl_->Iterate().then([span = span_](auto f) {
-      auto r = f.get();
-      if (!r) {
-        span->AddEvent("gl-cpp.storage.rewrite.iterate",
-                       {{"gl-cpp.status_code",
-                         static_cast<std::int32_t>(r.status().code())}});
-        return r;
-      }
-      span->AddEvent(
-          "gl-cpp.storage.rewrite.iterate",
-          {{"gl-cpp.status_code", static_cast<std::int32_t>(StatusCode::kOk)},
-           {"total_bytes_rewritten", r->total_bytes_rewritten},
-           {"object_size", r->object_size}});
-      if (r->metadata) return EndSpan(*span, std::move(r));
-      return r;
-    });
+    return impl_->Iterate().then(
+        [span = span_,
+         oc = opentelemetry::context::RuntimeContext::GetCurrent()](auto f) {
+          auto r = f.get();
+          internal::DetachOTelContext(oc);
+          if (!r) {
+            span->AddEvent("gl-cpp.storage.rewrite.iterate",
+                           {{"gl-cpp.status_code",
+                             static_cast<std::int32_t>(r.status().code())}});
+            return r;
+          }
+          span->AddEvent("gl-cpp.storage.rewrite.iterate",
+                         {{"gl-cpp.status_code",
+                           static_cast<std::int32_t>(StatusCode::kOk)},
+                          {"total_bytes_rewritten", r->total_bytes_rewritten},
+                          {"object_size", r->object_size}});
+          if (r->metadata) return EndSpan(*span, std::move(r));
+          return r;
+        });
   }
 
  private:
