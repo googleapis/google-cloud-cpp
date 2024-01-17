@@ -16,8 +16,10 @@
 #include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <grpcpp/client_context.h>
 #include <chrono>
@@ -36,12 +38,14 @@ using ::google::cloud::bigtable::testing::MockReadRowsStream;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Matcher;
 using ::testing::MockFunction;
+using ::testing::Pair;
 using ::testing::Property;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
@@ -98,7 +102,14 @@ class DefaultRowReaderTest : public ::testing::Test {
  protected:
   // Ensure that we set up the ClientContext once per stream
   Options TestOptions(int expected_streams) {
-    EXPECT_CALL(mock_setup_, Call).Times(expected_streams);
+    EXPECT_CALL(mock_setup_, Call)
+        .Times(expected_streams)
+        .WillRepeatedly([this](grpc::ClientContext& context) {
+          // We must manually populate the `grpc::ClientContext` with server
+          // metadata, or else gRPC will assert. Using the `GrpcSetupOption` to
+          // accomplish this is a bit of a hack.
+          metadata_fixture_.SetServerMetadata(context);
+        });
     return Options{}.set<internal::GrpcSetupOption>(
         mock_setup_.AsStdFunction());
   }
@@ -108,6 +119,7 @@ class DefaultRowReaderTest : public ::testing::Test {
   ExponentialBackoffPolicy backoff_ =
       ExponentialBackoffPolicy(ms(0), ms(0), 2.0);
   MockFunction<void(grpc::ClientContext&)> mock_setup_;
+  testing_util::ValidateMetadataFixture metadata_fixture_;
 };
 
 TEST_F(DefaultRowReaderTest, EmptyReaderHasNoRows) {
@@ -809,6 +821,40 @@ TEST_F(DefaultRowReaderTest, ReverseScanResumption) {
       true, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r3")));
+}
+
+TEST_F(DefaultRowReaderTest, BigtableCookies) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([this](auto context, auto const&,
+                       google::bigtable::v2::ReadRowsRequest const&) {
+        // Return a bigtable cookie in the first request.
+        metadata_fixture_.SetServerMetadata(
+            *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
+        auto stream = std::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(internal::UnavailableError("try again")));
+        return stream;
+      })
+      .WillOnce([this](auto context, auto const&,
+                       google::bigtable::v2::ReadRowsRequest const&) {
+        // Verify that the next request includes the bigtable cookie from above.
+        auto headers = metadata_fixture_.GetMetadata(*context);
+        EXPECT_THAT(headers,
+                    Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
+        auto stream = std::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(internal::PermissionDeniedError("fail")));
+        return stream;
+      });
+
+  auto impl = std::make_shared<DefaultRowReader>(
+      mock, kAppProfile, kTableName, bigtable::RowSet("r1"),
+      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
+      true, retry_.clone(), backoff_.clone());
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
+  EXPECT_THAT(StatusOrRowKeys(reader),
+              ElementsAre(StatusIs(StatusCode::kPermissionDenied)));
 }
 
 }  // namespace

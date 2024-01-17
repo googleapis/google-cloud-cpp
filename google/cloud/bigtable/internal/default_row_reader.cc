@@ -58,9 +58,10 @@ void DefaultRowReader::MakeRequest() {
   }
 
   auto const& options = internal::CurrentOptions();
-  auto context = std::make_shared<grpc::ClientContext>();
-  internal::ConfigureContext(*context, options);
-  stream_ = stub_->ReadRows(std::move(context), options, request);
+  context_ = std::make_shared<grpc::ClientContext>();
+  internal::ConfigureContext(*context_, options);
+  retry_context_.PreCall(*context_);
+  stream_ = stub_->ReadRows(context_, options, request);
   stream_is_open_ = true;
 
   parser_ = bigtable::internal::ReadRowsParserFactory().Create(reverse_);
@@ -74,6 +75,8 @@ bool DefaultRowReader::NextChunk() {
     if (absl::holds_alternative<Status>(v)) {
       last_status_ = absl::get<Status>(std::move(v));
       response_ = {};
+      retry_context_.PostCall(*context_);
+      context_ = nullptr;
       return false;
     }
     response_ = absl::get<google::bigtable::v2::ReadRowsResponse>(std::move(v));
@@ -175,6 +178,7 @@ void DefaultRowReader::Cancel() {
       stream_->Read())) {
   }
 
+  context_ = nullptr;
   stream_is_open_ = false;
 }
 

@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
+#include "google/cloud/bigtable/internal/retry_context.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/options.h"
@@ -92,6 +93,8 @@ class DefaultRowReader : public RowReaderImpl {
   bool reverse_;
   std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
+  std::shared_ptr<grpc::ClientContext> context_;
+  RetryContext retry_context_;
 
   std::unique_ptr<bigtable::internal::ReadRowsParser> parser_;
   std::unique_ptr<
