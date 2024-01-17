@@ -70,7 +70,6 @@ MakeTracingAsyncRewriterConnection(
     bool enabled) {
   if (!enabled) return impl;
   auto span = internal::MakeSpan("storage::AsyncConnection::RewriteObject");
-  internal::OTelScope scope(span);
   return std::make_shared<AsyncRewriterTracingConnection>(std::move(impl),
                                                           std::move(span));
 }

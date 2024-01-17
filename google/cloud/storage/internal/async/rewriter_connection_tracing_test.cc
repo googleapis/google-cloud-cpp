@@ -38,6 +38,7 @@ using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
@@ -61,20 +62,29 @@ TEST(RewriterTracingConnection, Basic) {
   EXPECT_CALL(*mock, Iterate)
       .WillOnce([&] {
         EXPECT_TRUE(ThereIsAnActiveSpan());
+        EXPECT_TRUE(OTelContextCaptured());
         return sequencer.PushBack("Iterate(1)").then([](auto) {
+          EXPECT_FALSE(ThereIsAnActiveSpan());
+          EXPECT_FALSE(OTelContextCaptured());
           return PermanentError();
         });
       })
       .WillOnce([&] {
         EXPECT_TRUE(ThereIsAnActiveSpan());
+        EXPECT_TRUE(OTelContextCaptured());
         return sequencer.PushBack("Iterate(2)").then([](auto) {
+          EXPECT_FALSE(ThereIsAnActiveSpan());
+          EXPECT_FALSE(OTelContextCaptured());
           return make_status_or(
               RewriteObjectResponse{1000, 3000, "test-token", absl::nullopt});
         });
       })
       .WillOnce([&] {
         EXPECT_TRUE(ThereIsAnActiveSpan());
+        EXPECT_TRUE(OTelContextCaptured());
         return sequencer.PushBack("Iterate(3)").then([](auto) {
+          EXPECT_FALSE(ThereIsAnActiveSpan());
+          EXPECT_FALSE(OTelContextCaptured());
           return make_status_or(
               RewriteObjectResponse{3000, 3000, std::string{},
                                     storage::ObjectMetadata().set_size(3000)});
