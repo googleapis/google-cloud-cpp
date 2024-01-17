@@ -75,6 +75,8 @@ else ()
         internal/async/reader_connection_tracing.h
         internal/async/rewriter_connection_impl.cc
         internal/async/rewriter_connection_impl.h
+        internal/async/rewriter_connection_tracing.cc
+        internal/async/rewriter_connection_tracing.h
         internal/async/token_impl.cc
         internal/async/token_impl.h
         internal/async/write_payload_fwd.h
@@ -223,7 +225,7 @@ add_library(google_cloud_cpp_storage_grpc_mocks INTERFACE)
 set(google_cloud_cpp_storage_grpc_mocks_hdrs
     # cmake-format: sort
     mocks/mock_async_connection.h mocks/mock_async_reader_connection.h
-    mocks/mock_async_writer_connection.h)
+    mocks/mock_async_rewriter_connection.h mocks/mock_async_writer_connection.h)
 export_list_to_bazel("google_cloud_cpp_storage_grpc_mocks.bzl"
                      "google_cloud_cpp_storage_grpc_mocks_hdrs" YEAR "2023")
 target_link_libraries(
@@ -302,6 +304,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/async/reader_connection_impl_test.cc
         internal/async/reader_connection_tracing_test.cc
         internal/async/rewriter_connection_impl_test.cc
+        internal/async/rewriter_connection_tracing_test.cc
         internal/async/write_payload_impl_test.cc
         internal/async/writer_connection_buffered_test.cc
         internal/async/writer_connection_finalized_test.cc
