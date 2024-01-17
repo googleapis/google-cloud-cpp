@@ -27,9 +27,9 @@
 #include "google/cloud/retry_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/meta/type_traits.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -330,7 +330,7 @@ class AsyncRestRetryLoopImpl
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   Idempotency idempotency_ = Idempotency::kNonIdempotent;
   CompletionQueue cq_;
-  absl::decay_t<Functor> functor_;
+  std::decay_t<Functor> functor_;
   Request request_;
   char const* location_ = "unknown";
   internal::CallContext call_context_;
