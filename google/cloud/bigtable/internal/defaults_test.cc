@@ -18,8 +18,10 @@
 #include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/chrono_output.h"
+#include "google/cloud/testing_util/credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/universe_domain_options.h"
@@ -37,6 +39,7 @@ namespace {
 using ::google::cloud::internal::GetIntChannelArgument;
 using ::google::cloud::internal::GetStringChannelArgument;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::TestCredentialsVisitor;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using secs = std::chrono::seconds;
@@ -54,9 +57,13 @@ TEST(OptionsTest, Defaults) {
   EXPECT_EQ("bigtableadmin.googleapis.com.", opts.get<AdminEndpointOption>());
   EXPECT_EQ("bigtableadmin.googleapis.com.",
             opts.get<InstanceAdminEndpointOption>());
-  EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
-            typeid(opts.get<GrpcCredentialOption>()));
   EXPECT_FALSE(opts.has<UserProjectOption>());
+
+  EXPECT_TRUE(opts.has<UnifiedCredentialsOption>());
+  auto const& creds = opts.get<UnifiedCredentialsOption>();
+  TestCredentialsVisitor v;
+  google::cloud::internal::CredentialsVisitor::dispatch(*creds, v);
+  EXPECT_EQ(v.name, "GoogleDefaultCredentialsConfig");
 
   auto args = google::cloud::internal::MakeChannelArguments(opts);
   // Check that the pool domain is not set by default
@@ -93,7 +100,6 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
           .set<DataEndpointOption>("testdata.googleapis.com")
           .set<AdminEndpointOption>("testadmin.googleapis.com")
           .set<InstanceAdminEndpointOption>("testinstanceadmin.googleapis.com")
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<GrpcTracingOptionsOption>(
               TracingOptions{}.SetOptions("single_line_mode=F"))
           .set<TracingComponentsOption>({"test-component"})
@@ -107,8 +113,6 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
   EXPECT_EQ("testadmin.googleapis.com", opts.get<AdminEndpointOption>());
   EXPECT_EQ("testinstanceadmin.googleapis.com",
             opts.get<InstanceAdminEndpointOption>());
-  EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
-            typeid(opts.get<GrpcCredentialOption>()));
   EXPECT_FALSE(opts.get<GrpcTracingOptionsOption>().single_line_mode());
   EXPECT_THAT(opts.get<TracingComponentsOption>(), Contains("test-component"));
   EXPECT_EQ(3U, opts.get<GrpcNumChannelsOption>());
@@ -124,6 +128,25 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
   auto s = GetStringChannelArgument(args, GRPC_ARG_PRIMARY_USER_AGENT_STRING);
   ASSERT_TRUE(s.has_value());
   EXPECT_THAT(*s, HasSubstr("test-prefix"));
+}
+
+TEST(OptionsTest, CustomCredentialsPreserved) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+
+  auto opts = DefaultOptions(
+      Options{}.set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+          "access-token", std::chrono::system_clock::now())));
+
+  EXPECT_TRUE(opts.has<UnifiedCredentialsOption>());
+  auto const& creds = opts.get<UnifiedCredentialsOption>();
+  TestCredentialsVisitor v;
+  google::cloud::internal::CredentialsVisitor::dispatch(*creds, v);
+  EXPECT_EQ(v.name, "AccessTokenConfig");
+
+  auto grpc_creds = grpc::GoogleDefaultCredentials();
+  opts = DefaultOptions(Options{}.set<GrpcCredentialOption>(grpc_creds));
+  EXPECT_FALSE(opts.has<UnifiedCredentialsOption>());
+  EXPECT_EQ(opts.get<GrpcCredentialOption>(), grpc_creds);
 }
 
 TEST(OptionsTest, EndpointOptionSetsAll) {
@@ -338,18 +361,30 @@ TEST(EndpointEnvTest, EmulatorEnvDefaultsToInsecureCredentials) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
 
   auto opts = DefaultOptions();
-  EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
-            typeid(opts.get<GrpcCredentialOption>()));
+  EXPECT_TRUE(opts.has<UnifiedCredentialsOption>());
+  auto const& creds = opts.get<UnifiedCredentialsOption>();
+  TestCredentialsVisitor v;
+  google::cloud::internal::CredentialsVisitor::dispatch(*creds, v);
+  EXPECT_EQ(v.name, "InsecureCredentialsConfig");
 }
 
 TEST(EndpointEnvTest, UserCredentialsOverrideEmulatorEnv) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
 
   auto opts = DefaultOptions(
-      Options{}.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials()));
+      Options{}.set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+          "access-token", std::chrono::system_clock::now())));
 
-  EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
-            typeid(opts.get<GrpcCredentialOption>()));
+  EXPECT_TRUE(opts.has<UnifiedCredentialsOption>());
+  auto const& creds = opts.get<UnifiedCredentialsOption>();
+  TestCredentialsVisitor v;
+  google::cloud::internal::CredentialsVisitor::dispatch(*creds, v);
+  EXPECT_EQ(v.name, "AccessTokenConfig");
+
+  auto grpc_creds = grpc::GoogleDefaultCredentials();
+  opts = DefaultOptions(Options{}.set<GrpcCredentialOption>(grpc_creds));
+  EXPECT_FALSE(opts.has<UnifiedCredentialsOption>());
+  EXPECT_EQ(opts.get<GrpcCredentialOption>(), grpc_creds);
 }
 
 TEST(EndpointEnvTest, DirectPathEnabled) {
