@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/connection_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/service_endpoint.h"
@@ -190,11 +191,14 @@ Options DefaultOptions(Options opts) {
   // options are always set as a result of calling this function.
   opts = HandleUniverseDomain(std::move(opts));
 
+  if (!opts.has<UnifiedCredentialsOption>() &&
+      !opts.has<GrpcCredentialOption>()) {
+    opts.set<GrpcCredentialOption>(emulator ? grpc::InsecureChannelCredentials()
+                                            : grpc::GoogleDefaultCredentials());
+  }
+
   // Fill any missing default values.
   auto defaults = Options{}
-                      .set<GrpcCredentialOption>(
-                          emulator ? grpc::InsecureChannelCredentials()
-                                   : grpc::GoogleDefaultCredentials())
                       .set<TracingComponentsOption>(
                           ::google::cloud::internal::DefaultTracingComponents())
                       .set<GrpcTracingOptionsOption>(
