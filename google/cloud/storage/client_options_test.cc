@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
 #include <fstream>
@@ -388,6 +389,30 @@ TEST_F(ClientOptionsTest, DefaultOptions) {
 
   EXPECT_FALSE(o.has<rest::HttpVersionOption>());
   EXPECT_FALSE(o.has<rest::CAPathOption>());
+}
+
+TEST_F(ClientOptionsTest, IncorporatesUniverseDomain) {
+  auto o = internal::DefaultOptions(
+      oauth2::CreateAnonymousCredentials(),
+      Options{}.set<google::cloud::internal::UniverseDomainOption>(
+          "my-ud.net"));
+  EXPECT_EQ(o.get<RestEndpointOption>(), "https://storage.my-ud.net");
+  EXPECT_EQ(o.get<IamEndpointOption>(), "https://iamcredentials.my-ud.net/v1");
+}
+
+TEST_F(ClientOptionsTest, CustomEndpointOverridesUniverseDomain) {
+  auto o = internal::DefaultOptions(
+      oauth2::CreateAnonymousCredentials(),
+      Options{}
+          .set<RestEndpointOption>("https://custom-storage.googleapis.com")
+          .set<IamEndpointOption>(
+              "https://custom-iamcredentials.googleapis.com/v1")
+          .set<google::cloud::internal::UniverseDomainOption>(
+              "ignored-ud.net"));
+  EXPECT_EQ(o.get<RestEndpointOption>(),
+            "https://custom-storage.googleapis.com");
+  EXPECT_EQ(o.get<IamEndpointOption>(),
+            "https://custom-iamcredentials.googleapis.com/v1");
 }
 
 TEST_F(ClientOptionsTest, HttpVersion) {
