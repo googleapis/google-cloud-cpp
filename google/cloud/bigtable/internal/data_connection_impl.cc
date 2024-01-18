@@ -136,11 +136,18 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
              is_idempotent ? Idempotency::kIdempotent
                            : Idempotency::kNonIdempotent,
              background_->cq(),
-             [stub = stub_](
+             [stub = stub_, retry_context = std::make_shared<RetryContext>()](
                  CompletionQueue& cq,
                  std::shared_ptr<grpc::ClientContext> context,
                  google::bigtable::v2::MutateRowRequest const& request) {
-               return stub->AsyncMutateRow(cq, std::move(context), request);
+               retry_context->PreCall(*context);
+               auto f = stub->AsyncMutateRow(cq, context, request);
+               return f.then(
+                   [retry_context, context = std::move(context)](auto f) {
+                     auto s = f.get();
+                     retry_context->PostCall(*context);
+                     return s;
+                   });
              },
              request, __func__)
       .then([](future<StatusOr<google::bigtable::v2::MutateRowResponse>> f) {
@@ -276,13 +283,19 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
   return google::cloud::internal::AsyncRetryLoop(
              retry_policy(*current), backoff_policy(*current), idempotency,
              background_->cq(),
-             [stub = stub_](
+             [stub = stub_, retry_context = std::make_shared<RetryContext>()](
                  CompletionQueue& cq,
                  std::shared_ptr<grpc::ClientContext> context,
                  google::bigtable::v2::CheckAndMutateRowRequest const&
                      request) {
-               return stub->AsyncCheckAndMutateRow(cq, std::move(context),
-                                                   request);
+               retry_context->PreCall(*context);
+               auto f = stub->AsyncCheckAndMutateRow(cq, context, request);
+               return f.then(
+                   [retry_context, context = std::move(context)](auto f) {
+                     auto s = f.get();
+                     retry_context->PostCall(*context);
+                     return s;
+                   });
              },
              request, __func__)
       .then([](future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>

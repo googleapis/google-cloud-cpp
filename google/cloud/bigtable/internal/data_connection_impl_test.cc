@@ -490,6 +490,42 @@ TEST_F(DataConnectionTest, AsyncApplyRetryIdempotency) {
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
 }
 
+TEST_F(DataConnectionTest, AsyncApplyBigtableCookie) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRow)
+      .WillOnce([this](CompletionQueue&,
+                       std::shared_ptr<grpc::ClientContext> const& context,
+                       v2::MutateRowRequest const&) {
+        metadata_fixture_.SetServerMetadata(
+            *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
+        return make_ready_future<StatusOr<v2::MutateRowResponse>>(
+            TransientError());
+      })
+      .WillOnce([this](CompletionQueue&,
+                       std::shared_ptr<grpc::ClientContext> const& context,
+                       v2::MutateRowRequest const&) {
+        auto headers = metadata_fixture_.GetMetadata(*context);
+        EXPECT_THAT(headers,
+                    Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
+        return make_ready_future<StatusOr<v2::MutateRowResponse>>(
+            PermanentError());
+      });
+
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
+    auto clone = std::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone, OnCompletion).Times(1);
+    return clone;
+  });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptionsWithoutClientContextSetup().set<DataBackoffPolicyOption>(
+          std::move(mock_b)));
+  auto status = conn->AsyncApply(kTableName, IdempotentMutation("row"));
+  EXPECT_THAT(status.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
 TEST_F(DataConnectionTest, BulkApplyEmpty) {
   auto mock = std::make_shared<MockBigtableStub>();
   auto conn = TestConnection(std::move(mock));
@@ -1278,6 +1314,50 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
   auto status = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
                                              {t1, t2}, {f1, f2});
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(DataConnectionTest, AsyncCheckAndMutateRowBigtableCookie) {
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncCheckAndMutateRow)
+      .WillOnce([this](CompletionQueue&,
+                       std::shared_ptr<grpc::ClientContext> const& context,
+                       v2::CheckAndMutateRowRequest const&) {
+        metadata_fixture_.SetServerMetadata(
+            *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
+        return make_ready_future<StatusOr<v2::CheckAndMutateRowResponse>>(
+            TransientError());
+      })
+      .WillOnce([this](CompletionQueue&,
+                       std::shared_ptr<grpc::ClientContext> const& context,
+                       v2::CheckAndMutateRowRequest const&) {
+        auto headers = metadata_fixture_.GetMetadata(*context);
+        EXPECT_THAT(headers,
+                    Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
+        return make_ready_future<StatusOr<v2::CheckAndMutateRowResponse>>(
+            PermanentError());
+      });
+
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
+    auto clone = std::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone, OnCompletion).Times(1);
+    return clone;
+  });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptionsWithoutClientContextSetup()
+          .set<DataBackoffPolicyOption>(std::move(mock_b))
+          .set<IdempotentMutationPolicyOption>(
+              bigtable::AlwaysRetryMutationPolicy().clone()));
+  auto status = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
+                                             {t1, t2}, {f1, f2});
+  EXPECT_THAT(status.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST_F(DataConnectionTest, SampleRowsSuccess) {
