@@ -24,6 +24,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "google/cloud/testing_util/validate_propagator.h"
+#include "google/cloud/universe_domain_options.h"
 #include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
 #include <gmock/gmock.h>
 
@@ -342,6 +343,26 @@ TEST_F(MinimalIamCredentialsStubTest, SignBlobTracing) {
               OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+TEST(MakeMinimalIamCredentialsOptions, Default) {
+  auto o = MakeMinimalIamCredentialsOptions(
+      Options{}.set<EndpointOption>("storage.googleapis.com."));
+  EXPECT_EQ(o.get<EndpointOption>(), "iamcredentials.googleapis.com.");
+}
+
+TEST(MakeMinimalIamCredentialsOptions, WithoutUniverseDomain) {
+  auto o = MakeMinimalIamCredentialsOptions(
+      Options{}.set<EndpointOption>("storage.googleapis.com."));
+  EXPECT_EQ(o.get<EndpointOption>(), "iamcredentials.googleapis.com.");
+}
+
+TEST(MakeMinimalIamCredentialsOptions, WithUniverseDomain) {
+  auto o = MakeMinimalIamCredentialsOptions(
+      Options{}
+          .set<EndpointOption>("storage.googleapis.com.")
+          .set<internal::UniverseDomainOption>("my-ud.net"));
+  EXPECT_EQ(o.get<EndpointOption>(), "iamcredentials.my-ud.net");
+}
 
 }  // namespace
 }  // namespace internal
