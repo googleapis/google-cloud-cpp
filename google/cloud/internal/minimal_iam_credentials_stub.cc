@@ -20,6 +20,7 @@
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/internal/url_encode.h"
@@ -228,9 +229,11 @@ std::shared_ptr<MinimalIamCredentialsStub> MakeMinimalIamCredentialsStub(
 }
 
 Options MakeMinimalIamCredentialsOptions(Options options) {
-  return MergeOptions(
-      Options{}.set<EndpointOption>("iamcredentials.googleapis.com"),
-      std::move(options));
+  // The supplied options come from a service. We are overriding the value of
+  // its `EndpointOption`.
+  options.unset<EndpointOption>();
+  auto ep = UniverseDomainEndpoint("iamcredentials.googleapis.com.", options);
+  return options.set<EndpointOption>(std::move(ep));
 }
 
 }  // namespace internal
