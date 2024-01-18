@@ -290,19 +290,18 @@ TEST_F(BulkMutatorTest, RetryOnlyIdempotent) {
       })
       // The BulkMutator should issue a second request, with only the
       // idempotent mutation. Make the mock return success for it.
-      .WillOnce(
-          [this, expect_r2](
-              auto context, auto const&,
-              google::bigtable::v2::MutateRowsRequest const& request) {
-            metadata_fixture_.SetServerMetadata(*context, {});
-            EXPECT_THAT(request, HasCorrectResourceNames());
-            expect_r2(request);
-            auto stream = std::make_unique<MockMutateRowsStream>();
-            EXPECT_CALL(*stream, Read)
-                .WillOnce(Return(MakeResponse({{0, grpc::StatusCode::OK}})))
-                .WillOnce(Return(Status()));
-            return stream;
-          });
+      .WillOnce([this, expect_r2](
+                    auto context, auto const&,
+                    google::bigtable::v2::MutateRowsRequest const& request) {
+        metadata_fixture_.SetServerMetadata(*context, {});
+        EXPECT_THAT(request, HasCorrectResourceNames());
+        expect_r2(request);
+        auto stream = std::make_unique<MockMutateRowsStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(MakeResponse({{0, grpc::StatusCode::OK}})))
+            .WillOnce(Return(Status()));
+        return stream;
+      });
 
   auto policy = DefaultIdempotentMutationPolicy();
   bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
