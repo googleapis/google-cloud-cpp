@@ -85,12 +85,8 @@ function (google_cloud_cpp_universe_domain_add_test fname labels)
     google_cloud_cpp_add_executable(target "common" "${fname}")
     target_link_libraries(
         ${target}
-        PRIVATE google-cloud-cpp::universe_domain
-                google_cloud_cpp_testing
-                absl::variant
-                GTest::gmock_main
-                GTest::gmock
-                GTest::gtest)
+        PRIVATE google-cloud-cpp::universe_domain google_cloud_cpp_testing
+                absl::variant GTest::gmock_main GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(${target})
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(${target} PROPERTIES LABELS "${labels}")
