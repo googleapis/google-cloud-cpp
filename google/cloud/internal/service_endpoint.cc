@@ -56,8 +56,10 @@ StatusOr<std::string> DetermineServiceEndpoint(
 std::string UniverseDomainEndpoint(std::string gdu_endpoint,
                                    Options const& options) {
   if (!options.has<UniverseDomainOption>()) return gdu_endpoint;
-  return absl::StrCat(absl::StripSuffix(gdu_endpoint, ".googleapis.com."), ".",
-                      options.get<UniverseDomainOption>());
+  // Support both "foo.googleapis.com" and "foo.googleapis.com."
+  return absl::StrCat(absl::StripSuffix(absl::StripSuffix(gdu_endpoint, "."),
+                                        ".googleapis.com"),
+                      ".", options.get<UniverseDomainOption>());
 }
 
 }  // namespace internal
