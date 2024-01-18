@@ -320,10 +320,12 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
   std::vector<bigtable::RowKeySample> samples;
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
+  RetryContext retry_context;
   while (true) {
     auto context = std::make_shared<grpc::ClientContext>();
     internal::ConfigureContext(*context, internal::CurrentOptions());
-    auto stream = stub_->SampleRowKeys(std::move(context), Options{}, request);
+    retry_context.PreCall(*context);
+    auto stream = stub_->SampleRowKeys(context, Options{}, request);
 
     struct UnpackVariant {
       Status& status;
@@ -350,6 +352,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
       return Status(status.code(),
                     "Retry policy exhausted: " + status.message());
     }
+    retry_context.PostCall(*context);
     // A new stream invalidates previously returned samples.
     samples.clear();
     if (!backoff) backoff = backoff_policy(*current);
