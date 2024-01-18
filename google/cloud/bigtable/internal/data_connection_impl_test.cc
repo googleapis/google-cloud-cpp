@@ -25,6 +25,7 @@
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <grpcpp/client_context.h>
@@ -54,11 +55,13 @@ using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::An;
 using ::testing::ByMove;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::Eq;
 using ::testing::Matcher;
 using ::testing::MockFunction;
+using ::testing::Pair;
 using ::testing::Property;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
@@ -188,7 +191,9 @@ ExponentialBackoffPolicy TestBackoffPolicy() {
   return ExponentialBackoffPolicy(ms(0), ms(0), 2.0);
 }
 
-Options CallOptions() {
+// For tests that need to manually interact with the client/server metadata in a
+// `grpc::ClientContext`.
+Options CallOptionsWithoutClientContextSetup() {
   return bigtable::internal::DefaultDataOptions(
       Options{}
           .set<bigtable::AppProfileIdOption>(kAppProfile)
@@ -243,7 +248,23 @@ TEST(TransformReadModifyWriteRowResponse, Basic) {
                                        MatchCell(c3), MatchCell(c4)));
 }
 
-TEST(DataConnectionTest, ApplySuccess) {
+class DataConnectionTest : public ::testing::Test {
+ protected:
+  Options CallOptions() {
+    auto options = CallOptionsWithoutClientContextSetup();
+    // All code paths try to access the server metadata returned in the
+    // `grpc::ClientContext`. As a hack to get around some asserts in gRPC,
+    // make sure that these `grpc::ClientContext`s have server metadata.
+    auto setup = [this](grpc::ClientContext& context) {
+      metadata_fixture_.SetServerMetadata(context, {});
+    };
+    return options.set<internal::GrpcSetupOption>(setup);
+  }
+
+  testing_util::ValidateMetadataFixture metadata_fixture_;
+};
+
+TEST_F(DataConnectionTest, ApplySuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
@@ -259,7 +280,7 @@ TEST(DataConnectionTest, ApplySuccess) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST(DataConnectionTest, ApplyPermanentFailure) {
+TEST_F(DataConnectionTest, ApplyPermanentFailure) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
@@ -275,7 +296,7 @@ TEST(DataConnectionTest, ApplyPermanentFailure) {
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(DataConnectionTest, ApplyRetryThenSuccess) {
+TEST_F(DataConnectionTest, ApplyRetryThenSuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
@@ -297,7 +318,7 @@ TEST(DataConnectionTest, ApplyRetryThenSuccess) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST(DataConnectionTest, ApplyRetryExhausted) {
+TEST_F(DataConnectionTest, ApplyRetryExhausted) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .Times(kNumRetries + 1)
@@ -323,7 +344,7 @@ TEST(DataConnectionTest, ApplyRetryExhausted) {
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST(DataConnectionTest, ApplyRetryIdempotency) {
+TEST_F(DataConnectionTest, ApplyRetryIdempotency) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
@@ -348,7 +369,39 @@ TEST(DataConnectionTest, ApplyRetryIdempotency) {
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST(DataConnectionTest, AsyncApplySuccess) {
+TEST_F(DataConnectionTest, ApplyBigtableCookie) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRow)
+      .WillOnce(
+          [this](grpc::ClientContext& context, v2::MutateRowRequest const&) {
+            metadata_fixture_.SetServerMetadata(
+                context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
+            return TransientError();
+          })
+      .WillOnce(
+          [this](grpc::ClientContext& context, v2::MutateRowRequest const&) {
+            auto headers = metadata_fixture_.GetMetadata(context);
+            EXPECT_THAT(headers,
+                        Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
+            return PermanentError();
+          });
+
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
+    auto clone = std::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone, OnCompletion).Times(1);
+    return clone;
+  });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptionsWithoutClientContextSetup().set<DataBackoffPolicyOption>(
+          std::move(mock_b)));
+  auto status = conn->Apply(kTableName, IdempotentMutation("row"));
+  EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST_F(DataConnectionTest, AsyncApplySuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRow)
       .WillOnce([](google::cloud::CompletionQueue&, auto,
@@ -365,7 +418,7 @@ TEST(DataConnectionTest, AsyncApplySuccess) {
   ASSERT_STATUS_OK(status.get());
 }
 
-TEST(DataConnectionTest, AsyncApplyPermanentFailure) {
+TEST_F(DataConnectionTest, AsyncApplyPermanentFailure) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRow)
       .WillOnce([](google::cloud::CompletionQueue&, auto,
@@ -383,7 +436,7 @@ TEST(DataConnectionTest, AsyncApplyPermanentFailure) {
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(DataConnectionTest, AsyncApplyRetryExhausted) {
+TEST_F(DataConnectionTest, AsyncApplyRetryExhausted) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRow)
       .Times(kNumRetries + 1)
@@ -410,7 +463,7 @@ TEST(DataConnectionTest, AsyncApplyRetryExhausted) {
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
 }
 
-TEST(DataConnectionTest, AsyncApplyRetryIdempotency) {
+TEST_F(DataConnectionTest, AsyncApplyRetryIdempotency) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRow)
       .WillOnce([](google::cloud::CompletionQueue&, auto,
@@ -437,14 +490,14 @@ TEST(DataConnectionTest, AsyncApplyRetryIdempotency) {
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
 }
 
-TEST(DataConnectionTest, BulkApplyEmpty) {
+TEST_F(DataConnectionTest, BulkApplyEmpty) {
   auto mock = std::make_shared<MockBigtableStub>();
   auto conn = TestConnection(std::move(mock));
   auto actual = conn->BulkApply(kTableName, bigtable::BulkMutation());
   CheckFailedMutations(actual, {});
 }
 
-TEST(DataConnectionTest, BulkApplySuccess) {
+TEST_F(DataConnectionTest, BulkApplySuccess) {
   bigtable::BulkMutation mut(IdempotentMutation("r0"),
                              IdempotentMutation("r1"));
 
@@ -469,7 +522,7 @@ TEST(DataConnectionTest, BulkApplySuccess) {
   CheckFailedMutations(actual, {});
 }
 
-TEST(DataConnectionTest, BulkApplyRetryMutationPolicy) {
+TEST_F(DataConnectionTest, BulkApplyRetryMutationPolicy) {
   std::vector<bigtable::FailedMutation> expected = {{PermanentError(), 2},
                                                     {TransientError(), 3}};
   bigtable::BulkMutation mut(
@@ -514,7 +567,7 @@ TEST(DataConnectionTest, BulkApplyRetryMutationPolicy) {
   CheckFailedMutations(actual, expected);
 }
 
-TEST(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
+TEST_F(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
   bigtable::BulkMutation mut(IdempotentMutation("returned"),
                              IdempotentMutation("forgotten"));
 
@@ -550,7 +603,7 @@ TEST(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
   CheckFailedMutations(actual, {});
 }
 
-TEST(DataConnectionTest, BulkApplyStreamRetryExhausted) {
+TEST_F(DataConnectionTest, BulkApplyStreamRetryExhausted) {
   std::vector<bigtable::FailedMutation> expected = {{TransientError(), 0}};
   bigtable::BulkMutation mut(IdempotentMutation("row"));
 
@@ -581,7 +634,7 @@ TEST(DataConnectionTest, BulkApplyStreamRetryExhausted) {
   CheckFailedMutations(actual, expected);
 }
 
-TEST(DataConnectionTest, BulkApplyStreamPermanentError) {
+TEST_F(DataConnectionTest, BulkApplyStreamPermanentError) {
   std::vector<bigtable::FailedMutation> expected = {{PermanentError(), 0}};
   bigtable::BulkMutation mut(IdempotentMutation("row"));
 
@@ -602,7 +655,7 @@ TEST(DataConnectionTest, BulkApplyStreamPermanentError) {
   CheckFailedMutations(actual, expected);
 }
 
-TEST(DataConnectionTest, BulkApplyNoSleepIfNoPendingMutations) {
+TEST_F(DataConnectionTest, BulkApplyNoSleepIfNoPendingMutations) {
   bigtable::BulkMutation mut(IdempotentMutation("succeeds"),
                              IdempotentMutation("fails-immediately"));
 
@@ -630,7 +683,7 @@ TEST(DataConnectionTest, BulkApplyNoSleepIfNoPendingMutations) {
   (void)conn->BulkApply(kTableName, std::move(mut));
 }
 
-TEST(DataConnectionTest, BulkApplyRetriesOkStreamWithFailedMutations) {
+TEST_F(DataConnectionTest, BulkApplyRetriesOkStreamWithFailedMutations) {
   std::vector<bigtable::FailedMutation> expected = {
       {Status(StatusCode::kUnavailable, "try again"), 0}};
   bigtable::BulkMutation mut(IdempotentMutation("r1"));
@@ -667,7 +720,7 @@ TEST(DataConnectionTest, BulkApplyRetriesOkStreamWithFailedMutations) {
   CheckFailedMutations(actual, expected);
 }
 
-TEST(DataConnectionTest, BulkApplyThrottling) {
+TEST_F(DataConnectionTest, BulkApplyThrottling) {
   std::vector<bigtable::FailedMutation> expected = {{PermanentError(), 0}};
   bigtable::BulkMutation mut(IdempotentMutation("row"));
 
@@ -691,7 +744,7 @@ TEST(DataConnectionTest, BulkApplyThrottling) {
 
 // The `AsyncBulkApplier` is tested extensively in `async_bulk_apply_test.cc`.
 // In this test, we just verify that the configuration is passed along.
-TEST(DataConnectionTest, AsyncBulkApply) {
+TEST_F(DataConnectionTest, AsyncBulkApply) {
   std::vector<bigtable::FailedMutation> expected = {{PermanentError(), 0}};
   bigtable::BulkMutation mut(IdempotentMutation("row"));
 
@@ -720,7 +773,7 @@ TEST(DataConnectionTest, AsyncBulkApply) {
 
 // The DefaultRowReader is tested extensively in `default_row_reader_test.cc`.
 // In this test, we just verify that the configuration is passed along.
-TEST(DataConnectionTest, ReadRows) {
+TEST_F(DataConnectionTest, ReadRows) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -743,7 +796,7 @@ TEST(DataConnectionTest, ReadRows) {
   EXPECT_EQ(reader.begin(), reader.end());
 }
 
-TEST(DataConnectionTest, ReadRowsReverseScan) {
+TEST_F(DataConnectionTest, ReadRowsReverseScan) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -763,7 +816,7 @@ TEST(DataConnectionTest, ReadRowsReverseScan) {
 
 // The DefaultRowReader is tested extensively in `default_row_reader_test.cc`.
 // In this test, we just verify that the configuration is passed along.
-TEST(DataConnectionTest, ReadRowsFull) {
+TEST_F(DataConnectionTest, ReadRowsFull) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -787,7 +840,7 @@ TEST(DataConnectionTest, ReadRowsFull) {
   EXPECT_EQ(reader.begin(), reader.end());
 }
 
-TEST(DataConnectionTest, ReadRowEmpty) {
+TEST_F(DataConnectionTest, ReadRowEmpty) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -810,7 +863,7 @@ TEST(DataConnectionTest, ReadRowEmpty) {
   EXPECT_FALSE(resp->first);
 }
 
-TEST(DataConnectionTest, ReadRowSuccess) {
+TEST_F(DataConnectionTest, ReadRowSuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -844,7 +897,7 @@ TEST(DataConnectionTest, ReadRowSuccess) {
   EXPECT_EQ("row", resp->second.row_key());
 }
 
-TEST(DataConnectionTest, ReadRowFailure) {
+TEST_F(DataConnectionTest, ReadRowFailure) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -866,7 +919,7 @@ TEST(DataConnectionTest, ReadRowFailure) {
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(DataConnectionTest, CheckAndMutateRowSuccess) {
+TEST_F(DataConnectionTest, CheckAndMutateRowSuccess) {
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -918,7 +971,7 @@ TEST(DataConnectionTest, CheckAndMutateRowSuccess) {
   EXPECT_EQ(*predicate, bigtable::MutationBranch::kPredicateNotMatched);
 }
 
-TEST(DataConnectionTest, CheckAndMutateRowIdempotency) {
+TEST_F(DataConnectionTest, CheckAndMutateRowIdempotency) {
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -956,7 +1009,7 @@ TEST(DataConnectionTest, CheckAndMutateRowIdempotency) {
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST(DataConnectionTest, CheckAndMutateRowPermanentError) {
+TEST_F(DataConnectionTest, CheckAndMutateRowPermanentError) {
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -984,7 +1037,7 @@ TEST(DataConnectionTest, CheckAndMutateRowPermanentError) {
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
+TEST_F(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -1024,7 +1077,47 @@ TEST(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST(DataConnectionTest, AsyncCheckAndMutateRowSuccess) {
+TEST_F(DataConnectionTest, CheckAndMutateRowBigtableCookie) {
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, CheckAndMutateRow)
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::CheckAndMutateRowRequest const&) {
+        metadata_fixture_.SetServerMetadata(
+            context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
+        return TransientError();
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::CheckAndMutateRowRequest const&) {
+        auto headers = metadata_fixture_.GetMetadata(context);
+        EXPECT_THAT(headers,
+                    Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
+        return PermanentError();
+      });
+
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([]() {
+    auto clone = std::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone, OnCompletion).Times(1);
+    return clone;
+  });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptionsWithoutClientContextSetup()
+          .set<DataBackoffPolicyOption>(std::move(mock_b))
+          .set<IdempotentMutationPolicyOption>(
+              bigtable::AlwaysRetryMutationPolicy().clone()));
+  auto status = conn->CheckAndMutateRow(kTableName, "row", TestFilter(),
+                                        {t1, t2}, {f1, f2});
+  EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST_F(DataConnectionTest, AsyncCheckAndMutateRowSuccess) {
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -1078,7 +1171,7 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowSuccess) {
   EXPECT_EQ(*predicate, bigtable::MutationBranch::kPredicateNotMatched);
 }
 
-TEST(DataConnectionTest, AsyncCheckAndMutateRowIdempotency) {
+TEST_F(DataConnectionTest, AsyncCheckAndMutateRowIdempotency) {
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -1117,7 +1210,7 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowIdempotency) {
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
 }
 
-TEST(DataConnectionTest, AsyncCheckAndMutateRowPermanentError) {
+TEST_F(DataConnectionTest, AsyncCheckAndMutateRowPermanentError) {
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -1146,7 +1239,7 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowPermanentError) {
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
+TEST_F(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -1187,7 +1280,7 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kUnavailable));
 }
 
-TEST(DataConnectionTest, SampleRowsSuccess) {
+TEST_F(DataConnectionTest, SampleRowsSuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, SampleRowKeys)
       .WillOnce([](auto, auto const&, v2::SampleRowKeysRequest const& request) {
@@ -1214,7 +1307,7 @@ TEST(DataConnectionTest, SampleRowsSuccess) {
   EXPECT_THAT(actual.row_keys, ElementsAre("test1", "test2"));
 }
 
-TEST(DataConnectionTest, SampleRowsRetryResetsSamples) {
+TEST_F(DataConnectionTest, SampleRowsRetryResetsSamples) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, SampleRowKeys)
       .WillOnce([](auto, auto const&, v2::SampleRowKeysRequest const& request) {
@@ -1249,7 +1342,7 @@ TEST(DataConnectionTest, SampleRowsRetryResetsSamples) {
   EXPECT_THAT(actual.row_keys, ElementsAre("returned"));
 }
 
-TEST(DataConnectionTest, SampleRowsRetryExhausted) {
+TEST_F(DataConnectionTest, SampleRowsRetryExhausted) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, SampleRowKeys)
       .Times(kNumRetries + 1)
@@ -1280,7 +1373,7 @@ TEST(DataConnectionTest, SampleRowsRetryExhausted) {
   EXPECT_THAT(samples, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST(DataConnectionTest, SampleRowsPermanentError) {
+TEST_F(DataConnectionTest, SampleRowsPermanentError) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, SampleRowKeys)
       .WillOnce([](auto, auto const&, v2::SampleRowKeysRequest const& request) {
@@ -1303,7 +1396,7 @@ TEST(DataConnectionTest, SampleRowsPermanentError) {
 
 // The `AsyncRowSampler` is tested extensively in `async_row_sampler_test.cc`.
 // In this test, we just verify that the configuration is passed along.
-TEST(DataConnectionTest, AsyncSampleRows) {
+TEST_F(DataConnectionTest, AsyncSampleRows) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
       .WillOnce([](CompletionQueue const&, auto,
@@ -1321,7 +1414,7 @@ TEST(DataConnectionTest, AsyncSampleRows) {
   EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(DataConnectionTest, ReadModifyWriteRowSuccess) {
+TEST_F(DataConnectionTest, ReadModifyWriteRowSuccess) {
   v2::ReadModifyWriteRowResponse response;
   auto constexpr kText = R"pb(
     row {
@@ -1361,7 +1454,7 @@ TEST(DataConnectionTest, ReadModifyWriteRowSuccess) {
   EXPECT_THAT(row->cells(), ElementsAre(MatchCell(c)));
 }
 
-TEST(DataConnectionTest, ReadModifyWriteRowPermanentError) {
+TEST_F(DataConnectionTest, ReadModifyWriteRowPermanentError) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadModifyWriteRow)
       .WillOnce([](grpc::ClientContext&,
@@ -1383,7 +1476,7 @@ TEST(DataConnectionTest, ReadModifyWriteRowPermanentError) {
   EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(DataConnectionTest, ReadModifyWriteRowTransientErrorNotRetried) {
+TEST_F(DataConnectionTest, ReadModifyWriteRowTransientErrorNotRetried) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadModifyWriteRow)
       .WillOnce([](grpc::ClientContext&,
@@ -1413,7 +1506,7 @@ TEST(DataConnectionTest, ReadModifyWriteRowTransientErrorNotRetried) {
   EXPECT_THAT(row, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST(DataConnectionTest, AsyncReadModifyWriteRowSuccess) {
+TEST_F(DataConnectionTest, AsyncReadModifyWriteRowSuccess) {
   v2::ReadModifyWriteRowResponse response;
   auto constexpr kText = R"pb(
     row {
@@ -1453,7 +1546,7 @@ TEST(DataConnectionTest, AsyncReadModifyWriteRowSuccess) {
   EXPECT_THAT(row->cells(), ElementsAre(MatchCell(c)));
 }
 
-TEST(DataConnectionTest, AsyncReadModifyWriteRowPermanentError) {
+TEST_F(DataConnectionTest, AsyncReadModifyWriteRowPermanentError) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
       .WillOnce([](google::cloud::CompletionQueue&, auto,
@@ -1476,7 +1569,7 @@ TEST(DataConnectionTest, AsyncReadModifyWriteRowPermanentError) {
   EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(DataConnectionTest, AsyncReadModifyWriteRowTransientErrorNotRetried) {
+TEST_F(DataConnectionTest, AsyncReadModifyWriteRowTransientErrorNotRetried) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
       .WillOnce([](google::cloud::CompletionQueue&, auto,
@@ -1509,7 +1602,7 @@ TEST(DataConnectionTest, AsyncReadModifyWriteRowTransientErrorNotRetried) {
 
 // The `AsyncRowReader` is tested extensively in `async_row_reader_test.cc`.
 // In this test, we just verify that the configuration is passed along.
-TEST(DataConnectionTest, AsyncReadRows) {
+TEST_F(DataConnectionTest, AsyncReadRows) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce(
@@ -1539,7 +1632,7 @@ TEST(DataConnectionTest, AsyncReadRows) {
                       TestFilter());
 }
 
-TEST(DataConnectionTest, AsyncReadRowsReverseScan) {
+TEST_F(DataConnectionTest, AsyncReadRowsReverseScan) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce(
@@ -1565,7 +1658,7 @@ TEST(DataConnectionTest, AsyncReadRowsReverseScan) {
                       TestFilter());
 }
 
-TEST(DataConnectionTest, AsyncReadRowEmpty) {
+TEST_F(DataConnectionTest, AsyncReadRowEmpty) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([](CompletionQueue const&, auto,
@@ -1596,7 +1689,7 @@ TEST(DataConnectionTest, AsyncReadRowEmpty) {
   EXPECT_FALSE(resp->first);
 }
 
-TEST(DataConnectionTest, AsyncReadRowSuccess) {
+TEST_F(DataConnectionTest, AsyncReadRowSuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([](CompletionQueue const&, auto,
@@ -1639,7 +1732,7 @@ TEST(DataConnectionTest, AsyncReadRowSuccess) {
   EXPECT_EQ("row", resp->second.row_key());
 }
 
-TEST(DataConnectionTest, AsyncReadRowFailure) {
+TEST_F(DataConnectionTest, AsyncReadRowFailure) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce(
