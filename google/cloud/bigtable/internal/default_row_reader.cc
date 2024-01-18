@@ -76,7 +76,7 @@ bool DefaultRowReader::NextChunk() {
       last_status_ = absl::get<Status>(std::move(v));
       response_ = {};
       retry_context_.PostCall(*context_);
-      context_ = nullptr;
+      context_.reset();
       return false;
     }
     response_ = absl::get<google::bigtable::v2::ReadRowsResponse>(std::move(v));
@@ -178,7 +178,7 @@ void DefaultRowReader::Cancel() {
       stream_->Read())) {
   }
 
-  context_ = nullptr;
+  context_.reset();
   stream_is_open_ = false;
 }
 
