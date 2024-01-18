@@ -56,6 +56,8 @@ readonly PUBSUB_SHARD=(
 readonly STORAGE_SHARD=(
   storage
   experimental-storage_grpc
+  # universe_domain is included because its deps are already built by storage.
+  universe_domain
 )
 
 readonly TOOLS_SHARD=(

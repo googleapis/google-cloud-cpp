@@ -32,6 +32,8 @@ load(":google_cloud_cpp_rest_internal_unit_tests.bzl", "google_cloud_cpp_rest_in
 load(":google_cloud_cpp_rest_internal.bzl", "google_cloud_cpp_rest_internal_hdrs", "google_cloud_cpp_rest_internal_srcs")
 load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cpp_rest_protobuf_internal_unit_tests")
 load(":google_cloud_cpp_rest_protobuf_internal.bzl", "google_cloud_cpp_rest_protobuf_internal_hdrs", "google_cloud_cpp_rest_protobuf_internal_srcs")
+load(":google_cloud_cpp_universe_domain_unit_tests.bzl", "google_cloud_cpp_universe_domain_unit_tests")
+load(":google_cloud_cpp_universe_domain.bzl", "google_cloud_cpp_universe_domain_hdrs", "google_cloud_cpp_universe_domain_srcs")
 
 capture_build_info(
     name = "generate_build_info",
@@ -353,6 +355,28 @@ cc_library(
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_protobuf_internal_unit_tests]
+
+cc_library(
+    name = "google_cloud_cpp_universe_domain",
+    srcs = google_cloud_cpp_universe_domain_srcs,
+    hdrs = google_cloud_cpp_universe_domain_hdrs,
+    visibility = ["//:__subpackages__"],
+    deps = [
+        ":google_cloud_cpp_common",
+        ":google_cloud_cpp_rest_internal",
+    ],
+)
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_universe_domain",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_universe_domain_unit_tests]
 
 [cc_test(
     name = sample.replace("/", "_").replace(".cc", ""),
