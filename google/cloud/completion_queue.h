@@ -21,8 +21,8 @@
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/meta/type_traits.h"
 #include <chrono>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -227,7 +227,7 @@ class CompletionQueue {
 
      private:
       std::weak_ptr<internal::CompletionQueueImpl> impl_;
-      absl::decay_t<Functor> fun_;
+      std::decay_t<Functor> fun_;
     };
     impl_->RunAsync(
         std::make_unique<Wrapper>(impl_, std::forward<Functor>(functor)));
@@ -253,7 +253,7 @@ class CompletionQueue {
       void exec() override { fun_(); }
 
      private:
-      absl::decay_t<Functor> fun_;
+      std::decay_t<Functor> fun_;
     };
     impl_->RunAsync(std::make_unique<Wrapper>(std::forward<Functor>(functor)));
   }

@@ -20,6 +20,7 @@
 #include <chrono>
 #include <memory>
 #include <thread>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -152,7 +153,7 @@ std::shared_ptr<StreamingReadRpc<ResponseType>> MakeResumableStreamingReadRpc(
     RequestUpdater<ResponseType, RequestType> updater, RequestType request) {
   return std::make_shared<
       ResumableStreamingReadRpc<ResponseType, RequestType, RetryPolicy,
-                                BackoffPolicy, absl::decay_t<Sleeper>>>(
+                                BackoffPolicy, std::decay_t<Sleeper>>>(
       std::move(retry_policy), std::move(backoff_policy),
       std::forward<Sleeper>(sleeper), std::move(stream_factory),
       std::move(updater), std::forward<RequestType>(request));
