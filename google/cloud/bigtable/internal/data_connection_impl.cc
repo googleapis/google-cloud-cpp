@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/retry_context.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/idempotency.h"
@@ -98,12 +99,17 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
         return idempotent_policy->is_idempotent(m);
       });
 
+  RetryContext retry_context;
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent,
-      [this](grpc::ClientContext& context,
-             google::bigtable::v2::MutateRowRequest const& request) {
-        return stub_->MutateRow(context, request);
+      [this, &retry_context](
+          grpc::ClientContext& context,
+          google::bigtable::v2::MutateRowRequest const& request) {
+        retry_context.PreCall(context);
+        auto s = stub_->MutateRow(context, request);
+        retry_context.PostCall(context);
+        return s;
       },
       request, __func__);
   if (!sor) return std::move(sor).status();
@@ -227,11 +233,16 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
   auto const idempotency = idempotency_policy(*current)->is_idempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
+  RetryContext retry_context;
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current), idempotency,
-      [this](grpc::ClientContext& context,
-             google::bigtable::v2::CheckAndMutateRowRequest const& request) {
-        return stub_->CheckAndMutateRow(context, request);
+      [this, &retry_context](
+          grpc::ClientContext& context,
+          google::bigtable::v2::CheckAndMutateRowRequest const& request) {
+        retry_context.PreCall(context);
+        auto s = stub_->CheckAndMutateRow(context, request);
+        retry_context.PostCall(context);
+        return s;
       },
       request, __func__);
   if (!sor) return std::move(sor).status();
