@@ -212,6 +212,7 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
   auto const& options = google::cloud::internal::CurrentOptions();
   auto context = std::make_shared<grpc::ClientContext>();
   google::cloud::internal::ConfigureContext(*context, options);
+  retry_context_.PreCall(*context);
 
   struct UnpackVariant {
     BulkMutatorState& state;
@@ -231,9 +232,10 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
   limiter.Acquire();
 
   // Read the stream of responses.
-  auto stream = stub.MutateRows(std::move(context), options, mutations);
+  auto stream = stub.MutateRows(context, options, mutations);
   while (absl::visit(UnpackVariant{state_, limiter}, stream->Read())) {
   }
+  retry_context_.PostCall(*context);
   return state_.last_status();
 }
 
