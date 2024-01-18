@@ -74,12 +74,6 @@ class AsyncRewriter {
   std::shared_ptr<AsyncRewriterConnection> impl_;
 };
 
-/**
- * Asynchronously run a rewrite to completion.
- */
-future<StatusOr<storage::ObjectMetadata>> CompleteRewrite(
-    AsyncRewriter rewriter, AsyncToken token);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud
