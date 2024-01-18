@@ -107,7 +107,7 @@ TEST(CompletionQueueTest, TimerCancel) {
     }
   };
   std::vector<std::thread> workers;
-  std::generate_n(std::back_inserter(runners), 8,
+  std::generate_n(std::back_inserter(workers), 8,
                   [&] { return std::thread(worker, cq); });
 
   for (auto& t : workers) t.join();
