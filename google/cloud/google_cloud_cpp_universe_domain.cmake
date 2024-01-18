@@ -14,7 +14,6 @@
 # limitations under the License.
 # ~~~
 
-# the library
 add_library(google_cloud_cpp_universe_domain # cmake-format: sort
             universe_domain.cc universe_domain.h)
 target_link_libraries(

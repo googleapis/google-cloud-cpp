@@ -14,7 +14,9 @@
 
 #include "google/cloud/universe_domain.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/filesystem.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
 #include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -29,6 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::NotNull;
 
@@ -60,10 +63,8 @@ TEST(AddUniverseDomainOption, GoogleDefaultCredentialsAuthorizedUser) {
   (void)std::remove(filename.c_str());
 
   ASSERT_STATUS_OK(result_options);
-  ASSERT_TRUE(result_options->has<UnifiedCredentialsOption>());
   auto creds = result_options->get<UnifiedCredentialsOption>();
   EXPECT_THAT(creds.get(), NotNull());
-  ASSERT_TRUE(result_options->has<internal::UniverseDomainOption>());
   EXPECT_THAT(result_options->get<internal::UniverseDomainOption>(),
               Eq("googleapis.com"));
 }
@@ -93,10 +94,8 @@ TEST(AddUniverseDomainOption, GoogleDefaultCredentialsServiceAccount) {
   (void)std::remove(filename.c_str());
 
   ASSERT_STATUS_OK(result_options);
-  ASSERT_TRUE(result_options->has<UnifiedCredentialsOption>());
   auto creds = result_options->get<UnifiedCredentialsOption>();
   EXPECT_THAT(creds.get(), NotNull());
-  ASSERT_TRUE(result_options->has<internal::UniverseDomainOption>());
   EXPECT_THAT(result_options->get<internal::UniverseDomainOption>(),
               Eq("test-ud.net"));
 }
@@ -107,13 +106,18 @@ TEST(AddUniverseDomainOption, CredentialsSpecified) {
   auto result_options = AddUniverseDomainOption(ExperimentalTag{}, options);
 
   ASSERT_STATUS_OK(result_options);
-  ASSERT_TRUE(result_options->has<UnifiedCredentialsOption>());
   auto const& creds = result_options->get<UnifiedCredentialsOption>();
-  // Verify UnifiedCredentialsOption value did not get overwritten.
-  EXPECT_THAT(expected_creds.get(), Eq(creds.get()));
-  ASSERT_TRUE(result_options->has<internal::UniverseDomainOption>());
+  EXPECT_THAT(expected_creds, Eq(creds));
   EXPECT_THAT(result_options->get<internal::UniverseDomainOption>(),
               Eq("googleapis.com"));
+}
+
+TEST(AddUniverseDomainOption, ErrorCredentials) {
+  auto options =
+      Options{}.set<UnifiedCredentialsOption>(internal::MakeErrorCredentials(
+          internal::FailedPreconditionError("error")));
+  auto result_options = AddUniverseDomainOption(ExperimentalTag{}, options);
+  EXPECT_THAT(result_options, StatusIs(StatusCode::kFailedPrecondition));
 }
 
 }  // namespace

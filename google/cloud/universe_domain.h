@@ -28,33 +28,42 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Uses the `UnifiedCredentialsOptions` in `options` or
-// ApplicationDefaultCredentials if `UnifiedCredentialsOptions` is not found,
-// and retrieves the universe_domain from those Credentials and sets the
-// `UniverseDomainOption` to the result.
-//
-// If the Metadata Server needs to be called, this function checks the options
-// for the `UniverseDomainRetryPolicyOption` and
-// `UniverseDomainBackoffPolicyOption`. If either policy option is not present a
-// default policy is used for the corresponding policy option.
-//
-// If everything succeeds, the `Options` returned contain both the
-// `UnifiedCredentialsOption` and the `UniverseDomainOption`.
-// If the `RetryPolicy` becomes exhausted or other errors are encountered, that
-// `Status` is returned.
+/**
+ * Creates an `Options` containing the `UnifiedCredentialsOption` and its
+ * corresponding `UniverseDomainOption`.
+ *
+ * Uses the `UnifiedCredentialsOption` in `options` or
+ * ApplicationDefaultCredentials if `UnifiedCredentialsOption` is not found,
+ * and retrieves the universe_domain from those `Credentials` and sets the
+ * `UniverseDomainOption` to the result.
+ *
+ * If the Metadata Server needs to be called, this function checks the options
+ * for the `UniverseDomainRetryPolicyOption` and
+ * `UniverseDomainBackoffPolicyOption`. If either policy option is not present a
+ * default policy is used for the corresponding policy option.
+ *
+ * If everything succeeds, the `Options` returned contain both the
+ * `UnifiedCredentialsOption` and the `UniverseDomainOption`.
+ * If the `RetryPolicy` becomes exhausted or other errors are encountered, that
+ * `Status` is returned.
+ */
 StatusOr<Options> AddUniverseDomainOption(ExperimentalTag tag,
                                           Options options = {});
 
-// Interrogates the supplied credentials for the universe_domain. If the
-// Metadata Server needs to be called, the supplied `UniverseDomainRetryPolicy`
-// and `BackoffPolicy` are used, otherwise default policies are used.
-//
-// If successful the universe_domain value is returned, otherwise a `Status`
-// indicating the error encountered is returned.
-StatusOr<std::string> GetUniverseDomain(
-    ExperimentalTag tag, Credentials const& credentials,
-    std::unique_ptr<internal::UniverseDomainRetryPolicy> retry_policy = {},
-    std::unique_ptr<BackoffPolicy> backoff_policy = {});
+/**
+ * Interrogates the provided credentials for the universe_domain.
+ *
+ * If the Metadata Server needs to be called, this function checks the options
+ * for the `UniverseDomainRetryPolicyOption` and
+ * `UniverseDomainBackoffPolicyOption`. If either policy option is not present a
+ * default policy is used for the corresponding policy option.
+ *
+ * If successful the universe_domain value is returned, otherwise a `Status`
+ * indicating the error encountered is returned.
+ */
+StatusOr<std::string> GetUniverseDomain(ExperimentalTag tag,
+                                        Credentials const& credentials,
+                                        Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

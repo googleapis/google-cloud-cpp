@@ -24,6 +24,14 @@ StatusOr<AccessToken> ErrorCredentials::GetToken(
   return status_;
 }
 
+StatusOr<std::string> ErrorCredentials::universe_domain() const {
+  return status_;
+}
+StatusOr<std::string> ErrorCredentials::universe_domain(
+    google::cloud::Options const&) const {
+  return status_;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud

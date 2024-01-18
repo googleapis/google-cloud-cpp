@@ -21,20 +21,6 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
-
-template <typename T, typename U = typename std::remove_reference_t<
-                          decltype(*typename T::Type())>>
-std::unique_ptr<U> GetPolicyClone(Options const& options) {
-  std::unique_ptr<U> policy;
-  if (options.has<T>()) {
-    auto const& policy_option = options.get<T>();
-    if (policy_option) return policy_option->clone();
-  }
-  return policy;
-}
-
-}  // namespace
 
 StatusOr<Options> AddUniverseDomainOption(ExperimentalTag, Options options) {
   if (!options.has<UnifiedCredentialsOption>()) {
@@ -43,30 +29,16 @@ StatusOr<Options> AddUniverseDomainOption(ExperimentalTag, Options options) {
   }
 
   auto universe_domain = GetUniverseDomain(
-      ExperimentalTag{}, *options.get<UnifiedCredentialsOption>(),
-      GetPolicyClone<internal::UniverseDomainRetryPolicyOption>(options),
-      GetPolicyClone<internal::UniverseDomainBackoffPolicyOption>(options));
+      ExperimentalTag{}, *options.get<UnifiedCredentialsOption>(), options);
   if (!universe_domain) return std::move(universe_domain).status();
-  options.set<internal::UniverseDomainOption>(*std::move(universe_domain));
-  return options;
+  return options.set<internal::UniverseDomainOption>(
+      *std::move(universe_domain));
 }
 
-StatusOr<std::string> GetUniverseDomain(
-    ExperimentalTag, Credentials const& credentials,
-    std::unique_ptr<internal::UniverseDomainRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy) {
-  Options retry_options;
-  if (retry_policy) {
-    retry_options.set<internal::UniverseDomainRetryPolicyOption>(
-        std::move(retry_policy));
-  }
-  if (backoff_policy) {
-    retry_options.set<internal::UniverseDomainBackoffPolicyOption>(
-        std::move(backoff_policy));
-  }
-
-  return rest_internal::MapCredentials(credentials)
-      ->universe_domain(retry_options);
+StatusOr<std::string> GetUniverseDomain(ExperimentalTag,
+                                        Credentials const& credentials,
+                                        Options const& options) {
+  return rest_internal::MapCredentials(credentials)->universe_domain(options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
