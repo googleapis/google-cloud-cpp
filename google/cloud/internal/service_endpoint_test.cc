@@ -116,8 +116,8 @@ TEST(UniverseDomainEndpoint, WithUniverseDomainOption) {
       "foo.googleapis.com.", Options{}.set<UniverseDomainOption>("my-ud.net"));
   EXPECT_EQ(ep, "foo.my-ud.net");
 
-  ep = UniverseDomainEndpoint(
-      "foo.googleapis.com", Options{}.set<UniverseDomainOption>("my-ud.net"));
+  ep = UniverseDomainEndpoint("foo.googleapis.com",
+                              Options{}.set<UniverseDomainOption>("my-ud.net"));
   EXPECT_EQ(ep, "foo.my-ud.net");
 }
 
