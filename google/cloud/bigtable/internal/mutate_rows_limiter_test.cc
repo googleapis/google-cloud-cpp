@@ -14,10 +14,12 @@
 
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -31,6 +33,9 @@ using Clock = ThrottlingMutateRowsLimiter::Clock;
 using ::google::cloud::bigtable::experimental::BulkApplyThrottlingOption;
 using ::google::cloud::testing_util::FakeSteadyClock;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
+using ::testing::Contains;
+using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::MockFunction;
 using ::testing::NotNull;
 
@@ -241,12 +246,43 @@ TEST(MutateRowsLimiter, MakeMutateRowsLimiter) {
               NotNull());
 }
 
+TEST(MutateRowsLimiter, LoggingEnabled) {
+  testing_util::ScopedLog log;
+  std::vector<std::string> lines;
+
+  auto limiter = MakeMutateRowsLimiter(
+      CompletionQueue{}, Options{}
+                             .set<BulkApplyThrottlingOption>(true)
+                             .set<TracingComponentsOption>({"rpc"}));
+  // With the default settings, we should expect throttling by the second
+  // request. Still, go up to 100 in case instructions are slow.
+  for (auto i = 0; i != 100 && lines.empty(); ++i) {
+    limiter->Acquire();
+    lines = log.ExtractLines();
+  }
+
+  EXPECT_THAT(lines, Contains(HasSubstr("Throttling BulkApply for ")));
+}
+
+TEST(MakeMutateRowsLimiter, LoggingDisabled) {
+  testing_util::ScopedLog log;
+
+  auto limiter = MakeMutateRowsLimiter(CompletionQueue{},
+                                       Options{}
+                                           .set<BulkApplyThrottlingOption>(true)
+                                           .set<TracingComponentsOption>({}));
+  // We generally expect throttling by the second response. Still, go up to 5 to
+  // be a little bit more conclusive.
+  for (auto i = 0; i != 5; ++i) {
+    limiter->Acquire();
+    EXPECT_THAT(log.ExtractLines(), IsEmpty());
+  }
+}
+
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::SpanNamed;
-using ::testing::Contains;
-using ::testing::IsEmpty;
 
 TEST(MakeMutateRowsLimiter, TracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
