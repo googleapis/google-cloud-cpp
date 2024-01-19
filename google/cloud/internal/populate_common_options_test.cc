@@ -197,6 +197,12 @@ TEST(PopulateCommonOptions, EnvVarsOverridesUniverseDomain) {
       "AUTHORITY_OPTION", "default.googleapis.com");
   EXPECT_EQ(actual.get<EndpointOption>(), "default.test-ud.net");
   EXPECT_EQ(actual.get<AuthorityOption>(), "authority-env.googleapis.com");
+
+  actual = PopulateCommonOptions(
+      Options{}.set<UniverseDomainOption>("test-ud.net"), "SERVICE_ENDPOINT",
+      {}, "AUTHORITY_OPTION", "default.googleapis.com");
+  EXPECT_EQ(actual.get<EndpointOption>(), "endpoint-env.googleapis.com");
+  EXPECT_EQ(actual.get<AuthorityOption>(), "authority-env.googleapis.com");
 }
 
 TEST(PopulateCommonOptions, UserProject) {
