@@ -72,7 +72,7 @@ TEST(IAMPolicyOptions, EndpointOverridesUniverseDomain) {
       IAMPolicyOptions(Options{}
                            .set<internal::UniverseDomainOption>("my-ud.net")
                            .set<EndpointOption>("test-only-endpoint")
-                           .set<EndpointOption>("test-only-authority"));
+                           .set<AuthorityOption>("test-only-authority"));
   EXPECT_EQ(actual.get<EndpointOption>(), "test-only-endpoint");
   EXPECT_EQ(actual.get<AuthorityOption>(), "test-only-authority");
 }
