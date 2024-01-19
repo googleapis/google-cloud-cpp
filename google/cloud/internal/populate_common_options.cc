@@ -32,7 +32,7 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
                               std::string const& authority_env_var,
                               std::string default_endpoint) {
   if (!opts.has<AuthorityOption>()) {
-    opts.set<AuthorityOption>(default_endpoint);
+    opts.set<AuthorityOption>(UniverseDomainEndpoint(default_endpoint, opts));
   }
   if (!authority_env_var.empty()) {
     auto e = GetEnv(authority_env_var.c_str());
