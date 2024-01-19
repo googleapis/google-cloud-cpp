@@ -43,12 +43,13 @@ void AsyncRowReader::MakeRequest() {
   parser_ = bigtable::internal::ReadRowsParserFactory().Create(reverse_);
 
   internal::ScopedCallContext scope(call_context_);
-  auto context = std::make_shared<grpc::ClientContext>();
-  internal::ConfigureContext(*context, internal::CurrentOptions());
+  context_ = std::make_shared<grpc::ClientContext>();
+  internal::ConfigureContext(*context_, internal::CurrentOptions());
+  retry_context_->PreCall(*context_);
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead(
-      stub_->AsyncReadRows(cq_, std::move(context), request),
+      stub_->AsyncReadRows(cq_, context_, request),
       [self](v2::ReadRowsResponse r) {
         return self->OnDataReceived(std::move(r));
       },
@@ -169,7 +170,7 @@ void AsyncRowReader::OnStreamFinished(Status status) {
   grpc::Status parser_status;
   parser_->HandleEndOfStream(parser_status);
   if (!parser_status.ok() && status_.ok()) {
-    // If there stream finished with an error ignore what the parser says.
+    // If the stream finished with an error ignore what the parser says.
     status_ = MakeStatusFromRpcError(parser_status);
   }
 
@@ -213,19 +214,19 @@ void AsyncRowReader::OnStreamFinished(Status status) {
     TryGiveRowToUser();
     return;
   }
+  retry_context_->PostCall(*context_);
+  context_.reset();
   auto self = this->shared_from_this();
   internal::TracedAsyncBackoff(cq_, internal::CurrentOptions(),
                                backoff_policy_->OnCompletion(), "Async Backoff")
-      .then(
-          [self](
-              future<StatusOr<std::chrono::system_clock::time_point>> result) {
-            if (auto tp = result.get()) {
-              self->MakeRequest();
-            } else {
-              self->whole_op_finished_ = true;
-              self->TryGiveRowToUser();
-            }
-          });
+      .then([self](auto result) {
+        if (auto tp = result.get()) {
+          self->MakeRequest();
+        } else {
+          self->whole_op_finished_ = true;
+          self->TryGiveRowToUser();
+        }
+      });
 }
 
 void AsyncRowReader::Cancel(std::string const& reason) {
