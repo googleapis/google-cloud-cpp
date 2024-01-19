@@ -226,7 +226,9 @@ Options DefaultDataOptions(Options opts) {
     opts.set<UserProjectOption>(*std::move(user_project));
   }
   if (!opts.has<AuthorityOption>()) {
-    opts.set<AuthorityOption>("bigtable.googleapis.com");
+    auto ep = google::cloud::internal::UniverseDomainEndpoint(
+        "bigtable.googleapis.com", opts);
+    opts.set<AuthorityOption>(std::move(ep));
   }
   if (!opts.has<bigtable::DataRetryPolicyOption>()) {
     opts.set<bigtable::DataRetryPolicyOption>(

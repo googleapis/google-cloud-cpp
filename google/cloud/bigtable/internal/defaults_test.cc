@@ -221,8 +221,10 @@ TEST(OptionsTest, UniverseDomain) {
   auto options =
       Options{}.set<google::cloud::internal::UniverseDomainOption>("ud.net");
 
-  EXPECT_EQ(DefaultDataOptions(options).get<EndpointOption>(),
-            "bigtable.ud.net");
+  auto data_options = DefaultDataOptions(options);
+  EXPECT_EQ(data_options.get<EndpointOption>(), "bigtable.ud.net");
+  EXPECT_EQ(data_options.get<AuthorityOption>(), "bigtable.ud.net");
+
   EXPECT_EQ(DefaultTableAdminOptions(options).get<EndpointOption>(),
             "bigtableadmin.ud.net");
   EXPECT_EQ(DefaultInstanceAdminOptions(options).get<EndpointOption>(),
@@ -233,9 +235,12 @@ TEST(OptionsTest, EndpointOptionsOverrideUniverseDomain) {
   auto options =
       Options{}
           .set<google::cloud::internal::UniverseDomainOption>("ud.net")
-          .set<EndpointOption>("data.googleapis.com");
-  EXPECT_EQ(DefaultDataOptions(options).get<EndpointOption>(),
-            "data.googleapis.com");
+          .set<EndpointOption>("data-endpoint.googleapis.com")
+          .set<AuthorityOption>("data-authority.googleapis.com");
+  auto data_options = DefaultDataOptions(options);
+  EXPECT_EQ(data_options.get<EndpointOption>(), "data-endpoint.googleapis.com");
+  EXPECT_EQ(data_options.get<AuthorityOption>(),
+            "data-authority.googleapis.com");
 }
 
 TEST(OptionsTest, BigtableEndpointOptionsOverrideUniverseDomain) {
