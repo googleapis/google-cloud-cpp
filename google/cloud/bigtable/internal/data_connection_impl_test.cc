@@ -374,12 +374,15 @@ TEST_F(DataConnectionTest, ApplyBigtableCookie) {
   EXPECT_CALL(*mock, MutateRow)
       .WillOnce(
           [this](grpc::ClientContext& context, v2::MutateRowRequest const&) {
+            // Return a bigtable cookie in the first request.
             metadata_fixture_.SetServerMetadata(
                 context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
             return TransientError();
           })
       .WillOnce(
           [this](grpc::ClientContext& context, v2::MutateRowRequest const&) {
+            // Verify that the next request includes the bigtable cookie from
+            // above.
             auto headers = metadata_fixture_.GetMetadata(context);
             EXPECT_THAT(headers,
                         Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
@@ -496,6 +499,7 @@ TEST_F(DataConnectionTest, AsyncApplyBigtableCookie) {
       .WillOnce([this](CompletionQueue&,
                        std::shared_ptr<grpc::ClientContext> const& context,
                        v2::MutateRowRequest const&) {
+        // Return a bigtable cookie in the first request.
         metadata_fixture_.SetServerMetadata(
             *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
         return make_ready_future<StatusOr<v2::MutateRowResponse>>(
@@ -504,6 +508,7 @@ TEST_F(DataConnectionTest, AsyncApplyBigtableCookie) {
       .WillOnce([this](CompletionQueue&,
                        std::shared_ptr<grpc::ClientContext> const& context,
                        v2::MutateRowRequest const&) {
+        // Verify that the next request includes the bigtable cookie from above.
         auto headers = metadata_fixture_.GetMetadata(*context);
         EXPECT_THAT(headers,
                     Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
@@ -1123,12 +1128,14 @@ TEST_F(DataConnectionTest, CheckAndMutateRowBigtableCookie) {
   EXPECT_CALL(*mock, CheckAndMutateRow)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::CheckAndMutateRowRequest const&) {
+        // Return a bigtable cookie in the first request.
         metadata_fixture_.SetServerMetadata(
             context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
         return TransientError();
       })
       .WillOnce([this](grpc::ClientContext& context,
                        v2::CheckAndMutateRowRequest const&) {
+        // Verify that the next request includes the bigtable cookie from above.
         auto headers = metadata_fixture_.GetMetadata(context);
         EXPECT_THAT(headers,
                     Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
@@ -1327,6 +1334,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowBigtableCookie) {
       .WillOnce([this](CompletionQueue&,
                        std::shared_ptr<grpc::ClientContext> const& context,
                        v2::CheckAndMutateRowRequest const&) {
+        // Return a bigtable cookie in the first request.
         metadata_fixture_.SetServerMetadata(
             *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
         return make_ready_future<StatusOr<v2::CheckAndMutateRowResponse>>(
@@ -1335,6 +1343,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowBigtableCookie) {
       .WillOnce([this](CompletionQueue&,
                        std::shared_ptr<grpc::ClientContext> const& context,
                        v2::CheckAndMutateRowRequest const&) {
+        // Verify that the next request includes the bigtable cookie from above.
         auto headers = metadata_fixture_.GetMetadata(*context);
         EXPECT_THAT(headers,
                     Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
@@ -1476,6 +1485,7 @@ TEST_F(DataConnectionTest, SampleRowsBigtableCookie) {
   EXPECT_CALL(*mock, SampleRowKeys)
       .WillOnce(
           [this](auto context, auto const&, v2::SampleRowKeysRequest const&) {
+            // Return a bigtable cookie in the first request.
             metadata_fixture_.SetServerMetadata(
                 *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
             auto stream = std::make_unique<MockSampleRowKeysStream>();
@@ -1484,6 +1494,8 @@ TEST_F(DataConnectionTest, SampleRowsBigtableCookie) {
           })
       .WillOnce(
           [this](auto context, auto const&, v2::SampleRowKeysRequest const&) {
+            // Verify that the next request includes the bigtable cookie from
+            // above.
             auto headers = metadata_fixture_.GetMetadata(*context);
             EXPECT_THAT(headers,
                         Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
