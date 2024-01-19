@@ -56,12 +56,13 @@ void AsyncRowSampler::StartIteration() {
   request.set_table_name(table_name_);
 
   internal::ScopedCallContext scope(call_context_);
-  auto context = std::make_shared<grpc::ClientContext>();
-  internal::ConfigureContext(*context, internal::CurrentOptions());
+  context_ = std::make_shared<grpc::ClientContext>();
+  internal::ConfigureContext(*context_, internal::CurrentOptions());
+  retry_context_->PreCall(*context_);
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead<v2::SampleRowKeysResponse>(
-      stub_->AsyncSampleRowKeys(cq_, std::move(context), request),
+      stub_->AsyncSampleRowKeys(cq_, context_, request),
       [self](v2::SampleRowKeysResponse response) {
         return self->OnRead(std::move(response));
       },
@@ -86,13 +87,13 @@ void AsyncRowSampler::OnFinish(Status status) {
     return;
   }
 
-  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
-
+  retry_context_->PostCall(*context_);
+  context_.reset();
   samples_.clear();
   auto self = this->shared_from_this();
   internal::TracedAsyncBackoff(cq_, internal::CurrentOptions(),
                                backoff_policy_->OnCompletion(), "Async Backoff")
-      .then([self](TimerFuture result) {
+      .then([self](auto result) {
         if (result.get()) {
           self->StartIteration();
         } else {
