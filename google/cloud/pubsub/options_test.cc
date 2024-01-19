@@ -64,14 +64,17 @@ TEST(IAMPolicyOptions, IncorporatesUniverseDomain) {
   auto const actual = IAMPolicyOptions(
       Options{}.set<internal::UniverseDomainOption>("my-ud.net"));
   EXPECT_EQ(actual.get<EndpointOption>(), "pubsub.my-ud.net");
+  EXPECT_EQ(actual.get<AuthorityOption>(), "pubsub.my-ud.net");
 }
 
 TEST(IAMPolicyOptions, EndpointOverridesUniverseDomain) {
   auto const actual =
       IAMPolicyOptions(Options{}
                            .set<internal::UniverseDomainOption>("my-ud.net")
-                           .set<EndpointOption>("test-only-endpoint"));
+                           .set<EndpointOption>("test-only-endpoint")
+                           .set<AuthorityOption>("test-only-authority"));
   EXPECT_EQ(actual.get<EndpointOption>(), "test-only-endpoint");
+  EXPECT_EQ(actual.get<AuthorityOption>(), "test-only-authority");
 }
 
 }  // namespace
