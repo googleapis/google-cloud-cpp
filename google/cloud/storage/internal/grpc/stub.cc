@@ -232,12 +232,14 @@ Options DefaultOptionsGrpc(Options options) {
     options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
   }
 
-  auto default_endpoint = google::cloud::internal::UniverseDomainEndpoint(
+  auto default_ep = google::cloud::internal::UniverseDomainEndpoint(
       "storage.googleapis.com.", options);
+  auto authority_ep = google::cloud::internal::UniverseDomainEndpoint(
+      "storage.googleapis.com", options);
   options = google::cloud::internal::MergeOptions(
       std::move(options), Options{}
-                              .set<EndpointOption>(std::move(default_endpoint))
-                              .set<AuthorityOption>("storage.googleapis.com"));
+                              .set<EndpointOption>(std::move(default_ep))
+                              .set<AuthorityOption>(std::move(authority_ep)));
   // We can only compute this once the endpoint is known, so take an additional
   // step.
   auto const num_channels =

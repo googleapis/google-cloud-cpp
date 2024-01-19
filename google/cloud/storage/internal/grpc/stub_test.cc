@@ -129,19 +129,19 @@ TEST(DefaultOptionsGrpc, EnvVarsOverrideOptionsAndDefaults) {
   ScopedEnvironment e("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT",
                       "from-env");
 
-  auto options = DefaultOptionsGrpc(
-      Options{}
-          .set<EndpointOption>("from-option")
-          .set<internal::UniverseDomainOption>("ignored-ud"));
+  auto options =
+      DefaultOptionsGrpc(Options{}
+                             .set<EndpointOption>("from-option")
+                             .set<internal::UniverseDomainOption>("my-ud.net"));
   EXPECT_EQ(options.get<EndpointOption>(), "from-env");
-  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.my-ud.net");
 }
 
 TEST(DefaultOptionsGrpc, IncorporatesUniverseDomain) {
   auto options = DefaultOptionsGrpc(
       Options{}.set<internal::UniverseDomainOption>("my-ud.net"));
   EXPECT_EQ(options.get<EndpointOption>(), "storage.my-ud.net");
-  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.my-ud.net");
 }
 
 TEST(DefaultOptionsGrpc, DefaultOptionsUploadBuffer) {
