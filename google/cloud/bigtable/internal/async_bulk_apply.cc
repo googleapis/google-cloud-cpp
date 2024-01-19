@@ -67,12 +67,13 @@ void AsyncBulkApplier::StartIteration() {
 
 void AsyncBulkApplier::MakeRequest() {
   internal::ScopedCallContext scope(call_context_);
-  auto context = std::make_shared<grpc::ClientContext>();
-  internal::ConfigureContext(*context, internal::CurrentOptions());
+  context_ = std::make_shared<grpc::ClientContext>();
+  internal::ConfigureContext(*context_, internal::CurrentOptions());
+  retry_context_->PreCall(*context_);
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead(
-      stub_->AsyncMutateRows(cq_, std::move(context), state_.BeforeStart()),
+      stub_->AsyncMutateRows(cq_, context_, state_.BeforeStart()),
       [self](google::bigtable::v2::MutateRowsResponse r) {
         self->OnRead(std::move(r));
         return make_ready_future(self->keep_reading_.load());
@@ -93,6 +94,8 @@ void AsyncBulkApplier::OnFinish(Status const& status) {
     return;
   }
 
+  retry_context_->PostCall(*context_);
+  context_.reset();
   auto self = this->shared_from_this();
   internal::TracedAsyncBackoff(cq_, internal::CurrentOptions(),
                                backoff_policy_->OnCompletion(), "Async Backoff")
