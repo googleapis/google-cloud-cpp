@@ -18,6 +18,7 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "absl/time/time.h"
 #include <algorithm>
 #include <thread>
 
