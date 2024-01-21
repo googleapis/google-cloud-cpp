@@ -71,4 +71,5 @@ endif ()
 if (universe_domain IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     include(
         "${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_universe_domain.cmake")
+    add_subdirectory(universe_domain)
 endif ()
