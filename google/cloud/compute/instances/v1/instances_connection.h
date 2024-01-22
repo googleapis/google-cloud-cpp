@@ -264,6 +264,10 @@ class InstancesConnection {
       google::cloud::cpp::compute::instances::v1::ListReferrersRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(google::cloud::cpp::compute::instances::v1::
+                         PerformMaintenanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveResourcePolicies(google::cloud::cpp::compute::instances::v1::
                              RemoveResourcePoliciesRequest const& request);
 

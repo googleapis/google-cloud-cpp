@@ -286,6 +286,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeRegionUrlMapsConnection()`.
 
+- `GOOGLE_CLOUD_CPP_REGION_ZONES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionZonesConnection()`.
+
 - `GOOGLE_CLOUD_CPP_RESERVATIONS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeReservationsConnection()`.

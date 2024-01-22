@@ -99,6 +99,7 @@ application.
 - [\c compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient](@ref google::cloud::compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient)
 - [\c compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient](@ref google::cloud::compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient)
 - [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref google::cloud::compute_region_url_maps_v1::RegionUrlMapsClient)
+- [\c compute_region_zones_v1::RegionZonesClient](@ref google::cloud::compute_region_zones_v1::RegionZonesClient)
 - [\c compute_regions_v1::RegionsClient](@ref google::cloud::compute_regions_v1::RegionsClient)
 - [\c compute_reservations_v1::ReservationsClient](@ref google::cloud::compute_reservations_v1::ReservationsClient)
 - [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref google::cloud::compute_resource_policies_v1::ResourcePoliciesClient)

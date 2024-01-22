@@ -81,6 +81,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient](@ref compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient-endpoint-snippet)
 - [\c compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient](@ref compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient-endpoint-snippet)
 - [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref compute_region_url_maps_v1::RegionUrlMapsClient-endpoint-snippet)
+- [\c compute_region_zones_v1::RegionZonesClient](@ref compute_region_zones_v1::RegionZonesClient-endpoint-snippet)
 - [\c compute_regions_v1::RegionsClient](@ref compute_regions_v1::RegionsClient-endpoint-snippet)
 - [\c compute_reservations_v1::ReservationsClient](@ref compute_reservations_v1::ReservationsClient-endpoint-snippet)
 - [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref compute_resource_policies_v1::ResourcePoliciesClient-endpoint-snippet)
@@ -518,6 +519,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_region_url_maps_v1::RegionUrlMapsClient-endpoint-snippet Override compute_region_url_maps_v1::RegionUrlMapsClient Endpoint Configuration
 
 @snippet google/cloud/compute/region_url_maps/v1/samples/region_url_maps_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_zones_v1::RegionZonesClient-endpoint-snippet Override compute_region_zones_v1::RegionZonesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_zones/v1/samples/region_zones_client_samples.cc set-client-endpoint
 
 */
 

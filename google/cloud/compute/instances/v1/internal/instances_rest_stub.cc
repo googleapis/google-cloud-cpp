@@ -523,6 +523,41 @@ DefaultInstancesRestStub::ListReferrers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultInstancesRestStub::AsyncPerformMaintenance(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const&
+        request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request, false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", options),
+                             "/", "projects", "/", request.project(), "/",
+                             "zones", "/", request.zone(), "/", "instances",
+                             "/", request.instance(), "/",
+                             "performMaintenance"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      options};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncRemoveResourcePolicies(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -1135,7 +1170,10 @@ DefaultInstancesRestStub::AsyncSimulateMaintenanceEvent(
                              "/", request.instance(), "/",
                              "simulateMaintenanceEvent"),
                 rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                    {std::make_pair("request_id", request.request_id()),
+                     std::make_pair(
+                         "with_extended_notifications",
+                         request.with_extended_notifications() ? "1" : "0")})));
       },
       std::move(p),
       service_,

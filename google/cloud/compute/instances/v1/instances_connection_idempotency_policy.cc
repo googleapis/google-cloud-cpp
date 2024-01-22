@@ -133,6 +133,12 @@ Idempotency InstancesConnectionIdempotencyPolicy::ListReferrers(
   return Idempotency::kIdempotent;
 }
 
+Idempotency InstancesConnectionIdempotencyPolicy::PerformMaintenance(
+    google::cloud::cpp::compute::instances::v1::
+        PerformMaintenanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency InstancesConnectionIdempotencyPolicy::RemoveResourcePolicies(
     google::cloud::cpp::compute::instances::v1::
         RemoveResourcePoliciesRequest const&) {
