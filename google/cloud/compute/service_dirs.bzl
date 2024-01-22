@@ -82,6 +82,7 @@ service_dirs = [
     "region_target_https_proxies/v1/",
     "region_target_tcp_proxies/v1/",
     "region_url_maps/v1/",
+    "region_zones/v1/",
     "regions/v1/",
     "reservations/v1/",
     "resource_policies/v1/",
