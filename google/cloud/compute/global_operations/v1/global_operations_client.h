@@ -241,7 +241,7 @@ class GlobalOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L193}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L130}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -273,7 +273,7 @@ class GlobalOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L193}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L130}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -311,7 +311,7 @@ class GlobalOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_operations.v1.ListGlobalOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L207}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L130}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListGlobalOperations(
@@ -352,7 +352,7 @@ class GlobalOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_operations.v1.ListGlobalOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L207}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L130}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListGlobalOperations(
@@ -391,7 +391,7 @@ class GlobalOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L273}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L130}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
@@ -433,7 +433,7 @@ class GlobalOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L273}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L130}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(

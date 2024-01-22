@@ -445,7 +445,7 @@ class NetworkEndpointGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L358}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L105}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L107}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -478,7 +478,7 @@ class NetworkEndpointGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L358}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L105}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L107}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -599,7 +599,7 @@ class NetworkEndpointGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.network_endpoint_groups.v1.ListNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L409}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L105}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L107}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -641,7 +641,7 @@ class NetworkEndpointGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.network_endpoint_groups.v1.ListNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L409}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L105}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L107}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -684,7 +684,7 @@ class NetworkEndpointGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L479}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L506}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L508}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>
@@ -730,7 +730,7 @@ class NetworkEndpointGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L479}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L506}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L508}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>

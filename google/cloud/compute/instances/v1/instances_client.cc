@@ -437,6 +437,27 @@ InstancesClient::ListReferrers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::PerformMaintenance(std::string const& project,
+                                    std::string const& zone,
+                                    std::string const& instance, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance(instance);
+  return connection_->PerformMaintenance(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::PerformMaintenance(
+    google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PerformMaintenance(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesClient::RemoveResourcePolicies(
     std::string const& project, std::string const& zone,
     std::string const& instance,

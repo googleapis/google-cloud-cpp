@@ -106,6 +106,10 @@ class InstancesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListReferrers(
       google::cloud::cpp::compute::instances::v1::ListReferrersRequest request);
 
+  virtual google::cloud::Idempotency PerformMaintenance(
+      google::cloud::cpp::compute::instances::v1::
+          PerformMaintenanceRequest const& request);
+
   virtual google::cloud::Idempotency RemoveResourcePolicies(
       google::cloud::cpp::compute::instances::v1::
           RemoveResourcePoliciesRequest const& request);

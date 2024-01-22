@@ -175,6 +175,15 @@ InstancesConnection::ListReferrers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesConnection::PerformMaintenance(
+    google::cloud::cpp::compute::instances::v1::
+        PerformMaintenanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::RemoveResourcePolicies(
     google::cloud::cpp::compute::instances::v1::
         RemoveResourcePoliciesRequest const&) {

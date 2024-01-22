@@ -224,6 +224,17 @@ InstancesTracingConnection::ListReferrers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesTracingConnection::PerformMaintenance(
+    google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_instances_v1::InstancesConnection::PerformMaintenance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PerformMaintenance(request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesTracingConnection::RemoveResourcePolicies(
     google::cloud::cpp::compute::instances::v1::
         RemoveResourcePoliciesRequest const& request) {

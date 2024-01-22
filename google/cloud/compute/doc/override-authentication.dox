@@ -81,6 +81,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient](@ref compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient-service-account-snippet)
 - [\c compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient](@ref compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient-service-account-snippet)
 - [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref compute_region_url_maps_v1::RegionUrlMapsClient-service-account-snippet)
+- [\c compute_region_zones_v1::RegionZonesClient](@ref compute_region_zones_v1::RegionZonesClient-service-account-snippet)
 - [\c compute_regions_v1::RegionsClient](@ref compute_regions_v1::RegionsClient-service-account-snippet)
 - [\c compute_reservations_v1::ReservationsClient](@ref compute_reservations_v1::ReservationsClient-service-account-snippet)
 - [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref compute_resource_policies_v1::ResourcePoliciesClient-service-account-snippet)
@@ -528,6 +529,12 @@ guide for more details.
 /*! @page compute_region_url_maps_v1::RegionUrlMapsClient-service-account-snippet Override compute_region_url_maps_v1::RegionUrlMapsClient Authentication Defaults
 
 @snippet google/cloud/compute/region_url_maps/v1/samples/region_url_maps_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_zones_v1::RegionZonesClient-service-account-snippet Override compute_region_zones_v1::RegionZonesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_zones/v1/samples/region_zones_client_samples.cc with-service-account
 
 */
 

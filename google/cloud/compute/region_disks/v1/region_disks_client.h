@@ -492,7 +492,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L419}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L267}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L287}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -525,7 +525,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L419}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L267}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L287}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -872,7 +872,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L618}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L267}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L287}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -908,7 +908,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L618}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L267}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L287}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(

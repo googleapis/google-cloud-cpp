@@ -115,7 +115,7 @@ class SubnetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.subnetworks.v1.AggregatedListSubnetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L188}
-  /// [google.cloud.cpp.compute.v1.SubnetworksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L482}
+  /// [google.cloud.cpp.compute.v1.SubnetworksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L487}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -156,7 +156,7 @@ class SubnetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.subnetworks.v1.AggregatedListSubnetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L188}
-  /// [google.cloud.cpp.compute.v1.SubnetworksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L482}
+  /// [google.cloud.cpp.compute.v1.SubnetworksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L487}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -403,7 +403,7 @@ class SubnetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.subnetworks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L337}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L267}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L287}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -436,7 +436,7 @@ class SubnetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.subnetworks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L337}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L267}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L287}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -628,7 +628,7 @@ class SubnetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.subnetworks.v1.ListUsableRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L474}
-  /// [google.cloud.cpp.compute.v1.UsableSubnetwork]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L577}
+  /// [google.cloud.cpp.compute.v1.UsableSubnetwork]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L582}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork> ListUsable(
@@ -668,7 +668,7 @@ class SubnetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.subnetworks.v1.ListUsableRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L474}
-  /// [google.cloud.cpp.compute.v1.UsableSubnetwork]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L577}
+  /// [google.cloud.cpp.compute.v1.UsableSubnetwork]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L582}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork> ListUsable(
@@ -782,7 +782,7 @@ class SubnetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.subnetworks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L587}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L267}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L287}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -818,7 +818,7 @@ class SubnetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.subnetworks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L587}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L267}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L287}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(

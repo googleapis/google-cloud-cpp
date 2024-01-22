@@ -341,6 +341,26 @@ InstancesRestLogging::ListReferrers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesRestLogging::AsyncPerformMaintenance(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::instances::v1::
+                 PerformMaintenanceRequest const& request) {
+        return child_->AsyncPerformMaintenance(cq, std::move(rest_context),
+                                               options, request);
+      },
+      cq, std::move(rest_context), options, request, __func__,
+      tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestLogging::AsyncRemoveResourcePolicies(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

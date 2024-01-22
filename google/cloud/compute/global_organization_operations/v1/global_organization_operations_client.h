@@ -164,7 +164,7 @@ class GlobalOrganizationOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_organization_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L83}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L130}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -196,7 +196,7 @@ class GlobalOrganizationOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_organization_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L83}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L130}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -239,7 +239,7 @@ class GlobalOrganizationOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_organization_operations.v1.ListGlobalOrganizationOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L93}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L130}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation>

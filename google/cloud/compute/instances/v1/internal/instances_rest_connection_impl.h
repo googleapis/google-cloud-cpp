@@ -128,6 +128,10 @@ class InstancesRestConnectionImpl
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(google::cloud::cpp::compute::instances::v1::
+                         PerformMaintenanceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveResourcePolicies(
       google::cloud::cpp::compute::instances::v1::
           RemoveResourcePoliciesRequest const& request) override;

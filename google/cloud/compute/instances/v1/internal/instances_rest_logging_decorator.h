@@ -169,6 +169,14 @@ class InstancesRestLogging : public InstancesRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPerformMaintenance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instances::v1::
+          PerformMaintenanceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncRemoveResourcePolicies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,

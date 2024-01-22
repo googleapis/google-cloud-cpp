@@ -694,8 +694,8 @@ class TargetSslProxiesClient {
   ///
   /// Sets the SSL policy for TargetSslProxy. The SSL policy specifies the
   /// server-side support for SSL features. This affects connections between
-  /// clients and the SSL proxy load balancer. They do not affect the connection
-  /// between the load balancer and the backends.
+  /// clients and the load balancer. They do not affect the connection between
+  /// the load balancer and the backends.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setSslPolicy
   ///
   /// @param project  Project ID for this request.
@@ -735,8 +735,8 @@ class TargetSslProxiesClient {
   ///
   /// Sets the SSL policy for TargetSslProxy. The SSL policy specifies the
   /// server-side support for SSL features. This affects connections between
-  /// clients and the SSL proxy load balancer. They do not affect the connection
-  /// between the load balancer and the backends.
+  /// clients and the load balancer. They do not affect the connection between
+  /// the load balancer and the backends.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setSslPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this

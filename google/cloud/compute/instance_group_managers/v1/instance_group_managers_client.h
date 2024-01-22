@@ -1039,8 +1039,8 @@ class InstanceGroupManagersClient {
   /// still creating an instance, the currentAction is CREATING. If a previous
   /// action failed, the list displays the errors for that failed action. The
   /// orderBy query parameter is not supported. The `pageToken` query parameter
-  /// is supported only in the alpha and beta API and only if the group's
-  /// `listManagedInstancesResults` field is set to `PAGINATED`.
+  /// is supported only if the group's `listManagedInstancesResults` field is set
+  /// to `PAGINATED`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listManagedInstances
   ///
   /// @param project  Project ID for this request.
@@ -1077,8 +1077,8 @@ class InstanceGroupManagersClient {
   /// still creating an instance, the currentAction is CREATING. If a previous
   /// action failed, the list displays the errors for that failed action. The
   /// orderBy query parameter is not supported. The `pageToken` query parameter
-  /// is supported only in the alpha and beta API and only if the group's
-  /// `listManagedInstancesResults` field is set to `PAGINATED`.
+  /// is supported only if the group's `listManagedInstancesResults` field is set
+  /// to `PAGINATED`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listManagedInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
