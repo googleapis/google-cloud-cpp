@@ -20,7 +20,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # Fetch the Google Cloud C++ libraries.
 # NOTE: Update this version and SHA256 as needed.
-# TODO(sdhart): update the version to a commit SHA that contains the necessary
+# TODO(#13494): update the version to a commit SHA that contains the necessary
 # changes.
 http_archive(
     name = "google_cloud_cpp",

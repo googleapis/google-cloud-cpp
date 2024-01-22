@@ -20,7 +20,7 @@ cc_binary(
         "kms.cc",
     ],
     deps = [
-        "//google/cloud:google_cloud_cpp_universe_domain",
+        "@google_cloud_cpp//:experimental-universe_domain",
         "@google_cloud_cpp//:kms",
     ],
 )

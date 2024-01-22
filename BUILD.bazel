@@ -230,6 +230,13 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "experimental-universe_domain",
+    deps = [
+        "//google/cloud:google_cloud_cpp_universe_domain",
+    ],
+)
+
 bool_flag(
     name = "enable_opentelemetry",
     build_setting_default = False,
