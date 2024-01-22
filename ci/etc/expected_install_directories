@@ -467,6 +467,10 @@
 ./include/google/cloud/compute/region_url_maps/v1
 ./include/google/cloud/compute/region_url_maps/v1/internal
 ./include/google/cloud/compute/region_url_maps/v1/mocks
+./include/google/cloud/compute/region_zones
+./include/google/cloud/compute/region_zones/v1
+./include/google/cloud/compute/region_zones/v1/internal
+./include/google/cloud/compute/region_zones/v1/mocks
 ./include/google/cloud/compute/regions
 ./include/google/cloud/compute/regions/v1
 ./include/google/cloud/compute/regions/v1/internal
