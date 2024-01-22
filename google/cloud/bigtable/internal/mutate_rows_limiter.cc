@@ -14,8 +14,11 @@
 
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "absl/time/time.h"
 #include <algorithm>
 #include <thread>
 
@@ -85,6 +88,14 @@ std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(CompletionQueue cq,
   std::function<void(duration)> sleeper = [](duration d) {
     std::this_thread::sleep_for(d);
   };
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+    sleeper = [sleeper = std::move(sleeper)](duration d) {
+      if (d != duration::zero()) {
+        GCP_LOG(DEBUG) << "Throttling BulkApply for " << absl::FromChrono(d);
+      }
+      sleeper(d);
+    };
+  }
   sleeper = internal::MakeTracedSleeper(
       options, std::move(sleeper), "gl-cpp.bigtable.bulk_apply_throttling");
   auto async_sleeper = [cq = std::move(cq),
