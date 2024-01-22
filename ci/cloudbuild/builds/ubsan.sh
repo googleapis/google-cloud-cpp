@@ -24,9 +24,9 @@ source module ci/lib/io.sh
 export CC=clang
 export CXX=clang++
 
-# With UBSAN builds we need to ignore the `quickstart` programs, see:
+# With UBSAN builds we need to ignore the `quickstart` and demo programs, see:
 #   https://github.com/bazelbuild/bazel/issues/11122
-deleted_packages="$(find google/cloud -type d -name quickstart | xargs printf ",%s")"
+deleted_packages="$(find google/cloud -type d -name quickstart -o -name demo | xargs printf ",%s")"
 
 mapfile -t args < <(bazel::common_args)
 args+=("--config=ubsan")
