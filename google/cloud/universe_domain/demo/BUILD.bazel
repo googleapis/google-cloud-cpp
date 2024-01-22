@@ -22,6 +22,7 @@ cc_binary(
     deps = [
         "//google/cloud:google_cloud_cpp_universe_domain",
         "@com_github_grpc_grpc//:grpc++",  # needed for ubsan build
+        "@google_cloud_cpp//:iam",  # needed for ubsan build
         "@google_cloud_cpp//:kms",
     ],
 )
