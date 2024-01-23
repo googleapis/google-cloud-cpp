@@ -24,13 +24,13 @@ Upon exit of the quickstart, the collected traces are sent to Cloud Trace.
 ### Viewing the trace in Cloud Trace
 
 To find the traces created by this quickstart, we can follow the documentation
-to [Find and view traces]. We can open the Cloud Trace UI in the Google Cloud
+to [Find and explore traces]. We can open the Cloud Trace UI in the Google Cloud
 project we supplied to the quickstart. We can search using the filter
 `SpanName:storage::Client` to find any spans created by the GCS client.
 
 ![Screenshot of the Cloud Trace UI after running this quickstart.](assets/cloud_trace_ui.png)
 
-For an overview of the Cloud Trace UI, see: [View traces overview].
+For an overview of the Cloud Trace UI, see: [Find and explore traces].
 
 ## OpenTelemetry Dependency
 
@@ -192,7 +192,7 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
 [exporter]: https://opentelemetry.io/docs/concepts/signals/traces/#trace-exporters
-[find and view traces]: https://cloud.google.com/trace/docs/trace-overview
+[find and explore traces]: https://cloud.google.com/trace/docs/finding-traces
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [opentelemetry]: https://opentelemetry.io
 [opentelemetry-cpp]: https://github.com/open-telemetry/opentelemetry-cpp
@@ -200,4 +200,3 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [packaging guide]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md
 [quickstart-storage]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/quickstart
 [quickstart-trace]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/trace/quickstart
-[view traces overview]: https://cloud.google.com/trace/docs/trace-overview
