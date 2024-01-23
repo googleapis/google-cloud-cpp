@@ -231,13 +231,18 @@ if (BUILD_TESTING)
     include(FindGMockWithTargets)
 endif ()
 
-# The examples use exception handling to simplify the code. Therefore they
-# cannot be compiled when exceptions are disabled, and applications cannot force
-# the flag.
+# The examples and demos use exception handling to simplify the code. Therefore
+# they cannot be compiled when exceptions are disabled, and applications cannot
+# force the flag.
 cmake_dependent_option(
     GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES "Compile the google-cloud-cpp examples."
     ON "GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS;BUILD_TESTING" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
+
+cmake_dependent_option(
+    GOOGLE_CLOUD_CPP_BUILD_DEMOS "Compile the google-cloud-cpp demos." OFF
+    "GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS;BUILD_TESTING" OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_BUILD_DEMOS)
 
 # Add any subdirectories configured in the application.
 

@@ -16,12 +16,34 @@
 
 include(GoogleCloudCppLibrary)
 
-if (BUILD_UNIVERSE_DOMAIN_DEMOS AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-    add_executable(universe_domain_kms_demo "demo/kms.cc")
-    target_link_libraries(
-        universe_domain_kms_demo PRIVATE google-cloud-cpp::kms
-                                         google-cloud-cpp::universe_domain)
-    google_cloud_cpp_add_common_options(universe_domain_kms_demo)
+if (GOOGLE_CLOUD_CPP_BUILD_DEMOS AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    set(universe_domain_demos bigquery compute kms pubsub storage)
+    foreach (demo ${universe_domain_demos})
+        add_executable(universe_domain_${demo}_demo "demo/${demo}.cc")
+        target_link_libraries(
+            universe_domain_${demo}_demo
+            PRIVATE google-cloud-cpp::${demo} google-cloud-cpp::universe_domain)
+        google_cloud_cpp_add_common_options(universe_domain_${demo}_demo)
+    endforeach ()
+
+    add_test(
+        NAME universe_domain_bigquery_demo
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:universe_domain_bigquery_demo> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE)
+    set_tests_properties(universe_domain_bigquery_demo
+                         PROPERTIES LABELS "integration-test;quickstart")
+
+    add_test(
+        NAME universe_domain_compute_demo
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:universe_domain_compute_demo> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_TEST_ZONE)
+    set_tests_properties(universe_domain_compute_demo
+                         PROPERTIES LABELS "integration-test;quickstart")
+
     add_test(
         NAME universe_domain_kms_demo
         COMMAND
@@ -29,5 +51,20 @@ if (BUILD_UNIVERSE_DOMAIN_DEMOS AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
             $<TARGET_FILE:universe_domain_kms_demo> GOOGLE_CLOUD_PROJECT
             GOOGLE_CLOUD_CPP_TEST_REGION)
     set_tests_properties(universe_domain_kms_demo
+                         PROPERTIES LABELS "integration-test;quickstart")
+
+    add_test(
+        NAME universe_domain_pubsub_demo
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:universe_domain_pubsub_demo> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(universe_domain_pubsub_demo
+                         PROPERTIES LABELS "integration-test;quickstart")
+
+    add_test(
+        NAME universe_domain_storage_demo
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:universe_domain_storage_demo> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(universe_domain_storage_demo
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
