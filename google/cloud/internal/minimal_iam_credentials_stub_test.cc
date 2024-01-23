@@ -347,13 +347,13 @@ TEST_F(MinimalIamCredentialsStubTest, SignBlobTracing) {
 TEST(MakeMinimalIamCredentialsOptions, Default) {
   auto o = MakeMinimalIamCredentialsOptions(
       Options{}.set<EndpointOption>("storage.googleapis.com."));
-  EXPECT_EQ(o.get<EndpointOption>(), "iamcredentials.googleapis.com.");
+  EXPECT_EQ(o.get<EndpointOption>(), "iamcredentials.googleapis.com");
 }
 
 TEST(MakeMinimalIamCredentialsOptions, WithoutUniverseDomain) {
   auto o = MakeMinimalIamCredentialsOptions(
       Options{}.set<EndpointOption>("storage.googleapis.com."));
-  EXPECT_EQ(o.get<EndpointOption>(), "iamcredentials.googleapis.com.");
+  EXPECT_EQ(o.get<EndpointOption>(), "iamcredentials.googleapis.com");
 }
 
 TEST(MakeMinimalIamCredentialsOptions, WithUniverseDomain) {

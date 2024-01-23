@@ -232,7 +232,7 @@ Options MakeMinimalIamCredentialsOptions(Options options) {
   // The supplied options come from a service. We are overriding the value of
   // its `EndpointOption`.
   options.unset<EndpointOption>();
-  auto ep = UniverseDomainEndpoint("iamcredentials.googleapis.com.", options);
+  auto ep = UniverseDomainEndpoint("iamcredentials.googleapis.com", options);
   return options.set<EndpointOption>(std::move(ep));
 }
 
