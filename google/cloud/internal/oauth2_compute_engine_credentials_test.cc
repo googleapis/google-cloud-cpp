@@ -473,6 +473,26 @@ TEST(ComputeEngineCredentialsTest, UniverseDomainPermanentFailure) {
   EXPECT_THAT(credentials.universe_domain(), StatusIs(StatusCode::kNotFound));
 }
 
+TEST(ComputeEngineCredentialsTest, UniverseDomainMDSResourceNotFound) {
+  auto client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*client, Get(_, expected_universe_domain_request()))
+      .WillOnce([&](RestContext&, RestRequest const&) {
+        return internal::UnavailableError("Transient Error");
+      })
+      .WillOnce([&](RestContext&, RestRequest const&) {
+        auto response = std::make_unique<MockRestResponse>();
+        EXPECT_CALL(*response, StatusCode)
+            .WillRepeatedly(Return(HttpStatusCode::kNotFound));
+        return std::unique_ptr<RestResponse>(std::move(response));
+      });
+
+  MockHttpClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).WillOnce(Return(ByMove(std::move(client))));
+  ComputeEngineCredentials credentials(Options{},
+                                       client_factory.AsStdFunction());
+  EXPECT_THAT(credentials.universe_domain(), IsOkAndHolds("googleapis.com"));
+}
+
 struct TestUniverseDomainRetryTraits {
   static bool IsPermanentFailure(Status const& status) {
     return !status.ok() && status.code() != StatusCode::kUnavailable;
