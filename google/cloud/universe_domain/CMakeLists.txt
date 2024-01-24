@@ -20,7 +20,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     set(universe_domain_demos bigquery compute kms pubsub storage)
     foreach (library ${universe_domain_demos})
         if (${library} IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-
             add_executable(universe_domain_${library}_demo "demo/${library}.cc")
             target_link_libraries(
                 universe_domain_${library}_demo

@@ -231,7 +231,7 @@ if (BUILD_TESTING)
     include(FindGMockWithTargets)
 endif ()
 
-# The examples  use exception handling to simplify the code. Therefore they
+# The examples use exception handling to simplify the code. Therefore they
 # cannot be compiled when exceptions are disabled, and applications cannot force
 # the flag.
 cmake_dependent_option(
