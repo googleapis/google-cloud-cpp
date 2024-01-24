@@ -15,7 +15,11 @@
 cmake_minimum_required(VERSION 3.10...3.24)
 project(google-cloud-cpp-universe-domain-demo CXX)
 
+find_package(google_cloud_cpp_bigquery REQUIRED)
+find_package(google_cloud_cpp_compute REQUIRED)
 find_package(google_cloud_cpp_kms REQUIRED)
+find_package(google_cloud_cpp_pubsub REQUIRED)
+find_package(google_cloud_cpp_storage REQUIRED)
 find_package(google_cloud_cpp_universe_domain REQUIRED)
 
 # MSVC requires some additional code to select the correct runtime library
@@ -25,7 +29,9 @@ else ()
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 endif ()
 
-# Define your targets.
-add_executable(kms_demo kms.cc)
-target_link_libraries(kms_demo google-cloud-cpp::kms
-                      google-cloud-cpp::universe_domain)
+set(universe_domain_demos bigquery compute kms pubsub storage)
+foreach (library ${universe_domain_demos})
+    add_executable(${library}_demo ${library}.cc)
+    target_link_libraries(${library}_demo google-cloud-cpp::${library}
+                          google-cloud-cpp::universe_domain)
+endforeach ()

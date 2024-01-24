@@ -14,13 +14,21 @@
 
 licenses(["notice"])  # Apache 2.0
 
-cc_binary(
-    name = "kms_demo",
+service_demos = [
+    "bigquery",
+    "compute",
+    "kms",
+    "pubsub",
+    "storage",
+]
+
+[cc_binary(
+    name = demo + "_demo",
     srcs = [
-        "kms.cc",
+        demo + ".cc",
     ],
     deps = [
+        "@google_cloud_cpp//:" + demo,
         "@google_cloud_cpp//:experimental-universe_domain",
-        "@google_cloud_cpp//:kms",
     ],
-)
+) for demo in service_demos]

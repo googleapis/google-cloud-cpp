@@ -29,6 +29,8 @@ export CXX=g++
 mapfile -t cmake_args < <(cmake::common_args)
 readonly INSTALL_PREFIX="/var/tmp/google-cloud-cpp"
 read -r ENABLED_FEATURES < <(features::list_full_cmake)
+# TODO(#13495): Determine how best to include universe_domain in cmake builds.
+ENABLED_FEATURES="${ENABLED_FEATURES},universe_domain"
 readonly ENABLED_FEATURES
 
 io::run cmake "${cmake_args[@]}" \
