@@ -30,8 +30,8 @@ else ()
 endif ()
 
 set(universe_domain_demos bigquery compute kms pubsub storage)
-foreach (demo ${universe_domain_demos})
-    add_executable(${demo}_demo ${demo}.cc)
-    target_link_libraries(${demo}_demo google-cloud-cpp::${demo}
+foreach (library ${universe_domain_demos})
+    add_executable(${library}_demo ${library}.cc)
+    target_link_libraries(${library}_demo google-cloud-cpp::${library}
                           google-cloud-cpp::universe_domain)
 endforeach ()
