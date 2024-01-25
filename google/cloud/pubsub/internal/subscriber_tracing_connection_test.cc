@@ -159,13 +159,13 @@ TEST(SubscriberTracingConnectionTest, PullAttributes) {
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription receive"),
                              SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingDestinationTemplate,
-                                 TestSubscription().FullName())))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription receive"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingDestinationTemplate,
-                                 TestSubscription().FullName())))));
+                                 sc::kMessagingDestinationName,
+                                 TestSubscription().subscription_id())))));
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(SpanNamed("test-subscription receive"),
+                     SpanHasAttributes(OTelAttribute<std::string>(
+                         "gcp.project_id", TestSubscription().project_id())))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription receive"),
                              SpanHasAttributes(OTelAttribute<std::string>(
