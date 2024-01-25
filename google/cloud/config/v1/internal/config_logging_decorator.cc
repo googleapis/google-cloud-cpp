@@ -244,6 +244,74 @@ StatusOr<google::cloud::config::v1::LockInfo> ConfigLogging::ExportLockInfo(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ConfigLogging::AsyncCreatePreview(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::config::v1::CreatePreviewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::config::v1::CreatePreviewRequest const& request) {
+        return child_->AsyncCreatePreview(cq, std::move(context), options,
+                                          request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::config::v1::Preview> ConfigLogging::GetPreview(
+    grpc::ClientContext& context,
+    google::cloud::config::v1::GetPreviewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::config::v1::GetPreviewRequest const& request) {
+        return child_->GetPreview(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::config::v1::ListPreviewsResponse>
+ConfigLogging::ListPreviews(
+    grpc::ClientContext& context,
+    google::cloud::config::v1::ListPreviewsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::config::v1::ListPreviewsRequest const& request) {
+        return child_->ListPreviews(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigLogging::AsyncDeletePreview(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::config::v1::DeletePreviewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::config::v1::DeletePreviewRequest const& request) {
+        return child_->AsyncDeletePreview(cq, std::move(context), options,
+                                          request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
+ConfigLogging::ExportPreviewResult(
+    grpc::ClientContext& context,
+    google::cloud::config::v1::ExportPreviewResultRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::config::v1::ExportPreviewResultRequest const&
+                 request) {
+        return child_->ExportPreviewResult(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ConfigLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context, Options const& options,

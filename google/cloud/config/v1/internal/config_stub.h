@@ -117,6 +117,30 @@ class ConfigStub {
       grpc::ClientContext& context,
       google::cloud::config::v1::ExportLockInfoRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreatePreview(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::config::v1::CreatePreviewRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::config::v1::Preview> GetPreview(
+      grpc::ClientContext& context,
+      google::cloud::config::v1::GetPreviewRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::config::v1::ListPreviewsResponse>
+  ListPreviews(
+      grpc::ClientContext& context,
+      google::cloud::config::v1::ListPreviewsRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeletePreview(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::config::v1::DeletePreviewRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
+  ExportPreviewResult(
+      grpc::ClientContext& context,
+      google::cloud::config::v1::ExportPreviewResultRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -214,6 +238,30 @@ class DefaultConfigStub : public ConfigStub {
   StatusOr<google::cloud::config::v1::LockInfo> ExportLockInfo(
       grpc::ClientContext& context,
       google::cloud::config::v1::ExportLockInfoRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreatePreview(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::config::v1::CreatePreviewRequest const& request) override;
+
+  StatusOr<google::cloud::config::v1::Preview> GetPreview(
+      grpc::ClientContext& context,
+      google::cloud::config::v1::GetPreviewRequest const& request) override;
+
+  StatusOr<google::cloud::config::v1::ListPreviewsResponse> ListPreviews(
+      grpc::ClientContext& context,
+      google::cloud::config::v1::ListPreviewsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeletePreview(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::config::v1::DeletePreviewRequest const& request) override;
+
+  StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
+  ExportPreviewResult(
+      grpc::ClientContext& context,
+      google::cloud::config::v1::ExportPreviewResultRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

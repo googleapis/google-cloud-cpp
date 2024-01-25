@@ -224,6 +224,67 @@ StatusOr<google::cloud::config::v1::LockInfo> ConfigTracingStub::ExportLockInfo(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ConfigTracingStub::AsyncCreatePreview(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::config::v1::CreatePreviewRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.config.v1.Config", "CreatePreview");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreatePreview(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::config::v1::Preview> ConfigTracingStub::GetPreview(
+    grpc::ClientContext& context,
+    google::cloud::config::v1::GetPreviewRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.config.v1.Config", "GetPreview");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetPreview(context, request));
+}
+
+StatusOr<google::cloud::config::v1::ListPreviewsResponse>
+ConfigTracingStub::ListPreviews(
+    grpc::ClientContext& context,
+    google::cloud::config::v1::ListPreviewsRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.config.v1.Config", "ListPreviews");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListPreviews(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigTracingStub::AsyncDeletePreview(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::config::v1::DeletePreviewRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.config.v1.Config", "DeletePreview");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeletePreview(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
+ConfigTracingStub::ExportPreviewResult(
+    grpc::ClientContext& context,
+    google::cloud::config::v1::ExportPreviewResultRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "ExportPreviewResult");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExportPreviewResult(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ConfigTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context, Options const& options,

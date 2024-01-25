@@ -219,6 +219,68 @@ StatusOr<google::cloud::config::v1::LockInfo> ConfigAuth::ExportLockInfo(
   return child_->ExportLockInfo(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>> ConfigAuth::AsyncCreatePreview(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::config::v1::CreatePreviewRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreatePreview(cq, *std::move(context), options,
+                                         request);
+      });
+}
+
+StatusOr<google::cloud::config::v1::Preview> ConfigAuth::GetPreview(
+    grpc::ClientContext& context,
+    google::cloud::config::v1::GetPreviewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetPreview(context, request);
+}
+
+StatusOr<google::cloud::config::v1::ListPreviewsResponse>
+ConfigAuth::ListPreviews(
+    grpc::ClientContext& context,
+    google::cloud::config::v1::ListPreviewsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListPreviews(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>> ConfigAuth::AsyncDeletePreview(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::config::v1::DeletePreviewRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeletePreview(cq, *std::move(context), options,
+                                         request);
+      });
+}
+
+StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
+ConfigAuth::ExportPreviewResult(
+    grpc::ClientContext& context,
+    google::cloud::config::v1::ExportPreviewResultRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportPreviewResult(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> ConfigAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context, Options const& options,

@@ -51,6 +51,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/api/endpoint.proto"
     "google/api/error_reason.proto"
     "google/api/field_behavior.proto"
+    "google/api/field_info.proto"
     "google/api/http.proto"
     "google/api/httpbody.proto"
     "google/api/label.proto"

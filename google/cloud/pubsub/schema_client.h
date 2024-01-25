@@ -98,8 +98,8 @@ class SchemaServiceClient {
   /// @param schema_id  The ID to use for the schema, which will become the final component of
   ///  the schema's resource name.
   ///  @n
-  ///  See https://cloud.google.com/pubsub/docs/admin#resource_names for resource
-  ///  name constraints.
+  ///  See https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names for
+  ///  resource name constraints.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

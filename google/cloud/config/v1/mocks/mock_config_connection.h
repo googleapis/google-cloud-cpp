@@ -121,6 +121,30 @@ class MockConfigConnection : public config_v1::ConfigConnection {
   MOCK_METHOD(StatusOr<google::cloud::config::v1::LockInfo>, ExportLockInfo,
               (google::cloud::config::v1::ExportLockInfoRequest const& request),
               (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Preview>>,
+              CreatePreview,
+              (google::cloud::config::v1::CreatePreviewRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::config::v1::Preview>, GetPreview,
+              (google::cloud::config::v1::GetPreviewRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::config::v1::Preview>), ListPreviews,
+              (google::cloud::config::v1::ListPreviewsRequest request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Preview>>,
+              DeletePreview,
+              (google::cloud::config::v1::DeletePreviewRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>,
+      ExportPreviewResult,
+      (google::cloud::config::v1::ExportPreviewResultRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

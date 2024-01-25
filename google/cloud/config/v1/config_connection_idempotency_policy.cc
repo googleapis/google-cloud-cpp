@@ -114,6 +114,31 @@ Idempotency ConfigConnectionIdempotencyPolicy::ExportLockInfo(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ConfigConnectionIdempotencyPolicy::CreatePreview(
+    google::cloud::config::v1::CreatePreviewRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ConfigConnectionIdempotencyPolicy::GetPreview(
+    google::cloud::config::v1::GetPreviewRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConfigConnectionIdempotencyPolicy::ListPreviews(
+    google::cloud::config::v1::ListPreviewsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConfigConnectionIdempotencyPolicy::DeletePreview(
+    google::cloud::config::v1::DeletePreviewRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ConfigConnectionIdempotencyPolicy::ExportPreviewResult(
+    google::cloud::config::v1::ExportPreviewResultRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ConfigConnectionIdempotencyPolicy>
 MakeDefaultConfigConnectionIdempotencyPolicy() {
   return std::make_unique<ConfigConnectionIdempotencyPolicy>();

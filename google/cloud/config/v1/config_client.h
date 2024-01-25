@@ -115,8 +115,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
-  /// [google.cloud.config.v1.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L460}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
+  /// [google.cloud.config.v1.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L514}
   ///
   // clang-format on
   StreamRange<google::cloud::config::v1::Deployment> ListDeployments(
@@ -155,8 +155,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
-  /// [google.cloud.config.v1.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L460}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
+  /// [google.cloud.config.v1.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L514}
   ///
   // clang-format on
   StreamRange<google::cloud::config::v1::Deployment> ListDeployments(
@@ -182,8 +182,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
-  /// [google.cloud.config.v1.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L519}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
+  /// [google.cloud.config.v1.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L573}
   ///
   // clang-format on
   StatusOr<google::cloud::config::v1::Deployment> GetDeployment(
@@ -212,8 +212,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
-  /// [google.cloud.config.v1.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L519}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
+  /// [google.cloud.config.v1.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L573}
   ///
   // clang-format on
   StatusOr<google::cloud::config::v1::Deployment> GetDeployment(
@@ -249,8 +249,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.CreateDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L602}
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
+  /// [google.cloud.config.v1.CreateDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L656}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
   ///
   // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> CreateDeployment(
@@ -288,8 +288,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.CreateDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L602}
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
+  /// [google.cloud.config.v1.CreateDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L656}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
   ///
   // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> CreateDeployment(
@@ -331,8 +331,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
-  /// [google.cloud.config.v1.UpdateDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L635}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
+  /// [google.cloud.config.v1.UpdateDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L689}
   ///
   // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> UpdateDeployment(
@@ -369,8 +369,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
-  /// [google.cloud.config.v1.UpdateDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L635}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
+  /// [google.cloud.config.v1.UpdateDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L689}
   ///
   // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> UpdateDeployment(
@@ -403,8 +403,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.DeleteDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L668}
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
+  /// [google.cloud.config.v1.DeleteDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L722}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
   ///
   // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> DeleteDeployment(
@@ -440,8 +440,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.DeleteDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L668}
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
+  /// [google.cloud.config.v1.DeleteDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L722}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
   ///
   // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> DeleteDeployment(
@@ -477,8 +477,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L531}
-  /// [google.cloud.config.v1.Revision]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L757}
+  /// [google.cloud.config.v1.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L585}
+  /// [google.cloud.config.v1.Revision]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L815}
   ///
   // clang-format on
   StreamRange<google::cloud::config::v1::Revision> ListRevisions(
@@ -516,8 +516,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L531}
-  /// [google.cloud.config.v1.Revision]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L757}
+  /// [google.cloud.config.v1.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L585}
+  /// [google.cloud.config.v1.Revision]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L815}
   ///
   // clang-format on
   StreamRange<google::cloud::config::v1::Revision> ListRevisions(
@@ -543,8 +543,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.GetRevisionRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L593}
-  /// [google.cloud.config.v1.Revision]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L757}
+  /// [google.cloud.config.v1.GetRevisionRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L647}
+  /// [google.cloud.config.v1.Revision]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L815}
   ///
   // clang-format on
   StatusOr<google::cloud::config::v1::Revision> GetRevision(
@@ -573,8 +573,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.GetRevisionRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L593}
-  /// [google.cloud.config.v1.Revision]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L757}
+  /// [google.cloud.config.v1.GetRevisionRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L647}
+  /// [google.cloud.config.v1.Revision]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L815}
   ///
   // clang-format on
   StatusOr<google::cloud::config::v1::Revision> GetRevision(
@@ -601,8 +601,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.GetResourceRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1072}
-  /// [google.cloud.config.v1.Resource]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L983}
+  /// [google.cloud.config.v1.GetResourceRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1130}
+  /// [google.cloud.config.v1.Resource]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1041}
   ///
   // clang-format on
   StatusOr<google::cloud::config::v1::Resource> GetResource(
@@ -632,8 +632,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.GetResourceRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1072}
-  /// [google.cloud.config.v1.Resource]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L983}
+  /// [google.cloud.config.v1.GetResourceRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1130}
+  /// [google.cloud.config.v1.Resource]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1041}
   ///
   // clang-format on
   StatusOr<google::cloud::config::v1::Resource> GetResource(
@@ -669,8 +669,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.ListResourcesRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1082}
-  /// [google.cloud.config.v1.Resource]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L983}
+  /// [google.cloud.config.v1.ListResourcesRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1140}
+  /// [google.cloud.config.v1.Resource]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1041}
   ///
   // clang-format on
   StreamRange<google::cloud::config::v1::Resource> ListResources(
@@ -708,8 +708,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.ListResourcesRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1082}
-  /// [google.cloud.config.v1.Resource]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L983}
+  /// [google.cloud.config.v1.ListResourcesRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1140}
+  /// [google.cloud.config.v1.Resource]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1041}
   ///
   // clang-format on
   StreamRange<google::cloud::config::v1::Resource> ListResources(
@@ -739,8 +739,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.ExportDeploymentStatefileRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1142}
-  /// [google.cloud.config.v1.Statefile]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1134}
+  /// [google.cloud.config.v1.ExportDeploymentStatefileRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1200}
+  /// [google.cloud.config.v1.Statefile]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1192}
   ///
   // clang-format on
   StatusOr<google::cloud::config::v1::Statefile> ExportDeploymentStatefile(
@@ -771,8 +771,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.ExportRevisionStatefileRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1161}
-  /// [google.cloud.config.v1.Statefile]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1134}
+  /// [google.cloud.config.v1.ExportRevisionStatefileRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1219}
+  /// [google.cloud.config.v1.Statefile]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1192}
   ///
   // clang-format on
   StatusOr<google::cloud::config::v1::Statefile> ExportRevisionStatefile(
@@ -802,8 +802,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.ImportStatefileRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1172}
-  /// [google.cloud.config.v1.Statefile]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1134}
+  /// [google.cloud.config.v1.ImportStatefileRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1230}
+  /// [google.cloud.config.v1.Statefile]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1192}
   ///
   // clang-format on
   StatusOr<google::cloud::config::v1::Statefile> ImportStatefile(
@@ -833,8 +833,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.ImportStatefileRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1172}
-  /// [google.cloud.config.v1.Statefile]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1134}
+  /// [google.cloud.config.v1.ImportStatefileRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1230}
+  /// [google.cloud.config.v1.Statefile]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1192}
   ///
   // clang-format on
   StatusOr<google::cloud::config::v1::Statefile> ImportStatefile(
@@ -858,7 +858,7 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.DeleteStatefileRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1192}
+  /// [google.cloud.config.v1.DeleteStatefileRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1250}
   ///
   // clang-format on
   Status DeleteStatefile(std::string const& name, Options opts = {});
@@ -884,7 +884,7 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.DeleteStatefileRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1192}
+  /// [google.cloud.config.v1.DeleteStatefileRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1250}
   ///
   // clang-format on
   Status DeleteStatefile(
@@ -917,8 +917,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
-  /// [google.cloud.config.v1.LockDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1208}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
+  /// [google.cloud.config.v1.LockDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1266}
   ///
   // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> LockDeployment(
@@ -954,8 +954,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
-  /// [google.cloud.config.v1.LockDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1208}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
+  /// [google.cloud.config.v1.LockDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1266}
   ///
   // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> LockDeployment(
@@ -989,8 +989,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
-  /// [google.cloud.config.v1.UnlockDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1220}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
+  /// [google.cloud.config.v1.UnlockDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1278}
   ///
   // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> UnlockDeployment(
@@ -1026,8 +1026,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L221}
-  /// [google.cloud.config.v1.UnlockDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1220}
+  /// [google.cloud.config.v1.Deployment]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L275}
+  /// [google.cloud.config.v1.UnlockDeploymentRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1278}
   ///
   // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> UnlockDeployment(
@@ -1053,8 +1053,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.ExportLockInfoRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1235}
-  /// [google.cloud.config.v1.LockInfo]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1247}
+  /// [google.cloud.config.v1.ExportLockInfoRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1293}
+  /// [google.cloud.config.v1.LockInfo]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1305}
   ///
   // clang-format on
   StatusOr<google::cloud::config::v1::LockInfo> ExportLockInfo(
@@ -1083,12 +1083,323 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.config.v1.ExportLockInfoRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1235}
-  /// [google.cloud.config.v1.LockInfo]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1247}
+  /// [google.cloud.config.v1.ExportLockInfoRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1293}
+  /// [google.cloud.config.v1.LockInfo]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1305}
   ///
   // clang-format on
   StatusOr<google::cloud::config::v1::LockInfo> ExportLockInfo(
       google::cloud::config::v1::ExportLockInfoRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a [Preview][google.cloud.config.v1.Preview].
+  ///
+  /// @param parent  Required. The parent in whose context the Preview is created. The parent
+  ///  value is in the format: 'projects/{project_id}/locations/{location}'.
+  /// @param preview  Required. [Preview][google.cloud.config.v1.Preview] resource to be created.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.config.v1.Preview] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.config.v1.CreatePreviewRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1561}
+  /// [google.cloud.config.v1.Preview]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1328}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
+      std::string const& parent,
+      google::cloud::config::v1::Preview const& preview, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a [Preview][google.cloud.config.v1.Preview].
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.config.v1.CreatePreviewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.config.v1.Preview] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.config.v1.CreatePreviewRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1561}
+  /// [google.cloud.config.v1.Preview]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1328}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
+      google::cloud::config::v1::CreatePreviewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details about a [Preview][google.cloud.config.v1.Preview].
+  ///
+  /// @param name  Required. The name of the preview. Format:
+  ///  'projects/{project_id}/locations/{location}/previews/{preview}'.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.config.v1.Preview])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.config.v1.GetPreviewRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1597}
+  /// [google.cloud.config.v1.Preview]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1328}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::config::v1::Preview> GetPreview(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details about a [Preview][google.cloud.config.v1.Preview].
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.config.v1.GetPreviewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.config.v1.Preview])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.config.v1.GetPreviewRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1597}
+  /// [google.cloud.config.v1.Preview]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1328}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::config::v1::Preview> GetPreview(
+      google::cloud::config::v1::GetPreviewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists [Preview][google.cloud.config.v1.Preview]s in a given project and
+  /// location.
+  ///
+  /// @param parent  Required. The parent in whose context the Previews are listed. The parent
+  ///  value is in the format: 'projects/{project_id}/locations/{location}'.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.config.v1.Preview], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.config.v1.ListPreviewsRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1607}
+  /// [google.cloud.config.v1.Preview]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1328}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::config::v1::Preview> ListPreviews(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists [Preview][google.cloud.config.v1.Preview]s in a given project and
+  /// location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.config.v1.ListPreviewsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.config.v1.Preview], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.config.v1.ListPreviewsRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1607}
+  /// [google.cloud.config.v1.Preview]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1328}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::config::v1::Preview> ListPreviews(
+      google::cloud::config::v1::ListPreviewsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a [Preview][google.cloud.config.v1.Preview].
+  ///
+  /// @param name  Required. The name of the Preview in the format:
+  ///  'projects/{project_id}/locations/{location}/previews/{preview}'.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.config.v1.Preview] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.config.v1.DeletePreviewRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1668}
+  /// [google.cloud.config.v1.Preview]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1328}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a [Preview][google.cloud.config.v1.Preview].
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.config.v1.DeletePreviewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.config.v1.Preview] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.config.v1.DeletePreviewRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1668}
+  /// [google.cloud.config.v1.Preview]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1328}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
+      google::cloud::config::v1::DeletePreviewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Export [Preview][google.cloud.config.v1.Preview] results.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.config.v1.ExportPreviewResultRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.config.v1.ExportPreviewResultResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.config.v1.ExportPreviewResultRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1696}
+  /// [google.cloud.config.v1.ExportPreviewResultResponse]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1707}
+  /// [google.cloud.config.v1.Preview]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L1328}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
+  ExportPreviewResult(
+      google::cloud::config::v1::ExportPreviewResultRequest const& request,
       Options opts = {});
 
  private:
