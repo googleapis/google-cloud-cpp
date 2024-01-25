@@ -139,7 +139,7 @@ TEST(PullAckHandlerTest, TracingEnabled) {
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanHasInstrumentationScope(), SpanKindIsClient(),
                          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                         SpanNamed("test-subscription settle"))));
+                         SpanNamed("test-subscription ack"))));
 }
 
 TEST(PullAckHandlerTest, TracingDisabled) {

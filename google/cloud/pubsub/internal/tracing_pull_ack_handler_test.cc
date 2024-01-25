@@ -72,7 +72,7 @@ TEST(TracingAckHandlerTest, AckSuccess) {
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanHasInstrumentationScope(), SpanKindIsClient(),
                          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                         SpanNamed("test-subscription settle"))));
+                         SpanNamed("test-subscription ack"))));
 }
 
 TEST(TracingAckHandlerTest, AckError) {
@@ -90,7 +90,7 @@ TEST(TracingAckHandlerTest, AckError) {
   EXPECT_THAT(
       spans,
       Contains(AllOf(SpanWithStatus(opentelemetry::trace::StatusCode::kError),
-                     SpanNamed("test-subscription settle"))));
+                     SpanNamed("test-subscription ack"))));
 }
 
 TEST(TracingAckHandlerTest, AckAttributes) {
@@ -105,30 +105,32 @@ TEST(TracingAckHandlerTest, AckAttributes) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription settle"),
+              Contains(AllOf(SpanNamed("test-subscription ack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::kMessagingSystem, "gcp_pubsub")))));
   EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription settle"),
+              Contains(AllOf(SpanNamed("test-subscription ack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingOperation, "settle")))));
+                                 "gcp.project_id", "test-project")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-subscription ack"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::kMessagingOperation, "ack")))));
   EXPECT_THAT(
       spans,
-      Contains(AllOf(SpanNamed("test-subscription settle"),
+      Contains(AllOf(SpanNamed("test-subscription ack"),
                      SpanHasAttributes(OTelAttribute<std::string>(
                          sc::kCodeFunction, "pubsub::PullAckHandler::ack")))));
   EXPECT_THAT(spans,
               Contains(AllOf(
-                  SpanNamed("test-subscription settle"),
+                  SpanNamed("test-subscription ack"),
                   SpanHasAttributes(OTelAttribute<std::int32_t>(
                       "messaging.gcp_pubsub.message.delivery_attempt", 42)))));
-  EXPECT_THAT(
-      spans,
-      Contains(AllOf(
-          SpanNamed("test-subscription settle"),
-          SpanHasAttributes(OTelAttribute<std::string>(
-              "messaging.gcp_pubsub.subscription.template",
-              "projects/test-project/subscriptions/test-subscription")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(
+                  SpanNamed("test-subscription ack"),
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      sc::kMessagingDestinationName, "test-subscription")))));
 }
 
 TEST(TracingAckHandlerTest, NackSuccess) {
@@ -144,7 +146,7 @@ TEST(TracingAckHandlerTest, NackSuccess) {
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanHasInstrumentationScope(), SpanKindIsClient(),
                          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                         SpanNamed("test-subscription settle"))));
+                         SpanNamed("test-subscription nack"))));
 }
 
 TEST(TracingAckHandlerTest, NackError) {
@@ -162,7 +164,7 @@ TEST(TracingAckHandlerTest, NackError) {
   EXPECT_THAT(
       spans,
       Contains(AllOf(SpanWithStatus(opentelemetry::trace::StatusCode::kError),
-                     SpanNamed("test-subscription settle"))));
+                     SpanNamed("test-subscription nack"))));
 }
 
 TEST(TracingAckHandlerTest, NackAttributes) {
@@ -177,23 +179,32 @@ TEST(TracingAckHandlerTest, NackAttributes) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription settle"),
+              Contains(AllOf(SpanNamed("test-subscription nack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::kMessagingSystem, "gcp_pubsub")))));
   EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription settle"),
+              Contains(AllOf(SpanNamed("test-subscription nack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingOperation, "settle")))));
+                                 sc::kMessagingOperation, "nack")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-subscription nack"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 "gcp.project_id", "test-project")))));
   EXPECT_THAT(
       spans,
-      Contains(AllOf(SpanNamed("test-subscription settle"),
+      Contains(AllOf(SpanNamed("test-subscription nack"),
                      SpanHasAttributes(OTelAttribute<std::string>(
                          sc::kCodeFunction, "pubsub::PullAckHandler::nack")))));
   EXPECT_THAT(spans,
               Contains(AllOf(
-                  SpanNamed("test-subscription settle"),
+                  SpanNamed("test-subscription nack"),
                   SpanHasAttributes(OTelAttribute<std::int32_t>(
                       "messaging.gcp_pubsub.message.delivery_attempt", 42)))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(
+                  SpanNamed("test-subscription nack"),
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      sc::kMessagingDestinationName, "test-subscription")))));
 }
 
 TEST(TracingAckHandlerTest, DeliveryAttemptNoSpans) {
@@ -246,7 +257,7 @@ TEST(TracingAckHandlerTest, AckAddsLink) {
 
   consumer_span->End();
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription settle"),
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription ack"),
                                     SpanLinksSizeIs(1))));
 }
 
@@ -264,7 +275,7 @@ TEST(TracingAckHandlerTest, AckSkipsLinkForNotSampledSpan) {
 
   consumer_span->End();
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription settle"),
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription ack"),
                                     SpanLinksSizeIs(0))));
 }
 
@@ -286,7 +297,7 @@ TEST(TracingAckHandlerTest, AckAddsSpanIdAndTraceIdAttribute) {
   EXPECT_THAT(
       spans,
       Contains(AllOf(
-          SpanNamed("test-subscription settle"),
+          SpanNamed("test-subscription ack"),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp_pubsub.receive.trace_id", _),
               OTelAttribute<std::string>("gcp_pubsub.receive.span_id", _)))));

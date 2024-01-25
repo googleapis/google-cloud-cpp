@@ -46,16 +46,16 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
   }
   ~TracingPullAckHandler() override = default;
 
-  TracingAttributes MakeSharedAttributes(std::string const& ack_id,
-                                         std::string const& subscription) {
+  TracingAttributes MakeSharedAttributes(
+      std::string const& ack_id, pubsub::Subscription const& subscription) {
     namespace sc = opentelemetry::trace::SemanticConventions;
     return TracingAttributes{
         {sc::kMessagingSystem, "gcp_pubsub"},
-        {sc::kMessagingOperation, "settle"},
         {"messaging.gcp_pubsub.message.ack_id", ack_id},
         {"messaging.gcp_pubsub.message.delivery_attempt",
          child_->delivery_attempt()},
-        {"messaging.gcp_pubsub.subscription.template", subscription}};
+        {"gcp.project_id", subscription.project_id()},
+        {sc::kMessagingDestinationName, subscription.subscription_id()}};
   }
 
   future<Status> ack() override {
@@ -64,14 +64,13 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
     options.kind = opentelemetry::trace::SpanKind::kClient;
     auto const ack_id = child_->ack_id();
     auto const subscription = child_->subscription();
-    auto const subscription_name = subscription.FullName();
-    TracingAttributes attributes =
-        MakeSharedAttributes(ack_id, subscription_name);
+    TracingAttributes attributes = MakeSharedAttributes(ack_id, subscription);
     attributes.emplace_back(
         std::make_pair(sc::kCodeFunction, "pubsub::PullAckHandler::ack"));
-    auto span = internal::MakeSpan(
-        subscription.subscription_id() + " settle", attributes,
-        CreateLinks(consumer_span_context_), options);
+    attributes.emplace_back(std::make_pair(sc::kMessagingOperation, "ack"));
+    auto span =
+        internal::MakeSpan(subscription.subscription_id() + " ack", attributes,
+                           CreateLinks(consumer_span_context_), options);
     MaybeAddLinkAttributes(*span, consumer_span_context_, "receive");
     auto scope = internal::OTelScope(span);
 
@@ -90,14 +89,13 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
     options.kind = opentelemetry::trace::SpanKind::kClient;
     auto const ack_id = child_->ack_id();
     auto const subscription = child_->subscription();
-    auto const subscription_name = subscription.FullName();
-    TracingAttributes attributes =
-        MakeSharedAttributes(ack_id, subscription_name);
+    TracingAttributes attributes = MakeSharedAttributes(ack_id, subscription);
     attributes.emplace_back(
         std::make_pair(sc::kCodeFunction, "pubsub::PullAckHandler::nack"));
-    auto span = internal::MakeSpan(
-        subscription.subscription_id() + " settle", attributes,
-        CreateLinks(consumer_span_context_), options);
+    attributes.emplace_back(std::make_pair(sc::kMessagingOperation, "nack"));
+    auto span =
+        internal::MakeSpan(subscription.subscription_id() + " nack", attributes,
+                           CreateLinks(consumer_span_context_), options);
     MaybeAddLinkAttributes(*span, consumer_span_context_, "receive");
     auto scope = internal::OTelScope(span);
 

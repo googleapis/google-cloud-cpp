@@ -222,7 +222,7 @@ TEST(MakeSubscriberConnectionTest, TracingEnabledForUnaryPull) {
   EXPECT_THAT(spans, UnorderedElementsAre(
                          SpanNamed("test-subscription receive"),
                          SpanNamed("google.pubsub.v1.Subscriber/Pull"),
-                         SpanNamed("test-subscription settle"),
+                         SpanNamed("test-subscription ack"),
                          SpanNamed("google.pubsub.v1.Subscriber/Acknowledge")));
 }
 
