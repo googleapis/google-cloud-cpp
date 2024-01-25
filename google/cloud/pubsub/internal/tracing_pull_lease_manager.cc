@@ -63,7 +63,7 @@ class TracingPullLeaseManager : public PullLeaseManager {
          {"messaging.gcp_pubsub.message.ack_deadline_seconds",
           static_cast<std::int32_t>(extension.count())},
          {"gcp.project_id", child_->subscription().project_id()},
-         {"messaging.destination.name",
+         {sc::kMessagingDestinationName,
           child_->subscription().subscription_id()}},
         CreateLinks(consumer_span_context_), options);
     auto scope = internal::OTelScope(span);

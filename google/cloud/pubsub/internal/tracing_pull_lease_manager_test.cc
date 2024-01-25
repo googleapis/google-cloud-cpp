@@ -136,11 +136,11 @@ TEST(TracingPullLeaseManagerTest, ExtendAttributes) {
                   SpanNamed("test-subscription modack"),
                   SpanHasAttributes(OTelAttribute<std::string>(
                       "messaging.gcp_pubsub.message.ack_id", "test-ack-id")))));
-  EXPECT_THAT(
-      spans,
-      Contains(AllOf(SpanNamed("test-subscription modack"),
-                     SpanHasAttributes(OTelAttribute<std::string>(
-                         "messaging.destination.name", "test-subscription")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(
+                  SpanNamed("test-subscription modack"),
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      sc::kMessagingDestinationName, "test-subscription")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription modack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
