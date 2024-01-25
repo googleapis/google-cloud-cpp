@@ -65,6 +65,9 @@ export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_QUICKSTART_TABLE="quickstart"
 # Cloud Storage configuration parameters
 # An existing bucket, used in small tests that do not change the bucket metadata.
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="gcs-grpc-team-cloud-cpp-testing-bucket"
+# Another preexisting bucket, created with folders enabled, for tests that do
+# not modify the bucket:
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_FOLDER_BUCKET_NAME="cloud-cpp-testing-folder-bucket"
 # A bucket with a different location and/or storage class from
 # `cloud-cpp-testing-bucket`, some requests (object copy and rewrite) succeed
 # immediately with buckets in the same location, and we want to demonstrate we

@@ -266,6 +266,7 @@ declare -A -r LIBRARIES=(
   )"
   ["sql"]="@com_google_googleapis//google/cloud/sql/v1:sql_cc_proto"
   ["storage"]="@com_google_googleapis//google/storage/v2:storage_cc_grpc"
+  ["storagecontrol"]="@com_google_googleapis//google/storage/control/v2:control_cc_grpc"
   ["storageinsights"]="@com_google_googleapis//google/cloud/storageinsights/v1:storageinsights_cc_grpc"
   ["storagetransfer"]="@com_google_googleapis//google/storagetransfer/v1:storagetransfer_cc_grpc"
   ["support"]="@com_google_googleapis//google/cloud/support/v2:support_cc_grpc"

@@ -18,6 +18,7 @@
 
 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
     "pubsublite",
+    "storagecontrol",
 ]
 
 GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [

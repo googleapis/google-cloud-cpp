@@ -1010,6 +1010,10 @@
 ./include/google/cloud/sql/v1/mocks
 ./include/google/cloud/storage
 ./include/google/cloud/storage/internal
+./include/google/cloud/storagecontrol
+./include/google/cloud/storagecontrol/v2
+./include/google/cloud/storagecontrol/v2/internal
+./include/google/cloud/storagecontrol/v2/mocks
 ./include/google/cloud/storageinsights
 ./include/google/cloud/storageinsights/v1
 ./include/google/cloud/storageinsights/v1/internal
@@ -1178,6 +1182,8 @@
 ./include/google/spanner/admin/instance/v1
 ./include/google/spanner/v1
 ./include/google/storage
+./include/google/storage/control
+./include/google/storage/control/v2
 ./include/google/storage/v2
 ./include/google/storagetransfer
 ./include/google/storagetransfer/v1
@@ -1289,6 +1295,7 @@
 ./lib64/cmake/google_cloud_cpp_speech
 ./lib64/cmake/google_cloud_cpp_sql
 ./lib64/cmake/google_cloud_cpp_storage
+./lib64/cmake/google_cloud_cpp_storagecontrol
 ./lib64/cmake/google_cloud_cpp_storageinsights
 ./lib64/cmake/google_cloud_cpp_storagetransfer
 ./lib64/cmake/google_cloud_cpp_support
