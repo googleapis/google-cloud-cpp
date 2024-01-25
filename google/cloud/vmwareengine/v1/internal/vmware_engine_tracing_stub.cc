@@ -170,6 +170,111 @@ VmwareEngineTracingStub::AsyncDeleteCluster(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::cloud::vmwareengine::v1::ListNodesResponse>
+VmwareEngineTracingStub::ListNodes(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::ListNodesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "ListNodes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span, child_->ListNodes(context, request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::Node>
+VmwareEngineTracingStub::GetNode(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetNodeRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "GetNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span, child_->GetNode(context, request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ListExternalAddressesResponse>
+VmwareEngineTracingStub::ListExternalAddresses(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::ListExternalAddressesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "ListExternalAddresses");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListExternalAddresses(context, request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::
+             FetchNetworkPolicyExternalAddressesResponse>
+VmwareEngineTracingStub::FetchNetworkPolicyExternalAddresses(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::
+        FetchNetworkPolicyExternalAddressesRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.vmwareengine.v1.VmwareEngine",
+                             "FetchNetworkPolicyExternalAddresses");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->FetchNetworkPolicyExternalAddresses(context, request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineTracingStub::GetExternalAddress(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "GetExternalAddress");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetExternalAddress(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncCreateExternalAddress(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "CreateExternalAddress");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateExternalAddress(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncUpdateExternalAddress(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateExternalAddress");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateExternalAddress(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncDeleteExternalAddress(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "DeleteExternalAddress");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteExternalAddress(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 StatusOr<google::cloud::vmwareengine::v1::ListSubnetsResponse>
 VmwareEngineTracingStub::ListSubnets(
     grpc::ClientContext& context,
@@ -203,6 +308,140 @@ VmwareEngineTracingStub::AsyncUpdateSubnet(
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateSubnet(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse>
+VmwareEngineTracingStub::ListExternalAccessRules(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "ListExternalAccessRules");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListExternalAccessRules(context, request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
+VmwareEngineTracingStub::GetExternalAccessRule(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "GetExternalAccessRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetExternalAccessRule(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncCreateExternalAccessRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "CreateExternalAccessRule");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateExternalAccessRule(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncUpdateExternalAccessRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateExternalAccessRule");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateExternalAccessRule(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncDeleteExternalAccessRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "DeleteExternalAccessRule");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteExternalAccessRule(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ListLoggingServersResponse>
+VmwareEngineTracingStub::ListLoggingServers(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::ListLoggingServersRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "ListLoggingServers");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListLoggingServers(context, request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::LoggingServer>
+VmwareEngineTracingStub::GetLoggingServer(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "GetLoggingServer");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetLoggingServer(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncCreateLoggingServer(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "CreateLoggingServer");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateLoggingServer(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncUpdateLoggingServer(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateLoggingServer");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateLoggingServer(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncDeleteLoggingServer(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "DeleteLoggingServer");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteLoggingServer(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -281,6 +520,111 @@ VmwareEngineTracingStub::AsyncResetVcenterCredentials(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncResetVcenterCredentials(cq, context, options, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
+VmwareEngineTracingStub::GetDnsForwarding(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "GetDnsForwarding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetDnsForwarding(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncUpdateDnsForwarding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateDnsForwarding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateDnsForwarding(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
+VmwareEngineTracingStub::GetNetworkPeering(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "GetNetworkPeering");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetNetworkPeering(context, request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ListNetworkPeeringsResponse>
+VmwareEngineTracingStub::ListNetworkPeerings(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "ListNetworkPeerings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListNetworkPeerings(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncCreateNetworkPeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "CreateNetworkPeering");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateNetworkPeering(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncDeleteNetworkPeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "DeleteNetworkPeering");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteNetworkPeering(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncUpdateNetworkPeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateNetworkPeering");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateNetworkPeering(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ListPeeringRoutesResponse>
+VmwareEngineTracingStub::ListPeeringRoutes(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::ListPeeringRoutesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "ListPeeringRoutes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListPeeringRoutes(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -387,6 +731,98 @@ VmwareEngineTracingStub::AsyncDeleteNetworkPolicy(
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteNetworkPolicy(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse>
+VmwareEngineTracingStub::ListManagementDnsZoneBindings(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.vmwareengine.v1.VmwareEngine",
+                             "ListManagementDnsZoneBindings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListManagementDnsZoneBindings(context, request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+VmwareEngineTracingStub::GetManagementDnsZoneBinding(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.vmwareengine.v1.VmwareEngine",
+                             "GetManagementDnsZoneBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetManagementDnsZoneBinding(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncCreateManagementDnsZoneBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::
+        CreateManagementDnsZoneBindingRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.vmwareengine.v1.VmwareEngine",
+                             "CreateManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateManagementDnsZoneBinding(cq, context, options,
+                                                       request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncUpdateManagementDnsZoneBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::
+        UpdateManagementDnsZoneBindingRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.vmwareengine.v1.VmwareEngine",
+                             "UpdateManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateManagementDnsZoneBinding(cq, context, options,
+                                                       request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncDeleteManagementDnsZoneBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::
+        DeleteManagementDnsZoneBindingRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.vmwareengine.v1.VmwareEngine",
+                             "DeleteManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteManagementDnsZoneBinding(cq, context, options,
+                                                       request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncRepairManagementDnsZoneBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::
+        RepairManagementDnsZoneBindingRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.vmwareengine.v1.VmwareEngine",
+                             "RepairManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncRepairManagementDnsZoneBinding(cq, context, options,
+                                                       request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -543,6 +979,47 @@ VmwareEngineTracingStub::ListPrivateConnectionPeeringRoutes(
   return internal::EndSpan(
       context, *span,
       child_->ListPrivateConnectionPeeringRoutes(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncGrantDnsBindPermission(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "GrantDnsBindPermission");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncGrantDnsBindPermission(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
+VmwareEngineTracingStub::GetDnsBindPermission(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "GetDnsBindPermission");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetDnsBindPermission(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineTracingStub::AsyncRevokeDnsBindPermission(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vmwareengine.v1.VmwareEngine", "RevokeDnsBindPermission");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncRevokeDnsBindPermission(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>

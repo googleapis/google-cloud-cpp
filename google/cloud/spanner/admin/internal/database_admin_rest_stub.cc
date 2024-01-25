@@ -77,7 +77,9 @@ DefaultDatabaseAdminRestStub::AsyncCreateDatabase(
             rest_internal::TrimEmptyQueryParameters(
                 {std::make_pair("create_statement", request.create_statement()),
                  std::make_pair("database_dialect",
-                                std::to_string(request.database_dialect()))})));
+                                std::to_string(request.database_dialect())),
+                 std::make_pair("proto_descriptors",
+                                request.proto_descriptors())})));
       },
       std::move(p),
       service_,
@@ -144,7 +146,9 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabaseDdl(
             absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options),
                          "/", request.database(), "/", "ddl"),
             rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("operation_id", request.operation_id())})));
+                {std::make_pair("operation_id", request.operation_id()),
+                 std::make_pair("proto_descriptors",
+                                request.proto_descriptors())})));
       },
       std::move(p),
       service_,

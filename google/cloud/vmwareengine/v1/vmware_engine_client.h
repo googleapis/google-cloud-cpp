@@ -117,8 +117,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListPrivateCloudsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L570}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
+  /// [google.cloud.vmwareengine.v1.ListPrivateCloudsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1021}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PrivateCloud> ListPrivateClouds(
@@ -156,8 +156,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListPrivateCloudsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L570}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
+  /// [google.cloud.vmwareengine.v1.ListPrivateCloudsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1021}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PrivateCloud> ListPrivateClouds(
@@ -186,8 +186,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetPrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L649}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
+  /// [google.cloud.vmwareengine.v1.GetPrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1100}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::PrivateCloud> GetPrivateCloud(
@@ -216,8 +216,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetPrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L649}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
+  /// [google.cloud.vmwareengine.v1.GetPrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1100}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::PrivateCloud> GetPrivateCloud(
@@ -227,9 +227,9 @@ class VmwareEngineClient {
   // clang-format off
   ///
   /// Creates a new `PrivateCloud` resource in a given project and location.
-  /// Private clouds can only be created in zones, regional private clouds are
-  /// not supported.
-  ///
+  /// Private clouds of type `STANDARD` and
+  /// `TIME_LIMITED` are zonal resources, `STRETCHED` private clouds are
+  /// regional.
   /// Creating a private cloud also creates a [management
   /// cluster](https://cloud.google.com/vmware-engine/docs/concepts-vmware-components)
   /// for that private cloud.
@@ -271,8 +271,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.CreatePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L665}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
+  /// [google.cloud.vmwareengine.v1.CreatePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1116}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -284,9 +284,9 @@ class VmwareEngineClient {
   // clang-format off
   ///
   /// Creates a new `PrivateCloud` resource in a given project and location.
-  /// Private clouds can only be created in zones, regional private clouds are
-  /// not supported.
-  ///
+  /// Private clouds of type `STANDARD` and
+  /// `TIME_LIMITED` are zonal resources, `STRETCHED` private clouds are
+  /// regional.
   /// Creating a private cloud also creates a [management
   /// cluster](https://cloud.google.com/vmware-engine/docs/concepts-vmware-components)
   /// for that private cloud.
@@ -317,8 +317,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.CreatePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L665}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
+  /// [google.cloud.vmwareengine.v1.CreatePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1116}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -363,8 +363,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
-  /// [google.cloud.vmwareengine.v1.UpdatePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L705}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.UpdatePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1156}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -409,8 +409,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
-  /// [google.cloud.vmwareengine.v1.UpdatePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L705}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.UpdatePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1156}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -461,8 +461,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DeletePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L724}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
+  /// [google.cloud.vmwareengine.v1.DeletePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1175}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -512,8 +512,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DeletePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L724}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
+  /// [google.cloud.vmwareengine.v1.DeletePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1175}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -553,8 +553,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
-  /// [google.cloud.vmwareengine.v1.UndeletePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L761}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.UndeletePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1212}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -593,8 +593,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
-  /// [google.cloud.vmwareengine.v1.UndeletePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L761}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.UndeletePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1212}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -634,8 +634,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L206}
-  /// [google.cloud.vmwareengine.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L781}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1232}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::Cluster> ListClusters(
@@ -673,8 +673,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L206}
-  /// [google.cloud.vmwareengine.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L781}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1232}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::Cluster> ListClusters(
@@ -703,8 +703,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L206}
-  /// [google.cloud.vmwareengine.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L848}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1299}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::Cluster> GetCluster(
@@ -733,8 +733,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L206}
-  /// [google.cloud.vmwareengine.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L848}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1299}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::Cluster> GetCluster(
@@ -785,8 +785,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L206}
-  /// [google.cloud.vmwareengine.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L864}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1315}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> CreateCluster(
@@ -827,8 +827,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L206}
-  /// [google.cloud.vmwareengine.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L864}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1315}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> CreateCluster(
@@ -837,8 +837,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// Modifies a `Cluster` resource. Only the following fields can be updated:
-  /// `node_type_configs.*.node_count`. Only fields specified in `updateMask` are
+  /// Modifies a `Cluster` resource. Only fields specified in `updateMask` are
   /// applied.
   ///
   /// During operation processing, the resource is temporarily in the `ACTIVE`
@@ -872,8 +871,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L206}
-  /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L904}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
@@ -882,8 +881,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// Modifies a `Cluster` resource. Only the following fields can be updated:
-  /// `node_type_configs.*.node_count`. Only fields specified in `updateMask` are
+  /// Modifies a `Cluster` resource. Only fields specified in `updateMask` are
   /// applied.
   ///
   /// During operation processing, the resource is temporarily in the `ACTIVE`
@@ -917,8 +915,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L206}
-  /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L904}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
@@ -957,8 +955,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L927}
-  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1022}
+  /// [google.cloud.vmwareengine.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1378}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -997,13 +995,641 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L927}
-  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1022}
+  /// [google.cloud.vmwareengine.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1378}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteCluster(
       google::cloud::vmwareengine::v1::DeleteClusterRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists nodes in a given cluster.
+  ///
+  /// @param parent  Required. The resource name of the cluster to be queried for nodes.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/clusters/my-cluster`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.Node], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ListNodesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1398}
+  /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L317}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::Node> ListNodes(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists nodes in a given cluster.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.ListNodesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.Node], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ListNodesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1398}
+  /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L317}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::Node> ListNodes(
+      google::cloud::vmwareengine::v1::ListNodesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single node.
+  ///
+  /// @param name  Required. The resource name of the node to retrieve.
+  ///  For example:
+  ///  `projects/{project}/locations/{location}/privateClouds/{private_cloud}/clusters/{cluster}/nodes/{node}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.Node])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.GetNodeRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1439}
+  /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L317}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::Node> GetNode(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single node.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.GetNodeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.Node])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.GetNodeRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1439}
+  /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L317}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::Node> GetNode(
+      google::cloud::vmwareengine::v1::GetNodeRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists external IP addresses assigned to VMware workload VMs in a given
+  /// private cloud.
+  ///
+  /// @param parent  Required. The resource name of the private cloud to be queried for
+  ///  external IP addresses.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.ExternalAddress], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.ListExternalAddressesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1453}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+  ListExternalAddresses(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists external IP addresses assigned to VMware workload VMs in a given
+  /// private cloud.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.ListExternalAddressesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.ExternalAddress], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.ListExternalAddressesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1453}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+  ListExternalAddresses(
+      google::cloud::vmwareengine::v1::ListExternalAddressesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists external IP addresses assigned to VMware workload VMs within the
+  /// scope of the given network policy.
+  ///
+  /// @param network_policy  Required. The resource name of the network policy to query for assigned
+  ///  external IP addresses. Resource names are schemeless URIs that follow the
+  ///  conventions in https://cloud.google.com/apis/design/resource_names. For
+  ///  example:
+  ///  `projects/my-project/locations/us-central1/networkPolicies/my-policy`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.ExternalAddress], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.FetchNetworkPolicyExternalAddressesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1532}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+  FetchNetworkPolicyExternalAddresses(std::string const& network_policy,
+                                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists external IP addresses assigned to VMware workload VMs within the
+  /// scope of the given network policy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.FetchNetworkPolicyExternalAddressesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.ExternalAddress], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.FetchNetworkPolicyExternalAddressesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1532}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+  FetchNetworkPolicyExternalAddresses(
+      google::cloud::vmwareengine::v1::
+          FetchNetworkPolicyExternalAddressesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single external IP address.
+  ///
+  /// @param name  Required. The resource name of the external IP address to retrieve.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/externalAddresses/my-ip`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.ExternalAddress])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.GetExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1575}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::ExternalAddress> GetExternalAddress(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single external IP address.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.GetExternalAddressRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.ExternalAddress])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.GetExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1575}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::ExternalAddress> GetExternalAddress(
+      google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new `ExternalAddress` resource in a given private cloud. The
+  /// network policy that corresponds to the private cloud must have the external
+  /// IP address network service enabled (`NetworkPolicy.external_ip`).
+  ///
+  /// @param parent  Required. The resource name of the private cloud
+  ///  to create a new external IP address in.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
+  /// @param external_address  Required. The initial description of a new external IP address.
+  /// @param external_address_id  Required. The user-provided identifier of the `ExternalAddress` to be
+  ///  created. This identifier must be unique among `ExternalAddress` resources
+  ///  within the parent and becomes the final token in the name URI. The
+  ///  identifier must meet the following requirements:
+  ///  @n
+  ///  * Only contains 1-63 alphanumeric characters and hyphens
+  ///  * Begins with an alphabetical character
+  ///  * Ends with a non-hyphen character
+  ///  * Not formatted as a UUID
+  ///  * Complies with [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034)
+  ///  (section 3.5)
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ExternalAddress] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.CreateExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1591}
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+  CreateExternalAddress(
+      std::string const& parent,
+      google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
+      std::string const& external_address_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new `ExternalAddress` resource in a given private cloud. The
+  /// network policy that corresponds to the private cloud must have the external
+  /// IP address network service enabled (`NetworkPolicy.external_ip`).
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.CreateExternalAddressRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ExternalAddress] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.CreateExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1591}
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+  CreateExternalAddress(
+      google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single external IP address.
+  /// Only fields specified in `update_mask` are applied.
+  ///
+  /// During operation processing, the resource is temporarily in the `ACTIVE`
+  /// state before the operation fully completes. For that period of time, you
+  /// can't update the resource. Use the operation status to determine when the
+  /// processing fully completes.
+  ///
+  /// @param external_address  Required. External IP address description.
+  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  ///  `ExternalAddress` resource by the update.
+  ///  The fields specified in the `update_mask` are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ExternalAddress] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.UpdateExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1640}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+  UpdateExternalAddress(
+      google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single external IP address.
+  /// Only fields specified in `update_mask` are applied.
+  ///
+  /// During operation processing, the resource is temporarily in the `ACTIVE`
+  /// state before the operation fully completes. For that period of time, you
+  /// can't update the resource. Use the operation status to determine when the
+  /// processing fully completes.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.UpdateExternalAddressRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ExternalAddress] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.UpdateExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1640}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+  UpdateExternalAddress(
+      google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single external IP address. When you delete an external IP
+  /// address, connectivity between the external IP address and the corresponding
+  /// internal IP address is lost.
+  ///
+  /// @param name  Required. The resource name of the external IP address to delete.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/externalAddresses/my-ip`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DeleteExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1671}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteExternalAddress(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single external IP address. When you delete an external IP
+  /// address, connectivity between the external IP address and the corresponding
+  /// internal IP address is lost.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.DeleteExternalAddressRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DeleteExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1671}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteExternalAddress(
+      google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+          request,
       Options opts = {});
 
   // clang-format off
@@ -1038,8 +1664,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListSubnetsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L947}
-  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L269}
+  /// [google.cloud.vmwareengine.v1.ListSubnetsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1703}
+  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L429}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::Subnet> ListSubnets(
@@ -1077,8 +1703,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListSubnetsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L947}
-  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L269}
+  /// [google.cloud.vmwareengine.v1.ListSubnetsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1703}
+  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L429}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::Subnet> ListSubnets(
@@ -1107,8 +1733,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L992}
-  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L269}
+  /// [google.cloud.vmwareengine.v1.GetSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1748}
+  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L429}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::Subnet> GetSubnet(
@@ -1137,8 +1763,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L992}
-  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L269}
+  /// [google.cloud.vmwareengine.v1.GetSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1748}
+  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L429}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::Subnet> GetSubnet(
@@ -1180,8 +1806,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L269}
-  /// [google.cloud.vmwareengine.v1.UpdateSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1008}
+  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L429}
+  /// [google.cloud.vmwareengine.v1.UpdateSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1764}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::Subnet>> UpdateSubnet(
@@ -1223,12 +1849,795 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L269}
-  /// [google.cloud.vmwareengine.v1.UpdateSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1008}
+  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L429}
+  /// [google.cloud.vmwareengine.v1.UpdateSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1764}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::Subnet>> UpdateSubnet(
       google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists `ExternalAccessRule` resources in the specified network policy.
+  ///
+  /// @param parent  Required. The resource name of the network policy to query for external
+  ///  access firewall rules. Resource names are schemeless URIs that follow the
+  ///  conventions in https://cloud.google.com/apis/design/resource_names. For
+  ///  example:
+  ///  `projects/my-project/locations/us-central1/networkPolicies/my-policy`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.ExternalAccessRule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.ListExternalAccessRulesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1779}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
+  ListExternalAccessRules(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists `ExternalAccessRule` resources in the specified network policy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.ListExternalAccessRulesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.ExternalAccessRule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.ListExternalAccessRulesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1779}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
+  ListExternalAccessRules(
+      google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single external access rule.
+  ///
+  /// @param name  Required. The resource name of the external access firewall rule to
+  ///  retrieve. Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1/networkPolicies/my-policy/externalAccessRules/my-rule`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.ExternalAccessRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.GetExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1858}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
+  GetExternalAccessRule(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single external access rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.GetExternalAccessRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.ExternalAccessRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.GetExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1858}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
+  GetExternalAccessRule(
+      google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new external access rule in a given network policy.
+  ///
+  /// @param parent  Required. The resource name of the network policy
+  ///  to create a new external access firewall rule in.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1/networkPolicies/my-policy`
+  /// @param external_access_rule  Required. The initial description of a new external access rule.
+  /// @param external_access_rule_id  Required. The user-provided identifier of the `ExternalAccessRule` to be
+  ///  created. This identifier must be unique among `ExternalAccessRule`
+  ///  resources within the parent and becomes the final token in the name URI.
+  ///  The identifier must meet the following requirements:
+  ///  @n
+  ///  * Only contains 1-63 alphanumeric characters and hyphens
+  ///  * Begins with an alphabetical character
+  ///  * Ends with a non-hyphen character
+  ///  * Not formatted as a UUID
+  ///  * Complies with [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034)
+  ///  (section 3.5)
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ExternalAccessRule] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.CreateExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1874}
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+  CreateExternalAccessRule(
+      std::string const& parent,
+      google::cloud::vmwareengine::v1::ExternalAccessRule const&
+          external_access_rule,
+      std::string const& external_access_rule_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new external access rule in a given network policy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.CreateExternalAccessRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ExternalAccessRule] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.CreateExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1874}
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+  CreateExternalAccessRule(
+      google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single external access rule.
+  /// Only fields specified in `update_mask` are applied.
+  ///
+  /// @param external_access_rule  Required. Description of the external access rule.
+  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  ///  `ExternalAccessRule` resource by the update.
+  ///  The fields specified in the `update_mask` are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ExternalAccessRule] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.UpdateExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1924}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+  UpdateExternalAccessRule(
+      google::cloud::vmwareengine::v1::ExternalAccessRule const&
+          external_access_rule,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single external access rule.
+  /// Only fields specified in `update_mask` are applied.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.UpdateExternalAccessRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ExternalAccessRule] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.UpdateExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1924}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+  UpdateExternalAccessRule(
+      google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single external access rule.
+  ///
+  /// @param name  Required. The resource name of the external access firewall rule to delete.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1/networkPolicies/my-policy/externalAccessRules/my-rule`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DeleteExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1956}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteExternalAccessRule(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single external access rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.DeleteExternalAccessRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DeleteExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1956}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteExternalAccessRule(
+      google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists logging servers configured for a given private
+  /// cloud.
+  ///
+  /// @param parent  Required. The resource name of the private cloud to be queried for
+  ///  logging servers.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.LoggingServer], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ListLoggingServersRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1988}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
+  ListLoggingServers(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists logging servers configured for a given private
+  /// cloud.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.ListLoggingServersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.LoggingServer], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ListLoggingServersRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1988}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
+  ListLoggingServers(
+      google::cloud::vmwareengine::v1::ListLoggingServersRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a logging server.
+  ///
+  /// @param name  Required. The resource name of the Logging Server to retrieve.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/loggingServers/my-logging-server`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.LoggingServer])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.GetLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2068}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::LoggingServer> GetLoggingServer(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a logging server.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.GetLoggingServerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.LoggingServer])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.GetLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2068}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::LoggingServer> GetLoggingServer(
+      google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a new logging server for a given private cloud.
+  ///
+  /// @param parent  Required. The resource name of the private cloud
+  ///  to create a new Logging Server in.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
+  /// @param logging_server  Required. The initial description of a new logging server.
+  /// @param logging_server_id  Required. The user-provided identifier of the `LoggingServer` to be
+  ///  created. This identifier must be unique among `LoggingServer` resources
+  ///  within the parent and becomes the final token in the name URI.
+  ///  The identifier must meet the following requirements:
+  ///  @n
+  ///  * Only contains 1-63 alphanumeric characters and hyphens
+  ///  * Begins with an alphabetical character
+  ///  * Ends with a non-hyphen character
+  ///  * Not formatted as a UUID
+  ///  * Complies with [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034)
+  ///  (section 3.5)
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.LoggingServer] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.CreateLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2084}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+  CreateLoggingServer(
+      std::string const& parent,
+      google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
+      std::string const& logging_server_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a new logging server for a given private cloud.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.CreateLoggingServerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.LoggingServer] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.CreateLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2084}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+  CreateLoggingServer(
+      google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single logging server.
+  /// Only fields specified in `update_mask` are applied.
+  ///
+  /// @param logging_server  Required. Logging server description.
+  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  ///  `LoggingServer` resource by the update.
+  ///  The fields specified in the `update_mask` are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.LoggingServer] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  /// [google.cloud.vmwareengine.v1.UpdateLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2133}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+  UpdateLoggingServer(
+      google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single logging server.
+  /// Only fields specified in `update_mask` are applied.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.UpdateLoggingServerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.LoggingServer] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  /// [google.cloud.vmwareengine.v1.UpdateLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2133}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+  UpdateLoggingServer(
+      google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single logging server.
+  ///
+  /// @param name  Required. The resource name of the logging server to delete.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/loggingServers/my-logging-server`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DeleteLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2164}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteLoggingServer(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single logging server.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.DeleteLoggingServerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DeleteLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2164}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteLoggingServer(
+      google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
+          request,
       Options opts = {});
 
   // clang-format off
@@ -1262,8 +2671,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1054}
-  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L323}
+  /// [google.cloud.vmwareengine.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2227}
+  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L684}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::NodeType> ListNodeTypes(
@@ -1301,8 +2710,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1054}
-  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L323}
+  /// [google.cloud.vmwareengine.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2227}
+  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L684}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::NodeType> ListNodeTypes(
@@ -1331,8 +2740,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetNodeTypeRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1125}
-  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L323}
+  /// [google.cloud.vmwareengine.v1.GetNodeTypeRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2298}
+  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L684}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::NodeType> GetNodeType(
@@ -1361,8 +2770,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetNodeTypeRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1125}
-  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L323}
+  /// [google.cloud.vmwareengine.v1.GetNodeTypeRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2298}
+  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L684}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::NodeType> GetNodeType(
@@ -1392,8 +2801,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L362}
-  /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1141}
+  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L757}
+  /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2314}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowNsxCredentials(
@@ -1422,8 +2831,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L362}
-  /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1141}
+  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L757}
+  /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2314}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowNsxCredentials(
@@ -1453,8 +2862,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L362}
-  /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1158}
+  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L757}
+  /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2331}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowVcenterCredentials(
@@ -1483,8 +2892,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L362}
-  /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1158}
+  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L757}
+  /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2331}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowVcenterCredentials(
@@ -1522,8 +2931,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
-  /// [google.cloud.vmwareengine.v1.ResetNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1175}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.ResetNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2360}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -1559,8 +2968,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
-  /// [google.cloud.vmwareengine.v1.ResetNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1175}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.ResetNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2360}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -1599,8 +3008,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
-  /// [google.cloud.vmwareengine.v1.ResetVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1208}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.ResetVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2393}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -1636,14 +3045,640 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L82}
-  /// [google.cloud.vmwareengine.v1.ResetVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1208}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.ResetVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2393}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetVcenterCredentials(
       google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
           request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of the `DnsForwarding` config.
+  ///
+  /// @param name  Required. The resource name of a `DnsForwarding` to retrieve.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/dnsForwarding`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.DnsForwarding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DnsForwarding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L899}
+  /// [google.cloud.vmwareengine.v1.GetDnsForwardingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2548}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::DnsForwarding> GetDnsForwarding(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of the `DnsForwarding` config.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.GetDnsForwardingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.DnsForwarding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DnsForwarding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L899}
+  /// [google.cloud.vmwareengine.v1.GetDnsForwardingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2548}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::DnsForwarding> GetDnsForwarding(
+      google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of the `DnsForwarding` config, like associated
+  /// domains. Only fields specified in `update_mask` are applied.
+  ///
+  /// @param dns_forwarding  Required. DnsForwarding config details.
+  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  ///  `DnsForwarding` resource by the update.
+  ///  The fields specified in the `update_mask` are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.DnsForwarding] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DnsForwarding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L899}
+  /// [google.cloud.vmwareengine.v1.UpdateDnsForwardingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2564}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
+  UpdateDnsForwarding(
+      google::cloud::vmwareengine::v1::DnsForwarding const& dns_forwarding,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of the `DnsForwarding` config, like associated
+  /// domains. Only fields specified in `update_mask` are applied.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.UpdateDnsForwardingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.DnsForwarding] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DnsForwarding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L899}
+  /// [google.cloud.vmwareengine.v1.UpdateDnsForwardingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2564}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
+  UpdateDnsForwarding(
+      google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves a `NetworkPeering` resource by its resource name. The resource
+  /// contains details of the network peering, such as peered
+  /// networks, import and export custom route configurations, and peering state.
+  /// NetworkPeering is a global resource and location can only be global.
+  ///
+  /// @param name  Required. The resource name of the network peering to retrieve.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/global/networkPeerings/my-peering`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.NetworkPeering])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.GetNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2675}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::NetworkPeering> GetNetworkPeering(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves a `NetworkPeering` resource by its resource name. The resource
+  /// contains details of the network peering, such as peered
+  /// networks, import and export custom route configurations, and peering state.
+  /// NetworkPeering is a global resource and location can only be global.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.GetNetworkPeeringRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.NetworkPeering])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.GetNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2675}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::NetworkPeering> GetNetworkPeering(
+      google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists `NetworkPeering` resources in a given project. NetworkPeering is a
+  /// global resource and location can only be global.
+  ///
+  /// @param parent  Required. The resource name of the location (global) to query for
+  ///  network peerings. Resource names are schemeless URIs that follow the
+  ///  conventions in https://cloud.google.com/apis/design/resource_names. For
+  ///  example: `projects/my-project/locations/global`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.NetworkPeering], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ListNetworkPeeringsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2691}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
+  ListNetworkPeerings(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists `NetworkPeering` resources in a given project. NetworkPeering is a
+  /// global resource and location can only be global.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.ListNetworkPeeringsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.NetworkPeering], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ListNetworkPeeringsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2691}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
+  ListNetworkPeerings(
+      google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new network peering between the peer network and VMware Engine
+  /// network provided in a `NetworkPeering` resource. NetworkPeering is a
+  /// global resource and location can only be global.
+  ///
+  /// @param parent  Required. The resource name of the location to create the new network
+  ///  peering in. This value is always `global`, because `NetworkPeering` is a
+  ///  global resource. Resource names are schemeless URIs that follow the
+  ///  conventions in https://cloud.google.com/apis/design/resource_names. For
+  ///  example: `projects/my-project/locations/global`
+  /// @param network_peering  Required. The initial description of the new network peering.
+  /// @param network_peering_id  Required. The user-provided identifier of the new `NetworkPeering`.
+  ///  This identifier must be unique among `NetworkPeering` resources within the
+  ///  parent and becomes the final token in the name URI.
+  ///  The identifier must meet the following requirements:
+  ///  @n
+  ///  * Only contains 1-63 alphanumeric characters and hyphens
+  ///  * Begins with an alphabetical character
+  ///  * Ends with a non-hyphen character
+  ///  * Not formatted as a UUID
+  ///  * Complies with [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034)
+  ///  (section 3.5)
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.NetworkPeering] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.CreateNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2595}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+  CreateNetworkPeering(
+      std::string const& parent,
+      google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
+      std::string const& network_peering_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new network peering between the peer network and VMware Engine
+  /// network provided in a `NetworkPeering` resource. NetworkPeering is a
+  /// global resource and location can only be global.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.CreateNetworkPeeringRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.NetworkPeering] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.CreateNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2595}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+  CreateNetworkPeering(
+      google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a `NetworkPeering` resource. When a network peering is deleted for
+  /// a VMware Engine network, the peer network becomes inaccessible to that
+  /// VMware Engine network. NetworkPeering is a global resource and location can
+  /// only be global.
+  ///
+  /// @param name  Required. The resource name of the network peering to be deleted.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/global/networkPeerings/my-peering`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DeleteNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2643}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteNetworkPeering(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a `NetworkPeering` resource. When a network peering is deleted for
+  /// a VMware Engine network, the peer network becomes inaccessible to that
+  /// VMware Engine network. NetworkPeering is a global resource and location can
+  /// only be global.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.DeleteNetworkPeeringRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DeleteNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2643}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteNetworkPeering(
+      google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Modifies a `NetworkPeering` resource. Only the `description` field can be
+  /// updated. Only fields specified in `updateMask` are applied. NetworkPeering
+  /// is a global resource and location can only be global.
+  ///
+  /// @param network_peering  Required. Network peering description.
+  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  ///  `NetworkPeering` resource by the update.
+  ///  The fields specified in the `update_mask` are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.NetworkPeering] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  /// [google.cloud.vmwareengine.v1.UpdateNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2753}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+  UpdateNetworkPeering(
+      google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Modifies a `NetworkPeering` resource. Only the `description` field can be
+  /// updated. Only fields specified in `updateMask` are applied. NetworkPeering
+  /// is a global resource and location can only be global.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.UpdateNetworkPeeringRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.NetworkPeering] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  /// [google.cloud.vmwareengine.v1.UpdateNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2753}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+  UpdateNetworkPeering(
+      google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the network peering routes exchanged over a peering connection.
+  /// NetworkPeering is a global resource and location can only be global.
+  ///
+  /// @param parent  Required. The resource name of the network peering to retrieve peering
+  ///  routes from. Resource names are schemeless URIs that follow the conventions
+  ///  in https://cloud.google.com/apis/design/resource_names. For example:
+  ///  `projects/my-project/locations/global/networkPeerings/my-peering`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.PeeringRoute], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ListPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2798}
+  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1086}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::PeeringRoute> ListPeeringRoutes(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the network peering routes exchanged over a peering connection.
+  /// NetworkPeering is a global resource and location can only be global.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.ListPeeringRoutesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.PeeringRoute], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ListPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2798}
+  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1086}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::PeeringRoute> ListPeeringRoutes(
+      google::cloud::vmwareengine::v1::ListPeeringRoutesRequest request,
       Options opts = {});
 
   // clang-format off
@@ -1688,8 +3723,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.CreateHcxActivationKeyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1302}
-  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
+  /// [google.cloud.vmwareengine.v1.CreateHcxActivationKeyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2498}
+  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L773}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
@@ -1729,8 +3764,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.CreateHcxActivationKeyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1302}
-  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
+  /// [google.cloud.vmwareengine.v1.CreateHcxActivationKeyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2498}
+  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L773}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
@@ -1771,8 +3806,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
-  /// [google.cloud.vmwareengine.v1.ListHcxActivationKeysRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1256}
+  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L773}
+  /// [google.cloud.vmwareengine.v1.ListHcxActivationKeysRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2452}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
@@ -1810,8 +3845,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
-  /// [google.cloud.vmwareengine.v1.ListHcxActivationKeysRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1256}
+  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L773}
+  /// [google.cloud.vmwareengine.v1.ListHcxActivationKeysRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2452}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
@@ -1841,8 +3876,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetHcxActivationKeyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1286}
-  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
+  /// [google.cloud.vmwareengine.v1.GetHcxActivationKeyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2482}
+  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L773}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
@@ -1871,8 +3906,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetHcxActivationKeyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1286}
-  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
+  /// [google.cloud.vmwareengine.v1.GetHcxActivationKeyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2482}
+  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L773}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
@@ -1903,8 +3938,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1430}
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L566}
+  /// [google.cloud.vmwareengine.v1.GetNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2921}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy> GetNetworkPolicy(
@@ -1933,8 +3968,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1430}
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L566}
+  /// [google.cloud.vmwareengine.v1.GetNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2921}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy> GetNetworkPolicy(
@@ -1971,8 +4006,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListNetworkPoliciesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1352}
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L566}
+  /// [google.cloud.vmwareengine.v1.ListNetworkPoliciesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2843}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>
@@ -2010,8 +4045,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListNetworkPoliciesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1352}
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L566}
+  /// [google.cloud.vmwareengine.v1.ListNetworkPoliciesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2843}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>
@@ -2064,8 +4099,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.CreateNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1477}
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L566}
+  /// [google.cloud.vmwareengine.v1.CreateNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2968}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
@@ -2106,8 +4141,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.CreateNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1477}
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L566}
+  /// [google.cloud.vmwareengine.v1.CreateNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2968}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
@@ -2157,8 +4192,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L566}
-  /// [google.cloud.vmwareengine.v1.UpdateNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1446}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
+  /// [google.cloud.vmwareengine.v1.UpdateNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2937}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
@@ -2207,8 +4242,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L566}
-  /// [google.cloud.vmwareengine.v1.UpdateNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1446}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
+  /// [google.cloud.vmwareengine.v1.UpdateNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2937}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
@@ -2248,8 +4283,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DeleteNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1527}
-  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1022}
+  /// [google.cloud.vmwareengine.v1.DeleteNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3018}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -2287,14 +4322,503 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DeleteNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1527}
-  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1022}
+  /// [google.cloud.vmwareengine.v1.DeleteNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3018}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteNetworkPolicy(
       google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
           request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists Consumer VPCs bound to Management DNS Zone of a given private cloud.
+  ///
+  /// @param parent  Required. The resource name of the private cloud to be queried for
+  ///  management DNS zone bindings.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ListManagementDnsZoneBindingsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3050}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+  ListManagementDnsZoneBindings(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists Consumer VPCs bound to Management DNS Zone of a given private cloud.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.ListManagementDnsZoneBindingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ListManagementDnsZoneBindingsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3050}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+  ListManagementDnsZoneBindings(
+      google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves a 'ManagementDnsZoneBinding' resource by its resource name.
+  ///
+  /// @param name  Required. The resource name of the management DNS zone binding to
+  ///  retrieve. Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/managementDnsZoneBindings/my-management-dns-zone-binding`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.ManagementDnsZoneBinding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.GetManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3130}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+  GetManagementDnsZoneBinding(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves a 'ManagementDnsZoneBinding' resource by its resource name.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.GetManagementDnsZoneBindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.ManagementDnsZoneBinding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.GetManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3130}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+  GetManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new `ManagementDnsZoneBinding` resource in a private cloud.
+  /// This RPC creates the DNS binding and the resource that represents the
+  /// DNS binding of the consumer VPC network to the management DNS zone. A
+  /// management DNS zone is the Cloud DNS cross-project binding zone that
+  /// VMware Engine creates for each private cloud. It contains FQDNs and
+  /// corresponding IP addresses for the private cloud's ESXi hosts and
+  /// management VM appliances like vCenter and NSX Manager.
+  ///
+  /// @param parent  Required. The resource name of the private cloud
+  ///  to create a new management DNS zone binding for.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
+  /// @param management_dns_zone_binding  Required. The initial values for a new management DNS zone binding.
+  /// @param management_dns_zone_binding_id  Required. The user-provided identifier of the `ManagementDnsZoneBinding`
+  ///  resource to be created. This identifier must be unique among
+  ///  `ManagementDnsZoneBinding` resources within the parent and becomes the
+  ///  final token in the name URI. The identifier must meet the following
+  ///  requirements:
+  ///  @n
+  ///  * Only contains 1-63 alphanumeric characters and hyphens
+  ///  * Begins with an alphabetical character
+  ///  * Ends with a non-hyphen character
+  ///  * Not formatted as a UUID
+  ///  * Complies with [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034)
+  ///  (section 3.5)
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.CreateManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3145}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+  CreateManagementDnsZoneBinding(
+      std::string const& parent,
+      google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
+          management_dns_zone_binding,
+      std::string const& management_dns_zone_binding_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new `ManagementDnsZoneBinding` resource in a private cloud.
+  /// This RPC creates the DNS binding and the resource that represents the
+  /// DNS binding of the consumer VPC network to the management DNS zone. A
+  /// management DNS zone is the Cloud DNS cross-project binding zone that
+  /// VMware Engine creates for each private cloud. It contains FQDNs and
+  /// corresponding IP addresses for the private cloud's ESXi hosts and
+  /// management VM appliances like vCenter and NSX Manager.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.CreateManagementDnsZoneBindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.CreateManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3145}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+  CreateManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::
+          CreateManagementDnsZoneBindingRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a `ManagementDnsZoneBinding` resource.
+  /// Only fields specified in `update_mask` are applied.
+  ///
+  /// @param management_dns_zone_binding  Required. New values to update the management DNS zone binding with.
+  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  ///  `ManagementDnsZoneBinding` resource by the update.
+  ///  The fields specified in the `update_mask` are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.UpdateManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3197}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+  UpdateManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
+          management_dns_zone_binding,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a `ManagementDnsZoneBinding` resource.
+  /// Only fields specified in `update_mask` are applied.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.UpdateManagementDnsZoneBindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.UpdateManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3197}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+  UpdateManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::
+          UpdateManagementDnsZoneBindingRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a `ManagementDnsZoneBinding` resource. When a management DNS zone
+  /// binding is deleted, the corresponding consumer VPC network is no longer
+  /// bound to the management DNS zone.
+  ///
+  /// @param name  Required. The resource name of the management DNS zone binding to delete.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/managementDnsZoneBindings/my-management-dns-zone-binding`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DeleteManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3229}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteManagementDnsZoneBinding(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a `ManagementDnsZoneBinding` resource. When a management DNS zone
+  /// binding is deleted, the corresponding consumer VPC network is no longer
+  /// bound to the management DNS zone.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.DeleteManagementDnsZoneBindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DeleteManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3229}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::
+          DeleteManagementDnsZoneBindingRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retries to create a `ManagementDnsZoneBinding` resource that is
+  /// in failed state.
+  ///
+  /// @param name  Required. The resource name of the management DNS zone binding to repair.
+  ///  Resource names are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names.
+  ///  For example:
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/managementDnsZoneBindings/my-management-dns-zone-binding`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.RepairManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3260}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+  RepairManagementDnsZoneBinding(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retries to create a `ManagementDnsZoneBinding` resource that is
+  /// in failed state.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.RepairManagementDnsZoneBindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.RepairManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3260}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+  RepairManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::
+          RepairManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -2343,8 +4867,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.CreateVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1559}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L660}
+  /// [google.cloud.vmwareengine.v1.CreateVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3292}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -2384,8 +4908,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.CreateVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1559}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L660}
+  /// [google.cloud.vmwareengine.v1.CreateVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3292}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -2427,8 +4951,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.UpdateVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1613}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L660}
+  /// [google.cloud.vmwareengine.v1.UpdateVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3346}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -2469,8 +4993,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.UpdateVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1613}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L660}
+  /// [google.cloud.vmwareengine.v1.UpdateVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3346}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -2511,8 +5035,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DeleteVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1646}
-  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1022}
+  /// [google.cloud.vmwareengine.v1.DeleteVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3379}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -2551,8 +5075,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DeleteVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1646}
-  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1022}
+  /// [google.cloud.vmwareengine.v1.DeleteVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3379}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -2586,8 +5110,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1684}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L660}
+  /// [google.cloud.vmwareengine.v1.GetVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3417}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -2619,8 +5143,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1684}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L660}
+  /// [google.cloud.vmwareengine.v1.GetVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3417}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -2659,8 +5183,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListVmwareEngineNetworksRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1700}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L660}
+  /// [google.cloud.vmwareengine.v1.ListVmwareEngineNetworksRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3433}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -2698,8 +5222,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListVmwareEngineNetworksRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1700}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L660}
+  /// [google.cloud.vmwareengine.v1.ListVmwareEngineNetworksRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3433}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -2749,8 +5273,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.CreatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1776}
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L775}
+  /// [google.cloud.vmwareengine.v1.CreatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3509}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
@@ -2791,8 +5315,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.CreatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1776}
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L775}
+  /// [google.cloud.vmwareengine.v1.CreatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3509}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
@@ -2825,8 +5349,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetPrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1825}
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L775}
+  /// [google.cloud.vmwareengine.v1.GetPrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3558}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
@@ -2857,8 +5381,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.GetPrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1825}
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L775}
+  /// [google.cloud.vmwareengine.v1.GetPrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3558}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
@@ -2897,8 +5421,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListPrivateConnectionsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1841}
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L775}
+  /// [google.cloud.vmwareengine.v1.ListPrivateConnectionsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3574}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
@@ -2936,8 +5460,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListPrivateConnectionsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1841}
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L775}
+  /// [google.cloud.vmwareengine.v1.ListPrivateConnectionsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3574}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
@@ -2977,8 +5501,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L775}
-  /// [google.cloud.vmwareengine.v1.UpdatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1917}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
+  /// [google.cloud.vmwareengine.v1.UpdatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3650}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
@@ -3019,8 +5543,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L775}
-  /// [google.cloud.vmwareengine.v1.UpdatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1917}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
+  /// [google.cloud.vmwareengine.v1.UpdatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3650}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
@@ -3060,8 +5584,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DeletePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1949}
-  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1022}
+  /// [google.cloud.vmwareengine.v1.DeletePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3682}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -3099,8 +5623,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DeletePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1949}
-  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1022}
+  /// [google.cloud.vmwareengine.v1.DeletePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3682}
+  /// [google.cloud.vmwareengine.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -3139,8 +5663,8 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListPrivateConnectionPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1981}
-  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L502}
+  /// [google.cloud.vmwareengine.v1.ListPrivateConnectionPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3714}
+  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1086}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
@@ -3179,13 +5703,256 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ListPrivateConnectionPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1981}
-  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L502}
+  /// [google.cloud.vmwareengine.v1.ListPrivateConnectionPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3714}
+  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1086}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
   ListPrivateConnectionPeeringRoutes(
       google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Grants the bind permission to the customer provided principal(user /
+  /// service account) to bind their DNS zone with the intranet VPC associated
+  /// with the project. DnsBindPermission is a global resource and location can
+  /// only be global.
+  ///
+  /// @param name  Required. The name of the resource which stores the users/service accounts
+  ///  having the permission to bind to the corresponding intranet VPC of the
+  ///  consumer project. DnsBindPermission is a global resource. Resource names
+  ///  are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names. For example:
+  ///  `projects/my-project/locations/global/dnsBindPermission`
+  /// @param principal  Required. The consumer provided user/service account which needs to be
+  ///  granted permission to bind with the intranet VPC corresponding to the
+  ///  consumer project.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.DnsBindPermission] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1620}
+  /// [google.cloud.vmwareengine.v1.GrantDnsBindPermissionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3752}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+  GrantDnsBindPermission(
+      std::string const& name,
+      google::cloud::vmwareengine::v1::Principal const& principal,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Grants the bind permission to the customer provided principal(user /
+  /// service account) to bind their DNS zone with the intranet VPC associated
+  /// with the project. DnsBindPermission is a global resource and location can
+  /// only be global.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.GrantDnsBindPermissionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.DnsBindPermission] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1620}
+  /// [google.cloud.vmwareengine.v1.GrantDnsBindPermissionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3752}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+  GrantDnsBindPermission(
+      google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets all the principals having bind permission on the intranet VPC
+  /// associated with the consumer project granted by the Grant API.
+  /// DnsBindPermission is a global resource and location can only be global.
+  ///
+  /// @param name  Required. The name of the resource which stores the users/service accounts
+  ///  having the permission to bind to the corresponding intranet VPC of the
+  ///  consumer project. DnsBindPermission is a global resource. Resource names
+  ///  are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names. For example:
+  ///  `projects/my-project/locations/global/dnsBindPermission`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.DnsBindPermission])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1620}
+  /// [google.cloud.vmwareengine.v1.GetDnsBindPermissionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3828}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
+  GetDnsBindPermission(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets all the principals having bind permission on the intranet VPC
+  /// associated with the consumer project granted by the Grant API.
+  /// DnsBindPermission is a global resource and location can only be global.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.GetDnsBindPermissionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmwareengine.v1.DnsBindPermission])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1620}
+  /// [google.cloud.vmwareengine.v1.GetDnsBindPermissionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3828}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
+  GetDnsBindPermission(
+      google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Revokes the bind permission from the customer provided principal(user /
+  /// service account) on the intranet VPC associated with the consumer project.
+  /// DnsBindPermission is a global resource and location can only be global.
+  ///
+  /// @param name  Required. The name of the resource which stores the users/service accounts
+  ///  having the permission to bind to the corresponding intranet VPC of the
+  ///  consumer project. DnsBindPermission is a global resource. Resource names
+  ///  are schemeless URIs that follow the conventions in
+  ///  https://cloud.google.com/apis/design/resource_names. For example:
+  ///  `projects/my-project/locations/global/dnsBindPermission`
+  /// @param principal  Required. The consumer provided user/service account which needs to be
+  ///  granted permission to bind with the intranet VPC corresponding to the
+  ///  consumer project.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.DnsBindPermission] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1620}
+  /// [google.cloud.vmwareengine.v1.RevokeDnsBindPermissionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3790}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+  RevokeDnsBindPermission(
+      std::string const& name,
+      google::cloud::vmwareengine::v1::Principal const& principal,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Revokes the bind permission from the customer provided principal(user /
+  /// service account) on the intranet VPC associated with the consumer project.
+  /// DnsBindPermission is a global resource and location can only be global.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmwareengine.v1.RevokeDnsBindPermissionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmwareengine.v1.DnsBindPermission] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1620}
+  /// [google.cloud.vmwareengine.v1.RevokeDnsBindPermissionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3790}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+  RevokeDnsBindPermission(
+      google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
           request,
       Options opts = {});
 

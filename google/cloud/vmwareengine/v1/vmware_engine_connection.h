@@ -231,6 +231,41 @@ class VmwareEngineConnection {
   DeleteCluster(
       google::cloud::vmwareengine::v1::DeleteClusterRequest const& request);
 
+  virtual StreamRange<google::cloud::vmwareengine::v1::Node> ListNodes(
+      google::cloud::vmwareengine::v1::ListNodesRequest request);
+
+  virtual StatusOr<google::cloud::vmwareengine::v1::Node> GetNode(
+      google::cloud::vmwareengine::v1::GetNodeRequest const& request);
+
+  virtual StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+  ListExternalAddresses(
+      google::cloud::vmwareengine::v1::ListExternalAddressesRequest request);
+
+  virtual StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+  FetchNetworkPolicyExternalAddresses(
+      google::cloud::vmwareengine::v1::
+          FetchNetworkPolicyExternalAddressesRequest request);
+
+  virtual StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>
+  GetExternalAddress(
+      google::cloud::vmwareengine::v1::GetExternalAddressRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+  CreateExternalAddress(
+      google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+  UpdateExternalAddress(
+      google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteExternalAddress(
+      google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+          request);
+
   virtual StreamRange<google::cloud::vmwareengine::v1::Subnet> ListSubnets(
       google::cloud::vmwareengine::v1::ListSubnetsRequest request);
 
@@ -240,6 +275,53 @@ class VmwareEngineConnection {
   virtual future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
   UpdateSubnet(
       google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request);
+
+  virtual StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
+  ListExternalAccessRules(
+      google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest request);
+
+  virtual StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
+  GetExternalAccessRule(
+      google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+  CreateExternalAccessRule(
+      google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+  UpdateExternalAccessRule(
+      google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteExternalAccessRule(
+      google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
+  ListLoggingServers(
+      google::cloud::vmwareengine::v1::ListLoggingServersRequest request);
+
+  virtual StatusOr<google::cloud::vmwareengine::v1::LoggingServer>
+  GetLoggingServer(
+      google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+  CreateLoggingServer(
+      google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+  UpdateLoggingServer(
+      google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteLoggingServer(
+      google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
+          request);
 
   virtual StreamRange<google::cloud::vmwareengine::v1::NodeType> ListNodeTypes(
       google::cloud::vmwareengine::v1::ListNodeTypesRequest request);
@@ -266,6 +348,42 @@ class VmwareEngineConnection {
   ResetVcenterCredentials(
       google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
           request);
+
+  virtual StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
+  GetDnsForwarding(
+      google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
+  UpdateDnsForwarding(
+      google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
+  GetNetworkPeering(
+      google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request);
+
+  virtual StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
+  ListNetworkPeerings(
+      google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+  CreateNetworkPeering(
+      google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteNetworkPeering(
+      google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+  UpdateNetworkPeering(
+      google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+  ListPeeringRoutes(
+      google::cloud::vmwareengine::v1::ListPeeringRoutesRequest request);
 
   virtual future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
   CreateHcxActivationKey(
@@ -303,6 +421,39 @@ class VmwareEngineConnection {
   DeleteNetworkPolicy(
       google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
           request);
+
+  virtual StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+  ListManagementDnsZoneBindings(
+      google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest
+          request);
+
+  virtual StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+  GetManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+  CreateManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::
+          CreateManagementDnsZoneBindingRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+  UpdateManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::
+          UpdateManagementDnsZoneBindingRequest const& request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeleteManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::
+          DeleteManagementDnsZoneBindingRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+  RepairManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::
+          RepairManagementDnsZoneBindingRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
   CreateVmwareEngineNetwork(
@@ -355,6 +506,21 @@ class VmwareEngineConnection {
   virtual StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
   ListPrivateConnectionPeeringRoutes(
       google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+  GrantDnsBindPermission(
+      google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
+  GetDnsBindPermission(
+      google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+  RevokeDnsBindPermission(
+      google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
           request);
 };
 

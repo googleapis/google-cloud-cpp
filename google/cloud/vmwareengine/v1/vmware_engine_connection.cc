@@ -121,6 +121,65 @@ VmwareEngineConnection::DeleteCluster(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::cloud::vmwareengine::v1::Node>
+VmwareEngineConnection::ListNodes(
+    google::cloud::vmwareengine::v1::
+        ListNodesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmwareengine::v1::Node>>();
+}
+
+StatusOr<google::cloud::vmwareengine::v1::Node> VmwareEngineConnection::GetNode(
+    google::cloud::vmwareengine::v1::GetNodeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineConnection::ListExternalAddresses(
+    google::cloud::vmwareengine::v1::
+        ListExternalAddressesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>>();
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineConnection::FetchNetworkPolicyExternalAddresses(
+    google::cloud::vmwareengine::v1::
+        FetchNetworkPolicyExternalAddressesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>>();
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineConnection::GetExternalAddress(
+    google::cloud::vmwareengine::v1::GetExternalAddressRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+VmwareEngineConnection::CreateExternalAddress(
+    google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+VmwareEngineConnection::UpdateExternalAddress(
+    google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnection::DeleteExternalAddress(
+    google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::vmwareengine::v1::Subnet>
 VmwareEngineConnection::ListSubnets(
     google::cloud::vmwareengine::v1::
@@ -140,6 +199,82 @@ VmwareEngineConnection::UpdateSubnet(
     google::cloud::vmwareengine::v1::UpdateSubnetRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::Subnet>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
+VmwareEngineConnection::ListExternalAccessRules(
+    google::cloud::vmwareengine::v1::
+        ListExternalAccessRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>>();
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
+VmwareEngineConnection::GetExternalAccessRule(
+    google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+VmwareEngineConnection::CreateExternalAccessRule(
+    google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+VmwareEngineConnection::UpdateExternalAccessRule(
+    google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnection::DeleteExternalAccessRule(
+    google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
+VmwareEngineConnection::ListLoggingServers(
+    google::cloud::vmwareengine::v1::
+        ListLoggingServersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmwareengine::v1::LoggingServer>>();
+}
+
+StatusOr<google::cloud::vmwareengine::v1::LoggingServer>
+VmwareEngineConnection::GetLoggingServer(
+    google::cloud::vmwareengine::v1::GetLoggingServerRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+VmwareEngineConnection::CreateLoggingServer(
+    google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+VmwareEngineConnection::UpdateLoggingServer(
+    google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnection::DeleteLoggingServer(
+    google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
@@ -183,6 +318,66 @@ VmwareEngineConnection::ResetVcenterCredentials(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
+VmwareEngineConnection::GetDnsForwarding(
+    google::cloud::vmwareengine::v1::GetDnsForwardingRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
+VmwareEngineConnection::UpdateDnsForwarding(
+    google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
+VmwareEngineConnection::GetNetworkPeering(
+    google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
+VmwareEngineConnection::ListNetworkPeerings(
+    google::cloud::vmwareengine::v1::
+        ListNetworkPeeringsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>>();
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+VmwareEngineConnection::CreateNetworkPeering(
+    google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnection::DeleteNetworkPeering(
+    google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+VmwareEngineConnection::UpdateNetworkPeering(
+    google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+VmwareEngineConnection::ListPeeringRoutes(
+    google::cloud::vmwareengine::v1::
+        ListPeeringRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>>();
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
@@ -242,6 +437,57 @@ VmwareEngineConnection::DeleteNetworkPolicy(
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+VmwareEngineConnection::ListManagementDnsZoneBindings(
+    google::cloud::vmwareengine::v1::
+        ListManagementDnsZoneBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>();
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+VmwareEngineConnection::GetManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        GetManagementDnsZoneBindingRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineConnection::CreateManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        CreateManagementDnsZoneBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineConnection::UpdateManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        UpdateManagementDnsZoneBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnection::DeleteManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        DeleteManagementDnsZoneBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineConnection::RepairManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        RepairManagementDnsZoneBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
@@ -327,6 +573,28 @@ VmwareEngineConnection::ListPrivateConnectionPeeringRoutes(
         ListPrivateConnectionPeeringRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>>();
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+VmwareEngineConnection::GrantDnsBindPermission(
+    google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
+VmwareEngineConnection::GetDnsBindPermission(
+    google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+VmwareEngineConnection::RevokeDnsBindPermission(
+    google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<VmwareEngineConnection> MakeVmwareEngineConnection(

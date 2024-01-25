@@ -447,6 +447,137 @@ ConfigConnectionImpl::ExportLockInfo(
       request, __func__);
 }
 
+future<StatusOr<google::cloud::config::v1::Preview>>
+ConfigConnectionImpl::CreatePreview(
+    google::cloud::config::v1::CreatePreviewRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::config::v1::Preview>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::config::v1::CreatePreviewRequest const& request) {
+        return stub->AsyncCreatePreview(cq, std::move(context), options,
+                                        request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::Preview>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreatePreview(request),
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::config::v1::Preview> ConfigConnectionImpl::GetPreview(
+    google::cloud::config::v1::GetPreviewRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetPreview(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::config::v1::GetPreviewRequest const& request) {
+        return stub_->GetPreview(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::config::v1::Preview>
+ConfigConnectionImpl::ListPreviews(
+    google::cloud::config::v1::ListPreviewsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListPreviews(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::config::v1::Preview>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<config_v1::ConfigRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::config::v1::ListPreviewsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::config::v1::ListPreviewsRequest const& request) {
+              return stub->ListPreviews(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::config::v1::ListPreviewsResponse r) {
+        std::vector<google::cloud::config::v1::Preview> result(
+            r.previews().size());
+        auto& messages = *r.mutable_previews();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::config::v1::Preview>>
+ConfigConnectionImpl::DeletePreview(
+    google::cloud::config::v1::DeletePreviewRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::config::v1::Preview>(
+      background_->cq(), current, request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::config::v1::DeletePreviewRequest const& request) {
+        return stub->AsyncDeletePreview(cq, std::move(context), options,
+                                        request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     Options const& options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), options,
+                                       request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), options,
+                                          request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::Preview>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePreview(request),
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
+ConfigConnectionImpl::ExportPreviewResult(
+    google::cloud::config::v1::ExportPreviewResultRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportPreviewResult(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::config::v1::ExportPreviewResultRequest const&
+                 request) {
+        return stub_->ExportPreviewResult(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace config_v1_internal
 }  // namespace cloud

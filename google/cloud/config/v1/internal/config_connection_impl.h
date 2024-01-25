@@ -106,6 +106,23 @@ class ConfigConnectionImpl : public config_v1::ConfigConnection {
   StatusOr<google::cloud::config::v1::LockInfo> ExportLockInfo(
       google::cloud::config::v1::ExportLockInfoRequest const& request) override;
 
+  future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
+      google::cloud::config::v1::CreatePreviewRequest const& request) override;
+
+  StatusOr<google::cloud::config::v1::Preview> GetPreview(
+      google::cloud::config::v1::GetPreviewRequest const& request) override;
+
+  StreamRange<google::cloud::config::v1::Preview> ListPreviews(
+      google::cloud::config::v1::ListPreviewsRequest request) override;
+
+  future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
+      google::cloud::config::v1::DeletePreviewRequest const& request) override;
+
+  StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
+  ExportPreviewResult(
+      google::cloud::config::v1::ExportPreviewResultRequest const& request)
+      override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<config_v1_internal::ConfigStub> stub_;

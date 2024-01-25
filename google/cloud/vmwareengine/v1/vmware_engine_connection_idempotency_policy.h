@@ -74,6 +74,35 @@ class VmwareEngineConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteCluster(
       google::cloud::vmwareengine::v1::DeleteClusterRequest const& request);
 
+  virtual google::cloud::Idempotency ListNodes(
+      google::cloud::vmwareengine::v1::ListNodesRequest request);
+
+  virtual google::cloud::Idempotency GetNode(
+      google::cloud::vmwareengine::v1::GetNodeRequest const& request);
+
+  virtual google::cloud::Idempotency ListExternalAddresses(
+      google::cloud::vmwareengine::v1::ListExternalAddressesRequest request);
+
+  virtual google::cloud::Idempotency FetchNetworkPolicyExternalAddresses(
+      google::cloud::vmwareengine::v1::
+          FetchNetworkPolicyExternalAddressesRequest request);
+
+  virtual google::cloud::Idempotency GetExternalAddress(
+      google::cloud::vmwareengine::v1::GetExternalAddressRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateExternalAddress(
+      google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateExternalAddress(
+      google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteExternalAddress(
+      google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListSubnets(
       google::cloud::vmwareengine::v1::ListSubnetsRequest request);
 
@@ -82,6 +111,43 @@ class VmwareEngineConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateSubnet(
       google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request);
+
+  virtual google::cloud::Idempotency ListExternalAccessRules(
+      google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest request);
+
+  virtual google::cloud::Idempotency GetExternalAccessRule(
+      google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateExternalAccessRule(
+      google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateExternalAccessRule(
+      google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteExternalAccessRule(
+      google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListLoggingServers(
+      google::cloud::vmwareengine::v1::ListLoggingServersRequest request);
+
+  virtual google::cloud::Idempotency GetLoggingServer(
+      google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request);
+
+  virtual google::cloud::Idempotency CreateLoggingServer(
+      google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateLoggingServer(
+      google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteLoggingServer(
+      google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
+          request);
 
   virtual google::cloud::Idempotency ListNodeTypes(
       google::cloud::vmwareengine::v1::ListNodeTypesRequest request);
@@ -104,6 +170,34 @@ class VmwareEngineConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ResetVcenterCredentials(
       google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
           request);
+
+  virtual google::cloud::Idempotency GetDnsForwarding(
+      google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateDnsForwarding(
+      google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetNetworkPeering(
+      google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request);
+
+  virtual google::cloud::Idempotency ListNetworkPeerings(
+      google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request);
+
+  virtual google::cloud::Idempotency CreateNetworkPeering(
+      google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteNetworkPeering(
+      google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateNetworkPeering(
+      google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListPeeringRoutes(
+      google::cloud::vmwareengine::v1::ListPeeringRoutesRequest request);
 
   virtual google::cloud::Idempotency CreateHcxActivationKey(
       google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
@@ -133,6 +227,30 @@ class VmwareEngineConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteNetworkPolicy(
       google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
           request);
+
+  virtual google::cloud::Idempotency ListManagementDnsZoneBindings(
+      google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest
+          request);
+
+  virtual google::cloud::Idempotency GetManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::
+          CreateManagementDnsZoneBindingRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::
+          UpdateManagementDnsZoneBindingRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::
+          DeleteManagementDnsZoneBindingRequest const& request);
+
+  virtual google::cloud::Idempotency RepairManagementDnsZoneBinding(
+      google::cloud::vmwareengine::v1::
+          RepairManagementDnsZoneBindingRequest const& request);
 
   virtual google::cloud::Idempotency CreateVmwareEngineNetwork(
       google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
@@ -174,6 +292,18 @@ class VmwareEngineConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListPrivateConnectionPeeringRoutes(
       google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+          request);
+
+  virtual google::cloud::Idempotency GrantDnsBindPermission(
+      google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetDnsBindPermission(
+      google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency RevokeDnsBindPermission(
+      google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
           request);
 };
 
