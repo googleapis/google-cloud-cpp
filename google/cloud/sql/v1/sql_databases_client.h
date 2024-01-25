@@ -109,7 +109,7 @@ class SqlDatabasesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L764}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L779}
   /// [google.cloud.sql.v1.SqlDatabasesDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L90}
   ///
   // clang-format on
@@ -175,7 +175,7 @@ class SqlDatabasesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L764}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L779}
   /// [google.cloud.sql.v1.SqlDatabasesInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L114}
   ///
   // clang-format on
@@ -238,7 +238,7 @@ class SqlDatabasesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L764}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L779}
   /// [google.cloud.sql.v1.SqlDatabasesUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L134}
   ///
   // clang-format on
@@ -270,7 +270,7 @@ class SqlDatabasesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L764}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L779}
   /// [google.cloud.sql.v1.SqlDatabasesUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L134}
   ///
   // clang-format on

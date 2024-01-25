@@ -89,6 +89,48 @@ Idempotency VmwareEngineConnectionIdempotencyPolicy::DeleteCluster(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency VmwareEngineConnectionIdempotencyPolicy::ListNodes(
+    google::cloud::vmwareengine::v1::ListNodesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::GetNode(
+    google::cloud::vmwareengine::v1::GetNodeRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::ListExternalAddresses(
+    google::cloud::vmwareengine::v1::ListExternalAddressesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+VmwareEngineConnectionIdempotencyPolicy::FetchNetworkPolicyExternalAddresses(
+    google::cloud::vmwareengine::v1::
+        FetchNetworkPolicyExternalAddressesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::GetExternalAddress(
+    google::cloud::vmwareengine::v1::GetExternalAddressRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::CreateExternalAddress(
+    google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::UpdateExternalAddress(
+    google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::DeleteExternalAddress(
+    google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency VmwareEngineConnectionIdempotencyPolicy::ListSubnets(
     google::cloud::vmwareengine::v1::ListSubnetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -101,6 +143,57 @@ Idempotency VmwareEngineConnectionIdempotencyPolicy::GetSubnet(
 
 Idempotency VmwareEngineConnectionIdempotencyPolicy::UpdateSubnet(
     google::cloud::vmwareengine::v1::UpdateSubnetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::ListExternalAccessRules(
+    google::cloud::vmwareengine::v1::
+        ListExternalAccessRulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::GetExternalAccessRule(
+    google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::CreateExternalAccessRule(
+    google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::UpdateExternalAccessRule(
+    google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::DeleteExternalAccessRule(
+    google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::ListLoggingServers(
+    google::cloud::vmwareengine::v1::ListLoggingServersRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::GetLoggingServer(
+    google::cloud::vmwareengine::v1::GetLoggingServerRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::CreateLoggingServer(
+    google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::UpdateLoggingServer(
+    google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::DeleteLoggingServer(
+    google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -132,6 +225,46 @@ Idempotency VmwareEngineConnectionIdempotencyPolicy::ResetNsxCredentials(
 Idempotency VmwareEngineConnectionIdempotencyPolicy::ResetVcenterCredentials(
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::GetDnsForwarding(
+    google::cloud::vmwareengine::v1::GetDnsForwardingRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::UpdateDnsForwarding(
+    google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::GetNetworkPeering(
+    google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::ListNetworkPeerings(
+    google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::CreateNetworkPeering(
+    google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::DeleteNetworkPeering(
+    google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::UpdateNetworkPeering(
+    google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::ListPeeringRoutes(
+    google::cloud::vmwareengine::v1::ListPeeringRoutesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
 }
 
 Idempotency VmwareEngineConnectionIdempotencyPolicy::CreateHcxActivationKey(
@@ -171,6 +304,48 @@ Idempotency VmwareEngineConnectionIdempotencyPolicy::UpdateNetworkPolicy(
 
 Idempotency VmwareEngineConnectionIdempotencyPolicy::DeleteNetworkPolicy(
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+VmwareEngineConnectionIdempotencyPolicy::ListManagementDnsZoneBindings(
+    google::cloud::vmwareengine::v1::
+        ListManagementDnsZoneBindingsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+VmwareEngineConnectionIdempotencyPolicy::GetManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        GetManagementDnsZoneBindingRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+VmwareEngineConnectionIdempotencyPolicy::CreateManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        CreateManagementDnsZoneBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+VmwareEngineConnectionIdempotencyPolicy::UpdateManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        UpdateManagementDnsZoneBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+VmwareEngineConnectionIdempotencyPolicy::DeleteManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        DeleteManagementDnsZoneBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+VmwareEngineConnectionIdempotencyPolicy::RepairManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        RepairManagementDnsZoneBindingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -230,6 +405,21 @@ VmwareEngineConnectionIdempotencyPolicy::ListPrivateConnectionPeeringRoutes(
     google::cloud::vmwareengine::v1::
         ListPrivateConnectionPeeringRoutesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::GrantDnsBindPermission(
+    google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::GetDnsBindPermission(
+    google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::RevokeDnsBindPermission(
+    google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<VmwareEngineConnectionIdempotencyPolicy>

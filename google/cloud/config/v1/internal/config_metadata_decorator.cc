@@ -192,6 +192,52 @@ StatusOr<google::cloud::config::v1::LockInfo> ConfigMetadata::ExportLockInfo(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ConfigMetadata::AsyncCreatePreview(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::config::v1::CreatePreviewRequest const& request) {
+  SetMetadata(*context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreatePreview(cq, std::move(context), options, request);
+}
+
+StatusOr<google::cloud::config::v1::Preview> ConfigMetadata::GetPreview(
+    grpc::ClientContext& context,
+    google::cloud::config::v1::GetPreviewRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetPreview(context, request);
+}
+
+StatusOr<google::cloud::config::v1::ListPreviewsResponse>
+ConfigMetadata::ListPreviews(
+    grpc::ClientContext& context,
+    google::cloud::config::v1::ListPreviewsRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListPreviews(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigMetadata::AsyncDeletePreview(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::config::v1::DeletePreviewRequest const& request) {
+  SetMetadata(*context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeletePreview(cq, std::move(context), options, request);
+}
+
+StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
+ConfigMetadata::ExportPreviewResult(
+    grpc::ClientContext& context,
+    google::cloud::config::v1::ExportPreviewResultRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ExportPreviewResult(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ConfigMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context, Options const& options,

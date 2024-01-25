@@ -122,7 +122,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.ListFunctionsRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L738}
+  /// [google.cloud.functions.v1.ListFunctionsRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L748}
   ///
   // clang-format on
   StreamRange<google::cloud::functions::v1::CloudFunction> ListFunctions(
@@ -148,7 +148,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L727}
+  /// [google.cloud.functions.v1.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L729}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
@@ -178,7 +178,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L727}
+  /// [google.cloud.functions.v1.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L729}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
@@ -188,7 +188,7 @@ class CloudFunctionsServiceClient {
   // clang-format off
   ///
   /// Creates a new function. If a function with the given name already exists in
-  /// the specified project, the long running operation returns an
+  /// the specified project, the long running operation will return
   /// `ALREADY_EXISTS` error.
   ///
   /// @param location  Required. The project and location in which the function should be created,
@@ -215,7 +215,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.CreateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L703}
+  /// [google.cloud.functions.v1.CreateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> CreateFunction(
@@ -226,7 +226,7 @@ class CloudFunctionsServiceClient {
   // clang-format off
   ///
   /// Creates a new function. If a function with the given name already exists in
-  /// the specified project, the long running operation returns an
+  /// the specified project, the long running operation will return
   /// `ALREADY_EXISTS` error.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -256,7 +256,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.CreateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L703}
+  /// [google.cloud.functions.v1.CreateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> CreateFunction(
@@ -289,7 +289,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L718}
+  /// [google.cloud.functions.v1.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L720}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
@@ -327,7 +327,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L718}
+  /// [google.cloud.functions.v1.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L720}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
@@ -337,7 +337,7 @@ class CloudFunctionsServiceClient {
   // clang-format off
   ///
   /// Deletes a function with the given name from the specified project. If the
-  /// given function is used by some trigger, the trigger is updated to
+  /// given function is used by some trigger, the trigger will be updated to
   /// remove this function.
   ///
   /// @param name  Required. The name of the function which should be deleted.
@@ -361,7 +361,7 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v1.DeleteFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L776}
+  /// [google.cloud.functions.v1.DeleteFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L786}
   /// [google.cloud.functions.v1.OperationMetadataV1]: @googleapis_reference_link{google/cloud/functions/v1/operations.proto#L43}
   ///
   // clang-format on
@@ -371,7 +371,7 @@ class CloudFunctionsServiceClient {
   // clang-format off
   ///
   /// Deletes a function with the given name from the specified project. If the
-  /// given function is used by some trigger, the trigger is updated to
+  /// given function is used by some trigger, the trigger will be updated to
   /// remove this function.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -400,7 +400,7 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v1.DeleteFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L776}
+  /// [google.cloud.functions.v1.DeleteFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L786}
   /// [google.cloud.functions.v1.OperationMetadataV1]: @googleapis_reference_link{google/cloud/functions/v1/operations.proto#L43}
   ///
   // clang-format on
@@ -431,8 +431,8 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v1.CallFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L787}
-  /// [google.cloud.functions.v1.CallFunctionResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L801}
+  /// [google.cloud.functions.v1.CallFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L797}
+  /// [google.cloud.functions.v1.CallFunctionResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L811}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v1::CallFunctionResponse> CallFunction(
@@ -464,8 +464,8 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v1.CallFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L787}
-  /// [google.cloud.functions.v1.CallFunctionResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L801}
+  /// [google.cloud.functions.v1.CallFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L797}
+  /// [google.cloud.functions.v1.CallFunctionResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L811}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v1::CallFunctionResponse> CallFunction(
@@ -491,12 +491,12 @@ class CloudFunctionsServiceClient {
   ///   attached, the identity from the credentials would be used, but that
   ///   identity does not have permissions to upload files to the URL.
   ///
-  /// When making an HTTP PUT request, these two headers must be specified:
+  /// When making a HTTP PUT request, these two headers need to be specified:
   ///
   /// * `content-type: application/zip`
   /// * `x-goog-content-length-range: 0,104857600`
   ///
-  /// And this header must NOT be specified:
+  /// And this header SHOULD NOT be specified:
   ///
   /// * `Authorization: Bearer YOUR_TOKEN`
   ///
@@ -519,8 +519,8 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v1.GenerateUploadUrlRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L815}
-  /// [google.cloud.functions.v1.GenerateUploadUrlResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L843}
+  /// [google.cloud.functions.v1.GenerateUploadUrlRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L825}
+  /// [google.cloud.functions.v1.GenerateUploadUrlResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L853}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
@@ -531,9 +531,9 @@ class CloudFunctionsServiceClient {
   // clang-format off
   ///
   /// Returns a signed URL for downloading deployed function source code.
-  /// The URL is only valid for a limited period and must be used within
+  /// The URL is only valid for a limited period and should be used within
   /// minutes after generation.
-  /// For more information about the signed URL usage, see:
+  /// For more information about the signed URL usage see:
   /// https://cloud.google.com/storage/docs/access-control/signed-urls
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -555,8 +555,8 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v1.GenerateDownloadUrlRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L851}
-  /// [google.cloud.functions.v1.GenerateDownloadUrlResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L862}
+  /// [google.cloud.functions.v1.GenerateDownloadUrlRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L861}
+  /// [google.cloud.functions.v1.GenerateDownloadUrlResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L872}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
@@ -631,7 +631,7 @@ class CloudFunctionsServiceClient {
   ///
   /// Tests the specified permissions against the IAM access control policy
   /// for a function.
-  /// If the function does not exist, this returns an empty set of
+  /// If the function does not exist, this will return an empty set of
   /// permissions, not a NOT_FOUND error.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this

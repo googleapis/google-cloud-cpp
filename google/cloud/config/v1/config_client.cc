@@ -270,6 +270,77 @@ StatusOr<google::cloud::config::v1::LockInfo> ConfigClient::ExportLockInfo(
   return connection_->ExportLockInfo(request);
 }
 
+future<StatusOr<google::cloud::config::v1::Preview>>
+ConfigClient::CreatePreview(std::string const& parent,
+                            google::cloud::config::v1::Preview const& preview,
+                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::CreatePreviewRequest request;
+  request.set_parent(parent);
+  *request.mutable_preview() = preview;
+  return connection_->CreatePreview(request);
+}
+
+future<StatusOr<google::cloud::config::v1::Preview>>
+ConfigClient::CreatePreview(
+    google::cloud::config::v1::CreatePreviewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePreview(request);
+}
+
+StatusOr<google::cloud::config::v1::Preview> ConfigClient::GetPreview(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::GetPreviewRequest request;
+  request.set_name(name);
+  return connection_->GetPreview(request);
+}
+
+StatusOr<google::cloud::config::v1::Preview> ConfigClient::GetPreview(
+    google::cloud::config::v1::GetPreviewRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetPreview(request);
+}
+
+StreamRange<google::cloud::config::v1::Preview> ConfigClient::ListPreviews(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::ListPreviewsRequest request;
+  request.set_parent(parent);
+  return connection_->ListPreviews(request);
+}
+
+StreamRange<google::cloud::config::v1::Preview> ConfigClient::ListPreviews(
+    google::cloud::config::v1::ListPreviewsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListPreviews(std::move(request));
+}
+
+future<StatusOr<google::cloud::config::v1::Preview>>
+ConfigClient::DeletePreview(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::DeletePreviewRequest request;
+  request.set_name(name);
+  return connection_->DeletePreview(request);
+}
+
+future<StatusOr<google::cloud::config::v1::Preview>>
+ConfigClient::DeletePreview(
+    google::cloud::config::v1::DeletePreviewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePreview(request);
+}
+
+StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
+ConfigClient::ExportPreviewResult(
+    google::cloud::config::v1::ExportPreviewResultRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportPreviewResult(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace config_v1
 }  // namespace cloud

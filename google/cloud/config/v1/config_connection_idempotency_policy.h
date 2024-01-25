@@ -84,6 +84,21 @@ class ConfigConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ExportLockInfo(
       google::cloud::config::v1::ExportLockInfoRequest const& request);
+
+  virtual google::cloud::Idempotency CreatePreview(
+      google::cloud::config::v1::CreatePreviewRequest const& request);
+
+  virtual google::cloud::Idempotency GetPreview(
+      google::cloud::config::v1::GetPreviewRequest const& request);
+
+  virtual google::cloud::Idempotency ListPreviews(
+      google::cloud::config::v1::ListPreviewsRequest request);
+
+  virtual google::cloud::Idempotency DeletePreview(
+      google::cloud::config::v1::DeletePreviewRequest const& request);
+
+  virtual google::cloud::Idempotency ExportPreviewResult(
+      google::cloud::config::v1::ExportPreviewResultRequest const& request);
 };
 
 std::unique_ptr<ConfigConnectionIdempotencyPolicy>

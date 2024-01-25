@@ -117,7 +117,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L101}
+  /// [google.cloud.batch.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L102}
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
@@ -148,7 +148,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L101}
+  /// [google.cloud.batch.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L102}
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
@@ -174,7 +174,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L140}
+  /// [google.cloud.batch.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L141}
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
@@ -204,7 +204,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L140}
+  /// [google.cloud.batch.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L141}
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
@@ -237,8 +237,8 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L149}
-  /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L247}
+  /// [google.cloud.batch.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L150}
+  /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L248}
   ///
   // clang-format on
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
@@ -274,8 +274,8 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L149}
-  /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L247}
+  /// [google.cloud.batch.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L150}
+  /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L248}
   ///
   // clang-format on
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
@@ -310,7 +310,7 @@ class BatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
-  /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L173}
+  /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L174}
   ///
   // clang-format on
   StreamRange<google::cloud::batch::v1::Job> ListJobs(std::string const& parent,
@@ -349,7 +349,7 @@ class BatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
-  /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L173}
+  /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L174}
   ///
   // clang-format on
   StreamRange<google::cloud::batch::v1::Job> ListJobs(
@@ -373,8 +373,8 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L238}
-  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L355}
+  /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L239}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L374}
   ///
   // clang-format on
   StatusOr<google::cloud::batch::v1::Task> GetTask(std::string const& name,
@@ -403,8 +403,8 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L238}
-  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L355}
+  /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L239}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L374}
   ///
   // clang-format on
   StatusOr<google::cloud::batch::v1::Task> GetTask(
@@ -440,8 +440,8 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L204}
-  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L355}
+  /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L205}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L374}
   ///
   // clang-format on
   StreamRange<google::cloud::batch::v1::Task> ListTasks(
@@ -479,8 +479,8 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L204}
-  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L355}
+  /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L205}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L374}
   ///
   // clang-format on
   StreamRange<google::cloud::batch::v1::Task> ListTasks(

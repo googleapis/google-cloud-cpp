@@ -224,6 +224,148 @@ VmwareEngineClient::DeleteCluster(
   return connection_->DeleteCluster(request);
 }
 
+StreamRange<google::cloud::vmwareengine::v1::Node>
+VmwareEngineClient::ListNodes(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::ListNodesRequest request;
+  request.set_parent(parent);
+  return connection_->ListNodes(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::Node>
+VmwareEngineClient::ListNodes(
+    google::cloud::vmwareengine::v1::ListNodesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListNodes(std::move(request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::Node> VmwareEngineClient::GetNode(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::GetNodeRequest request;
+  request.set_name(name);
+  return connection_->GetNode(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::Node> VmwareEngineClient::GetNode(
+    google::cloud::vmwareengine::v1::GetNodeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetNode(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineClient::ListExternalAddresses(std::string const& parent,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::ListExternalAddressesRequest request;
+  request.set_parent(parent);
+  return connection_->ListExternalAddresses(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineClient::ListExternalAddresses(
+    google::cloud::vmwareengine::v1::ListExternalAddressesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListExternalAddresses(std::move(request));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineClient::FetchNetworkPolicyExternalAddresses(
+    std::string const& network_policy, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::FetchNetworkPolicyExternalAddressesRequest
+      request;
+  request.set_network_policy(network_policy);
+  return connection_->FetchNetworkPolicyExternalAddresses(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineClient::FetchNetworkPolicyExternalAddresses(
+    google::cloud::vmwareengine::v1::FetchNetworkPolicyExternalAddressesRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchNetworkPolicyExternalAddresses(std::move(request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineClient::GetExternalAddress(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::GetExternalAddressRequest request;
+  request.set_name(name);
+  return connection_->GetExternalAddress(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineClient::GetExternalAddress(
+    google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetExternalAddress(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+VmwareEngineClient::CreateExternalAddress(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
+    std::string const& external_address_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::CreateExternalAddressRequest request;
+  request.set_parent(parent);
+  *request.mutable_external_address() = external_address;
+  request.set_external_address_id(external_address_id);
+  return connection_->CreateExternalAddress(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+VmwareEngineClient::CreateExternalAddress(
+    google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateExternalAddress(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+VmwareEngineClient::UpdateExternalAddress(
+    google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::UpdateExternalAddressRequest request;
+  *request.mutable_external_address() = external_address;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateExternalAddress(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+VmwareEngineClient::UpdateExternalAddress(
+    google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateExternalAddress(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineClient::DeleteExternalAddress(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::DeleteExternalAddressRequest request;
+  request.set_name(name);
+  return connection_->DeleteExternalAddress(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineClient::DeleteExternalAddress(
+    google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteExternalAddress(request);
+}
+
 StreamRange<google::cloud::vmwareengine::v1::Subnet>
 VmwareEngineClient::ListSubnets(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -271,6 +413,192 @@ VmwareEngineClient::UpdateSubnet(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSubnet(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
+VmwareEngineClient::ListExternalAccessRules(std::string const& parent,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest request;
+  request.set_parent(parent);
+  return connection_->ListExternalAccessRules(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
+VmwareEngineClient::ListExternalAccessRules(
+    google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListExternalAccessRules(std::move(request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
+VmwareEngineClient::GetExternalAccessRule(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest request;
+  request.set_name(name);
+  return connection_->GetExternalAccessRule(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
+VmwareEngineClient::GetExternalAccessRule(
+    google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetExternalAccessRule(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+VmwareEngineClient::CreateExternalAccessRule(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::ExternalAccessRule const&
+        external_access_rule,
+    std::string const& external_access_rule_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest request;
+  request.set_parent(parent);
+  *request.mutable_external_access_rule() = external_access_rule;
+  request.set_external_access_rule_id(external_access_rule_id);
+  return connection_->CreateExternalAccessRule(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+VmwareEngineClient::CreateExternalAccessRule(
+    google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateExternalAccessRule(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+VmwareEngineClient::UpdateExternalAccessRule(
+    google::cloud::vmwareengine::v1::ExternalAccessRule const&
+        external_access_rule,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest request;
+  *request.mutable_external_access_rule() = external_access_rule;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateExternalAccessRule(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+VmwareEngineClient::UpdateExternalAccessRule(
+    google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateExternalAccessRule(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineClient::DeleteExternalAccessRule(std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest request;
+  request.set_name(name);
+  return connection_->DeleteExternalAccessRule(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineClient::DeleteExternalAccessRule(
+    google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteExternalAccessRule(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
+VmwareEngineClient::ListLoggingServers(std::string const& parent,
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::ListLoggingServersRequest request;
+  request.set_parent(parent);
+  return connection_->ListLoggingServers(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
+VmwareEngineClient::ListLoggingServers(
+    google::cloud::vmwareengine::v1::ListLoggingServersRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListLoggingServers(std::move(request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::LoggingServer>
+VmwareEngineClient::GetLoggingServer(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::GetLoggingServerRequest request;
+  request.set_name(name);
+  return connection_->GetLoggingServer(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::LoggingServer>
+VmwareEngineClient::GetLoggingServer(
+    google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetLoggingServer(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+VmwareEngineClient::CreateLoggingServer(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
+    std::string const& logging_server_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::CreateLoggingServerRequest request;
+  request.set_parent(parent);
+  *request.mutable_logging_server() = logging_server;
+  request.set_logging_server_id(logging_server_id);
+  return connection_->CreateLoggingServer(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+VmwareEngineClient::CreateLoggingServer(
+    google::cloud::vmwareengine::v1::CreateLoggingServerRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateLoggingServer(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+VmwareEngineClient::UpdateLoggingServer(
+    google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::UpdateLoggingServerRequest request;
+  *request.mutable_logging_server() = logging_server;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateLoggingServer(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+VmwareEngineClient::UpdateLoggingServer(
+    google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateLoggingServer(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineClient::DeleteLoggingServer(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::DeleteLoggingServerRequest request;
+  request.set_name(name);
+  return connection_->DeleteLoggingServer(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineClient::DeleteLoggingServer(
+    google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteLoggingServer(request);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NodeType>
@@ -373,6 +701,147 @@ VmwareEngineClient::ResetVcenterCredentials(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetVcenterCredentials(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
+VmwareEngineClient::GetDnsForwarding(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::GetDnsForwardingRequest request;
+  request.set_name(name);
+  return connection_->GetDnsForwarding(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
+VmwareEngineClient::GetDnsForwarding(
+    google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDnsForwarding(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
+VmwareEngineClient::UpdateDnsForwarding(
+    google::cloud::vmwareengine::v1::DnsForwarding const& dns_forwarding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest request;
+  *request.mutable_dns_forwarding() = dns_forwarding;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDnsForwarding(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
+VmwareEngineClient::UpdateDnsForwarding(
+    google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDnsForwarding(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
+VmwareEngineClient::GetNetworkPeering(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::GetNetworkPeeringRequest request;
+  request.set_name(name);
+  return connection_->GetNetworkPeering(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
+VmwareEngineClient::GetNetworkPeering(
+    google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetNetworkPeering(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
+VmwareEngineClient::ListNetworkPeerings(std::string const& parent,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request;
+  request.set_parent(parent);
+  return connection_->ListNetworkPeerings(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
+VmwareEngineClient::ListNetworkPeerings(
+    google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListNetworkPeerings(std::move(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+VmwareEngineClient::CreateNetworkPeering(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
+    std::string const& network_peering_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest request;
+  request.set_parent(parent);
+  *request.mutable_network_peering() = network_peering;
+  request.set_network_peering_id(network_peering_id);
+  return connection_->CreateNetworkPeering(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+VmwareEngineClient::CreateNetworkPeering(
+    google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateNetworkPeering(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineClient::DeleteNetworkPeering(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest request;
+  request.set_name(name);
+  return connection_->DeleteNetworkPeering(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineClient::DeleteNetworkPeering(
+    google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNetworkPeering(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+VmwareEngineClient::UpdateNetworkPeering(
+    google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest request;
+  *request.mutable_network_peering() = network_peering;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateNetworkPeering(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+VmwareEngineClient::UpdateNetworkPeering(
+    google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateNetworkPeering(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+VmwareEngineClient::ListPeeringRoutes(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::ListPeeringRoutesRequest request;
+  request.set_parent(parent);
+  return connection_->ListPeeringRoutes(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+VmwareEngineClient::ListPeeringRoutes(
+    google::cloud::vmwareengine::v1::ListPeeringRoutesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListPeeringRoutes(std::move(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
@@ -517,6 +986,126 @@ VmwareEngineClient::DeleteNetworkPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworkPolicy(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+VmwareEngineClient::ListManagementDnsZoneBindings(std::string const& parent,
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest request;
+  request.set_parent(parent);
+  return connection_->ListManagementDnsZoneBindings(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+VmwareEngineClient::ListManagementDnsZoneBindings(
+    google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListManagementDnsZoneBindings(std::move(request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+VmwareEngineClient::GetManagementDnsZoneBinding(std::string const& name,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest request;
+  request.set_name(name);
+  return connection_->GetManagementDnsZoneBinding(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+VmwareEngineClient::GetManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetManagementDnsZoneBinding(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineClient::CreateManagementDnsZoneBinding(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
+        management_dns_zone_binding,
+    std::string const& management_dns_zone_binding_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::CreateManagementDnsZoneBindingRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_management_dns_zone_binding() = management_dns_zone_binding;
+  request.set_management_dns_zone_binding_id(management_dns_zone_binding_id);
+  return connection_->CreateManagementDnsZoneBinding(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineClient::CreateManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        CreateManagementDnsZoneBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateManagementDnsZoneBinding(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineClient::UpdateManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
+        management_dns_zone_binding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::UpdateManagementDnsZoneBindingRequest
+      request;
+  *request.mutable_management_dns_zone_binding() = management_dns_zone_binding;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateManagementDnsZoneBinding(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineClient::UpdateManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        UpdateManagementDnsZoneBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateManagementDnsZoneBinding(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineClient::DeleteManagementDnsZoneBinding(std::string const& name,
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::DeleteManagementDnsZoneBindingRequest
+      request;
+  request.set_name(name);
+  return connection_->DeleteManagementDnsZoneBinding(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineClient::DeleteManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        DeleteManagementDnsZoneBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteManagementDnsZoneBinding(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineClient::RepairManagementDnsZoneBinding(std::string const& name,
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::RepairManagementDnsZoneBindingRequest
+      request;
+  request.set_name(name);
+  return connection_->RepairManagementDnsZoneBinding(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineClient::RepairManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        RepairManagementDnsZoneBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RepairManagementDnsZoneBinding(request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -729,6 +1318,63 @@ VmwareEngineClient::ListPrivateConnectionPeeringRoutes(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPrivateConnectionPeeringRoutes(std::move(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+VmwareEngineClient::GrantDnsBindPermission(
+    std::string const& name,
+    google::cloud::vmwareengine::v1::Principal const& principal, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest request;
+  request.set_name(name);
+  *request.mutable_principal() = principal;
+  return connection_->GrantDnsBindPermission(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+VmwareEngineClient::GrantDnsBindPermission(
+    google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GrantDnsBindPermission(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
+VmwareEngineClient::GetDnsBindPermission(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest request;
+  request.set_name(name);
+  return connection_->GetDnsBindPermission(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
+VmwareEngineClient::GetDnsBindPermission(
+    google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDnsBindPermission(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+VmwareEngineClient::RevokeDnsBindPermission(
+    std::string const& name,
+    google::cloud::vmwareengine::v1::Principal const& principal, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest request;
+  request.set_name(name);
+  *request.mutable_principal() = principal;
+  return connection_->RevokeDnsBindPermission(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+VmwareEngineClient::RevokeDnsBindPermission(
+    google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RevokeDnsBindPermission(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -141,6 +141,94 @@ VmwareEngineTracingConnection::DeleteCluster(
   return internal::EndSpan(std::move(span), child_->DeleteCluster(request));
 }
 
+StreamRange<google::cloud::vmwareengine::v1::Node>
+VmwareEngineTracingConnection::ListNodes(
+    google::cloud::vmwareengine::v1::ListNodesRequest request) {
+  auto span =
+      internal::MakeSpan("vmwareengine_v1::VmwareEngineConnection::ListNodes");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListNodes(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::vmwareengine::v1::Node>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::Node>
+VmwareEngineTracingConnection::GetNode(
+    google::cloud::vmwareengine::v1::GetNodeRequest const& request) {
+  auto span =
+      internal::MakeSpan("vmwareengine_v1::VmwareEngineConnection::GetNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetNode(request));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineTracingConnection::ListExternalAddresses(
+    google::cloud::vmwareengine::v1::ListExternalAddressesRequest request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListExternalAddresses");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListExternalAddresses(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::ExternalAddress>(std::move(span),
+                                                        std::move(sr));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineTracingConnection::FetchNetworkPolicyExternalAddresses(
+    google::cloud::vmwareengine::v1::FetchNetworkPolicyExternalAddressesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "FetchNetworkPolicyExternalAddresses");
+  internal::OTelScope scope(span);
+  auto sr = child_->FetchNetworkPolicyExternalAddresses(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::ExternalAddress>(std::move(span),
+                                                        std::move(sr));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>
+VmwareEngineTracingConnection::GetExternalAddress(
+    google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetExternalAddress");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetExternalAddress(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+VmwareEngineTracingConnection::CreateExternalAddress(
+    google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateExternalAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateExternalAddress(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+VmwareEngineTracingConnection::UpdateExternalAddress(
+    google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateExternalAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateExternalAddress(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteExternalAddress(
+    google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteExternalAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteExternalAddress(request));
+}
+
 StreamRange<google::cloud::vmwareengine::v1::Subnet>
 VmwareEngineTracingConnection::ListSubnets(
     google::cloud::vmwareengine::v1::ListSubnetsRequest request) {
@@ -168,6 +256,115 @@ VmwareEngineTracingConnection::UpdateSubnet(
       "vmwareengine_v1::VmwareEngineConnection::UpdateSubnet");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateSubnet(request));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
+VmwareEngineTracingConnection::ListExternalAccessRules(
+    google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListExternalAccessRules");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListExternalAccessRules(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::ExternalAccessRule>(std::move(span),
+                                                           std::move(sr));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
+VmwareEngineTracingConnection::GetExternalAccessRule(
+    google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetExternalAccessRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetExternalAccessRule(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+VmwareEngineTracingConnection::CreateExternalAccessRule(
+    google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateExternalAccessRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateExternalAccessRule(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+VmwareEngineTracingConnection::UpdateExternalAccessRule(
+    google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateExternalAccessRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateExternalAccessRule(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteExternalAccessRule(
+    google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteExternalAccessRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteExternalAccessRule(request));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
+VmwareEngineTracingConnection::ListLoggingServers(
+    google::cloud::vmwareengine::v1::ListLoggingServersRequest request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListLoggingServers");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListLoggingServers(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::LoggingServer>(std::move(span),
+                                                      std::move(sr));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::LoggingServer>
+VmwareEngineTracingConnection::GetLoggingServer(
+    google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetLoggingServer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLoggingServer(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+VmwareEngineTracingConnection::CreateLoggingServer(
+    google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateLoggingServer");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateLoggingServer(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+VmwareEngineTracingConnection::UpdateLoggingServer(
+    google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateLoggingServer");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateLoggingServer(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteLoggingServer(
+    google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteLoggingServer");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteLoggingServer(request));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NodeType>
@@ -230,6 +427,92 @@ VmwareEngineTracingConnection::ResetVcenterCredentials(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ResetVcenterCredentials(request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
+VmwareEngineTracingConnection::GetDnsForwarding(
+    google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetDnsForwarding");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDnsForwarding(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
+VmwareEngineTracingConnection::UpdateDnsForwarding(
+    google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateDnsForwarding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDnsForwarding(request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
+VmwareEngineTracingConnection::GetNetworkPeering(
+    google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetNetworkPeering");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetNetworkPeering(request));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
+VmwareEngineTracingConnection::ListNetworkPeerings(
+    google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListNetworkPeerings");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListNetworkPeerings(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::NetworkPeering>(std::move(span),
+                                                       std::move(sr));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+VmwareEngineTracingConnection::CreateNetworkPeering(
+    google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateNetworkPeering(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteNetworkPeering(
+    google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNetworkPeering(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+VmwareEngineTracingConnection::UpdateNetworkPeering(
+    google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateNetworkPeering(request));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+VmwareEngineTracingConnection::ListPeeringRoutes(
+    google::cloud::vmwareengine::v1::ListPeeringRoutesRequest request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListPeeringRoutes");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListPeeringRoutes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::PeeringRoute>(std::move(span),
+                                                     std::move(sr));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
@@ -317,6 +600,77 @@ VmwareEngineTracingConnection::DeleteNetworkPolicy(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteNetworkPolicy(request));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+VmwareEngineTracingConnection::ListManagementDnsZoneBindings(
+    google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListManagementDnsZoneBindings");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListManagementDnsZoneBindings(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
+VmwareEngineTracingConnection::GetManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetManagementDnsZoneBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetManagementDnsZoneBinding(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineTracingConnection::CreateManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        CreateManagementDnsZoneBindingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "CreateManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateManagementDnsZoneBinding(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineTracingConnection::UpdateManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        UpdateManagementDnsZoneBindingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "UpdateManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateManagementDnsZoneBinding(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        DeleteManagementDnsZoneBindingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "DeleteManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteManagementDnsZoneBinding(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineTracingConnection::RepairManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        RepairManagementDnsZoneBindingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "RepairManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RepairManagementDnsZoneBinding(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -441,6 +795,38 @@ VmwareEngineTracingConnection::ListPrivateConnectionPeeringRoutes(
   return internal::MakeTracedStreamRange<
       google::cloud::vmwareengine::v1::PeeringRoute>(std::move(span),
                                                      std::move(sr));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+VmwareEngineTracingConnection::GrantDnsBindPermission(
+    google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GrantDnsBindPermission");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->GrantDnsBindPermission(request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
+VmwareEngineTracingConnection::GetDnsBindPermission(
+    google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetDnsBindPermission");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDnsBindPermission(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+VmwareEngineTracingConnection::RevokeDnsBindPermission(
+    google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::RevokeDnsBindPermission");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RevokeDnsBindPermission(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

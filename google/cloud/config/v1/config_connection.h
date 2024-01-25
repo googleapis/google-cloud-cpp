@@ -236,6 +236,22 @@ class ConfigConnection {
 
   virtual StatusOr<google::cloud::config::v1::LockInfo> ExportLockInfo(
       google::cloud::config::v1::ExportLockInfoRequest const& request);
+
+  virtual future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
+      google::cloud::config::v1::CreatePreviewRequest const& request);
+
+  virtual StatusOr<google::cloud::config::v1::Preview> GetPreview(
+      google::cloud::config::v1::GetPreviewRequest const& request);
+
+  virtual StreamRange<google::cloud::config::v1::Preview> ListPreviews(
+      google::cloud::config::v1::ListPreviewsRequest request);
+
+  virtual future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
+      google::cloud::config::v1::DeletePreviewRequest const& request);
+
+  virtual StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
+  ExportPreviewResult(
+      google::cloud::config::v1::ExportPreviewResultRequest const& request);
 };
 
 /**
