@@ -1,10 +1,10 @@
-# Cloud Storage API C++ Client Library
+# Cloud Storage Control API C++ Client Library
 
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Storage API][cloud-service-docs], a service to Lets you store and
-retrieve potentially-large, immutable data objects.
+[Cloud Storage Control API][cloud-service-docs], a service to manage GCS
+configuration.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -21,23 +21,21 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/storagecontrol/v2/ EDIT HERE _client.h"
-#include "google/cloud/location.h"
+#include "google/cloud/storagecontrol/v2/storage_control_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " bucket-id\n";
     return 1;
   }
-
-  auto const location = google::cloud::Location(argv[1], argv[2]);
+  std::string const bucket_name = std::string{"projects/_/buckets/"} + argv[1];
 
   namespace storagecontrol = ::google::cloud::storagecontrol_v2;
-  auto client = storagecontrol::ServiceClient(
-      storagecontrol::MakeServiceConnection());  // EDIT HERE
+  auto client = storagecontrol::StorageControlClient(
+      storagecontrol::MakeStorageControlConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListFolders(bucket_name)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
@@ -53,12 +51,12 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the [Cloud Storage API][cloud-service-docs]
-  service
+- Official documentation about the
+  [Cloud Storage Control API][cloud-service-docs] service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/storagecontrol
+[cloud-service-docs]: https://cloud.google.com/storage/docs
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/storagecontrol/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storagecontrol

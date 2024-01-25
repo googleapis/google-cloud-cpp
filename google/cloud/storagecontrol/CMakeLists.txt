@@ -28,9 +28,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         NAME storagecontrol_quickstart
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:storagecontrol_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
-    )
+            $<TARGET_FILE:storagecontrol_quickstart>
+            GOOGLE_CLOUD_CPP_STORAGE_TEST_FOLDER_BUCKET_NAME)
     set_tests_properties(storagecontrol_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

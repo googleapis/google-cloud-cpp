@@ -1,9 +1,9 @@
-# HOWTO: using the Cloud Storage API C++ client in your project
+# HOWTO: using the Cloud Storage Control API C++ client in your project
 
-This directory contains small examples showing how to use the Cloud Storage API
-C++ client library in your own project. These instructions assume that you have
-some experience as a C++ developer and that you have a working C++ toolchain
-(compiler, linker, etc.) installed on your platform.
+This directory contains small examples showing how to use the Cloud Storage
+Control API C++ client library in your own project. These instructions assume
+that you have some experience as a C++ developer and that you have a working C++
+toolchain (compiler, linker, etc.) installed on your platform.
 
 - Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
@@ -29,12 +29,12 @@ detail.
 
 ## Configuring authentication for the C++ Client Library
 
-Like most Google Cloud Platform (GCP) services, Cloud Storage API requires that
-your application authenticates with the service before accessing any data. If
-you are not familiar with GCP authentication please take this opportunity to
-review the [Authentication Overview][authentication-quickstart]. This library
-uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to find the
-credentials file. For example:
+Like most Google Cloud Platform (GCP) services, Cloud Storage Control API
+requires that your application authenticates with the service before accessing
+any data. If you are not familiar with GCP authentication please take this
+opportunity to review the [Authentication Overview][authentication-quickstart].
+This library uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to
+find the credentials file. For example:
 
 | Shell              | Command                                                                              |
 | :----------------- | ------------------------------------------------------------------------------------ |
@@ -151,4 +151,4 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
-[quickstart-link]: https://cloud.google.com/storagecontrol/docs/quickstart
+[quickstart-link]: https://cloud.google.com/storage/docs

@@ -1,8 +1,8 @@
 /*!
 
-@mainpage Cloud Storage API C++ Client Library
+@mainpage Cloud Storage Control API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Storage API][cloud-service-docs], a service
+An idiomatic C++ client library for the [Cloud Storage Control API][cloud-service-docs], a service
 to Lets you store and retrieve potentially-large, immutable data objects.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -16,7 +16,7 @@ Please, note that the Google Cloud C++ client libraries do **not** follow
 
 The following shows the code that you'll run in the
 `google/cloud/storagecontrol/quickstart/` directory,
-which should give you a taste of the Cloud Storage API C++ client library API.
+which should give you a taste of the Cloud Storage Control API C++ client library API.
 
 @snippet quickstart.cc all
 
@@ -43,6 +43,6 @@ application.
 - @ref storagecontrol-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/storagecontrol
+[cloud-service-docs]: https://cloud.google.com/storage/docs
 
 */

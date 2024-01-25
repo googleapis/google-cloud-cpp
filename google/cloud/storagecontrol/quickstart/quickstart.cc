@@ -13,23 +13,21 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/storagecontrol/v2/ EDIT HERE _client.h"
-#include "google/cloud/location.h"
+#include "google/cloud/storagecontrol/v2/storage_control_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " bucket-id\n";
     return 1;
   }
-
-  auto const location = google::cloud::Location(argv[1], argv[2]);
+  std::string const bucket_name = std::string{"projects/_/buckets/"} + argv[1];
 
   namespace storagecontrol = ::google::cloud::storagecontrol_v2;
-  auto client = storagecontrol::ServiceClient(
-      storagecontrol::MakeServiceConnection());  // EDIT HERE
+  auto client = storagecontrol::StorageControlClient(
+      storagecontrol::MakeStorageControlConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListFolders(bucket_name)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
