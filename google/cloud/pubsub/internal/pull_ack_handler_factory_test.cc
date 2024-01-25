@@ -68,10 +68,9 @@ TEST(PullAckHandlerTest, AckSimple) {
   auto request_matcher = AllOf(
       Property(&AcknowledgeRequest::ack_ids, ElementsAre("test-ack-id")),
       Property(&AcknowledgeRequest::subscription, subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, request_matcher))
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
-  // Since the lease manager is started in the constructor of the ack handler,
-  // we need to match the lease manager calls.
+  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _)).WillRepeatedly([]() {
+    return make_ready_future(Status{});
+  });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).WillRepeatedly([]() {
     return make_ready_future(Status{});
   });
@@ -80,8 +79,17 @@ TEST(PullAckHandlerTest, AckSimple) {
   auto handler =
       MakePullAckHandler(std::move(cq), std::move(mock), subscription,
                          "test-ack-id", 42, MakeTestOptions());
-
+  auto pending = aseq.PopFrontWithName();
+  EXPECT_EQ(pending.second, "MakeRelativeTimer");
+  pending.first.set_value(true);
+  pending = aseq.PopFrontWithName();
+  EXPECT_EQ(pending.second, "MakeRelativeTimer");
   EXPECT_THAT(std::move(handler).ack().get(), StatusIs(StatusCode::kOk));
+
+  // Terminate the loop. With exceptions disabled abandoning a future with a
+  // continuation results in a crash. In non-test programs, the completion queue
+  // does this automatically as part of its shutdown.
+  pending.first.set_value(false);
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -115,9 +123,18 @@ TEST(PullAckHandlerTest, TracingEnabled) {
   auto handler =
       MakePullAckHandler(std::move(cq), std::move(mock), subscription,
                          "test-ack-id", 42, EnableTracing(MakeTestOptions()));
+  auto pending = aseq.PopFrontWithName();
+  EXPECT_EQ(pending.second, "MakeRelativeTimer");
+  pending.first.set_value(true);
+  pending = aseq.PopFrontWithName();
+  EXPECT_EQ(pending.second, "MakeRelativeTimer");
 
   EXPECT_THAT(std::move(handler).ack().get(), StatusIs(StatusCode::kOk));
 
+  // Terminate the loop. With exceptions disabled abandoning a future with a
+  // continuation results in a crash. In non-test programs, the completion queue
+  // does this automatically as part of its shutdown.
+  pending.first.set_value(false);
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanHasInstrumentationScope(), SpanKindIsClient(),
@@ -144,8 +161,17 @@ TEST(PullAckHandlerTest, TracingDisabled) {
   auto handler =
       MakePullAckHandler(std::move(cq), std::move(mock), subscription,
                          "test-ack-id", 42, DisableTracing(MakeTestOptions()));
+  auto pending = aseq.PopFrontWithName();
+  EXPECT_EQ(pending.second, "MakeRelativeTimer");
+  pending.first.set_value(true);
+  pending = aseq.PopFrontWithName();
+  EXPECT_EQ(pending.second, "MakeRelativeTimer");
 
   EXPECT_THAT(std::move(handler).ack().get(), StatusIs(StatusCode::kOk));
+  // Terminate the loop. With exceptions disabled abandoning a future with a
+  // continuation results in a crash. In non-test programs, the completion queue
+  // does this automatically as part of its shutdown.
+  pending.first.set_value(false);
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
 }
