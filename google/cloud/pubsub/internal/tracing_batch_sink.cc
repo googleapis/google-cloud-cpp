@@ -62,18 +62,19 @@ auto MakeParent(Links const& links, Spans const& message_spans,
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto options = RootStartSpanOptions();
   options.kind = opentelemetry::trace::SpanKind::kClient;
-  auto batch_sink_parent = internal::MakeSpan(
-      topic.topic_id() + " publish",
-      /*attributes=*/
-      {{sc::kMessagingBatchMessageCount,
-        static_cast<std::int64_t>(message_spans.size())},
-       {sc::kCodeFunction, "BatchSink::AsyncPublish"},
-       {/*sc::kMessagingOperation=*/
-        "messaging.operation", "publish"},
-       {sc::kThreadId, internal::CurrentThreadId()},
-       {sc::kMessagingSystem, "gcp_pubsub"},
-       {sc::kMessagingDestinationTemplate, topic.FullName()}},
-      /*links*/ std::move(links), options);
+  auto batch_sink_parent =
+      internal::MakeSpan(topic.topic_id() + " publish",
+                         /*attributes=*/
+                         {{sc::kMessagingBatchMessageCount,
+                           static_cast<std::int64_t>(message_spans.size())},
+                          {sc::kCodeFunction, "BatchSink::AsyncPublish"},
+                          {/*sc::kMessagingOperation=*/
+                           "messaging.operation", "publish"},
+                          {sc::kThreadId, internal::CurrentThreadId()},
+                          {sc::kMessagingSystem, "gcp_pubsub"},
+                          {"gcp.project_id", topic.project_id()},
+                          {sc::kMessagingDestinationName, topic.topic_id()}},
+                         /*links*/ std::move(links), options);
 
   auto context = batch_sink_parent->GetContext();
   auto trace_id = internal::ToString(context.trace_id());

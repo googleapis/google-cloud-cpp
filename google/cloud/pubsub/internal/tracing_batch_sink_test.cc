@@ -210,11 +210,15 @@ TEST(TracingBatchSink, PublishSpanHasAttributes) {
               Contains(AllOf(SpanNamed("test-topic publish"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::kMessagingSystem, "gcp_pubsub")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-topic publish"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingDestinationTemplate,
-                                 TestTopic().FullName())))));
+  EXPECT_THAT(
+      spans, Contains(AllOf(SpanNamed("test-topic publish"),
+                            SpanHasAttributes(OTelAttribute<std::string>(
+                                "gcp.project_id", TestTopic().project_id())))));
+  EXPECT_THAT(
+      spans, Contains(AllOf(
+                 SpanNamed("test-topic publish"),
+                 SpanHasAttributes(OTelAttribute<std::string>(
+                     sc::kMessagingDestinationName, TestTopic().topic_id())))));
 }
 
 #if OPENTELEMETRY_VERSION_MAJOR >= 2 || \
