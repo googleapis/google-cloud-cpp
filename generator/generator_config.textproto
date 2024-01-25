@@ -3225,6 +3225,14 @@ service {
   omit_repo_metadata: true
 }
 
+# Storage Control
+service {
+  service_proto_path: "google/storage/control/v2/storage_control.proto"
+  product_path: "google/cloud/storagecontrol/v2"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Storage Insights
 service {
   service_proto_path: "google/cloud/storageinsights/v1/storageinsights.proto"
