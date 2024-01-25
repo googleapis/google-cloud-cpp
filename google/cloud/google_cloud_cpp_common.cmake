@@ -108,6 +108,7 @@ add_library(
     internal/port_platform.h
     internal/random.cc
     internal/random.h
+    internal/retry_info.h
     internal/retry_loop_helpers.cc
     internal/retry_loop_helpers.h
     internal/retry_policy_impl.cc

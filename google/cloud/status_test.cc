@@ -23,6 +23,8 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::Optional;
+
 TEST(StatusCode, StatusCodeToString) {
   EXPECT_EQ("OK", StatusCodeToString(StatusCode::kOk));
   EXPECT_EQ("CANCELLED", StatusCodeToString(StatusCode::kCancelled));
@@ -160,6 +162,27 @@ TEST(Status, Payload) {
 
   internal::SetPayload(copy, "key2", "payload2");
   EXPECT_EQ(copy, s);
+}
+
+TEST(Status, RetryInfoIgnoredWithOk) {
+  Status const ok{};
+  Status s;
+  EXPECT_EQ(ok, s);
+  internal::SetRetryInfo(s, internal::RetryInfo{std::chrono::minutes(5)});
+  EXPECT_EQ(ok, s);
+  auto ri = internal::GetRetryInfo(s);
+  EXPECT_EQ(ri, absl::nullopt);
+}
+
+TEST(Status, RetryInfo) {
+  internal::RetryInfo const expected{std::chrono::minutes(5)};
+  Status const err{StatusCode::kUnknown, "some error"};
+  Status s = err;
+  EXPECT_EQ(err, s);
+  internal::SetRetryInfo(s, expected);
+  EXPECT_NE(err, s);
+  auto actual = internal::GetRetryInfo(s);
+  EXPECT_THAT(actual, Optional(expected));
 }
 
 }  // namespace
