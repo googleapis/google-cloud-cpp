@@ -132,8 +132,11 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
           SpanHasAttributes(
               OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
               OTelAttribute<std::string>(
-                  sc::kMessagingDestinationTemplate,
-                  "projects/test-project/topics/test-topic"),
+                  sc::kMessagingDestinationName,
+                  "test-topic"),
+                      OTelAttribute<std::string>(
+                  "gcp.project_id",
+                  "test-project"),
               OTelAttribute<std::string>(
                   "messaging.gcp_pubsub.message.ordering_key",
                   "ordering-key-0"),
