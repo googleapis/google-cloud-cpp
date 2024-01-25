@@ -126,11 +126,11 @@ TEST(TracingAckHandlerTest, AckAttributes) {
                   SpanNamed("test-subscription ack"),
                   SpanHasAttributes(OTelAttribute<std::int32_t>(
                       "messaging.gcp_pubsub.message.delivery_attempt", 42)))));
-  EXPECT_THAT(
-      spans,
-      Contains(AllOf(SpanNamed("test-subscription ack"),
-                     SpanHasAttributes(OTelAttribute<std::string>(
-                         sc::kMessagingDestinationName, "test-subscription")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(
+                  SpanNamed("test-subscription ack"),
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      sc::kMessagingDestinationName, "test-subscription")))));
 }
 
 TEST(TracingAckHandlerTest, NackSuccess) {
@@ -200,11 +200,11 @@ TEST(TracingAckHandlerTest, NackAttributes) {
                   SpanNamed("test-subscription nack"),
                   SpanHasAttributes(OTelAttribute<std::int32_t>(
                       "messaging.gcp_pubsub.message.delivery_attempt", 42)))));
-  EXPECT_THAT(
-      spans,
-      Contains(AllOf(SpanNamed("test-subscription nack"),
-                     SpanHasAttributes(OTelAttribute<std::string>(
-                         sc::kMessagingDestinationName, "test-subscription")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(
+                  SpanNamed("test-subscription nack"),
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      sc::kMessagingDestinationName, "test-subscription")))));
 }
 
 TEST(TracingAckHandlerTest, DeliveryAttemptNoSpans) {
