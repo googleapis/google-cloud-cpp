@@ -386,9 +386,6 @@ ParameterCommentSubstitution substitutions[] = {
     {R"""(`{cluster} = '-'`)""", R"""(``{cluster} = '-'``)"""},
     {R"""(`projects/<Project ID or '-'>`)""",
      R"""(``projects/<Project ID or '-'>``)"""},
-    // In this case the single quote is just a mistake so we can remove it.
-    {R"""(`projects/{project}/locations/{location}'`)""",
-     R"""(`projects/{project}/locations/{location}`)"""},
 
     // Further trim some initial paragraphs for long descriptions.
     {R"""( The included patch
