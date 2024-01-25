@@ -72,8 +72,8 @@ auto MakeParent(Links const& links, Spans const& message_spans,
                            "messaging.operation", "publish"},
                           {sc::kThreadId, internal::CurrentThreadId()},
                           {sc::kMessagingSystem, "gcp_pubsub"},
-                          {"gcp.project_id", topic.project_id()} {
-                              sc::kMessagingDestinationName, topic.topic_id()}},
+                          {"gcp.project_id", topic.project_id()},
+                          {sc::kMessagingDestinationName, topic.topic_id()}},
                          /*links*/ std::move(links), options);
 
   auto context = batch_sink_parent->GetContext();
