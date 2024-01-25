@@ -55,15 +55,16 @@ class TracingPullLeaseManager : public PullLeaseManager {
     opentelemetry::trace::StartSpanOptions options;
     options.kind = opentelemetry::trace::SpanKind::kClient;
     auto span = internal::MakeSpan(
-        child_->subscription().subscription_id() + " extend",
+        child_->subscription().subscription_id() + " modack",
         {{sc::kMessagingSystem, "gcp_pubsub"},
-         {sc::kMessagingOperation, "extend"},
+         {sc::kMessagingOperation, "modack"},
          {sc::kCodeFunction, "pubsub::PullLeaseManager::ExtendLease"},
          {"messaging.gcp_pubsub.message.ack_id", child_->ack_id()},
          {"messaging.gcp_pubsub.message.ack_deadline_seconds",
           static_cast<std::int32_t>(extension.count())},
-         {"messaging.gcp_pubsub.subscription.template",
-          child_->subscription().FullName()}},
+         {"gcp.project_id", child_->subscription().project_id()},
+         {sc::kMessagingDestinationName,
+          child_->subscription().subscription_id()}},
         CreateLinks(consumer_span_context_), options);
     auto scope = internal::OTelScope(span);
     MaybeAddLinkAttributes(*span, consumer_span_context_, "receive");

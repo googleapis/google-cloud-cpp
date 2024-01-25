@@ -133,7 +133,7 @@ TEST(DefaultPullLeaseManager, TracingEnabled) {
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanHasInstrumentationScope(), SpanKindIsClient(),
                          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                         SpanNamed("test-subscription extend"))));
+                         SpanNamed("test-subscription modack"))));
 }
 
 TEST(DefaultPullLeaseManager, TracingDisabled) {

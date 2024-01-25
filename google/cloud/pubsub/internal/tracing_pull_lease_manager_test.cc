@@ -77,7 +77,7 @@ TEST(TracingPullLeaseManagerTest, ExtendSuccess) {
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanHasInstrumentationScope(), SpanKindIsClient(),
                          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                         SpanNamed("test-subscription extend"))));
+                         SpanNamed("test-subscription modack"))));
 }
 
 TEST(TracingPullLeaseManagerTest, ExtendError) {
@@ -96,7 +96,7 @@ TEST(TracingPullLeaseManagerTest, ExtendError) {
   EXPECT_THAT(
       spans,
       Contains(AllOf(SpanWithStatus(opentelemetry::trace::StatusCode::kError),
-                     SpanNamed("test-subscription extend"))));
+                     SpanNamed("test-subscription modack"))));
 }
 
 TEST(TracingPullLeaseManagerTest, ExtendAttributes) {
@@ -113,36 +113,38 @@ TEST(TracingPullLeaseManagerTest, ExtendAttributes) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription extend"),
+              Contains(AllOf(SpanNamed("test-subscription modack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::kMessagingSystem, "gcp_pubsub")))));
   EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription extend"),
+              Contains(AllOf(SpanNamed("test-subscription modack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingOperation, "extend")))));
+                                 sc::kMessagingOperation, "modack")))));
   EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription extend"),
+              Contains(AllOf(SpanNamed("test-subscription modack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::kCodeFunction,
                                  "pubsub::PullLeaseManager::ExtendLease")))));
   EXPECT_THAT(
       spans,
       Contains(AllOf(
-          SpanNamed("test-subscription extend"),
+          SpanNamed("test-subscription modack"),
           SpanHasAttributes(OTelAttribute<std::int32_t>(
               "messaging.gcp_pubsub.message.ack_deadline_seconds", 10)))));
   EXPECT_THAT(spans,
               Contains(AllOf(
-                  SpanNamed("test-subscription extend"),
+                  SpanNamed("test-subscription modack"),
                   SpanHasAttributes(OTelAttribute<std::string>(
                       "messaging.gcp_pubsub.message.ack_id", "test-ack-id")))));
-  EXPECT_THAT(
-      spans,
-      Contains(AllOf(
-          SpanNamed("test-subscription extend"),
-          SpanHasAttributes(OTelAttribute<std::string>(
-              "messaging.gcp_pubsub.subscription.template",
-              "projects/test-project/subscriptions/test-subscription")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(
+                  SpanNamed("test-subscription modack"),
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      sc::kMessagingDestinationName, "test-subscription")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-subscription modack"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 "gcp.project_id", "test-project")))));
 }
 
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
@@ -164,7 +166,7 @@ TEST(TracingPullLeaseManagerTest, ExtendAddsLink) {
   EXPECT_STATUS_OK(status.get());
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription extend"),
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription modack"),
                                     SpanLinksSizeIs(1))));
 }
 
@@ -188,7 +190,7 @@ TEST(TracingPullLeaseManagerTest, ExtendAddsSpanIdAndTraceIdAttribute) {
   EXPECT_THAT(
       spans,
       Contains(AllOf(
-          SpanNamed("test-subscription extend"),
+          SpanNamed("test-subscription modack"),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp_pubsub.receive.trace_id", _),
               OTelAttribute<std::string>("gcp_pubsub.receive.span_id", _)))));
