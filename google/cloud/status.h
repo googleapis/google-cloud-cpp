@@ -284,12 +284,6 @@ class ErrorInfo {
   std::unordered_map<std::string, std::string> metadata_;
 };
 
-class Status;
-namespace internal {
-Status MakeStatus(StatusCode code, std::string message, ErrorInfo error_info,
-                  absl::optional<internal::RetryInfo> retry_info);
-}
-
 /**
  * Represents success or an error with info about the error.
  *
