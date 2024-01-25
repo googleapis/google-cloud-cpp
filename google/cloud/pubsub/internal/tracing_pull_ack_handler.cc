@@ -55,7 +55,7 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
         {"messaging.gcp_pubsub.message.delivery_attempt",
          child_->delivery_attempt()},
         {"gcp.project_id", subscription.project_id()},
-        {"messaging.destination.name", subscription.subscription_id()}};
+        {sc::kMessagingDestinationName, subscription.subscription_id()}};
   }
 
   future<Status> ack() override {

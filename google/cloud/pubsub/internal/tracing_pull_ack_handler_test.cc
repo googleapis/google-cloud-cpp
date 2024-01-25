@@ -130,7 +130,7 @@ TEST(TracingAckHandlerTest, AckAttributes) {
       spans,
       Contains(AllOf(SpanNamed("test-subscription ack"),
                      SpanHasAttributes(OTelAttribute<std::string>(
-                         "messaging.destination.name", "test-subscription")))));
+                         sc::kMessagingDestinationName, "test-subscription")))));
 }
 
 TEST(TracingAckHandlerTest, NackSuccess) {
@@ -204,7 +204,7 @@ TEST(TracingAckHandlerTest, NackAttributes) {
       spans,
       Contains(AllOf(SpanNamed("test-subscription nack"),
                      SpanHasAttributes(OTelAttribute<std::string>(
-                         "messaging.destination.name", "test-subscription")))));
+                         sc::kMessagingDestinationName, "test-subscription")))));
 }
 
 TEST(TracingAckHandlerTest, DeliveryAttemptNoSpans) {
