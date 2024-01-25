@@ -3231,6 +3231,7 @@ service {
   product_path: "google/cloud/storagecontrol/v2"
   initial_copyright_year: "2024"
   retryable_status_codes: ["kUnavailable"]
+  omit_repo_metadata: true
 }
 
 # Storage Insights
