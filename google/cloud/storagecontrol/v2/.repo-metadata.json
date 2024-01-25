@@ -8,7 +8,7 @@
     "library_type": "GAPIC_AUTO",
     "name_pretty": "Cloud Storage API",
     "product_documentation": "https://cloud.google.com/storage/docs/overview",
-    "release_level": "stable",
+    "release_level": "preview",
     "repo": "googleapis/google-cloud-cpp",
     "requires_billing": true
 }
