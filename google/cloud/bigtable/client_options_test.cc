@@ -44,8 +44,8 @@ using ::testing::HasSubstr;
 
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
   ClientOptions client_options;
-  EXPECT_EQ("bigtable.googleapis.com.", client_options.data_endpoint());
-  EXPECT_EQ("bigtableadmin.googleapis.com.", client_options.admin_endpoint());
+  EXPECT_EQ("bigtable.googleapis.com", client_options.data_endpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", client_options.admin_endpoint());
   EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
             typeid(client_options.credentials()));
 
@@ -173,8 +173,8 @@ TEST_F(ClientOptionsDefaultEndpointTest, Default) {
 TEST_F(ClientOptionsDefaultEndpointTest, WithCredentials) {
   auto credentials = grpc::GoogleDefaultCredentials();
   ClientOptions tested(credentials);
-  EXPECT_EQ("bigtable.googleapis.com.", tested.data_endpoint());
-  EXPECT_EQ("bigtableadmin.googleapis.com.", tested.admin_endpoint());
+  EXPECT_EQ("bigtable.googleapis.com", tested.data_endpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", tested.admin_endpoint());
   EXPECT_EQ(credentials.get(), tested.credentials().get());
 }
 
@@ -183,9 +183,9 @@ TEST_F(ClientOptionsDefaultEndpointTest, DefaultNoEmulator) {
 
   auto credentials = grpc::GoogleDefaultCredentials();
   ClientOptions tested(credentials);
-  EXPECT_EQ("bigtable.googleapis.com.", tested.data_endpoint());
-  EXPECT_EQ("bigtableadmin.googleapis.com.", tested.admin_endpoint());
-  EXPECT_EQ("bigtableadmin.googleapis.com.", GetInstanceAdminEndpoint(tested));
+  EXPECT_EQ("bigtable.googleapis.com", tested.data_endpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", tested.admin_endpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", GetInstanceAdminEndpoint(tested));
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, SeparateEmulators) {
@@ -201,12 +201,12 @@ TEST_F(ClientOptionsDefaultEndpointTest, SeparateEmulators) {
 
 TEST_F(ClientOptionsDefaultEndpointTest, DataNoEnv) {
   ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST", {});
-  EXPECT_EQ("bigtable.googleapis.com.", ClientOptions{}.data_endpoint());
+  EXPECT_EQ("bigtable.googleapis.com", ClientOptions{}.data_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, AdminNoEnv) {
   ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST", {});
-  EXPECT_EQ("bigtableadmin.googleapis.com.", ClientOptions{}.admin_endpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", ClientOptions{}.admin_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, AdminEmulatorOverrides) {
@@ -219,12 +219,12 @@ TEST_F(ClientOptionsDefaultEndpointTest, AdminInstanceAdminNoEffect) {
   ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST", {});
   ScopedEnvironment bigtable_instance_admin_emulator_host(
       "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", "127.0.0.1:1234");
-  EXPECT_EQ("bigtableadmin.googleapis.com.", ClientOptions{}.admin_endpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", ClientOptions{}.admin_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminNoEnv) {
   ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST", {});
-  EXPECT_EQ("bigtableadmin.googleapis.com.",
+  EXPECT_EQ("bigtableadmin.googleapis.com",
             GetInstanceAdminEndpoint(ClientOptions()));
 }
 
