@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_H
 
+#include "google/cloud/internal/retry_info.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <iostream>
@@ -197,6 +198,8 @@ class Status;
 class ErrorInfo;
 namespace internal {
 void AddMetadata(ErrorInfo&, std::string const& key, std::string value);
+void SetRetryInfo(Status& status, absl::optional<RetryInfo> retry_info);
+absl::optional<RetryInfo> GetRetryInfo(Status const& status);
 void SetPayload(Status&, std::string key, std::string payload);
 absl::optional<std::string> GetPayload(Status const&, std::string const& key);
 }  // namespace internal
@@ -325,7 +328,7 @@ class Status {
    * @param message the message for the new `Status`, ignored if @p code is
    *     `StatusCode::kOk`.
    * @param info the `ErrorInfo` for the new `Status`, ignored if @p code is
-   *     `SStatusCode::kOk`.
+   *     `StatusCode::kOk`.
    */
   explicit Status(StatusCode code, std::string message, ErrorInfo info = {});
 
@@ -359,6 +362,10 @@ class Status {
 
  private:
   static bool Equals(Status const& a, Status const& b);
+  friend void internal::SetRetryInfo(Status&,
+                                     absl::optional<internal::RetryInfo>);
+  friend absl::optional<internal::RetryInfo> internal::GetRetryInfo(
+      Status const&);
   friend void internal::SetPayload(Status&, std::string, std::string);
   friend absl::optional<std::string> internal::GetPayload(Status const&,
                                                           std::string const&);

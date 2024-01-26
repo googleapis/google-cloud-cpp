@@ -86,16 +86,22 @@ class Status::Impl {
  public:
   using PayloadType = std::unordered_map<std::string, std::string>;
 
-  explicit Impl(StatusCode code, std::string message, ErrorInfo info,
+  explicit Impl(StatusCode code, std::string message, ErrorInfo error_info,
                 PayloadType payload)
       : code_(code),
         message_(std::move(message)),
-        error_info_(std::move(info)),
+        error_info_(std::move(error_info)),
         payload_(std::move(payload)) {}
 
   StatusCode code() const { return code_; }
   std::string const& message() const { return message_; }
   ErrorInfo const& error_info() const { return error_info_; }
+  absl::optional<internal::RetryInfo> const& retry_info() const {
+    return retry_info_;
+  }
+  // Allows mutable access to payload, which is needed in the
+  // `internal::SetRetryInfo()` function.
+  absl::optional<internal::RetryInfo>& retry_info() { return retry_info_; }
   PayloadType const& payload() const { return payload_; }
 
   // Allows mutable access to payload, which is needed in the
@@ -104,7 +110,8 @@ class Status::Impl {
 
   friend inline bool operator==(Impl const& a, Impl const& b) {
     return a.code_ == b.code_ && a.message_ == b.message_ &&
-           a.error_info_ == b.error_info_ && a.payload_ == b.payload_;
+           a.error_info_ == b.error_info_ && a.retry_info_ == b.retry_info_ &&
+           a.payload_ == b.payload_;
   }
 
   friend inline bool operator!=(Impl const& a, Impl const& b) {
@@ -115,6 +122,7 @@ class Status::Impl {
   StatusCode code_;
   std::string message_;
   ErrorInfo error_info_;
+  absl::optional<internal::RetryInfo> retry_info_;
   PayloadType payload_;
 };
 
@@ -134,11 +142,11 @@ Status& Status::operator=(Status const& other) {
 }
 
 // OK statuses have an impl_ == nullptr. Non-OK Statuses get an Impl.
-Status::Status(StatusCode code, std::string message, ErrorInfo info)
+Status::Status(StatusCode code, std::string message, ErrorInfo error_info)
     : impl_(code == StatusCode::kOk
                 ? nullptr
                 : new Status::Impl{
-                      code, std::move(message), std::move(info), {}}) {}
+                      code, std::move(message), std::move(error_info), {}}) {}
 
 StatusCode Status::code() const {
   return impl_ ? impl_->code() : StatusCode::kOk;
@@ -180,6 +188,16 @@ namespace internal {
 
 void AddMetadata(ErrorInfo& ei, std::string const& key, std::string value) {
   ei.metadata_[key] = std::move(value);
+}
+
+void SetRetryInfo(Status& status, absl::optional<RetryInfo> retry_info) {
+  if (!status.impl_) return;
+  status.impl_->retry_info() = std::move(retry_info);
+}
+
+absl::optional<RetryInfo> GetRetryInfo(Status const& status) {
+  if (!status.impl_) return absl::nullopt;
+  return status.impl_->retry_info();
 }
 
 // Sets the given `payload`, indexed by the given `key`, on the given `Status`,
