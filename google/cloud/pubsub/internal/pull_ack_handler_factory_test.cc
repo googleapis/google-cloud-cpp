@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/pull_ack_handler_factory.h"
-#include "google/cloud/future_generic.h"
 #include "google/cloud/pubsub/mocks/mock_pull_ack_handler.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/future_generic.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
