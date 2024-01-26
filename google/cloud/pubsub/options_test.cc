@@ -25,7 +25,7 @@ namespace {
 
 TEST(IAMPolicyOptions, Default) {
   auto const actual = IAMPolicyOptions();
-  EXPECT_EQ(actual.get<EndpointOption>(), "pubsub.googleapis.com.");
+  EXPECT_EQ(actual.get<EndpointOption>(), "pubsub.googleapis.com");
   EXPECT_EQ(actual.get<AuthorityOption>(), "pubsub.googleapis.com");
 }
 
@@ -55,7 +55,7 @@ TEST(IAMPolicyOptions, OverrideAuthority) {
       IAMPolicyOptions(Options{}
                            .set<AuthorityOption>("test-only-authority")
                            .set<UserProjectOption>("test-only-user-project"));
-  EXPECT_EQ(actual.get<EndpointOption>(), "pubsub.googleapis.com.");
+  EXPECT_EQ(actual.get<EndpointOption>(), "pubsub.googleapis.com");
   EXPECT_EQ(actual.get<AuthorityOption>(), "test-only-authority");
   EXPECT_EQ(actual.get<UserProjectOption>(), "test-only-user-project");
 }

@@ -22,14 +22,10 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Options IAMPolicyOptions(Options opts) {
-  auto default_ep =
-      internal::UniverseDomainEndpoint("pubsub.googleapis.com.", opts);
-  auto authority_ep =
-      internal::UniverseDomainEndpoint("pubsub.googleapis.com", opts);
+  auto ep = internal::UniverseDomainEndpoint("pubsub.googleapis.com", opts);
   return internal::MergeOptions(
-      std::move(opts), Options{}
-                           .set<EndpointOption>(std::move(default_ep))
-                           .set<AuthorityOption>(std::move(authority_ep)));
+      std::move(opts),
+      Options{}.set<EndpointOption>(ep).set<AuthorityOption>(std::move(ep)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
