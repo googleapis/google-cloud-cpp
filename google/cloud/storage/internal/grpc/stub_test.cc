@@ -111,7 +111,7 @@ TEST(DefaultOptionsGrpc, DefaultOptionsGrpcChannelCount) {
 
 TEST(DefaultOptionsGrpc, DefaultEndpoints) {
   auto options = DefaultOptionsGrpc();
-  EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com.");
+  EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
 }
 
