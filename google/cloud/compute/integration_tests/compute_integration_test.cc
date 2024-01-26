@@ -178,6 +178,9 @@ TEST_F(ComputeIntegrationTest, VerifyUpdateSendsUpdateMaskParameter) {
 }
 
 TEST_F(ComputeIntegrationTest, VerifyPatchResourceFieldNameFormat) {
+  // TODO(#13522): Fix issue with test where firewall rules are not being
+  // deleted.
+  GTEST_SKIP();
   namespace networks = ::google::cloud::compute_networks_v1;
   namespace compute_proto = ::google::cloud::cpp::compute::v1;
 
