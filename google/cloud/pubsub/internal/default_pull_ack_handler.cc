@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include <google/pubsub/v1/pubsub.pb.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
