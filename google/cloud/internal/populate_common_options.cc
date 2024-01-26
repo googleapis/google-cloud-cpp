@@ -31,16 +31,7 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
                               std::string const& emulator_env_var,
                               std::string const& authority_env_var,
                               std::string default_endpoint) {
-  if (!opts.has<AuthorityOption>()) {
-    opts.set<AuthorityOption>(UniverseDomainEndpoint(default_endpoint, opts));
-  }
-  if (!authority_env_var.empty()) {
-    auto e = GetEnv(authority_env_var.c_str());
-    if (e && !e->empty()) {
-      opts.set<AuthorityOption>(*std::move(e));
-    }
-  }
-
+  default_endpoint = UniverseDomainEndpoint(std::move(default_endpoint), opts);
   if (!endpoint_env_var.empty()) {
     auto e = GetEnv(endpoint_env_var.c_str());
     if (e && !e->empty()) {
@@ -55,9 +46,17 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
     }
   }
   if (!opts.has<EndpointOption>()) {
-    absl::StrAppend(&default_endpoint, ".");
-    opts.set<EndpointOption>(
-        UniverseDomainEndpoint(std::move(default_endpoint), opts));
+    opts.set<EndpointOption>(default_endpoint);
+  }
+
+  if (!authority_env_var.empty()) {
+    auto e = GetEnv(authority_env_var.c_str());
+    if (e && !e->empty()) {
+      opts.set<AuthorityOption>(*std::move(e));
+    }
+  }
+  if (!opts.has<AuthorityOption>()) {
+    opts.set<AuthorityOption>(std::move(default_endpoint));
   }
 
   auto e = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");

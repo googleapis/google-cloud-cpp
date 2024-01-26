@@ -29,7 +29,7 @@ using ::testing::Eq;
 TEST(GeneratorUniverseDomainTest, ConnectionEndpointOptionUnset) {
   auto connection = MakeGoldenThingAdminConnection();
   EXPECT_THAT(connection->options().get<EndpointOption>(),
-              Eq("test.googleapis.com."));
+              Eq("test.googleapis.com"));
 }
 
 TEST(GeneratorUniverseDomainTest, ConnectionEndpointOptionEmpty) {
@@ -49,7 +49,7 @@ TEST(GeneratorUniverseDomainTest, ConnectionEndpointEnvVarEmpty) {
   ScopedEnvironment endpoint_var("GOLDEN_KITCHEN_SINK_ENDPOINT", "");
   auto connection = MakeGoldenThingAdminConnection();
   EXPECT_THAT(connection->options().get<EndpointOption>(),
-              Eq("test.googleapis.com."));
+              Eq("test.googleapis.com"));
 }
 
 TEST(GeneratorUniverseDomainTest, ConnectionEndpointEnvVarNonEmpty) {

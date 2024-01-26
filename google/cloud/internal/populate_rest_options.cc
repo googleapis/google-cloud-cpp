@@ -37,9 +37,6 @@ Options PopulateRestOptions(Options opts) {
   }
   if (opts.has<EndpointOption>()) {
     auto& endpoint = opts.lookup<EndpointOption>();
-    // Use an unqualified domain name, because we do not seem to reuse
-    // connections with a fully qualified domain name over REST.
-    if (absl::EndsWith(endpoint, ".googleapis.com.")) endpoint.pop_back();
     if (!absl::StartsWithIgnoreCase(endpoint, "http://") &&
         !absl::StartsWithIgnoreCase(endpoint, "https://")) {
       endpoint = absl::StrCat("https://", endpoint);

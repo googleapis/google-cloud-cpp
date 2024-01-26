@@ -36,7 +36,7 @@ TEST(GoldenKitchenSinkDefaultOptions, DefaultEndpoint) {
   auto env = ScopedEnvironment("GOLDEN_KITCHEN_SINK_ENDPOINT", absl::nullopt);
   Options options;
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
-  EXPECT_EQ("goldenkitchensink.googleapis.com.",
+  EXPECT_EQ("goldenkitchensink.googleapis.com",
             updated_options.get<EndpointOption>());
 }
 
