@@ -14,7 +14,6 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/project_options.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -33,10 +32,7 @@ TEST(ProjectOptionsTest, DefaultOptions) {
   auto expected_idempotency = Idempotency::kIdempotent;
   auto const* default_endpoint = "bigquery.googleapis.com";
 
-  EXPECT_TRUE(actual.has<EndpointOption>());
-  EXPECT_EQ(actual.get<EndpointOption>(), absl::StrCat(default_endpoint, "."));
-
-  EXPECT_TRUE(actual.has<AuthorityOption>());
+  EXPECT_EQ(actual.get<EndpointOption>(), default_endpoint);
   EXPECT_EQ(actual.get<AuthorityOption>(), default_endpoint);
 
   ListProjectsRequest request;
