@@ -44,7 +44,7 @@ TEST(PopulateCommonOptions, Simple) {
   auto actual =
       PopulateCommonOptions(Options{}, {}, {}, {}, "default.googleapis.com");
   EXPECT_TRUE(actual.has<EndpointOption>());
-  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default.googleapis.com."));
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default.googleapis.com"));
   EXPECT_TRUE(actual.has<AuthorityOption>());
   EXPECT_THAT(actual.get<AuthorityOption>(), Eq("default.googleapis.com"));
   EXPECT_FALSE(actual.has<UserProjectOption>());
@@ -68,7 +68,7 @@ TEST(PopulateCommonOptions, EmptyEndpointEnvVar) {
       PopulateCommonOptions(Options{}, "GOOGLE_CLOUD_CPP_SERVICE_ENDPOINT", {},
                             {}, "default.googleapis.com");
   EXPECT_TRUE(actual.has<EndpointOption>());
-  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default.googleapis.com."));
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default.googleapis.com"));
 }
 
 TEST(PopulateCommonOptions, EmptyEmulatorEnvVar) {
@@ -77,7 +77,7 @@ TEST(PopulateCommonOptions, EmptyEmulatorEnvVar) {
       PopulateCommonOptions(Options{}, {}, "GOOGLE_CLOUD_CPP_EMULATOR_ENDPOINT",
                             {}, "default.googleapis.com");
   EXPECT_TRUE(actual.has<EndpointOption>());
-  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default.googleapis.com."));
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("default.googleapis.com"));
   EXPECT_FALSE(actual.has<UnifiedCredentialsOption>());
 }
 
@@ -128,7 +128,7 @@ TEST(PopulateCommonOptions, EndpointAuthority) {
           } else if (options.has<EndpointOption>()) {
             EXPECT_THAT(actual_endpoint, Eq(options.get<EndpointOption>()));
           } else {
-            EXPECT_THAT(actual_endpoint, Eq("default.googleapis.com."));
+            EXPECT_THAT(actual_endpoint, Eq("default.googleapis.com"));
           }
 
           ASSERT_TRUE(actual.has<AuthorityOption>());

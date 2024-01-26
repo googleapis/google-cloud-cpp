@@ -47,7 +47,7 @@ StatusOr<std::string> DetermineServiceEndpoint(
  *
  * @code
  * auto options = Options{}.set<UniverseDomainOption>("my-ud.net");
- * auto endpoint = UniverseDomainEndpoint("foo.googleapis.com.", options);
+ * auto endpoint = UniverseDomainEndpoint("foo.googleapis.com", options);
  * EXPECT_EQ(endpoint, "foo.my-ud.net");
  * @endcode
  */
