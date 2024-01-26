@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/pull_ack_handler_factory.h"
+#include "google/cloud/future_generic.h"
 #include "google/cloud/pubsub/mocks/mock_pull_ack_handler.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
