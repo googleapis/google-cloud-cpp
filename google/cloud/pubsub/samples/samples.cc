@@ -125,7 +125,7 @@ void PleaseIgnoreThisSimplifiesTestingTheSamples() {
 void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [START pubsub_quickstart_create_topic]
-  //! [START pubsub_create_topic] [create-topic]
+  //! [START pubsub_create_topic]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
@@ -140,10 +140,9 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
 
     std::cout << "The topic was successfully created: " << topic->DebugString()
               << "\n";
-  }
-  //! [END pubsub_create_topic] [create-topic]
-  //! [END pubsub_quickstart_create_topic]
-  (std::move(client), argv.at(0), argv.at(1));
+    //! [END pubsub_create_topic]
+    //! [END pubsub_quickstart_create_topic]
+  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void GetTopic(google::cloud::pubsub::TopicAdminClient client,
@@ -203,7 +202,7 @@ void ListTopics(google::cloud::pubsub::TopicAdminClient client,
 
 void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
-  //! [START pubsub_delete_topic] [delete-topic]
+  //! [START pubsub_delete_topic]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string const& project_id,
      std::string const& topic_id) {
@@ -216,9 +215,8 @@ void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
     if (!status.ok()) throw std::runtime_error(status.message());
 
     std::cout << "The topic was successfully deleted\n";
-  }
-  //! [END pubsub_delete_topic] [delete-topic]
-  (std::move(client), argv.at(0), argv.at(1));
+    //! [END pubsub_delete_topic]
+  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void DetachSubscription(google::cloud::pubsub::TopicAdminClient client,
@@ -2761,15 +2759,11 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   using ::google::cloud::testing_util::Example;
 
   Example example({
-      CreateTopicAdminCommand("create-topic", {"project-id", "topic-id"},
-                              CreateTopic),
       CreateTopicAdminCommand("get-topic", {"project-id", "topic-id"},
                               GetTopic),
       CreateTopicAdminCommand("update-topic", {"project-id", "topic-id"},
                               UpdateTopic),
       CreateTopicAdminCommand("list-topics", {"project-id"}, ListTopics),
-      CreateTopicAdminCommand("delete-topic", {"project-id", "topic-id"},
-                              DeleteTopic),
       CreateTopicAdminCommand("detach-subscription",
                               {"project-id", "subscription-id"},
                               DetachSubscription),
