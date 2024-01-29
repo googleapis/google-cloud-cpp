@@ -87,6 +87,23 @@ ErrorInfo GetErrorInfo(google::rpc::Status const& status) {
   return ErrorInfo{proto->reason(), proto->domain(), std::move(metadata)};
 }
 
+// Unpacks the RetryInfo from the Status proto, if one exists.
+absl::optional<internal::RetryInfo> GetRetryInfo(
+    google::rpc::Status const& proto) {
+  // While in theory there _could_ be multiple RetryInfo protos in this
+  // repeated field, we're told that there will be at most one, and our
+  // user-facing APIs should only expose one. So if we find one, we're done.
+  google::rpc::RetryInfo retry_info;
+  for (google::protobuf::Any const& any : proto.details()) {
+    if (any.UnpackTo(&retry_info)) {
+      auto d = std::chrono::nanoseconds(retry_info.retry_delay().nanos()) +
+               std::chrono::seconds(retry_info.retry_delay().seconds());
+      return internal::RetryInfo(d);
+    }
+  }
+  return absl::nullopt;
+}
+
 }  // namespace
 
 google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status) {
@@ -120,6 +137,7 @@ google::cloud::Status MakeStatusFromRpcError(google::rpc::Status const& proto) {
     code = static_cast<StatusCode>(proto.code());
   }
   auto status = Status(code, proto.message(), GetErrorInfo(proto));
+  google::cloud::internal::SetRetryInfo(status, GetRetryInfo(proto));
   google::cloud::internal::SetPayload(
       status, google::cloud::internal::StatusPayloadGrpcProto(),
       proto.SerializeAsString());
