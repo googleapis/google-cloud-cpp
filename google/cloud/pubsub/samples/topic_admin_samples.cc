@@ -23,7 +23,7 @@
 namespace {
 
 using ::google::cloud::pubsub::examples::RandomTopicId;
-
+using ::google::cloud::pubsub::examples::UsingEmulator;
 using TopicAdminCommand =
     std::function<void(::google::cloud::pubsub_admin::TopicAdminClient,
                        std::vector<std::string> const&)>;
@@ -72,6 +72,104 @@ void CreateTopic(google::cloud::pubsub_admin::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void GetTopic(google::cloud::pubsub_admin::TopicAdminClient client,
+              std::vector<std::string> const& argv) {
+  //! [get-topic]
+  namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::TopicAdminClient client, std::string project_id,
+     std::string topic_id) {
+    auto topic = client.GetTopic(
+        pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
+    if (!topic) throw std::move(topic).status();
+
+    std::cout << "The topic information was successfully retrieved: "
+              << topic->DebugString() << "\n";
+  }
+  //! [get-topic]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
+void UpdateTopic(google::cloud::pubsub_admin::TopicAdminClient client,
+                 std::vector<std::string> const& argv) {
+  //! [update-topic]
+  namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::TopicAdminClient client, std::string project_id,
+     std::string topic_id) {
+    google::pubsub::v1::UpdateTopicRequest request;
+    request.mutable_topic()->set_name(
+        pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
+    request.mutable_topic()->mutable_labels()->insert(
+        {"test-key", "test-value"});
+    *request.mutable_update_mask()->add_paths() = "labels";
+    auto topic = client.UpdateTopic(request);
+    if (!topic) throw std::move(topic).status();
+
+    std::cout << "The topic was successfully updated: " << topic->DebugString()
+              << "\n";
+  }
+  //! [update-topic]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
+void ListTopics(google::cloud::pubsub_admin::TopicAdminClient client,
+                std::vector<std::string> const& argv) {
+  //! [START pubsub_list_topics] [list-topics]
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::TopicAdminClient client, std::string const& project_id) {
+    int count = 0;
+    for (auto& topic : client.ListTopics("projects/" + project_id)) {
+      if (!topic) throw std::move(topic).status();
+      std::cout << "Topic Name: " << topic->name() << "\n";
+      ++count;
+    }
+    if (count == 0) {
+      std::cout << "No topics found in project " << project_id << "\n";
+    }
+  }
+  //! [END pubsub_list_topics] [list-topics]
+  (std::move(client), argv.at(0));
+}
+
+void ListTopicSubscriptions(
+    google::cloud::pubsub_admin::TopicAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [START pubsub_list_topic_subscriptions] [list-topic-subscriptions]
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::TopicAdminClient client, std::string const& project_id,
+     std::string const& topic_id) {
+    auto const topic = pubsub::Topic(project_id, topic_id);
+    std::cout << "Subscription list for topic " << topic << ":\n";
+    for (auto& name : client.ListTopicSubscriptions(topic.FullName())) {
+      if (!name) throw std::move(name).status();
+      std::cout << "  " << *name << "\n";
+    }
+  }
+  //! [END pubsub_list_topic_subscriptions] [list-topic-subscriptions]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
+void ListTopicSnapshots(google::cloud::pubsub_admin::TopicAdminClient client,
+                        std::vector<std::string> const& argv) {
+  //! [list-topic-snapshots]
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::TopicAdminClient client, std::string project_id,
+     std::string topic_id) {
+    auto const topic =
+        pubsub::Topic(std::move(project_id), std::move(topic_id));
+    std::cout << "Snapshot list for topic " << topic << ":\n";
+    for (auto& name : client.ListTopicSnapshots(topic.FullName())) {
+      if (!name) throw std::move(name).status();
+      std::cout << "  " << *name << "\n";
+    }
+  }
+  //! [list-topic-snapshots]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void DeleteTopic(google::cloud::pubsub_admin::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [delete-topic]
@@ -106,11 +204,47 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const topic_id = RandomTopicId(generator);
   auto const topic = google::cloud::pubsub::Topic(project_id, topic_id);
 
+  using ::google::cloud::StatusCode;
+  auto ignore_emulator_failures =
+      [](auto lambda, StatusCode code = StatusCode::kUnimplemented) {
+        try {
+          lambda();
+        } catch (google::cloud::Status const& s) {
+          if (UsingEmulator() && s.code() == code) return;
+          throw;
+        } catch (...) {
+          throw;
+        }
+      };
+
   google::cloud::pubsub_admin::TopicAdminClient topic_admin_client(
       google::cloud::pubsub_admin::MakeTopicAdminConnection());
 
-  std::cout << "\nRunning CreateTopic() sample" << std::endl;
+  std::cout << "\nRunning CreateTopic() sample [1]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, topic_id});
+
+  // Since the topic was created already, this should return kAlreadyExists.
+  std::cout << "\nRunning CreateTopic() sample [2]" << std::endl;
+  CreateTopic(topic_admin_client, {project_id, topic_id});
+
+  std::cout << "\nRunning GetTopic() sample" << std::endl;
+  GetTopic(topic_admin_client, {project_id, topic_id});
+
+  std::cout << "\nRunning UpdateTopic() sample" << std::endl;
+  ignore_emulator_failures(
+      [&] {
+        UpdateTopic(topic_admin_client, {project_id, topic_id});
+      },
+      StatusCode::kInvalidArgument);
+
+  std::cout << "\nRunning ListTopics() sample" << std::endl;
+  ListTopics(topic_admin_client, {project_id});
+
+  std::cout << "\nRunning ListTopicSnapshots() sample" << std::endl;
+  ListTopicSnapshots(topic_admin_client, {project_id, topic_id});
+
+  std::cout << "\nRunning ListTopicSubscriptions() sample" << std::endl;
+  ListTopicSubscriptions(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nRunning DeleteTopic() sample" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, topic_id});
@@ -126,6 +260,16 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   Example example({
       CreateTopicAdminCommand("create-topic", {"project-id", "topic-id"},
                               CreateTopic),
+      CreateTopicAdminCommand("get-topic", {"project-id", "topic-id"},
+                              GetTopic),
+      CreateTopicAdminCommand("update-topic", {"project-id", "topic-id"},
+                              UpdateTopic),
+      CreateTopicAdminCommand("list-topics", {"project-id"}, ListTopics),
+      CreateTopicAdminCommand("list-topic-subscriptions",
+                              {"project-id", "topic-id"},
+                              ListTopicSubscriptions),
+      CreateTopicAdminCommand("list-topic-snapshots",
+                              {"project-id", "topic-id"}, ListTopicSnapshots),
       CreateTopicAdminCommand("delete-topic", {"project-id", "topic-id"},
                               DeleteTopic),
       {"auto", AutoRun},
