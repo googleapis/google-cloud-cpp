@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include <thread>
 
 namespace google {
 namespace cloud {
@@ -27,7 +26,7 @@ DefaultRowReader::DefaultRowReader(
     std::string table_name, bigtable::RowSet row_set, std::int64_t rows_limit,
     bigtable::Filter filter, bool reverse,
     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy)
+    std::unique_ptr<BackoffPolicy> backoff_policy, Sleeper sleeper)
     : stub_(std::move(stub)),
       app_profile_id_(std::move(app_profile_id)),
       table_name_(std::move(table_name)),
@@ -36,7 +35,8 @@ DefaultRowReader::DefaultRowReader(
       filter_(std::move(filter)),
       reverse_(reverse),
       retry_policy_(std::move(retry_policy)),
-      backoff_policy_(std::move(backoff_policy)) {}
+      backoff_policy_(std::move(backoff_policy)),
+      sleeper_(std::move(sleeper)) {}
 
 void DefaultRowReader::MakeRequest() {
   response_ = {};
@@ -127,8 +127,7 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
 
     if (!retry_policy_->OnFailure(status)) return status;
 
-    auto delay = backoff_policy_->OnCompletion();
-    std::this_thread::sleep_for(delay);
+    sleeper_(backoff_policy_->OnCompletion());
 
     // If we reach this place, we failed and need to restart the call.
     MakeRequest();

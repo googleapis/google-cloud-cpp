@@ -273,12 +273,15 @@ TEST_F(DefaultRowReaderTest, RetryPolicyExhausted) {
   auto backoff = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*backoff, OnCompletion)
       .Times(kNumRetries)
-      .WillRepeatedly(Return(ms(0)));
+      .WillRepeatedly(Return(ms(10)));
+
+  MockFunction<void(std::chrono::milliseconds)> mock_sleeper;
+  EXPECT_CALL(mock_sleeper, Call(ms(10))).Times(kNumRetries);
 
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), std::move(backoff));
+      false, retry_.clone(), std::move(backoff), mock_sleeper.AsStdFunction());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader),
               ElementsAre(StatusIs(StatusCode::kUnavailable)));
