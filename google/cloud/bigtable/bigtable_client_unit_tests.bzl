@@ -63,6 +63,7 @@ bigtable_client_unit_tests = [
     "internal/prefix_range_end_test.cc",
     "internal/rate_limiter_test.cc",
     "internal/retry_context_test.cc",
+    "internal/retry_info_helper_test.cc",
     "internal/retry_traits_test.cc",
     "internal/traced_row_reader_test.cc",
     "legacy_table_test.cc",
