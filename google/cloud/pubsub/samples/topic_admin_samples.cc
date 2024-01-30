@@ -115,7 +115,7 @@ void UpdateTopic(google::cloud::pubsub_admin::TopicAdminClient client,
 
 void ListTopics(google::cloud::pubsub_admin::TopicAdminClient client,
                 std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topics] [list-topics]
+  //! [list-topics]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string const& project_id) {
     int count = 0;
@@ -128,14 +128,14 @@ void ListTopics(google::cloud::pubsub_admin::TopicAdminClient client,
       std::cout << "No topics found in project " << project_id << "\n";
     }
   }
-  //! [END pubsub_list_topics] [list-topics]
+  //! [list-topics]
   (std::move(client), argv.at(0));
 }
 
 void ListTopicSubscriptions(
     google::cloud::pubsub_admin::TopicAdminClient client,
     std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topic_subscriptions] [list-topic-subscriptions]
+  //! [list-topic-subscriptions]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub_admin::TopicAdminClient client, std::string const& project_id,
@@ -147,7 +147,7 @@ void ListTopicSubscriptions(
       std::cout << "  " << *name << "\n";
     }
   }
-  //! [END pubsub_list_topic_subscriptions] [list-topic-subscriptions]
+  //! [list-topic-subscriptions]
   (std::move(client), argv.at(0), argv.at(1));
 }
 

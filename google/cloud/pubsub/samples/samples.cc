@@ -181,6 +181,42 @@ void DetachSubscription(google::cloud::pubsub::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void ListTopics(google::cloud::pubsub::TopicAdminClient client,
+                std::vector<std::string> const& argv) {
+  //! [START pubsub_list_topics]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::TopicAdminClient client, std::string const& project_id) {
+    int count = 0;
+    for (auto& topic : client.ListTopics(project_id)) {
+      if (!topic) throw std::move(topic).status();
+      std::cout << "Topic Name: " << topic->name() << "\n";
+      ++count;
+    }
+    if (count == 0) {
+      std::cout << "No topics found in project " << project_id << "\n";
+    }
+  }
+  //! [END pubsub_list_topics]
+  (std::move(client), argv.at(0));
+}
+
+void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
+                            std::vector<std::string> const& argv) {
+  //! [START pubsub_list_topic_subscriptions]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::TopicAdminClient client, std::string const& project_id,
+     std::string const& topic_id) {
+    auto const topic = pubsub::Topic(project_id, topic_id);
+    std::cout << "Subscription list for topic " << topic << ":\n";
+    for (auto& name : client.ListTopicSubscriptions(topic)) {
+      if (!name) throw std::move(name).status();
+      std::cout << "  " << *name << "\n";
+    }
+  }
+  //! [END pubsub_list_topic_subscriptions]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [START pubsub_create_pull_subscription] [create-subscription]
