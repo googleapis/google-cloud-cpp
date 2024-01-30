@@ -263,9 +263,16 @@ StatusOr<std::string> ComputeEngineCredentials::RetrieveUniverseDomain(
     }
     return AsStatus(std::move(**response));
   }
-  auto metadata = ParseMetadataServerResponse(**response);
-  if (!metadata) return std::move(metadata).status();
-  universe_domain_ = std::move(metadata->universe_domain);
+
+  auto payload =
+      rest_internal::ReadAll((std::move(**response)).ExtractPayload());
+  if (!payload.ok()) return payload.status();
+  // Curiously the MDS response for universe_domain is not JSON, but plain text.
+  // TODO(#13529): Revisit this JSON synthesis if we cannot convince the the
+  //  output format to be changed.
+  auto metadata = ParseMetadataServerResponse(
+      absl::StrCat(R"""({"universe_domain": ")""", *payload, R"""("})"""));
+  universe_domain_ = std::move(metadata.universe_domain);
   return *universe_domain_;
 }
 

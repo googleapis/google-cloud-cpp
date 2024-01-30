@@ -430,9 +430,7 @@ auto expected_universe_domain_request = []() {
 };
 
 TEST(ComputeEngineCredentialsTest, UniverseDomainSuccess) {
-  auto const universe_domain_resp = std::string{R"""({
-      "universe_domain": "my-ud.net"
-  })"""};
+  auto const universe_domain_resp = std::string{R"""(my-ud.net)"""};
 
   auto client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*client, Get(_, expected_universe_domain_request()))
