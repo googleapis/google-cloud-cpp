@@ -53,7 +53,6 @@ CreateSubscriptionAdminCommand(std::string const& name,
 void CreateSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
-  //! [create-subscription]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub_admin::SubscriptionAdminClient client,
@@ -73,14 +72,12 @@ void CreateSubscription(
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
   }
-  //! [create-subscription]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void DeleteSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
-  //! [delete-subscription]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub_admin::SubscriptionAdminClient client,
@@ -96,7 +93,6 @@ void DeleteSubscription(
 
     std::cout << "The subscription was successfully deleted\n";
   }
-  //! [delete-subscription]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
