@@ -47,6 +47,11 @@ function (google_cloud_cpp_install_headers target destination)
         get_target_property(target_sources ${target} SOURCES)
     endif ()
     foreach (header ${target_sources})
+        # Sometimes we use generator expressions for the headers.
+        string(REPLACE "$<BUILD_INTERFACE:" "" header "${header}")
+        string(REPLACE ">" "" header "${header}")
+
+        # Only install headers.
         if (NOT "${header}" MATCHES "\\.h$" AND NOT "${header}" MATCHES
                                                 "\\.inc$")
             continue()

@@ -519,14 +519,8 @@ install(
     TARGETS google_cloud_cpp_pubsub_mocks
     EXPORT pubsub_mocks-targets
     COMPONENT google_cloud_cpp_development)
-install(
-    FILES ${google_cloud_cpp_pubsub_mocks_hdrs}
-    DESTINATION "include/google/cloud/pubsub/mocks"
-    COMPONENT google_cloud_cpp_development)
-install(
-    FILES ${google_cloud_cpp_pubsub_mocks_hdrs}
-    DESTINATION "include/google/cloud/pubsub/admin/mocks"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_install_headers(google_cloud_cpp_pubsub_mocks
+                                 "include/google/cloud/pubsub")
 
 google_cloud_cpp_add_pkgconfig(
     pubsub
