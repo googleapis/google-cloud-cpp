@@ -139,9 +139,6 @@ class TopicAdminClient {
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
-   *
-   * @par Example
-   * @snippet samples.cc list-topics
    */
   ListTopicsRange ListTopics(std::string const& project_id, Options opts = {}) {
     internal::OptionsSpan span(
