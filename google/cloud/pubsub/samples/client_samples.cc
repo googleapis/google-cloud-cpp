@@ -161,7 +161,6 @@ void TopicAdminClientSetEndpoint(std::vector<std::string> const& argv) {
     throw examples::Usage{"topic-admin-client-set-endpoint"};
   }
   //! [topic-admin-client-set-endpoint]
-  namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   using ::google::cloud::Options;
   []() {
@@ -180,7 +179,6 @@ void TopicAdminClientServiceAccountKey(std::vector<std::string> const& argv) {
     throw examples::Usage{"topic-admin-client-service-account <keyfile>"};
   }
   //! [topic-admin-client-service-account]
-  namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   using ::google::cloud::Options;
   [](std::string const& keyfile) {
@@ -204,7 +202,6 @@ void SubscriptionAdminClientSetEndpoint(std::vector<std::string> const& argv) {
   }
   //! [subscription-admin-client-set-endpoint]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
-  namespace pubsub = ::google::cloud::pubsub;
   using ::google::cloud::Options;
   []() {
     return pubsub_admin::SubscriptionAdminClient(
@@ -224,7 +221,6 @@ void SubscriptionAdminClientServiceAccountKey(
         "subscription-admin-client-service-account <keyfile>"};
   }
   //! [subscription-admin-client-service-account]
-  namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   using ::google::cloud::Options;
   [](std::string const& keyfile) {
