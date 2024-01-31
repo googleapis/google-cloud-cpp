@@ -2476,9 +2476,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   CreateSnapshot(subscription_admin_client,
                  {project_id, subscription_id, snapshot_id});
 
-  std::cout << "\nRunning ListTopicSnapshots() sample" << std::endl;
-  ListTopicSnapshots(topic_admin_client, {project_id, topic_id});
-
   std::cout << "\nRunning GetSnapshot() sample" << std::endl;
   GetSnapshot(subscription_admin_client, {project_id, snapshot_id});
 
