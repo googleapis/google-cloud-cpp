@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/blocking_publisher.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
-#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
@@ -82,18 +82,17 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const topic_id = RandomTopicId(generator);
   auto const topic = google::cloud::pubsub::Topic(project_id, topic_id);
 
-  google::cloud::pubsub::TopicAdminClient topic_admin_client(
-      google::cloud::pubsub::MakeTopicAdminConnection());
+  google::cloud::pubsub_admin::TopicAdminClient topic_admin_client(
+      google::cloud::pubsub_admin::MakeTopicAdminConnection());
 
   std::cout << "\nCreateTopic()" << std::endl;
-  auto topic_metadata = topic_admin_client.CreateTopic(
-      google::cloud::pubsub::TopicBuilder(topic));
+  auto topic_metadata = topic_admin_client.CreateTopic(topic.FullName());
 
   std::cout << "\nRunning BlockingPublish()" << std::endl;
   BlockingPublish({project_id, topic_id});
 
   std::cout << "\nDeleteTopic()" << std::endl;
-  (void)topic_admin_client.DeleteTopic(topic);
+  (void)topic_admin_client.DeleteTopic(topic.FullName());
 
   std::cout << "\nAutoRun done" << std::endl;
 }
