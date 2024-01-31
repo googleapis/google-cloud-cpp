@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/subscription_admin_client.h"
+#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/blocking_publisher.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/subscriber.h"
-#include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/subscription_builder.h"
-#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -162,11 +162,13 @@ void TopicAdminClientSetEndpoint(std::vector<std::string> const& argv) {
   }
   //! [topic-admin-client-set-endpoint]
   namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
   using ::google::cloud::Options;
   []() {
-    return pubsub::TopicAdminClient(pubsub::MakeTopicAdminConnection(
-        Options{}.set<google::cloud::EndpointOption>(
-            "private.googleapis.com")));
+    return pubsub_admin::TopicAdminClient(
+        pubsub_admin::MakeTopicAdminConnection(
+            Options{}.set<google::cloud::EndpointOption>(
+                "private.googleapis.com")));
   }
   //! [topic-admin-client-set-endpoint]
   ();
@@ -179,15 +181,17 @@ void TopicAdminClientServiceAccountKey(std::vector<std::string> const& argv) {
   }
   //! [topic-admin-client-service-account]
   namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
   using ::google::cloud::Options;
   [](std::string const& keyfile) {
     auto is = std::ifstream(keyfile);
     is.exceptions(std::ios::badbit);
     auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
     std::cerr << "DEBUG\n" << keyfile << "\nDEBUG\n";
-    return pubsub::TopicAdminClient(pubsub::MakeTopicAdminConnection(
-        Options{}.set<google::cloud::UnifiedCredentialsOption>(
-            google::cloud::MakeServiceAccountCredentials(contents))));
+    return pubsub_admin::TopicAdminClient(
+        pubsub_admin::MakeTopicAdminConnection(
+            Options{}.set<google::cloud::UnifiedCredentialsOption>(
+                google::cloud::MakeServiceAccountCredentials(contents))));
   }
   //! [topic-admin-client-service-account]
   (argv.at(0));
@@ -199,11 +203,12 @@ void SubscriptionAdminClientSetEndpoint(std::vector<std::string> const& argv) {
     throw examples::Usage{"subscription-admin-client-set-endpoint"};
   }
   //! [subscription-admin-client-set-endpoint]
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
   namespace pubsub = ::google::cloud::pubsub;
   using ::google::cloud::Options;
   []() {
-    return pubsub::SubscriptionAdminClient(
-        pubsub::MakeSubscriptionAdminConnection(
+    return pubsub_admin::SubscriptionAdminClient(
+        pubsub_admin::MakeSubscriptionAdminConnection(
             Options{}.set<google::cloud::EndpointOption>(
                 "private.googleapis.com")));
   }
@@ -220,13 +225,14 @@ void SubscriptionAdminClientServiceAccountKey(
   }
   //! [subscription-admin-client-service-account]
   namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
   using ::google::cloud::Options;
   [](std::string const& keyfile) {
     auto is = std::ifstream(keyfile);
     is.exceptions(std::ios::badbit);
     auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
-    return pubsub::SubscriptionAdminClient(
-        pubsub::MakeSubscriptionAdminConnection(
+    return pubsub_admin::SubscriptionAdminClient(
+        pubsub_admin::MakeSubscriptionAdminConnection(
             Options{}.set<google::cloud::UnifiedCredentialsOption>(
                 google::cloud::MakeServiceAccountCredentials(contents))));
   }
