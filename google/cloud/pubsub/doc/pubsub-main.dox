@@ -102,31 +102,31 @@ Follow these links to find examples for other `*Client` classes:
 
 /*! @page Publisher-endpoint-snippet Override @c Publisher Default Endpoint
 
-@snippet google/cloud/pubsub/samples/client_samples.cc publisher-set-endpoint
+@snippetgoogle/cloud/pubsub/admin/samples/topic_admin_client_samples.cc publisher-set-endpoint
 
 */
 
 /*! @page Subscriber-endpoint-snippet Override @c Subscriber Default Endpoint
 
-@snippet google/cloud/pubsub/samples/client_samples.cc subscriber-set-endpoint
+@snippetgoogle/cloud/pubsub/admin/samples/topic_admin_client_samples.cc subscriber-set-endpoint
 
 */
 
 /*! @page BlockingPublisher-endpoint-snippet Override @c BlockingPublisher Default Endpoint
 
-@snippet google/cloud/pubsub/samples/client_samples.cc blocking-publisher-set-endpoint
+@snippetgoogle/cloud/pubsub/admin/samples/topic_admin_client_samples.cc blocking-publisher-set-endpoint
 
 */
 
 /*! @page TopicAdminClient-endpoint-snippet Override @c TopicAdminClient Default Endpoint
 
-@snippet google/cloud/pubsub/samples/client_samples.cc topic-admin-client-set-endpoint
+@snippetgoogle/cloud/pubsub/admin/samples/topic_admin_client_samples.cc topic-admin-client-set-endpoint
 
 */
 
 /*! @page SubscriptionAdminClient-endpoint-snippet Override @c SubscriptionAdminClient Default Endpoint
 
-@snippet google/cloud/pubsub/samples/client_samples.cc subscription-admin-client-set-endpoint
+@snippet google/cloud/pubsub/admin/samples/topic_admin_client_samples.cc subscription-admin-client-set-endpoint
 
 */
 
@@ -140,31 +140,31 @@ Follow these links to find examples for other `*Client` classes:
 
 /*! @page Publisher-service-account-snippet Override @c Publisher Default Authentication
 
-@snippet google/cloud/pubsub/samples/client_samples.cc publisher-service-account
+@snippetgoogle/cloud/pubsub/admin/samples/topic_admin_client_samples.cc publisher-service-account
 
 */
 
 /*! @page Subscriber-service-account-snippet Override @c Subscriber Default Authentication
 
-@snippet google/cloud/pubsub/samples/client_samples.cc subscriber-service-account
+@snippetgoogle/cloud/pubsub/admin/samples/topic_admin_client_samples.cc subscriber-service-account
 
 */
 
 /*! @page BlockingPublisher-service-account-snippet Override @c BlockingPublisher Default Authentication
 
-@snippet google/cloud/pubsub/samples/client_samples.cc blocking-publisher-service-account
+@snippetgoogle/cloud/pubsub/admin/samples/topic_admin_client_samples.cc blocking-publisher-service-account
 
 */
 
 /*! @page TopicAdminClient-service-account-snippet Override @c TopicAdminClient Default Authentication
 
-@snippet google/cloud/pubsub/samples/client_samples.cc topic-admin-client-service-account
+@snippetgoogle/cloud/pubsub/admin/samples/topic_admin_client_samples.cc topic-admin-client-service-account
 
 */
 
 /*! @page SubscriptionAdminClient-service-account-snippet Override @c SubscriptionAdminClient Default Authentication
 
-@snippet google/cloud/pubsub/samples/client_samples.cc subscription-admin-client-service-account
+@snippetgoogle/cloud/pubsub/admin/samples/topic_admin_client_samples.cc subscription-admin-client-service-account
 
 */
 
