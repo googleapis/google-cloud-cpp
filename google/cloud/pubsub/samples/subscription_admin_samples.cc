@@ -134,11 +134,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
 
- cleanup.Defer([subscription_admin_client, project_id, subscription_id]() mutable {
-    std::cout << "\nRunning DeleteSubscription() sample" << std::endl;
-    DeleteSubscription(subscription_admin_client,
-                       {project_id, subscription_id});
-  });
+  cleanup.Defer(
+      [subscription_admin_client, project_id, subscription_id]() mutable {
+        std::cout << "\nRunning DeleteSubscription() sample" << std::endl;
+        DeleteSubscription(subscription_admin_client,
+                           {project_id, subscription_id});
+      });
 
   std::cout << "\nAutoRun done" << std::endl;
 }
