@@ -263,9 +263,11 @@ StatusOr<std::string> ComputeEngineCredentials::RetrieveUniverseDomain(
     }
     return AsStatus(std::move(**response));
   }
-  auto metadata = ParseMetadataServerResponse(**response);
-  if (!metadata) return std::move(metadata).status();
-  universe_domain_ = std::move(metadata->universe_domain);
+
+  auto payload =
+      rest_internal::ReadAll((std::move(**response)).ExtractPayload());
+  if (!payload.ok()) return payload.status();
+  universe_domain_ = *std::move(payload);
   return *universe_domain_;
 }
 
