@@ -105,7 +105,7 @@ class TopicAdminClient {
    * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
-   * @snippet topic_admin_samples.cc get-topic
+   * @snippet samples.cc get-topic
    */
   StatusOr<google::pubsub::v1::Topic> GetTopic(Topic topic, Options opts = {}) {
     internal::OptionsSpan span(
