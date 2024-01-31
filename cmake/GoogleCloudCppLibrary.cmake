@@ -264,7 +264,10 @@ function (google_cloud_cpp_add_gapic_library library display_name)
     list(SORT relative_mock_files)
     set(mock_files)
     foreach (file IN LISTS relative_mock_files)
-        list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
+        # We use a generator expression per the recommendation in:
+        # https://stackoverflow.com/a/62465051
+        list(APPEND mock_files
+             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${file}>")
     endforeach ()
     add_library(${mocks_target} INTERFACE)
     target_sources(${mocks_target} INTERFACE ${mock_files})
@@ -306,8 +309,6 @@ function (google_cloud_cpp_add_gapic_library library display_name)
 
     google_cloud_cpp_install_headers("${library_target}"
                                      "include/google/cloud/${library}")
-    google_cloud_cpp_install_headers("${mocks_target}"
-                                     "include/google/cloud/${library}")
 
     google_cloud_cpp_add_pkgconfig(
         ${library}
@@ -346,6 +347,37 @@ function (google_cloud_cpp_add_gapic_library library display_name)
             "${CMAKE_CURRENT_BINARY_DIR}/${library_target}-config.cmake"
             "${CMAKE_CURRENT_BINARY_DIR}/${library_target}-config-version.cmake"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${library_target}"
+        COMPONENT google_cloud_cpp_development)
+
+    # Install mocks
+    install(
+        EXPORT ${mocks_target}-targets
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${mocks_target}"
+        COMPONENT google_cloud_cpp_development)
+    install(
+        TARGETS ${mocks_target}
+        EXPORT ${mocks_target}-targets
+        COMPONENT google_cloud_cpp_development)
+
+    google_cloud_cpp_install_headers("${mocks_target}"
+                                     "include/google/cloud/${library}")
+
+    google_cloud_cpp_add_pkgconfig(
+        ${library}_mocks "${display_name} Mocks"
+        "Mocks for the ${display_name} C++ Client Library" "${library_target}"
+        "gmock_main")
+
+    configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/mocks-config.cmake.in"
+                   "${mocks_target}-config.cmake" @ONLY)
+    write_basic_package_version_file(
+        "${mocks_target}-config-version.cmake"
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY ExactVersion)
+
+    install(
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/${mocks_target}-config.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/${mocks_target}-config-version.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${mocks_target}"
         COMPONENT google_cloud_cpp_development)
 
     # ${library_alias} must be defined before we can add the samples.
