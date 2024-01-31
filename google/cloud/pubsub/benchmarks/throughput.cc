@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/subscription_admin_client.h"
+#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/subscriber.h"
-#include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
-#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
@@ -34,6 +34,7 @@
 
 namespace {
 namespace pubsub = ::google::cloud::pubsub;
+namespace pubsub_admin = ::google::cloud::pubsub_admin;
 using ::google::cloud::future;
 using ::google::cloud::Status;
 using ::google::cloud::StatusOr;
@@ -120,34 +121,38 @@ int main(int argc, char* argv[]) {
   // If there is no pre-defined topic and/or subscription for this test, create
   // them and automatically remove them at the end of the test.
   if (config->topic_id.empty()) {
-    pubsub::TopicAdminClient topic_admin(pubsub::MakeTopicAdminConnection());
+    pubsub_admin::TopicAdminClient topic_admin(
+        pubsub_admin::MakeTopicAdminConnection());
     config->topic_id = google::cloud::pubsub_testing::RandomTopicId(generator);
     auto topic = pubsub::Topic(config->project_id, config->topic_id);
-    auto create = topic_admin.CreateTopic(pubsub::TopicBuilder{topic});
+    auto create = topic_admin.CreateTopic(topic.FullName());
     if (!create) {
       std::cout << "CreateTopic() failed: " << create.status() << "\n";
       return 1;
     }
     cleanup.Defer([topic_admin, topic]() mutable {
-      (void)topic_admin.DeleteTopic(topic);
+      (void)topic_admin.DeleteTopic(topic.FullName());
     });
   }
 
   if (config->subscription_id.empty()) {
-    pubsub::SubscriptionAdminClient subscription_admin(
-        pubsub::MakeSubscriptionAdminConnection());
+    pubsub_admin::SubscriptionAdminClient subscription_admin(
+        pubsub_admin::MakeSubscriptionAdminConnection());
     config->subscription_id =
         google::cloud::pubsub_testing::RandomSubscriptionId(generator);
     auto topic = pubsub::Topic(config->project_id, config->topic_id);
     auto subscription =
         pubsub::Subscription(config->project_id, config->subscription_id);
-    auto create = subscription_admin.CreateSubscription(topic, subscription);
+    google::pubsub::v1::Subscription request;
+    request.set_name(subscription.FullName());
+    request.set_topic(topic.FullName());
+    auto create = subscription_admin.CreateSubscription(request);
     if (!create) {
       std::cout << "CreateSubscription() failed: " << create.status() << "\n";
       return 1;
     }
     cleanup.Defer([subscription_admin, subscription]() mutable {
-      (void)subscription_admin.DeleteSubscription(subscription);
+      (void)subscription_admin.DeleteSubscription(subscription.FullName());
     });
   }
 
