@@ -71,8 +71,7 @@ void CreateSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void DeleteSubscription(
@@ -92,8 +91,7 @@ void DeleteSubscription(
     if (!status.ok()) throw std::runtime_error(status.message());
 
     std::cout << "The subscription was successfully deleted\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1));
+  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
