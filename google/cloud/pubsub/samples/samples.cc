@@ -2362,6 +2362,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateTopic() sample [3]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, ordering_topic_id});
 
+  std::cout << "\nRunning ListTopics() sample" << std::endl;
+  ListTopics(topic_admin_client, {project_id});
+
   std::cout << "\nRunning the StatusOr example" << std::endl;
   ExampleStatusOr(topic_admin_client, {project_id});
 
