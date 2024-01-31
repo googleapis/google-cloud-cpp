@@ -195,7 +195,9 @@ bigtable::RowReader DataConnectionImpl::ReadRowsFull(
   auto impl = std::make_shared<DefaultRowReader>(
       stub_, std::move(params.app_profile_id), std::move(params.table_name),
       std::move(params.row_set), params.rows_limit, std::move(params.filter),
-      params.reverse, retry_policy(*current), backoff_policy(*current));
+      params.reverse, retry_policy(*current), backoff_policy(*current),
+      // TODO(#13514) - use Option value.
+      false);
   return MakeRowReader(std::move(impl));
 }
 
