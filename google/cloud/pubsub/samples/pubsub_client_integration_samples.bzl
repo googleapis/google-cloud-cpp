@@ -21,6 +21,7 @@ pubsub_client_integration_samples = [
     "client_samples.cc",
     "samples.cc",
     "schema_client_samples.cc",
+    "subscription_admin_samples.cc",
     "topic_admin_samples.cc",
     "iam_samples.cc",
 ]

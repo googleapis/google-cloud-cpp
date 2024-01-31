@@ -2773,9 +2773,6 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateTopicAdminCommand("list-topic-snapshots",
                               {"project-id", "topic-id"}, ListTopicSnapshots),
       CreateSubscriptionAdminCommand(
-          "create-subscription", {"project-id", "topic-id", "subscription-id"},
-          CreateSubscription),
-      CreateSubscriptionAdminCommand(
           "create-filtered-subscription",
           {"project-id", "topic-id", "subscription-id"},
           CreateFilteredSubscription),
@@ -2824,9 +2821,6 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                                      UpdateSubscription),
       CreateSubscriptionAdminCommand("list-subscriptions", {"project-id"},
                                      ListSubscriptions),
-      CreateSubscriptionAdminCommand("delete-subscription",
-                                     {"project-id", "subscription-id"},
-                                     DeleteSubscription),
       CreateSubscriptionAdminCommand(
           "modify-push-config", {"project-id", "subscription-id", "endpoint"},
           ModifyPushConfig),

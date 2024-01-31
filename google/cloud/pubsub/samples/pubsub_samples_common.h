@@ -90,6 +90,18 @@ std::pair<std::string, std::string> CommitSchemaWithRevisionsForTesting(
 void CleanupSchemas(google::cloud::pubsub::SchemaServiceClient& schema_admin,
                     std::string const& project_id, absl::Time const& time_now);
 
+class Cleanup {
+ public:
+  Cleanup() = default;
+  ~Cleanup() {
+    for (auto i = actions_.rbegin(); i != actions_.rend(); ++i) (*i)();
+  }
+  void Defer(std::function<void()> f) { actions_.push_back(std::move(f)); }
+
+ private:
+  std::vector<std::function<void()>> actions_;
+};
+
 }  // namespace examples
 }  // namespace pubsub
 }  // namespace cloud
