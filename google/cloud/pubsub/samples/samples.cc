@@ -2349,12 +2349,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
 
-  auto const bucket_id = project_id + "-pubsub-bucket";
-  std::cout << "\nRunning CreateCloudStorageSubscription() sample" << std::endl;
-  CreateCloudStorageSubscription(
-      subscription_admin_client,
-      {project_id, topic_id, cloud_storage_subscription_id, bucket_id});
-
   std::cout << "\nRunning CreateFilteredSubscription() sample [1]" << std::endl;
   CreateFilteredSubscription(subscription_admin_client,
                              {project_id, topic_id, filtered_subscription_id});
