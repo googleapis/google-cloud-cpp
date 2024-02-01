@@ -59,8 +59,13 @@ export_list_to_bazel("pubsub_samples_unit_tests.bzl"
 
 set(pubsub_client_integration_samples
     # cmake-format: sort
-    blocking_samples.cc client_samples.cc samples.cc schema_client_samples.cc schema_samples.cc
-    subscription_admin_samples.cc topic_admin_samples.cc)
+    blocking_samples.cc
+    client_samples.cc
+    samples.cc
+    schema_client_samples.cc
+    schema_samples.cc
+    subscription_admin_samples.cc
+    topic_admin_samples.cc)
 if (TARGET google-cloud-cpp::iam)
     list(APPEND pubsub_client_integration_samples iam_samples.cc)
 endif ()

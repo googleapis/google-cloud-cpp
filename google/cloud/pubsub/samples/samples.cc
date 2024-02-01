@@ -858,8 +858,7 @@ void CreateAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
 
     std::cout << "Schema successfully created: " << schema->DebugString()
               << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
@@ -883,8 +882,7 @@ void CreateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
     if (!schema) throw std::move(schema).status();
     std::cout << "Schema successfully created: " << schema->DebugString()
               << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void DeleteSchema(google::cloud::pubsub::SchemaServiceClient client,
@@ -903,8 +901,7 @@ void DeleteSchema(google::cloud::pubsub::SchemaServiceClient client,
     if (!status.ok()) throw std::runtime_error(status.message());
 
     std::cout << "Schema successfully deleted\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1));
+  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void CreateTopicWithSchema(google::cloud::pubsub::TopicAdminClient client,
