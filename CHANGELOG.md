@@ -6,7 +6,7 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.22.0 - TBD
 
-## v2.21.0
+## v2.21.0 - 2024-02
 
 ### New Libraries
 
