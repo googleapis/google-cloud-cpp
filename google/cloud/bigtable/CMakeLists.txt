@@ -203,6 +203,8 @@ add_library(
     internal/readrowsparser.h
     internal/retry_context.cc
     internal/retry_context.h
+    internal/retry_info_helper.cc
+    internal/retry_info_helper.h
     internal/retry_traits.h
     internal/row_reader_impl.h
     internal/rpc_policy_parameters.h
@@ -395,6 +397,7 @@ if (BUILD_TESTING)
         internal/prefix_range_end_test.cc
         internal/rate_limiter_test.cc
         internal/retry_context_test.cc
+        internal/retry_info_helper_test.cc
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
         legacy_table_test.cc

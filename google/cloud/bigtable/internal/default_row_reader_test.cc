@@ -138,7 +138,7 @@ TEST_F(DefaultRowReaderTest, EmptyReaderHasNoRows) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), IsEmpty());
 }
@@ -161,7 +161,7 @@ TEST_F(DefaultRowReaderTest, ReadOneRow) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
@@ -188,7 +188,7 @@ TEST_F(DefaultRowReaderTest, StreamIsDrained) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
@@ -226,7 +226,7 @@ TEST_F(DefaultRowReaderTest, RetryThenSuccess) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
@@ -248,7 +248,7 @@ TEST_F(DefaultRowReaderTest, NoRetryOnPermanentError) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader),
               ElementsAre(StatusIs(StatusCode::kPermissionDenied)));
@@ -273,12 +273,16 @@ TEST_F(DefaultRowReaderTest, RetryPolicyExhausted) {
   auto backoff = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*backoff, OnCompletion)
       .Times(kNumRetries)
-      .WillRepeatedly(Return(ms(0)));
+      .WillRepeatedly(Return(ms(10)));
+
+  MockFunction<void(ms)> mock_sleeper;
+  EXPECT_CALL(mock_sleeper, Call(ms(10))).Times(kNumRetries);
 
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), std::move(backoff));
+      false, retry_.clone(), std::move(backoff), false,
+      mock_sleeper.AsStdFunction());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader),
               ElementsAre(StatusIs(StatusCode::kUnavailable)));
@@ -313,7 +317,7 @@ TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyReadRows) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
@@ -356,7 +360,7 @@ TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyScannedRows) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2", "r3"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
@@ -391,7 +395,7 @@ TEST_F(DefaultRowReaderTest, FailedParseIsRetried) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, std::move(retry), backoff_.clone());
+      false, std::move(retry), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
@@ -430,7 +434,7 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyReadRows) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, std::move(retry), backoff_.clone());
+      false, std::move(retry), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
@@ -478,7 +482,7 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyScannedRows) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2", "r3"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, std::move(retry), backoff_.clone());
+      false, std::move(retry), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
@@ -503,7 +507,7 @@ TEST_F(DefaultRowReaderTest, FailedParseWithPermanentError) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader),
               ElementsAre(StatusIs(StatusCode::kInternal)));
@@ -529,7 +533,7 @@ TEST_F(DefaultRowReaderTest, NoRetryOnEmptyRowSet) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r2")));
 }
@@ -551,7 +555,7 @@ TEST_F(DefaultRowReaderTest, RowLimitIsSent) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(), 42,
       bigtable::Filter::PassAllFilter(), false, retry_.clone(),
-      backoff_.clone());
+      backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), IsEmpty());
 }
@@ -583,7 +587,7 @@ TEST_F(DefaultRowReaderTest, RowLimitIsDecreasedOnRetry) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(), 42,
       bigtable::Filter::PassAllFilter(), false, retry_.clone(),
-      backoff_.clone());
+      backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
@@ -609,7 +613,7 @@ TEST_F(DefaultRowReaderTest, NoRetryIfRowLimitReached) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(), 1,
       bigtable::Filter::PassAllFilter(), false, retry_.clone(),
-      backoff_.clone());
+      backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
@@ -636,7 +640,7 @@ TEST_F(DefaultRowReaderTest, CancelDrainsStream) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
@@ -661,7 +665,7 @@ TEST_F(DefaultRowReaderTest, CancelBeforeBegin) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   // Manually cancel the call before a stream was created.
@@ -686,7 +690,7 @@ TEST_F(DefaultRowReaderTest, RowReaderConstructorDoesNotCallRpc) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 }
 
@@ -715,7 +719,7 @@ TEST_F(DefaultRowReaderTest, RetryUsesNewContext) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone());
+      false, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader),
               ElementsAre(StatusIs(StatusCode::kUnavailable)));
@@ -742,7 +746,7 @@ TEST_F(DefaultRowReaderTest, ReverseScanSuccess) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      true, retry_.clone(), backoff_.clone());
+      true, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(
       StatusOrRowKeys(reader),
@@ -770,7 +774,7 @@ TEST_F(DefaultRowReaderTest, ReverseScanFailsOnIncreasingRowKeyOrder) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      true, retry_.clone(), backoff_.clone());
+      true, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(
       StatusOrRowKeys(reader),
@@ -818,7 +822,7 @@ TEST_F(DefaultRowReaderTest, ReverseScanResumption) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2", "r3"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      true, retry_.clone(), backoff_.clone());
+      true, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r3")));
 }
@@ -851,10 +855,78 @@ TEST_F(DefaultRowReaderTest, BigtableCookies) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      true, retry_.clone(), backoff_.clone());
+      true, retry_.clone(), backoff_.clone(), false);
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader),
               ElementsAre(StatusIs(StatusCode::kPermissionDenied)));
+}
+
+TEST_F(DefaultRowReaderTest, RetryInfoHeeded) {
+  auto const delay = ms(std::chrono::minutes(5));
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([delay](auto, auto const&,
+                        google::bigtable::v2::ReadRowsRequest const&) {
+        auto stream = std::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce([delay] {
+          auto s = internal::ResourceExhaustedError("try again");
+          internal::SetRetryInfo(s, internal::RetryInfo{delay});
+          return s;
+        });
+        return stream;
+      })
+      .WillOnce([](auto, auto const&,
+                   google::bigtable::v2::ReadRowsRequest const& request) {
+        EXPECT_THAT(request, HasCorrectResourceNames());
+        auto stream = std::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(MakeRow("r1")))
+            .WillOnce(Return(Status()));
+        return stream;
+      });
+
+  MockFunction<void(ms)> mock_sleeper;
+  EXPECT_CALL(mock_sleeper, Call(delay));
+
+  internal::OptionsSpan span(TestOptions(/*expected_streams=*/2));
+
+  auto impl = std::make_shared<DefaultRowReader>(
+      mock, kAppProfile, kTableName, bigtable::RowSet(),
+      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
+      false, retry_.clone(), backoff_.clone(), true,
+      mock_sleeper.AsStdFunction());
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
+  EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
+}
+
+TEST_F(DefaultRowReaderTest, RetryInfoIgnored) {
+  auto const delay = ms(std::chrono::minutes(5));
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([delay](auto, auto const&,
+                        google::bigtable::v2::ReadRowsRequest const&) {
+        auto stream = std::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce([delay] {
+          auto s = internal::ResourceExhaustedError("try again");
+          internal::SetRetryInfo(s, internal::RetryInfo{delay});
+          return s;
+        });
+        return stream;
+      });
+
+  MockFunction<void(ms)> mock_sleeper;
+  EXPECT_CALL(mock_sleeper, Call).Times(0);
+
+  internal::OptionsSpan span(TestOptions(/*expected_streams=*/1));
+
+  auto impl = std::make_shared<DefaultRowReader>(
+      mock, kAppProfile, kTableName, bigtable::RowSet(),
+      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
+      false, retry_.clone(), backoff_.clone(), false,
+      mock_sleeper.AsStdFunction());
+  auto reader = bigtable_internal::MakeRowReader(std::move(impl));
+  EXPECT_THAT(StatusOrRowKeys(reader),
+              ElementsAre(StatusIs(StatusCode::kResourceExhausted)));
 }
 
 }  // namespace

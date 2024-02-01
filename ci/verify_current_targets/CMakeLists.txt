@@ -27,6 +27,7 @@ set(ga_libraries
     bigquery
     bigtable
     iam
+    iam_mocks
     logging
     opentelemetry
     pubsub
