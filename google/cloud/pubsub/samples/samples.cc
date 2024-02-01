@@ -370,20 +370,17 @@ void CreatePushSubscription(
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void CreateUnwrappedPushSubscription(
+void CreateOrderingSubscription(
     google::cloud::pubsub::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
-  //! [START pubsub_create_unwrapped_push_subscription]
+  //! [START pubsub_enable_subscription_ordering] [enable-subscription-ordering]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& topic_id, std::string const& subscription_id,
-     std::string const& endpoint) {
+     std::string const& topic_id, std::string const& subscription_id) {
     auto sub = client.CreateSubscription(
         pubsub::Topic(project_id, topic_id),
         pubsub::Subscription(project_id, subscription_id),
-        pubsub::SubscriptionBuilder{}.set_push_config(
-            pubsub::PushConfigBuilder{}.set_push_endpoint(endpoint).set_wrapper(
-                pubsub::PushConfigBuilder::MakeNoWrapper(true))));
+        pubsub::SubscriptionBuilder{}.enable_message_ordering(true));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The subscription already exists\n";
       return;
@@ -393,8 +390,8 @@ void CreateUnwrappedPushSubscription(
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
   }
-  //! [END pubsub_create_unwrapped_push_subscription]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+  //! [END pubsub_enable_subscription_ordering] [enable-subscription-ordering]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreateDeadLetterSubscription(
@@ -2296,6 +2293,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto const topic_id = RandomTopicId(generator);
   auto const subscription_id = RandomSubscriptionId(generator);
+  auto const exactly_once_subscription_id = RandomSubscriptionId(generator);
+  auto const filtered_subscription_id = RandomSubscriptionId(generator);
   auto const push_subscription_id = RandomSubscriptionId(generator);
   auto const dead_letter_subscription_id = RandomSubscriptionId(generator);
   auto const dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
@@ -2326,9 +2325,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateTopic() sample [2]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, topic_id});
 
-  std::cout << "\nRunning CreateTopic() sample [3]" << std::endl;
-  CreateTopic(topic_admin_client, {project_id, ordering_topic_id});
-
   std::cout << "\nRunning GetTopic() sample" << std::endl;
   GetTopic(topic_admin_client, {project_id, topic_id});
 
@@ -2348,6 +2344,38 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateSubscription() sample [1]" << std::endl;
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
+
+  std::cout << "\nRunning CreateSubscription() sample [2]" << std::endl;
+  CreateSubscription(subscription_admin_client,
+                     {project_id, topic_id, subscription_id});
+
+  auto const bucket_id = project_id + "-pubsub-bucket";
+  std::cout << "\nRunning CreateCloudStorageSubscription() sample" << std::endl;
+  CreateCloudStorageSubscription(
+      subscription_admin_client,
+      {project_id, topic_id, cloud_storage_subscription_id, bucket_id});
+
+  std::cout << "\nRunning CreateFilteredSubscription() sample [1]" << std::endl;
+  CreateFilteredSubscription(subscription_admin_client,
+                             {project_id, topic_id, filtered_subscription_id});
+
+  std::cout << "\nRunning CreateFilteredSubscription() sample [2]" << std::endl;
+  CreateFilteredSubscription(subscription_admin_client,
+                             {project_id, topic_id, filtered_subscription_id});
+
+  std::cout
+      << "\nRunning CreateSubscriptionWithExactlyOnceDelivery() sample [1]"
+      << std::endl;
+  CreateSubscriptionWithExactlyOnceDelivery(
+      subscription_admin_client,
+      {project_id, topic_id, exactly_once_subscription_id});
+
+  std::cout
+      << "\nRunning CreateSubscriptionWithExactlyOnceDelivery() sample [2]"
+      << std::endl;
+  CreateSubscriptionWithExactlyOnceDelivery(
+      subscription_admin_client,
+      {project_id, topic_id, exactly_once_subscription_id});
 
   std::cout << "\nRunning ListTopicSubscriptions() sample" << std::endl;
   ListTopicSubscriptions(topic_admin_client, {project_id, topic_id});
@@ -2577,38 +2605,23 @@ void AutoRun(std::vector<std::string> const& argv) {
     DetachSubscription(topic_admin_client, {project_id, subscription_id});
   });
 
-  std::cout << "\nRunning DeleteSubscription() sample [2]" << std::endl;
+  std::cout << "\nRunning DeleteSubscription() sample [1]" << std::endl;
   DeleteSubscription(subscription_admin_client,
                      {project_id, std::move(dead_letter_subscription_id)});
 
-  std::cout << "\nRunning DeleteSubscription() sample [4]" << std::endl;
+  std::cout << "\nRunning DeleteSubscription() sample [2]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 
-  std::cout << "\nRunning DeleteSubscription() sample [5]" << std::endl;
+  std::cout << "\nRunning DeleteSubscription() sample [3]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
-
-  std::cout << "\nRunning DeleteSubscription() sample [6] " << std::endl;
-  DeleteSubscription(subscription_admin_client,
-                     {project_id, bigquery_subscription_id});
-
-  std::cout << "\nRunning DeleteSubscription() for sample [7] " << std::endl;
-  DeleteSubscription(subscription_admin_client,
-                     {project_id, cloud_storage_subscription_id});
-
-  std::cout << "\nRunning DeleteSubscription() sample [8] " << std::endl;
-  DeleteSubscription(subscription_admin_client,
-                     {project_id, unwrapped_push_subscription_id});
 
   std::cout << "\nRunning DeleteTopic() sample [1]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, dead_letter_topic_id});
 
   std::cout << "\nRunning DeleteTopic() sample [2]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, ordering_topic_id});
-
-  std::cout << "\nRunning DeleteTopic() sample [3]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, topic_id});
 
-  std::cout << "\nRunning DeleteTopic() sample [4]" << std::endl;
+  std::cout << "\nRunning DeleteTopic() sample [3]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nAutoRun done" << std::endl;
