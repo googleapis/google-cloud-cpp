@@ -146,7 +146,7 @@ Follow these links to find examples for other `*Client` classes:
 
 /*! @page Subscriber-service-account-snippet Override @c Subscriber Default Authentication
 
-@snippet google/cloud/pubsub/admin/samples/topic_admin_client_samples.cc subscriber-service-account
+@snippet google/cloud/pubsub/samples/client_samples.cc subscriber-service-account
 
 */
 
