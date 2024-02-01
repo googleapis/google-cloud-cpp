@@ -23,21 +23,14 @@
 #include <google/cloud/pubsub/samples/testdata/schema.pb.h>
 #include <google/protobuf/text_format.h>
 #include <chrono>
-#include <condition_variable>
 #include <iostream>
-#include <mutex>
 #include <string>
-#include <tuple>
-#include <utility>
 
 namespace {
 
 using ::google::cloud::pubsub::examples::CleanupSchemas;
 using ::google::cloud::pubsub::examples::CommitSchemaWithRevisionsForTesting;
 using ::google::cloud::pubsub::examples::RandomSchemaId;
-using ::google::cloud::pubsub::examples::RandomSnapshotId;
-using ::google::cloud::pubsub::examples::RandomSubscriptionId;
-using ::google::cloud::pubsub::examples::RandomTopicId;
 using ::google::cloud::pubsub::examples::ReadFile;
 using ::google::cloud::pubsub::examples::UsingEmulator;
 
@@ -435,7 +428,6 @@ void AutoRunAvro(std::string const& project_id,
 
   // For testing commands that require a revision id.
   auto avro_revision_schema_id = RandomSchemaId(generator);
-  auto const avro_revision_topic_id = RandomTopicId(generator);
   auto const revision_ids = CommitSchemaWithRevisionsForTesting(
       schema_admin, project_id, avro_revision_schema_id,
       avro_schema_definition_file, avro_revised_schema_definition_file, "AVRO");
