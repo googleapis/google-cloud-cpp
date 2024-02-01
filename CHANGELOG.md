@@ -13,18 +13,10 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Personalized Service Health](/google/cloud/servicehealth/README.md)
 
-### [BigQuery](/google/cloud/bigquery/README.md)
-
-- feat(bigquery): remove validation of input parameters ([#13430](https://github.com/googleapis/google-cloud-cpp/pull/13430))
-
 ### [Bigtable](/google/cloud/bigtable/README.md)
 
 - feat(bigtable): support bigtable routing cookies ([#13502](https://github.com/googleapis/google-cloud-cpp/pull/13502))
 - feat(bigtable): logging for bulk apply throttling ([#13488](https://github.com/googleapis/google-cloud-cpp/pull/13488))
-
-### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
-
-- docs: Update OpenTelemetry quickstart links ([#13499](https://github.com/googleapis/google-cloud-cpp/pull/13499))
 
 ### [Pub/Sub](/google/cloud/pubsub/README.md)
 
@@ -38,9 +30,7 @@ the APIs in these libraries are stable, and are ready for production use.
 
 ### [Common Libraries](/google/cloud/README.md)
 
-- feat(storagecontrol): generate library ([#13509](https://github.com/googleapis/google-cloud-cpp/pull/13509))
 - feat: support UniverseDomainOption in gRPC IAM stub ([#13466](https://github.com/googleapis/google-cloud-cpp/pull/13466))
-- feat(servicehealth): generate library ([#13442](https://github.com/googleapis/google-cloud-cpp/pull/13442))
 - feat: simplify Bazel initialization ([#13411](https://github.com/googleapis/google-cloud-cpp/pull/13411))
 
 ## v2.20.0 - 2024-01
