@@ -15,9 +15,7 @@
 #include "google/cloud/pubsub/blocking_publisher.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/subscriber.h"
-#include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/subscription_builder.h"
-#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -155,85 +153,6 @@ void BlockingPublisherServiceAccountKey(std::vector<std::string> const& argv) {
   (argv.at(0));
 }
 
-void TopicAdminClientSetEndpoint(std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::testing_util;
-  if (!argv.empty()) {
-    throw examples::Usage{"topic-admin-client-set-endpoint"};
-  }
-  //! [topic-admin-client-set-endpoint]
-  namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::Options;
-  []() {
-    return pubsub::TopicAdminClient(pubsub::MakeTopicAdminConnection(
-        Options{}.set<google::cloud::EndpointOption>(
-            "private.googleapis.com")));
-  }
-  //! [topic-admin-client-set-endpoint]
-  ();
-}
-
-void TopicAdminClientServiceAccountKey(std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::testing_util;
-  if (argv.size() != 1 || argv[0] == "--help") {
-    throw examples::Usage{"topic-admin-client-service-account <keyfile>"};
-  }
-  //! [topic-admin-client-service-account]
-  namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::Options;
-  [](std::string const& keyfile) {
-    auto is = std::ifstream(keyfile);
-    is.exceptions(std::ios::badbit);
-    auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
-    std::cerr << "DEBUG\n" << keyfile << "\nDEBUG\n";
-    return pubsub::TopicAdminClient(pubsub::MakeTopicAdminConnection(
-        Options{}.set<google::cloud::UnifiedCredentialsOption>(
-            google::cloud::MakeServiceAccountCredentials(contents))));
-  }
-  //! [topic-admin-client-service-account]
-  (argv.at(0));
-}
-
-void SubscriptionAdminClientSetEndpoint(std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::testing_util;
-  if (!argv.empty()) {
-    throw examples::Usage{"subscription-admin-client-set-endpoint"};
-  }
-  //! [subscription-admin-client-set-endpoint]
-  namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::Options;
-  []() {
-    return pubsub::SubscriptionAdminClient(
-        pubsub::MakeSubscriptionAdminConnection(
-            Options{}.set<google::cloud::EndpointOption>(
-                "private.googleapis.com")));
-  }
-  //! [subscription-admin-client-set-endpoint]
-  ();
-}
-
-void SubscriptionAdminClientServiceAccountKey(
-    std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::testing_util;
-  if (argv.size() != 1 || argv[0] == "--help") {
-    throw examples::Usage{
-        "subscription-admin-client-service-account <keyfile>"};
-  }
-  //! [subscription-admin-client-service-account]
-  namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::Options;
-  [](std::string const& keyfile) {
-    auto is = std::ifstream(keyfile);
-    is.exceptions(std::ios::badbit);
-    auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
-    return pubsub::SubscriptionAdminClient(
-        pubsub::MakeSubscriptionAdminConnection(
-            Options{}.set<google::cloud::UnifiedCredentialsOption>(
-                google::cloud::MakeServiceAccountCredentials(contents))));
-  }
-  //! [subscription-admin-client-service-account]
-  (argv.at(0));
-}
-
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
 
@@ -269,14 +188,6 @@ void AutoRun(std::vector<std::string> const& argv) {
             << std::endl;
   BlockingPublisherServiceAccountKey({keyfile});
 
-  std::cout << "\nRunning SubscriptionAdminClientSetEndpoint() sample"
-            << std::endl;
-  SubscriptionAdminClientSetEndpoint({});
-
-  std::cout << "\nRunning SubscriptionAdminClientServiceAccountKey() sample"
-            << std::endl;
-  SubscriptionAdminClientServiceAccountKey({keyfile});
-
   std::cout << "\nAutoRun done" << std::endl;
 }
 
@@ -291,13 +202,6 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"blocking-publisher-set-endpoint", BlockingPublisherSetEndpoint},
       {"blocking-publisher-service-account-key",
        BlockingPublisherServiceAccountKey},
-      {"topic-admin-client-set-endpoint", TopicAdminClientSetEndpoint},
-      {"topic-admin-client-service-account-key",
-       TopicAdminClientServiceAccountKey},
-      {"subscription-admin-client-set-endpoint",
-       SubscriptionAdminClientSetEndpoint},
-      {"subscription-admin-client-service-account-key",
-       SubscriptionAdminClientServiceAccountKey},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);

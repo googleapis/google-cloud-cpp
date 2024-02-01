@@ -120,13 +120,12 @@ Follow these links to find examples for other `*Client` classes:
 
 /*! @page TopicAdminClient-endpoint-snippet Override @c TopicAdminClient Default Endpoint
 
-@snippet google/cloud/pubsub/samples/client_samples.cc topic-admin-client-set-endpoint
-
+@snippet google/cloud/pubsub/admin/samples/topic_admin_client_samples.cc set-client-endpoint
 */
 
 /*! @page SubscriptionAdminClient-endpoint-snippet Override @c SubscriptionAdminClient Default Endpoint
 
-@snippet google/cloud/pubsub/samples/client_samples.cc subscription-admin-client-set-endpoint
+@snippet google/cloud/pubsub/admin/samples/subscription_admin_client_samples.cc set-client-endpoint
 
 */
 
@@ -158,13 +157,12 @@ Follow these links to find examples for other `*Client` classes:
 
 /*! @page TopicAdminClient-service-account-snippet Override @c TopicAdminClient Default Authentication
 
-@snippet google/cloud/pubsub/samples/client_samples.cc topic-admin-client-service-account
-
+@snippet google/cloud/pubsub/admin/samples/topic_admin_client_samples.cc with-service-account
 */
 
 /*! @page SubscriptionAdminClient-service-account-snippet Override @c SubscriptionAdminClient Default Authentication
 
-@snippet google/cloud/pubsub/samples/client_samples.cc subscription-admin-client-service-account
+@snippet google/cloud/pubsub/admin/samples/subscription_admin_client_samples.cc with-service-account
 
 */
 
