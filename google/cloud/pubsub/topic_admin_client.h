@@ -194,9 +194,6 @@ class TopicAdminClient {
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
-   *
-   * @par Example
-   * @snippet samples.cc list-topic-subscriptions
    */
   ListTopicSubscriptionsRange ListTopicSubscriptions(Topic const& topic,
                                                      Options opts = {}) {
