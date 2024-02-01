@@ -225,9 +225,6 @@ class TopicAdminClient {
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
    *
-   * @par Example
-   * @snippet samples.cc list-topic-snapshots
-   *
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's snapshots.
    */
