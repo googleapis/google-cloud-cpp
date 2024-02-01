@@ -114,9 +114,6 @@ class TopicAdminClient {
    * This operation is idempotent, the state of the system is the same after one
    * or several calls, and therefore it is always retried.
    *
-   * @par Example
-   * @snippet samples.cc update-topic
-   *
    * @param builder the configuration for the new topic, includes the name.
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
