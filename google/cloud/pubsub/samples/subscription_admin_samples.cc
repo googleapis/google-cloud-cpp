@@ -82,8 +82,9 @@ void CreateBigQuerySubscription(
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id, std::string const& topic_id,
      std::string const& subscription_id, std::string const& table_id) {
-     //! [START pubsub_create_bigquery_subscription] [create-bigquery-subscription] 
-     google::pubsub::v1::Subscription request;
+    //! [START pubsub_create_bigquery_subscription]
+    //! [create-bigquery-subscription]
+    google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, subscription_id).FullName());
     request.set_topic(pubsub::Topic(project_id, topic_id).FullName());
@@ -99,7 +100,7 @@ void CreateBigQuerySubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-                //! [END pubsub_create_bigquery_subscription] [create-bigquery-subscription]
+    //! [END pubsub_create_bigquery_subscription] [create-bigquery-subscription]
   }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
@@ -112,7 +113,7 @@ void CreateCloudStorageSubscription(
      std::string const& project_id, std::string const& topic_id,
      std::string const& subscription_id, std::string const& bucket) {
     //! [START pubsub_create_cloud_storage_subscription]
-      google::pubsub::v1::Subscription request;
+    google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, subscription_id).FullName());
     request.set_topic(pubsub::Topic(project_id, topic_id).FullName());
@@ -128,8 +129,8 @@ void CreateCloudStorageSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-   //! [END pubsub_create_cloud_storage_subscription] 
-   }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+    //! [END pubsub_create_cloud_storage_subscription]
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void CreateDeadLetterSubscription(
@@ -166,9 +167,8 @@ void CreateDeadLetterSubscription(
 
     std::cout << "After " << sub->dead_letter_policy().max_delivery_attempts()
               << " delivery attempts.\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
-   std::stoi(argv.at(4)));
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
+    std::stoi(argv.at(4)));
 }
 
 void CreateSubscriptionWithExactlyOnceDelivery(
@@ -207,8 +207,9 @@ void CreateFilteredSubscription(
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id, std::string topic_id,
      std::string subscription_id) {
+    //! [START pubsub_create_subscription_with_filter]
     //! [create-filtered-subscription]
-  // [START pubsub_create_subscription_with_filter]  google::pubsub::v1::Subscription request;
+    google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, subscription_id).FullName());
     request.set_topic(pubsub::Topic(project_id, topic_id).FullName());
@@ -222,11 +223,10 @@ void CreateFilteredSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-   // [END pubsub_create_subscription_with_filter]
-  //! [create-filtered-subscription]
-   }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
+    //! [END pubsub_create_subscription_with_filter]
+    //! [create-filtered-subscription]
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
-
 
 void CreateOrderingSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
@@ -278,8 +278,7 @@ void CreatePushSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void CreateUnwrappedPushSubscription(
