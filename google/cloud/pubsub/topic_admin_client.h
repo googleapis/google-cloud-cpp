@@ -77,9 +77,6 @@ class TopicAdminClient {
    * `kAlreadyExists` as a consequence of retrying a successful (but reported as
    * failed) request.
    *
-   * @par Example
-   * @snippet topic_admin_samples.cc create-topic
-   *
    * @param builder the configuration for the new topic, includes the name.
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
@@ -103,9 +100,6 @@ class TopicAdminClient {
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
-   *
-   * @par Example
-   * @snippet topic_admin_samples.cc get-topic
    */
   StatusOr<google::pubsub::v1::Topic> GetTopic(Topic topic, Options opts = {}) {
     internal::OptionsSpan span(
@@ -154,9 +148,6 @@ class TopicAdminClient {
    * or several calls, and therefore it is always retried. It might return a
    * status code of `kNotFound` as a consequence of retrying a successful
    * (but reported as failed) request.
-   *
-   * @par Example
-   * @snippet topic_admin_samples.cc delete-topic
    *
    * @param topic the name of the topic to be deleted.
    * @param opts Override the class-level options, such as retry and backoff
