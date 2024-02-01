@@ -4,7 +4,7 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.21.0 - TBD
+## v2.21.0
 
 ### New Libraries
 
@@ -12,6 +12,26 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Personalized Service Health](/google/cloud/servicehealth/README.md)
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- feat(bigtable): support bigtable routing cookies ([#13502](https://github.com/googleapis/google-cloud-cpp/pull/13502))
+- feat(bigtable): logging for bulk apply throttling ([#13488](https://github.com/googleapis/google-cloud-cpp/pull/13488))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- fix(pubsub): install admin mocks ([#13537](https://github.com/googleapis/google-cloud-cpp/pull/13537))
+- feat(pubsub): add lease management for unary pull ([#13428](https://github.com/googleapis/google-cloud-cpp/pull/13428))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): support `UniverseDomainOption` ([#13471](https://github.com/googleapis/google-cloud-cpp/pull/13471))
+- docs(GCS+gRPC): better comments for `AsyncConnection` ([#13424](https://github.com/googleapis/google-cloud-cpp/pull/13424))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat: support UniverseDomainOption in gRPC IAM stub ([#13466](https://github.com/googleapis/google-cloud-cpp/pull/13466))
+- feat: simplify Bazel initialization ([#13411](https://github.com/googleapis/google-cloud-cpp/pull/13411))
 
 ## v2.20.0 - 2024-01
 
