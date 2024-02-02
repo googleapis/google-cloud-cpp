@@ -239,6 +239,7 @@ declare -A -r LIBRARIES=(
   )"
   ["securesourcemanager"]="@com_google_googleapis//google/cloud/securesourcemanager/v1:securesourcemanager_cc_grpc"
   ["securitycenter"]="@com_google_googleapis//google/cloud/securitycenter/v1:securitycenter_cc_grpc"
+  ["securitycentermanagement"]="@com_google_googleapis//google/cloud/securitycentermanagement/v1:securitycentermanagement_cc_grpc"
   ["servicecontrol"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/api/servicecontrol/v1:servicecontrol_cc_grpc" \
