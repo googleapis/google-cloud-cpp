@@ -145,61 +145,6 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
   }(std::move(client), argv.at(0), argv.at(1));
 }
 
-void GetTopic(google::cloud::pubsub::TopicAdminClient client,
-              std::vector<std::string> const& argv) {
-  //! [get-topic]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string project_id,
-     std::string topic_id) {
-    auto topic = client.GetTopic(
-        pubsub::Topic(std::move(project_id), std::move(topic_id)));
-    if (!topic) throw std::move(topic).status();
-
-    std::cout << "The topic information was successfully retrieved: "
-              << topic->DebugString() << "\n";
-  }
-  //! [get-topic]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void UpdateTopic(google::cloud::pubsub::TopicAdminClient client,
-                 std::vector<std::string> const& argv) {
-  //! [update-topic]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string project_id,
-     std::string topic_id) {
-    auto topic = client.UpdateTopic(
-        pubsub::TopicBuilder(
-            pubsub::Topic(std::move(project_id), std::move(topic_id)))
-            .add_label("test-key", "test-value"));
-    if (!topic) throw std::move(topic).status();
-
-    std::cout << "The topic was successfully updated: " << topic->DebugString()
-              << "\n";
-  }
-  //! [update-topic]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ListTopics(google::cloud::pubsub::TopicAdminClient client,
-                std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topics] [list-topics]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string const& project_id) {
-    int count = 0;
-    for (auto& topic : client.ListTopics(project_id)) {
-      if (!topic) throw std::move(topic).status();
-      std::cout << "Topic Name: " << topic->name() << "\n";
-      ++count;
-    }
-    if (count == 0) {
-      std::cout << "No topics found in project " << project_id << "\n";
-    }
-  }
-  //! [END pubsub_list_topics] [list-topics]
-  (std::move(client), argv.at(0));
-}
-
 void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [START pubsub_delete_topic]
@@ -236,9 +181,28 @@ void DetachSubscription(google::cloud::pubsub::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void ListTopics(google::cloud::pubsub::TopicAdminClient client,
+                std::vector<std::string> const& argv) {
+  //! [START pubsub_list_topics]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::TopicAdminClient client, std::string const& project_id) {
+    int count = 0;
+    for (auto& topic : client.ListTopics(project_id)) {
+      if (!topic) throw std::move(topic).status();
+      std::cout << "Topic Name: " << topic->name() << "\n";
+      ++count;
+    }
+    if (count == 0) {
+      std::cout << "No topics found in project " << project_id << "\n";
+    }
+  }
+  //! [END pubsub_list_topics]
+  (std::move(client), argv.at(0));
+}
+
 void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
                             std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topic_subscriptions] [list-topic-subscriptions]
+  //! [START pubsub_list_topic_subscriptions]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string const& project_id,
      std::string const& topic_id) {
@@ -249,25 +213,7 @@ void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
       std::cout << "  " << *name << "\n";
     }
   }
-  //! [END pubsub_list_topic_subscriptions] [list-topic-subscriptions]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ListTopicSnapshots(google::cloud::pubsub::TopicAdminClient client,
-                        std::vector<std::string> const& argv) {
-  //! [list-topic-snapshots]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string project_id,
-     std::string topic_id) {
-    auto const topic =
-        pubsub::Topic(std::move(project_id), std::move(topic_id));
-    std::cout << "Snapshot list for topic " << topic << ":\n";
-    for (auto& name : client.ListTopicSnapshots(topic)) {
-      if (!name) throw std::move(name).status();
-      std::cout << "  " << *name << "\n";
-    }
-  }
-  //! [list-topic-snapshots]
+  //! [END pubsub_list_topic_subscriptions]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -2416,21 +2362,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateTopic() sample [3]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, ordering_topic_id});
 
-  std::cout << "\nRunning GetTopic() sample" << std::endl;
-  GetTopic(topic_admin_client, {project_id, topic_id});
-
-  std::cout << "\nRunning UpdateTopic() sample" << std::endl;
-  ignore_emulator_failures(
-      [&] {
-        UpdateTopic(topic_admin_client, {project_id, topic_id});
-      },
-      StatusCode::kInvalidArgument);
+  std::cout << "\nRunning ListTopics() sample" << std::endl;
+  ListTopics(topic_admin_client, {project_id});
 
   std::cout << "\nRunning the StatusOr example" << std::endl;
   ExampleStatusOr(topic_admin_client, {project_id});
-
-  std::cout << "\nRunning ListTopics() sample" << std::endl;
-  ListTopics(topic_admin_client, {project_id});
 
   std::cout << "\nRunning CreateSubscription() sample [1]" << std::endl;
   CreateSubscription(subscription_admin_client,
@@ -2542,9 +2478,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateSnapshot() sample [2]" << std::endl;
   CreateSnapshot(subscription_admin_client,
                  {project_id, subscription_id, snapshot_id});
-
-  std::cout << "\nRunning ListTopicSnapshots() sample" << std::endl;
-  ListTopicSnapshots(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nRunning GetSnapshot() sample" << std::endl;
   GetSnapshot(subscription_admin_client, {project_id, snapshot_id});
@@ -2759,19 +2692,10 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   using ::google::cloud::testing_util::Example;
 
   Example example({
-      CreateTopicAdminCommand("get-topic", {"project-id", "topic-id"},
-                              GetTopic),
-      CreateTopicAdminCommand("update-topic", {"project-id", "topic-id"},
-                              UpdateTopic),
-      CreateTopicAdminCommand("list-topics", {"project-id"}, ListTopics),
       CreateTopicAdminCommand("detach-subscription",
                               {"project-id", "subscription-id"},
                               DetachSubscription),
-      CreateTopicAdminCommand("list-topic-subscriptions",
-                              {"project-id", "topic-id"},
-                              ListTopicSubscriptions),
-      CreateTopicAdminCommand("list-topic-snapshots",
-                              {"project-id", "topic-id"}, ListTopicSnapshots),
+
       CreateSubscriptionAdminCommand(
           "create-filtered-subscription",
           {"project-id", "topic-id", "subscription-id"},
