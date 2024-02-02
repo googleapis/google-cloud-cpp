@@ -1354,6 +1354,7 @@
 ./lib64/cmake/google_cloud_cpp_pubsub
 ./lib64/cmake/google_cloud_cpp_pubsub_mocks
 ./lib64/cmake/google_cloud_cpp_pubsublite
+./lib64/cmake/google_cloud_cpp_pubsublite_mocks
 ./lib64/cmake/google_cloud_cpp_rapidmigrationassessment
 ./lib64/cmake/google_cloud_cpp_rapidmigrationassessment_mocks
 ./lib64/cmake/google_cloud_cpp_recaptchaenterprise
@@ -1391,9 +1392,11 @@
 ./lib64/cmake/google_cloud_cpp_shell
 ./lib64/cmake/google_cloud_cpp_shell_mocks
 ./lib64/cmake/google_cloud_cpp_spanner
+./lib64/cmake/google_cloud_cpp_spanner_mocks
 ./lib64/cmake/google_cloud_cpp_speech
 ./lib64/cmake/google_cloud_cpp_speech_mocks
 ./lib64/cmake/google_cloud_cpp_sql
+./lib64/cmake/google_cloud_cpp_sql_mocks
 ./lib64/cmake/google_cloud_cpp_storage
 ./lib64/cmake/google_cloud_cpp_storagecontrol
 ./lib64/cmake/google_cloud_cpp_storagecontrol_mocks
