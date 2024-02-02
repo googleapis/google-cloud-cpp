@@ -30,7 +30,8 @@ int main(int argc, char* argv[]) try {
   auto client = securitycentermanagement::SecurityCenterManagementClient(
       securitycentermanagement::MakeSecurityCenterManagementConnection());
 
-  for (auto m : client.ListEventThreatDetectionCustomModules(location.FullName())) {
+  for (auto m :
+       client.ListEventThreatDetectionCustomModules(location.FullName())) {
     if (!m) throw std::move(m).status();
     std::cout << m->DebugString() << "\n";
   }
