@@ -307,6 +307,8 @@ set(relative_mock_files
     mocks/mock_instance_admin_connection.h
     mocks/mock_spanner_connection.h
     mocks/row.h)
+export_list_to_bazel("google_cloud_cpp_spanner_mocks.bzl"
+                     google_cloud_cpp_spanner_mocks_hdrs YEAR "2019")
 foreach (file IN LISTS relative_mock_files)
     # We use a generator expression per the recommendation in:
     # https://stackoverflow.com/a/62465051
@@ -320,7 +322,6 @@ target_link_libraries(
               GTest::gtest)
 set_target_properties(google_cloud_cpp_spanner_mocks
                       PROPERTIES EXPORT_NAME google-cloud-cpp::spanner_mocks)
-create_bazel_config(google_cloud_cpp_spanner_mocks YEAR "2019")
 target_include_directories(
     google_cloud_cpp_spanner_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

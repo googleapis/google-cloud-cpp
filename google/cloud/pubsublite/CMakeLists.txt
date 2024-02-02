@@ -206,6 +206,8 @@ add_library(google_cloud_cpp_pubsublite_mocks INTERFACE)
 set(relative_mock_files
     # cmake-format: sort
     mocks/mock_admin_connection.h mocks/mock_topic_stats_connection.h)
+export_list_to_bazel("google_cloud_cpp_pubsublite_mocks.bzl"
+                     google_cloud_cpp_pubsublite_mocks_hdrs YEAR "2021")
 foreach (file IN LISTS relative_mock_files)
     # We use a generator expression per the recommendation in:
     # https://stackoverflow.com/a/62465051
@@ -220,7 +222,6 @@ target_link_libraries(
 set_target_properties(
     google_cloud_cpp_pubsublite_mocks
     PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-pubsublite_mocks)
-create_bazel_config(google_cloud_cpp_pubsublite_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_pubsublite_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
