@@ -2,8 +2,10 @@
 
 @mainpage Security Center Management API C++ Client Library
 
-An idiomatic C++ client library for the [Security Center Management API][cloud-service-docs], a service
-to Management API for the Security Command Center, a built-in security and risk management solution for Google Cloud. Use this API to programmatically update the settings and configuration of Security Command Center.
+An idiomatic C++ client library for the [Security Center Management API][cloud-service-docs],
+a built-in security and risk management solution for Google Cloud. Use this API
+to programmatically update the settings and configuration of Security Command
+Center.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -35,6 +37,6 @@ which should give you a taste of the Security Center Management API C++ client l
 - @ref securitycentermanagement-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/securitycentermanagement
+[cloud-service-docs]: https://cloud.google.com/security-command-center/docs/reference/security-center-management/rest
 
 */

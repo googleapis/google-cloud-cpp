@@ -13,26 +13,26 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/securitycentermanagement/v1/ EDIT HERE _client.h"
+#include "google/cloud/securitycentermanagement/v1/security_center_management_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], argv[2]);
+  auto const location = google::cloud::Location(argv[1], "global");
 
   namespace securitycentermanagement =
       ::google::cloud::securitycentermanagement_v1;
-  auto client = securitycentermanagement::ServiceClient(
-      securitycentermanagement::MakeServiceConnection());  // EDIT HERE
+  auto client = securitycentermanagement::SecurityCenterManagementClient(
+      securitycentermanagement::MakeSecurityCenterManagementConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto m : client.ListEventThreatDetectionCustomModules(location.FullName())) {
+    if (!m) throw std::move(m).status();
+    std::cout << m->DebugString() << "\n";
   }
 
   return 0;
