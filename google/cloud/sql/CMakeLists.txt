@@ -92,7 +92,10 @@ file(
 list(SORT relative_mock_files)
 set(mock_files)
 foreach (file IN LISTS relative_mock_files)
-    list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
+    # We use a generator expression per the recommendation in:
+    # https://stackoverflow.com/a/62465051
+    list(APPEND mock_files
+         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${file}>")
 endforeach ()
 add_library(google_cloud_cpp_sql_mocks INTERFACE)
 target_sources(google_cloud_cpp_sql_mocks INTERFACE ${mock_files})
@@ -149,8 +152,6 @@ google_cloud_cpp_install_proto_library_protos("google_cloud_cpp_sql_protos"
 google_cloud_cpp_install_proto_library_headers("google_cloud_cpp_sql_protos")
 google_cloud_cpp_install_headers("google_cloud_cpp_sql"
                                  "include/google/cloud/sql")
-google_cloud_cpp_install_headers("google_cloud_cpp_sql_mocks"
-                                 "include/google/cloud/sql")
 
 google_cloud_cpp_add_pkgconfig(
     sql
@@ -178,6 +179,8 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 external_googleapis_install_pc("google_cloud_cpp_sql_protos")
+
+google_cloud_cpp_install_mocks(sql "Cloud SQL Admin API")
 
 # google-cloud-cpp::sql must be defined before we can add the samples.
 foreach (dir IN LISTS service_dirs)

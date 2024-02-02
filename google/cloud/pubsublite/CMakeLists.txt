@@ -203,10 +203,16 @@ create_bazel_config(google_cloud_cpp_pubsublite YEAR "2021")
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
 add_library(google_cloud_cpp_pubsublite_mocks INTERFACE)
-target_sources(
-    google_cloud_cpp_pubsublite_mocks
-    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_admin_connection.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_topic_stats_connection.h)
+set(relative_mock_files
+    # cmake-format: sort
+    mocks/mock_admin_connection.h mocks/mock_topic_stats_connection.h)
+foreach (file IN LISTS relative_mock_files)
+    # We use a generator expression per the recommendation in:
+    # https://stackoverflow.com/a/62465051
+    list(APPEND mock_files
+         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${file}>")
+endforeach ()
+target_sources(google_cloud_cpp_pubsublite_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_pubsublite_mocks
     INTERFACE google-cloud-cpp::experimental-pubsublite GTest::gmock_main
@@ -340,8 +346,6 @@ install(
 
 google_cloud_cpp_install_headers("google_cloud_cpp_pubsublite"
                                  "include/google/cloud/pubsublite")
-google_cloud_cpp_install_headers("google_cloud_cpp_pubsublite_mocks"
-                                 "include/google/cloud/pubsublite")
 
 google_cloud_cpp_add_pkgconfig(
     pubsublite
@@ -366,3 +370,5 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_pubsublite-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsublite"
     COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_install_mocks(pubsublite "Pub/Sub Lite API")
