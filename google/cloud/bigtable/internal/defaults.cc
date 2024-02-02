@@ -246,6 +246,9 @@ Options DefaultDataOptions(Options opts) {
     opts.set<bigtable::IdempotentMutationPolicyOption>(
         bigtable::DefaultIdempotentMutationPolicy());
   }
+  if (!opts.has<google::cloud::internal::EnableServerRetriesOption>()) {
+    opts.set<google::cloud::internal::EnableServerRetriesOption>(true);
+  }
   opts = DefaultOptions(std::move(opts));
   return opts.set<EndpointOption>(opts.get<DataEndpointOption>());
 }
