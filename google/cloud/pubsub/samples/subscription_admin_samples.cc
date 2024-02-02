@@ -146,10 +146,9 @@ void CreateDeadLetterSubscription(
     google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, subscription_id).FullName());
-    auto topic = pubsub::Topic(project_id, dead_letter_topic_id);
-    request.set_topic(topic.FullName());
+    request.set_topic(pubsub::Topic(project_id, topic_id).FullName());
     request.mutable_dead_letter_policy()->set_dead_letter_topic(
-        topic.FullName());
+        pubsub::Topic(dead_letter_topic_id, topic_id).FullName());
     request.mutable_dead_letter_policy()->set_max_delivery_attempts(
         dead_letter_delivery_attempts);
     auto sub = client.CreateSubscription(request);
@@ -211,8 +210,10 @@ void CreateFilteredSubscription(
     //! [create-filtered-subscription]
     google::pubsub::v1::Subscription request;
     request.set_name(
-        pubsub::Subscription(project_id, subscription_id).FullName());
-    request.set_topic(pubsub::Topic(project_id, topic_id).FullName());
+        pubsub::Subscription(project_id, std::move(subscription_id))
+            .FullName());
+    request.set_topic(
+        pubsub::Topic(project_id, std::move(topic_id)).FullName());
     request.set_filter(R"""(attributes.is-even = "false")""");
     auto sub = client.CreateSubscription(request);
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
