@@ -299,7 +299,7 @@ endif ()
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
 add_library(google_cloud_cpp_spanner_mocks INTERFACE)
-set(relative_mock_files
+set(google_cloud_cpp_spanner_mocks_hdrs
     # cmake-format: sort
     admin/mocks/mock_database_admin_connection.h
     admin/mocks/mock_instance_admin_connection.h
@@ -309,7 +309,7 @@ set(relative_mock_files
     mocks/row.h)
 export_list_to_bazel("google_cloud_cpp_spanner_mocks.bzl"
                      google_cloud_cpp_spanner_mocks_hdrs YEAR "2019")
-foreach (file IN LISTS relative_mock_files)
+foreach (file IN LISTS google_cloud_cpp_spanner_mocks_hdrs)
     # We use a generator expression per the recommendation in:
     # https://stackoverflow.com/a/62465051
     list(APPEND mock_files

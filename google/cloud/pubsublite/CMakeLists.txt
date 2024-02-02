@@ -203,12 +203,12 @@ create_bazel_config(google_cloud_cpp_pubsublite YEAR "2021")
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
 add_library(google_cloud_cpp_pubsublite_mocks INTERFACE)
-set(relative_mock_files
+set(google_cloud_cpp_pubsublite_mocks_hdrs
     # cmake-format: sort
     mocks/mock_admin_connection.h mocks/mock_topic_stats_connection.h)
 export_list_to_bazel("google_cloud_cpp_pubsublite_mocks.bzl"
                      google_cloud_cpp_pubsublite_mocks_hdrs YEAR "2021")
-foreach (file IN LISTS relative_mock_files)
+foreach (file IN LISTS google_cloud_cpp_pubsublite_mocks_hdrs)
     # We use a generator expression per the recommendation in:
     # https://stackoverflow.com/a/62465051
     list(APPEND mock_files
