@@ -280,13 +280,15 @@ include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_bigtable)
 
 add_library(google_cloud_cpp_bigtable_mocks INTERFACE)
-set(relative_mock_files
+set(google_cloud_cpp_bigtable_mocks_hdrs
     # cmake-format: sort
     admin/mocks/mock_bigtable_instance_admin_connection.h
     admin/mocks/mock_bigtable_table_admin_connection.h
     mocks/mock_data_connection.h
     mocks/mock_row_reader.h)
-foreach (file IN LISTS relative_mock_files)
+export_list_to_bazel("google_cloud_cpp_bigtable_mocks.bzl"
+                     google_cloud_cpp_bigtable_mocks_hdrs YEAR "2021")
+foreach (file IN LISTS google_cloud_cpp_bigtable_mocks_hdrs)
     # We use a generator expression per the recommendation in:
     # https://stackoverflow.com/a/62465051
     list(APPEND mock_files
