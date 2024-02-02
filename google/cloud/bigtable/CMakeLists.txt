@@ -279,17 +279,24 @@ add_library(google-cloud-cpp::bigtable ALIAS google_cloud_cpp_bigtable)
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_bigtable)
 
-add_library(
-    google_cloud_cpp_bigtable_mocks # cmake-format: sort
+add_library(google_cloud_cpp_bigtable_mocks INTERFACE)
+set(relative_mock_files
+    # cmake-format: sort
     admin/mocks/mock_bigtable_instance_admin_connection.h
     admin/mocks/mock_bigtable_table_admin_connection.h
     mocks/mock_data_connection.h
-    mocks/mock_row_reader.cc
     mocks/mock_row_reader.h)
+foreach (file IN LISTS relative_mock_files)
+    # We use a generator expression per the recommendation in:
+    # https://stackoverflow.com/a/62465051
+    list(APPEND mock_files
+         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${file}>")
+endforeach ()
+target_sources(google_cloud_cpp_bigtable_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_bigtable_mocks
-    PUBLIC google-cloud-cpp::bigtable
-    INTERFACE GTest::gmock_main GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::bigtable GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(google_cloud_cpp_bigtable_mocks
                       PROPERTIES EXPORT_NAME google-cloud-cpp::bigtable_mocks)
 create_bazel_config(google_cloud_cpp_bigtable_mocks YEAR "2021")

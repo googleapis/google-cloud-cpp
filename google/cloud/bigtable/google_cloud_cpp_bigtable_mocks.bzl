@@ -24,5 +24,4 @@ google_cloud_cpp_bigtable_mocks_hdrs = [
 ]
 
 google_cloud_cpp_bigtable_mocks_srcs = [
-    "mocks/mock_row_reader.cc",
 ]
