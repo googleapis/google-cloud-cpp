@@ -169,7 +169,6 @@ int WriteInstallDirectories(
     install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib);
     // TODO(#5782) - install mocks in libs with handwritten CMakeLists.txt
     auto const handwritten_cmake = std::set<std::string>{{
-        "bigtable",
         "compute",
         "storage",
     }};

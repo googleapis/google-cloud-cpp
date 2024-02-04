@@ -26,6 +26,7 @@ set(ga_libraries
     # cmake-format: sort
     bigquery
     bigtable
+    bigtable_mocks
     iam
     iam_mocks
     logging
