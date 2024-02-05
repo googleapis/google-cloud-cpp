@@ -30,7 +30,7 @@ using TopicAdminCommand =
     std::function<void(::google::cloud::pubsub_admin::TopicAdminClient,
                        std::vector<std::string> const&)>;
 
-// Delete all topics created with that inclue "cloud-cpp-samples". Ignore any
+// Delete all topics created with that include "cloud-cpp-samples". Ignore any
 // failures. If multiple tests are cleaning up topics in parallel, then the
 // delete call might fail.
 void CleanupTopics(
@@ -237,7 +237,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   using ::google::cloud::pubsub::examples::RandomSubscriptionId;
   using ::google::cloud::pubsub::examples::RandomTopicId;
   using ::google::cloud::pubsub::examples::UsingEmulator;
- 
+
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({"GOOGLE_CLOUD_PROJECT"});
   auto project_id =
@@ -271,7 +271,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   // Delete old resources.
   CleanupTopics(topic_admin_client, project_id);
-  
+
   std::cout << "\nRunning CreateTopic() sample [1]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, topic_id});
   std::cout << "\nCreate topic (" << topic_id << ")" << std::endl;
