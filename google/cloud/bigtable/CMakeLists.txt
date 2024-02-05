@@ -512,8 +512,6 @@ install(
 
 google_cloud_cpp_install_headers("google_cloud_cpp_bigtable"
                                  "include/google/cloud/bigtable")
-google_cloud_cpp_install_headers("google_cloud_cpp_bigtable_mocks"
-                                 "include/google/cloud/bigtable")
 
 google_cloud_cpp_add_pkgconfig(
     bigtable
@@ -537,3 +535,5 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigtable-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigtable"
     COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_install_mocks(bigtable "Google Cloud Bigtable")

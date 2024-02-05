@@ -1228,6 +1228,7 @@
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_bigquery_mocks
 ./lib64/cmake/google_cloud_cpp_bigtable
+./lib64/cmake/google_cloud_cpp_bigtable_mocks
 ./lib64/cmake/google_cloud_cpp_billing
 ./lib64/cmake/google_cloud_cpp_billing_mocks
 ./lib64/cmake/google_cloud_cpp_binaryauthorization
