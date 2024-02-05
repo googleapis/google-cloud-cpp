@@ -18,7 +18,9 @@
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/project.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "absl/strings/match.h"
 #include <sstream>
 
 namespace {
@@ -50,6 +52,23 @@ CreateSubscriptionAdminCommand(std::string const& name,
   };
   return google::cloud::testing_util::Commands::value_type{name,
                                                            std::move(adapter)};
+}
+
+// Delete all subscriptions created with that include "cloud-cpp-samples". Ignore any
+// failures. If multiple tests are cleaning up subscriptions in parallel, then the
+// delete call might fail.
+void CleanupSubscriptions(
+    google::cloud::pubsub_admin::SubscriptionAdminClient& client,
+    std::string const& project_id) {
+  auto const parent = google::cloud::Project(project_id).FullName();
+  for (auto& subscription : client.ListSubscriptions(parent)) {
+    if (!subscription) continue;
+    if (!absl::StrContains(subscription->name(), "cloud-cpp-samples")) continue;
+
+    google::pubsub::v1::DeleteSubscriptionRequest request;
+    request.set_subscription(subscription->name());
+    (void)client.DeleteSubscription(request);
+  }
 }
 
 void CreateSubscription(
@@ -408,6 +427,9 @@ void AutoRun(std::vector<std::string> const& argv) {
           throw;
         }
       };
+
+  // Delete old subscriptions.
+  CleanupSubscriptions(subscription_admin_client, project_id);
 
   std::cout << "\nCreate topic (" << topic_id << ")" << std::endl;
   topic_admin_client.CreateTopic(topic.FullName());
