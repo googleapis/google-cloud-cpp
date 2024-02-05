@@ -2692,10 +2692,6 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   using ::google::cloud::testing_util::Example;
 
   Example example({
-      CreateTopicAdminCommand("detach-subscription",
-                              {"project-id", "subscription-id"},
-                              DetachSubscription),
-
       CreateSubscriptionAdminCommand(
           "create-filtered-subscription",
           {"project-id", "topic-id", "subscription-id"},
@@ -2837,7 +2833,6 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                              PublishProtobufRecords),
       CreateSubscriberCommand("subscribe-protobuf-records", {},
                               SubscribeProtobufRecords),
-
       CreatePublisherCommand("publish", {}, Publish),
       CreatePublisherCommand("publish-custom-attributes", {},
                              PublishCustomAttributes),

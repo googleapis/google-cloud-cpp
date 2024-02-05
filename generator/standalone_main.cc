@@ -20,7 +20,6 @@
 #include "generator/internal/scaffold_generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "absl/flags/flag.h"
@@ -167,10 +166,10 @@ int WriteInstallDirectories(
     }
     auto const lib = LibraryName(product_path);
     install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib);
-    // TODO(#5782) - install mocks in libs with handwritten CMakeLists.txt
-    auto const handwritten_cmake = std::set<std::string>{
-        {"bigtable", "compute", "pubsublite", "spanner", "sql", "storage"}};
-    if (!google::cloud::internal::Contains(handwritten_cmake, lib)) {
+    // Note that storage does not have a public-facing mocks library. Only
+    // GCS+gRPC does.
+    // TODO(#5782) - install mocks for compute
+    if (lib != "compute" && lib != "storage") {
       install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib +
                                     "_mocks");
     }

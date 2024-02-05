@@ -18,7 +18,7 @@ licenses(["notice"])  # Apache 2.0
 
 load(":google_cloud_cpp_spanner.bzl", "google_cloud_cpp_spanner_hdrs", "google_cloud_cpp_spanner_srcs")
 load(":google_cloud_cpp_spanner_rest.bzl", "google_cloud_cpp_spanner_rest_hdrs", "google_cloud_cpp_spanner_rest_srcs")
-load(":google_cloud_cpp_spanner_mocks.bzl", "google_cloud_cpp_spanner_mocks_hdrs", "google_cloud_cpp_spanner_mocks_srcs")
+load(":google_cloud_cpp_spanner_mocks.bzl", "google_cloud_cpp_spanner_mocks_hdrs")
 load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
 load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks")
 
@@ -76,7 +76,7 @@ filegroup(
 cc_library(
     name = "google_cloud_cpp_spanner_mocks",
     testonly = True,
-    srcs = google_cloud_cpp_spanner_mocks_srcs,
+    srcs = [],
     hdrs = google_cloud_cpp_spanner_mocks_hdrs,
     visibility = [
         ":__subpackages__",

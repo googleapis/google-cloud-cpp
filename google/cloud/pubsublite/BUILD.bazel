@@ -17,7 +17,7 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 load(":google_cloud_cpp_pubsublite.bzl", "google_cloud_cpp_pubsublite_hdrs", "google_cloud_cpp_pubsublite_srcs")
-load(":google_cloud_cpp_pubsublite_mocks.bzl", "google_cloud_cpp_pubsublite_mocks_hdrs", "google_cloud_cpp_pubsublite_mocks_srcs")
+load(":google_cloud_cpp_pubsublite_mocks.bzl", "google_cloud_cpp_pubsublite_mocks_hdrs")
 load(":pubsublite_testing.bzl", "pubsublite_testing_hdrs", "pubsublite_testing_srcs")
 load(":pubsublite_unit_tests.bzl", "pubsublite_unit_tests")
 
@@ -49,7 +49,7 @@ filegroup(
 cc_library(
     name = "google_cloud_cpp_pubsublite_mocks",
     testonly = True,
-    srcs = google_cloud_cpp_pubsublite_mocks_srcs,
+    srcs = [],
     hdrs = google_cloud_cpp_pubsublite_mocks_hdrs,
     visibility = ["//:__pkg__"],
     deps = [

@@ -1,0 +1,25 @@
+/*!
+@page securitycentermanagement-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `securitycentermanagement_v1::SecurityCenterManagementClient`:
+
+@snippet security_center_management_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page securitycentermanagement_v1::SecurityCenterManagementClient-endpoint-snippet Override securitycentermanagement_v1::SecurityCenterManagementClient Endpoint Configuration
+
+@snippet google/cloud/securitycentermanagement/v1/samples/security_center_management_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->
