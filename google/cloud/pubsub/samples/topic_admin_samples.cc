@@ -85,7 +85,7 @@ void CreateTopicWithSchema(google::cloud::pubsub_admin::TopicAdminClient client,
     google::pubsub::v1::Topic request;
     request.set_name(pubsub::Topic(project_id, std::move(topic_id)).FullName());
     request.mutable_schema_settings()->set_schema(
-        pubsub::Schema(project_id, std::move(schema_id)).FullName());
+        pubsub::Schema(std::move(project_id), std::move(schema_id)).FullName());
     request.mutable_schema_settings()->set_encoding(
         encoding == "JSON" ? google::pubsub::v1::JSON
                            : google::pubsub::v1::BINARY);
@@ -118,7 +118,7 @@ void CreateTopicWithSchemaRevisions(
     google::pubsub::v1::Topic request;
     request.set_name(pubsub::Topic(project_id, std::move(topic_id)).FullName());
     request.mutable_schema_settings()->set_schema(
-        pubsub::Schema(project_id, std::move(schema_id)).FullName());
+        pubsub::Schema(std::move(project_id), std::move(schema_id)).FullName());
     request.mutable_schema_settings()->set_encoding(
         encoding == "JSON" ? google::pubsub::v1::JSON
                            : google::pubsub::v1::BINARY);
@@ -192,7 +192,7 @@ void UpdateTopicSchema(google::cloud::pubsub_admin::TopicAdminClient client,
      std::string topic_id, std::string const& first_revision_id,
      std::string const& last_revision_id) {
     google::pubsub::v1::UpdateTopicRequest request;
-    auto request_topic = request.mutable_topic();
+    auto* request_topic = request.mutable_topic();
     request_topic->set_name(
         pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
     request_topic->mutable_schema_settings()->set_first_revision_id(
