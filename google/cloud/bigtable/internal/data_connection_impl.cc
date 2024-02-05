@@ -20,8 +20,10 @@
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/retry_context.h"
+#include "google/cloud/bigtable/internal/retry_info_helper.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -50,6 +52,10 @@ inline std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
 inline std::unique_ptr<bigtable::IdempotentMutationPolicy> idempotency_policy(
     Options const& options) {
   return options.get<bigtable::IdempotentMutationPolicyOption>()->clone();
+}
+
+inline bool enable_server_retries(Options const& options) {
+  return options.get<internal::EnableServerRetriesOption>();
 }
 
 }  // namespace
@@ -350,16 +356,17 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
     // We wait to allocate the policies until they are needed as a
     // micro-optimization.
     if (!retry) retry = retry_policy(*current);
-    if (!retry->OnFailure(status)) {
+    if (!backoff) backoff = backoff_policy(*current);
+    auto delay = BackoffOrBreak(enable_server_retries(*current), status, *retry,
+                                *backoff);
+    if (!delay) {
       return Status(status.code(),
                     "Retry policy exhausted: " + status.message());
     }
     retry_context.PostCall(*context);
     // A new stream invalidates previously returned samples.
     samples.clear();
-    if (!backoff) backoff = backoff_policy(*current);
-    auto delay = backoff->OnCompletion();
-    std::this_thread::sleep_for(delay);
+    std::this_thread::sleep_for(*delay);
   }
   return samples;
 }
