@@ -142,6 +142,41 @@ void CreateTopicWithSchemaRevisions(
    argv.at(4), argv.at(5));
 }
 
+void CreateTopicWithKinesisIngestion(
+    google::cloud::pubsub_admin::TopicAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [pubsub_create_topic_with_kinesis_ingestion]
+  namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::TopicAdminClient client, std::string project_id,
+     std::string topic_id, std::string stream_arn, std::string consumer_arn,
+     std::string aws_role_arn, std::string gcp_service_account) {
+    google::pubsub::v1::Topic request;
+    request.set_name(
+        pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
+    auto aws_kinesis =
+        request.mutable_ingestion_data_source_settings()->mutable_aws_kinesis();
+    aws_kinesis->set_stream_arn(stream_arn);
+    aws_kinesis->set_consumer_arn(consumer_arn);
+    aws_kinesis->set_aws_role_arn(aws_role_arn);
+    aws_kinesis->set_gcp_service_account(gcp_service_account);
+
+    auto topic = client.CreateTopic(request);
+    // Note that kAlreadyExists is a possible error when the library retries.
+    if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The topic already exists\n";
+      return;
+    }
+    if (!topic) throw std::move(topic).status();
+
+    std::cout << "The topic was successfully created: " << topic->DebugString()
+              << "\n";
+  }
+  //! [pubsub_create_topic_with_kinesis_ingestion]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
+   argv.at(4), argv.at(5));
+}
+
 void GetTopic(google::cloud::pubsub_admin::TopicAdminClient client,
               std::vector<std::string> const& argv) {
   //! [get-topic]
@@ -212,6 +247,32 @@ void UpdateTopicSchema(google::cloud::pubsub_admin::TopicAdminClient client,
   }
   //! [END pubsub_update_topic_schema]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
+void UpdateTopicType(google::cloud::pubsub_admin::TopicAdminClient client,
+                     std::vector<std::string> const& argv) {
+  //! [pubsub_update_topic_type]
+  namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::TopicAdminClient client, std::string project_id,
+     std::string topic_id, std::string gcp_service_account) {
+    google::pubsub::v1::UpdateTopicRequest request;
+    request.mutable_topic()->set_name(
+        pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
+    request.mutable_topic()
+        ->mutable_ingestion_data_source_settings()
+        ->mutable_aws_kinesis()
+        ->set_gcp_service_account(gcp_service_account);
+    *request.mutable_update_mask()->add_paths() =
+        "ingestion_data_source_settings.aws_kinesis.gcp_service_account";
+    auto topic = client.UpdateTopic(request);
+    if (!topic) throw std::move(topic).status();
+
+    std::cout << "The topic was successfully updated: " << topic->DebugString()
+              << "\n";
+  }
+  //! [pubsub_update_topic_type]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void ListTopics(google::cloud::pubsub_admin::TopicAdminClient client,
@@ -459,6 +520,25 @@ void AutoRun(std::vector<std::string> const& argv) {
       google::cloud::pubsub::Subscription(project_id, subscription_id);
   auto const schema_topic_id = RandomTopicId(generator);
   auto const schema_id = RandomSchemaId(generator);
+  // The topic must end in "_ingestion_topic".
+  auto const kinesis_topic_id =
+      "kinesis-" + RandomTopicId(generator) + "_ingestion_topic";
+  auto const kinesis_stream_arn =
+      "arn:aws:kinesis:us-west-2:581969753609:stream/"
+      "kinesis_cps_ingestion_client_lib_test_stream_1";
+  auto const kinesis_consumer_arn =
+      "arn:aws:kinesis:us-west-2:581969753609:stream/"
+      "kinesis_cps_ingestion_client_lib_test_stream_1/consumer/"
+      "consumer-1:1706816534";
+  auto const kinesis_aws_role_arm =
+      "arn:aws:iam::581969753609:role/"
+      "kinesis_cps_ingestion_client_lib_test_stream_1_role";
+  auto const kinesis_gcp_service_account =
+      "kinesis-pubsub-testing@cloud-cpp-testing-resources.iam.gserviceaccount."
+      "com";
+  auto const kinesis_updated_gcp_service_account =
+      "kinesis-pubsub-update-testing@cloud-cpp-testing-resources.iam."
+      "gserviceaccount.com";
 
   using ::google::cloud::StatusCode;
   auto ignore_emulator_failures =
@@ -490,6 +570,21 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   // Since the topic was created already, this should return kAlreadyExists.
   std::cout << "\nRunning CreateTopic() sample [2]" << std::endl;
+
+  std::cout << "\nRunning CreateTopicWithKinesisIngestion() sample"
+            << std::endl;
+  CreateTopicWithKinesisIngestion(
+      topic_admin_client,
+      {project_id, kinesis_topic_id, kinesis_stream_arn, kinesis_consumer_arn,
+       kinesis_aws_role_arm, kinesis_gcp_service_account});
+  cleanup.Defer([topic_admin_client, project_id, kinesis_topic_id]() mutable {
+    std::cout << "\nRunning DeleteTopic() sample" << std::endl;
+    DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
+  });
+
+  std::cout << "\nRunning UpdateTopicType() sample" << std::endl;
+  UpdateTopicType(topic_admin_client, {project_id, kinesis_topic_id,
+                                       kinesis_updated_gcp_service_account});
 
   std::cout << "\nRunning GetTopic() sample" << std::endl;
   GetTopic(topic_admin_client, {project_id, topic_id});
@@ -549,6 +644,11 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateTopicAdminCommand("create-topic", {"project-id", "topic-id"},
                               CreateTopic),
       CreateTopicAdminCommand(
+          "create-topic-with-kinesis-ingestion",
+          {"project-id", "topic-id", "stream-arn", "consumer-arn",
+           "aws-role-arn", "gcp-service-account"},
+          CreateTopicWithKinesisIngestion),
+      CreateTopicAdminCommand(
           "create-topic-with-schema",
           {"project-id", "topic-id", "schema-id", "encoding"},
           CreateTopicWithSchema),
@@ -565,6 +665,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           "update-topic-schema",
           {"project-id", "topic-id", "first-revision-id", "last-revision-id"},
           UpdateTopicSchema),
+      CreateTopicAdminCommand("update-topic-type",
+                              {"project-id", "topic-id", "gcp-service-account"},
+                              UpdateTopicType),
       CreateTopicAdminCommand("list-topics", {"project-id"}, ListTopics),
       CreateTopicAdminCommand("list-topic-subscriptions",
                               {"project-id", "topic-id"},
