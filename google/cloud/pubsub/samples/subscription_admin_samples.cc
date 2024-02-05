@@ -54,9 +54,9 @@ CreateSubscriptionAdminCommand(std::string const& name,
                                                            std::move(adapter)};
 }
 
-// Delete all subscriptions created with that include "cloud-cpp-samples". Ignore any
-// failures. If multiple tests are cleaning up subscriptions in parallel, then the
-// delete call might fail.
+// Delete all subscriptions created with that include "cloud-cpp-samples".
+// Ignore any failures. If multiple tests are cleaning up subscriptions in
+// parallel, then the delete call might fail.
 void CleanupSubscriptions(
     google::cloud::pubsub_admin::SubscriptionAdminClient& client,
     std::string const& project_id) {
