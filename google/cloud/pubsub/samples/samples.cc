@@ -2761,58 +2761,6 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriptionAdminCommand(
           "seek-with-timestamp", {"project-id", "subscription-id", "seconds"},
           SeekWithTimestamp),
-
-      CreateSchemaServiceCommand(
-          "create-avro-schema",
-          {"project-id", "schema-id", "schema-definition-file"},
-          CreateAvroSchema),
-      CreateSchemaServiceCommand(
-          "create-protobuf-schema",
-          {"project-id", "schema-id", "schema-definition-file"},
-          CreateProtobufSchema),
-      CreateSchemaServiceCommand(
-          "commit-avro-schema",
-          {"project-id", "schema-id", "schema-definition-file"},
-          CommitAvroSchema),
-      CreateSchemaServiceCommand(
-          "commit-protobuf-schema",
-          {"project-id", "schema-id", "schema-definition-file"},
-          CommitProtobufSchema),
-      CreateSchemaServiceCommand("get-schema", {"project-id", "schema-id"},
-                                 GetSchema),
-      CreateSchemaServiceCommand("get-schema-revision",
-                                 {"project-id", "schema-id", "revision-id"},
-                                 GetSchemaRevision),
-      CreateSchemaServiceCommand("list-schemas", {"project-id"}, ListSchemas),
-      CreateSchemaServiceCommand("list-schema-revisions",
-                                 {"project-id", "schema-id"},
-                                 ListSchemaRevisions),
-      CreateSchemaServiceCommand("delete-schema", {"project-id", "schema-id"},
-                                 DeleteSchema),
-      CreateSchemaServiceCommand("delete-schema-revision",
-                                 {"project-id", "schema-id", "revision-id"},
-                                 DeleteSchemaRevision),
-      CreateSchemaServiceCommand("rollback-schema",
-                                 {"project-id", "schema-id", "revision-id"},
-                                 RollbackSchema),
-      CreateSchemaServiceCommand("validate-avro-schema",
-                                 {"project-id", "schema-definition-file"},
-                                 ValidateAvroSchema),
-      CreateSchemaServiceCommand("validate-protobuf-schema",
-                                 {"project-id", "schema-definition-file"},
-                                 ValidateProtobufSchema),
-      CreateSchemaServiceCommand(
-          "validate-message-avro",
-          {"project-id", "schema-definition-file", "message-file"},
-          ValidateMessageAvro),
-      CreateSchemaServiceCommand(
-          "validate-message-protobuf",
-          {"project-id", "schema-definition-file", "message-file"},
-          ValidateMessageProtobuf),
-      CreateSchemaServiceCommand("validate-message-named-schema",
-                                 {"project-id", "schema-id", "message-file"},
-                                 ValidateMessageNamedSchema),
-
       CreateTopicAdminCommand(
           "create-topic-with-schema",
           {"project-id", "topic-id", "schema-id", "encoding"},
