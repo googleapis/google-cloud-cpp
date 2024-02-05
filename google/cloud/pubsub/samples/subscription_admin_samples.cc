@@ -24,6 +24,8 @@
 namespace {
 
 using google::cloud::pubsub::examples::Cleanup;
+using ::google::cloud::pubsub::examples::UsingEmulator;
+
 using SubscriptionAdminCommand =
     std::function<void(google::cloud::pubsub_admin::SubscriptionAdminClient,
                        std::vector<std::string> const&)>;
@@ -148,7 +150,7 @@ void CreateDeadLetterSubscription(
         pubsub::Subscription(project_id, subscription_id).FullName());
     request.set_topic(pubsub::Topic(project_id, topic_id).FullName());
     request.mutable_dead_letter_policy()->set_dead_letter_topic(
-        pubsub::Topic(dead_letter_topic_id, topic_id).FullName());
+        pubsub::Topic(project_id, dead_letter_topic_id).FullName());
     request.mutable_dead_letter_policy()->set_max_delivery_attempts(
         dead_letter_delivery_attempts);
     auto sub = client.CreateSubscription(request);
@@ -312,6 +314,29 @@ void CreateUnwrappedPushSubscription(
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
+void RemoveDeadLetterPolicy(
+    google::cloud::pubsub_admin::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [START pubsub_dead_letter_remove] [dead-letter-remove]
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id, std::string const& subscription_id) {
+    google::pubsub::v1::UpdateSubscriptionRequest request;
+    request.mutable_subscription()->set_name(
+        pubsub::Subscription(project_id, subscription_id).FullName());
+    request.mutable_subscription()->clear_dead_letter_policy();
+    *request.mutable_update_mask()->add_paths() = "dead_letter_policy";
+    auto sub = client.UpdateSubscription(request);
+    if (!sub) throw std::move(sub).status();
+
+    std::cout << "The subscription has been updated to: " << sub->DebugString()
+              << "\n";
+  }
+  //! [END pubsub_dead_letter_remove] [dead-letter-remove]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void DeleteSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
@@ -371,6 +396,20 @@ void AutoRun(std::vector<std::string> const& argv) {
       subscription_admin_client(
           google::cloud::pubsub_admin::MakeSubscriptionAdminConnection());
 
+  using ::google::cloud::StatusCode;
+  auto ignore_emulator_failures =
+      [](auto lambda, StatusCode code = StatusCode::kUnimplemented) {
+        try {
+          lambda();
+        } catch (google::cloud::Status const& s) {
+          if (UsingEmulator() && s.code() == code) return;
+          throw;
+        } catch (...) {
+          throw;
+        }
+      };
+
+
   std::cout << "\nCreate topic (" << topic_id << ")" << std::endl;
   topic_admin_client.CreateTopic(topic.FullName());
   std::cout << "\nCreate topic (" << dead_letter_topic_id << ")" << std::endl;
@@ -378,17 +417,13 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nCreate topic (" << ordering_topic_id << ")" << std::endl;
   topic_admin_client.CreateTopic(ordering_topic.FullName());
   Cleanup cleanup;
-  cleanup.Defer(
-      [topic_admin_client, topic, dead_letter_topic, ordering_topic]() mutable {
-        std::cout << "\nDelete topic (" << topic.topic_id() << ")" << std::endl;
-        (void)topic_admin_client.DeleteTopic(topic.FullName());
-        std::cout << "\nDelete topic (" << dead_letter_topic.topic_id() << ")"
-                  << std::endl;
-        (void)topic_admin_client.DeleteTopic(dead_letter_topic.FullName());
-        std::cout << "\nDelete topic (" << ordering_topic.topic_id() << ")"
-                  << std::endl;
-        (void)topic_admin_client.DeleteTopic(ordering_topic.FullName());
-      });
+  cleanup.Defer([topic_admin_client, topic, ordering_topic]() mutable {
+    std::cout << "\nDelete topic (" << topic.topic_id() << ")" << std::endl;
+    (void)topic_admin_client.DeleteTopic(topic.FullName());
+    std::cout << "\nDelete topic (" << ordering_topic.topic_id() << ")"
+              << std::endl;
+    (void)topic_admin_client.DeleteTopic(ordering_topic.FullName());
+  });
 
   std::cout << "\nRunning CreateSubscription() [1] sample" << std::endl;
   CreateSubscription(subscription_admin_client,
@@ -428,13 +463,24 @@ void AutoRun(std::vector<std::string> const& argv) {
       subscription_admin_client,
       {project_id, topic_id, dead_letter_subscription_id, dead_letter_topic_id,
        std::to_string(kDeadLetterDeliveryAttempts)});
-  cleanup.Defer(
-      [subscription_admin_client, project_id, dead_letter_topic_id]() mutable {
-        std::cout << "\nDelete subscription (" << dead_letter_topic_id << ")"
-                  << std::endl;
-        subscription_admin_client.DeleteSubscription(
-            pubsub::Subscription(project_id, dead_letter_topic_id).FullName());
-      });
+  cleanup.Defer([subscription_admin_client, topic_admin_client, project_id,
+                 dead_letter_topic, dead_letter_subscription_id]() mutable {
+    // You must delete the subscription before the topic.
+    std::cout << "\nDelete subscription (" << dead_letter_subscription_id << ")"
+              << std::endl;
+    subscription_admin_client.DeleteSubscription(
+        pubsub::Subscription(project_id, dead_letter_subscription_id)
+            .FullName());
+    std::cout << "\nDelete topic (" << dead_letter_topic.topic_id() << ")"
+              << std::endl;
+    (void)topic_admin_client.DeleteTopic(dead_letter_topic.FullName());
+  });
+
+  std::cout << "\nRunning RemoveDeadLetterPolicy() sample" << std::endl;
+  ignore_emulator_failures([&] {
+    RemoveDeadLetterPolicy(subscription_admin_client,
+                           {project_id, dead_letter_subscription_id});
+  });
 
   std::cout
       << "\nRunning CreateSubscriptionWithExactlyOnceDelivery() sample [1]"
@@ -563,6 +609,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           "create-unwrapped-push-subscription",
           {"project-id", "topic-id", "subscription-id", "endpoint"},
           CreateUnwrappedPushSubscription),
+      CreateSubscriptionAdminCommand("remove-dead-letter-policy",
+                                     {"project-id", "subscription-id"},
+                                     RemoveDeadLetterPolicy),
       CreateSubscriptionAdminCommand("delete-subscription",
                                      {"project-id", "subscription-id"},
                                      DeleteSubscription),
