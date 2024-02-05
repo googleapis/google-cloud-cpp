@@ -145,61 +145,6 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
   }(std::move(client), argv.at(0), argv.at(1));
 }
 
-void GetTopic(google::cloud::pubsub::TopicAdminClient client,
-              std::vector<std::string> const& argv) {
-  //! [get-topic]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string project_id,
-     std::string topic_id) {
-    auto topic = client.GetTopic(
-        pubsub::Topic(std::move(project_id), std::move(topic_id)));
-    if (!topic) throw std::move(topic).status();
-
-    std::cout << "The topic information was successfully retrieved: "
-              << topic->DebugString() << "\n";
-  }
-  //! [get-topic]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void UpdateTopic(google::cloud::pubsub::TopicAdminClient client,
-                 std::vector<std::string> const& argv) {
-  //! [update-topic]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string project_id,
-     std::string topic_id) {
-    auto topic = client.UpdateTopic(
-        pubsub::TopicBuilder(
-            pubsub::Topic(std::move(project_id), std::move(topic_id)))
-            .add_label("test-key", "test-value"));
-    if (!topic) throw std::move(topic).status();
-
-    std::cout << "The topic was successfully updated: " << topic->DebugString()
-              << "\n";
-  }
-  //! [update-topic]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ListTopics(google::cloud::pubsub::TopicAdminClient client,
-                std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topics] [list-topics]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string const& project_id) {
-    int count = 0;
-    for (auto& topic : client.ListTopics(project_id)) {
-      if (!topic) throw std::move(topic).status();
-      std::cout << "Topic Name: " << topic->name() << "\n";
-      ++count;
-    }
-    if (count == 0) {
-      std::cout << "No topics found in project " << project_id << "\n";
-    }
-  }
-  //! [END pubsub_list_topics] [list-topics]
-  (std::move(client), argv.at(0));
-}
-
 void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [START pubsub_delete_topic]
@@ -236,9 +181,28 @@ void DetachSubscription(google::cloud::pubsub::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void ListTopics(google::cloud::pubsub::TopicAdminClient client,
+                std::vector<std::string> const& argv) {
+  //! [START pubsub_list_topics]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::TopicAdminClient client, std::string const& project_id) {
+    int count = 0;
+    for (auto& topic : client.ListTopics(project_id)) {
+      if (!topic) throw std::move(topic).status();
+      std::cout << "Topic Name: " << topic->name() << "\n";
+      ++count;
+    }
+    if (count == 0) {
+      std::cout << "No topics found in project " << project_id << "\n";
+    }
+  }
+  //! [END pubsub_list_topics]
+  (std::move(client), argv.at(0));
+}
+
 void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
                             std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topic_subscriptions] [list-topic-subscriptions]
+  //! [START pubsub_list_topic_subscriptions]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string const& project_id,
      std::string const& topic_id) {
@@ -249,25 +213,7 @@ void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
       std::cout << "  " << *name << "\n";
     }
   }
-  //! [END pubsub_list_topic_subscriptions] [list-topic-subscriptions]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ListTopicSnapshots(google::cloud::pubsub::TopicAdminClient client,
-                        std::vector<std::string> const& argv) {
-  //! [list-topic-snapshots]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string project_id,
-     std::string topic_id) {
-    auto const topic =
-        pubsub::Topic(std::move(project_id), std::move(topic_id));
-    std::cout << "Snapshot list for topic " << topic << ":\n";
-    for (auto& name : client.ListTopicSnapshots(topic)) {
-      if (!name) throw std::move(name).status();
-      std::cout << "  " << *name << "\n";
-    }
-  }
-  //! [list-topic-snapshots]
+  //! [END pubsub_list_topic_subscriptions]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -367,6 +313,89 @@ void CreatePushSubscription(
               << sub->DebugString() << "\n";
   }
   //! [END pubsub_create_push_subscription] [create-push-subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
+void CreateUnwrappedPushSubscription(
+    google::cloud::pubsub::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [START pubsub_create_unwrapped_push_subscription]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& topic_id, std::string const& subscription_id,
+     std::string const& endpoint) {
+    auto sub = client.CreateSubscription(
+        pubsub::Topic(project_id, topic_id),
+        pubsub::Subscription(project_id, subscription_id),
+        pubsub::SubscriptionBuilder{}.set_push_config(
+            pubsub::PushConfigBuilder{}.set_push_endpoint(endpoint).set_wrapper(
+                pubsub::PushConfigBuilder::MakeNoWrapper(true))));
+    if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The subscription already exists\n";
+      return;
+    }
+    if (!sub) throw std::move(sub).status();
+
+    std::cout << "The subscription was successfully created: "
+              << sub->DebugString() << "\n";
+  }
+  //! [END pubsub_create_unwrapped_push_subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
+void CreateBigQuerySubscription(
+    google::cloud::pubsub::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [START pubsub_create_bigquery_subscription] [create-bigquery-subscription]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& topic_id, std::string const& subscription_id,
+     std::string const& table_id) {
+    auto sub = client.CreateSubscription(
+        pubsub::Topic(project_id, topic_id),
+        pubsub::Subscription(project_id, subscription_id),
+        pubsub::SubscriptionBuilder{}.set_bigquery_config(
+            pubsub::BigQueryConfigBuilder{}.set_table(table_id)));
+    if (!sub) {
+      if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+        std::cout << "The subscription already exists\n";
+        return;
+      }
+      throw std::move(sub).status();
+    }
+
+    std::cout << "The subscription was successfully created: "
+              << sub->DebugString() << "\n";
+  }
+  //! [END pubsub_create_bigquery_subscription] [create-bigquery-subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
+void CreateCloudStorageSubscription(
+    google::cloud::pubsub::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [START pubsub_create_cloud_storage_subscription]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& topic_id, std::string const& subscription_id,
+     std::string const& bucket) {
+    auto sub = client.CreateSubscription(
+        pubsub::Topic(project_id, topic_id),
+        pubsub::Subscription(project_id, subscription_id),
+        pubsub::SubscriptionBuilder{}.set_cloud_storage_config(
+            pubsub::CloudStorageConfigBuilder{}.set_bucket(bucket)));
+    if (!sub) {
+      if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+        std::cout << "The subscription already exists\n";
+        return;
+      }
+      throw std::move(sub).status();
+    }
+
+    std::cout << "The subscription was successfully created: "
+              << sub->DebugString() << "\n";
+  }
+  //! [END pubsub_create_cloud_storage_subscription]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
@@ -2296,6 +2325,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const exactly_once_subscription_id = RandomSubscriptionId(generator);
   auto const filtered_subscription_id = RandomSubscriptionId(generator);
   auto const push_subscription_id = RandomSubscriptionId(generator);
+  auto const unwrapped_push_subscription_id = RandomSubscriptionId(generator);
+  auto const cloud_storage_subscription_id = RandomSubscriptionId(generator);
+  auto const bigquery_subscription_id = RandomSubscriptionId(generator);
+  auto const ordering_subscription_id = RandomSubscriptionId(generator);
+  auto const ordering_topic_id = "ordering-" + RandomTopicId(generator);
   auto const dead_letter_subscription_id = RandomSubscriptionId(generator);
   auto const dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
 
@@ -2325,21 +2359,14 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateTopic() sample [2]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, topic_id});
 
-  std::cout << "\nRunning GetTopic() sample" << std::endl;
-  GetTopic(topic_admin_client, {project_id, topic_id});
-
-  std::cout << "\nRunning UpdateTopic() sample" << std::endl;
-  ignore_emulator_failures(
-      [&] {
-        UpdateTopic(topic_admin_client, {project_id, topic_id});
-      },
-      StatusCode::kInvalidArgument);
-
-  std::cout << "\nRunning the StatusOr example" << std::endl;
-  ExampleStatusOr(topic_admin_client, {project_id});
+  std::cout << "\nRunning CreateTopic() sample [3]" << std::endl;
+  CreateTopic(topic_admin_client, {project_id, ordering_topic_id});
 
   std::cout << "\nRunning ListTopics() sample" << std::endl;
   ListTopics(topic_admin_client, {project_id});
+
+  std::cout << "\nRunning the StatusOr example" << std::endl;
+  ExampleStatusOr(topic_admin_client, {project_id});
 
   std::cout << "\nRunning CreateSubscription() sample [1]" << std::endl;
   CreateSubscription(subscription_admin_client,
@@ -2348,6 +2375,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateSubscription() sample [2]" << std::endl;
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
+
+  auto const bucket_id = project_id + "-pubsub-bucket";
+  std::cout << "\nRunning CreateCloudStorageSubscription() sample" << std::endl;
+  CreateCloudStorageSubscription(
+      subscription_admin_client,
+      {project_id, topic_id, cloud_storage_subscription_id, bucket_id});
 
   std::cout << "\nRunning CreateFilteredSubscription() sample [1]" << std::endl;
   CreateFilteredSubscription(subscription_admin_client,
@@ -2395,6 +2428,17 @@ void AutoRun(std::vector<std::string> const& argv) {
       subscription_admin_client,
       {project_id, topic_id, push_subscription_id, endpoint1});
 
+  std::cout << "\nRunning CreateUnwrappedPushSubscription() sample [3]"
+            << std::endl;
+  CreateUnwrappedPushSubscription(
+      subscription_admin_client,
+      {project_id, topic_id, unwrapped_push_subscription_id, endpoint1});
+
+  std::cout << "\nRunning CreateOrderingSubscription() sample" << std::endl;
+  CreateOrderingSubscription(
+      subscription_admin_client,
+      {project_id, ordering_topic_id, ordering_subscription_id});
+
   std::cout << "\nRunning ModifyPushConfig() sample" << std::endl;
   ModifyPushConfig(subscription_admin_client,
                    {project_id, push_subscription_id, endpoint2});
@@ -2434,9 +2478,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateSnapshot() sample [2]" << std::endl;
   CreateSnapshot(subscription_admin_client,
                  {project_id, subscription_id, snapshot_id});
-
-  std::cout << "\nRunning ListTopicSnapshots() sample" << std::endl;
-  ListTopicSnapshots(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nRunning GetSnapshot() sample" << std::endl;
   GetSnapshot(subscription_admin_client, {project_id, snapshot_id});
@@ -2599,23 +2640,42 @@ void AutoRun(std::vector<std::string> const& argv) {
     DetachSubscription(topic_admin_client, {project_id, subscription_id});
   });
 
-  std::cout << "\nRunning DeleteSubscription() sample [1]" << std::endl;
+  std::cout << "\nRunning DeleteSubscription() sample [2]" << std::endl;
   DeleteSubscription(subscription_admin_client,
                      {project_id, std::move(dead_letter_subscription_id)});
 
-  std::cout << "\nRunning DeleteSubscription() sample [2]" << std::endl;
+  std::cout << "\nRunning DeleteSubscription() sample [3] " << std::endl;
+  DeleteSubscription(subscription_admin_client,
+                     {project_id, ordering_subscription_id});
+
+  std::cout << "\nRunning DeleteSubscription() sample [4]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 
-  std::cout << "\nRunning DeleteSubscription() sample [3]" << std::endl;
+  std::cout << "\nRunning DeleteSubscription() sample [5]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
+
+  std::cout << "\nRunning DeleteSubscription() sample [6] " << std::endl;
+  DeleteSubscription(subscription_admin_client,
+                     {project_id, bigquery_subscription_id});
+
+  std::cout << "\nRunning DeleteSubscription() for sample [7] " << std::endl;
+  DeleteSubscription(subscription_admin_client,
+                     {project_id, cloud_storage_subscription_id});
+
+  std::cout << "\nRunning DeleteSubscription() sample [8] " << std::endl;
+  DeleteSubscription(subscription_admin_client,
+                     {project_id, unwrapped_push_subscription_id});
 
   std::cout << "\nRunning DeleteTopic() sample [1]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, dead_letter_topic_id});
 
   std::cout << "\nRunning DeleteTopic() sample [2]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, topic_id});
+  DeleteTopic(topic_admin_client, {project_id, ordering_topic_id});
 
   std::cout << "\nRunning DeleteTopic() sample [3]" << std::endl;
+  DeleteTopic(topic_admin_client, {project_id, topic_id});
+
+  std::cout << "\nRunning DeleteTopic() sample [4]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nAutoRun done" << std::endl;
@@ -2632,19 +2692,43 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   using ::google::cloud::testing_util::Example;
 
   Example example({
-      CreateTopicAdminCommand("get-topic", {"project-id", "topic-id"},
-                              GetTopic),
-      CreateTopicAdminCommand("update-topic", {"project-id", "topic-id"},
-                              UpdateTopic),
-      CreateTopicAdminCommand("list-topics", {"project-id"}, ListTopics),
       CreateTopicAdminCommand("detach-subscription",
                               {"project-id", "subscription-id"},
                               DetachSubscription),
-      CreateTopicAdminCommand("list-topic-subscriptions",
-                              {"project-id", "topic-id"},
-                              ListTopicSubscriptions),
-      CreateTopicAdminCommand("list-topic-snapshots",
-                              {"project-id", "topic-id"}, ListTopicSnapshots),
+
+      CreateSubscriptionAdminCommand(
+          "create-filtered-subscription",
+          {"project-id", "topic-id", "subscription-id"},
+          CreateFilteredSubscription),
+      CreateSubscriptionAdminCommand(
+          "create-subscription-with-exactly-once-delivery",
+          {"project-id", "topic-id", "subscription-id"},
+          CreateSubscriptionWithExactlyOnceDelivery),
+      CreateSubscriptionAdminCommand(
+          "create-push-subscription",
+          {"project-id", "topic-id", "subscription-id", "endpoint"},
+          CreatePushSubscription),
+      CreateSubscriptionAdminCommand(
+          "create-unwrapped-push-subscription",
+          {"project-id", "topic-id", "subscription-id", "endpoint"},
+          CreateUnwrappedPushSubscription),
+      CreateSubscriptionAdminCommand(
+          "create-bigquery-subscription",
+          {"project-id", "topic-id", "subscription-id", "table-id"},
+          CreateBigQuerySubscription),
+      CreateSubscriptionAdminCommand(
+          "create-cloud-storage-subscription",
+          {"project-id", "topic-id", "subscription-id", "bucket"},
+          CreateCloudStorageSubscription),
+      CreateSubscriptionAdminCommand(
+          "create-ordering-subscription",
+          {"project-id", "topic-id", "subscription-id"},
+          CreateOrderingSubscription),
+      CreateSubscriptionAdminCommand(
+          "create-dead-letter-subscription",
+          {"project-id", "topic-id", "subscription-id", "dead-letter-topic-id",
+           "dead-letter-delivery-attempts"},
+          CreateDeadLetterSubscription),
       CreateSubscriptionAdminCommand(
           "update-dead-letter-subscription",
           {"project-id", "subscription-id", "dead-letter-topic-id",
