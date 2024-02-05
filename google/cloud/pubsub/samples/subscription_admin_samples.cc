@@ -409,7 +409,6 @@ void AutoRun(std::vector<std::string> const& argv) {
         }
       };
 
-
   std::cout << "\nCreate topic (" << topic_id << ")" << std::endl;
   topic_admin_client.CreateTopic(topic.FullName());
   std::cout << "\nCreate topic (" << dead_letter_topic_id << ")" << std::endl;
