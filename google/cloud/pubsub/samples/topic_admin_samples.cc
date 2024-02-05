@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/subscription_admin_client.h"
 #include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
+#include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -22,8 +24,6 @@
 
 namespace {
 
-using ::google::cloud::pubsub::examples::RandomTopicId;
-using ::google::cloud::pubsub::examples::UsingEmulator;
 using TopicAdminCommand =
     std::function<void(::google::cloud::pubsub_admin::TopicAdminClient,
                        std::vector<std::string> const&)>;
@@ -170,6 +170,26 @@ void ListTopicSnapshots(google::cloud::pubsub_admin::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void DetachSubscription(google::cloud::pubsub_admin::TopicAdminClient client,
+                        std::vector<std::string> const& argv) {
+  //! [START pubsub_detach_subscription] [detach-subscription]
+  namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::TopicAdminClient client, std::string const& project_id,
+     std::string const& subscription_id) {
+    google::pubsub::v1::DetachSubscriptionRequest request;
+    request.set_subscription(
+        pubsub::Subscription(project_id, subscription_id).FullName());
+    auto response = client.DetachSubscription(request);
+    if (!response.ok()) throw std::move(response).status();
+
+    std::cout << "The subscription was successfully detached: "
+              << response->DebugString() << "\n";
+  }
+  //! [END pubsub_detach_subscription] [detach-subscription]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void DeleteTopic(google::cloud::pubsub_admin::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [delete-topic]
@@ -194,6 +214,10 @@ void DeleteTopic(google::cloud::pubsub_admin::TopicAdminClient client,
 
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
+  using google::cloud::pubsub::examples::Cleanup;
+  using ::google::cloud::pubsub::examples::RandomSubscriptionId;
+  using ::google::cloud::pubsub::examples::RandomTopicId;
+  using ::google::cloud::pubsub::examples::UsingEmulator;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({"GOOGLE_CLOUD_PROJECT"});
@@ -203,6 +227,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto const topic_id = RandomTopicId(generator);
   auto const topic = google::cloud::pubsub::Topic(project_id, topic_id);
+  auto const subscription_id = RandomSubscriptionId(generator);
+  auto const subscription =
+      google::cloud::pubsub::Subscription(project_id, subscription_id);
 
   using ::google::cloud::StatusCode;
   auto ignore_emulator_failures =
@@ -219,13 +246,21 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   google::cloud::pubsub_admin::TopicAdminClient topic_admin_client(
       google::cloud::pubsub_admin::MakeTopicAdminConnection());
+  google::cloud::pubsub_admin::SubscriptionAdminClient
+      subscription_admin_client(
+          google::cloud::pubsub_admin::MakeSubscriptionAdminConnection());
 
   std::cout << "\nRunning CreateTopic() sample [1]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, topic_id});
+  std::cout << "\nCreate topic (" << topic_id << ")" << std::endl;
+  Cleanup cleanup;
+  cleanup.Defer([topic_admin_client, project_id, topic_id]() mutable {
+    std::cout << "\nRunning DeleteTopic() sample" << std::endl;
+    DeleteTopic(topic_admin_client, {project_id, topic_id});
+  });
 
   // Since the topic was created already, this should return kAlreadyExists.
   std::cout << "\nRunning CreateTopic() sample [2]" << std::endl;
-  CreateTopic(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nRunning GetTopic() sample" << std::endl;
   GetTopic(topic_admin_client, {project_id, topic_id});
@@ -246,8 +281,24 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ListTopicSubscriptions() sample" << std::endl;
   ListTopicSubscriptions(topic_admin_client, {project_id, topic_id});
 
-  std::cout << "\nRunning DeleteTopic() sample" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, topic_id});
+  std::cout << "\nCreate subscription (" << subscription_id << ")" << std::endl;
+  google::pubsub::v1::Subscription request;
+  request.set_name(
+      google::cloud::pubsub::Subscription(project_id, subscription_id)
+          .FullName());
+  request.set_topic(
+      google::cloud::pubsub::Topic(project_id, topic_id).FullName());
+  subscription_admin_client.CreateSubscription(request);
+  cleanup.Defer([subscription_admin_client, subscription]() mutable {
+    std::cout << "\nDelete subscription (" << subscription.subscription_id()
+              << ")" << std::endl;
+    (void)subscription_admin_client.DeleteSubscription(subscription.FullName());
+  });
+
+  std::cout << "\nRunning DetachSubscription() sample" << std::endl;
+  ignore_emulator_failures([&] {
+    DetachSubscription(topic_admin_client, {project_id, subscription_id});
+  });
 
   std::cout << "\nAutoRun done" << std::endl;
 }
@@ -270,6 +321,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                               ListTopicSubscriptions),
       CreateTopicAdminCommand("list-topic-snapshots",
                               {"project-id", "topic-id"}, ListTopicSnapshots),
+      CreateTopicAdminCommand("detach-subscription",
+                              {"project-id", "subscription-id"},
+                              DetachSubscription),
       CreateTopicAdminCommand("delete-topic", {"project-id", "topic-id"},
                               DeleteTopic),
       {"auto", AutoRun},
