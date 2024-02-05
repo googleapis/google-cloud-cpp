@@ -153,3 +153,45 @@ endfunction ()
 function (google_cloud_cpp_add_samples library)
     google_cloud_cpp_add_samples_relative("${library}" "")
 endfunction ()
+
+# Install headers, export target, and add a package config file for a `*_mocks`
+# library.
+#
+# Parameters:
+#
+# * library:      e.g. pubsub
+# * display_name: e.g. "Cloud Pub/Sub"
+function (google_cloud_cpp_install_mocks library display_name)
+    set(library_target "google_cloud_cpp_${library}")
+    set(mocks_target "google_cloud_cpp_${library}_mocks")
+    install(
+        EXPORT ${mocks_target}-targets
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${mocks_target}"
+        COMPONENT google_cloud_cpp_development)
+    install(
+        TARGETS ${mocks_target}
+        EXPORT ${mocks_target}-targets
+        COMPONENT google_cloud_cpp_development)
+
+    google_cloud_cpp_install_headers("${mocks_target}"
+                                     "include/google/cloud/${library}")
+
+    google_cloud_cpp_add_pkgconfig(
+        ${library}_mocks "${display_name} Mocks"
+        "Mocks for the ${display_name} C++ Client Library" "${library_target}"
+        "gmock_main")
+
+    set(GOOGLE_CLOUD_CPP_CONFIG_LIBRARY "${library_target}")
+    configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/mocks-config.cmake.in"
+                   "${mocks_target}-config.cmake" @ONLY)
+    write_basic_package_version_file(
+        "${mocks_target}-config-version.cmake"
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY ExactVersion)
+
+    install(
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/${mocks_target}-config.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/${mocks_target}-config-version.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${mocks_target}"
+        COMPONENT google_cloud_cpp_development)
+endfunction ()

@@ -279,20 +279,28 @@ add_library(google-cloud-cpp::bigtable ALIAS google_cloud_cpp_bigtable)
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_bigtable)
 
-add_library(
-    google_cloud_cpp_bigtable_mocks # cmake-format: sort
+add_library(google_cloud_cpp_bigtable_mocks INTERFACE)
+set(google_cloud_cpp_bigtable_mocks_hdrs
+    # cmake-format: sort
     admin/mocks/mock_bigtable_instance_admin_connection.h
     admin/mocks/mock_bigtable_table_admin_connection.h
     mocks/mock_data_connection.h
-    mocks/mock_row_reader.cc
     mocks/mock_row_reader.h)
+export_list_to_bazel("google_cloud_cpp_bigtable_mocks.bzl"
+                     google_cloud_cpp_bigtable_mocks_hdrs YEAR "2021")
+foreach (file IN LISTS google_cloud_cpp_bigtable_mocks_hdrs)
+    # We use a generator expression per the recommendation in:
+    # https://stackoverflow.com/a/62465051
+    list(APPEND mock_files
+         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${file}>")
+endforeach ()
+target_sources(google_cloud_cpp_bigtable_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_bigtable_mocks
-    PUBLIC google-cloud-cpp::bigtable
-    INTERFACE GTest::gmock_main GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::bigtable GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(google_cloud_cpp_bigtable_mocks
                       PROPERTIES EXPORT_NAME google-cloud-cpp::bigtable_mocks)
-create_bazel_config(google_cloud_cpp_bigtable_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_bigtable_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -504,8 +512,6 @@ install(
 
 google_cloud_cpp_install_headers("google_cloud_cpp_bigtable"
                                  "include/google/cloud/bigtable")
-google_cloud_cpp_install_headers("google_cloud_cpp_bigtable_mocks"
-                                 "include/google/cloud/bigtable")
 
 google_cloud_cpp_add_pkgconfig(
     bigtable
@@ -529,3 +535,5 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigtable-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigtable"
     COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_install_mocks(bigtable "Google Cloud Bigtable")

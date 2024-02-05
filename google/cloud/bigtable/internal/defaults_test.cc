@@ -217,6 +217,15 @@ TEST(OptionsTest, DataAuthorityOption) {
   EXPECT_EQ(options.get<AuthorityOption>(), "custom-endpoint.googleapis.com");
 }
 
+TEST(OptionsTest, DataEnableServerRetriesOption) {
+  using ::google::cloud::internal::EnableServerRetriesOption;
+  auto options = DefaultDataOptions(Options{});
+  EXPECT_TRUE(options.get<EnableServerRetriesOption>());
+
+  options = DefaultDataOptions(Options{}.set<EnableServerRetriesOption>(false));
+  EXPECT_FALSE(options.get<EnableServerRetriesOption>());
+}
+
 TEST(OptionsTest, UniverseDomain) {
   auto options =
       Options{}.set<google::cloud::internal::UniverseDomainOption>("ud.net");

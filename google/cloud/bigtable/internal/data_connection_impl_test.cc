@@ -1519,6 +1519,47 @@ TEST_F(DataConnectionTest, SampleRowsBigtableCookie) {
   EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
 }
 
+TEST_F(DataConnectionTest, SampleRowsRetryInfoHeeded) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, SampleRowKeys)
+      .WillOnce([](auto, auto const&, v2::SampleRowKeysRequest const&) {
+        auto status = PermanentError();
+        internal::SetRetryInfo(status, internal::RetryInfo{ms(0)});
+        auto stream = std::make_unique<MockSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(status));
+        return stream;
+      })
+      .WillOnce([](auto, auto const&, v2::SampleRowKeysRequest const&) {
+        auto stream = std::make_unique<MockSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<internal::EnableServerRetriesOption>(true));
+  auto samples = conn->SampleRows(kTableName);
+  EXPECT_STATUS_OK(samples);
+}
+
+TEST_F(DataConnectionTest, SampleRowsRetryInfoIgnored) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, SampleRowKeys)
+      .WillOnce([](auto, auto const&, v2::SampleRowKeysRequest const&) {
+        auto status = PermanentError();
+        internal::SetRetryInfo(status, internal::RetryInfo{ms(0)});
+        auto stream = std::make_unique<MockSampleRowKeysStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(status));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<internal::EnableServerRetriesOption>(false));
+  auto samples = conn->SampleRows(kTableName);
+  EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
+}
+
 // The `AsyncRowSampler` is tested extensively in `async_row_sampler_test.cc`.
 // In this test, we just verify that the configuration is passed along.
 TEST_F(DataConnectionTest, AsyncSampleRows) {

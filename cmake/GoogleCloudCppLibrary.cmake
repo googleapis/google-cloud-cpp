@@ -349,36 +349,7 @@ function (google_cloud_cpp_add_gapic_library library display_name)
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${library_target}"
         COMPONENT google_cloud_cpp_development)
 
-    # Install mocks
-    install(
-        EXPORT ${mocks_target}-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${mocks_target}"
-        COMPONENT google_cloud_cpp_development)
-    install(
-        TARGETS ${mocks_target}
-        EXPORT ${mocks_target}-targets
-        COMPONENT google_cloud_cpp_development)
-
-    google_cloud_cpp_install_headers("${mocks_target}"
-                                     "include/google/cloud/${library}")
-
-    google_cloud_cpp_add_pkgconfig(
-        ${library}_mocks "${display_name} Mocks"
-        "Mocks for the ${display_name} C++ Client Library" "${library_target}"
-        "gmock_main")
-
-    configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/mocks-config.cmake.in"
-                   "${mocks_target}-config.cmake" @ONLY)
-    write_basic_package_version_file(
-        "${mocks_target}-config-version.cmake"
-        VERSION ${PROJECT_VERSION}
-        COMPATIBILITY ExactVersion)
-
-    install(
-        FILES "${CMAKE_CURRENT_BINARY_DIR}/${mocks_target}-config.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/${mocks_target}-config-version.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${mocks_target}"
-        COMPONENT google_cloud_cpp_development)
+    google_cloud_cpp_install_mocks("${library}" "${display_name}")
 
     # ${library_alias} must be defined before we can add the samples.
     if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)

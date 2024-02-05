@@ -959,6 +959,10 @@
 ./include/google/cloud/securitycenter/v1
 ./include/google/cloud/securitycenter/v1/internal
 ./include/google/cloud/securitycenter/v1/mocks
+./include/google/cloud/securitycentermanagement
+./include/google/cloud/securitycentermanagement/v1
+./include/google/cloud/securitycentermanagement/v1/internal
+./include/google/cloud/securitycentermanagement/v1/mocks
 ./include/google/cloud/servicecontrol
 ./include/google/cloud/servicecontrol/mocks
 ./include/google/cloud/servicecontrol/v1
@@ -1224,6 +1228,7 @@
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_bigquery_mocks
 ./lib64/cmake/google_cloud_cpp_bigtable
+./lib64/cmake/google_cloud_cpp_bigtable_mocks
 ./lib64/cmake/google_cloud_cpp_billing
 ./lib64/cmake/google_cloud_cpp_billing_mocks
 ./lib64/cmake/google_cloud_cpp_binaryauthorization
@@ -1354,6 +1359,7 @@
 ./lib64/cmake/google_cloud_cpp_pubsub
 ./lib64/cmake/google_cloud_cpp_pubsub_mocks
 ./lib64/cmake/google_cloud_cpp_pubsublite
+./lib64/cmake/google_cloud_cpp_pubsublite_mocks
 ./lib64/cmake/google_cloud_cpp_rapidmigrationassessment
 ./lib64/cmake/google_cloud_cpp_rapidmigrationassessment_mocks
 ./lib64/cmake/google_cloud_cpp_recaptchaenterprise
@@ -1378,6 +1384,8 @@
 ./lib64/cmake/google_cloud_cpp_securesourcemanager_mocks
 ./lib64/cmake/google_cloud_cpp_securitycenter
 ./lib64/cmake/google_cloud_cpp_securitycenter_mocks
+./lib64/cmake/google_cloud_cpp_securitycentermanagement
+./lib64/cmake/google_cloud_cpp_securitycentermanagement_mocks
 ./lib64/cmake/google_cloud_cpp_servicecontrol
 ./lib64/cmake/google_cloud_cpp_servicecontrol_mocks
 ./lib64/cmake/google_cloud_cpp_servicedirectory
@@ -1391,9 +1399,11 @@
 ./lib64/cmake/google_cloud_cpp_shell
 ./lib64/cmake/google_cloud_cpp_shell_mocks
 ./lib64/cmake/google_cloud_cpp_spanner
+./lib64/cmake/google_cloud_cpp_spanner_mocks
 ./lib64/cmake/google_cloud_cpp_speech
 ./lib64/cmake/google_cloud_cpp_speech_mocks
 ./lib64/cmake/google_cloud_cpp_sql
+./lib64/cmake/google_cloud_cpp_sql_mocks
 ./lib64/cmake/google_cloud_cpp_storage
 ./lib64/cmake/google_cloud_cpp_storagecontrol
 ./lib64/cmake/google_cloud_cpp_storagecontrol_mocks
