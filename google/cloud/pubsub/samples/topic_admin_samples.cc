@@ -19,7 +19,9 @@
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/project.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "absl/strings/match.h"
 #include <sstream>
 
 namespace {
@@ -27,6 +29,23 @@ namespace {
 using TopicAdminCommand =
     std::function<void(::google::cloud::pubsub_admin::TopicAdminClient,
                        std::vector<std::string> const&)>;
+
+// Delete all topics created with that inclue "cloud-cpp-samples". Ignore any
+// failures. If multiple tests are cleaning up topics in parallel, then the
+// delete call might fail.
+void CleanupTopics(
+    google::cloud::pubsub_admin::TopicAdminClient& topic_admin_client,
+    std::string const& project_id) {
+  auto const parent = google::cloud::Project(project_id).FullName();
+  for (auto& topic : topic_admin_client.ListTopics(parent)) {
+    if (!topic) continue;
+    if (!absl::StrContains(topic->name(), "cloud-cpp-samples")) continue;
+
+    google::pubsub::v1::DeleteTopicRequest request;
+    request.set_topic(topic->name());
+    (void)topic_admin_client.DeleteTopic(request);
+  }
+}
 
 google::cloud::testing_util::Commands::value_type CreateTopicAdminCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
@@ -218,7 +237,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   using ::google::cloud::pubsub::examples::RandomSubscriptionId;
   using ::google::cloud::pubsub::examples::RandomTopicId;
   using ::google::cloud::pubsub::examples::UsingEmulator;
-
+ 
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({"GOOGLE_CLOUD_PROJECT"});
   auto project_id =
@@ -250,6 +269,9 @@ void AutoRun(std::vector<std::string> const& argv) {
       subscription_admin_client(
           google::cloud::pubsub_admin::MakeSubscriptionAdminConnection());
 
+  // Delete old resources.
+  CleanupTopics(topic_admin_client, project_id);
+  
   std::cout << "\nRunning CreateTopic() sample [1]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, topic_id});
   std::cout << "\nCreate topic (" << topic_id << ")" << std::endl;
