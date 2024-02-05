@@ -87,10 +87,6 @@ StatusOr<ListTablesResponse> ListTablesResponse::BuildFromHttpResponse(
   result.etag = json->value("etag", "");
   result.next_page_token = json->value("nextPageToken", "");
   result.total_items = json->value("totalItems", 0);
-  if (result.total_items < 0) {
-    return internal::InternalError("Invalid value for totalItems",
-                                   GCP_ERROR_INFO());
-  }
 
   for (auto const& kv : json->at("tables").items()) {
     auto const& json_list_format_table_obj = kv.value();

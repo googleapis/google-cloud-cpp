@@ -271,19 +271,6 @@ TEST(InsertJobRequestTest, Success) {
   EXPECT_EQ(expected, *actual);
 }
 
-TEST(InsertJobRequestTest, EmptyQuery) {
-  InsertJobRequest request;
-  request.set_project_id("1234");
-
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
-  internal::OptionsSpan span(opts);
-
-  auto actual = BuildRestRequest(request);
-  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
-                               HasSubstr("Invalid Job object")));
-}
-
 TEST(InsertJobRequest, DebugString) {
   InsertJobRequest request("1234", MakeJob());
 
@@ -1025,18 +1012,6 @@ TEST(PostQueryRequestTest, Success) {
       "https://bigquery.googleapis.com/bigquery/v2/projects/test-project-id/"
       "queries");
   EXPECT_EQ(expected, *actual);
-}
-
-TEST(PostQueryRequestTest, MissingQuery) {
-  PostQueryRequest request("1234");
-
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
-  internal::OptionsSpan span(opts);
-
-  auto actual = BuildRestRequest(request);
-  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
-                               HasSubstr("Missing required query field")));
 }
 
 TEST(PostQueryRequestTest, DebugString) {

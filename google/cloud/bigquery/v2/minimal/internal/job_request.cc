@@ -206,22 +206,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
       absl::StrCat(endpoint, "/projects/", r.project_id(), "/jobs");
   request.SetPath(std::move(path));
 
-  // Validate request body is a valid json Job payload.
-  nlohmann::json json_payload;
-  to_json(json_payload, r.job());
-
-  if (!json_payload.is_object()) {
-    return internal::InvalidArgumentError(
-        "Invalid InsertJobRequest: Invalid json payload", GCP_ERROR_INFO());
-  }
-
-  auto const& job = json_payload.get<Job>();
-
-  if (job.configuration.query.query.empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid InsertJobRequest: Invalid Job object", GCP_ERROR_INFO());
-  }
-
   return request;
 }
 
@@ -322,23 +306,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   std::string path =
       absl::StrCat(endpoint, "/projects/", r.project_id(), "/queries");
   request.SetPath(std::move(path));
-
-  // Validate request body is a valid json QueryRequest payload.
-  nlohmann::json json_payload;
-  to_json(json_payload, r.query_request());
-
-  if (!json_payload.is_object()) {
-    return internal::InvalidArgumentError(
-        "Invalid PostQueryRequest: Invalid json payload", GCP_ERROR_INFO());
-  }
-
-  auto const& query_request = json_payload.get<QueryRequest>();
-
-  if (query_request.query().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid PostQueryRequest: Missing required query field",
-        GCP_ERROR_INFO());
-  }
 
   return request;
 }

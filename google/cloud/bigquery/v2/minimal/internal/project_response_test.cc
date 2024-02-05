@@ -139,20 +139,6 @@ TEST(ListProjectsResponseTest, InvalidProject) {
                                  HasSubstr("Not a valid Json Project object")));
 }
 
-TEST(ListProjectsResponseTest, InvalidTotalItems) {
-  BigQueryHttpResponse http_response;
-  http_response.payload =
-      R"({"etag": "tag-1",
-          "kind": "kind-1",
-          "nextPageToken": "npt-123",
-          "totalItems": -1,
-          "projects": []})";
-  auto const response =
-      ListProjectsResponse::BuildFromHttpResponse(http_response);
-  EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
-                                 HasSubstr("Invalid value for totalItems")));
-}
-
 TEST(ListProjectsResponseTest, DebugString) {
   BigQueryHttpResponse http_response;
   http_response.http_status_code = HttpStatusCode::kOk;
