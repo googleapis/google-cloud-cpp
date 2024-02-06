@@ -143,9 +143,8 @@ auto constexpr kGetRequestTypeJson = R"""({
 auto constexpr kOperationTypeJson = R"""({})""";
 
 TEST_F(DiscoveryFileTest, FormatFileWithImport) {
-  std::string const expected_proto_copyright = []() {
-    return absl::StrCat("// Copyright ", CurrentCopyrightYear(), " Google LLC");
-  }();
+  std::string const expected_proto_copyright =
+      absl::StrCat("// Copyright ", CurrentCopyrightYear(), " Google LLC");
   auto constexpr kExpectedProto = R"""(//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -262,15 +261,14 @@ message GetMyResourceRequest {
   ASSERT_STATUS_OK(result);
   std::string copyright_line;
   std::getline(os, copyright_line);
-  EXPECT_THAT(copyright_line, expected_proto_copyright);
+  EXPECT_THAT(copyright_line, Eq(expected_proto_copyright));
   std::string rest(std::istreambuf_iterator<char>(os), {});
   EXPECT_THAT(rest, Eq(kExpectedProto));
 }
 
 TEST_F(DiscoveryFileTest, FormatFileWithoutImports) {
-  std::string const expected_proto_copyright = []() {
-    return absl::StrCat("// Copyright ", CurrentCopyrightYear(), " Google LLC");
-  }();
+  std::string const expected_proto_copyright =
+      absl::StrCat("// Copyright ", CurrentCopyrightYear(), " Google LLC");
   auto constexpr kExpectedProto = R"""(//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -383,15 +381,14 @@ message GetMyResourceRequest {
   ASSERT_STATUS_OK(result);
   std::string copyright_line;
   std::getline(os, copyright_line);
-  EXPECT_THAT(copyright_line, expected_proto_copyright);
+  EXPECT_THAT(copyright_line, Eq(expected_proto_copyright));
   std::string rest(std::istreambuf_iterator<char>(os), {});
   EXPECT_THAT(rest, Eq(kExpectedProto));
 }
 
 TEST_F(DiscoveryFileTest, FormatFileNoResource) {
-  std::string const expected_proto_copyright = []() {
-    return absl::StrCat("// Copyright ", CurrentCopyrightYear(), " Google LLC");
-  }();
+  std::string const expected_proto_copyright =
+      absl::StrCat("// Copyright ", CurrentCopyrightYear(), " Google LLC");
   auto constexpr kExpectedProto = R"""(//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -463,7 +460,7 @@ message GetMyResourceRequest {
   ASSERT_STATUS_OK(result);
   std::string copyright_line;
   std::getline(os, copyright_line);
-  EXPECT_THAT(copyright_line, expected_proto_copyright);
+  EXPECT_THAT(copyright_line, Eq(expected_proto_copyright));
   std::string rest(std::istreambuf_iterator<char>(os), {});
   EXPECT_THAT(rest, Eq(kExpectedProto));
 }
@@ -481,9 +478,8 @@ TEST_F(DiscoveryFileTest, FormatFileNoTypes) {
   }
 })""";
 
-  std::string const expected_proto_copyright = []() {
-    return absl::StrCat("// Copyright ", CurrentCopyrightYear(), " Google LLC");
-  }();
+  std::string const expected_proto_copyright =
+      absl::StrCat("// Copyright ", CurrentCopyrightYear(), " Google LLC");
   auto constexpr kExpectedProto = R"""(//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -539,7 +535,7 @@ service MyResources {
   ASSERT_STATUS_OK(result);
   std::string copyright_line;
   std::getline(os, copyright_line);
-  EXPECT_THAT(copyright_line, expected_proto_copyright);
+  EXPECT_THAT(copyright_line, Eq(expected_proto_copyright));
   std::string rest(std::istreambuf_iterator<char>(os), {});
   EXPECT_THAT(rest, Eq(kExpectedProto));
 }
