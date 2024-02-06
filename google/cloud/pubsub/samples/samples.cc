@@ -2761,19 +2761,6 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriptionAdminCommand(
           "seek-with-timestamp", {"project-id", "subscription-id", "seconds"},
           SeekWithTimestamp),
-      CreateTopicAdminCommand(
-          "create-topic-with-schema",
-          {"project-id", "topic-id", "schema-id", "encoding"},
-          CreateTopicWithSchema),
-      CreateTopicAdminCommand(
-          "create-topic-with-schema-revisions",
-          {"project-id", "topic-id", "schema-id", "encoding",
-           "first-revision-id", "last-revision-id"},
-          CreateTopicWithSchemaRevisions),
-      CreateTopicAdminCommand(
-          "update-topic-schema",
-          {"project-id", "topic-id", "first-revision-id", "last-revision-id"},
-          UpdateTopicSchema),
       CreatePublisherCommand("publish-avro-records", {}, PublishAvroRecords),
       CreateSubscriberCommand("subscribe-avro-records", {},
                               SubscribeAvroRecords),

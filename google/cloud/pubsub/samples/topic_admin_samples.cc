@@ -22,6 +22,9 @@
 #include "google/cloud/testing_util/example_driver.h"
 #include <sstream>
 
+using google::cloud::pubsub::examples::Cleanup;
+using google::cloud::pubsub::examples::CommitSchemaWithRevisionsForTesting;
+
 namespace {
 
 using TopicAdminCommand =
@@ -72,6 +75,73 @@ void CreateTopic(google::cloud::pubsub_admin::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void CreateTopicWithSchema(google::cloud::pubsub_admin::TopicAdminClient client,
+                           std::vector<std::string> const& argv) {
+  //! [START pubsub_create_topic_with_schema]
+  namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::TopicAdminClient client, std::string project_id,
+     std::string topic_id, std::string schema_id, std::string const& encoding) {
+    google::pubsub::v1::Topic request;
+    request.set_name(pubsub::Topic(project_id, std::move(topic_id)).FullName());
+    request.mutable_schema_settings()->set_schema(
+        pubsub::Schema(std::move(project_id), std::move(schema_id)).FullName());
+    request.mutable_schema_settings()->set_encoding(
+        encoding == "JSON" ? google::pubsub::v1::JSON
+                           : google::pubsub::v1::BINARY);
+    auto topic = client.CreateTopic(request);
+
+    // Note that kAlreadyExists is a possible error when the library retries.
+    if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The topic already exists\n";
+      return;
+    }
+    if (!topic) throw std::move(topic).status();
+
+    std::cout << "The topic was successfully created: " << topic->DebugString()
+              << "\n";
+  }
+  //! [END pubsub_create_topic_with_schema]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
+void CreateTopicWithSchemaRevisions(
+    google::cloud::pubsub_admin::TopicAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [START pubsub_create_topic_with_schema_revisions]
+  namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::TopicAdminClient client, std::string project_id,
+     std::string topic_id, std::string schema_id, std::string const& encoding,
+     std::string const& first_revision_id,
+     std::string const& last_revision_id) {
+    google::pubsub::v1::Topic request;
+    request.set_name(pubsub::Topic(project_id, std::move(topic_id)).FullName());
+    request.mutable_schema_settings()->set_schema(
+        pubsub::Schema(std::move(project_id), std::move(schema_id)).FullName());
+    request.mutable_schema_settings()->set_encoding(
+        encoding == "JSON" ? google::pubsub::v1::JSON
+                           : google::pubsub::v1::BINARY);
+    request.mutable_schema_settings()->set_first_revision_id(first_revision_id);
+    request.mutable_schema_settings()->set_last_revision_id(last_revision_id);
+    auto topic = client.CreateTopic(request);
+
+    // Note that kAlreadyExists is a possible error when the
+    // library retries.
+    if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The topic already exists\n";
+      return;
+    }
+    if (!topic) throw std::move(topic).status();
+
+    std::cout << "The topic was successfully created: " << topic->DebugString()
+              << "\n";
+  }
+  //! [END pubsub_create_topic_with_schema_revisions]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
+   argv.at(4), argv.at(5));
+}
+
 void GetTopic(google::cloud::pubsub_admin::TopicAdminClient client,
               std::vector<std::string> const& argv) {
   //! [get-topic]
@@ -111,6 +181,37 @@ void UpdateTopic(google::cloud::pubsub_admin::TopicAdminClient client,
   }
   //! [update-topic]
   (std::move(client), argv.at(0), argv.at(1));
+}
+
+void UpdateTopicSchema(google::cloud::pubsub_admin::TopicAdminClient client,
+                       std::vector<std::string> const& argv) {
+  //! [START pubsub_update_topic_schema]
+  namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::TopicAdminClient client, std::string project_id,
+     std::string topic_id, std::string const& first_revision_id,
+     std::string const& last_revision_id) {
+    google::pubsub::v1::UpdateTopicRequest request;
+    auto* request_topic = request.mutable_topic();
+    request_topic->set_name(
+        pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
+    request_topic->mutable_schema_settings()->set_first_revision_id(
+        first_revision_id);
+    request_topic->mutable_schema_settings()->set_last_revision_id(
+        last_revision_id);
+    *request.mutable_update_mask()->add_paths() =
+        "schema_settings.first_revision_id";
+    *request.mutable_update_mask()->add_paths() =
+        "schema_settings.last_revision_id";
+    auto topic = client.UpdateTopic(request);
+
+    if (!topic) throw std::move(topic).status();
+
+    std::cout << "The topic was successfully updated: " << topic->DebugString()
+              << "\n";
+  }
+  //! [END pubsub_update_topic_schema]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void ListTopics(google::cloud::pubsub_admin::TopicAdminClient client,
@@ -212,9 +313,129 @@ void DeleteTopic(google::cloud::pubsub_admin::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void AutoRunAvro(
+    std::string const& project_id, std::string const& topic_id,
+    std::string const& schema_id, std::string const& testdata_directory,
+    google::cloud::pubsub_admin::TopicAdminClient& topic_admin_client) {
+  auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
+      google::cloud::pubsub::MakeSchemaServiceConnection());
+
+  // The following commands require a schema for testing. This creates a schema
+  // with multiple revisions.
+  auto avro_revision_schema_id = "avro-revision-" + schema_id;
+  auto const avro_revision_topic_id = "avro-revision-" + topic_id;
+  auto const revision_ids = CommitSchemaWithRevisionsForTesting(
+      schema_admin, project_id, avro_revision_schema_id,
+      testdata_directory + "schema.avsc",
+      testdata_directory + "revised_schema.avsc", "AVRO");
+  auto const first_revision_id = revision_ids.first;
+  auto const last_revision_id = revision_ids.second;
+  Cleanup cleanup;
+  cleanup.Defer([schema_admin, project_id, avro_revision_schema_id]() mutable {
+    std::cout << "\nDelete revision topic " + avro_revision_schema_id +
+                     " [avro]"
+              << std::endl;
+    google::pubsub::v1::DeleteSchemaRequest request;
+    request.set_name(
+        google::cloud::pubsub::Schema(project_id, avro_revision_schema_id)
+            .FullName());
+    schema_admin.DeleteSchema(request);
+  });
+
+  std::cout << "\nRunning CreateTopicWithSchemaRevisions sample [avro]"
+            << std::endl;
+  CreateTopicWithSchemaRevisions(
+      topic_admin_client,
+      {project_id, avro_revision_topic_id, avro_revision_schema_id, "JSON",
+       first_revision_id, last_revision_id});
+  cleanup.Defer(
+      [topic_admin_client, project_id, avro_revision_topic_id]() mutable {
+        std::cout << "\nDelete topic " + avro_revision_topic_id + " [avro]"
+                  << std::endl;
+        DeleteTopic(topic_admin_client, {project_id, avro_revision_topic_id});
+      });
+
+  std::cout << "\nRunning UpdateTopicSchema sample [avro]" << std::endl;
+  UpdateTopicSchema(topic_admin_client, {project_id, avro_revision_topic_id,
+                                         first_revision_id, first_revision_id});
+
+  // Re-use the schema from before.
+  std::cout << "\nRunning CreateTopicWithSchema() sample [avro]" << std::endl;
+  auto const avro_topic_id = "avro-" + topic_id;
+  CreateTopicWithSchema(topic_admin_client, {project_id, avro_topic_id,
+                                             avro_revision_schema_id, "JSON"});
+  std::cout << "\nCreate topic (" << avro_topic_id << ")" << std::endl;
+  cleanup.Defer([topic_admin_client, project_id, avro_topic_id]() mutable {
+    std::cout << "\nDelete revision topic " + avro_topic_id + " [avro]"
+              << std::endl;
+    DeleteTopic(topic_admin_client, {project_id, avro_topic_id});
+  });
+}
+
+void AutoRunProtobuf(
+    std::string const& project_id, std::string const& topic_id,
+    std::string const& schema_id, std::string const& testdata_directory,
+    google::cloud::pubsub_admin::TopicAdminClient& topic_admin_client) {
+  auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
+      google::cloud::pubsub::MakeSchemaServiceConnection());
+
+  // The following commands require a schema for testing. This creates a schema
+  // with multiple revisions.
+  auto proto_revision_schema_id = "proto-revision-" + schema_id;
+  auto const proto_revision_topic_id = "proto-revision-" + topic_id;
+  auto const revision_ids = CommitSchemaWithRevisionsForTesting(
+      schema_admin, project_id, proto_revision_schema_id,
+      testdata_directory + "schema.proto",
+      testdata_directory + "revised_schema.proto", "PROTO");
+  auto const first_revision_id = revision_ids.first;
+  auto const last_revision_id = revision_ids.second;
+
+  Cleanup cleanup;
+  cleanup.Defer([schema_admin, project_id, proto_revision_schema_id]() mutable {
+    std::cout << "\nDelete revision topic " + proto_revision_schema_id +
+                     " [proto]"
+              << std::endl;
+    google::pubsub::v1::DeleteSchemaRequest request;
+    request.set_name(
+        google::cloud::pubsub::Schema(project_id, proto_revision_schema_id)
+            .FullName());
+    schema_admin.DeleteSchema(request);
+  });
+
+  std::cout << "\nRunning CreateTopicWithSchemaRevisions sample [proto]"
+            << std::endl;
+  CreateTopicWithSchemaRevisions(
+      topic_admin_client,
+      {project_id, proto_revision_topic_id, proto_revision_schema_id, "BINARY",
+       first_revision_id, last_revision_id});
+  cleanup.Defer(
+      [topic_admin_client, project_id, proto_revision_topic_id]() mutable {
+        std::cout << "\nDelete topic " + proto_revision_topic_id + " [proto]"
+                  << std::endl;
+        DeleteTopic(topic_admin_client, {project_id, proto_revision_topic_id});
+      });
+
+  std::cout << "\nRunning UpdateTopicSchema sample [proto]" << std::endl;
+  UpdateTopicSchema(topic_admin_client, {project_id, proto_revision_topic_id,
+                                         first_revision_id, first_revision_id});
+
+  // Re-use the schema from before.
+  std::cout << "\nRunning CreateTopicWithSchema() sample [proto]" << std::endl;
+  auto const proto_topic_id = "proto-" + topic_id;
+  CreateTopicWithSchema(
+      topic_admin_client,
+      {project_id, proto_topic_id, proto_revision_schema_id, "BINARY"});
+  std::cout << "\nCreate topic (" << proto_topic_id << ")" << std::endl;
+  cleanup.Defer([topic_admin_client, project_id, proto_topic_id]() mutable {
+    std::cout << "\nDelete revision topic " + proto_topic_id + " [proto]"
+              << std::endl;
+    DeleteTopic(topic_admin_client, {project_id, proto_topic_id});
+  });
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
-  using google::cloud::pubsub::examples::Cleanup;
+  using ::google::cloud::pubsub::examples::RandomSchemaId;
   using ::google::cloud::pubsub::examples::RandomSubscriptionId;
   using ::google::cloud::pubsub::examples::RandomTopicId;
   using ::google::cloud::pubsub::examples::UsingEmulator;
@@ -224,12 +445,20 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
 
+  // For CMake builds, use the environment variable. For Bazel builds, use the
+  // relative path to the file.
+  auto const testdata_directory =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_PUBSUB_TESTDATA")
+          .value_or("./google/cloud/pubsub/samples/testdata/");
+
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto const topic_id = RandomTopicId(generator);
   auto const topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto const subscription_id = RandomSubscriptionId(generator);
   auto const subscription =
       google::cloud::pubsub::Subscription(project_id, subscription_id);
+  auto const schema_topic_id = RandomTopicId(generator);
+  auto const schema_id = RandomSchemaId(generator);
 
   using ::google::cloud::StatusCode;
   auto ignore_emulator_failures =
@@ -300,6 +529,14 @@ void AutoRun(std::vector<std::string> const& argv) {
     DetachSubscription(topic_admin_client, {project_id, subscription_id});
   });
 
+  ignore_emulator_failures([&] {
+    AutoRunAvro(project_id, schema_topic_id, schema_id, testdata_directory,
+                topic_admin_client);
+  });
+  ignore_emulator_failures([&] {
+    AutoRunProtobuf(project_id, schema_topic_id, schema_id, testdata_directory,
+                    topic_admin_client);
+  });
   std::cout << "\nAutoRun done" << std::endl;
 }
 
@@ -311,10 +548,23 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   Example example({
       CreateTopicAdminCommand("create-topic", {"project-id", "topic-id"},
                               CreateTopic),
+      CreateTopicAdminCommand(
+          "create-topic-with-schema",
+          {"project-id", "topic-id", "schema-id", "encoding"},
+          CreateTopicWithSchema),
+      CreateTopicAdminCommand(
+          "create-topic-with-schema-revisions",
+          {"project-id", "topic-id", "schema-id", "encoding",
+           "first-revision-id", "last-revision-id"},
+          CreateTopicWithSchemaRevisions),
       CreateTopicAdminCommand("get-topic", {"project-id", "topic-id"},
                               GetTopic),
       CreateTopicAdminCommand("update-topic", {"project-id", "topic-id"},
                               UpdateTopic),
+      CreateTopicAdminCommand(
+          "update-topic-schema",
+          {"project-id", "topic-id", "first-revision-id", "last-revision-id"},
+          UpdateTopicSchema),
       CreateTopicAdminCommand("list-topics", {"project-id"}, ListTopics),
       CreateTopicAdminCommand("list-topic-subscriptions",
                               {"project-id", "topic-id"},
