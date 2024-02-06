@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_file.h"
+#include "generator/internal/codegen_utils.h"
 #include "generator/testing/descriptor_pool_fixture.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -141,8 +143,9 @@ auto constexpr kGetRequestTypeJson = R"""({
 auto constexpr kOperationTypeJson = R"""({})""";
 
 TEST_F(DiscoveryFileTest, FormatFileWithImport) {
-  auto constexpr kExpectedProto = R"""(// Copyright 2024 Google LLC
-//
+  std::string const expected_proto_copyright =
+      absl::StrCat("// Copyright ", CurrentCopyrightYear(), " Google LLC");
+  auto constexpr kExpectedProto = R"""(//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -250,16 +253,23 @@ message GetMyResourceRequest {
                 DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{
-      "my/service", "https://default.host", "my_product", "v1",
-      "19700101",   "file:///my_url",       {},           "2024"};
+      "my/service", "https://default.host",
+      "my_product", "v1",
+      "19700101",   "file:///my_url",
+      {},           CurrentCopyrightYear()};
   auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
-  EXPECT_THAT(os.str(), Eq(kExpectedProto));
+  std::string copyright_line;
+  std::getline(os, copyright_line);
+  EXPECT_THAT(copyright_line, Eq(expected_proto_copyright));
+  std::string rest(std::istreambuf_iterator<char>(os), {});
+  EXPECT_THAT(rest, Eq(kExpectedProto));
 }
 
 TEST_F(DiscoveryFileTest, FormatFileWithoutImports) {
-  auto constexpr kExpectedProto = R"""(// Copyright 2024 Google LLC
-//
+  std::string const expected_proto_copyright =
+      absl::StrCat("// Copyright ", CurrentCopyrightYear(), " Google LLC");
+  auto constexpr kExpectedProto = R"""(//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -363,16 +373,23 @@ message GetMyResourceRequest {
                 DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{
-      "my/service", "https://default.host", "my_product", "v1",
-      "19700101",   "file:///my_url",       {},           "2024"};
+      "my/service", "https://default.host",
+      "my_product", "v1",
+      "19700101",   "file:///my_url",
+      {},           CurrentCopyrightYear()};
   auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
-  EXPECT_THAT(os.str(), Eq(kExpectedProto));
+  std::string copyright_line;
+  std::getline(os, copyright_line);
+  EXPECT_THAT(copyright_line, Eq(expected_proto_copyright));
+  std::string rest(std::istreambuf_iterator<char>(os), {});
+  EXPECT_THAT(rest, Eq(kExpectedProto));
 }
 
 TEST_F(DiscoveryFileTest, FormatFileNoResource) {
-  auto constexpr kExpectedProto = R"""(// Copyright 2024 Google LLC
-//
+  std::string const expected_proto_copyright =
+      absl::StrCat("// Copyright ", CurrentCopyrightYear(), " Google LLC");
+  auto constexpr kExpectedProto = R"""(//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -435,10 +452,17 @@ message GetMyResourceRequest {
                 DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{
-      "", "", "my_product", "v1", "19700101", "file:///my_url", {}, "2024"};
+      "",           "",
+      "my_product", "v1",
+      "19700101",   "file:///my_url",
+      {},           CurrentCopyrightYear()};
   auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
-  EXPECT_THAT(os.str(), Eq(kExpectedProto));
+  std::string copyright_line;
+  std::getline(os, copyright_line);
+  EXPECT_THAT(copyright_line, Eq(expected_proto_copyright));
+  std::string rest(std::istreambuf_iterator<char>(os), {});
+  EXPECT_THAT(rest, Eq(kExpectedProto));
 }
 
 TEST_F(DiscoveryFileTest, FormatFileNoTypes) {
@@ -454,8 +478,9 @@ TEST_F(DiscoveryFileTest, FormatFileNoTypes) {
   }
 })""";
 
-  auto constexpr kExpectedProto = R"""(// Copyright 2024 Google LLC
-//
+  std::string const expected_proto_copyright =
+      absl::StrCat("// Copyright ", CurrentCopyrightYear(), " Google LLC");
+  auto constexpr kExpectedProto = R"""(//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -502,11 +527,17 @@ service MyResources {
                 DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{
-      "my/service", "https://default.host", "my_product", "v1",
-      "19700101",   "file:///my_url",       {},           "2024"};
+      "my/service", "https://default.host",
+      "my_product", "v1",
+      "19700101",   "file:///my_url",
+      {},           CurrentCopyrightYear()};
   auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
-  EXPECT_THAT(os.str(), Eq(kExpectedProto));
+  std::string copyright_line;
+  std::getline(os, copyright_line);
+  EXPECT_THAT(copyright_line, Eq(expected_proto_copyright));
+  std::string rest(std::istreambuf_iterator<char>(os), {});
+  EXPECT_THAT(rest, Eq(kExpectedProto));
 }
 
 TEST_F(DiscoveryFileTest, FormatFileResourceScopeError) {
@@ -560,8 +591,8 @@ TEST_F(DiscoveryFileTest, FormatFileResourceScopeError) {
   types.emplace("Foo",
                 DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
-  DiscoveryDocumentProperties document_properties{"", "", "my_product", "v1",
-                                                  "", "", {},           "2024"};
+  DiscoveryDocumentProperties document_properties{
+      "", "", "my_product", "v1", "", "", {}, CurrentCopyrightYear()};
   auto result = f.FormatFile(document_properties, types, os);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("scope")));
@@ -619,8 +650,8 @@ TEST_F(DiscoveryFileTest, FormatFileTypeMissingError) {
   types.emplace("Foo",
                 DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
-  DiscoveryDocumentProperties document_properties{"", "", "my_product", "v1",
-                                                  "", "", {},           "2024"};
+  DiscoveryDocumentProperties document_properties{
+      "", "", "my_product", "v1", "", "", {}, CurrentCopyrightYear()};
   auto result = f.FormatFile(document_properties, types, os);
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("neither $ref nor type")));
