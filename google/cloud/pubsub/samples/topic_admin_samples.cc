@@ -154,7 +154,7 @@ void CreateTopicWithKinesisIngestion(
     google::pubsub::v1::Topic request;
     request.set_name(
         pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
-    auto aws_kinesis =
+    auto* aws_kinesis =
         request.mutable_ingestion_data_source_settings()->mutable_aws_kinesis();
     aws_kinesis->set_stream_arn(stream_arn);
     aws_kinesis->set_consumer_arn(consumer_arn);
@@ -520,25 +520,13 @@ void AutoRun(std::vector<std::string> const& argv) {
       google::cloud::pubsub::Subscription(project_id, subscription_id);
   auto const schema_topic_id = RandomTopicId(generator);
   auto const schema_id = RandomSchemaId(generator);
-  // The topic must end in "_ingestion_topic".
   auto const kinesis_topic_id =
       "kinesis-" + RandomTopicId(generator) + "_ingestion_topic";
-  auto const kinesis_stream_arn =
-      "arn:aws:kinesis:us-west-2:581969753609:stream/"
-      "kinesis_cps_ingestion_client_lib_test_stream_1";
-  auto const kinesis_consumer_arn =
-      "arn:aws:kinesis:us-west-2:581969753609:stream/"
-      "kinesis_cps_ingestion_client_lib_test_stream_1/consumer/"
-      "consumer-1:1706816534";
-  auto const kinesis_aws_role_arm =
-      "arn:aws:iam::581969753609:role/"
-      "kinesis_cps_ingestion_client_lib_test_stream_1_role";
-  auto const kinesis_gcp_service_account =
-      "kinesis-pubsub-testing@cloud-cpp-testing-resources.iam.gserviceaccount."
-      "com";
-  auto const kinesis_updated_gcp_service_account =
-      "kinesis-pubsub-update-testing@cloud-cpp-testing-resources.iam."
-      "gserviceaccount.com";
+  auto const* const kinesis_stream_arn = "";
+  auto const* const kinesis_consumer_arn = ""
+  auto const* const kinesis_aws_role_arm = "";
+  auto const* const kinesis_gcp_service_account = "";
+  auto const* const kinesis_updated_gcp_service_account = "";
 
   using ::google::cloud::StatusCode;
   auto ignore_emulator_failures =
