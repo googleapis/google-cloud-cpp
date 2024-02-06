@@ -362,6 +362,16 @@ struct CommitReturnStatsOption {
 };
 
 /**
+ * Option for `google::cloud::Options` to return additional statistics
+ * about the committed transaction in a `spanner::CommitResult`.
+ *
+ * @ingroup spanner-options
+ */
+struct MaxCommitDelayOption {
+  using Type = std::chrono::milliseconds;
+};
+
+/**
  * List of Request options for `client::ExecuteBatchDml()`.
  */
 using RequestOptionList = OptionList<RequestPriorityOption, RequestTagOption>;
