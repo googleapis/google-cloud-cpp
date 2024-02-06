@@ -362,8 +362,8 @@ struct CommitReturnStatsOption {
 };
 
 /**
- * Option for `google::cloud::Options` to return additional statistics
- * about the committed transaction in a `spanner::CommitResult`.
+ * Option for `google::cloud::Options` to set a maximum delay for
+ * the committed transaction in order to improve throughput. Value must be between 0ms and 100ms.
  *
  * @ingroup spanner-options
  */
