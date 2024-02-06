@@ -59,15 +59,26 @@ CreateSubscriptionAdminCommand(std::string const& name,
 // parallel, then the delete call might fail.
 void CleanupSubscriptions(
     google::cloud::pubsub_admin::SubscriptionAdminClient& client,
-    std::string const& project_id) {
+    std::string const& project_id, absl::Time time_now) {
   auto const parent = google::cloud::Project(project_id).FullName();
   for (auto& subscription : client.ListSubscriptions(parent)) {
     if (!subscription) continue;
-    if (!absl::StrContains(subscription->name(), "cloud-cpp-samples")) continue;
+    std::string keyword = "cloud-cpp-samples";
+    if (!absl::StrContains(subscription->name(), keyword)) continue;
+    // Extract the date from the resource name which is in the format
+    // `*-cloud-cpp-samples-YYYY-MM-DD-`.
+    auto date = subscription->name().substr(
+        subscription->name().find(keyword) + keyword.size() + 1, 10);
 
-    google::pubsub::v1::DeleteSubscriptionRequest request;
-    request.set_subscription(subscription->name());
-    (void)client.DeleteSubscription(request);
+    absl::TimeZone nyc;
+    if (!absl::LoadTimeZone("America/New_York", &nyc)) continue;
+    absl::CivilDay day;
+    if (absl::ParseCivilTime(date, &day) &&
+        absl::FromCivil(day, nyc) < time_now - absl::Hours(36)) {
+      google::pubsub::v1::DeleteSubscriptionRequest request;
+      request.set_subscription(subscription->name());
+      (void)client.DeleteSubscription(request);
+    }
   }
 }
 
@@ -428,8 +439,9 @@ void AutoRun(std::vector<std::string> const& argv) {
         }
       };
 
-  // Delete old subscriptions.
-  CleanupSubscriptions(subscription_admin_client, project_id);
+  // Delete subscriptions over 3 days old.
+  CleanupSubscriptions(subscription_admin_client, project_id,
+                       absl::FromChrono(std::chrono::system_clock::now()));
 
   std::cout << "\nCreate topic (" << topic_id << ")" << std::endl;
   topic_admin_client.CreateTopic(topic.FullName());
