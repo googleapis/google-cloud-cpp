@@ -35,15 +35,28 @@ using TopicAdminCommand =
 // delete call might fail.
 void CleanupTopics(
     google::cloud::pubsub_admin::TopicAdminClient& topic_admin_client,
-    std::string const& project_id) {
+    std::string const& project_id, absl::Time time_now) {
+  std::cout << "Cleaning up old topics...\n";
   auto const parent = google::cloud::Project(project_id).FullName();
   for (auto& topic : topic_admin_client.ListTopics(parent)) {
     if (!topic) continue;
-    if (!absl::StrContains(topic->name(), "cloud-cpp-samples")) continue;
+    auto topic_name = topic->name();
+    std::string keyword = "cloud-cpp-samples";
+    if (!absl::StrContains(topic->name(), keyword)) continue;
+    // Extract the date from the resource name which is in the format
+    // `*-cloud-cpp-samples-YYYY-MM-DD-`.
+    auto date =
+        topic_name.substr(topic_name.find(keyword) + keyword.size() + 1, 10);
 
-    google::pubsub::v1::DeleteTopicRequest request;
-    request.set_topic(topic->name());
-    (void)topic_admin_client.DeleteTopic(request);
+    absl::TimeZone nyc;
+    if (!absl::LoadTimeZone("America/New_York", &nyc)) continue;
+    absl::CivilDay day;
+    if (absl::ParseCivilTime(date, &day) &&
+        absl::FromCivil(day, nyc) < time_now - absl::Hours(36)) {
+      google::pubsub::v1::DeleteTopicRequest request;
+      request.set_topic(topic->name());
+      (void)topic_admin_client.DeleteTopic(request);
+    }
   }
 }
 
@@ -269,8 +282,9 @@ void AutoRun(std::vector<std::string> const& argv) {
       subscription_admin_client(
           google::cloud::pubsub_admin::MakeSubscriptionAdminConnection());
 
-  // Delete old resources.
-  CleanupTopics(topic_admin_client, project_id);
+  // Delete resources over 3 days old.
+  CleanupTopics(topic_admin_client, project_id,
+                absl::FromChrono(std::chrono::system_clock::now()));
 
   std::cout << "\nRunning CreateTopic() sample [1]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, topic_id});
