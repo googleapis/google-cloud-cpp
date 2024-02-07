@@ -761,6 +761,55 @@ TEST_F(DataConnectionTest, BulkApplyRetriesOkStreamWithFailedMutations) {
   CheckFailedMutations(actual, expected);
 }
 
+TEST_F(DataConnectionTest, BulkApplyRetryInfoHeeded) {
+  bigtable::BulkMutation mut(IdempotentMutation("row"));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRows)
+      .WillOnce([](auto, auto const&, v2::MutateRowsRequest const&) {
+        auto status = PermanentError();
+        internal::SetRetryInfo(status, internal::RetryInfo{ms(0)});
+        auto stream = std::make_unique<MockMutateRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(status));
+        return stream;
+      })
+      .WillOnce([](auto, auto const&, v2::MutateRowsRequest const&) {
+        auto stream = std::make_unique<MockMutateRowsStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(
+                Return(MakeBulkApplyResponse({{0, grpc::StatusCode::OK}})))
+            .WillOnce(Return(Status()));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<internal::EnableServerRetriesOption>(true));
+  auto actual = conn->BulkApply(kTableName, std::move(mut));
+  CheckFailedMutations(actual, {});
+}
+
+TEST_F(DataConnectionTest, BulkApplyRetryInfoIgnored) {
+  std::vector<bigtable::FailedMutation> expected = {{PermanentError(), 0}};
+  bigtable::BulkMutation mut(IdempotentMutation("row"));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRows)
+      .WillOnce([](auto, auto const&, v2::MutateRowsRequest const&) {
+        auto status = PermanentError();
+        internal::SetRetryInfo(status, internal::RetryInfo{ms(0)});
+        auto stream = std::make_unique<MockMutateRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(status));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<internal::EnableServerRetriesOption>(false));
+  auto actual = conn->BulkApply(kTableName, std::move(mut));
+  CheckFailedMutations(actual, expected);
+}
+
 TEST_F(DataConnectionTest, BulkApplyThrottling) {
   std::vector<bigtable::FailedMutation> expected = {{PermanentError(), 0}};
   bigtable::BulkMutation mut(IdempotentMutation("row"));
