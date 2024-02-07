@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
+#include "google/cloud/bigtable/internal/retry_info_helper.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include <chrono>
@@ -28,11 +29,12 @@ namespace v2 = ::google::bigtable::v2;
 future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncRowSampler::Create(
     CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     std::string const& app_profile_id, std::string const& table_name) {
-  std::shared_ptr<AsyncRowSampler> sampler(new AsyncRowSampler(
-      std::move(cq), std::move(stub), std::move(retry_policy),
-      std::move(backoff_policy), app_profile_id, table_name));
+  std::shared_ptr<AsyncRowSampler> sampler(
+      new AsyncRowSampler(std::move(cq), std::move(stub),
+                          std::move(retry_policy), std::move(backoff_policy),
+                          enable_server_retries, app_profile_id, table_name));
   sampler->StartIteration();
   return sampler->promise_.get_future();
 }
@@ -40,12 +42,13 @@ future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncRowSampler::Create(
 AsyncRowSampler::AsyncRowSampler(
     CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     std::string const& app_profile_id, std::string const& table_name)
     : cq_(std::move(cq)),
       stub_(std::move(stub)),
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)),
+      enable_server_retries_(enable_server_retries),
       app_profile_id_(std::move(app_profile_id)),
       table_name_(std::move(table_name)),
       promise_([this] { keep_reading_ = false; }) {}
@@ -57,7 +60,7 @@ void AsyncRowSampler::StartIteration() {
 
   internal::ScopedCallContext scope(call_context_);
   context_ = std::make_shared<grpc::ClientContext>();
-  internal::ConfigureContext(*context_, internal::CurrentOptions());
+  internal::ConfigureContext(*context_, *call_context_.options);
   retry_context_->PreCall(*context_);
 
   auto self = this->shared_from_this();
@@ -82,7 +85,9 @@ void AsyncRowSampler::OnFinish(Status status) {
     promise_.set_value(std::move(samples_));
     return;
   }
-  if (!retry_policy_->OnFailure(status)) {
+  auto delay = BackoffOrBreak(enable_server_retries_, status, *retry_policy_,
+                              *backoff_policy_);
+  if (!delay) {
     promise_.set_value(std::move(status));
     return;
   }
@@ -91,8 +96,8 @@ void AsyncRowSampler::OnFinish(Status status) {
   context_.reset();
   samples_.clear();
   auto self = this->shared_from_this();
-  internal::TracedAsyncBackoff(cq_, internal::CurrentOptions(),
-                               backoff_policy_->OnCompletion(), "Async Backoff")
+  internal::TracedAsyncBackoff(cq_, *call_context_.options, *delay,
+                               "Async Backoff")
       .then([self](auto result) {
         if (result.get()) {
           self->StartIteration();
