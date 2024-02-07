@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/connection.h"
 #include "google/cloud/storage/async/object_requests.h"
 #include "google/cloud/storage/async/reader_connection.h"
+#include "google/cloud/storage/async/rewriter_connection.h"
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/invocation_id_generator.h"
@@ -73,6 +74,9 @@ class AsyncConnectionImpl
       ComposeObjectParams p) override;
 
   future<Status> DeleteObject(DeleteObjectParams p) override;
+
+  std::shared_ptr<storage_experimental::AsyncRewriterConnection> RewriteObject(
+      RewriteObjectParams p) override;
 
  private:
   std::weak_ptr<AsyncConnectionImpl> WeakFromThis() {

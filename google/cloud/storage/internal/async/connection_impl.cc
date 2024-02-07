@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/async/insert_object.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_impl.h"
+#include "google/cloud/storage/internal/async/rewriter_connection_impl.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/async/writer_connection_buffered.h"
 #include "google/cloud/storage/internal/async/writer_connection_finalized.h"
@@ -284,6 +285,14 @@ future<Status> AsyncConnectionImpl::DeleteObject(DeleteObjectParams p) {
         return stub->AsyncDeleteObject(cq, std::move(context), proto);
       },
       proto, __func__);
+}
+
+std::shared_ptr<storage_experimental::AsyncRewriterConnection>
+AsyncConnectionImpl::RewriteObject(RewriteObjectParams p) {
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
+
+  return std::make_shared<RewriterConnectionImpl>(
+      cq_, stub_, std::move(current), std::move(p.request.impl_));
 }
 
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>

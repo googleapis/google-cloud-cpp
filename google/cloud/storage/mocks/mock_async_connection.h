@@ -51,6 +51,8 @@ class MockAsyncConnection : public storage_experimental::AsyncConnection {
   MOCK_METHOD(future<StatusOr<storage::ObjectMetadata>>, ComposeObject,
               (ComposeObjectParams), (override));
   MOCK_METHOD(future<Status>, DeleteObject, (DeleteObjectParams), (override));
+  MOCK_METHOD(std::shared_ptr<storage_experimental::AsyncRewriterConnection>,
+              RewriteObject, (RewriteObjectParams), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
