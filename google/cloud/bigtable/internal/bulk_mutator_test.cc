@@ -102,7 +102,7 @@ TEST_F(BulkMutatorTest, Simple) {
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   bigtable_internal::NoopMutateRowsLimiter limiter;
-  auto status = mutator.MakeOneRequest(*mock, limiter);
+  auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
   EXPECT_STATUS_OK(status);
   auto failures = std::move(mutator).OnRetryDone();
   EXPECT_TRUE(failures.empty());
@@ -150,7 +150,7 @@ TEST_F(BulkMutatorTest, RetryPartialFailure) {
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
     bigtable_internal::NoopMutateRowsLimiter limiter;
-    auto status = mutator.MakeOneRequest(*mock, limiter);
+    auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
     EXPECT_STATUS_OK(status);
   }
   auto failures = std::move(mutator).OnRetryDone();
@@ -199,7 +199,7 @@ TEST_F(BulkMutatorTest, PermanentFailure) {
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
     bigtable_internal::NoopMutateRowsLimiter limiter;
-    auto status = mutator.MakeOneRequest(*mock, limiter);
+    auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
     EXPECT_STATUS_OK(status);
   }
   auto failures = std::move(mutator).OnRetryDone();
@@ -250,7 +250,7 @@ TEST_F(BulkMutatorTest, PartialStream) {
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
     bigtable_internal::NoopMutateRowsLimiter limiter;
-    auto status = mutator.MakeOneRequest(*mock, limiter);
+    auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
     EXPECT_STATUS_OK(status);
   }
   auto failures = std::move(mutator).OnRetryDone();
@@ -312,7 +312,7 @@ TEST_F(BulkMutatorTest, RetryOnlyIdempotent) {
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
     bigtable_internal::NoopMutateRowsLimiter limiter;
-    auto status = mutator.MakeOneRequest(*mock, limiter);
+    auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
     EXPECT_STATUS_OK(status);
   }
   auto failures = std::move(mutator).OnRetryDone();
@@ -353,7 +353,7 @@ TEST_F(BulkMutatorTest, UnconfirmedAreFailed) {
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   bigtable_internal::NoopMutateRowsLimiter limiter;
-  auto status = mutator.MakeOneRequest(*mock, limiter);
+  auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 
   auto failures = std::move(mutator).OnRetryDone();
@@ -383,11 +383,11 @@ TEST_F(BulkMutatorTest, ConfiguresContext) {
   MockFunction<void(grpc::ClientContext&)> mock_setup;
   EXPECT_CALL(mock_setup, Call).Times(1);
 
-  google::cloud::internal::OptionsSpan span(
+  bigtable_internal::NoopMutateRowsLimiter limiter;
+  (void)mutator.MakeOneRequest(
+      *mock, limiter,
       Options{}.set<google::cloud::internal::GrpcSetupOption>(
           mock_setup.AsStdFunction()));
-  bigtable_internal::NoopMutateRowsLimiter limiter;
-  (void)mutator.MakeOneRequest(*mock, limiter);
 }
 
 TEST_F(BulkMutatorTest, MutationStatusReportedOnOkStream) {
@@ -412,7 +412,7 @@ TEST_F(BulkMutatorTest, MutationStatusReportedOnOkStream) {
                                          std::move(mut));
 
   bigtable_internal::NoopMutateRowsLimiter limiter;
-  auto status = mutator.MakeOneRequest(*mock, limiter);
+  auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
   EXPECT_STATUS_OK(status);
 
   auto failures = std::move(mutator).OnRetryDone();
@@ -449,7 +449,7 @@ TEST_F(BulkMutatorTest, ReportEitherRetryableMutationFailOrStreamFail) {
                                          std::move(mut));
 
   bigtable_internal::NoopMutateRowsLimiter limiter;
-  auto status = mutator.MakeOneRequest(*mock, limiter);
+  auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
   EXPECT_THAT(status, StatusIs(StatusCode::kDataLoss));
 
   auto failures = std::move(mutator).OnRetryDone();
@@ -496,10 +496,10 @@ TEST_F(BulkMutatorTest, ReportOnlyLatestMutationStatus) {
                                          std::move(mut));
 
   bigtable_internal::NoopMutateRowsLimiter limiter;
-  auto status = mutator.MakeOneRequest(*mock, limiter);
+  auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 
-  status = mutator.MakeOneRequest(*mock, limiter);
+  status = mutator.MakeOneRequest(*mock, limiter, Options{});
   EXPECT_THAT(status, StatusIs(StatusCode::kDataLoss));
 
   auto failures = std::move(mutator).OnRetryDone();
@@ -538,7 +538,7 @@ TEST_F(BulkMutatorTest, Throttling) {
                                          std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
-  auto status = mutator.MakeOneRequest(*mock_stub, *mock_limiter);
+  auto status = mutator.MakeOneRequest(*mock_stub, *mock_limiter, Options{});
   EXPECT_STATUS_OK(status);
   auto failures = std::move(mutator).OnRetryDone();
   EXPECT_THAT(failures, IsEmpty());
@@ -580,11 +580,11 @@ TEST_F(BulkMutatorTest, BigtableCookies) {
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   bigtable_internal::NoopMutateRowsLimiter limiter;
-  auto status = mutator.MakeOneRequest(*mock, limiter);
+  auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
-  status = mutator.MakeOneRequest(*mock, limiter);
+  status = mutator.MakeOneRequest(*mock, limiter, Options{});
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
