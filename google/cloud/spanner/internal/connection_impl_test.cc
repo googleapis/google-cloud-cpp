@@ -149,6 +149,10 @@ MATCHER_P(HasReturnStats, return_commit_stats, "has return-stats value") {
   return arg.return_commit_stats() == return_commit_stats;
 }
 
+MATCHER_P(HasMaxCommitDelay, max_commit_delay, "has maxCommitDelay Value") {
+  return arg.has_max_commit_delay() == max_commit_delay;
+}
+
 MATCHER(HasBeginTransaction, "has begin TransactionSelector set") {
   return arg.transaction().has_begin();
 }
@@ -2507,6 +2511,62 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction(),
                               {},
                               spanner::CommitOptions{}.set_return_stats(true)});
+  ASSERT_STATUS_OK(commit);
+  ASSERT_TRUE(commit->commit_stats.has_value());
+  EXPECT_EQ(42, commit->commit_stats->mutation_count);
+}
+
+TEST(ConnectionImplTest, CommitSuccessWithoutMaxCommitDelay) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  google::spanner::v1::Transaction txn = MakeTestTransaction();
+  EXPECT_CALL(*mock, BeginTransaction).WillOnce(Return(txn));
+  EXPECT_CALL(*mock,
+              Commit(_, AllOf(HasSession("test-session-name"),
+                              HasReturnStats(true), HasMaxCommitDelay(false))))
+      .WillOnce(Return(MakeCommitResponse(
+          spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+              .value(),
+          spanner::CommitStats{42})));
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto commit = conn->Commit({spanner::MakeReadWriteTransaction(),
+                              {},
+                              spanner::CommitOptions{}.set_return_stats(true)});
+  ASSERT_STATUS_OK(commit);
+  ASSERT_TRUE(commit->commit_stats.has_value());
+  EXPECT_EQ(42, commit->commit_stats->mutation_count);
+}
+
+TEST(ConnectionImplTest, CommitSuccessWithMaxCommitDelay) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  google::spanner::v1::Transaction txn = MakeTestTransaction();
+  EXPECT_CALL(*mock, BeginTransaction).WillOnce(Return(txn));
+  EXPECT_CALL(*mock,
+              Commit(_, AllOf(HasSession("test-session-name"),
+                              HasReturnStats(true), HasMaxCommitDelay(true))))
+      .WillOnce(Return(MakeCommitResponse(
+          spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+              .value(),
+          spanner::CommitStats{42})));
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  Options options;
+  options.set<google::cloud::spanner::CommitReturnStatsOption>(true);
+  options.set<google::cloud::spanner::MaxCommitDelayOption>(
+      std::chrono::milliseconds(100));
+  auto commit = conn->Commit({spanner::MakeReadWriteTransaction(),
+                              {},
+                              spanner::CommitOptions(options)});
   ASSERT_STATUS_OK(commit);
   ASSERT_TRUE(commit->commit_stats.has_value());
   EXPECT_EQ(42, commit->commit_stats->mutation_count);
