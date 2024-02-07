@@ -881,6 +881,54 @@ TEST_F(DataConnectionTest, ReadRowsFull) {
   EXPECT_EQ(reader.begin(), reader.end());
 }
 
+TEST_F(DataConnectionTest, ReadRowsRetryInfoHeeded) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce(
+          [](auto, auto const&, google::bigtable::v2::ReadRowsRequest const&) {
+            auto status = PermanentError();
+            internal::SetRetryInfo(status, internal::RetryInfo{ms(0)});
+            auto stream = std::make_unique<MockReadRowsStream>();
+            EXPECT_CALL(*stream, Read).WillOnce(Return(status));
+            return stream;
+          })
+      .WillOnce(
+          [](auto, auto const&, google::bigtable::v2::ReadRowsRequest const&) {
+            auto stream = std::make_unique<MockReadRowsStream>();
+            EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
+            return stream;
+          });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<internal::EnableServerRetriesOption>(true));
+  auto reader = conn->ReadRowsFull(bigtable::ReadRowsParams{
+      kTableName, kAppProfile, TestRowSet(), 42, TestFilter(), true});
+  EXPECT_EQ(reader.begin(), reader.end());
+}
+
+TEST_F(DataConnectionTest, ReadRowsRetryInfoIgnored) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce(
+          [](auto, auto const&, google::bigtable::v2::ReadRowsRequest const&) {
+            auto status = PermanentError();
+            internal::SetRetryInfo(status, internal::RetryInfo{ms(0)});
+            auto stream = std::make_unique<MockReadRowsStream>();
+            EXPECT_CALL(*stream, Read).WillOnce(Return(status));
+            return stream;
+          });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(
+      CallOptions().set<internal::EnableServerRetriesOption>(false));
+  auto reader = conn->ReadRowsFull(bigtable::ReadRowsParams{
+      kTableName, kAppProfile, TestRowSet(), 42, TestFilter(), true});
+  std::vector<StatusOr<bigtable::Row>> rows;
+  for (auto const& row : reader) rows.push_back(row);
+  EXPECT_THAT(rows, ElementsAre(StatusIs(PermanentError().code())));
+}
+
 TEST_F(DataConnectionTest, ReadRowEmpty) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
