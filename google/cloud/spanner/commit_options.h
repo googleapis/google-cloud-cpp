@@ -20,6 +20,7 @@
 #include "google/cloud/options.h"
 #include "absl/types/optional.h"
 #include <string>
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -98,6 +99,7 @@ class CommitOptions {
   // Note that CommitRequest.request_options.request_tag is ignored,
   // so we do not even provide a mechanism to specify one.
   bool return_stats_ = false;
+  absl::optional<std::chrono::milliseconds> max_commit_delay_;
   absl::optional<RequestPriority> request_priority_;
   absl::optional<std::string> transaction_tag_;
 };
