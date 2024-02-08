@@ -88,6 +88,26 @@ StatusOr<google::api::HttpBody> PredictionServiceConnectionImpl::RawPredict(
       request, __func__);
 }
 
+StreamRange<google::api::HttpBody>
+PredictionServiceConnectionImpl::StreamRawPredict(
+    google::cloud::aiplatform::v1::StreamRawPredictRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto factory =
+      [stub = stub_,
+       current](google::cloud::aiplatform::v1::StreamRawPredictRequest const&
+                    request) {
+        return stub->StreamRawPredict(std::make_shared<grpc::ClientContext>(),
+                                      *current, request);
+      };
+  auto resumable = internal::MakeResumableStreamingReadRpc<
+      google::api::HttpBody,
+      google::cloud::aiplatform::v1::StreamRawPredictRequest>(
+      retry_policy(*current), backoff_policy(*current), factory,
+      PredictionServiceStreamRawPredictStreamingUpdater, request);
+  return internal::MakeStreamRange(
+      internal::StreamReader<google::api::HttpBody>(
+          [resumable] { return resumable->Read(); }));
+}
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
 PredictionServiceConnectionImpl::DirectPredict(
     google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
@@ -148,6 +168,19 @@ PredictionServiceConnectionImpl::Explain(
              google::cloud::aiplatform::v1::ExplainRequest const& request) {
         return stub_->Explain(context, request);
       },
+      request, __func__);
+}
+
+StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
+PredictionServiceConnectionImpl::GenerateContent(
+    google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateContent(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::aiplatform::v1::GenerateContentRequest const&
+                 request) { return stub_->GenerateContent(context, request); },
       request, __func__);
 }
 

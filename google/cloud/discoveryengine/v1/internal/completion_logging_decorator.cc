@@ -45,6 +45,73 @@ CompletionServiceLogging::CompleteQuery(
       context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CompletionServiceLogging::AsyncImportSuggestionDenyListEntries(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::discoveryengine::v1::
+        ImportSuggestionDenyListEntriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::
+                 ImportSuggestionDenyListEntriesRequest const& request) {
+        return child_->AsyncImportSuggestionDenyListEntries(
+            cq, std::move(context), options, request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CompletionServiceLogging::AsyncPurgeSuggestionDenyListEntries(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::discoveryengine::v1::
+        PurgeSuggestionDenyListEntriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::
+                 PurgeSuggestionDenyListEntriesRequest const& request) {
+        return child_->AsyncPurgeSuggestionDenyListEntries(
+            cq, std::move(context), options, request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CompletionServiceLogging::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(context), options,
+                                         request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
+future<Status> CompletionServiceLogging::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::longrunning::CancelOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(context), options,
+                                            request);
+      },
+      cq, std::move(context), options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1_internal
 }  // namespace cloud

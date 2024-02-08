@@ -154,21 +154,10 @@ StatusOr<google::iam::v1::Policy> StorageMetadata::GetIamPolicy(
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::iam::v1::GetIamPolicyRequest>{
-        "bucket=",
-        {
-            {[](google::iam::v1::GetIamPolicyRequest const& request)
-                 -> std::string const& { return request.resource(); },
-             std::regex{"(projects/[^/]+/buckets/[^/]+)/objects/.*",
-                        std::regex::optimize}},
-            {[](google::iam::v1::GetIamPolicyRequest const& request)
-                 -> std::string const& { return request.resource(); },
-             absl::nullopt},
-        }};
-  }();
-  bucket_matcher->AppendParam(request, params);
+  if (!request.resource().empty()) {
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.resource())));
+  }
 
   if (params.empty()) {
     SetMetadata(context, internal::CurrentOptions());
@@ -185,21 +174,10 @@ StatusOr<google::iam::v1::Policy> StorageMetadata::SetIamPolicy(
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::iam::v1::SetIamPolicyRequest>{
-        "bucket=",
-        {
-            {[](google::iam::v1::SetIamPolicyRequest const& request)
-                 -> std::string const& { return request.resource(); },
-             std::regex{"(projects/[^/]+/buckets/[^/]+)/objects/.*",
-                        std::regex::optimize}},
-            {[](google::iam::v1::SetIamPolicyRequest const& request)
-                 -> std::string const& { return request.resource(); },
-             absl::nullopt},
-        }};
-  }();
-  bucket_matcher->AppendParam(request, params);
+  if (!request.resource().empty()) {
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.resource())));
+  }
 
   if (params.empty()) {
     SetMetadata(context, internal::CurrentOptions());

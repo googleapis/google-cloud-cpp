@@ -199,6 +199,11 @@ class FeatureOnlineStoreServiceConnection {
   virtual StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
   FetchFeatureValues(
       google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request);
+
+  virtual StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+  SearchNearestEntities(
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request);
 };
 
 /**

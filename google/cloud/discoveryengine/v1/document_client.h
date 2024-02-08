@@ -444,8 +444,8 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L34}
-  /// [google.cloud.discoveryengine.v1.ImportDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L223}
-  /// [google.cloud.discoveryengine.v1.ImportDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L332}
+  /// [google.cloud.discoveryengine.v1.ImportDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L224}
+  /// [google.cloud.discoveryengine.v1.ImportDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L333}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
@@ -501,9 +501,9 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L34}
   /// [google.cloud.discoveryengine.v1.DocumentService.GetDocument]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L46}
   /// [google.cloud.discoveryengine.v1.DocumentService.ListDocuments]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L57}
-  /// [google.cloud.discoveryengine.v1.PurgeDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L35}
-  /// [google.cloud.discoveryengine.v1.PurgeDocumentsRequest.force]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L52}
-  /// [google.cloud.discoveryengine.v1.PurgeDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L59}
+  /// [google.cloud.discoveryengine.v1.PurgeDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L36}
+  /// [google.cloud.discoveryengine.v1.PurgeDocumentsRequest.force]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L53}
+  /// [google.cloud.discoveryengine.v1.PurgeDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L60}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>

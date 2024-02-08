@@ -44,6 +44,18 @@ class CompletionServiceTracingConnection
   CompleteQuery(google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) override;
 
+  future<StatusOr<google::cloud::discoveryengine::v1::
+                      ImportSuggestionDenyListEntriesResponse>>
+  ImportSuggestionDenyListEntries(
+      google::cloud::discoveryengine::v1::
+          ImportSuggestionDenyListEntriesRequest const& request) override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::
+                      PurgeSuggestionDenyListEntriesResponse>>
+  PurgeSuggestionDenyListEntries(
+      google::cloud::discoveryengine::v1::
+          PurgeSuggestionDenyListEntriesRequest const& request) override;
+
  private:
   std::shared_ptr<discoveryengine_v1::CompletionServiceConnection> child_;
 };

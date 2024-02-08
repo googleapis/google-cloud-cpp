@@ -25,6 +25,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -108,13 +109,101 @@ class CompletionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CompleteQueryRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L53}
-  /// [google.cloud.discoveryengine.v1.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L113}
+  /// [google.cloud.discoveryengine.v1.CompleteQueryRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L94}
+  /// [google.cloud.discoveryengine.v1.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L154}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
   CompleteQuery(
       google::cloud::discoveryengine::v1::CompleteQueryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Imports all
+  /// [SuggestionDenyListEntry][google.cloud.discoveryengine.v1.SuggestionDenyListEntry]
+  /// for a DataStore.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L344}
+  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L381}
+  /// [google.cloud.discoveryengine.v1.SuggestionDenyListEntry]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L32}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::discoveryengine::v1::
+                      ImportSuggestionDenyListEntriesResponse>>
+  ImportSuggestionDenyListEntries(
+      google::cloud::discoveryengine::v1::
+          ImportSuggestionDenyListEntriesRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Permanently deletes all
+  /// [SuggestionDenyListEntry][google.cloud.discoveryengine.v1.SuggestionDenyListEntry]
+  /// for a DataStore.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.PurgeSuggestionDenyListEntriesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.discoveryengine.v1.PurgeSuggestionDenyListEntriesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.PurgeSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L92}
+  /// [google.cloud.discoveryengine.v1.PurgeSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L106}
+  /// [google.cloud.discoveryengine.v1.SuggestionDenyListEntry]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L32}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::discoveryengine::v1::
+                      PurgeSuggestionDenyListEntriesResponse>>
+  PurgeSuggestionDenyListEntries(
+      google::cloud::discoveryengine::v1::
+          PurgeSuggestionDenyListEntriesRequest const& request,
       Options opts = {});
 
  private:

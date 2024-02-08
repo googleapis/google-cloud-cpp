@@ -59,6 +59,31 @@ StatusOr<google::api::HttpBody> PredictionServiceLogging::RawPredict(
       context, request, __func__, tracing_options_);
 }
 
+std::unique_ptr<
+    google::cloud::internal::StreamingReadRpc<google::api::HttpBody>>
+PredictionServiceLogging::StreamRawPredict(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::aiplatform::v1::StreamRawPredictRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::aiplatform::v1::StreamRawPredictRequest const& request)
+          -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+              google::api::HttpBody>> {
+        auto stream =
+            child_->StreamRawPredict(std::move(context), options, request);
+        if (stream_logging_) {
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
+                  google::api::HttpBody>>(
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
+        }
+        return stream;
+      },
+      std::move(context), options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
 PredictionServiceLogging::DirectPredict(
     grpc::ClientContext& context,
@@ -83,6 +108,48 @@ PredictionServiceLogging::DirectRawPredict(
         return child_->DirectRawPredict(context, request);
       },
       context, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamDirectPredictRequest,
+    google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
+PredictionServiceLogging::AsyncStreamDirectPredict(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  using LoggingStream =
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::cloud::aiplatform::v1::StreamDirectPredictRequest,
+          google::cloud::aiplatform::v1::StreamDirectPredictResponse>;
+
+  auto request_id = google::cloud::internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->AsyncStreamDirectPredict(cq, std::move(context));
+  if (stream_logging_) {
+    stream = std::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
+PredictionServiceLogging::AsyncStreamDirectRawPredict(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  using LoggingStream =
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
+          google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>;
+
+  auto request_id = google::cloud::internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->AsyncStreamDirectRawPredict(cq, std::move(context));
+  if (stream_logging_) {
+    stream = std::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -161,6 +228,17 @@ PredictionServiceLogging::Explain(
              google::cloud::aiplatform::v1::ExplainRequest const& request) {
         return child_->Explain(context, request);
       },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
+PredictionServiceLogging::GenerateContent(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::aiplatform::v1::GenerateContentRequest const&
+                 request) { return child_->GenerateContent(context, request); },
       context, request, __func__, tracing_options_);
 }
 
