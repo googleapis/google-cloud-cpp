@@ -98,7 +98,7 @@ ENV PATH=/usr/local/bin:${PATH}
 
 # ```bash
 WORKDIR /var/tmp/build/abseil-cpp
-RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \

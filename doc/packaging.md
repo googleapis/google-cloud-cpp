@@ -413,7 +413,7 @@ information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -608,7 +608,7 @@ use the polyfills. See [abseil/abseil-cpp#696] for more information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -783,7 +783,7 @@ information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -1086,7 +1086,7 @@ information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -1267,7 +1267,7 @@ information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -1489,7 +1489,7 @@ information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -1714,7 +1714,7 @@ information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 1/' "absl/base/options.h" && \
     cmake \
@@ -1953,7 +1953,7 @@ information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
