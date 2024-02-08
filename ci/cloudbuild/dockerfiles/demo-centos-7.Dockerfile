@@ -61,13 +61,13 @@ ENV LD_LIBRARY_PATH /opt/rh/devtoolset-7/root/usr/lib64:/opt/rh/devtoolset-7/roo
 # newer. If not, `yum install pkgconfig` should work instead.
 
 # ```bash
-WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+WORKDIR /var/tmp/build/pkgconf
+RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
+    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
     make install && \
-    ldconfig
+    ldconfig && cd /var/tmp && rm -fr build
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. By

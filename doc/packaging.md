@@ -160,15 +160,23 @@ when handling `.pc` files with lots of `Requires:` deps, which happens with
 Abseil, so we use the normal `pkg-config` binary, which seems to not suffer from
 this bottleneck. For more details see
 https://github.com/pkgconf/pkgconf/issues/229 and
-https://github.com/googleapis/google-cloud-cpp/issues/7052.
+https://github.com/googleapis/google-cloud-cpp/issues/7052
 
 ```bash
-mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
-curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
+curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
+    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
-sudo make install
+sudo make install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
+```
+
+The following steps will install libraries and tools in `/usr/local`. By
+default, pkgconf does not search in these directories. We need to explicitly set
+the search path.
+
+```bash
 export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
 ```
 
@@ -278,13 +286,13 @@ may want to use a recent version of the standard `pkg-config` binary. If not,
 `sudo dnf install pkgconfig` should work.
 
 ```bash
-mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
-curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
+curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
+    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
 sudo make install && \
-sudo ldconfig
+sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
 Older versions of Fedora hard-code RE2 to use C++11. It was fixed starting with
@@ -297,7 +305,8 @@ sed -i 's/-std=c\+\+11 //' /usr/lib64/pkgconfig/re2.pc
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
-default, pkg-config does not search in these directories.
+default, pkgconf does not search in these directories. We need to explicitly set
+the search path.
 
 ```bash
 export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
@@ -841,13 +850,13 @@ may want to use a recent version of the standard `pkg-config` binary. If not,
 `sudo dnf install pkgconfig` should work.
 
 ```bash
-mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
-curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
+curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
+    ./configure --with-system-libdir=/lib:/usr/lib --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
 sudo make install && \
-sudo ldconfig
+sudo ldconfig && cd /var/tmp && rm -fr build
 export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig/
 ```
 
@@ -1294,13 +1303,13 @@ may want to use a recent version of the standard `pkg-config` binary. If not,
 `sudo dnf install pkgconfig` should work.
 
 ```bash
-mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
-curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
+curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
+    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
 sudo make install && \
-sudo ldconfig
+sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
@@ -1508,13 +1517,13 @@ may want to use a recent version of the standard `pkg-config` binary. If not,
 `sudo dnf install pkgconfig` should work.
 
 ```bash
-mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
-curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
+curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
+    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
 sudo make install && \
-sudo ldconfig
+sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
@@ -1740,13 +1749,13 @@ with any of the installed artifacts, you'll want to upgrade it to something
 newer. If not, `sudo yum install pkgconfig` should work instead.
 
 ```bash
-mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
-curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
+curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
+    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
 sudo make install && \
-sudo ldconfig
+sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
