@@ -583,7 +583,7 @@ class AsyncClient {
    * @param destination_bucket_name where the destination object will be
    *     located.
    * @param destination_object_name what to name the destination object.
-   * @param options a list of optional query parameters and/or request headers.
+   * @param args a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `DestinationKmsKeyName`,
    *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
    *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
@@ -607,14 +607,15 @@ class AsyncClient {
    */
   template <typename... Args>
   std::pair<AsyncRewriter, AsyncToken> StartRewrite(
-      std::string source_bucket, std::string source_object,
-      std::string destination_bucket, std::string destination_object,
+      std::string source_bucket_name, std::string source_object_name,
+      std::string destination_bucket_name, std::string destination_object_name,
       Args&&... args) {
     auto options = SpanOptions(std::forward<Args>(args)...);
     auto c = connection_->RewriteObject(
-        {RewriteObjectRequest(
-             std::move(source_bucket), std::move(source_object),
-             std::move(destination_bucket), std::move(destination_object))
+        {RewriteObjectRequest(std::move(source_bucket_name),
+                              std::move(source_object_name),
+                              std::move(destination_bucket_name),
+                              std::move(destination_object_name))
              .set_multiple_options(std::forward<Args>(args)...),
          /*.options=*/std::move(options)});
     auto t = storage_internal::MakeAsyncToken(c.get());
@@ -642,7 +643,10 @@ class AsyncClient {
    * @param destination_bucket_name where the destination object will be
    *     located.
    * @param destination_object_name what to name the destination object.
-   * @param options a list of optional query parameters and/or request headers.
+   * @param rewrite_token the token from a previous successful rewrite
+   *     iteration. Can be the empty string, in which case this starts a new
+   *     rewrite operation.
+   * @param args a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `DestinationKmsKeyName`,
    *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
    *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
@@ -658,7 +662,7 @@ class AsyncClient {
    * `IfGenerationMatch`.
    *
    * @par Example
-   * @snippet storage_async_samples.cc resume-rewrite-object
+   * @snippet storage_async_samples.cc resume-rewrite
    *
    * @see
    * [Object: rewrite]:
@@ -666,14 +670,15 @@ class AsyncClient {
    */
   template <typename... Args>
   std::pair<AsyncRewriter, AsyncToken> ResumeRewrite(
-      std::string source_bucket, std::string source_object,
-      std::string destination_bucket, std::string destination_object,
+      std::string source_bucket_name, std::string source_object_name,
+      std::string destination_bucket_name, std::string destination_object_name,
       std::string rewrite_token, Args&&... args) {
     auto options = SpanOptions(std::forward<Args>(args)...);
     auto c = connection_->RewriteObject(
-        {RewriteObjectRequest(
-             std::move(source_bucket), std::move(source_object),
-             std::move(destination_bucket), std::move(destination_object))
+        {RewriteObjectRequest(std::move(source_bucket_name),
+                              std::move(source_object_name),
+                              std::move(destination_bucket_name),
+                              std::move(destination_object_name))
              .set_rewrite_token(std::move(rewrite_token))
              .set_multiple_options(std::forward<Args>(args)...),
          /*.options=*/std::move(options)});
