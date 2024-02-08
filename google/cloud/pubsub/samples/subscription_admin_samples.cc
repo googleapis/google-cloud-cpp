@@ -60,21 +60,20 @@ CreateSubscriptionAdminCommand(std::string const& name,
 void CleanupSubscriptions(
     google::cloud::pubsub_admin::SubscriptionAdminClient& client,
     std::string const& project_id, absl::Time time_now) {
-  auto const parent = google::cloud::Project(project_id).FullName();
-  for (auto& subscription : client.ListSubscriptions(parent)) {
+  for (auto const& subscription : client.ListSubscriptions(
+           google::cloud::Project(project_id).FullName())) {
     if (!subscription) continue;
-    std::string keyword = "cloud-cpp-samples";
+    std::string const keyword = "cloud-cpp-samples";
     if (!absl::StrContains(subscription->name(), keyword)) continue;
     // Extract the date from the resource name which is in the format
     // `*-cloud-cpp-samples-YYYY-MM-DD-`.
     auto date = subscription->name().substr(
         subscription->name().find(keyword) + keyword.size() + 1, 10);
 
-    absl::TimeZone nyc;
-    if (!absl::LoadTimeZone("America/New_York", &nyc)) continue;
     absl::CivilDay day;
     if (absl::ParseCivilTime(date, &day) &&
-        absl::FromCivil(day, nyc) < time_now - absl::Hours(36)) {
+        absl::FromCivil(day, absl::UTCTimeZone()) <
+            time_now - absl::Hours(36)) {
       google::pubsub::v1::DeleteSubscriptionRequest request;
       request.set_subscription(subscription->name());
       (void)client.DeleteSubscription(request);
