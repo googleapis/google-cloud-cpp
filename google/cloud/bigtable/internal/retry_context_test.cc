@@ -22,7 +22,6 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::testing::IsEmpty;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
@@ -56,13 +55,13 @@ class RetryContextTest : public ::testing::Test {
   }
 };
 
-TEST_F(RetryContextTest, StartsEmpty) {
+TEST_F(RetryContextTest, StartsWithoutBigtableCookies) {
   RetryContext retry_context;
 
   grpc::ClientContext c;
   retry_context.PreCall(c);
   auto headers = metadata_fixture_.GetMetadata(c);
-  EXPECT_THAT(headers, IsEmpty());
+  EXPECT_THAT(headers, UnorderedElementsAre(Pair("bigtable-attempt", "1")));
 }
 
 TEST_F(RetryContextTest, ParrotsBigtableCookies) {
@@ -84,7 +83,8 @@ TEST_F(RetryContextTest, ParrotsBigtableCookies) {
   EXPECT_THAT(headers, UnorderedElementsAre(
                            Pair("x-goog-cbt-cookie-header-only", "header"),
                            Pair("x-goog-cbt-cookie-trailer-only", "trailer"),
-                           Pair("x-goog-cbt-cookie-both", "trailer")));
+                           Pair("x-goog-cbt-cookie-both", "trailer"),
+                           Pair("bigtable-attempt", "1")));
 }
 
 TEST_F(RetryContextTest, Retries) {
@@ -93,20 +93,23 @@ TEST_F(RetryContextTest, Retries) {
   auto headers = SimulateRequest(
       retry_context, {{}, {{"x-goog-cbt-cookie-routing", "request-1"}}});
   EXPECT_THAT(headers, UnorderedElementsAre(
-                           Pair("x-goog-cbt-cookie-routing", "request-1")));
+                           Pair("x-goog-cbt-cookie-routing", "request-1"),
+                           Pair("bigtable-attempt", "1")));
 
   // Simulate receiving no `RpcMetadata` from the server. We should remember the
   // cookie from the first response.
   headers = SimulateRequest(retry_context, {});
   EXPECT_THAT(headers, UnorderedElementsAre(
-                           Pair("x-goog-cbt-cookie-routing", "request-1")));
+                           Pair("x-goog-cbt-cookie-routing", "request-1"),
+                           Pair("bigtable-attempt", "2")));
 
   // Simulate receiving a new routing cookie. We should overwrite the cookie
   // from the first response.
   headers = SimulateRequest(retry_context,
                             {{}, {{"x-goog-cbt-cookie-routing", "request-3"}}});
   EXPECT_THAT(headers, UnorderedElementsAre(
-                           Pair("x-goog-cbt-cookie-routing", "request-3")));
+                           Pair("x-goog-cbt-cookie-routing", "request-3"),
+                           Pair("bigtable-attempt", "3")));
 }
 
 }  // namespace
