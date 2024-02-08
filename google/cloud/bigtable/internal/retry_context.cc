@@ -24,7 +24,7 @@ void RetryContext::PreCall(grpc::ClientContext& context) {
   for (auto const& h : cookies_) {
     context.AddMetadata(h.first, h.second);
   }
-  context.AddMetadata("bigtable-attempt", std::to_string(++attempt_number_));
+  context.AddMetadata("bigtable-attempt", std::to_string(attempt_number_++));
 }
 
 void RetryContext::PostCall(grpc::ClientContext const& context) {
