@@ -48,13 +48,17 @@ RUN echo 'root:' | chpasswd
 # Abseil, so we use the normal `pkg-config` binary, which seems to not suffer
 # from this bottleneck. For more details see
 # https://github.com/googleapis/google-cloud-cpp/issues/7052
-WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+WORKDIR /var/tmp/build/pkgconf
+RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
+    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
     make install && \
-    ldconfig
+    ldconfig && cd /var/tmp && rm -fr build
+
+# The following steps will install libraries and tools in `/usr/local`. By
+# default, pkgconf does not search in these directories. We need to explicitly
+# set the search path.
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
 
 # Download and install direct dependencies of `google-cloud-cpp`. Including
