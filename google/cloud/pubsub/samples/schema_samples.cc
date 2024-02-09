@@ -20,8 +20,6 @@
 #include "google/cloud/project.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/example_driver.h"
-#include <google/cloud/pubsub/samples/testdata/schema.pb.h>
-#include <google/protobuf/text_format.h>
 #include <chrono>
 #include <iostream>
 #include <string>
