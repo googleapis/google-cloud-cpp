@@ -405,6 +405,99 @@ TEST_F(AsyncClientIntegrationTest, StartBufferedUploadMultiple) {
   EXPECT_EQ(metadata->size(), kBlockCount * kBlockSize);
 }
 
+TEST_F(AsyncClientIntegrationTest, RewriteObject) {
+  auto o1 = MakeRandomObjectName();
+  auto o2 = MakeRandomObjectName();
+
+  auto async = AsyncClient();
+  auto constexpr kBlockSize = 4 * 1024 * 1024;
+  auto insert = async
+                    .InsertObject(bucket_name(), o1, MakeRandomData(kBlockSize),
+                                  gcs::IfGenerationMatch(0))
+                    .get();
+  ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
+
+  // Start a rewrite, but limit each iteration to a small number of bytes, to
+  // force multiple calls.
+  storage::ObjectMetadata metadata;
+  AsyncRewriter rewriter;
+  AsyncToken token;
+  std::tie(rewriter, token) =
+      async.StartRewrite(bucket_name(), o1, bucket_name(), o2,
+                         storage::MaxBytesRewrittenPerCall(1024 * 1024));
+  while (token.valid()) {
+    auto rt = rewriter.Iterate(std::move(token)).get();
+    ASSERT_STATUS_OK(rt);
+    RewriteObjectResponse response;
+    AsyncToken t;
+    std::tie(response, t) = *std::move(rt);
+    token = std::move(t);
+    if (!response.metadata.has_value()) continue;
+    ScheduleForDelete(*response.metadata);
+    metadata = *response.metadata;
+    EXPECT_FALSE(token.valid());
+  }
+  EXPECT_EQ(metadata.name(), o2);
+  EXPECT_EQ(metadata.size(), insert->size());
+}
+
+TEST_F(AsyncClientIntegrationTest, RewriteObjectResume) {
+  auto destination =
+      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME");
+  if (!destination || destination->empty()) GTEST_SKIP();
+
+  auto async = AsyncClient();
+  auto constexpr kBlockSize = 4 * 1024 * 1024;
+  auto source =
+      async
+          .InsertObject(bucket_name(), MakeRandomObjectName(),
+                        MakeRandomData(kBlockSize), gcs::IfGenerationMatch(0))
+          .get();
+  ASSERT_STATUS_OK(source);
+  ScheduleForDelete(*source);
+
+  // Start a rewrite, but limit each iteration to a small number of bytes, to
+  // force multiple calls.
+  AsyncRewriter rewriter;
+  AsyncToken token;
+  auto const expected_name = MakeRandomObjectName();
+  std::tie(rewriter, token) = async.StartRewrite(
+      source->bucket(), source->name(), *destination, expected_name,
+      storage::MaxBytesRewrittenPerCall(1024 * 1024));
+
+  auto rt = rewriter.Iterate(std::move(token)).get();
+  ASSERT_STATUS_OK(rt);
+  RewriteObjectResponse response;
+  AsyncToken t;
+  std::tie(response, t) = *std::move(rt);
+
+  // We want to resume a partially completed resume. Verify the first rewrite
+  // did not complete things.
+  ASSERT_THAT(response.rewrite_token, Not(IsEmpty()));
+
+  std::tie(rewriter, token) =
+      async.ResumeRewrite(source->bucket(), source->name(), *destination,
+                          expected_name, response.rewrite_token);
+
+  storage::ObjectMetadata metadata;
+  while (token.valid()) {
+    auto rt = rewriter.Iterate(std::move(token)).get();
+    ASSERT_STATUS_OK(rt);
+    AsyncToken t;
+    std::tie(response, t) = *std::move(rt);
+    token = std::move(t);
+    if (!response.metadata.has_value()) continue;
+    ScheduleForDelete(*response.metadata);
+    metadata = *response.metadata;
+    EXPECT_FALSE(token.valid());
+  }
+  EXPECT_EQ(metadata.bucket(), *destination);
+  EXPECT_EQ(metadata.name(), expected_name);
+  EXPECT_EQ(metadata.size(), source->size());
+  EXPECT_EQ(metadata.crc32c(), source->crc32c());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental

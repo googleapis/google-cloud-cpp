@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/async/connection.h"
 #include "google/cloud/storage/async/reader.h"
+#include "google/cloud/storage/async/rewriter.h"
 #include "google/cloud/storage/async/token.h"
 #include "google/cloud/storage/async/writer.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
@@ -559,6 +560,122 @@ class AsyncClient {
         {DeleteObjectRequest(std::move(bucket_name), std::move(object_name))
              .set_multiple_options(std::forward<Args>(args)...),
          /*.options=*/std::move(options)});
+  }
+
+  /**
+   * Creates an `AsyncRewriter` to copy the source object.
+   *
+   * Applications use this function to reliably copy objects across [location
+   * boundaries](https://cloud.google.com/storage/docs/locations), and to
+   * rewrite objects with different encryption keys. The operation returns an
+   * `AsyncRewriter`, which the application can use to initiate the copy and to
+   * iterate if the copy requires more than one call to complete.
+   *
+   * @note Application developers should be aware that rewriting large objects
+   *     may take many calls to `AsyncRewriter::Iterate()`. Simple experiments
+   *     rewriting an object within the same bucket or rewriting small objects
+   *     often complete with a single call. For more information, see the
+   *     [Object: rewrite] documentation.
+   *
+   * @param source_bucket_name the name of the bucket containing the source
+   *     object.
+   * @param source_object_name the name of the source object.
+   * @param destination_bucket_name where the destination object will be
+   *     located.
+   * @param destination_object_name what to name the destination object.
+   * @param args a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationKmsKeyName`,
+   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
+   *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
+   *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
+   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
+   *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
+   *
+   * @par Idempotency
+   * This operation is purely local, and always succeeds.  The `Iterate()` calls
+   * might fail and are only idempotent if restricted by pre-conditions. In this
+   * call the most relevant pre-condition is `IfGenerationMatch`.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc rewrite-object
+   *
+   * @see
+   * [Object: rewrite]:
+   * https://cloud.google.com/storage/docs/json_api/v1/objects/rewrite
+   */
+  template <typename... Args>
+  std::pair<AsyncRewriter, AsyncToken> StartRewrite(
+      std::string source_bucket_name, std::string source_object_name,
+      std::string destination_bucket_name, std::string destination_object_name,
+      Args&&... args) {
+    return ResumeRewrite(
+        std::move(source_bucket_name), std::move(source_object_name),
+        std::move(destination_bucket_name), std::move(destination_object_name),
+        /*rewrite_token=*/"", std::forward<Args>(args)...);
+  }
+
+  /**
+   * Creates an `AsyncRewriter` to resume copying the source object.
+   *
+   * Applications use this function to reliably copy objects across [location
+   * boundaries](https://cloud.google.com/storage/docs/locations), and to
+   * rewrite objects with different encryption keys. The operation returns an
+   * `AsyncRewriter`, which the application can use to initiate the copy and to
+   * iterate if the copy requires more than one call to complete.
+   *
+   * @note Application developers should be aware that rewriting large objects
+   *     may take many calls to `AsyncRewriter::Iterate()`. Simple experiments
+   *     rewriting an object within the same bucket or rewriting small objects
+   *     often complete with a single call. For more information, see the
+   *     [Object: rewrite] documentation.
+   *
+   * @param source_bucket_name the name of the bucket containing the source
+   *     object.
+   * @param source_object_name the name of the source object.
+   * @param destination_bucket_name where the destination object will be
+   *     located.
+   * @param destination_object_name what to name the destination object.
+   * @param rewrite_token the token from a previous successful rewrite
+   *     iteration. Can be the empty string, in which case this starts a new
+   *     rewrite operation.
+   * @param args a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationKmsKeyName`,
+   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
+   *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
+   *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
+   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
+   *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
+   *
+   * @par Idempotency
+   * This operation is purely local, and always succeeds.  The `Iterate()` calls
+   * might fail and are only idempotent if restricted by pre-conditions. In this
+   * call the most relevant pre-condition is `IfGenerationMatch`.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc resume-rewrite
+   *
+   * @see
+   * [Object: rewrite]:
+   * https://cloud.google.com/storage/docs/json_api/v1/objects/rewrite
+   */
+  template <typename... Args>
+  std::pair<AsyncRewriter, AsyncToken> ResumeRewrite(
+      std::string source_bucket_name, std::string source_object_name,
+      std::string destination_bucket_name, std::string destination_object_name,
+      std::string rewrite_token, Args&&... args) {
+    auto options = SpanOptions(std::forward<Args>(args)...);
+    auto c = connection_->RewriteObject(
+        {RewriteObjectRequest(std::move(source_bucket_name),
+                              std::move(source_object_name),
+                              std::move(destination_bucket_name),
+                              std::move(destination_object_name))
+             .set_rewrite_token(std::move(rewrite_token))
+             .set_multiple_options(std::forward<Args>(args)...),
+         /*.options=*/std::move(options)});
+    auto t = storage_internal::MakeAsyncToken(c.get());
+    return std::make_pair(AsyncRewriter(std::move(c)), std::move(t));
   }
 
  private:
