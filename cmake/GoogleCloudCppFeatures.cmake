@@ -331,7 +331,7 @@ macro (google_cloud_cpp_enable_deps)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 storage)
     endif ()
     if (opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 trace)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 monitoring trace)
     endif ()
 endmacro ()
 
