@@ -394,6 +394,7 @@ void ResumeRewrite(google::cloud::storage_experimental::AsyncClient& client,
                 << progress.object_size << " bytes rewritten\n";
       if (progress.metadata) co_return *std::move(progress.metadata);
     }
+    throw std::runtime_error("rewrite failed before completion");
   };
   //! [resume-rewrite]
 
