@@ -12,17 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:private"])
-
-licenses(["notice"])  # Apache 2.0
-
 load(":google_cloud_cpp_storage.bzl", "google_cloud_cpp_storage_hdrs", "google_cloud_cpp_storage_srcs")
 load(":google_cloud_cpp_storage_grpc.bzl", "google_cloud_cpp_storage_grpc_hdrs", "google_cloud_cpp_storage_grpc_srcs")
 load(":google_cloud_cpp_storage_grpc_mocks.bzl", "google_cloud_cpp_storage_grpc_mocks_hdrs")
+load(":storage_client_benchmarks.bzl", "storage_client_benchmarks")
 load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
 load(":storage_client_testing.bzl", "storage_client_testing_hdrs", "storage_client_testing_srcs")
 load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
-load(":storage_client_benchmarks.bzl", "storage_client_benchmarks")
+
+package(default_visibility = ["//visibility:private"])
+
+licenses(["notice"])  # Apache 2.0
 
 # These are needed to use the BoringSSL libraries, and should be set in any
 # downstream dependency too.

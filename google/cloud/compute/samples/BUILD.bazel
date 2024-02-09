@@ -14,11 +14,11 @@
 
 """Examples for the Compute Engine C++ client library."""
 
+load(":compute_client_samples.bzl", "compute_client_samples")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-load(":compute_client_samples.bzl", "compute_client_samples")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),

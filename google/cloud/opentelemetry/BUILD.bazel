@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":google_cloud_cpp_opentelemetry.bzl", "google_cloud_cpp_opentelemetry_hdrs", "google_cloud_cpp_opentelemetry_srcs")
+load(":opentelemetry_unit_tests.bzl", "opentelemetry_unit_tests")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-load(":google_cloud_cpp_opentelemetry.bzl", "google_cloud_cpp_opentelemetry_hdrs", "google_cloud_cpp_opentelemetry_srcs")
-load(":opentelemetry_unit_tests.bzl", "opentelemetry_unit_tests")
 
 filegroup(
     name = "public_hdrs",

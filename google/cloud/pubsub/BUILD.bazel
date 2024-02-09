@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":google_cloud_cpp_pubsub.bzl", "google_cloud_cpp_pubsub_hdrs", "google_cloud_cpp_pubsub_srcs")
+load(":google_cloud_cpp_pubsub_mocks.bzl", "google_cloud_cpp_pubsub_mocks_hdrs")
+load(":pubsub_client_testing.bzl", "pubsub_client_testing_hdrs", "pubsub_client_testing_srcs")
+load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-load(":google_cloud_cpp_pubsub.bzl", "google_cloud_cpp_pubsub_hdrs", "google_cloud_cpp_pubsub_srcs")
-load(":pubsub_client_testing.bzl", "pubsub_client_testing_hdrs", "pubsub_client_testing_srcs")
-load(":google_cloud_cpp_pubsub_mocks.bzl", "google_cloud_cpp_pubsub_mocks_hdrs")
-load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
 
 filegroup(
     name = "public_hdrs",
