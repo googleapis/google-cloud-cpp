@@ -64,19 +64,15 @@ RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
 
 # We disable the inline namespace because otherwise Abseil LTS updates break our
-# `check-api` build.  We also force this build to use C++14, we don't want
-# Abseil to require C++17 (the default in this platform) because that would
-# enable C++17 in our clang-tidy builds. The clang-tidy fixes for C++17 would
-# break C++14 builds.
+# `check-api` build.
 WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     sed -i 's/^#define ABSL_OPTION_USE_INLINE_NAMESPACE 1$/#define ABSL_OPTION_USE_INLINE_NAMESPACE 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
-      -DCMAKE_CXX_STANDARD=14 \
       -DABSL_BUILD_TESTING=OFF \
-      -DABSL_PROPAGATE_CXX_STD=ON \
       -DBUILD_SHARED_LIBS=yes \
       -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
