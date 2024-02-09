@@ -47,6 +47,15 @@ StatusOr<google::api::HttpBody> PredictionServiceConnection::RawPredict(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::api::HttpBody>
+PredictionServiceConnection::StreamRawPredict(
+    google::cloud::aiplatform::v1::StreamRawPredictRequest const&) {
+  return google::cloud::internal::MakeStreamRange<google::api::HttpBody>(
+      []() -> absl::variant<Status, google::api::HttpBody> {
+        return Status(StatusCode::kUnimplemented, "not implemented");
+      });
+}
+
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
 PredictionServiceConnection::DirectPredict(
     google::cloud::aiplatform::v1::DirectPredictRequest const&) {
@@ -57,6 +66,28 @@ StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
 PredictionServiceConnection::DirectRawPredict(
     google::cloud::aiplatform::v1::DirectRawPredictRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamDirectPredictRequest,
+    google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
+PredictionServiceConnection::AsyncStreamDirectPredict() {
+  return std::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::cloud::aiplatform::v1::StreamDirectPredictRequest,
+          google::cloud::aiplatform::v1::StreamDirectPredictResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
+PredictionServiceConnection::AsyncStreamDirectRawPredict() {
+  return std::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
+          google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -96,6 +127,12 @@ PredictionServiceConnection::AsyncStreamingRawPredict() {
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 PredictionServiceConnection::Explain(
     google::cloud::aiplatform::v1::ExplainRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
+PredictionServiceConnection::GenerateContent(
+    google::cloud::aiplatform::v1::GenerateContentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

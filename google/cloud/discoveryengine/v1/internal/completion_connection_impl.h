@@ -26,9 +26,12 @@
 #include "google/cloud/discoveryengine/v1/internal/completion_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -51,6 +54,18 @@ class CompletionServiceConnectionImpl
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
   CompleteQuery(google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::
+                      ImportSuggestionDenyListEntriesResponse>>
+  ImportSuggestionDenyListEntries(
+      google::cloud::discoveryengine::v1::
+          ImportSuggestionDenyListEntriesRequest const& request) override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::
+                      PurgeSuggestionDenyListEntriesResponse>>
+  PurgeSuggestionDenyListEntries(
+      google::cloud::discoveryengine::v1::
+          PurgeSuggestionDenyListEntriesRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

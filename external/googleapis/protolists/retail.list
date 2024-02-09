@@ -1,9 +1,11 @@
+@com_google_googleapis//google/cloud/retail/v2:analytics_service.proto
 @com_google_googleapis//google/cloud/retail/v2:catalog.proto
 @com_google_googleapis//google/cloud/retail/v2:catalog_service.proto
 @com_google_googleapis//google/cloud/retail/v2:common.proto
 @com_google_googleapis//google/cloud/retail/v2:completion_service.proto
 @com_google_googleapis//google/cloud/retail/v2:control.proto
 @com_google_googleapis//google/cloud/retail/v2:control_service.proto
+@com_google_googleapis//google/cloud/retail/v2:export_config.proto
 @com_google_googleapis//google/cloud/retail/v2:import_config.proto
 @com_google_googleapis//google/cloud/retail/v2:model.proto
 @com_google_googleapis//google/cloud/retail/v2:model_service.proto

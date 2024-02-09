@@ -19,9 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_COMPLETION_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_COMPLETION_STUB_H
 
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/discoveryengine/v1/completion_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -37,25 +41,76 @@ class CompletionServiceStub {
   CompleteQuery(grpc::ClientContext& context,
                 google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncImportSuggestionDenyListEntries(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          ImportSuggestionDenyListEntriesRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncPurgeSuggestionDenyListEntries(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          PurgeSuggestionDenyListEntriesRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultCompletionServiceStub : public CompletionServiceStub {
  public:
-  explicit DefaultCompletionServiceStub(
+  DefaultCompletionServiceStub(
       std::unique_ptr<
           google::cloud::discoveryengine::v1::CompletionService::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
   CompleteQuery(grpc::ClientContext& context,
                 google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncImportSuggestionDenyListEntries(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          ImportSuggestionDenyListEntriesRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncPurgeSuggestionDenyListEntries(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          PurgeSuggestionDenyListEntriesRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::unique_ptr<
       google::cloud::discoveryengine::v1::CompletionService::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -54,6 +54,11 @@ class FeatureOnlineStoreServiceConnectionImpl
       google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+  SearchNearestEntities(
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::FeatureOnlineStoreServiceStub> stub_;

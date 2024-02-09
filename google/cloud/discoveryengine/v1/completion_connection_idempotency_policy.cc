@@ -39,6 +39,20 @@ Idempotency CompletionServiceConnectionIdempotencyPolicy::CompleteQuery(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+CompletionServiceConnectionIdempotencyPolicy::ImportSuggestionDenyListEntries(
+    google::cloud::discoveryengine::v1::
+        ImportSuggestionDenyListEntriesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+CompletionServiceConnectionIdempotencyPolicy::PurgeSuggestionDenyListEntries(
+    google::cloud::discoveryengine::v1::
+        PurgeSuggestionDenyListEntriesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
 MakeDefaultCompletionServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CompletionServiceConnectionIdempotencyPolicy>();

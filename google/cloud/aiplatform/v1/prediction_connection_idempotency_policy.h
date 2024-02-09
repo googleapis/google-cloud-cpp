@@ -51,6 +51,9 @@ class PredictionServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency Explain(
       google::cloud::aiplatform::v1::ExplainRequest const& request);
+
+  virtual google::cloud::Idempotency GenerateContent(
+      google::cloud::aiplatform::v1::GenerateContentRequest const& request);
 };
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>

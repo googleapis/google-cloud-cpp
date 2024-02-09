@@ -59,6 +59,11 @@ Idempotency PredictionServiceConnectionIdempotencyPolicy::Explain(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency PredictionServiceConnectionIdempotencyPolicy::GenerateContent(
+    google::cloud::aiplatform::v1::GenerateContentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
 MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
   return std::make_unique<PredictionServiceConnectionIdempotencyPolicy>();

@@ -45,6 +45,12 @@ class FeatureOnlineStoreServiceMetadata : public FeatureOnlineStoreServiceStub {
       google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+  SearchNearestEntities(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);

@@ -43,6 +43,12 @@ FeatureOnlineStoreServiceConnection::FetchFeatureValues(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+FeatureOnlineStoreServiceConnection::SearchNearestEntities(
+    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<FeatureOnlineStoreServiceConnection>
 MakeFeatureOnlineStoreServiceConnection(std::string const& location,
                                         Options options) {

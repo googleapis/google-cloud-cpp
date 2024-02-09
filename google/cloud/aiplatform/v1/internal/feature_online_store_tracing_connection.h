@@ -46,6 +46,11 @@ class FeatureOnlineStoreServiceTracingConnection
       google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+  SearchNearestEntities(
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request) override;
+
  private:
   std::shared_ptr<aiplatform_v1::FeatureOnlineStoreServiceConnection> child_;
 };

@@ -52,6 +52,20 @@ Options CompletionServiceDefaultOptions(Options options) {
             std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
+  if (!options
+           .has<discoveryengine_v1::CompletionServicePollingPolicyOption>()) {
+    options.set<discoveryengine_v1::CompletionServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            discoveryengine_v1::CompletionServiceRetryPolicyOption::Type,
+            discoveryengine_v1::CompletionServiceBackoffPolicyOption::Type>(
+            options
+                .get<discoveryengine_v1::CompletionServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
+  }
   if (!options.has<discoveryengine_v1::
                        CompletionServiceConnectionIdempotencyPolicyOption>()) {
     options.set<
