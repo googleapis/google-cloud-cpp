@@ -436,7 +436,7 @@ TEST_F(AsyncClientIntegrationTest, RewriteObject) {
     if (!response.metadata.has_value()) continue;
     ScheduleForDelete(*response.metadata);
     metadata = *response.metadata;
-    break;
+    EXPECT_FALSE(token.valid());
   }
   EXPECT_EQ(metadata.name(), o2);
   EXPECT_EQ(metadata.size(), insert->size());
@@ -490,7 +490,7 @@ TEST_F(AsyncClientIntegrationTest, RewriteObjectResume) {
     if (!response.metadata.has_value()) continue;
     ScheduleForDelete(*response.metadata);
     metadata = *response.metadata;
-    break;
+    EXPECT_FALSE(token.valid());
   }
   EXPECT_EQ(metadata.bucket(), *destination);
   EXPECT_EQ(metadata.name(), expected_name);

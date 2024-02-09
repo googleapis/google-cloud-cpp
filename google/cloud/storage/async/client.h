@@ -567,8 +567,8 @@ class AsyncClient {
    *
    * Applications use this function to reliably copy objects across [location
    * boundaries](https://cloud.google.com/storage/docs/locations), and to
-   * rewrite objects with different encryption keys. The operation returns a
-   * `ObjectRewriter`, which the application can use to initiate the copy and to
+   * rewrite objects with different encryption keys. The operation returns an
+   * `AsyncRewriter`, which the application can use to initiate the copy and to
    * iterate if the copy requires more than one call to complete.
    *
    * @note Application developers should be aware that rewriting large objects
@@ -594,9 +594,8 @@ class AsyncClient {
    *
    * @par Idempotency
    * This operation is purely local, and always succeeds.  The `Iterate()` calls
-   * may call might fail and are only idempotent if restricted by
-   * pre-conditions. It this call the most relevant pre-condition is,
-   * `IfGenerationMatch`.
+   * might fail and are only idempotent if restricted by pre-conditions. In this
+   * call the most relevant pre-condition is `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_async_samples.cc rewrite-object
@@ -610,25 +609,19 @@ class AsyncClient {
       std::string source_bucket_name, std::string source_object_name,
       std::string destination_bucket_name, std::string destination_object_name,
       Args&&... args) {
-    auto options = SpanOptions(std::forward<Args>(args)...);
-    auto c = connection_->RewriteObject(
-        {RewriteObjectRequest(std::move(source_bucket_name),
-                              std::move(source_object_name),
-                              std::move(destination_bucket_name),
-                              std::move(destination_object_name))
-             .set_multiple_options(std::forward<Args>(args)...),
-         /*.options=*/std::move(options)});
-    auto t = storage_internal::MakeAsyncToken(c.get());
-    return std::make_pair(AsyncRewriter(std::move(c)), std::move(t));
+    return ResumeRewrite(
+        std::move(source_bucket_name), std::move(source_object_name),
+        std::move(destination_bucket_name), std::move(destination_object_name),
+        /*rewrite_token=*/"", std::forward<Args>(args)...);
   }
 
   /**
-   * Creates an `AsyncRewriter` to copy the source object.
+   * Creates an `AsyncRewriter` to resume copying the source object.
    *
    * Applications use this function to reliably copy objects across [location
    * boundaries](https://cloud.google.com/storage/docs/locations), and to
-   * rewrite objects with different encryption keys. The operation returns a
-   * `ObjectRewriter`, which the application can use to initiate the copy and to
+   * rewrite objects with different encryption keys. The operation returns an
+   * `AsyncRewriter`, which the application can use to initiate the copy and to
    * iterate if the copy requires more than one call to complete.
    *
    * @note Application developers should be aware that rewriting large objects
@@ -657,9 +650,8 @@ class AsyncClient {
    *
    * @par Idempotency
    * This operation is purely local, and always succeeds.  The `Iterate()` calls
-   * may call might fail and are only idempotent if restricted by
-   * pre-conditions. It this call the most relevant pre-condition is,
-   * `IfGenerationMatch`.
+   * might fail and are only idempotent if restricted by pre-conditions. In this
+   * call the most relevant pre-condition is `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_async_samples.cc resume-rewrite

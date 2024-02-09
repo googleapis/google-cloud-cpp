@@ -369,7 +369,8 @@ void ResumeRewrite(google::cloud::storage_experimental::AsyncClient& client,
                   std::string object_name,
                   std::string destination_name) -> g::future<std::string> {
     // First start a rewrite. In this example we will limit the number of bytes
-    // rewritten by each iteration to capture and resume the
+    // rewritten by each iteration to capture then token and resume the rewrite
+    // later.
     auto [rewriter, token] = client.StartRewrite(
         bucket_name, object_name, bucket_name, destination_name,
         gcs::MaxBytesRewrittenPerCall(1024 * 1024));
