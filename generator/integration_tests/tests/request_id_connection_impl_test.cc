@@ -20,7 +20,6 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
-#include <set>
 #include <string>
 #include <utility>
 
@@ -97,8 +96,18 @@ auto WithRequestId(std::string expected) {
 template <typename Request>
 auto WithoutRequestId() {
   return ResultOf(
-      "request does not have request_id",
+      "request has empty request_id",
       [](Request const& request) { return request.request_id(); }, IsEmpty());
+}
+
+template <typename Request>
+auto RequestIdIsUuidV4() {
+  using ::testing::ContainsRegex;
+  return ResultOf(
+      "request has request_id in UUIDV4 format",
+      [](Request const& request) { return request.request_id(); },
+      ContainsRegex(
+          "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
 }
 
 auto MakeTestConnection(
@@ -109,9 +118,14 @@ auto MakeTestConnection(
       std::move(background), std::move(stub), std::move(options));
 }
 
+Status TransientError() {
+  return Status(StatusCode::kUnavailable, "try-again");
+}
+
 TEST(RequestIdTest, UnaryRpc) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
-  EXPECT_CALL(*mock, CreateFoo(_, WithoutRequestId<CreateFooRequest>()))
+  EXPECT_CALL(*mock, CreateFoo(_, RequestIdIsUuidV4<CreateFooRequest>()))
+      .WillOnce(Return(TransientError()))
       .WillOnce(Return(Foo{}));
 
   auto connection = MakeTestConnection(mock);
@@ -125,6 +139,7 @@ TEST(RequestIdTest, UnaryRpcExplicit) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
   EXPECT_CALL(*mock,
               CreateFoo(_, WithRequestId<CreateFooRequest>("test-request-id")))
+      .WillOnce(Return(TransientError()))
       .WillOnce(Return(Foo{}));
 
   auto connection = MakeTestConnection(mock);
@@ -137,7 +152,10 @@ TEST(RequestIdTest, UnaryRpcExplicit) {
 
 TEST(RequestIdTest, AsyncUnaryRpc) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
-  EXPECT_CALL(*mock, AsyncCreateFoo(_, _, WithoutRequestId<CreateFooRequest>()))
+  EXPECT_CALL(*mock,
+              AsyncCreateFoo(_, _, RequestIdIsUuidV4<CreateFooRequest>()))
+      .WillOnce(
+          Return(ByMove(make_ready_future(StatusOr<Foo>(TransientError())))))
       .WillOnce(Return(ByMove(make_ready_future(make_status_or(Foo{})))));
 
   auto connection = MakeTestConnection(mock);
@@ -152,6 +170,8 @@ TEST(RequestIdTest, AsyncUnaryRpcExplicit) {
   EXPECT_CALL(
       *mock,
       AsyncCreateFoo(_, _, WithRequestId<CreateFooRequest>("test-request-id")))
+      .WillOnce(
+          Return(ByMove(make_ready_future(StatusOr<Foo>(TransientError())))))
       .WillOnce(Return(ByMove(make_ready_future(make_status_or(Foo{})))));
 
   auto connection = MakeTestConnection(mock);
@@ -165,7 +185,9 @@ TEST(RequestIdTest, AsyncUnaryRpcExplicit) {
 TEST(RequestIdTest, Lro) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
   EXPECT_CALL(*mock,
-              AsyncRenameFoo(_, _, _, WithoutRequestId<RenameFooRequest>()))
+              AsyncRenameFoo(_, _, _, RequestIdIsUuidV4<RenameFooRequest>()))
+      .WillOnce(Return(ByMove(make_ready_future(
+          StatusOr<google::longrunning::Operation>(TransientError())))))
       .WillOnce(Return(ByMove(make_ready_future(
           make_status_or(google::longrunning::Operation{})))));
   EXPECT_CALL(*mock, AsyncGetOperation).WillOnce([] {
@@ -188,6 +210,8 @@ TEST(RequestIdTest, LroExplicit) {
       *mock, AsyncRenameFoo(_, _, _,
                             WithRequestId<RenameFooRequest>("test-request-id")))
       .WillOnce(Return(ByMove(make_ready_future(
+          StatusOr<google::longrunning::Operation>(TransientError())))))
+      .WillOnce(Return(ByMove(make_ready_future(
           make_status_or(google::longrunning::Operation{})))));
   EXPECT_CALL(*mock, AsyncGetOperation).WillOnce([] {
     google::longrunning::Operation result;
@@ -206,17 +230,17 @@ TEST(RequestIdTest, LroExplicit) {
 
 TEST(RequestIdTest, Pagination) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
-  std::set<std::string> sequence_ids;
+  std::vector<std::string> sequence_ids;
   EXPECT_CALL(*mock, ListFoos(_, WithoutRequestId<ListFoosRequest>()))
       .WillOnce([&](auto&, auto const& request) {
-        sequence_ids.insert(request.request_id());
+        sequence_ids.push_back(request.request_id());
         ListFoosResponse response;
         response.add_foos()->set_name("name-0");
         response.set_next_page_token("test-token-0");
         return response;
       })
       .WillOnce([&](auto&, auto const& request) {
-        sequence_ids.insert(request.request_id());
+        sequence_ids.push_back(request.request_id());
         ListFoosResponse response;
         response.add_foos()->set_name("name-1");
         return response;
@@ -234,26 +258,23 @@ TEST(RequestIdTest, Pagination) {
   };
   EXPECT_THAT(results, ElementsAre(IsOkAndHolds(with_name("name-0")),
                                    IsOkAndHolds(with_name("name-1"))));
-  EXPECT_THAT(sequence_ids, ElementsAre(IsEmpty()));
+  EXPECT_THAT(sequence_ids, ElementsAre(IsEmpty(), IsEmpty()));
 }
 
 TEST(RequestIdTest, PaginationExplicit) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
-  std::set<std::string> sequence_ids;
-  ::testing::InSequence sequence;
+  std::vector<std::string> sequence_ids;
   EXPECT_CALL(*mock,
               ListFoos(_, WithRequestId<ListFoosRequest>("test-request-id")))
       .WillOnce([&](auto&, auto const& request) {
-        sequence_ids.insert(request.request_id());
+        sequence_ids.push_back(request.request_id());
         ListFoosResponse response;
         response.add_foos()->set_name("name-0");
         response.set_next_page_token("test-token-0");
         return response;
-      });
-  EXPECT_CALL(*mock,
-              ListFoos(_, WithRequestId<ListFoosRequest>("test-request-id")))
+      })
       .WillOnce([&](auto&, auto const& request) {
-        sequence_ids.insert(request.request_id());
+        sequence_ids.push_back(request.request_id());
         ListFoosResponse response;
         response.add_foos()->set_name("name-1");
         return response;
@@ -272,7 +293,7 @@ TEST(RequestIdTest, PaginationExplicit) {
   };
   EXPECT_THAT(results, ElementsAre(IsOkAndHolds(with_name("name-0")),
                                    IsOkAndHolds(with_name("name-1"))));
-  EXPECT_THAT(sequence_ids, ElementsAre("test-request-id"));
+  EXPECT_THAT(sequence_ids, ElementsAre("test-request-id", "test-request-id"));
 }
 
 }  // namespace
