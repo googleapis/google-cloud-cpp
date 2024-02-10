@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:private"])
-
-licenses(["notice"])  # Apache 2.0
-
 load(
     "@com_google_googleapis_imports//:imports.bzl",
     "cc_grpc_library",
     "cc_proto_library",
 )
+
+package(default_visibility = ["//visibility:private"])
+
+licenses(["notice"])  # Apache 2.0
 
 # This library defines main(). It's declared as a library so it can be part of
 # a cc_test and cc_binary target.

@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":spanner_client_benchmark_programs.bzl", "spanner_client_benchmark_programs")
+load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks_hdrs", "spanner_client_benchmarks_srcs")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks_hdrs", "spanner_client_benchmarks_srcs")
-load(":spanner_client_benchmark_programs.bzl", "spanner_client_benchmark_programs")
 
 cc_library(
     name = "spanner_client_benchmarks",

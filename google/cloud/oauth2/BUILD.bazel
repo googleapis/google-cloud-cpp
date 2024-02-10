@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":google_cloud_cpp_oauth2.bzl", "google_cloud_cpp_oauth2_hdrs", "google_cloud_cpp_oauth2_srcs")
+load(":google_cloud_cpp_oauth2_unit_tests.bzl", "google_cloud_cpp_oauth2_unit_tests")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-load(":google_cloud_cpp_oauth2_unit_tests.bzl", "google_cloud_cpp_oauth2_unit_tests")
-load(":google_cloud_cpp_oauth2.bzl", "google_cloud_cpp_oauth2_hdrs", "google_cloud_cpp_oauth2_srcs")
 
 filegroup(
     name = "public_hdrs",

@@ -12,15 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":google_cloud_cpp_spanner.bzl", "google_cloud_cpp_spanner_hdrs", "google_cloud_cpp_spanner_srcs")
+load(":google_cloud_cpp_spanner_mocks.bzl", "google_cloud_cpp_spanner_mocks_hdrs")
+load(":google_cloud_cpp_spanner_rest.bzl", "google_cloud_cpp_spanner_rest_hdrs", "google_cloud_cpp_spanner_rest_srcs")
+load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks")
+load(":spanner_client_testing.bzl", "spanner_client_testing_hdrs", "spanner_client_testing_srcs")
+load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-load(":google_cloud_cpp_spanner.bzl", "google_cloud_cpp_spanner_hdrs", "google_cloud_cpp_spanner_srcs")
-load(":google_cloud_cpp_spanner_rest.bzl", "google_cloud_cpp_spanner_rest_hdrs", "google_cloud_cpp_spanner_rest_srcs")
-load(":google_cloud_cpp_spanner_mocks.bzl", "google_cloud_cpp_spanner_mocks_hdrs")
-load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
-load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks")
 
 filegroup(
     name = "public_hdrs",
@@ -89,8 +90,6 @@ cc_library(
         "@com_google_googletest//:gtest_main",
     ],
 )
-
-load(":spanner_client_testing.bzl", "spanner_client_testing_hdrs", "spanner_client_testing_srcs")
 
 cc_library(
     name = "spanner_client_testing_private",

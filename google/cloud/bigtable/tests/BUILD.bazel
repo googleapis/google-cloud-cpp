@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:private"])
-
-licenses(["notice"])  # Apache 2.0
-
 load(
     ":bigtable_client_integration_tests.bzl",
     "bigtable_client_integration_tests",
 )
+
+package(default_visibility = ["//visibility:private"])
+
+licenses(["notice"])  # Apache 2.0
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),

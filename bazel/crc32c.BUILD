@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@bazel_skylib//lib:selects.bzl", "selects")
+load(":configure_template.bzl", "configure_template")
+
 package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # BSD
-
-load(":configure_template.bzl", "configure_template")
-load("@bazel_skylib//lib:selects.bzl", "selects")
 
 crc32c_arm64_HDRS = [
     "src/crc32c_arm64.h",

@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:private"])
-
-licenses(["notice"])  # Apache 2.0
-
 load(
     "@com_google_googleapis_imports//:imports.bzl",
     "cc_grpc_library",
     "cc_proto_library",
 )
 load("@rules_proto//proto:defs.bzl", "proto_library")
+
+package(default_visibility = ["//visibility:private"])
+
+licenses(["notice"])  # Apache 2.0
 
 # Defines an interface for driving Cloud Bigtable client bindings, as
 # implemented in different languages.

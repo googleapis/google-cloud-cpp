@@ -14,10 +14,8 @@
 
 """Load dependencies needed to compile and test the google-cloud-cpp library."""
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
-load("//bazel:workspace0.bzl", "gl_cpp_workspace0")
 load("//bazel:development0.bzl", "gl_cpp_development0")
+load("//bazel:workspace0.bzl", "gl_cpp_workspace0")
 
 google_cloud_cpp_development_deps = gl_cpp_development0
 google_cloud_cpp_deps = gl_cpp_workspace0
