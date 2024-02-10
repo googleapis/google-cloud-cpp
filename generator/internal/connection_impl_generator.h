@@ -50,9 +50,9 @@ class ConnectionImplGenerator : public ServiceCodeGenerator {
       google::protobuf::MethodDescriptor const& method);
   static std::string AsyncMethodDeclaration(
       google::protobuf::MethodDescriptor const& method);
-  static std::string MethodDefinition(
+  std::string MethodDefinition(
       google::protobuf::MethodDescriptor const& method);
-  static std::string AsyncMethodDefinition(
+  std::string AsyncMethodDefinition(
       google::protobuf::MethodDescriptor const& method);
 };
 

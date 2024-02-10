@@ -30,11 +30,15 @@ TEST(RequestIdIdempotency, CreateFoo) {
   auto policy = MakeDefaultRequestIdServiceConnectionIdempotencyPolicy();
   CreateFooRequest request;
   EXPECT_EQ(policy->CreateFoo(request), Idempotency::kNonIdempotent);
+  request.set_request_id("test-request-id");
+  EXPECT_EQ(policy->CreateFoo(request), Idempotency::kIdempotent);
 }
 
 TEST(RequestIdIdempotency, ListFoos) {
   auto policy = MakeDefaultRequestIdServiceConnectionIdempotencyPolicy();
   ListFoosRequest request;
+  EXPECT_EQ(policy->ListFoos(request), Idempotency::kNonIdempotent);
+  request.set_request_id("test-request-id");
   EXPECT_EQ(policy->ListFoos(request), Idempotency::kNonIdempotent);
 }
 
@@ -42,6 +46,8 @@ TEST(RequestIdIdempotency, RenameFoo) {
   auto policy = MakeDefaultRequestIdServiceConnectionIdempotencyPolicy();
   RenameFooRequest request;
   EXPECT_EQ(policy->RenameFoo(request), Idempotency::kNonIdempotent);
+  request.set_request_id("test-request-id");
+  EXPECT_EQ(policy->RenameFoo(request), Idempotency::kIdempotent);
 }
 
 }  // namespace

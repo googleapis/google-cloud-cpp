@@ -16,7 +16,6 @@ syntax = "proto3";
 
 package google.test.requestid.v1;
 
-import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
 import "google/api/field_info.proto";
