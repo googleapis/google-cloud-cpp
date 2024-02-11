@@ -27,7 +27,7 @@ DefaultRowReader::DefaultRowReader(
     std::string table_name, bigtable::RowSet row_set, std::int64_t rows_limit,
     bigtable::Filter filter, bool reverse,
     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy, bool use_server_retry_info,
+    std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     Sleeper sleeper)
     : stub_(std::move(stub)),
       app_profile_id_(std::move(app_profile_id)),
@@ -38,7 +38,7 @@ DefaultRowReader::DefaultRowReader(
       reverse_(reverse),
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)),
-      use_server_retry_info_(use_server_retry_info),
+      enable_server_retries_(enable_server_retries),
       sleeper_(std::move(sleeper)) {}
 
 void DefaultRowReader::MakeRequest() {
@@ -128,7 +128,7 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
     // If we receive an error, but the retryable set is empty, stop.
     if (row_set_.IsEmpty()) return Status{};
 
-    auto delay = BackoffOrBreak(use_server_retry_info_, status, *retry_policy_,
+    auto delay = BackoffOrBreak(enable_server_retries_, status, *retry_policy_,
                                 *backoff_policy_);
     if (!delay) return status;
     sleeper_(*delay);
