@@ -174,7 +174,7 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
   while (true) {
-    auto status = mutator.MakeOneRequest(*stub_, *limiter_);
+    auto status = mutator.MakeOneRequest(*stub_, *limiter_, *current);
     if (!mutator.HasPendingMutations()) break;
     if (!retry) retry = retry_policy(*current);
     if (!retry->OnFailure(status)) break;
