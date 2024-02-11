@@ -21,11 +21,11 @@
 #include "google/cloud/storage/async/rewriter_connection.h"
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/hash_function.h"
-#include "google/cloud/storage/internal/invocation_id_generator.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/invocation_id_generator.h"
 #include "google/cloud/version.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
@@ -120,7 +120,7 @@ class AsyncConnectionImpl
   std::shared_ptr<GrpcChannelRefresh> refresh_;
   std::shared_ptr<StorageStub> stub_;
   Options options_;
-  storage::internal::InvocationIdGenerator invocation_id_generator_;
+  google::cloud::internal::InvocationIdGenerator invocation_id_generator_;
 };
 
 /// Create a connection and the default stub.

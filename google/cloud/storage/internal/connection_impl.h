@@ -17,10 +17,10 @@
 
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/generic_stub.h"
-#include "google/cloud/storage/internal/invocation_id_generator.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/invocation_id_generator.h"
 #include <string>
 
 namespace google {
@@ -173,7 +173,7 @@ class StorageConnectionImpl
   std::unique_ptr<storage_internal::GenericStub> stub_;
   Options options_;
   ClientOptions client_options_;  // For backwards compatibility
-  InvocationIdGenerator invocation_id_generator_;
+  google::cloud::internal::InvocationIdGenerator invocation_id_generator_;
 };
 
 }  // namespace internal
