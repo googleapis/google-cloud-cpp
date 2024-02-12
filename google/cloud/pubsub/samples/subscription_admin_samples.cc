@@ -371,10 +371,7 @@ void UpdateDeadLetterSubscription(
     request.mutable_subscription()
         ->mutable_dead_letter_policy()
         ->set_max_delivery_attempts(dead_letter_delivery_attempts);
-    *request.mutable_update_mask()->add_paths() =
-        "subscription.dead_letter_policy.dead_letter_topic";
-    *request.mutable_update_mask()->add_paths() =
-        "subscription.dead_letter_policy.max_delivery_attempts";
+    *request.mutable_update_mask()->add_paths() = "dead_letter_policy";
     auto sub = client.UpdateSubscription(request);
     if (!sub) throw std::move(sub).status();
 
@@ -651,10 +648,11 @@ void SeekWithTimestamp(
     google::pubsub::v1::SeekRequest request;
     request.set_subscription(
         pubsub::Subscription(project_id, subscription_id).FullName());
-request.mutable_time()->set_seconds(
-    std::chrono::duration_cast<std::chrono::seconds>(
-        std::chrono::system_clock::now().time_since_epoch()
-    ).count() - std::stoi(seconds));
+    request.mutable_time()->set_seconds(
+        std::chrono::duration_cast<std::chrono::seconds>(
+            std::chrono::system_clock::now().time_since_epoch())
+            .count() -
+        std::stoi(seconds));
     auto response = client.Seek(request);
     if (!response.ok()) throw std::move(response).status();
 
