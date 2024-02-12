@@ -462,7 +462,6 @@ void ListSubscriptions(
     std::vector<std::string> const& argv) {
   //! [START pubsub_list_subscriptions] [list-subscriptions]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
-  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id) {
     int count = 0;
@@ -559,7 +558,7 @@ void UpdateSnapshot(google::cloud::pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id, std::string snapshot_id) {
     google::pubsub::v1::UpdateSnapshotRequest request;
     request.mutable_snapshot()->set_name(
-        pubsub::Snapshot(project_id, snapshot_id).FullName());
+        pubsub::Snapshot(project_id, std::move(snapshot_id)).FullName());
     (*request.mutable_snapshot()->mutable_labels())["samples-cpp"] = "gcp";
     *request.mutable_update_mask()->add_paths() = "labels";
 
@@ -577,7 +576,6 @@ void ListSnapshots(google::cloud::pubsub_admin::SubscriptionAdminClient client,
                    std::vector<std::string> const& argv) {
   //! [list-snapshots]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
-  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id) {
     std::cout << "Snapshot list for project " << project_id << ":\n";

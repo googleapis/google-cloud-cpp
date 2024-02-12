@@ -2687,9 +2687,14 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   using ::google::cloud::pubsub::examples::CreatePublisherCommand;
   using ::google::cloud::pubsub::examples::CreateSchemaServiceCommand;
   using ::google::cloud::pubsub::examples::CreateSubscriberCommand;
+  using ::google::cloud::pubsub::examples::CreateSubscriptionAdminCommand;
   using ::google::cloud::testing_util::Example;
 
   Example example({
+      CreateSubscriptionAdminCommand(
+          "create-bigquery-subscription",
+          {"project-id", "topic-id", "subscription-id", "table-id"},
+          CreateBigQuerySubscription),
       CreatePublisherCommand("publish-avro-records", {}, PublishAvroRecords),
       CreateSubscriberCommand("subscribe-avro-records", {},
                               SubscribeAvroRecords),
