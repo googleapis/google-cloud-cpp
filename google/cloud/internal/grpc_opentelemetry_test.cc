@@ -105,6 +105,7 @@ TEST(OpenTelemetry, InjectTraceContextGrpc) {
 }
 
 TEST(OpenTelemetry, EndSpan) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
 
   grpc::ClientContext context;
@@ -135,7 +136,8 @@ TEST(OpenTelemetry, EndSpan) {
                                          "identity"),
               // It is too hard to mock a `grpc::ClientContext`. We will
               // just check that the expected attribute key is set.
-              OTelAttribute<std::string>("grpc.peer", _)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<std::string>(sc::kServerAddress, _)))));
 }
 
 TEST(OpenTelemetry, EndSpanFuture) {

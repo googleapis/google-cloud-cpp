@@ -74,19 +74,33 @@ class GrpcClientCarrier
 };
 
 // We translate some keys, and modify binary values to be printable.
-std::pair<std::string, std::string> MakeAttribute(
+std::map<std::string, std::string> MakeAttributes(
     std::pair<std::string, std::string> kv) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  std::map<std::string, std::string> result;
   if (kv.first == ":grpc-context-peer") {
     // TODO(#10489): extract IP version, IP address, port from peer URI.
     // https://github.com/grpc/grpc/blob/master/src/core/lib/address_utils/parse_address.h
-    return {"grpc.peer", std::move(kv.second)};
+    // This is a hack-y solution until gRPC provides a way to parse the address:
+    // https://github.com/grpc/grpc/issues/35885
+    // The address should be in the format: host [ ":" port ]
+    size_t offset = kv.second.find(':');
+    if (offset == std::string::npos || offset == 0) {
+      result.insert({sc::kServerAddress, kv.second});
+    } else {
+      result.insert({sc::kServerAddress, kv.second.substr(0, offset)});
+    }
+    result.insert({"grpc.peer", std::move(kv.second)});
+    return result;
   }
   if (kv.first == ":grpc-context-compression-algorithm") {
-    return {"grpc.compression_algorithm", std::move(kv.second)};
+    result.insert({"grpc.compression_algorithm", std::move(kv.second)});
+    return result;
   }
   if (!absl::EndsWith(kv.first, "-bin")) {
-    return {"rpc.grpc.response.metadata." + std::move(kv.first),
-            std::move(kv.second)};
+    result.insert({"rpc.grpc.response.metadata." + std::move(kv.first),
+                   std::move(kv.second)});
+    return result;
   }
 
   // The header is in binary format. OpenTelemetry does not really support byte
@@ -100,8 +114,9 @@ std::pair<std::string, std::string> MakeAttribute(
     value.push_back(kDigits[(c >> 4) & 0xf]);
     value.push_back(kDigits[c & 0xf]);
   }
-  return {"rpc.grpc.response.metadata." + std::move(kv.first),
-          std::move(value)};
+  result.insert(
+      {"rpc.grpc.response.metadata." + std::move(kv.first), std::move(value)});
+  return result;
 }
 
 }  // namespace
@@ -136,12 +151,14 @@ void ExtractAttributes(grpc::ClientContext& context,
                        opentelemetry::trace::Span& span) {
   auto md = GetRequestMetadataFromContext(context);
   for (auto& kv : md.headers) {
-    auto p = MakeAttribute(std::move(kv));
-    span.SetAttribute(p.first, p.second);
+    for (auto const& pkv : MakeAttributes(std::move(kv))) {
+      span.SetAttribute(pkv.first, pkv.second);
+    }
   }
   for (auto& kv : md.trailers) {
-    auto p = MakeAttribute(std::move(kv));
-    span.SetAttribute(p.first, p.second);
+    for (auto const& pkv : MakeAttributes(std::move(kv))) {
+      span.SetAttribute(pkv.first, pkv.second);
+    }
   }
 }
 
