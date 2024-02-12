@@ -42,11 +42,13 @@ std::string RandomSubscriptionId(
   // our tests 32 characters is long enough.
   //    https://cloud.google.com/pubsub/docs/admin#resource_names
   auto constexpr kMaxRandomSubscriptionSuffixLength = 32;
+  auto now = std::chrono::system_clock::now();
+  std::string date = google::cloud::internal::FormatUtcDate(now);
   auto suffix = google::cloud::internal::Sample(
       generator, kMaxRandomSubscriptionSuffixLength,
       "abcdefghijklmnopqrstuvwxyz");
   auto p = prefix.empty() ? "cloud-cpp" : prefix;
-  return p + "-" + suffix;
+  return p + "-" + date + "-" + suffix;
 }
 
 std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator,
