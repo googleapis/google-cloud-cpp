@@ -30,6 +30,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Performs topic admin operations in Cloud Pub/Sub.
  *
+ * @deprecated Please use #google::cloud::pubsub_admin::TopicAdminClient
+ *     and #google::cloud::pubsub_admin::TopicAdminClient instead.
+ *
  * Applications use this class to perform operations on
  * [Cloud Pub/Sub][pubsub-doc-link].
  *

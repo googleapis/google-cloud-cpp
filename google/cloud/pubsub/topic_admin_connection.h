@@ -73,6 +73,9 @@ using ListTopicSnapshotsRange =
 /**
  * A connection to Cloud Pub/Sub for topic-related administrative operations.
  *
+ * @deprecated Please use #google::cloud::pubsub_admin::SubscriptionAdminClient
+ *     and #google::cloud::pubsub_admin::SubscriptionAdminClient instead.
+ *
  * This interface defines pure-virtual functions for each of the user-facing
  * overload sets in `TopicAdminClient`. That is, all of `TopicAdminClient`'s
  * overloads will forward to the one pure-virtual function declared in this
