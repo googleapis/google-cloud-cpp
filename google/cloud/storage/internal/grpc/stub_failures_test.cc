@@ -45,6 +45,11 @@ class GrpcClientFailuresTest
         client_(
             storage_experimental::DefaultGrpcClient(TestOptions(GetParam()))) {}
 
+  void SetUp() override {
+    // Older versions of gRPC flake on this test, see #13114.
+    if (grpc::Version() < "1.60.0") GTEST_SKIP();
+  }
+
   static Options TestOptions(std::string const& plugin_config) {
     using us = std::chrono::microseconds;
     return Options{}
