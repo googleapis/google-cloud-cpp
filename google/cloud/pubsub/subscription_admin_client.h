@@ -31,8 +31,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Performs subscription administrative operations in Cloud Pub/Sub.
  *
- * @deprecated Please use #google::cloud::pubsub_admin::SubscriptionAdminClient
- *     and #google::cloud::pubsub_admin::SubscriptionAdminClient instead.
+ * @deprecated Please use \ref
+ * google::cloud::pubsub_admin::SubscriptionAdminClient and \ref
+ * google::cloud::pubsub_admin::SubscriptionAdminClient instead.
  *
  * Applications use this class to perform subscription administrative operations
  * on [Cloud Pub/Sub][pubsub-doc-link].
