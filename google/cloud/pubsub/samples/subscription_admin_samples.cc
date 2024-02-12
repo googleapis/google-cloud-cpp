@@ -63,13 +63,12 @@ void CleanupSubscriptions(
   for (auto const& subscription : client.ListSubscriptions(
            google::cloud::Project(project_id).FullName())) {
     if (!subscription) continue;
-    std::string const keyword = "cloud-cpp-samples";
-    if (!absl::StrContains(subscription->name(), keyword)) continue;
+    std::string const keyword = "cloud-cpp-samples-";
+    auto iter = subscription->name().find(keyword);
+    if (iter == std::string::npos) continue;
     // Extract the date from the resource name which is in the format
     // `*-cloud-cpp-samples-YYYY-MM-DD-`.
-    auto date = subscription->name().substr(
-        subscription->name().find(keyword) + keyword.size() + 1, 10);
-
+    auto date = subscription->name().substr(iter + keyword.size(), 10);
     absl::CivilDay day;
     if (absl::ParseCivilTime(date, &day) &&
         absl::FromCivil(day, absl::UTCTimeZone()) <
@@ -438,7 +437,7 @@ void AutoRun(std::vector<std::string> const& argv) {
         }
       };
 
-  // Delete subscriptions over 3 days old.
+  // Delete subscriptions over 36 hours old.
   CleanupSubscriptions(subscription_admin_client, project_id,
                        absl::FromChrono(std::chrono::system_clock::now()));
 
