@@ -2687,80 +2687,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   using ::google::cloud::pubsub::examples::CreatePublisherCommand;
   using ::google::cloud::pubsub::examples::CreateSchemaServiceCommand;
   using ::google::cloud::pubsub::examples::CreateSubscriberCommand;
-  using ::google::cloud::pubsub::examples::CreateSubscriptionAdminCommand;
-  using ::google::cloud::pubsub::examples::CreateTopicAdminCommand;
   using ::google::cloud::testing_util::Example;
 
   Example example({
-      CreateSubscriptionAdminCommand(
-          "create-filtered-subscription",
-          {"project-id", "topic-id", "subscription-id"},
-          CreateFilteredSubscription),
-      CreateSubscriptionAdminCommand(
-          "create-subscription-with-exactly-once-delivery",
-          {"project-id", "topic-id", "subscription-id"},
-          CreateSubscriptionWithExactlyOnceDelivery),
-      CreateSubscriptionAdminCommand(
-          "create-push-subscription",
-          {"project-id", "topic-id", "subscription-id", "endpoint"},
-          CreatePushSubscription),
-      CreateSubscriptionAdminCommand(
-          "create-unwrapped-push-subscription",
-          {"project-id", "topic-id", "subscription-id", "endpoint"},
-          CreateUnwrappedPushSubscription),
-      CreateSubscriptionAdminCommand(
-          "create-bigquery-subscription",
-          {"project-id", "topic-id", "subscription-id", "table-id"},
-          CreateBigQuerySubscription),
-      CreateSubscriptionAdminCommand(
-          "create-cloud-storage-subscription",
-          {"project-id", "topic-id", "subscription-id", "bucket"},
-          CreateCloudStorageSubscription),
-      CreateSubscriptionAdminCommand(
-          "create-ordering-subscription",
-          {"project-id", "topic-id", "subscription-id"},
-          CreateOrderingSubscription),
-      CreateSubscriptionAdminCommand(
-          "create-dead-letter-subscription",
-          {"project-id", "topic-id", "subscription-id", "dead-letter-topic-id",
-           "dead-letter-delivery-attempts"},
-          CreateDeadLetterSubscription),
-      CreateSubscriptionAdminCommand(
-          "update-dead-letter-subscription",
-          {"project-id", "subscription-id", "dead-letter-topic-id",
-           "dead-letter-delivery-attempts"},
-          UpdateDeadLetterSubscription),
-      CreateSubscriptionAdminCommand("remove-dead-letter-policy",
-                                     {"project-id", "subscription-id"},
-                                     RemoveDeadLetterPolicy),
-      CreateSubscriptionAdminCommand("get-subscription",
-                                     {"project-id", "subscription-id"},
-                                     GetSubscription),
-      CreateSubscriptionAdminCommand("update-subscription",
-                                     {"project-id", "subscription-id"},
-                                     UpdateSubscription),
-      CreateSubscriptionAdminCommand("list-subscriptions", {"project-id"},
-                                     ListSubscriptions),
-      CreateSubscriptionAdminCommand(
-          "modify-push-config", {"project-id", "subscription-id", "endpoint"},
-          ModifyPushConfig),
-      CreateSubscriptionAdminCommand(
-          "create-snapshot", {"project-id", "subscription-id", "snapshot-id"},
-          CreateSnapshot),
-      CreateSubscriptionAdminCommand(
-          "get-snapshot", {"project-id", "snapshot-id"}, GetSnapshot),
-      CreateSubscriptionAdminCommand(
-          "update-snapshot", {"project-id", "snapshot-id"}, UpdateSnapshot),
-      CreateSubscriptionAdminCommand("list-snapshots", {"project-id"},
-                                     ListSnapshots),
-      CreateSubscriptionAdminCommand(
-          "delete-snapshot", {"project-id", "snapshot-id"}, DeleteSnapshot),
-      CreateSubscriptionAdminCommand(
-          "seek-with-snapshot",
-          {"project-id", "subscription-id", "snapshot-id"}, SeekWithSnapshot),
-      CreateSubscriptionAdminCommand(
-          "seek-with-timestamp", {"project-id", "subscription-id", "seconds"},
-          SeekWithTimestamp),
       CreatePublisherCommand("publish-avro-records", {}, PublishAvroRecords),
       CreateSubscriberCommand("subscribe-avro-records", {},
                               SubscribeAvroRecords),
