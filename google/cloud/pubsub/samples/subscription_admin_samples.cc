@@ -372,9 +372,9 @@ void UpdateDeadLetterSubscription(
         ->mutable_dead_letter_policy()
         ->set_max_delivery_attempts(dead_letter_delivery_attempts);
     *request.mutable_update_mask()->add_paths() =
-        "dead_letter_policy.dead_letter_topic";
+        "subscription.dead_letter_policy.dead_letter_topic";
     *request.mutable_update_mask()->add_paths() =
-        "dead_letter_policy.max_delivery_attempts";
+        "subscription.dead_letter_policy.max_delivery_attempts";
     auto sub = client.UpdateSubscription(request);
     if (!sub) throw std::move(sub).status();
 
