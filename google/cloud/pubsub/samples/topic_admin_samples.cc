@@ -84,8 +84,8 @@ google::cloud::testing_util::Commands::value_type CreateTopicAdminCommand(
 
 void CreateTopic(google::cloud::pubsub_admin::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
-  //! [START pubsub_quickstart_create_topic]
-  //! [START pubsub_create_topic]
+  // [START pubsub_quickstart_create_topic]
+  // [START pubsub_create_topic]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
@@ -102,14 +102,14 @@ void CreateTopic(google::cloud::pubsub_admin::TopicAdminClient client,
     std::cout << "The topic was successfully created: " << topic->DebugString()
               << "\n";
   }
-  //! [END pubsub_create_topic]
-  //! [END pubsub_quickstart_create_topic]
+  // [END pubsub_create_topic]
+  // [END pubsub_quickstart_create_topic]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
 void CreateTopicWithSchema(google::cloud::pubsub_admin::TopicAdminClient client,
                            std::vector<std::string> const& argv) {
-  //! [START pubsub_create_topic_with_schema]
+  // [START pubsub_create_topic_with_schema]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
@@ -133,14 +133,14 @@ void CreateTopicWithSchema(google::cloud::pubsub_admin::TopicAdminClient client,
     std::cout << "The topic was successfully created: " << topic->DebugString()
               << "\n";
   }
-  //! [END pubsub_create_topic_with_schema]
+  // [END pubsub_create_topic_with_schema]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void CreateTopicWithSchemaRevisions(
     google::cloud::pubsub_admin::TopicAdminClient client,
     std::vector<std::string> const& argv) {
-  //! [START pubsub_create_topic_with_schema_revisions]
+  // [START pubsub_create_topic_with_schema_revisions]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
@@ -169,14 +169,13 @@ void CreateTopicWithSchemaRevisions(
     std::cout << "The topic was successfully created: " << topic->DebugString()
               << "\n";
   }
-  //! [END pubsub_create_topic_with_schema_revisions]
+  // [END pubsub_create_topic_with_schema_revisions]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
    argv.at(4), argv.at(5));
 }
 
 void GetTopic(google::cloud::pubsub_admin::TopicAdminClient client,
               std::vector<std::string> const& argv) {
-  //! [get-topic]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
@@ -188,13 +187,11 @@ void GetTopic(google::cloud::pubsub_admin::TopicAdminClient client,
     std::cout << "The topic information was successfully retrieved: "
               << topic->DebugString() << "\n";
   }
-  //! [get-topic]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
 void UpdateTopic(google::cloud::pubsub_admin::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
-  //! [update-topic]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
@@ -211,13 +208,12 @@ void UpdateTopic(google::cloud::pubsub_admin::TopicAdminClient client,
     std::cout << "The topic was successfully updated: " << topic->DebugString()
               << "\n";
   }
-  //! [update-topic]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
 void UpdateTopicSchema(google::cloud::pubsub_admin::TopicAdminClient client,
                        std::vector<std::string> const& argv) {
-  //! [START pubsub_update_topic_schema]
+  // [START pubsub_update_topic_schema]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
@@ -242,14 +238,13 @@ void UpdateTopicSchema(google::cloud::pubsub_admin::TopicAdminClient client,
     std::cout << "The topic was successfully updated: " << topic->DebugString()
               << "\n";
   }
-  //! [END pubsub_update_topic_schema]
+  // [END pubsub_update_topic_schema]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void ListTopics(google::cloud::pubsub_admin::TopicAdminClient client,
                 std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topics]
-  //! [list-topics]
+  // [START pubsub_list_topics]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string const& project_id) {
     int count = 0;
@@ -262,16 +257,14 @@ void ListTopics(google::cloud::pubsub_admin::TopicAdminClient client,
       std::cout << "No topics found in project " << project_id << "\n";
     }
   }
-  //! [END pubsub_list_topics]
-  //! [list-topics]
+  // [END pubsub_list_topics]
   (std::move(client), argv.at(0));
 }
 
 void ListTopicSubscriptions(
     google::cloud::pubsub_admin::TopicAdminClient client,
     std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topic_subscriptions]
-  //! [list-topic-subscriptions]
+  // [START pubsub_list_topic_subscriptions]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub_admin::TopicAdminClient client, std::string const& project_id,
@@ -283,14 +276,12 @@ void ListTopicSubscriptions(
       std::cout << "  " << *name << "\n";
     }
   }
-  //! [list-topic-subscriptions]
-  //! [END pubsub_list_topic_subscriptions]
+  // [END pubsub_list_topic_subscriptions]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
 void ListTopicSnapshots(google::cloud::pubsub_admin::TopicAdminClient client,
                         std::vector<std::string> const& argv) {
-  //! [list-topic-snapshots]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
@@ -303,13 +294,12 @@ void ListTopicSnapshots(google::cloud::pubsub_admin::TopicAdminClient client,
       std::cout << "  " << *name << "\n";
     }
   }
-  //! [list-topic-snapshots]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
 void DetachSubscription(google::cloud::pubsub_admin::TopicAdminClient client,
                         std::vector<std::string> const& argv) {
-  //! [START pubsub_detach_subscription] [detach-subscription]
+  // [START pubsub_detach_subscription]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string const& project_id,
@@ -323,14 +313,13 @@ void DetachSubscription(google::cloud::pubsub_admin::TopicAdminClient client,
     std::cout << "The subscription was successfully detached: "
               << response->DebugString() << "\n";
   }
-  //! [END pubsub_detach_subscription] [detach-subscription]
+  // [END pubsub_detach_subscription] 
   (std::move(client), argv.at(0), argv.at(1));
 }
 
 void DeleteTopic(google::cloud::pubsub_admin::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
-  //! [START pubsub_delete_topic]
-  //! [delete-topic]
+  // [START pubsub_delete_topic]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string const& project_id,
@@ -346,8 +335,7 @@ void DeleteTopic(google::cloud::pubsub_admin::TopicAdminClient client,
 
     std::cout << "The topic was successfully deleted\n";
   }
-  //! [delete-topic]
-  //! [END pubsub_delete_topic]
+  // [END pubsub_delete_topic]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
