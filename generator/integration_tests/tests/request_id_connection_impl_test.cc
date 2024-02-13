@@ -164,7 +164,8 @@ TEST(RequestIdTest, AsyncUnaryRpcExplicit) {
 
 TEST(RequestIdTest, Lro) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
-  EXPECT_CALL(*mock, AsyncRenameFoo(_, _, _, WithoutRequestId<RenameFooRequest>()))
+  EXPECT_CALL(*mock,
+              AsyncRenameFoo(_, _, _, WithoutRequestId<RenameFooRequest>()))
       .WillOnce(Return(ByMove(make_ready_future(
           make_status_or(google::longrunning::Operation{})))));
   EXPECT_CALL(*mock, AsyncGetOperation).WillOnce([] {
