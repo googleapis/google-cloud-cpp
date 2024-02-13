@@ -76,7 +76,6 @@ class GrpcClientCarrier
 // We translate some keys, and modify binary values to be printable.
 std::map<std::string, std::string> MakeAttributes(
     std::pair<std::string, std::string> kv) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
   std::map<std::string, std::string> result;
   if (kv.first == ":grpc-context-peer") {
     // TODO(#10489): extract IP version, IP address, port from peer URI.
@@ -86,9 +85,10 @@ std::map<std::string, std::string> MakeAttributes(
     // The address should be in the format: host [ ":" port ]
     size_t offset = kv.second.find(':');
     if (offset == std::string::npos || offset == 0) {
-      result.insert({sc::kServerAddress, kv.second});
+      result.insert({/*sc::kServerAddress=*/"server.address", kv.second});
     } else {
-      result.insert({sc::kServerAddress, kv.second.substr(0, offset)});
+      result.insert({/*sc::kServerAddress=*/"server.address",
+                     kv.second.substr(0, offset)});
     }
     result.insert({"grpc.peer", std::move(kv.second)});
     return result;

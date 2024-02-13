@@ -137,7 +137,8 @@ TEST(OpenTelemetry, EndSpan) {
               // It is too hard to mock a `grpc::ClientContext`. We will
               // just check that the expected attribute key is set.
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<std::string>(sc::kServerAddress, _)))));
+              OTelAttribute<std::string>(
+                  /*sc::kServerAddress=*/"server.address", _)))));
 }
 
 TEST(OpenTelemetry, EndSpanFuture) {
