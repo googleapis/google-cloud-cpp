@@ -186,8 +186,7 @@ void GetTopic(google::cloud::pubsub_admin::TopicAdminClient client,
 
     std::cout << "The topic information was successfully retrieved: "
               << topic->DebugString() << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1));
+  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void UpdateTopic(google::cloud::pubsub_admin::TopicAdminClient client,
@@ -207,8 +206,7 @@ void UpdateTopic(google::cloud::pubsub_admin::TopicAdminClient client,
 
     std::cout << "The topic was successfully updated: " << topic->DebugString()
               << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1));
+  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void UpdateTopicSchema(google::cloud::pubsub_admin::TopicAdminClient client,
@@ -293,8 +291,7 @@ void ListTopicSnapshots(google::cloud::pubsub_admin::TopicAdminClient client,
       if (!name) throw std::move(name).status();
       std::cout << "  " << *name << "\n";
     }
-  }
-  (std::move(client), argv.at(0), argv.at(1));
+  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void DetachSubscription(google::cloud::pubsub_admin::TopicAdminClient client,
@@ -313,7 +310,7 @@ void DetachSubscription(google::cloud::pubsub_admin::TopicAdminClient client,
     std::cout << "The subscription was successfully detached: "
               << response->DebugString() << "\n";
   }
-  // [END pubsub_detach_subscription] 
+  // [END pubsub_detach_subscription]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
