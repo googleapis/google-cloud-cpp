@@ -31,6 +31,7 @@
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
+#include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <array>
@@ -150,7 +151,9 @@ MATCHER_P(HasReturnStats, return_commit_stats, "has return-stats value") {
 }
 
 MATCHER_P(HasMaxCommitDelay, max_commit_delay, "has max commit delay") {
-  return arg.max_commit_delay() == max_commit_delay;
+  return arg.max_commit_delay() ==
+         google::protobuf::util::TimeUtil::MillisecondsToDuration(
+             max_commit_delay.count());
 }
 
 MATCHER(HasBeginTransaction, "has begin TransactionSelector set") {
@@ -2524,9 +2527,10 @@ TEST(ConnectionImplTest, CommitSuccessWithMaxCommitDelay) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   google::spanner::v1::Transaction txn = MakeTestTransaction();
   EXPECT_CALL(*mock, BeginTransaction).WillOnce(Return(txn));
-  EXPECT_CALL(*mock,
-              Commit(_, AllOf(HasSession("test-session-name"),
-                              HasMaxCommitDelay(std::chrono::milliseconds(100))))
+  EXPECT_CALL(
+      *mock,
+      Commit(_, AllOf(HasSession("test-session-name"),
+                      HasMaxCommitDelay(std::chrono::milliseconds(100)))))
       .WillOnce(Return(MakeCommitResponse(
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
               .value(),
