@@ -95,7 +95,7 @@ auto WithRequestId(std::string expected) {
 }
 
 template <typename Request>
-auto WithRequestId() {
+auto WithoutRequestId() {
   return ResultOf(
       "request does not have request_id",
       [](Request const& request) { return request.request_id(); }, IsEmpty());
@@ -111,7 +111,7 @@ auto MakeTestConnection(
 
 TEST(RequestIdTest, UnaryRpc) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
-  EXPECT_CALL(*mock, CreateFoo(_, WithRequestId<CreateFooRequest>()))
+  EXPECT_CALL(*mock, CreateFoo(_, WithoutRequestId<CreateFooRequest>()))
       .WillOnce(Return(Foo{}));
 
   auto connection = MakeTestConnection(mock);
@@ -137,7 +137,7 @@ TEST(RequestIdTest, UnaryRpcExplicit) {
 
 TEST(RequestIdTest, AsyncUnaryRpc) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
-  EXPECT_CALL(*mock, AsyncCreateFoo(_, _, WithRequestId<CreateFooRequest>()))
+  EXPECT_CALL(*mock, AsyncCreateFoo(_, _, WithoutRequestId<CreateFooRequest>()))
       .WillOnce(Return(ByMove(make_ready_future(make_status_or(Foo{})))));
 
   auto connection = MakeTestConnection(mock);
@@ -164,7 +164,7 @@ TEST(RequestIdTest, AsyncUnaryRpcExplicit) {
 
 TEST(RequestIdTest, Lro) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
-  EXPECT_CALL(*mock, AsyncRenameFoo(_, _, _, WithRequestId<RenameFooRequest>()))
+  EXPECT_CALL(*mock, AsyncRenameFoo(_, _, _, WithoutRequestId<RenameFooRequest>()))
       .WillOnce(Return(ByMove(make_ready_future(
           make_status_or(google::longrunning::Operation{})))));
   EXPECT_CALL(*mock, AsyncGetOperation).WillOnce([] {
@@ -206,7 +206,7 @@ TEST(RequestIdTest, LroExplicit) {
 TEST(RequestIdTest, Pagination) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
   std::set<std::string> sequence_ids;
-  EXPECT_CALL(*mock, ListFoos(_, WithRequestId<ListFoosRequest>()))
+  EXPECT_CALL(*mock, ListFoos(_, WithoutRequestId<ListFoosRequest>()))
       .WillOnce([&](auto&, auto const& request) {
         sequence_ids.insert(request.request_id());
         ListFoosResponse response;
