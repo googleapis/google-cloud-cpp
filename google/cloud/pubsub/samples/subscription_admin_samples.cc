@@ -471,6 +471,19 @@ void AutoRun(std::vector<std::string> const& argv) {
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
 
+  auto const table_id = project_id + ":samples.pubsub-subscription";
+  std::cout << "\nRunning CreateBigQuerySubscription() sample" << std::endl;
+  CreateBigQuerySubscription(
+      subscription_admin_client,
+      {project_id, topic_id, bigquery_subscription_id, table_id});
+  cleanup.Defer([subscription_admin_client, project_id,
+                 bigquery_subscription_id]() mutable {
+    std::cout << "\nDelete subscription (" << bigquery_subscription_id << ")"
+              << std::endl;
+    subscription_admin_client.DeleteSubscription(
+        pubsub::Subscription(project_id, bigquery_subscription_id).FullName());
+  });
+
   auto const bucket_id = project_id + "-pubsub-bucket";
   std::cout << "\nRunning CreateCloudStorageSubscription() sample" << std::endl;
   CreateCloudStorageSubscription(
