@@ -719,7 +719,7 @@ for (StatusOr<int> const& v : sr) {
 TEST(Doxygen2Markdown, ParagraphProgramListingAddsNewLine) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
-    <detaileddescription  id='test-node'> 
+    <detaileddescription  id='test-node'>
     <para><simplesect kind="par"><title>Thread-safety</title><para>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating concurrently on the same instance of this class is not guaranteed to work.</para>
 </simplesect>
 <simplesect kind="par"><title>Cost</title><para>Creating a new object of type <computeroutput><ref refid="classgoogle_1_1cloud_1_1bigtable_1_1TableAdmin" kindref="compound">TableAdmin</ref></computeroutput> is comparable to creating a few objects of type <computeroutput>std::string</computeroutput> or a few objects of type <computeroutput>std::shared_ptr&lt;int&gt;</computeroutput>. The class represents a shallow handle to a remote object.</para>
@@ -739,7 +739,7 @@ TEST(Doxygen2Markdown, ParagraphProgramListingAddsNewLine) {
 <codeline><highlight class="normal"></highlight><highlight class="comment">//<sp/>Use<sp/>&quot;metadata&quot;<sp/>as<sp/>a<sp/>smart<sp/>pointer<sp/>here,<sp/>e.g.:</highlight><highlight class="normal"></highlight></codeline>
 <codeline><highlight class="normal">std::cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;The<sp/>full<sp/>table<sp/>name<sp/>is<sp/>&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/>table-&gt;name()<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;<sp/>the<sp/>table<sp/>has<sp/>&quot;</highlight><highlight class="normal"></highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&lt;&lt;<sp/>table-&gt;column_families_size()<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;<sp/>column<sp/>families\n&quot;</highlight><highlight class="normal">;</highlight></codeline>
-</programlisting></para>     </detaileddescription> 
+</programlisting></para>     </detaileddescription>
  </doxygen>)xml";
 
   auto constexpr kExpected = R"md(
