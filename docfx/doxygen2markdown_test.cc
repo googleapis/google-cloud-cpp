@@ -716,6 +716,70 @@ for (StatusOr<int> const& v : sr) {
   EXPECT_EQ(kExpected, os.str());
 }
 
+TEST(Doxygen2Markdown, ParagraphProgramListingAddsNewLine) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+    <detaileddescription  id='test-node'> 
+    <para><simplesect kind="par"><title>Thread-safety</title><para>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating concurrently on the same instance of this class is not guaranteed to work.</para>
+</simplesect>
+<simplesect kind="par"><title>Cost</title><para>Creating a new object of type <computeroutput><ref refid="classgoogle_1_1cloud_1_1bigtable_1_1TableAdmin" kindref="compound">TableAdmin</ref></computeroutput> is comparable to creating a few objects of type <computeroutput>std::string</computeroutput> or a few objects of type <computeroutput>std::shared_ptr&lt;int&gt;</computeroutput>. The class represents a shallow handle to a remote object.</para>
+</simplesect>
+<simplesect kind="par"><title>Error Handling</title><para>This class uses <computeroutput><ref refid="classgoogle_1_1cloud_1_1StatusOr" kindref="compound" external="/workspace/cmake-out/google/cloud/cloud.tag">StatusOr</ref>&lt;T&gt;</computeroutput> to report errors. When an operation fails to perform its work the returned <computeroutput><ref refid="classgoogle_1_1cloud_1_1StatusOr" kindref="compound" external="/workspace/cmake-out/google/cloud/cloud.tag">StatusOr</ref>&lt;T&gt;</computeroutput> contains the error details. If the <computeroutput>ok()</computeroutput> member function in the <computeroutput><ref refid="classgoogle_1_1cloud_1_1StatusOr" kindref="compound" external="/workspace/cmake-out/google/cloud/cloud.tag">StatusOr</ref>&lt;T&gt;</computeroutput> returns <computeroutput>true</computeroutput> then it contains the expected result. Operations that do not return a value simply return a <computeroutput><ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound" external="/workspace/cmake-out/google/cloud/cloud.tag">google::cloud::Status</ref></computeroutput> indicating success or the details of the error Please consult the <ref refid="classgoogle_1_1cloud_1_1StatusOr" kindref="compound" external="/workspace/cmake-out/google/cloud/cloud.tag">`StatusOr&lt;T&gt;` documentation</ref> for more details.</para>
+</simplesect>
+<programlisting><codeline><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">cbt<sp/>=<sp/><ref refid="namespacegoogle_1_1cloud_1_1bigtable" kindref="compound">google::cloud::bigtable</ref>;</highlight></codeline>
+<codeline><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">btadmin<sp/>=<sp/>google::bigtable::admin::v2;</highlight></codeline>
+<codeline><highlight class="normal">cbt::TableAdmin<sp/>admin<sp/>=<sp/>...;</highlight></codeline>
+<codeline><highlight class="normal"><ref refid="classgoogle_1_1cloud_1_1StatusOr" kindref="compound" external="/workspace/cmake-out/google/cloud/cloud.tag">google::cloud::StatusOr&lt;btadmin::Table&gt;</ref><sp/>metadata<sp/>=<sp/>admin.GetTable(...);</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!metadata)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>std::cerr<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;Error<sp/>fetching<sp/>table<sp/>metadata\n&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"></highlight><highlight class="comment">//<sp/>Use<sp/>&quot;metadata&quot;<sp/>as<sp/>a<sp/>smart<sp/>pointer<sp/>here,<sp/>e.g.:</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal">std::cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;The<sp/>full<sp/>table<sp/>name<sp/>is<sp/>&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/>table-&gt;name()<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;<sp/>the<sp/>table<sp/>has<sp/>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&lt;&lt;<sp/>table-&gt;column_families_size()<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;<sp/>column<sp/>families\n&quot;</highlight><highlight class="normal">;</highlight></codeline>
+</programlisting></para>     </detaileddescription> 
+ </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+###### Thread-safety
+
+Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating concurrently on the same instance of this class is not guaranteed to work.
+
+###### Cost
+
+Creating a new object of type [`TableAdmin`](xref:classgoogle_1_1cloud_1_1bigtable_1_1TableAdmin) is comparable to creating a few objects of type `std::string` or a few objects of type `std::shared_ptr<int>`. The class represents a shallow handle to a remote object.
+
+###### Error Handling
+
+This class uses [`StatusOr`](xref:classgoogle_1_1cloud_1_1StatusOr)`<T>` to report errors. When an operation fails to perform its work the returned [`StatusOr`](xref:classgoogle_1_1cloud_1_1StatusOr)`<T>` contains the error details. If the `ok()` member function in the [`StatusOr`](xref:classgoogle_1_1cloud_1_1StatusOr)`<T>` returns `true` then it contains the expected result. Operations that do not return a value simply return a [`google::cloud::Status`](xref:classgoogle_1_1cloud_1_1Status) indicating success or the details of the error Please consult the [`StatusOr<T>` documentation](xref:classgoogle_1_1cloud_1_1StatusOr) for more details.```cpp
+namespace cbt = google::cloud::bigtable;
+namespace btadmin = google::bigtable::admin::v2;
+cbt::TableAdmin admin = ...;
+google::cloud::StatusOr<btadmin::Table> metadata = admin.GetTable(...);
+
+if (!metadata) {
+  std::cerr << "Error fetching table metadata\n";
+  return;
+}
+
+// Use "metadata" as a smart pointer here, e.g.:
+std::cout << "The full table name is " << table->name() << " the table has "
+          << table->column_families_size() << " column families\n";
+```)md";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  MarkdownContext mdctx;
+  mdctx.paragraph_start = "";
+  ASSERT_TRUE(AppendIfDetailedDescription(os, mdctx, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, ParagraphVerbatim) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
