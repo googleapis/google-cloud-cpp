@@ -19,8 +19,8 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/options.h"
 #include "absl/types/optional.h"
-#include <string>
 #include <chrono>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -95,13 +95,23 @@ class CommitOptions {
     return transaction_tag_;
   }
 
+  CommitOptions& set_max_commit_delay(
+      absl::optional<std::chrono::milliseconds> max_commit_delay) {
+    max_commit_delay_ = max_commit_delay;
+    return *this;
+  }
+
+  absl::optional<std::chrono::milliseconds> max_commit_delay() const {
+    return max_commit_delay_;
+  }
+
  private:
   // Note that CommitRequest.request_options.request_tag is ignored,
   // so we do not even provide a mechanism to specify one.
   bool return_stats_ = false;
-  absl::optional<std::chrono::milliseconds> max_commit_delay_;
   absl::optional<RequestPriority> request_priority_;
   absl::optional<std::string> transaction_tag_;
+  absl::optional<std::chrono::milliseconds> max_commit_delay_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

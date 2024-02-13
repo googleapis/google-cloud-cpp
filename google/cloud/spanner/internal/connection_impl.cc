@@ -1143,9 +1143,8 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
           .has<spanner::MaxCommitDelayOption>()) {
     *request.mutable_max_commit_delay() =
         google::protobuf::util::TimeUtil::MillisecondsToDuration(
-            std::chrono::duration_cast<std::chrono::milliseconds>(
-                static_cast<Options>(params.options)
-                    .get<spanner::MaxCommitDelayOption>())
+            static_cast<Options>(params.options)
+                .get<spanner::MaxCommitDelayOption>()
                 .count());
   }
 

@@ -981,7 +981,7 @@ TEST(ClientTest, CommitStats) {
   EXPECT_EQ(42, result->commit_stats->mutation_count);
 }
 
-TEST(ClientTest, MaxCommitDelayUnset) {
+TEST(ClientTest, MaxCommitDelay) {
   auto timestamp =
       spanner_internal::TimestampFromRFC3339("2020-10-20T02:20:09.123Z");
   ASSERT_STATUS_OK(timestamp);
@@ -990,47 +990,17 @@ TEST(ClientTest, MaxCommitDelayUnset) {
   auto conn = std::make_shared<MockConnection>();
   EXPECT_CALL(*conn, Commit)
       .WillOnce([&timestamp, &stats](Connection::CommitParams const& cp) {
-        EXPECT_TRUE(cp.options.return_stats());
-        EXPECT_FALSE(
-            static_cast<Options>(cp.options).has<MaxCommitDelayOption>());
-        return CommitResult{*timestamp, stats};
-      });
-
-  Client client(conn);
-  auto result =
-      client.Commit(Mutations{}, Options{}.set<CommitReturnStatsOption>(true));
-  ASSERT_STATUS_OK(result);
-  EXPECT_EQ(*timestamp, result->commit_timestamp);
-  ASSERT_TRUE(result->commit_stats.has_value());
-  EXPECT_EQ(42, result->commit_stats->mutation_count);
-}
-
-TEST(ClientTest, MaxCommitDelaySet) {
-  auto timestamp =
-      spanner_internal::TimestampFromRFC3339("2020-10-20T02:20:09.123Z");
-  ASSERT_STATUS_OK(timestamp);
-  CommitStats stats{42};
-
-  auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, Commit)
-      .WillOnce([&timestamp, &stats](Connection::CommitParams const& cp) {
-        EXPECT_TRUE(cp.options.return_stats());
-        EXPECT_TRUE(
-            static_cast<Options>(cp.options).has<MaxCommitDelayOption>());
-        EXPECT_EQ(static_cast<Options>(cp.options).get<MaxCommitDelayOption>(),
+        EXPECT_EQ(cp.options.max_commit_delay(),
                   std::chrono::milliseconds(100));
         return CommitResult{*timestamp, stats};
       });
 
   Client client(conn);
   Options options;
-  options.set<CommitReturnStatsOption>(true);
   options.set<MaxCommitDelayOption>(std::chrono::milliseconds(100));
   auto result = client.Commit(Mutations{}, options);
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
-  ASSERT_TRUE(result->commit_stats.has_value());
-  EXPECT_EQ(42, result->commit_stats->mutation_count);
 }
 
 TEST(ClientTest, CommitAtLeastOnce) {
@@ -1048,6 +1018,7 @@ TEST(ClientTest, CommitAtLeastOnce) {
         EXPECT_EQ(cp.mutations, Mutations{mutation});
         EXPECT_FALSE(cp.options.return_stats());
         EXPECT_FALSE(cp.options.request_priority().has_value());
+        EXPECT_FALSE(cp.options.max_commit_delay().has_value());
         EXPECT_EQ(cp.options.transaction_tag(), transaction_tag);
         return CommitResult{*timestamp, absl::nullopt};
       });
