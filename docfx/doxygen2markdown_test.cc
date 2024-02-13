@@ -754,7 +754,9 @@ Creating a new object of type [`TableAdmin`](xref:classgoogle_1_1cloud_1_1bigtab
 
 ###### Error Handling
 
-This class uses [`StatusOr`](xref:classgoogle_1_1cloud_1_1StatusOr)`<T>` to report errors. When an operation fails to perform its work the returned [`StatusOr`](xref:classgoogle_1_1cloud_1_1StatusOr)`<T>` contains the error details. If the `ok()` member function in the [`StatusOr`](xref:classgoogle_1_1cloud_1_1StatusOr)`<T>` returns `true` then it contains the expected result. Operations that do not return a value simply return a [`google::cloud::Status`](xref:classgoogle_1_1cloud_1_1Status) indicating success or the details of the error Please consult the [`StatusOr<T>` documentation](xref:classgoogle_1_1cloud_1_1StatusOr) for more details.```cpp
+This class uses [`StatusOr`](xref:classgoogle_1_1cloud_1_1StatusOr)`<T>` to report errors. When an operation fails to perform its work the returned [`StatusOr`](xref:classgoogle_1_1cloud_1_1StatusOr)`<T>` contains the error details. If the `ok()` member function in the [`StatusOr`](xref:classgoogle_1_1cloud_1_1StatusOr)`<T>` returns `true` then it contains the expected result. Operations that do not return a value simply return a [`google::cloud::Status`](xref:classgoogle_1_1cloud_1_1Status) indicating success or the details of the error Please consult the [`StatusOr<T>` documentation](xref:classgoogle_1_1cloud_1_1StatusOr) for more details.
+
+```cpp
 namespace cbt = google::cloud::bigtable;
 namespace btadmin = google::bigtable::admin::v2;
 cbt::TableAdmin admin = ...;
