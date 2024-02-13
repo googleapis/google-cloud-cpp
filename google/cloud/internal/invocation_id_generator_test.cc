@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/invocation_id_generator.h"
+#include "google/cloud/internal/invocation_id_generator.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
 
 using ::testing::AnyOf;
 using ::testing::ElementsAre;
@@ -68,8 +68,8 @@ TEST(InvocationIdGenerator, TwoGenerators) {
   EXPECT_TRUE(f == actual.end()) << "Duplicate=" << *f;
 }
 
+}  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
 }  // namespace cloud
 }  // namespace google
