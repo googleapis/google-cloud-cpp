@@ -471,25 +471,18 @@ void AutoRun(std::vector<std::string> const& argv) {
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
 
-  // Any project can use another project's table, but the pubsub service account
-  // for the project needs to be granted access on the table. See
-  // https://cloud.google.com/pubsub/docs/create-bigquery-subscription#assign_bigquery_service_account
-  // for more details.
-  if (project_id == "cloud-cpp-testing-resources") {
-    auto const table_id = project_id + ":samples.pubsub-subscription";
-    std::cout << "\nRunning CreateBigQuerySubscription() sample" << std::endl;
-    CreateBigQuerySubscription(
-        subscription_admin_client,
-        {project_id, topic_id, bigquery_subscription_id, table_id});
-    cleanup.Defer([subscription_admin_client, project_id,
-                   bigquery_subscription_id]() mutable {
-      std::cout << "\nDelete subscription (" << bigquery_subscription_id << ")"
-                << std::endl;
-      subscription_admin_client.DeleteSubscription(
-          pubsub::Subscription(project_id, bigquery_subscription_id)
-              .FullName());
-    });
-  }
+  auto const table_id = project_id + ":samples.pubsub-subscription";
+  std::cout << "\nRunning CreateBigQuerySubscription() sample" << std::endl;
+  CreateBigQuerySubscription(
+      subscription_admin_client,
+      {project_id, topic_id, bigquery_subscription_id, table_id});
+  cleanup.Defer([subscription_admin_client, project_id,
+                 bigquery_subscription_id]() mutable {
+    std::cout << "\nDelete subscription (" << bigquery_subscription_id << ")"
+              << std::endl;
+    subscription_admin_client.DeleteSubscription(
+        pubsub::Subscription(project_id, bigquery_subscription_id).FullName());
+  });
 
   auto const bucket_id = project_id + "-pubsub-bucket";
   std::cout << "\nRunning CreateCloudStorageSubscription() sample" << std::endl;
