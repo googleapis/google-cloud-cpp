@@ -59,6 +59,16 @@ struct CompletionServiceConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-discoveryengine-options
+ */
+struct CompletionServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to CompletionService.
  *
  * @ingroup google-cloud-discoveryengine-options
@@ -66,6 +76,7 @@ struct CompletionServiceConnectionIdempotencyPolicyOption {
 using CompletionServicePolicyOptionList =
     OptionList<CompletionServiceRetryPolicyOption,
                CompletionServiceBackoffPolicyOption,
+               CompletionServicePollingPolicyOption,
                CompletionServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

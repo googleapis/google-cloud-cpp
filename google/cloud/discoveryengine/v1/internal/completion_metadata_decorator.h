@@ -22,6 +22,7 @@
 #include "google/cloud/discoveryengine/v1/internal/completion_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -43,6 +44,30 @@ class CompletionServiceMetadata : public CompletionServiceStub {
   CompleteQuery(grpc::ClientContext& context,
                 google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncImportSuggestionDenyListEntries(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          ImportSuggestionDenyListEntriesRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncPurgeSuggestionDenyListEntries(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          PurgeSuggestionDenyListEntriesRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,

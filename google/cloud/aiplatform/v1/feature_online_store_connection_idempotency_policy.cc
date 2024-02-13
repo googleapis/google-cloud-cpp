@@ -41,6 +41,12 @@ FeatureOnlineStoreServiceConnectionIdempotencyPolicy::FetchFeatureValues(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+FeatureOnlineStoreServiceConnectionIdempotencyPolicy::SearchNearestEntities(
+    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<FeatureOnlineStoreServiceConnectionIdempotencyPolicy>
 MakeDefaultFeatureOnlineStoreServiceConnectionIdempotencyPolicy() {
   return std::make_unique<

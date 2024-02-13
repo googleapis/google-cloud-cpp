@@ -52,6 +52,13 @@ class MockFeatureOnlineStoreServiceConnection
       FetchFeatureValues,
       (google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>,
+      SearchNearestEntities,
+      (google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

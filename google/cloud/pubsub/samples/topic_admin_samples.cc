@@ -19,7 +19,9 @@
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/project.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "absl/strings/match.h"
 #include <sstream>
 
 using google::cloud::pubsub::examples::Cleanup;
@@ -30,6 +32,34 @@ namespace {
 using TopicAdminCommand =
     std::function<void(::google::cloud::pubsub_admin::TopicAdminClient,
                        std::vector<std::string> const&)>;
+
+// Delete all topics created with that include "cloud-cpp-samples". Ignore any
+// failures. If multiple tests are cleaning up topics in parallel, then the
+// delete call might fail.
+void CleanupTopics(
+    google::cloud::pubsub_admin::TopicAdminClient& topic_admin_client,
+    std::string const& project_id, absl::Time time_now) {
+  for (auto const& topic : topic_admin_client.ListTopics(
+           google::cloud::Project(project_id).FullName())) {
+    if (!topic) continue;
+    auto topic_name = topic->name();
+    std::string const keyword = "cloud-cpp-samples";
+    if (!absl::StrContains(topic->name(), keyword)) continue;
+    // Extract the date from the resource name which is in the format
+    // `*-cloud-cpp-samples-YYYY-MM-DD-`.
+    auto date =
+        topic_name.substr(topic_name.find(keyword) + keyword.size() + 1, 10);
+
+    absl::CivilDay day;
+    if (absl::ParseCivilTime(date, &day) &&
+        absl::FromCivil(day, absl::UTCTimeZone()) <
+            time_now - absl::Hours(36)) {
+      google::pubsub::v1::DeleteTopicRequest request;
+      request.set_topic(topic->name());
+      (void)topic_admin_client.DeleteTopic(request);
+    }
+  }
+}
 
 google::cloud::testing_util::Commands::value_type CreateTopicAdminCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
@@ -478,6 +508,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   google::cloud::pubsub_admin::SubscriptionAdminClient
       subscription_admin_client(
           google::cloud::pubsub_admin::MakeSubscriptionAdminConnection());
+
+  // Delete resources over 3 days old.
+  std::cout << "Cleaning up old topics...\n";
+  CleanupTopics(topic_admin_client, project_id,
+                absl::FromChrono(std::chrono::system_clock::now()));
 
   std::cout << "\nRunning CreateTopic() sample [1]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, topic_id});

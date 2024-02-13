@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":bigquery_rest_testing.bzl", "bigquery_rest_testing_hdrs", "bigquery_rest_testing_srcs")
+load(":bigquery_rest_unit_tests.bzl", "bigquery_rest_unit_tests")
+load(":google_cloud_cpp_bigquery_rest.bzl", "google_cloud_cpp_bigquery_rest_hdrs", "google_cloud_cpp_bigquery_rest_srcs")
+load(":google_cloud_cpp_bigquery_rest_mocks.bzl", "google_cloud_cpp_bigquery_rest_mocks_hdrs", "google_cloud_cpp_bigquery_rest_mocks_srcs")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
@@ -107,8 +112,6 @@ mock_samples_glob = ["samples/mock_*.cc"]
     ],
 ) for sample in glob(mock_samples_glob)]
 
-load(":google_cloud_cpp_bigquery_rest.bzl", "google_cloud_cpp_bigquery_rest_hdrs", "google_cloud_cpp_bigquery_rest_srcs")
-
 cc_library(
     name = "google_cloud_cpp_bigquery_rest",
     srcs = google_cloud_cpp_bigquery_rest_srcs,
@@ -119,8 +122,6 @@ cc_library(
         "//google/cloud:google_cloud_cpp_rest_internal",
     ],
 )
-
-load(":google_cloud_cpp_bigquery_rest_mocks.bzl", "google_cloud_cpp_bigquery_rest_mocks_hdrs", "google_cloud_cpp_bigquery_rest_mocks_srcs")
 
 cc_library(
     name = "google_cloud_cpp_bigquery_rest_mocks",
@@ -133,8 +134,6 @@ cc_library(
         "@com_google_googletest//:gtest",
     ],
 )
-
-load(":bigquery_rest_testing.bzl", "bigquery_rest_testing_hdrs", "bigquery_rest_testing_srcs")
 
 cc_library(
     name = "bigquery_rest_testing",
@@ -150,8 +149,6 @@ cc_library(
         "@com_google_googletest//:gtest_main",
     ],
 )
-
-load(":bigquery_rest_unit_tests.bzl", "bigquery_rest_unit_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),

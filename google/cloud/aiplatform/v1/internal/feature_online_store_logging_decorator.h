@@ -44,6 +44,12 @@ class FeatureOnlineStoreServiceLogging : public FeatureOnlineStoreServiceStub {
       google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+  SearchNearestEntities(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request) override;
+
  private:
   std::shared_ptr<FeatureOnlineStoreServiceStub> child_;
   TracingOptions tracing_options_;

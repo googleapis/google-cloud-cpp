@@ -39,6 +39,10 @@ class FeatureOnlineStoreServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency FetchFeatureValues(
       google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request);
+
+  virtual google::cloud::Idempotency SearchNearestEntities(
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request);
 };
 
 std::unique_ptr<FeatureOnlineStoreServiceConnectionIdempotencyPolicy>

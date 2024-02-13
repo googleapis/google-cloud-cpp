@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/invocation_id_generator.h"
+#include "google/cloud/internal/invocation_id_generator.h"
 #include "absl/strings/str_format.h"
 #include <algorithm>
 #include <array>
 
 namespace google {
 namespace cloud {
-namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
@@ -63,6 +62,5 @@ std::string InvocationIdGenerator::MakeInvocationId() {
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
 }  // namespace cloud
 }  // namespace google

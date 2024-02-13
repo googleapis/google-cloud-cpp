@@ -43,9 +43,11 @@ using ::google::cloud::bigtable_internal::AsyncRowReader;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::MockFunction;
+using ::testing::Pair;
 using ::testing::Return;
 using ::testing::Unused;
 using ::testing::Values;
@@ -1359,6 +1361,8 @@ TEST_F(AsyncRowReaderTest, BigtableCookie) {
       .WillOnce([this](Unused, auto context, v2::ReadRowsRequest const&) {
         // Verify that the next request includes the bigtable cookie from above.
         auto headers = metadata_fixture_.GetMetadata(*context);
+        EXPECT_THAT(headers,
+                    Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
         auto stream = std::make_unique<MockAsyncReadRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(false);

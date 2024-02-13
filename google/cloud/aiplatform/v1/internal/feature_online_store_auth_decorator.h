@@ -44,6 +44,12 @@ class FeatureOnlineStoreServiceAuth : public FeatureOnlineStoreServiceStub {
       google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+  SearchNearestEntities(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<FeatureOnlineStoreServiceStub> child_;

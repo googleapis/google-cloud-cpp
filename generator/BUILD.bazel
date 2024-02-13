@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:private"])
-
-licenses(["notice"])  # Apache 2.0
-
 load(":google_cloud_cpp_generator.bzl", "google_cloud_cpp_generator_hdrs", "google_cloud_cpp_generator_srcs")
 load(":google_cloud_cpp_generator_testing.bzl", "google_cloud_cpp_generator_testing_hdrs", "google_cloud_cpp_generator_testing_srcs")
 load(":google_cloud_cpp_generator_unit_tests.bzl", "google_cloud_cpp_generator_unit_tests")
+
+package(default_visibility = ["//visibility:private"])
+
+licenses(["notice"])  # Apache 2.0
 
 cc_library(
     name = "google_cloud_cpp_generator",

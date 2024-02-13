@@ -12,28 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:private"])
-
-licenses(["notice"])  # Apache 2.0
-
 load(":capture_build_info.bzl", "capture_build_info")
+load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
 load(":google_cloud_cpp_common_benchmarks.bzl", "google_cloud_cpp_common_benchmarks")
 load(":google_cloud_cpp_common_unit_tests.bzl", "google_cloud_cpp_common_unit_tests")
-load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
+load(":google_cloud_cpp_grpc_utils.bzl", "google_cloud_cpp_grpc_utils_hdrs", "google_cloud_cpp_grpc_utils_srcs")
 load(":google_cloud_cpp_grpc_utils_benchmarks.bzl", "google_cloud_cpp_grpc_utils_benchmarks")
 load(":google_cloud_cpp_grpc_utils_integration_tests.bzl", "google_cloud_cpp_grpc_utils_integration_tests")
 load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils_unit_tests")
-load(":google_cloud_cpp_grpc_utils.bzl", "google_cloud_cpp_grpc_utils_hdrs", "google_cloud_cpp_grpc_utils_srcs")
 load(":google_cloud_cpp_mocks.bzl", "google_cloud_cpp_mocks_hdrs")
+load(":google_cloud_cpp_rest_internal.bzl", "google_cloud_cpp_rest_internal_hdrs", "google_cloud_cpp_rest_internal_srcs")
 load(":google_cloud_cpp_rest_internal_benchmarks.bzl", "google_cloud_cpp_rest_internal_benchmarks")
 load(":google_cloud_cpp_rest_internal_emulator_integration_tests.bzl", "google_cloud_cpp_rest_internal_emulator_integration_tests")
 load(":google_cloud_cpp_rest_internal_production_integration_tests.bzl", "google_cloud_cpp_rest_internal_production_integration_tests")
 load(":google_cloud_cpp_rest_internal_unit_tests.bzl", "google_cloud_cpp_rest_internal_unit_tests")
-load(":google_cloud_cpp_rest_internal.bzl", "google_cloud_cpp_rest_internal_hdrs", "google_cloud_cpp_rest_internal_srcs")
-load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cpp_rest_protobuf_internal_unit_tests")
 load(":google_cloud_cpp_rest_protobuf_internal.bzl", "google_cloud_cpp_rest_protobuf_internal_hdrs", "google_cloud_cpp_rest_protobuf_internal_srcs")
-load(":google_cloud_cpp_universe_domain_unit_tests.bzl", "google_cloud_cpp_universe_domain_unit_tests")
+load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cpp_rest_protobuf_internal_unit_tests")
 load(":google_cloud_cpp_universe_domain.bzl", "google_cloud_cpp_universe_domain_hdrs", "google_cloud_cpp_universe_domain_srcs")
+load(":google_cloud_cpp_universe_domain_unit_tests.bzl", "google_cloud_cpp_universe_domain_unit_tests")
+
+package(default_visibility = ["//visibility:private"])
+
+licenses(["notice"])  # Apache 2.0
 
 capture_build_info(
     name = "generate_build_info",
@@ -102,6 +102,8 @@ to your build command, or set this value in your `.bazelrc` file(s).
         "@boringssl//:crypto",
         "@com_google_absl//absl/base",
         "@com_google_absl//absl/functional:function_ref",
+        "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/strings:str_format",
         "@com_google_absl//absl/time",
         "@com_google_absl//absl/types:optional",
         "@com_google_absl//absl/types:span",

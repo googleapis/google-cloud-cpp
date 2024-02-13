@@ -18,7 +18,9 @@
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/project.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "absl/strings/match.h"
 #include <sstream>
 
 namespace {
@@ -50,6 +52,32 @@ CreateSubscriptionAdminCommand(std::string const& name,
   };
   return google::cloud::testing_util::Commands::value_type{name,
                                                            std::move(adapter)};
+}
+
+// Delete all subscriptions created with that include "cloud-cpp-samples".
+// Ignore any failures. If multiple tests are cleaning up subscriptions in
+// parallel, then the delete call might fail.
+void CleanupSubscriptions(
+    google::cloud::pubsub_admin::SubscriptionAdminClient& client,
+    std::string const& project_id, absl::Time time_now) {
+  for (auto const& subscription : client.ListSubscriptions(
+           google::cloud::Project(project_id).FullName())) {
+    if (!subscription) continue;
+    std::string const keyword = "cloud-cpp-samples-";
+    auto iter = subscription->name().find(keyword);
+    if (iter == std::string::npos) continue;
+    // Extract the date from the resource name which is in the format
+    // `*-cloud-cpp-samples-YYYY-MM-DD-`.
+    auto date = subscription->name().substr(iter + keyword.size(), 10);
+    absl::CivilDay day;
+    if (absl::ParseCivilTime(date, &day) &&
+        absl::FromCivil(day, absl::UTCTimeZone()) <
+            time_now - absl::Hours(36)) {
+      google::pubsub::v1::DeleteSubscriptionRequest request;
+      request.set_subscription(subscription->name());
+      (void)client.DeleteSubscription(request);
+    }
+  }
 }
 
 void CreateSubscription(
@@ -408,6 +436,10 @@ void AutoRun(std::vector<std::string> const& argv) {
           throw;
         }
       };
+
+  // Delete subscriptions over 36 hours old.
+  CleanupSubscriptions(subscription_admin_client, project_id,
+                       absl::FromChrono(std::chrono::system_clock::now()));
 
   std::cout << "\nCreate topic (" << topic_id << ")" << std::endl;
   topic_admin_client.CreateTopic(topic.FullName());

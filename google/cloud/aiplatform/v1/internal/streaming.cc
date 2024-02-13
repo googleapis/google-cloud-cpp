@@ -37,6 +37,26 @@ void PredictionServiceStreamGenerateContentStreamingUpdater(
     google::cloud::aiplatform::v1::GenerateContentResponse const&,
     google::cloud::aiplatform::v1::GenerateContentRequest&) {}
 
+void PredictionServiceStreamRawPredictStreamingUpdater(
+    google::api::HttpBody const&,
+    google::cloud::aiplatform::v1::StreamRawPredictRequest&) {}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamDirectPredictRequest,
+    google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
+PredictionServiceConnectionImpl::AsyncStreamDirectPredict() {
+  return stub_->AsyncStreamDirectPredict(
+      background_->cq(), std::make_shared<grpc::ClientContext>());
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
+PredictionServiceConnectionImpl::AsyncStreamDirectRawPredict() {
+  return stub_->AsyncStreamDirectRawPredict(
+      background_->cq(), std::make_shared<grpc::ClientContext>());
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingPredictRequest,
     google::cloud::aiplatform::v1::StreamingPredictResponse>>

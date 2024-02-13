@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/async/connection_tracing.h"
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/async/reader_connection_tracing.h"
+#include "google/cloud/storage/internal/async/rewriter_connection_tracing.h"
 #include "google/cloud/storage/internal/async/writer_connection_tracing.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
@@ -121,6 +122,13 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
     internal::OTelScope scope(span);
     return internal::EndSpan(std::move(span),
                              impl_->DeleteObject(std::move(p)));
+  }
+
+  std::shared_ptr<storage_experimental::AsyncRewriterConnection> RewriteObject(
+      RewriteObjectParams p) override {
+    auto const enabled = internal::TracingEnabled(p.options);
+    return MakeTracingAsyncRewriterConnection(
+        impl_->RewriteObject(std::move(p)), enabled);
   }
 
  private:

@@ -18,7 +18,9 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -44,6 +46,15 @@ class GrpcClientFailuresTest
                        {}),
         client_(
             storage_experimental::DefaultGrpcClient(TestOptions(GetParam()))) {}
+
+  void SetUp() override {
+    // Older versions of gRPC flake on this test, see #13114.
+    std::vector<std::string> s = absl::StrSplit(grpc::Version(), '.');
+    if (s.size() < 2) GTEST_SKIP();
+    auto const major = std::stoi(s[0]);
+    auto const minor = std::stoi(s[1]);
+    if (major < 1 || (major == 1 && minor < 60)) GTEST_SKIP();
+  }
 
   static Options TestOptions(std::string const& plugin_config) {
     using us = std::chrono::microseconds;

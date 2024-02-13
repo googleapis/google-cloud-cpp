@@ -49,6 +49,16 @@ StatusOr<google::api::HttpBody> PredictionServiceTracingConnection::RawPredict(
   return internal::EndSpan(*span, child_->RawPredict(request));
 }
 
+StreamRange<google::api::HttpBody>
+PredictionServiceTracingConnection::StreamRawPredict(
+    google::cloud::aiplatform::v1::StreamRawPredictRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::StreamRawPredict");
+  internal::OTelScope scope(span);
+  auto sr = child_->StreamRawPredict(request);
+  return internal::MakeTracedStreamRange<google::api::HttpBody>(std::move(span),
+                                                                std::move(sr));
+}
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
 PredictionServiceTracingConnection::DirectPredict(
     google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
@@ -65,6 +75,20 @@ PredictionServiceTracingConnection::DirectRawPredict(
       "aiplatform_v1::PredictionServiceConnection::DirectRawPredict");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DirectRawPredict(request));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamDirectPredictRequest,
+    google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
+PredictionServiceTracingConnection::AsyncStreamDirectPredict() {
+  return child_->AsyncStreamDirectPredict();
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
+PredictionServiceTracingConnection::AsyncStreamDirectRawPredict() {
+  return child_->AsyncStreamDirectRawPredict();
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -99,6 +123,15 @@ PredictionServiceTracingConnection::Explain(
       internal::MakeSpan("aiplatform_v1::PredictionServiceConnection::Explain");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Explain(request));
+}
+
+StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
+PredictionServiceTracingConnection::GenerateContent(
+    google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::GenerateContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateContent(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>

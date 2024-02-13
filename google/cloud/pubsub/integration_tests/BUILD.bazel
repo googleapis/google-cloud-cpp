@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":pubsub_client_integration_tests.bzl", "pubsub_client_integration_tests")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-load(":pubsub_client_integration_tests.bzl", "pubsub_client_integration_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),

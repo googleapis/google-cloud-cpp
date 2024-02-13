@@ -39,6 +39,16 @@ FeatureOnlineStoreServiceAuth::FetchFeatureValues(
   return child_->FetchFeatureValues(context, request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+FeatureOnlineStoreServiceAuth::SearchNearestEntities(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SearchNearestEntities(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal
 }  // namespace cloud

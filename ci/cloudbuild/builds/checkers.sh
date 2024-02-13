@@ -144,7 +144,12 @@ time {
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
-printf "%-50s" "Running buildifier:" >&2
+printf "%-50s" "Running buildifier (lint):" >&2
+time {
+  git_files -z -- '*.BUILD' '*.bzl' '*.bazel' |
+    xargs -r -P "$(nproc)" -n 50 -0 buildifier --lint=fix
+}
+printf "%-50s" "Running buildifier (format):" >&2
 time {
   git_files -z -- '*.BUILD' '*.bzl' '*.bazel' |
     xargs -r -P "$(nproc)" -n 50 -0 buildifier -mode=fix

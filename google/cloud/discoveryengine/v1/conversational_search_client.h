@@ -114,8 +114,8 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ConverseConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L134}
-  /// [google.cloud.discoveryengine.v1.ConverseConversationResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L192}
+  /// [google.cloud.discoveryengine.v1.ConverseConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L155}
+  /// [google.cloud.discoveryengine.v1.ConverseConversationResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L231}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
@@ -147,8 +147,8 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ConverseConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L134}
-  /// [google.cloud.discoveryengine.v1.ConverseConversationResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L192}
+  /// [google.cloud.discoveryengine.v1.ConverseConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L155}
+  /// [google.cloud.discoveryengine.v1.ConverseConversationResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L231}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
@@ -181,7 +181,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L204}
+  /// [google.cloud.discoveryengine.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L243}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Conversation> CreateConversation(
@@ -216,7 +216,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L204}
+  /// [google.cloud.discoveryengine.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L243}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Conversation> CreateConversation(
@@ -245,7 +245,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L234}
+  /// [google.cloud.discoveryengine.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L273}
   ///
   // clang-format on
   Status DeleteConversation(std::string const& name, Options opts = {});
@@ -275,7 +275,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L234}
+  /// [google.cloud.discoveryengine.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L273}
   ///
   // clang-format on
   Status DeleteConversation(
@@ -297,7 +297,7 @@ class ConversationalSearchServiceClient {
   ///  [Conversation][google.cloud.discoveryengine.v1.Conversation] to update. The
   ///  following are NOT supported:
   ///  @n
-  ///  * [conversation.name][]
+  ///  * [Conversation.name][google.cloud.discoveryengine.v1.Conversation.name]
   ///  @n
   ///  If not set or empty, all supported fields are updated.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -314,7 +314,8 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L219}
+  /// [google.cloud.discoveryengine.v1.Conversation.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L58}
+  /// [google.cloud.discoveryengine.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L258}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Conversation> UpdateConversation(
@@ -350,7 +351,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L219}
+  /// [google.cloud.discoveryengine.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L258}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Conversation> UpdateConversation(
@@ -378,7 +379,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L246}
+  /// [google.cloud.discoveryengine.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L285}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Conversation> GetConversation(
@@ -408,7 +409,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L246}
+  /// [google.cloud.discoveryengine.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L285}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Conversation> GetConversation(
@@ -445,7 +446,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L258}
+  /// [google.cloud.discoveryengine.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L297}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::Conversation>
@@ -485,7 +486,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L258}
+  /// [google.cloud.discoveryengine.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L297}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::Conversation>

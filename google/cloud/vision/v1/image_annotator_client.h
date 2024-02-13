@@ -26,6 +26,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 
 namespace google {
@@ -105,8 +106,8 @@ class ImageAnnotatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vision.v1.BatchAnnotateImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L768}
-  /// [google.cloud.vision.v1.BatchAnnotateImagesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L788}
+  /// [google.cloud.vision.v1.BatchAnnotateImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L780}
+  /// [google.cloud.vision.v1.BatchAnnotateImagesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L809}
   ///
   // clang-format on
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
@@ -138,8 +139,8 @@ class ImageAnnotatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vision.v1.BatchAnnotateImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L768}
-  /// [google.cloud.vision.v1.BatchAnnotateImagesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L788}
+  /// [google.cloud.vision.v1.BatchAnnotateImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L780}
+  /// [google.cloud.vision.v1.BatchAnnotateImagesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L809}
   ///
   // clang-format on
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
@@ -157,8 +158,8 @@ class ImageAnnotatorClient {
   /// file provided and perform detection and annotation for each image
   /// extracted.
   ///
-  /// @param requests  Required. The list of file annotation requests. Right now we support only one
-  ///  AnnotateFileRequest in BatchAnnotateFilesRequest.
+  /// @param requests  Required. The list of file annotation requests. Right now we support only
+  ///  one AnnotateFileRequest in BatchAnnotateFilesRequest.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -172,8 +173,8 @@ class ImageAnnotatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vision.v1.BatchAnnotateFilesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L840}
-  /// [google.cloud.vision.v1.BatchAnnotateFilesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L861}
+  /// [google.cloud.vision.v1.BatchAnnotateFilesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L861}
+  /// [google.cloud.vision.v1.BatchAnnotateFilesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L891}
   ///
   // clang-format on
   StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
@@ -211,8 +212,8 @@ class ImageAnnotatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vision.v1.BatchAnnotateFilesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L840}
-  /// [google.cloud.vision.v1.BatchAnnotateFilesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L861}
+  /// [google.cloud.vision.v1.BatchAnnotateFilesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L861}
+  /// [google.cloud.vision.v1.BatchAnnotateFilesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L891}
   ///
   // clang-format on
   StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
@@ -254,8 +255,8 @@ class ImageAnnotatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L889}
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L912}
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L919}
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L951}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
@@ -303,8 +304,8 @@ class ImageAnnotatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L889}
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L912}
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L919}
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L951}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
@@ -342,8 +343,8 @@ class ImageAnnotatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L919}
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L939}
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L958}
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L987}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
@@ -387,8 +388,8 @@ class ImageAnnotatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L919}
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L939}
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L958}
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L987}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>

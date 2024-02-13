@@ -46,6 +46,10 @@ class PredictionServiceTracingConnection
   StatusOr<google::api::HttpBody> RawPredict(
       google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
 
+  StreamRange<google::api::HttpBody> StreamRawPredict(
+      google::cloud::aiplatform::v1::StreamRawPredictRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse> DirectPredict(
       google::cloud::aiplatform::v1::DirectPredictRequest const& request)
       override;
@@ -53,6 +57,16 @@ class PredictionServiceTracingConnection
   StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
   DirectRawPredict(google::cloud::aiplatform::v1::DirectRawPredictRequest const&
                        request) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::StreamDirectPredictRequest,
+      google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
+  AsyncStreamDirectPredict() override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
+      google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
+  AsyncStreamDirectRawPredict() override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamingPredictRequest,
@@ -71,6 +85,10 @@ class PredictionServiceTracingConnection
 
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
+
+  StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
+  GenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const&
+                      request) override;
 
   StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
   StreamGenerateContent(

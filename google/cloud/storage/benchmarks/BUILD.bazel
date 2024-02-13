@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
+load(":storage_benchmarks.bzl", "storage_benchmarks_hdrs", "storage_benchmarks_srcs")
+load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-load(":storage_benchmarks.bzl", "storage_benchmarks_hdrs", "storage_benchmarks_srcs")
-load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
-load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
 
 cc_library(
     name = "storage_benchmarks",

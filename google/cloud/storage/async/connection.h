@@ -30,6 +30,7 @@ namespace cloud {
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AsyncReaderConnection;
+class AsyncRewriterConnection;
 class AsyncWriterConnection;
 
 /**
@@ -159,6 +160,25 @@ class AsyncConnection {
 
   /// Delete an object.
   virtual future<Status> DeleteObject(DeleteObjectParams p) = 0;
+
+  /**
+   * A thin wrapper around the `StartRewriteObject()` parameters.
+   *
+   * We use a single struct as the input parameter for this function to
+   * prevent breaking any mocks when additional parameters are needed.
+   */
+  struct RewriteObjectParams {
+    /// The source and destination bucket and object names. Including
+    /// pre-conditions on the object and other optional parameters.
+    RewriteObjectRequest request;
+    /// Any options modifying the RPC behavior, including per-client and
+    /// per-connection options.
+    Options options;
+  };
+
+  /// Start an object rewrite.
+  virtual std::shared_ptr<AsyncRewriterConnection> RewriteObject(
+      RewriteObjectParams p) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

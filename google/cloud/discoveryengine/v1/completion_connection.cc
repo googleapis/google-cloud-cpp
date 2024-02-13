@@ -42,6 +42,28 @@ CompletionServiceConnection::CompleteQuery(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::discoveryengine::v1::
+                    ImportSuggestionDenyListEntriesResponse>>
+CompletionServiceConnection::ImportSuggestionDenyListEntries(
+    google::cloud::discoveryengine::v1::
+        ImportSuggestionDenyListEntriesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::
+                   ImportSuggestionDenyListEntriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
+CompletionServiceConnection::PurgeSuggestionDenyListEntries(
+    google::cloud::discoveryengine::v1::
+        PurgeSuggestionDenyListEntriesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::
+                   PurgeSuggestionDenyListEntriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<CompletionServiceConnection> MakeCompletionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -121,11 +121,11 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/6f0527b716d3581415b5ade997bd4c6a04480a7d.tar.gz",
-            "https://github.com/googleapis/googleapis/archive/6f0527b716d3581415b5ade997bd4c6a04480a7d.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/63239bbb06fc4ec560354d92473754dd519b9e9e.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/63239bbb06fc4ec560354d92473754dd519b9e9e.tar.gz",
         ],
-        sha256 = "aed50177b5c86bb15a79f1f7f7d02178bd2d4317ec403df4b5e6b3e17b197c73",
-        strip_prefix = "googleapis-6f0527b716d3581415b5ade997bd4c6a04480a7d",
+        sha256 = "afeb297bd888f6f12e2ca1643c4d9b7b468c8c3a6cf568a2c5e8265792f0e075",
+        strip_prefix = "googleapis-63239bbb06fc4ec560354d92473754dd519b9e9e",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]
@@ -170,11 +170,11 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.60.0.tar.gz",
-            "https://github.com/grpc/grpc/archive/v1.60.0.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.61.0.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.61.0.tar.gz",
         ],
-        sha256 = "437068b8b777d3b339da94d3498f1dc20642ac9bfa76db43abdd522186b1542b",
-        strip_prefix = "grpc-1.60.0",
+        sha256 = "aa1e25461879fa674584a9f5d5aec998845b1dfe5746c16cc16eeba5c1c83abe",
+        strip_prefix = "grpc-1.61.0",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which

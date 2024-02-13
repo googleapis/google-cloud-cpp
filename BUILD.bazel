@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
+load("//bazel:library_names.bzl", "hdrs_filegroup_name", "library_dir_name", "mocks_filegroup_name")
+load(":libraries.bzl", "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES", "GOOGLE_CLOUD_CPP_GA_LIBRARIES", "GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES")
+
 package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
@@ -19,10 +23,6 @@ licenses(["notice"])  # Apache 2.0
 exports_files([
     "LICENSE",
 ])
-
-load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
-load("//bazel:library_names.bzl", "hdrs_filegroup_name", "library_dir_name", "mocks_filegroup_name")
-load(":libraries.bzl", "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES", "GOOGLE_CLOUD_CPP_GA_LIBRARIES", "GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES")
 
 EXPERIMENTAL_LIBRARIES = GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
 
