@@ -177,10 +177,11 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
     auto status = mutator.MakeOneRequest(*stub_, *limiter_, *current);
     if (!mutator.HasPendingMutations()) break;
     if (!retry) retry = retry_policy(*current);
-    if (!retry->OnFailure(status)) break;
     if (!backoff) backoff = backoff_policy(*current);
-    auto delay = backoff->OnCompletion();
-    std::this_thread::sleep_for(delay);
+    auto delay = BackoffOrBreak(enable_server_retries(*current), status, *retry,
+                                *backoff);
+    if (!delay) break;
+    std::this_thread::sleep_for(*delay);
   }
   return std::move(mutator).OnRetryDone();
 }
