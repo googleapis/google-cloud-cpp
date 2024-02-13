@@ -375,7 +375,8 @@ DataConnectionImpl::AsyncSampleRows(std::string const& table_name) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return AsyncRowSampler::Create(
       background_->cq(), stub_, retry_policy(*current),
-      backoff_policy(*current), app_profile_id(*current), table_name);
+      backoff_policy(*current), enable_server_retries(*current),
+      app_profile_id(*current), table_name);
 }
 
 StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
