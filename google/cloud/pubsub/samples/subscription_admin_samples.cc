@@ -421,8 +421,7 @@ void GetSubscription(
 
     std::cout << "The subscription exists and its metadata is: "
               << sub->DebugString() << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1));
+  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void UpdateSubscription(
@@ -442,8 +441,7 @@ void UpdateSubscription(
 
     std::cout << "The subscription has been updated to: " << s->DebugString()
               << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1));
+  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void ListSubscriptions(
@@ -512,8 +510,7 @@ void CreateSnapshot(google::cloud::pubsub_admin::SubscriptionAdminClient client,
 
     std::cout << "The snapshot was successfully created: "
               << snapshot->DebugString() << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void GetSnapshot(google::cloud::pubsub_admin::SubscriptionAdminClient client,
@@ -530,8 +527,7 @@ void GetSnapshot(google::cloud::pubsub_admin::SubscriptionAdminClient client,
 
     std::cout << "The snapshot details are: " << response->DebugString()
               << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1));
+  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void UpdateSnapshot(google::cloud::pubsub_admin::SubscriptionAdminClient client,
@@ -551,8 +547,7 @@ void UpdateSnapshot(google::cloud::pubsub_admin::SubscriptionAdminClient client,
 
     std::cout << "The snapshot was successfully updated: "
               << snap->DebugString() << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1));
+  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void ListSnapshots(google::cloud::pubsub_admin::SubscriptionAdminClient client,
@@ -566,8 +561,7 @@ void ListSnapshots(google::cloud::pubsub_admin::SubscriptionAdminClient client,
       if (!snapshot) throw std::move(snapshot).status();
       std::cout << "Snapshot Name: " << snapshot->name() << "\n";
     }
-  }
-  (std::move(client), argv.at(0));
+  }(std::move(client), argv.at(0));
 }
 
 void DeleteSnapshot(google::cloud::pubsub_admin::SubscriptionAdminClient client,
@@ -586,8 +580,7 @@ void DeleteSnapshot(google::cloud::pubsub_admin::SubscriptionAdminClient client,
     if (!status.ok()) throw std::runtime_error(status.message());
 
     std::cout << "The snapshot was successfully deleted\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1));
+  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void SeekWithSnapshot(
@@ -607,8 +600,7 @@ void SeekWithSnapshot(
 
     std::cout << "The subscription seek was successful: "
               << response->DebugString() << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void SeekWithTimestamp(
@@ -632,8 +624,7 @@ void SeekWithTimestamp(
 
     std::cout << "The subscription seek was successful: "
               << response->DebugString() << "\n";
-  }
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void DeleteSubscription(
