@@ -191,8 +191,9 @@ DataConnectionImpl::AsyncBulkApply(std::string const& table_name,
   auto current = google::cloud::internal::SaveCurrentOptions();
   return AsyncBulkApplier::Create(
       background_->cq(), stub_, limiter_, retry_policy(*current),
-      backoff_policy(*current), *idempotency_policy(*current),
-      app_profile_id(*current), table_name, std::move(mut));
+      backoff_policy(*current), enable_server_retries(*current),
+      *idempotency_policy(*current), app_profile_id(*current), table_name,
+      std::move(mut));
 }
 
 bigtable::RowReader DataConnectionImpl::ReadRowsFull(
