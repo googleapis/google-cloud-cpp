@@ -105,7 +105,6 @@ TEST(OpenTelemetry, InjectTraceContextGrpc) {
 }
 
 TEST(OpenTelemetry, EndSpan) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
 
   grpc::ClientContext context;
