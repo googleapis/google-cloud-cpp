@@ -30,6 +30,7 @@ google_cloud_cpp_grpcpp_library(
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/common.proto
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/test.proto
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/test2.proto
+    ${PROJECT_SOURCE_DIR}/generator/integration_tests/test_request_id.proto
     PROTO_PATH_DIRECTORIES
     ${PROTO_INCLUDE_DIR}
     ${PROJECT_SOURCE_DIR}
@@ -39,6 +40,7 @@ target_link_libraries(
     PUBLIC google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
+           google-cloud-cpp::api_field_info_protos
            google-cloud-cpp::api_resource_protos
            google-cloud-cpp::api_routing_protos
            google-cloud-cpp::iam_v1_iam_policy_protos
