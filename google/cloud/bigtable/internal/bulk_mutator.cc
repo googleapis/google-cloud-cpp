@@ -127,7 +127,7 @@ void BulkMutatorState::OnRead(
 void BulkMutatorState::OnFinish(Status finish_status,
                                 bool enable_server_retries) {
   last_status_ = std::move(finish_status);
-  bool retryable =
+  bool const retryable =
       enable_server_retries &&
       google::cloud::internal::GetRetryInfo(last_status_).has_value();
 
