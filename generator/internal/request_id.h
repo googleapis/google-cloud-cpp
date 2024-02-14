@@ -17,6 +17,7 @@
 
 #include <google/protobuf/descriptor.h>
 #include <yaml-cpp/yaml.h>
+#include <string>
 
 namespace google {
 namespace cloud {

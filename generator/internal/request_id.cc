@@ -37,21 +37,21 @@ std::string RequestIdFieldName(
   auto const& request_descriptor = *descriptor.input_type();
   if (service_config.Type() != YAML::NodeType::Map) return {};
   // This code is fairly defensive. First we need to find the
-  // `publishing.method_settings` node, which must be a sequence:
+  // `publishing.method_settings` node, which must be a sequence.
   auto const& publishing = service_config["publishing"];
   if (publishing.Type() != YAML::NodeType::Map) return {};
   auto const& method_settings = publishing["method_settings"];
   if (method_settings.Type() != YAML::NodeType::Sequence) return {};
   for (auto const& m : method_settings) {
     // Each node in the `method_settings` sequence contains a map, the
-    // `selector` field in the map is a string that (may) match the name of the
+    // `selector` field in the map is a string that may match the name of the
     // method we are interested in.
     if (m.Type() != YAML::NodeType::Map) continue;
     auto const& selector = m["selector"];
     if (selector.Type() != YAML::NodeType::Scalar) continue;
     if (selector.as<std::string>() != descriptor.full_name()) continue;
     // Once we find the method, we need to find any auto populated field that
-    // meetings the requirements for a request id.
+    // meets the requirements for a request id.
     auto const& auto_populated = m["auto_populated_fields"];
     if (auto_populated.Type() != YAML::NodeType::Sequence) continue;
     for (auto const& f : auto_populated) {

@@ -67,8 +67,8 @@ message FieldInfo {
       &source_tree);
   google::protobuf::SimpleDescriptorDatabase simple_db;
   FileDescriptorProto file_proto;
-  // we need descriptor.proto to be accessible by the pool
-  // since our test file imports it
+  // We need descriptor.proto to be accessible by the pool
+  // since our test file imports it.
   FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto);
   simple_db.Add(file_proto);
   google::protobuf::MergedDescriptorDatabase merged_db(&simple_db,
@@ -76,7 +76,7 @@ message FieldInfo {
   generator_testing::ErrorCollector collector;
   DescriptorPool pool(&merged_db, &collector);
 
-  // Run the test
+  // Run the test.
   test(pool.FindFileByName("google/cloud/foo/service.proto"));
 }
 
