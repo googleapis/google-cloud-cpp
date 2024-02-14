@@ -72,46 +72,27 @@ class Printer {
    * and rethrows exceptions thrown by protoc in order to provide a more
    * meaningful diagnostic.
    */
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   void Print(int line, char const* file, VarsDictionary const& variables,
-             std::string const& text) {
-    try {
-      Print(variables, text);
-    } catch (std::exception& e) {
-      throw std::runtime_error(
-          absl::StrFormat("%s at %s:%d", e.what(), file, line));
-    }
-  }
-#else
-  void Print(int, char const*, VarsDictionary const& variables,
-             std::string const& text) {
+             std::string const& text) try {
     Print(variables, text);
+  } catch (std::exception const& e) {
+    throw std::runtime_error(
+        absl::StrFormat("%s at %s:%d", e.what(), file, line));
   }
-#endif
 
   /**
    * Like the variable arg Print(), except it accepts diagnostic information
    * from the caller and rethrows exceptions thrown by protoc in order to
    * provide a more meaningful diagnostic.
    */
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   template <typename... Args>
   void Print(int line, char const* file, std::string const& text,
-             Args&&... args) {
-    try {
-      Print(text, std::forward<Args>(args)...);
-    } catch (std::exception& e) {
-      throw std::runtime_error(
-          absl::StrFormat("%s at %s:%d", e.what(), file, line));
-    }
-  }
-#else
-  template <typename... Args>
-  void Print(int, char const*, std::string const& text, Args&&... args) {
+             Args&&... args) try {
     Print(text, std::forward<Args>(args)...);
+  } catch (std::exception const& e) {
+    throw std::runtime_error(
+        absl::StrFormat("%s at %s:%d", e.what(), file, line));
   }
-
-#endif
 
  private:
   std::unique_ptr<google::protobuf::io::ZeroCopyOutputStream> output_;
