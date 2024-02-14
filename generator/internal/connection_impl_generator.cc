@@ -356,23 +356,42 @@ $connection_class_name$Impl::$method_name$($request_type$ request) {
   }
 
   if (IsLongrunningOperation(method)) {
-    return absl::StrCat(
-        // The return type may be a simple `Status` or the
-        // computed type of the long-running operation
-        IsResponseTypeEmpty(method) ?
-                                    R"""(
-future<Status>)"""
-                                    :
-                                    R"""(
-future<StatusOr<$longrunning_deduced_response_type$>>)""",
-        // The body of the function is basically a call to
-        // internal::AsyncLongRunningOperation, a helper template function in
-        // `google::cloud::internal`.
-        R"""(
+    // The return type may be a simple `Status` or the computed type of the
+    // long-running operation.
+    auto const* return_fragment =
+        IsResponseTypeEmpty(method)
+            ? R"""(future<Status>)"""
+            : R"""(future<StatusOr<$longrunning_deduced_response_type$>>)""";
+
+    // One of the variations is how to extract the value from the operation
+    // result, some operations use the metadata, some the data. We need to
+    // provide the right function to internal::AsyncLongRunningOperation.
+    auto const* extract_value_fragment =
+        IsLongrunningMetadataTypeUsedAsResponse(method)
+            ? R"""(&google::cloud::internal::ExtractLongRunningResultMetadata<$longrunning_deduced_response_type$>,)"""
+            : R"""(&google::cloud::internal::ExtractLongRunningResultResponse<$longrunning_deduced_response_type$>,)""";
+
+    // In another variation, the internal::AsyncLongRunningOperation helper may
+    // return `future<StatusOr<google::protobuf::Empty>>`. In this case we add a
+    // bit of code to drop the `protobuf::Empty`:
+    auto const* elide_protobuf_empty_fragment = IsResponseTypeEmpty(method)
+                                                    ? R"""(
+    .then([](future<StatusOr<google::protobuf::Empty>> f) {
+      return f.get().status();
+    }))"""
+                                                    : "";
+
+    // The body of the function is basically a call to
+    // `google::cloud::internal::AsyncLongRunningOperation`.
+    return absl::StrCat("\n", return_fragment,
+                        R"""(
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->$method_name$(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<$longrunning_deduced_response_type$>(
-    background_->cq(), current, request,
+    background_->cq(), current, std::move(request_copy),
     [stub = stub_](google::cloud::CompletionQueue& cq,
                    std::shared_ptr<grpc::ClientContext> context,
                    Options const& options,
@@ -390,39 +409,22 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
                    Options const& options,
                    google::longrunning::CancelOperationRequest const& request) {
      return stub->AsyncCancelOperation(cq, std::move(context), options, request);
-    },)""",
-        // One of the variations is how to extract the value from the operation
-        // result, some operations use the metadata, some the data. We need to
-        // provide the right function to internal::AsyncLongRunningOperation.
-        IsLongrunningMetadataTypeUsedAsResponse(method) ?
-                                                        R"""(
-    &google::cloud::internal::ExtractLongRunningResultMetadata<$longrunning_deduced_response_type$>,)"""
-                                                        :
-                                                        R"""(
-    &google::cloud::internal::ExtractLongRunningResultResponse<$longrunning_deduced_response_type$>,)""",
-        R"""(
-    retry_policy(*current), backoff_policy(*current),
-    idempotency_policy(*current)->$method_name$(request),
+    },
+    )""",
+                        extract_value_fragment,
+                        R"""(
+    retry_policy(*current), backoff_policy(*current), idempotent,
     polling_policy(*current), __func__))""",
-        // Finally, the internal::AsyncLongRunningOperation helper may return
-        // `future<StatusOr<google::protobuf::Empty>>`, in this case we add a
-        // bit of code to drop the `protobuf::Empty`:
-        IsResponseTypeEmpty(method) ? R"""(
-    .then([](future<StatusOr<google::protobuf::Empty>> f) {
-      return f.get().status();
-    });
-)"""
-                                    : R"""(;
-)""",
-        R"""(
+                        elide_protobuf_empty_fragment,
+                        R"""(;
 }
 )""");
   }
 
-  return absl::StrCat(IsResponseTypeEmpty(method) ? R"""(
-Status)"""
-                                                  : R"""(
-StatusOr<$response_type$>)""",
+  auto const* return_fragment = IsResponseTypeEmpty(method)
+                                    ? R"""(Status)"""
+                                    : R"""(StatusOr<$response_type$>)""";
+  return absl::StrCat("\n", return_fragment,
                       R"""(
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -440,23 +442,26 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
 
 std::string ConnectionImplGenerator::AsyncMethodDefinition(
     google::protobuf::MethodDescriptor const& method) {
-  return absl::StrCat(IsResponseTypeEmpty(method) ? R"""(
-future<Status>)"""
-                                                  : R"""(
-future<StatusOr<$response_type$>>)""",
+  auto const* return_fragment =
+      IsResponseTypeEmpty(method) ? R"""(future<Status>)"""
+                                  : R"""(future<StatusOr<$response_type$>>)""";
+
+  return absl::StrCat("\n", return_fragment,
                       R"""(
 $connection_class_name$Impl::Async$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->$method_name$(request_copy);
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->$method_name$(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       background_->cq(),
       [stub = stub_](CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      $request_type$ const& request) {
         return stub->Async$method_name$(cq, std::move(context), request);
       },
-      request, __func__);
+      std::move(request_copy), __func__);
 }
 )""");
 }
