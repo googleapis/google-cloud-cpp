@@ -66,20 +66,27 @@ RequestIdServiceConnectionImpl::RequestIdServiceConnectionImpl(
 StatusOr<google::test::requestid::v1::Foo>
 RequestIdServiceConnectionImpl::CreateFoo(google::test::requestid::v1::CreateFooRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateFoo(request),
+      idempotency_policy(*current)->CreateFoo(request_copy),
       [this](grpc::ClientContext& context,
              google::test::requestid::v1::CreateFooRequest const& request) {
         return stub_->CreateFoo(context, request);
       },
-      request, __func__);
+      request_copy, __func__);
 }
 
 future<StatusOr<google::test::requestid::v1::Foo>>
 RequestIdServiceConnectionImpl::RenameFoo(google::test::requestid::v1::RenameFooRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   auto const idempotent =
       idempotency_policy(*current)->RenameFoo(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<google::test::requestid::v1::Foo>(
@@ -138,6 +145,9 @@ future<StatusOr<google::test::requestid::v1::Foo>>
 RequestIdServiceConnectionImpl::AsyncCreateFoo(google::test::requestid::v1::CreateFooRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   auto const idempotent =
       idempotency_policy(*current)->CreateFoo(request_copy);
   return google::cloud::internal::AsyncRetryLoop(

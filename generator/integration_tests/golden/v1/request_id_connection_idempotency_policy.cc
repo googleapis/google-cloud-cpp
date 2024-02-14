@@ -33,11 +33,13 @@ RequestIdServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RequestIdServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RequestIdServiceConnectionIdempotencyPolicy::CreateFoo(google::test::requestid::v1::CreateFooRequest const&) {
+Idempotency RequestIdServiceConnectionIdempotencyPolicy::CreateFoo(google::test::requestid::v1::CreateFooRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RequestIdServiceConnectionIdempotencyPolicy::RenameFoo(google::test::requestid::v1::RenameFooRequest const&) {
+Idempotency RequestIdServiceConnectionIdempotencyPolicy::RenameFoo(google::test::requestid::v1::RenameFooRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
