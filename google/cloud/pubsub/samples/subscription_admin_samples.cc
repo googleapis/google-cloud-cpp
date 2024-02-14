@@ -83,6 +83,7 @@ void CleanupSubscriptions(
 void CreateSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
+  // [START pubsub_create_pull_subscription]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub_admin::SubscriptionAdminClient client,
@@ -101,6 +102,7 @@ void CreateSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
+    // [END pubsub_create_pull_subscription]
   }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
@@ -112,8 +114,7 @@ void CreateBigQuerySubscription(
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id, std::string const& topic_id,
      std::string const& subscription_id, std::string const& table_id) {
-    //! [START pubsub_create_bigquery_subscription]
-    //! [create-bigquery-subscription]
+    // [START pubsub_create_bigquery_subscription]
     google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, subscription_id).FullName());
@@ -130,7 +131,7 @@ void CreateBigQuerySubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-    //! [END pubsub_create_bigquery_subscription] [create-bigquery-subscription]
+    // [END pubsub_create_bigquery_subscription]
   }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
@@ -142,7 +143,7 @@ void CreateCloudStorageSubscription(
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id, std::string const& topic_id,
      std::string const& subscription_id, std::string const& bucket) {
-    //! [START pubsub_create_cloud_storage_subscription]
+    // [START pubsub_create_cloud_storage_subscription]
     google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, subscription_id).FullName());
@@ -159,13 +160,14 @@ void CreateCloudStorageSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-    //! [END pubsub_create_cloud_storage_subscription]
+    // [END pubsub_create_cloud_storage_subscription]
   }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void CreateDeadLetterSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
+  // [START pubsub_dead_letter_create_subscription]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::SubscriptionAdminClient client,
@@ -196,6 +198,7 @@ void CreateDeadLetterSubscription(
 
     std::cout << "After " << sub->dead_letter_policy().max_delivery_attempts()
               << " delivery attempts.\n";
+    // [END pubsub_dead_letter_create_subscription]
   }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
     std::stoi(argv.at(4)));
 }
@@ -236,8 +239,7 @@ void CreateFilteredSubscription(
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id, std::string topic_id,
      std::string subscription_id) {
-    //! [START pubsub_create_subscription_with_filter]
-    //! [create-filtered-subscription]
+    // [START pubsub_create_subscription_with_filter]
     google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, std::move(subscription_id))
@@ -254,15 +256,14 @@ void CreateFilteredSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-    //! [END pubsub_create_subscription_with_filter]
-    //! [create-filtered-subscription]
+    // [END pubsub_create_subscription_with_filter]
   }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreateOrderingSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
-  //! [START pubsub_enable_subscription_ordering] [enable-subscription-ordering]
+  // [START pubsub_enable_subscription_ordering]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::SubscriptionAdminClient client,
@@ -283,13 +284,14 @@ void CreateOrderingSubscription(
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
   }
-  //! [END pubsub_enable_subscription_ordering] [enable-subscription-ordering]
+  // [END pubsub_enable_subscription_ordering]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreatePushSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
+  // [START pubsub_create_push_subscription]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::SubscriptionAdminClient client,
@@ -309,13 +311,14 @@ void CreatePushSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
+    // [END pubsub_create_push_subscription]
   }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void CreateUnwrappedPushSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
-  //! [START pubsub_create_unwrapped_push_subscription]
+  // [START pubsub_create_unwrapped_push_subscription]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::SubscriptionAdminClient client,
@@ -338,14 +341,52 @@ void CreateUnwrappedPushSubscription(
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
   }
-  //! [END pubsub_create_unwrapped_push_subscription]
+  // [END pubsub_create_unwrapped_push_subscription]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
+void UpdateDeadLetterSubscription(
+    google::cloud::pubsub_admin::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  // [START pubsub_dead_letter_update_subscription]
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id, std::string const& subscription_id,
+     std::string const& dead_letter_topic_id,
+     int dead_letter_delivery_attempts) {
+    google::pubsub::v1::UpdateSubscriptionRequest request;
+    request.mutable_subscription()->set_name(
+        pubsub::Subscription(project_id, subscription_id).FullName());
+    request.mutable_subscription()
+        ->mutable_dead_letter_policy()
+        ->set_dead_letter_topic(
+            pubsub::Topic(project_id, dead_letter_topic_id).FullName());
+    request.mutable_subscription()
+        ->mutable_dead_letter_policy()
+        ->set_max_delivery_attempts(dead_letter_delivery_attempts);
+    *request.mutable_update_mask()->add_paths() = "dead_letter_policy";
+    auto sub = client.UpdateSubscription(request);
+    if (!sub) throw std::move(sub).status();
+
+    std::cout << "The subscription has been updated to: " << sub->DebugString()
+              << "\n";
+
+    std::cout << "It will forward dead letter messages to: "
+              << sub->dead_letter_policy().dead_letter_topic() << "\n";
+
+    std::cout << "After " << sub->dead_letter_policy().max_delivery_attempts()
+              << " delivery attempts.\n";
+  }
+  // [END pubsub_dead_letter_update_subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2),
+   std::stoi(argv.at(3)));
 }
 
 void RemoveDeadLetterPolicy(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
-  //! [START pubsub_dead_letter_remove] [dead-letter-remove]
+  // [START pubsub_dead_letter_remove]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub_admin::SubscriptionAdminClient client,
@@ -361,13 +402,235 @@ void RemoveDeadLetterPolicy(
     std::cout << "The subscription has been updated to: " << sub->DebugString()
               << "\n";
   }
-  //! [END pubsub_dead_letter_remove] [dead-letter-remove]
+  // [END pubsub_dead_letter_remove]
   (std::move(client), argv.at(0), argv.at(1));
+}
+
+void GetSubscription(
+    google::cloud::pubsub_admin::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id, std::string const& subscription_id) {
+    google::pubsub::v1::GetSubscriptionRequest request;
+    request.set_subscription(
+        pubsub::Subscription(project_id, subscription_id).FullName());
+    auto sub = client.GetSubscription(request);
+    if (!sub) throw std::move(sub).status();
+
+    std::cout << "The subscription exists and its metadata is: "
+              << sub->DebugString() << "\n";
+  }(std::move(client), argv.at(0), argv.at(1));
+}
+
+void UpdateSubscription(
+    google::cloud::pubsub_admin::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id, std::string const& subscription_id) {
+    google::pubsub::v1::UpdateSubscriptionRequest request;
+    request.mutable_subscription()->set_name(
+        pubsub::Subscription(project_id, subscription_id).FullName());
+    request.mutable_subscription()->set_ack_deadline_seconds(60);
+    *request.mutable_update_mask()->add_paths() = "ack_deadline_seconds";
+    auto s = client.UpdateSubscription(request);
+    if (!s) throw std::move(s).status();
+
+    std::cout << "The subscription has been updated to: " << s->DebugString()
+              << "\n";
+  }(std::move(client), argv.at(0), argv.at(1));
+}
+
+void ListSubscriptions(
+    google::cloud::pubsub_admin::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  // [START pubsub_list_subscriptions]
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id) {
+    int count = 0;
+    google::pubsub::v1::ListSubscriptionsRequest request;
+    request.set_project(google::cloud::Project(project_id).FullName());
+    for (auto& subscription : client.ListSubscriptions(request)) {
+      if (!subscription) throw std::move(subscription).status();
+      std::cout << "Subscription Name: " << subscription->name() << "\n";
+      ++count;
+    }
+    if (count == 0) {
+      std::cout << "No subscriptions found in project " << project_id << "\n";
+    }
+  }
+  // [END pubsub_list_subscriptions]
+  (std::move(client), argv.at(0));
+}
+
+void ModifyPushConfig(
+    google::cloud::pubsub_admin::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  // [START pubsub_update_push_configuration]
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id, std::string const& subscription_id,
+     std::string const& endpoint) {
+    google::pubsub::v1::ModifyPushConfigRequest request;
+    request.set_subscription(
+        pubsub::Subscription(project_id, subscription_id).FullName());
+    request.mutable_push_config()->set_push_endpoint(endpoint);
+    auto status = client.ModifyPushConfig(request);
+    if (!status.ok()) throw std::runtime_error(status.message());
+
+    std::cout << "The subscription push configuration was successfully"
+              << " modified\n";
+  }
+  // [END pubsub_update_push_configuration]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
+void CreateSnapshot(google::cloud::pubsub_admin::SubscriptionAdminClient client,
+                    std::vector<std::string> const& argv) {
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id, std::string const& subscription_id,
+     std::string const& snapshot_id) {
+    google::pubsub::v1::CreateSnapshotRequest request;
+    request.set_name(pubsub::Snapshot(project_id, snapshot_id).FullName());
+    request.set_subscription(
+        pubsub::Subscription(project_id, subscription_id).FullName());
+    auto snapshot = client.CreateSnapshot(request);
+    if (snapshot.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The snapshot already exists\n";
+      return;
+    }
+    if (!snapshot.ok()) throw std::move(snapshot).status();
+
+    std::cout << "The snapshot was successfully created: "
+              << snapshot->DebugString() << "\n";
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
+void GetSnapshot(google::cloud::pubsub_admin::SubscriptionAdminClient client,
+                 std::vector<std::string> const& argv) {
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id, std::string const& snapshot_id) {
+    google::pubsub::v1::GetSnapshotRequest request;
+    request.set_snapshot(pubsub::Snapshot(project_id, snapshot_id).FullName());
+    auto snapshot = client.GetSnapshot(request);
+    auto response = client.GetSnapshot(request);
+    if (!response.ok()) throw std::move(response).status();
+
+    std::cout << "The snapshot details are: " << response->DebugString()
+              << "\n";
+  }(std::move(client), argv.at(0), argv.at(1));
+}
+
+void UpdateSnapshot(google::cloud::pubsub_admin::SubscriptionAdminClient client,
+                    std::vector<std::string> const& argv) {
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id, std::string snapshot_id) {
+    google::pubsub::v1::UpdateSnapshotRequest request;
+    request.mutable_snapshot()->set_name(
+        pubsub::Snapshot(project_id, std::move(snapshot_id)).FullName());
+    (*request.mutable_snapshot()->mutable_labels())["samples-cpp"] = "gcp";
+    *request.mutable_update_mask()->add_paths() = "labels";
+
+    auto snap = client.UpdateSnapshot(request);
+    if (!snap.ok()) throw std::move(snap).status();
+
+    std::cout << "The snapshot was successfully updated: "
+              << snap->DebugString() << "\n";
+  }(std::move(client), argv.at(0), argv.at(1));
+}
+
+void ListSnapshots(google::cloud::pubsub_admin::SubscriptionAdminClient client,
+                   std::vector<std::string> const& argv) {
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id) {
+    std::cout << "Snapshot list for project " << project_id << ":\n";
+    for (auto& snapshot :
+         client.ListSnapshots(google::cloud::Project(project_id).FullName())) {
+      if (!snapshot) throw std::move(snapshot).status();
+      std::cout << "Snapshot Name: " << snapshot->name() << "\n";
+    }
+  }(std::move(client), argv.at(0));
+}
+
+void DeleteSnapshot(google::cloud::pubsub_admin::SubscriptionAdminClient client,
+                    std::vector<std::string> const& argv) {
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id, std::string const& snapshot_id) {
+    auto status = client.DeleteSnapshot(
+        pubsub::Snapshot(project_id, snapshot_id).FullName());
+    // Note that kNotFound is a possible result when the library retries.
+    if (status.code() == google::cloud::StatusCode::kNotFound) {
+      std::cout << "The snapshot was not found\n";
+      return;
+    }
+    if (!status.ok()) throw std::runtime_error(status.message());
+
+    std::cout << "The snapshot was successfully deleted\n";
+  }(std::move(client), argv.at(0), argv.at(1));
+}
+
+void SeekWithSnapshot(
+    google::cloud::pubsub_admin::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id, std::string const& subscription_id,
+     std::string const& snapshot_id) {
+    google::pubsub::v1::SeekRequest request;
+    request.set_subscription(
+        pubsub::Subscription(project_id, subscription_id).FullName());
+    request.set_snapshot(pubsub::Snapshot(project_id, snapshot_id).FullName());
+    auto response = client.Seek(request);
+    if (!response.ok()) throw std::move(response).status();
+
+    std::cout << "The subscription seek was successful: "
+              << response->DebugString() << "\n";
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
+void SeekWithTimestamp(
+    google::cloud::pubsub_admin::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::SubscriptionAdminClient client,
+     std::string const& project_id, std::string const& subscription_id,
+     std::string const& seconds) {
+    google::pubsub::v1::SeekRequest request;
+    request.set_subscription(
+        pubsub::Subscription(project_id, subscription_id).FullName());
+    request.mutable_time()->set_seconds(
+        std::chrono::duration_cast<std::chrono::seconds>(
+            std::chrono::system_clock::now().time_since_epoch())
+            .count() -
+        std::stoi(seconds));
+    auto response = client.Seek(request);
+    if (!response.ok()) throw std::move(response).status();
+
+    std::cout << "The subscription seek was successful: "
+              << response->DebugString() << "\n";
+  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void DeleteSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
+  // [START pubsub_delete_subscription]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub_admin::SubscriptionAdminClient client,
@@ -382,12 +645,14 @@ void DeleteSubscription(
     if (!status.ok()) throw std::runtime_error(status.message());
 
     std::cout << "The subscription was successfully deleted\n";
+    // [END pubsub_delete_subscription]
   }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::pubsub::examples::RandomSnapshotId;
   using ::google::cloud::pubsub::examples::RandomSubscriptionId;
   using ::google::cloud::pubsub::examples::RandomTopicId;
 
@@ -417,6 +682,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const ordering_subscription_id = RandomSubscriptionId(generator);
   auto const push_subscription_id = RandomSubscriptionId(generator);
   auto const unwrapped_push_subscription_id = RandomSubscriptionId(generator);
+  auto const snapshot_id = RandomSnapshotId(generator);
 
   auto topic_admin_client = google::cloud::pubsub_admin::TopicAdminClient(
       google::cloud::pubsub_admin::MakeTopicAdminConnection());
@@ -520,6 +786,16 @@ void AutoRun(std::vector<std::string> const& argv) {
     (void)topic_admin_client.DeleteTopic(dead_letter_topic.FullName());
   });
 
+  auto constexpr kUpdatedDeadLetterDeliveryAttempts = 20;
+
+  std::cout << "\nRunning UpdateDeadLetterSubscription() sample" << std::endl;
+  ignore_emulator_failures([&] {
+    UpdateDeadLetterSubscription(
+        subscription_admin_client,
+        {project_id, dead_letter_subscription_id, dead_letter_topic_id,
+         std::to_string(kUpdatedDeadLetterDeliveryAttempts)});
+  });
+
   std::cout << "\nRunning RemoveDeadLetterPolicy() sample" << std::endl;
   ignore_emulator_failures([&] {
     RemoveDeadLetterPolicy(subscription_admin_client,
@@ -594,6 +870,10 @@ void AutoRun(std::vector<std::string> const& argv) {
       subscription_admin_client,
       {project_id, topic_id, push_subscription_id, endpoint1});
 
+  std::cout << "\nRunning ModifyPushConfig() sample" << std::endl;
+  ModifyPushConfig(subscription_admin_client,
+                   {project_id, push_subscription_id, endpoint2});
+
   std::cout << "\nRunning CreateUnwrappedPushSubscription() sample [3]"
             << std::endl;
   CreateUnwrappedPushSubscription(
@@ -607,6 +887,44 @@ void AutoRun(std::vector<std::string> const& argv) {
         pubsub::Subscription(project_id, unwrapped_push_subscription_id)
             .FullName());
   });
+
+  std::cout << "\nRunning CreateSnapshot() sample [1]" << std::endl;
+  CreateSnapshot(subscription_admin_client,
+                 {project_id, subscription_id, snapshot_id});
+  cleanup.Defer([subscription_admin_client, project_id, snapshot_id]() mutable {
+    std::cout << "\nDelete snapshot (" << snapshot_id << ")" << std::endl;
+    subscription_admin_client.DeleteSnapshot(
+        pubsub::Snapshot(project_id, snapshot_id).FullName());
+  });
+
+  std::cout << "\nRunning CreateSnapshot() sample [2]" << std::endl;
+  CreateSnapshot(subscription_admin_client,
+                 {project_id, subscription_id, snapshot_id});
+
+  std::cout << "\nRunning GetSnapshot() sample" << std::endl;
+  GetSnapshot(subscription_admin_client, {project_id, snapshot_id});
+
+  std::cout << "\nRunning UpdateSnapshot() sample" << std::endl;
+  ignore_emulator_failures([&] {
+    UpdateSnapshot(subscription_admin_client, {project_id, snapshot_id});
+  });
+
+  std::cout << "\nRunning ListSnapshots() sample" << std::endl;
+  ListSnapshots(subscription_admin_client, {project_id});
+
+  std::cout << "\nRunning SeekWithSnapshot() sample" << std::endl;
+  SeekWithSnapshot(subscription_admin_client,
+                   {project_id, subscription_id, snapshot_id});
+
+  std::cout << "\nRunning DeleteSnapshot() sample [1]" << std::endl;
+  DeleteSnapshot(subscription_admin_client, {project_id, snapshot_id});
+
+  std::cout << "\nRunning DeleteSnapshot() sample [2]" << std::endl;
+  DeleteSnapshot(subscription_admin_client, {project_id, snapshot_id});
+
+  std::cout << "\nRunning SeekWithTimestamp() sample" << std::endl;
+  SeekWithTimestamp(subscription_admin_client,
+                    {project_id, subscription_id, "2"});
 
   std::cout << "\nAutoRun done" << std::endl;
 }
@@ -656,6 +974,39 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriptionAdminCommand("remove-dead-letter-policy",
                                      {"project-id", "subscription-id"},
                                      RemoveDeadLetterPolicy),
+      CreateSubscriptionAdminCommand(
+          "update-dead-letter-subscription",
+          {"project-id", "subscription-id", "dead-letter-topic-id",
+           "dead-letter-delivery-attempts"},
+          UpdateDeadLetterSubscription),
+      CreateSubscriptionAdminCommand("get-subscription",
+                                     {"project-id", "subscription-id"},
+                                     GetSubscription),
+      CreateSubscriptionAdminCommand("update-subscription",
+                                     {"project-id", "subscription-id"},
+                                     UpdateSubscription),
+      CreateSubscriptionAdminCommand("list-subscriptions", {"project-id"},
+                                     ListSubscriptions),
+      CreateSubscriptionAdminCommand(
+          "modify-push-config", {"project-id", "subscription-id", "endpoint"},
+          ModifyPushConfig),
+      CreateSubscriptionAdminCommand(
+          "create-snapshot", {"project-id", "subscription-id", "snapshot-id"},
+          CreateSnapshot),
+      CreateSubscriptionAdminCommand(
+          "get-snapshot", {"project-id", "snapshot-id"}, GetSnapshot),
+      CreateSubscriptionAdminCommand(
+          "update-snapshot", {"project-id", "snapshot-id"}, UpdateSnapshot),
+      CreateSubscriptionAdminCommand("list-snapshots", {"project-id"},
+                                     ListSnapshots),
+      CreateSubscriptionAdminCommand(
+          "delete-snapshot", {"project-id", "snapshot-id"}, DeleteSnapshot),
+      CreateSubscriptionAdminCommand(
+          "seek-with-snapshot",
+          {"project-id", "subscription-id", "snapshot-id"}, SeekWithSnapshot),
+      CreateSubscriptionAdminCommand(
+          "seek-with-timestamp", {"project-id", "subscription-id", "seconds"},
+          SeekWithTimestamp),
       CreateSubscriptionAdminCommand("delete-subscription",
                                      {"project-id", "subscription-id"},
                                      DeleteSubscription),
