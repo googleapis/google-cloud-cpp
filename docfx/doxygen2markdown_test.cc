@@ -720,10 +720,7 @@ TEST(Doxygen2Markdown, ParagraphProgramListingAddsNewLine) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
     <detaileddescription  id='test-node'>
-    <para><simplesect kind="par"><title>Thread-safety</title><para>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating concurrently on the same instance of this class is not guaranteed to work.</para>
-</simplesect>
-<simplesect kind="par"><title>Cost</title><para>Creating a new object of type <computeroutput><ref refid="classgoogle_1_1cloud_1_1bigtable_1_1TableAdmin" kindref="compound">TableAdmin</ref></computeroutput> is comparable to creating a few objects of type <computeroutput>std::string</computeroutput> or a few objects of type <computeroutput>std::shared_ptr&lt;int&gt;</computeroutput>. The class represents a shallow handle to a remote object.</para>
-</simplesect>
+    <para>
 <simplesect kind="par"><title>Error Handling</title><para>Description goes here.</para>
 </simplesect>
 <programlisting><codeline><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">cbt<sp/>=<sp/><ref refid="namespacegoogle_1_1cloud_1_1bigtable" kindref="compound">google::cloud::bigtable</ref>;</highlight></codeline>
