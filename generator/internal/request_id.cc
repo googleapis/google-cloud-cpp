@@ -32,7 +32,7 @@ bool MeetsRequestIdRequirements(
 
 std::string RequestIdFieldName(
     YAML::Node const& service_config,
-    google::protobuf::MethodDescriptor const& descriptor) {
+    google::protobuf::MethodDescriptor const& descriptor) try {
   if (descriptor.input_type() == nullptr) return {};
   auto const& request_descriptor = *descriptor.input_type();
   if (service_config.Type() != YAML::NodeType::Map) return {};
@@ -61,6 +61,10 @@ std::string RequestIdFieldName(
       if (MeetsRequestIdRequirements(*fd)) return fd->name();
     }
   }
+  return {};
+} catch (YAML::Exception const& ex) {
+  // Ignore errors in the YAML file. If it is broken just fallback to having
+  // no field.
   return {};
 }
 
