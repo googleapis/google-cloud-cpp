@@ -666,11 +666,32 @@ package google.protobuf;
 message Empty {}
 )""";
 
-char const* const kServiceProto =
+auto constexpr kFieldInfoProto = R"""(
+syntax = "proto3";
+package google.api;
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.FieldOptions {
+  google.api.FieldInfo field_info = 291403980;
+}
+message FieldInfo {
+  enum Format {
+    FORMAT_UNSPECIFIED = 0;
+    UUID4 = 1;
+    IPV4 = 2;
+    IPV6 = 3;
+    IPV4_OR_IPV6 = 4;
+  }
+  Format format = 1;
+}
+)""";
+
+auto constexpr kServiceProto =
     "syntax = \"proto3\";\n"
     "package my.service.v1;\n"
     "import \"google/api/annotations.proto\";\n"
     "import \"google/api/client.proto\";\n"
+    "import \"google/api/field_info.proto\";\n"
     "import \"google/api/http.proto\";\n"
     "import \"google/iam/v1/fake_iam.proto\";\n"
     "import \"google/protobuf/well_known.proto\";\n"
@@ -842,7 +863,21 @@ char const* const kServiceProto =
     "       body: \"*\"\n"
     "    };\n"
     "  }\n"
-    "}\n";
+    // Continue in raw string format.
+    R"""(
+  rpc WithRequestId(WithRequestIdRequest) returns (google.protobuf.Empty) {}
+  rpc WithoutRequestId(WithoutRequestIdRequest) returns (google.protobuf.Empty) {}
+}
+
+message WithRequestIdRequest {
+  string field = 1 [ (google.api.field_info).format = UUID4 ];
+}
+
+
+message WithoutRequestIdRequest {
+  string field = 1;
+}
+)""";
 
 auto constexpr kExtendedOperationsProto = R"""(
 syntax = "proto3";
@@ -917,6 +952,7 @@ class CreateMethodVarsTest
   CreateMethodVarsTest()
       : source_tree_(std::map<std::string, std::string>{
             {std::string("google/api/client.proto"), kClientProto},
+            {std::string("google/api/field_info.proto"), kFieldInfoProto},
             {std::string("google/api/http.proto"), kHttpProto},
             {std::string("google/api/annotations.proto"), kAnnotationsProto},
             {std::string("google/iam/v1/fake_iam.proto"), kIamProto},
@@ -990,7 +1026,7 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [my.service.v1.Bar]: @googleapis_reference_link{google/foo/v1/service.proto#L18}
+  /// [my.service.v1.Bar]: @googleapis_reference_link{google/foo/v1/service.proto#L19}
   ///
   // clang-format on
 )""");
@@ -1033,7 +1069,7 @@ TEST_F(CreateMethodVarsTest,
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [my.service.v1.Bar]: @googleapis_reference_link{google/foo/v1/service.proto#L18}
+  /// [my.service.v1.Bar]: @googleapis_reference_link{google/foo/v1/service.proto#L19}
   ///
   // clang-format on
 )""");
@@ -1104,7 +1140,7 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsMethodSignature) {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [my.service.v1.Foo]: @googleapis_reference_link{google/foo/v1/service.proto#L10}
+  /// [my.service.v1.Foo]: @googleapis_reference_link{google/foo/v1/service.proto#L11}
   ///
   // clang-format on
 )""");
@@ -1119,7 +1155,8 @@ TEST_F(CreateMethodVarsTest, SkipMethodsWithDeprecatedFields) {
           "omitted_rpcs",
           absl::StrCat(SafeReplaceAll(kMethod6Deprecated1, ",", "@"), ",",
                        SafeReplaceAll(kMethod6Deprecated2, ",", "@")))});
-  vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
+  vars_ = CreateMethodVars(*service_file_descriptor->service(0), YAML::Node{},
+                           service_vars_);
   auto method_vars = vars_.find("my.service.v1.Service.Method6");
   ASSERT_NE(method_vars, vars_.end());
   EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature0", _))));
@@ -1137,13 +1174,43 @@ TEST_F(CreateMethodVarsTest, SkipMethodOverloadsWithDuplicateSignatures) {
           "omitted_rpcs",
           absl::StrCat(SafeReplaceAll(kMethod6Deprecated1, ",", "@"), ",",
                        SafeReplaceAll(kMethod6Deprecated2, ",", "@")))});
-  vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
+  vars_ = CreateMethodVars(*service_file_descriptor->service(0), YAML::Node{},
+                           service_vars_);
   auto method_vars = vars_.find("my.service.v1.Service.Method10");
   ASSERT_NE(method_vars, vars_.end());
   EXPECT_THAT(method_vars->second, Contains(Pair("method_signature0", _)));
   EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature1", _))));
   EXPECT_THAT(method_vars->second, Contains(Pair("method_signature2", _)));
   EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature3", _))));
+}
+
+TEST_F(CreateMethodVarsTest, WithRequestId) {
+  auto constexpr kServiceConfigYaml = R"""(publishing:
+  method_settings:
+  - selector: my.service.v1.Service.WithRequestId
+    auto_populated_fields:
+    - field
+)""";
+  auto const service_config = YAML::Load(kServiceConfigYaml);
+  ASSERT_EQ(service_config.Type(), YAML::NodeType::Map);
+
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  service_vars_ = CreateServiceVars(
+      *service_file_descriptor->service(0),
+      {std::make_pair(
+          "omitted_rpcs",
+          absl::StrCat(SafeReplaceAll(kMethod6Deprecated1, ",", "@"), ",",
+                       SafeReplaceAll(kMethod6Deprecated2, ",", "@")))});
+  vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_config,
+                           service_vars_);
+  auto mv0 = vars_.find("my.service.v1.Service.WithRequestId");
+  ASSERT_NE(mv0, vars_.end());
+  EXPECT_THAT(mv0->second, Contains(Pair("request_id_field_name", "field")));
+
+  auto mv1 = vars_.find("my.service.v1.Service.WithoutRequestId");
+  ASSERT_NE(mv1, vars_.end());
+  EXPECT_THAT(mv1->second, Not(Contains(Pair("request_id_field_name", _))));
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
@@ -1155,7 +1222,8 @@ TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
           "omitted_rpcs",
           absl::StrCat(SafeReplaceAll(kMethod6Deprecated1, ",", "@"), ",",
                        SafeReplaceAll(kMethod6Deprecated2, ",", "@")))});
-  vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
+  vars_ = CreateMethodVars(*service_file_descriptor->service(0), YAML::Node{},
+                           service_vars_);
   auto method_iter = vars_.find(GetParam().method);
   ASSERT_TRUE(method_iter != vars_.end());
   EXPECT_THAT(method_iter->second,
@@ -1197,7 +1265,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("my.service.v1.Service.Method1",
                              "method_return_doxygen_link",
                              "@googleapis_link{my::service::v1::Bar,google/"
-                             "foo/v1/service.proto#L18}"),
+                             "foo/v1/service.proto#L19}"),
         MethodVarsTestValues("my.service.v1.Service.Method1",
                              "method_http_query_parameters", R"""(,
       rest_internal::TrimEmptyQueryParameters({std::make_pair("number", std::to_string(request.number())),
@@ -1225,7 +1293,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("my.service.v1.Service.Method2",
                              "method_longrunning_deduced_return_doxygen_link",
                              "@googleapis_link{my::service::v1::Bar,google/"
-                             "foo/v1/service.proto#L18}"),
+                             "foo/v1/service.proto#L19}"),
         MethodVarsTestValues("my.service.v1.Service.Method2",
                              "method_http_query_parameters", R"""(,
       rest_internal::TrimEmptyQueryParameters({std::make_pair("number", std::to_string(request.number())),
@@ -1327,7 +1395,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("my.service.v1.Service.Method7",
                              "method_longrunning_deduced_return_doxygen_link",
                              "@googleapis_link{my::service::v1::Bar,google/"
-                             "foo/v1/service.proto#L18}"),
+                             "foo/v1/service.proto#L19}"),
         // Method8
         MethodVarsTestValues("my.service.v1.Service.Method8",
                              "method_signature0",
