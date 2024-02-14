@@ -108,6 +108,8 @@ add_library(
     internal/predicate_utils.h
     internal/printer.h
     internal/proto_definition_location.h
+    internal/request_id.cc
+    internal/request_id.h
     internal/resolve_comment_references.cc
     internal/resolve_comment_references.h
     internal/resolve_method_return.cc
@@ -246,6 +248,7 @@ function (google_cloud_cpp_generator_define_tests)
         internal/pagination_test.cc
         internal/predicate_utils_test.cc
         internal/printer_test.cc
+        internal/request_id_test.cc
         internal/resolve_comment_references_test.cc
         internal/resolve_method_return_test.cc
         internal/routing_test.cc

@@ -35,6 +35,7 @@ google_cloud_cpp_generator_unit_tests = [
     "internal/pagination_test.cc",
     "internal/predicate_utils_test.cc",
     "internal/printer_test.cc",
+    "internal/request_id_test.cc",
     "internal/resolve_comment_references_test.cc",
     "internal/resolve_method_return_test.cc",
     "internal/routing_test.cc",
